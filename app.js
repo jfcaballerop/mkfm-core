@@ -4,9 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var i18n = require("i18n-express");
 
+// START Routes de la aplicacion
+var login = require('./routes/login');
 var index = require('./routes/index');
 var users = require(path.join(__dirname, '/app/comp/user/users'));
+// END Routes
 
 var app = express();
 
@@ -18,6 +22,9 @@ app.set('views', [
 ]);
 
 
+
+//app.use(myLogger);
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -25,17 +32,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(i18n({
+    translationsPath: path.join(__dirname, '/app/translate/i18n'), // <--- use here. Specify translations files path. 
+    siteLangs: ["es", "en"],
+    textsVarName: 'trans',
+    defaultLang: 'es'
+}));
 
 // URL - Routes 
 // General
-app.use('/', index);
+app.use('/', login);
+app.use('/index', index);
 
 // Usuarios
 app.use('/users', users);
 
 // END URL - Routes
 
-console.log(path.join(__dirname, '/routes/users'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
