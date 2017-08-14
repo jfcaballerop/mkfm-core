@@ -7,7 +7,7 @@ var moment = require('moment');
 //router.use('/users');
 
 router.use(function timeLog(req, res, next) {
-    console.log('Time: ', moment().format("YYYYMMDD - hh:mm:ss"));
+    console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
 });
 
