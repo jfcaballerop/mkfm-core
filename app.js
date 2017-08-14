@@ -1,10 +1,16 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+var passport = require('passport');
+var flash = require('connect-flash');
+var mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
+var session = require('express-session');
+
+var configDB = require((path.join(__dirname, '/config/database.js')));
 
 // START Routes de la aplicacion
 var login = require('./routes/login');
