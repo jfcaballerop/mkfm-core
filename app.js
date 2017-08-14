@@ -14,7 +14,7 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
-    path.join(__dirname, '/app/comp/user')
+    path.join(__dirname, '/app/comp/user/views')
 ]);
 
 
@@ -26,8 +26,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// URL - Routes 
+// General
 app.use('/', index);
+
+// Usuarios
 app.use('/users', users);
+
+// END URL - Routes
 
 console.log(path.join(__dirname, '/routes/users'));
 // catch 404 and forward to error handler
