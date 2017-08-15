@@ -30,7 +30,8 @@ router.get('/V1/', function(req, res, next) {
 });
 /* GET JSON user by login. */
 router.get('/V1/:login', function(req, res, next) {
-    User.findOne(req.login, function(err, user) {
+    console.log(req.params.login);
+    User.findOne({ 'login': req.params.login }, function(err, user) {
         if (err) {
             res.send(500, err.message);
         }
@@ -48,6 +49,19 @@ router.post('/V1/', function(req, res, next) {
         }
         res.status(200).jsonp(user);
     });
+});
+/* DEL user */
+router.delete('/V1/:id', function(req, res, next) {
+    User.findById(req.params.id, function(err, user) {
+        user.remove(function(err) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            res.status(200).jsonp(user);
+
+        })
+    });
+
 });
 
 module.exports = router;
