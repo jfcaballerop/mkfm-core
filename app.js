@@ -1,35 +1,30 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var passport = require('passport');
-var flash = require('connect-flash');
 var mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
-var session = require('express-session');
 
+// CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
+var configAPP = require(path.join(__dirname, '/config/config.json'));
 
-// START Routes de la aplicacion
+// ROUTES de la aplicacion
 var login = require('./routes/login');
 var index = require('./routes/index');
 var users = require(path.join(__dirname, '/app/comp/user/users'));
-// END Routes
 
+// APP EXPRESS INIT
 var app = express();
 
-// view engine setup
+// TEMPLATE VIEW engine setup
 app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
     path.join(__dirname, '/app/comp/user/views')
 ]);
-
-
-
-//app.use(myLogger);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -38,6 +33,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// TRANSLATE CONFIG
 app.use(i18n({
     translationsPath: path.join(__dirname, '/app/translate/i18n'), // <--- use here. Specify translations files path. 
     siteLangs: ["es", "en"],
@@ -45,7 +42,9 @@ app.use(i18n({
     defaultLang: 'es'
 }));
 
-// URL - Routes 
+/*********************************
+ *  URL - Routes 
+ * *******************************/
 // General
 app.use('/', login);
 app.use('/index', index);
