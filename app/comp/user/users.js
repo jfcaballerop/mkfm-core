@@ -28,9 +28,20 @@ router.get('/V1/', function(req, res, next) {
     });
 
 });
+/* GET JSON user by login. */
+router.get('/V1/:login', function(req, res, next) {
+    User.findOne(req.login, function(err, user) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(user);
+    });
+
+});
 /* POST user */
 router.post('/V1/', function(req, res, next) {
     user = new User(req.body);
+    user.password = user.generateHash(req.body.password);
     user.save(function(err, user) {
         if (err) {
             return res.status(500).send(err.message);
