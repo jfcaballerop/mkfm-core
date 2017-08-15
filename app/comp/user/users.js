@@ -59,7 +59,7 @@ router.delete('/V1/:id', function(req, res, next) {
             }
             res.status(200).jsonp(user);
 
-        })
+        });
     });
 
 });
