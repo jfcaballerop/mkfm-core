@@ -6,10 +6,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
+var methodOverride = require("method-override");
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
 var configAPP = require(path.join(__dirname, '/config/config.json'));
+
 
 // ROUTES de la aplicacion
 var login = require('./routes/login');
@@ -34,6 +36,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// DB Connect
+mongoose.connect(configDB.url, function(err, res) {
+    if (err) {
+        console.log('ERROR: connecting to Database. ' + err);
+    } else {
+        console.log('MONGODB CONNECTED OK')
+    }
+});
+
 // TRANSLATE CONFIG
 app.use(i18n({
     translationsPath: path.join(__dirname, '/app/translate/i18n'), // <--- use here. Specify translations files path. 
@@ -41,6 +52,12 @@ app.use(i18n({
     textsVarName: 'trans',
     defaultLang: 'es'
 }));
+
+/*****************
+ * MODELS
+ *****************/
+var userModels = require(path.join(__dirname, '/app/comp/user/models/user'));
+
 
 /*********************************
  *  URL - Routes 
