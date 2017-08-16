@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
 var methodOverride = require("method-override");
+var flash = require('connect-flash');
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -35,13 +37,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    cookie: { maxAge: 60000 },
+    secret: 'mkfwcore1234',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 
 // DB Connect
 mongoose.connect(configDB.url, function(err, res) {
     if (err) {
         console.log('ERROR: connecting to Database. ' + err);
     } else {
-        console.log('MONGODB CONNECTED OK')
+        console.log('MONGODB CONNECTED OK');
     }
 });
 

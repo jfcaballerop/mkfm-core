@@ -22,6 +22,10 @@ body {
     font-size: 13px;
 }
 
+h3.error {
+    color: red;
+}
+
 ul li {
     list-style: none;
 }

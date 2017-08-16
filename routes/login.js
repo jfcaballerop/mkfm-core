@@ -6,7 +6,7 @@ var config = require(path.join(__dirname, '../config/config.json'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('login', { title: 'Login', cname: config.client_name });
+    res.render('login', { title: 'Login', cname: config.client_name, message: req.flash('message') });
 });
 
 module.exports = router;

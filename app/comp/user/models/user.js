@@ -8,6 +8,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     login: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    salt: { type: String, required: true },
     nombre: { type: String },
     apellido1: { type: String },
     apellido2: { type: String },
@@ -35,7 +36,7 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 // create the model for users and expose it to our app
