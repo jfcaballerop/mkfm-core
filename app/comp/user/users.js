@@ -29,9 +29,8 @@ router.post('/auth/login', function(req, res, next) {
                 res.status(500).send(err.message);
             }
             if (user.validPassword(req.body.user_passwd)) {
-                res.header('Access-Control-Expose-Headers', 'token');
-                res.set('token', 'kjhdkf89q37453lajjfq23');
                 req.session.token = 'kjhdkf89q37453lajjfq23';
+                res.cookie('auth', '1234567890asdfqwer');
                 res.redirect('/index');
             } else {
                 req.flash('message', 'Error de autenticacion');

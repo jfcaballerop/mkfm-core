@@ -9,7 +9,8 @@ var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
 var methodOverride = require("method-override");
 var flash = require('connect-flash');
-var cors = require('cors');
+//var cors = require('cors');
+var jwt = require('jwt-simple');
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -46,7 +47,7 @@ app.use(session({
 
 }));
 app.use(flash());
-app.use(cors());
+//app.use(cors());
 
 // DB Connect
 mongoose.connect(configDB.url, function(err, res) {

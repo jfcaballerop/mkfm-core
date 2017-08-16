@@ -6,7 +6,8 @@ var config = require(path.join(__dirname, '../config/config.json'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Home', cname: config.client_name });
+    console.log(req.cookies.auth);
+    res.render('index', { title: 'Home', cname: config.client_name, token: req.session.token });
 });
 
 module.exports = router;
