@@ -22,13 +22,16 @@ router.get('/', function(req, res, next) {
 });
 
 /* LOGIN action */
-router.post('/login', function(req, res, next) {
+router.post('/auth/login', function(req, res, next) {
     if (!validator.isEmpty(req.body.user_login) && !validator.isEmpty(req.body.user_passwd)) {
         User.findOne({ 'login': req.body.user_login }, function(err, user) {
             if (err) {
                 res.status(500).send(err.message);
             }
             if (user.validPassword(req.body.user_passwd)) {
+                res.header('Access-Control-Expose-Headers', 'token');
+                res.set('token', 'kjhdkf89q37453lajjfq23');
+                req.session.token = 'kjhdkf89q37453lajjfq23';
                 res.redirect('/index');
             } else {
                 req.flash('message', 'Error de autenticacion');

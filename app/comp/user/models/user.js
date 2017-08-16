@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     login: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    salt: { type: String, required: true },
+    token: { type: String },
     nombre: { type: String },
     apellido1: { type: String },
     apellido2: { type: String },

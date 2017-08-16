@@ -24,6 +24,7 @@ body {
 
 h3.error {
     color: red;
+    text-align: center;
 }
 
 ul li {

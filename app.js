@@ -9,16 +9,11 @@ var bodyParser = require('body-parser');
 var i18n = require("i18n-express");
 var methodOverride = require("method-override");
 var flash = require('connect-flash');
+var cors = require('cors');
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
 var configAPP = require(path.join(__dirname, '/config/config.json'));
-
-
-// ROUTES de la aplicacion
-var login = require('./routes/login');
-var index = require('./routes/index');
-var users = require(path.join(__dirname, '/app/comp/user/users'));
 
 // APP EXPRESS INIT
 var app = express();
@@ -38,12 +33,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    cookie: { maxAge: 60000 },
+    cookie: {
+        path: "/",
+        httpOnly: true,
+        secure: false, //change TRUE with SSL connections
+        maxAge: 1000 * 30 * 60 // 180000 ms = 30 mins
+    },
     secret: 'mkfwcore1234',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    name: "id"
+
 }));
 app.use(flash());
+app.use(cors());
 
 // DB Connect
 mongoose.connect(configDB.url, function(err, res) {
@@ -71,6 +74,11 @@ var userModels = require(path.join(__dirname, '/app/comp/user/models/user'));
 /*********************************
  *  URL - Routes 
  * *******************************/
+// Require ROUTES de la aplicacion
+var login = require('./routes/login');
+var index = require('./routes/index');
+var users = require(path.join(__dirname, '/app/comp/user/users'));
+
 // General
 app.use('/', login);
 app.use('/index', index);
