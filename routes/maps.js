@@ -6,7 +6,7 @@ var config = require(path.join(__dirname, '../config/config'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('maps', { title: 'Home', cname: config.client_name, id: req.user_id, login: req.user_login, api_key: config.MAPS_API_KEY });
+    res.render('maps', { title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
 });
 
 module.exports = router;

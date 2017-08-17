@@ -30,7 +30,11 @@ router.use(function timeLog(req, res, next) {
                 req.token = token;
                 req.user_id = token.id;
                 req.user_login = token.login;
-                console.log('## Usuario: ' + req.user_id + ' ' + req.user_login);
+                if (token.admin_rol)
+                    req.rol = 'admin';
+                else
+                    req.user = 'user';
+                console.log('## Usuario: ' + req.user_id + ' ' + req.user_login + ' ' + req.rol);
                 next();
             }
         });

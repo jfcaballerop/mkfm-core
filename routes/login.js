@@ -36,6 +36,14 @@ router.post('/login', function(req, res, next) {
         res.status(401).send('Error de autenticacion');
     }
 });
+/* LOGOUT action */
+router.get('/logout', function(req, res, next) {
+    //res.cookie('jwtToken', service.createToken(user));
+    res.cookie('jwtToken', '');
+    req.flash('message', 'Session closed');
+    res.status(401).redirect('/');
+
+});
 
 
 module.exports = router;
