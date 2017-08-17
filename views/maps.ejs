@@ -25,6 +25,22 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+        
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -291,8 +307,50 @@
                 <div id="morris">
                     <div class="row mt">
                         <div class="col-md-12" style="height:80vh;">
-                            <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen>
-                            </iframe>
+                            <div id="map"></div>
+                            <script>
+                                // This example uses the Google Maps JavaScript API's Data layer
+                                // to create a rectangular polygon with 2 holes in it.
+
+                                function initMap() {
+                                    var map = new google.maps.Map(document.getElementById('map'), {
+                                        zoom: 12,
+                                        center: {
+                                            lat: 15.41,
+                                            lng: -61.32
+                                        },
+                                    });
+
+                                    // Define the LatLng coordinates for the outer path.
+                                    var outerCoords = [{
+                                            lat: 15.42,
+                                            lng: -61.35
+                                        }, // north west
+                                        {
+                                            lat: 15.39,
+                                            lng: -61.35
+                                        }, // south west
+                                        {
+                                            lat: 15.39,
+                                            lng: -61.32
+                                        }, // south east
+                                        {
+                                            lat: 15.42,
+                                            lng: -61.32
+                                        } // north east
+                                    ];
+
+
+
+                                    map.data.add({
+                                        geometry: new google.maps.Data.Polygon([outerCoords])
+                                    })
+                                }
+                            </script>
+                            <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
+                            </script>
+                            <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
+                            <!-- </iframe> -->
                         </div>
                     </div>
                 </div>
