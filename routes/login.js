@@ -24,7 +24,10 @@ router.post('/login', function(req, res, next) {
             }
             if (user.validPassword(req.body.user_passwd)) {
                 //res.cookie('jwtToken', service.createToken(user));
-                res.cookie('jwtToken', service.createWebToken(user));
+                res.cookie('jwtToken', service.createWebToken(user), {
+                    httpOnly: true,
+                    secure: false // Poner a true con conex SSL
+                });
                 res.redirect('/auth/WEB/index');
             } else {
                 req.flash('message', 'Error de autenticacion');
@@ -40,6 +43,8 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
     //res.cookie('jwtToken', service.createToken(user));
     res.cookie('jwtToken', '');
+    res.clearCookie("jwtToken");
+
     req.flash('message', 'Session closed');
     res.status(401).redirect('/');
 

@@ -38,9 +38,9 @@ app.use(session({
         path: "/",
         httpOnly: true,
         secure: false, //change TRUE with SSL connections
-        maxAge: 1000 * 30 * 60 // 180000 ms = 30 mins
+        maxAge: configAPP.SESSION_TTL * 1000 // 1800000 ms = 30 mins
     },
-    secret: 'mkfwcore1234',
+    secret: configAPP.TOKEN_SECRET,
     resave: false,
     saveUninitialized: false,
     name: "id"
