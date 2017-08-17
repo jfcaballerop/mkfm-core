@@ -49,5 +49,8 @@ router.use('/users', require(path.join(__dirname, '../app/comp/user/users')));
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 
+// MAPS auth
+router.use('/maps', require(path.join(__dirname, './maps')));
+
 
 module.exports = router;

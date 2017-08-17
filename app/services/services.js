@@ -21,6 +21,6 @@ exports.createWebToken = function(user) {
         id: user._id
     };
     var pass = config.TOKEN_SECRET;
-    return jwtweb.sign(u, config.TOKEN_SECRET, { expiresIn: 30 * 60 }); // expiresIn: sec
+    return jwtweb.sign(u, config.TOKEN_SECRET, { expiresIn: config.SESSION_TTL }); // expiresIn: sec
 
 };
