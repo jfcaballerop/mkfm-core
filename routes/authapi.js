@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var config = require(path.join(__dirname, '../config/config.json'));
+var config = require(path.join(__dirname, '../config/config'));
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {

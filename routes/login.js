@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var config = require(path.join(__dirname, '../config/config.json'));
+var config = require(path.join(__dirname, '../config/config'));
 var moment = require('moment');
 var mongoose = require('mongoose');
 var validator = require('validator');
 var flash = require('connect-flash');
 var userModels = require(path.join(__dirname, '../app/comp/user/models/user'));
 var User = mongoose.model('User');
+var service = require(path.join(__dirname, '../app/services/services'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -22,9 +23,8 @@ router.post('/login', function(req, res, next) {
                 res.status(500).send(err.message);
             }
             if (user.validPassword(req.body.user_passwd)) {
-                // TODO: 
-                // [] Crear Token
-                res.cookie('jwtToken', '1234567890asdfqwer');
+                //res.cookie('jwtToken', service.createToken(user));
+                res.cookie('jwtToken', service.createWebToken(user));
                 res.redirect('/auth/WEB/index');
             } else {
                 req.flash('message', 'Error de autenticacion');
