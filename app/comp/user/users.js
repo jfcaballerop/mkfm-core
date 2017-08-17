@@ -21,27 +21,6 @@ router.get('/', function(req, res, next) {
     res.render('user', { title: 'Usuarios' });
 });
 
-/* LOGIN action */
-router.post('/auth/login', function(req, res, next) {
-    if (!validator.isEmpty(req.body.user_login) && !validator.isEmpty(req.body.user_passwd)) {
-        User.findOne({ 'login': req.body.user_login }, function(err, user) {
-            if (err) {
-                res.status(500).send(err.message);
-            }
-            if (user.validPassword(req.body.user_passwd)) {
-                req.session.token = 'kjhdkf89q37453lajjfq23';
-                res.cookie('auth', '1234567890asdfqwer');
-                res.redirect('/index');
-            } else {
-                req.flash('message', 'Error de autenticacion');
-                res.status(401).redirect('/');
-            }
-        });
-        //res.render('user', { title: 'Usuarios' });
-    } else {
-        res.status(401).send('Error de autenticacion');
-    }
-});
 
 
 /* GET JSON users listing. */

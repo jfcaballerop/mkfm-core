@@ -66,45 +66,39 @@ app.use(i18n({
     defaultLang: 'es'
 }));
 
-/*****************
- * MODELS
- *****************/
-var userModels = require(path.join(__dirname, '/app/comp/user/models/user'));
-
-
 /*********************************
  *  URL - Routes 
  * *******************************/
 // Require ROUTES de la aplicacion
 var login = require('./routes/login');
 var index = require('./routes/index');
-var users = require(path.join(__dirname, '/app/comp/user/users'));
+var auth_web = require('./routes/authweb');
+var auth_api = require('./routes/authapi');
 
-// General
+// AUTH de puntos de entrada
+app.use('/auth/WEB', auth_web);
+app.use('/auth/API', auth_api);
+// HOME General
 app.use('/', login);
-app.use('/index', index);
-
-// Usuarios
-app.use('/users', users);
 
 // END URL - Routes
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+// app.use(function(req, res, next) {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
-// error handler
-app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+// // error handler
+// app.use(function(err, req, res, next) {
+//     // set locals, only providing error in development
+//     res.locals.message = err.message;
+//     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-});
+//     // render the error page
+//     res.status(err.status || 500);
+//     res.render('error');
+// });
 
 module.exports = app;
