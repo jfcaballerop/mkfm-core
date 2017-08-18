@@ -11,6 +11,7 @@ var config = require(path.join(__dirname, '../../../config/config'));
 var User = mongoose.model('User');
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
+var extend = require('util')._extend;
 
 
 router.use(function timeLog(req, res, next) {
@@ -35,22 +36,19 @@ router.post('/new_user', function(req, resp, next) {
     // TODO: Pendiente hacer una validacion de los campos de la request.
     console.log("## REQ: " + JSON.stringify(req.body.user));
 
-    var postData = Object.assign({}, (JSON.stringify(req.body.user)));
-    // TODO: añadir los campos admin y activo
-    postData.admin = (req.body.user.admin ? true : false);
+    var postData = extend({}, req.body.user);
+    postData.admin = (req.body.user.admin == "" ? true : false);
     postData.activo = true;
     console.log("## POSTDATA: " + JSON.stringify(postData));
 
-
-    return;
     var options = {
         host: 'localhost',
         port: 3000,
         path: '/auth/API/users/V1/',
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(postData)
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData))
         }
     };
     var request = http.request(options, function(res) {
@@ -76,7 +74,7 @@ router.post('/new_user', function(req, resp, next) {
     request.on('error', function(err) {
         console.error('problem with request: ${err.message}');
     });
-    request.write(postData);
+    request.write(JSON.stringify(postData));
     request.end();
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 

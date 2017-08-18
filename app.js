@@ -10,6 +10,7 @@ var methodOverride = require("method-override");
 var flash = require('connect-flash');
 //var cors = require('cors');
 var jwt = require('jwt-simple');
+var bodyParser = require('body-parser');
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -30,6 +31,11 @@ app.set('views', [
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 app.use(session({
     cookie: {
         path: "/",
