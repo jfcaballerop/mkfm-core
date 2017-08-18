@@ -34,12 +34,10 @@ router.use(bodyParser.json());
 /* POST API REST new user */
 router.post('/new_user', function(req, resp, next) {
     // TODO: Pendiente hacer una validacion de los campos de la request.
-    console.log("## REQ: " + JSON.stringify(req.body.user));
-
+    // console.log("## REQ: " + JSON.stringify(req.body.user));
     var postData = extend({}, req.body.user);
     postData.admin = (req.body.user.admin == "" ? true : false);
     postData.activo = true;
-    console.log("## POSTDATA: " + JSON.stringify(postData));
 
     var options = {
         host: 'localhost',
@@ -52,22 +50,20 @@ router.post('/new_user', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            console.log('BODY: ' + chunk);
+            // console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            console.log('DATA ' + data.length + ' ' + data);
+            // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/users/list_users');
-
-            // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
         });
     });
@@ -76,11 +72,8 @@ router.post('/new_user', function(req, resp, next) {
     });
     request.write(JSON.stringify(postData));
     request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-
-
 });
+
 /* GET API REST users listing. */
 router.get('/list_users', function(req, resp, next) {
     var options = {
