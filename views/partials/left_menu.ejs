@@ -6,11 +6,11 @@
             <a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
         </p>
         <h5 class="centered">
-            <%= login %>
+            <%= token.login %>
         </h5>
 
         <li class="mt">
-            <a class="active" href="index">
+            <a class="active" href="/auth/WEB/index">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
             </a>
@@ -21,13 +21,13 @@
                 <span>Maps</span>
             </a>
             <ul class="sub">
-                <li><a href="maps">google maps</a></li>
+                <li><a href="/auth/WEB/maps">google maps</a></li>
             </ul>
         </li>
         <!--
             ADMIN MENU
         -->
-        <% if (rol == 'admin') { %>
+        <% if (token.admin) { %>
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class=" fa fa-cogs"></i>

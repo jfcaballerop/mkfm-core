@@ -21,11 +21,6 @@ router.use(function timeLog(req, res, next) {
         WEB CALLS
 **********************************************************/
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.render('user', { title: 'Usuarios' });
-});
-
 /* GET API REST users listing. */
 router.get('/list_users', function(req, resp, next) {
     var options = {
@@ -48,7 +43,7 @@ router.get('/list_users', function(req, resp, next) {
             // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
-            resp.render('user', { users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
         });
     });

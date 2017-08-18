@@ -19,7 +19,7 @@ exports.createWebToken = function(user) {
     var u = {
         login: user.login,
         id: user._id,
-        admin_rol: user.admin
+        admin: user.admin
     };
     var pass = config.TOKEN_SECRET;
     return jwtweb.sign(u, config.TOKEN_SECRET, { expiresIn: config.SESSION_TTL }); // expiresIn: sec

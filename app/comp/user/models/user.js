@@ -18,6 +18,7 @@ var userSchema = new Schema({
         doc: String
     },
     admin: Boolean,
+    activo: Boolean,
     location: String,
     meta: {
         age: Number,
