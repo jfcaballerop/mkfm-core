@@ -37,7 +37,7 @@
                     <div class="col-md-12">
                         <div class="content-panel">
                             <table class="table table-striped table-advance table-hover">
-                                <h4><i class="fa fa-angle-right"></i> Usuarios</h4>
+                                <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#newUser"><i class="fa fa-user-plus"></i> Usuario</button>
                                 <hr>
                                 <thead>
                                     <tr>
@@ -161,17 +161,22 @@
                 <!-- /row -->
 
             </section>
-            <! --/wrapper -->
         </section>
         <!-- /MAIN CONTENT -->
+        <!-- MODAL SECTION -->
+        <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <!-- Modal -->
+        <% include ./partials/modal_user %>
+            <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <!-- /MODAL SECTION -->
 
-        <!--main content end-->
-        <!--footer start-->
-        <footer class="site-footer">
-            <% include partials/footer %>
+            <!--main content end-->
+            <!--footer start-->
+            <footer class="site-footer">
+                <% include partials/footer %>
 
-        </footer>
-        <!--footer end-->
+            </footer>
+            <!--footer end-->
     </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
