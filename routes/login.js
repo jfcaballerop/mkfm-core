@@ -22,6 +22,7 @@ router.post('/login', function(req, res, next) {
             if (err) {
                 res.status(500).send(err.message);
             }
+            console.log(req.body.user_passwd);
             if (user.validPassword(req.body.user_passwd)) {
                 //res.cookie('jwtToken', service.createToken(user));
                 res.cookie('jwtToken', service.createWebToken(user), {

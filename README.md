@@ -62,5 +62,20 @@ ejecutar en dev:
         )
 * `mongo  --port 27017 -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 
+## APP Install
+
+* Es necesario crear un usuario de instalacion, para lo cual, se debe crear la coleccion en mongo de:
+    * `db.createCollection('users')`
+    * db.collection('inventory').insertOne(    {
+    "login" : "admin",
+    "password" : "unapasswdqueteacuerdes",
+    "nombre" : "Admin",
+    "apellido1" : "Admin",
+    "apellido2" : "Admin",
+    "admin" : true,
+    "activo" : false,
+    }
+    })
+    * El solo se encarga de encriptar la pass y activar el usuario. Este usuario no se podrá usar más desde el método de instalacion.
 
 

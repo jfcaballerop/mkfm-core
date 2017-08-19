@@ -75,6 +75,7 @@ app.use(i18n({
 // Require ROUTES de la aplicacion
 var login = require('./routes/login');
 var index = require('./routes/index');
+var install = require('./routes/install');
 var auth_web = require('./routes/authweb');
 var auth_api = require('./routes/authapi');
 
@@ -83,6 +84,9 @@ app.use('/auth/WEB', auth_web);
 app.use('/auth/API', auth_api);
 // HOME General
 app.use('/', login);
+
+// INSTALL
+app.use('/install', install);
 
 // END URL - Routes
 
