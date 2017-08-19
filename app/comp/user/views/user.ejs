@@ -69,7 +69,9 @@
                                             </td>
                                             <td>
                                                 <% if(users[i].activo){ %>
-                                                    <span class="label label-success label-mini">Activado</span>
+                                                    <a href='/auth/WEB/users/desactivate/<%= users[i]._id %>'>
+                                                        <span class="label label-success label-mini">Activado</span>
+                                                    </a>
                                                     <% } else { %>
                                                         <span class="label label-danger label-mini">Desactivado</span>
                                                         <% } %>
