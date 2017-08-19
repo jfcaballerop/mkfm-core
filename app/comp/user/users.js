@@ -112,13 +112,88 @@ router.get('/list_users', function(req, resp, next) {
 
 
 });
-/* GET DESACTIVATE USER */
-router.get('/desactivate/:id', function(req, resp, next) {
+/* DESACTIVATE USER */
+router.post('/desactivate/:id', function(req, resp, next) {
     console.log('## WEB DESACTIVATE USER: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
         path: config.PATH_API + '/users/V1/desactivate/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        console.log('STATUS: ' + res.statusCode);
+        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+
+
+});
+
+/* ACTIVATE USER */
+router.post('/activate/:id', function(req, resp, next) {
+    console.log('## WEB DESACTIVATE USER: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/users/V1/activate/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        console.log('STATUS: ' + res.statusCode);
+        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+
+
+});
+/* DEL USER */
+router.post('/delete/:id', function(req, resp, next) {
+    console.log('## WEB DELETE USER: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/users/V1/delete/' + req.params.id,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -214,6 +289,41 @@ router.post('/V1/desactivate/:id', function(req, res, next) {
                 }
                 res.status(200).jsonp(users);
             });
+        });
+    });
+
+});
+/* ACTIVATE user */
+router.post('/V1/activate/:id', function(req, res, next) {
+    User.findById(req.params.id, function(err, user) {
+        console.log('## API ACTIVATE USER: ' + req.params.id);
+        user.activo = true;
+        user.save(function(err, user) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            User.find(function(err, users) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                res.status(200).jsonp(users);
+            });
+        });
+    });
+
+});
+/* DEL user */
+router.post('/V1/delete/:id', function(req, res, next) {
+    User.findByIdAndRemove(req.params.id, function(err, user) {
+        console.log('## API DEL USER: ' + req.params.id);
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        User.find(function(err, users) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            res.status(200).jsonp(users);
         });
     });
 
