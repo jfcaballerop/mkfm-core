@@ -10,7 +10,7 @@ var config = require(path.join(__dirname, '../config/config'));
 router.use(function timeLog(req, res, next) {
     console.log('### COMPROBAR AUTH WEB ### ');
     var token = req.cookies.jwtToken;
-    console.log('## Token: ' + token);
+    console.log('## WEB Token: ' + token);
     if (!token || token == undefined) {
         console.log('## Cookie Token not found');
         req.flash('message', 'Session expired!');
