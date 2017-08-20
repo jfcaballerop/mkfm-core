@@ -76,6 +76,51 @@ router.post('/new_user', function(req, resp, next) {
     request.end();
 });
 
+/* UPDATE API REST user */
+router.post('/update_user', function(req, resp, next) {
+    // TODO: Pendiente hacer una validacion de los campos de la request.
+    console.log("\n\n## REQ: " + JSON.stringify(req.body.user));
+    var postData = extend({}, req.body.user);
+    console.log('postData: ' + JSON.stringify(postData));
+    // postData.admin = (req.body.user.admin == "" ? true : false);
+    // postData.activo = (req.body.user.activo == "" ? true : false);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/users/V1/update_user/' + req.body.user._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            // console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/users/list_users');
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
+
 /* GET API REST users listing. */
 router.get('/list_users', function(req, resp, next) {
     var options = {
@@ -184,9 +229,9 @@ router.post('/activate/:id', function(req, resp, next) {
     request.end();
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
-
-
 });
+
+
 /* DEL USER */
 router.post('/delete/:id', function(req, resp, next) {
     console.log('## WEB DELETE USER: ' + req.params.id);
@@ -329,4 +374,20 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 });
 
+/* UPDATE user */
+router.post('/V1/update_user/:id', function(req, res, next) {
+    // TODO: Revisar como cambiar la password
+    console.log('\n#### UPDATE user ####');
+    console.log('BODY: ' + JSON.stringify(req.body));
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, function(err, result) {
+        if (err) {
+            console.log(err);
+            return res.status(500).send(err.message);
+        }
+        console.log("RESULT: " + result);
+        res.status(200).jsonp(result);
+        // res.send('Done')
+    });
+
+});
 module.exports = router;

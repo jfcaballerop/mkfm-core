@@ -83,7 +83,12 @@
                                                         <% } else { %>
                                                             <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                                             <% }   %>
-                                                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                                                <button id="modifymodal" data-params='{"id" : "<%= users[i]._id %>",
+                                                                        "nombre" : "<%= users[i].nombre %>",
+                                                                        "apellido1" : "<%= users[i].apellido1 %>",
+                                                                        "apellido2" : "<%= users[i].apellido2 %>",
+                                                                        "login" : "<%= users[i].login %>"
+                                                                    }' class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyUser"><i class="fa fa-pencil"></i></button>
                                                                 <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                                                 </div>
                                             </td>
@@ -105,17 +110,18 @@
         <!-- MODAL SECTION -->
         <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <!-- Modal -->
-        <% include ./partials/modal_user %>
-            <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <!-- /MODAL SECTION -->
+        <% include ./partials/modal_newuser %>
+            <% include ./partials/modal_modifyuser %>
+                <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                <!-- /MODAL SECTION -->
 
-            <!--main content end-->
-            <!--footer start-->
-            <footer class="site-footer">
-                <% include partials/footer %>
+                <!--main content end-->
+                <!--footer start-->
+                <footer class="site-footer">
+                    <% include partials/footer %>
 
-            </footer>
-            <!--footer end-->
+                </footer>
+                <!--footer end-->
     </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
@@ -157,7 +163,20 @@
 
             };
 
-            $(function() {
+            $(document).on("click", "#modifymodal", function() {
+                // var res = '{"id" :"' + $(this).data('data') + '"}'
+                var res = JSON.stringify($(this).data('params'));
+                // alert(res);
+                var obj = JSON.parse(res);
+                console.log(obj);
+                // alert(obj.nombre);
+                $("input[name*='user[_id]']").val(obj.id);
+                $("input[name*='user[nombre]']").val(obj.nombre);
+                $("input[name*='user[apellido1]']").val(obj.apellido1);
+                $("input[name*='user[apellido2]']").val(obj.apellido2);
+                $("input[name*='user[login]']").val(obj.login);
+                // $("input[name*='user[password]']").val(obj.password);
+
 
             });
         </script>
