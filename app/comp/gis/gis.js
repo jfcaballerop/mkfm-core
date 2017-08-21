@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var multer = require('multer');
 var GJV = require("geojson-validation");
+var fs = require('fs');
 
 var fileuploadModels = require(path.join(__dirname, './models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -130,6 +131,37 @@ router.post('/upload', uploading, function(req, resp) {
 
 /* VALIDATE File */
 router.post('/validate/:id', function(req, resp) {
+    console.log('## WEB Validate File: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/validate/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+
+        });
+    });
+
+    request.end();
 
 });
 
@@ -396,6 +428,40 @@ router.get('/V1/', function(req, res, next) {
     });
 
 });
+
+/* VALIDATE File */
+router.post('/V1/validate/:id', function(req, res, next) {
+    Fileupload.findById(req.params.id, function(err, fup) {
+        var validFeatureCollection = {};
+        fs.readFile(fup.path, function(err, dataFile) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            console.log('## File DATA:: ' + dataFile);
+            validFeatureCollection = JSON.parse(dataFile);
+            //simple test 
+            if (GJV.valid(validFeatureCollection)) {
+                console.log("this is valid GeoJSON!");
+                fup.status = 'validate';
+            } else {
+                fup.status = 'error';
+            }
+            //console.log('## API DESACTIVATE USER: ' + req.params.id);
+            fup.save(function(err, user) {
+                if (err) {
+                    return res.status(500).send(err.message);
+                }
+                Fileupload.find(function(err, fup) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    res.status(200).jsonp(fup);
+                });
+            });
+        });
+    });
+
+});
 /* GET JSON user by login. */
 router.get('/V1/:login', function(req, res, next) {
     //console.log(req.params.login);
@@ -420,25 +486,7 @@ router.delete('/V1/:id', function(req, res, next) {
     });
 
 });
-/* DESACTIVATE user */
-router.post('/V1/desactivate/:id', function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
-        //console.log('## API DESACTIVATE USER: ' + req.params.id);
-        user.activo = false;
-        user.save(function(err, user) {
-            if (err) {
-                return res.status(500).send(err.message);
-            }
-            User.find(function(err, users) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                res.status(200).jsonp(users);
-            });
-        });
-    });
 
-});
 /* ACTIVATE user */
 router.post('/V1/activate/:id', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
