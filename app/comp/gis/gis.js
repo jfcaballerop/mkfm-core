@@ -42,53 +42,55 @@ router.get('/upload', function(req, resp, next) {
 
 /* UPLOAD File.*/
 var uploading = multer({ dest: path.join(process.env.PWD, '/public/uploads/') }).single('file');
-router.post('/upload', uploading, function(req, res) {
+router.post('/upload', uploading, function(req, resp) {
     console.log('## upload:: ');
-    console.log(req.body); //form fields
-    console.log(req.file); //form files
     if (!req.file)
-        return res.status(400).send('No files were uploaded.');
+        return resp.status(400).send('No files were uploaded.');
     else {
+        console.log(req.body); //form fields
+        console.log(req.file); //form files
         // SAVE File to DB
-        res.send('File uploaded!');
+        var postData = extend({}, req.file);
+        postData.owner = req.user_login;
+        console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
+        var options = {
+            host: config.HOST_API,
+            port: config.PORT_API,
+            path: config.PATH_API + '/gis/V1/fileupload/',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+                'Authorization': 'Bearer ' + req.cookies.jwtToken
+            }
+        };
+        var request = http.request(options, function(res) {
+            // //console.log('STATUS: ' + res.statusCode);
+            // //console.log('HEADERS: ' + JSON.stringify(res.headers));
+            res.setEncoding('utf8');
+            var data = '';
+            res.on('data', function(chunk) {
+                // //console.log('BODY: ' + chunk);
+                data = chunk;
+
+            });
+            res.on('end', function() {
+                // //console.log('DATA ' + data.length + ' ' + data);
+                var responseObject = JSON.parse(data);
+                //success(data);
+                //resp.redirect('/auth/WEB/users/list_users');
+                resp.send('File uploaded!');
+
+            });
+        });
+        request.on('error', function(err) {
+            console.error('problem with request: ${err.message}');
+        });
+        request.write(JSON.stringify(postData));
+        request.end();
+
     }
 
-
-    // // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
-    // var sampleFile = req.files.file;
-    // var new_path = path.join(process.env.PWD, '/public/uploads/', files.file.name);
-    // // Use the mv() method to place the file somewhere on your server 
-    // sampleFile.mv(new_path, function(err) {
-    //     if (err)
-    //         return res.status(500).send(err);
-
-    //     res.send('File uploaded!');
-    // });
-
-    // var form = new formidable.IncomingForm();
-    // form.parse(req, function(err, fields, files) {
-    //     // `file` is the name of the <input> field of type `file`
-    //     var old_path = files.file.path,
-    //         file_size = files.file.size,
-    //         file_ext = files.file.name.split('.').pop(),
-    //         index = old_path.lastIndexOf('/') + 1,
-    //         file_name = old_path.substr(index),
-    //         new_path = path.join(process.env.PWD, '/public/uploads/', file_name + '.' + file_ext);
-
-    //     fs.readFile(old_path, function(err, data) {
-    //         fs.writeFile(new_path, data, function(err) {
-    //             fs.unlink(old_path, function(err) {
-    //                 if (err) {
-    //                     res.status(500);
-    //                     res.json({ 'success': false });
-    //                 } else {
-    //                     res.status(200);
-    //                     res.json({ 'success': true });
-    //                 }
-    //             });
-    //         });
-    //     });
-    // });
 });
 
 /* POST API REST new user */

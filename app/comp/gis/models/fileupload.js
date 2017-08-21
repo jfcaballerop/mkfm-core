@@ -1,13 +1,27 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/*
+## upload::
+{ title: '' }
+{ fieldname: 'file',
+  originalname: 'backup.json',
+  encoding: '7bit',
+  mimetype: 'application/json',
+  destination: '/home/jfcp/Documentos/Workspace/domininesv3/public/uploads/',
+  filename: 'c85aa5ff220172903f0e7c9f9ec6f11a',
+  path: '/home/jfcp/Documentos/Workspace/domininesv3/public/uploads/c85aa5ff220172903f0e7c9f9ec6f11a',
+  size: 3415 }
+*/
+
 // define the schema for our user model
 var fileuploadSchema = new Schema({
-    fname: { type: String, required: true, unique: true },
-    fpath: { type: String, required: true },
-    foriginalname: { type: String },
-    fsize: { type: Number },
-    fowner: { type: String },
+    filename: { type: String, required: true, unique: true },
+    path: { type: String, required: true },
+    size: { type: Number },
+    destination: { type: String },
+    mimetype: { type: String },
+    owner: { type: String },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
 
