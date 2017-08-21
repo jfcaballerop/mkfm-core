@@ -29,100 +29,106 @@
         <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-        <!--main content start-->
-        <section id="main-content">
-            <section class="wrapper">
-                <h3><i class="fa fa-angle-right"></i> Lista de usuarios</h3>
-                <div class="row mt" style="height:80vh;">
-                    <div class="col-md-12">
-                        <div class="content-panel">
-                            <table class="table table-striped table-advance table-hover">
-                                <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#newUser"><i class="fa fa-user-plus"></i> Usuario</button>
-                                <hr>
-                                <thead>
-                                    <tr>
-                                        <th><i class="fa fa-address-card-o"></i> Nombre</th>
-                                        <th><i class="fa fa-users"></i> ROL</th>
-                                        <th><i class="fa fa-user-circle"></i> Login</th>
-                                        <th><i class="fa fa-power-off"></i> Estado</th>
-                                        <th><i class=" fa fa-edit"></i> Acciones</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for(var i=0; i < users.length; i++) {%>
-                                        <tr id="myTableRow_<%=users[i]._id %>">
-                                            <td>
-                                                <%= users[i].nombre %>
-                                                    <%= users[i].apellido1 %>
-                                                        <%= users[i].apellido2 %>
-                                            </td>
-                                            <td>
-                                                <% if(users[i].admin){ %>
-                                                    <span class="fa fa-star text-danger"></span>
-                                                    <% } else { %>
-                                                        <span class="fa fa-user-o text-primary"></span>
-                                                        <% } %>
-                                            </td>
-                                            <td>
-                                                <%= users[i].login %>
-                                            </td>
-                                            <td>
-                                                <div id="tag_<%=users[i]._id %>">
-                                                    <% if(users[i].activo){ %>
-                                                        <span class="label label-success label-mini">Activado</span>
-                                                        <% } else { %>
-                                                            <span class="label label-danger label-mini">Desactivado</span>
-                                                            <% } %>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div id="button_<%= users[i]._id %>">
-                                                    <% if(users[i].activo){ %>
-                                                        <button onclick="desactivate('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
-                                                        <% } else { %>
-                                                            <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                                            <% }   %>
-                                                                <button id="modifymodal" data-params='{"_id" : "<%= users[i]._id %>",
+        <!-- main content Permission denied -->
+        <% if(!token.admin) {%>
+            <% include partials/error_permissions %>
+                <!-- End permission denied -->
+                <%} else {%>
+                    <!--main content start-->
+                    <section id="main-content">
+                        <section class="wrapper">
+                            <h3><i class="fa fa-angle-right"></i> Lista de usuarios</h3>
+                            <div class="row mt" style="height:80vh;">
+                                <div class="col-md-12">
+                                    <div class="content-panel">
+                                        <table class="table table-striped table-advance table-hover">
+                                            <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#newUser"><i class="fa fa-user-plus"></i> Usuario</button>
+                                            <hr>
+                                            <thead>
+                                                <tr>
+                                                    <th><i class="fa fa-address-card-o"></i> Nombre</th>
+                                                    <th><i class="fa fa-users"></i> ROL</th>
+                                                    <th><i class="fa fa-user-circle"></i> Login</th>
+                                                    <th><i class="fa fa-power-off"></i> Estado</th>
+                                                    <th><i class=" fa fa-edit"></i> Acciones</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i=0; i < users.length; i++) {%>
+                                                    <tr id="myTableRow_<%=users[i]._id %>">
+                                                        <td>
+                                                            <%= users[i].nombre %>
+                                                                <%= users[i].apellido1 %>
+                                                                    <%= users[i].apellido2 %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(users[i].admin){ %>
+                                                                <span class="fa fa-star text-danger"></span>
+                                                                <% } else { %>
+                                                                    <span class="fa fa-user-o text-primary"></span>
+                                                                    <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <%= users[i].login %>
+                                                        </td>
+                                                        <td>
+                                                            <div id="tag_<%=users[i]._id %>">
+                                                                <% if(users[i].activo){ %>
+                                                                    <span class="label label-success label-mini">Activado</span>
+                                                                    <% } else { %>
+                                                                        <span class="label label-danger label-mini">Desactivado</span>
+                                                                        <% } %>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div id="button_<%= users[i]._id %>">
+                                                                <% if(users[i].activo){ %>
+                                                                    <button onclick="desactivate('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
+                                                                    <% } else { %>
+                                                                        <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+                                                                        <% }   %>
+                                                                            <button id="modifymodal" data-params='{"_id" : "<%= users[i]._id %>",
                                                                         "nombre" : "<%= users[i].nombre %>",
                                                                         "apellido1" : "<%= users[i].apellido1 %>",
                                                                         "apellido2" : "<%= users[i].apellido2 %>",
                                                                         "login" : "<%= users[i].login %>",
                                                                         "password" : "<%= users[i].password %>"
                                                                     }' class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyUser"><i class="fa fa-pencil"></i></button>
-                                                                <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <% } %>
+                                                                            <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /content-panel -->
-                    </div>
-                    <!-- /col-md-12 -->
-                </div>
-                <!-- /row -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /content-panel -->
+                                </div>
+                                <!-- /col-md-12 -->
+                            </div>
+                            <!-- /row -->
 
-            </section>
-        </section>
-        <!-- /MAIN CONTENT -->
-        <!-- MODAL SECTION -->
-        <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-        <!-- Modal -->
-        <% include ./partials/modal_newuser %>
-            <% include ./partials/modal_modifyuser %>
-                <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-                <!-- /MODAL SECTION -->
+                        </section>
+                    </section>
+                    <!-- /MAIN CONTENT -->
+                    <% } %>
+                        <!-- MODAL SECTION -->
+                        <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                        <!-- Modal -->
+                        <% include ./partials/modal_newuser %>
+                            <% include ./partials/modal_modifyuser %>
+                                <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                                <!-- /MODAL SECTION -->
 
-                <!--main content end-->
-                <!--footer start-->
-                <footer class="site-footer">
-                    <% include partials/footer %>
+                                <!--main content end-->
+                                <!--footer start-->
+                                <footer class="site-footer">
+                                    <% include partials/footer %>
 
-                </footer>
-                <!--footer end-->
+                                </footer>
+                                <!--footer end-->
     </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
