@@ -37,7 +37,38 @@ router.use(bodyParser.json());
 **********************************************************/
 /* GET Form upload */
 router.get('/upload', function(req, resp, next) {
-    resp.render('upload', { token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
 });
 
 /* UPLOAD File.*/
@@ -52,6 +83,8 @@ router.post('/upload', uploading, function(req, resp) {
         // SAVE File to DB
         var postData = extend({}, req.file);
         postData.owner = req.user_login;
+        postData.type = req.body.type;
+
         console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
         var options = {
             host: config.HOST_API,
@@ -78,8 +111,8 @@ router.post('/upload', uploading, function(req, resp) {
                 // //console.log('DATA ' + data.length + ' ' + data);
                 var responseObject = JSON.parse(data);
                 //success(data);
-                //resp.redirect('/auth/WEB/users/list_users');
-                resp.send('File uploaded!');
+                resp.redirect('/auth/WEB/gis/upload');
+                //resp.send('File uploaded!');
 
             });
         });
@@ -346,13 +379,13 @@ router.post('/V1/fileupload/', function(req, res, next) {
     });
 });
 
-/* GET JSON users listing. */
+/* GET JSON files listing. */
 router.get('/V1/', function(req, res, next) {
-    User.find(function(err, users) {
+    Fileupload.find(function(err, files) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(users);
+        res.status(200).jsonp(files);
     });
 
 });

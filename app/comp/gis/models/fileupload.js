@@ -22,6 +22,8 @@ var fileuploadSchema = new Schema({
     destination: { type: String },
     mimetype: { type: String },
     owner: { type: String },
+    type: { type: String },
+    originalname: { type: String },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
 
