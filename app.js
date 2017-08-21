@@ -20,10 +20,12 @@ var configAPP = require(path.join(__dirname, '/config/config'));
 var app = express();
 
 // TEMPLATE VIEW engine setup
+/* Añadir cada directorio de vistas por separado */
 app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
-    path.join(__dirname, '/app/comp/user/views')
+    path.join(__dirname, '/app/comp/user/views'),
+    path.join(__dirname, '/app/comp/gis/views')
 ]);
 
 // uncomment after placing your favicon in /public

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body>
+
+    <section id="container">
+        <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+        <!--header start-->
+        <header class="header black-bg">
+            <% include partials/header %>
+        </header>
+        <!--header end-->
+
+        <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+        <!--sidebar start-->
+        <aside>
+            <% include partials/left_menu %>
+        </aside>
+        <!--sidebar end-->
+
+        <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+        <!-- main content Permission denied -->
+        <% if(!token.admin) {%>
+            <% include partials/error_permissions %>
+                <!-- End permission denied -->
+                <%} else {%>
+                    <!--main content start-->
+                    <section id="main-content">
+                        <section class="wrapper">
+                            <h3><i class="fa fa-angle-right"></i> Carga de Ficheros</h3>
+                            <div class="row mt" style="height:80vh;">
+                                <div class="col-md-12">
+                                    <div class="form-panel">
+
+                                        <form class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="/auth/WEB/gis/upload">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 col-sm-2 control-label">Nombre del Fichero</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="title">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-10">
+                                                    <input type="file" name="file" class="alert alert-info">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-10">
+                                                    <!-- <input type="submit" value="Upload"> -->
+                                                    <button type="submit" class="btn btn-success" value="Upload"><i class="fa fa-check"></i> Upload</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /content-panel -->
+                                </div>
+                                <!-- /col-md-12 -->
+                            </div>
+                            <!-- /row -->
+
+                        </section>
+                    </section>
+                    <!-- /MAIN CONTENT -->
+                    <% } %>
+                        <!-- MODAL SECTION -->
+                        <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                        <!-- Modal -->
+
+
+                        <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                        <!-- /MODAL SECTION -->
+
+                        <!--main content end-->
+                        <!--footer start-->
+                        <footer class="site-footer">
+                            <% include partials/footer %>
+
+                        </footer>
+                        <!--footer end-->
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <% include partials/footer_scripts %>
+
+        <!--script for this page-->
+
+
+</body>
+
+</html>
