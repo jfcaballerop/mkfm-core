@@ -16,7 +16,7 @@ var extend = require('util')._extend;
 
 
 router.use(function timeLog(req, res, next) {
-    console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
+    //console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
 });
 router.use(bodyParser.urlencoded({
@@ -35,7 +35,7 @@ router.use(bodyParser.json());
 /* POST API REST new user */
 router.post('/new_user', function(req, resp, next) {
     // TODO: Pendiente hacer una validacion de los campos de la request.
-    // console.log("## REQ: " + JSON.stringify(req.body.user));
+    // //console.log("## REQ: " + JSON.stringify(req.body.user));
     var postData = extend({}, req.body.user);
     postData.admin = (req.body.user.admin == "" ? true : false);
     postData.activo = true;
@@ -52,17 +52,17 @@ router.post('/new_user', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        // console.log('STATUS: ' + res.statusCode);
-        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // //console.log('STATUS: ' + res.statusCode);
+        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            // console.log('BODY: ' + chunk);
+            // //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            // console.log('DATA ' + data.length + ' ' + data);
+            // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/users/list_users');
@@ -79,9 +79,9 @@ router.post('/new_user', function(req, resp, next) {
 /* UPDATE API REST user */
 router.post('/update_user', function(req, resp, next) {
     // TODO: Pendiente hacer una validacion de los campos de la request.
-    console.log("\n\n## REQ: " + JSON.stringify(req.body.user));
+    //console.log("\n\n## REQ: " + JSON.stringify(req.body.user));
     var postData = extend({}, req.body.user);
-    console.log('postData: ' + JSON.stringify(postData));
+    //console.log('postData: ' + JSON.stringify(postData));
     // postData.admin = (req.body.user.admin == "" ? true : false);
     // postData.activo = (req.body.user.activo == "" ? true : false);
 
@@ -97,17 +97,17 @@ router.post('/update_user', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        // console.log('STATUS: ' + res.statusCode);
-        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // //console.log('STATUS: ' + res.statusCode);
+        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            // console.log('BODY: ' + chunk);
+            // //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            // console.log('DATA ' + data.length + ' ' + data);
+            // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/users/list_users');
@@ -134,17 +134,17 @@ router.get('/list_users', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            console.log('BODY: ' + chunk);
+            //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            console.log('DATA ' + data.length + ' ' + data);
+            //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
@@ -159,7 +159,7 @@ router.get('/list_users', function(req, resp, next) {
 });
 /* DESACTIVATE USER */
 router.post('/desactivate/:id', function(req, resp, next) {
-    console.log('## WEB DESACTIVATE USER: ' + req.params.id);
+    //console.log('## WEB DESACTIVATE USER: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -171,17 +171,17 @@ router.post('/desactivate/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            console.log('BODY: ' + chunk);
+            //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            console.log('DATA ' + data.length + ' ' + data);
+            //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
@@ -197,7 +197,7 @@ router.post('/desactivate/:id', function(req, resp, next) {
 
 /* ACTIVATE USER */
 router.post('/activate/:id', function(req, resp, next) {
-    console.log('## WEB DESACTIVATE USER: ' + req.params.id);
+    //console.log('## WEB DESACTIVATE USER: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -209,17 +209,17 @@ router.post('/activate/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            console.log('BODY: ' + chunk);
+            //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            console.log('DATA ' + data.length + ' ' + data);
+            //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
@@ -234,7 +234,7 @@ router.post('/activate/:id', function(req, resp, next) {
 
 /* DEL USER */
 router.post('/delete/:id', function(req, resp, next) {
-    console.log('## WEB DELETE USER: ' + req.params.id);
+    //console.log('## WEB DELETE USER: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -246,17 +246,17 @@ router.post('/delete/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            console.log('BODY: ' + chunk);
+            //console.log('BODY: ' + chunk);
             data = chunk;
 
         });
         res.on('end', function() {
-            console.log('DATA ' + data.length + ' ' + data);
+            //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
@@ -286,7 +286,7 @@ router.get('/V1/', function(req, res, next) {
 });
 /* GET JSON user by login. */
 router.get('/V1/:login', function(req, res, next) {
-    console.log(req.params.login);
+    //console.log(req.params.login);
     User.findOne({ 'login': req.params.login }, function(err, user) {
         if (err) {
             res.send(500, err.message);
@@ -322,7 +322,7 @@ router.delete('/V1/:id', function(req, res, next) {
 /* DESACTIVATE user */
 router.post('/V1/desactivate/:id', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
-        console.log('## API DESACTIVATE USER: ' + req.params.id);
+        //console.log('## API DESACTIVATE USER: ' + req.params.id);
         user.activo = false;
         user.save(function(err, user) {
             if (err) {
@@ -341,7 +341,7 @@ router.post('/V1/desactivate/:id', function(req, res, next) {
 /* ACTIVATE user */
 router.post('/V1/activate/:id', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
-        console.log('## API ACTIVATE USER: ' + req.params.id);
+        //console.log('## API ACTIVATE USER: ' + req.params.id);
         user.activo = true;
         user.save(function(err, user) {
             if (err) {
@@ -360,7 +360,7 @@ router.post('/V1/activate/:id', function(req, res, next) {
 /* DEL user */
 router.post('/V1/delete/:id', function(req, res, next) {
     User.findByIdAndRemove(req.params.id, function(err, user) {
-        console.log('## API DEL USER: ' + req.params.id);
+        //console.log('## API DEL USER: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
@@ -377,17 +377,22 @@ router.post('/V1/delete/:id', function(req, res, next) {
 /* UPDATE user */
 router.post('/V1/update_user/:id', function(req, res, next) {
     // TODO: Revisar como cambiar la password
-    console.log('\n#### UPDATE user ####');
-    console.log('BODY: ' + JSON.stringify(req.body));
-    User.findByIdAndUpdate(req.params.id, { $set: req.body }, function(err, result) {
-        if (err) {
-            console.log(err);
-            return res.status(500).send(err.message);
-        }
-        console.log("RESULT: " + result);
-        res.status(200).jsonp(result);
-        // res.send('Done')
-    });
+    //console.log('\n#### UPDATE user ####');
+    //console.log('BODY: ' + JSON.stringify(req.body));
+    User.findById(req.params.id, function(err, user) {
+        var saveUser = extend({}, req.body);
+        saveUser.password = user.generateHash(req.body.password);
+        //console.log('\n\n##### Update User:: ' + JSON.stringify(saveUser));
 
+        User.findByIdAndUpdate(req.params.id, { $set: saveUser }, function(err, result) {
+            if (err) {
+                //console.log(err);
+                return res.status(500).send(err.message);
+            }
+            //console.log("RESULT: " + result);
+            res.status(200).jsonp(result);
+            // res.send('Done')
+        });
+    });
 });
 module.exports = router;

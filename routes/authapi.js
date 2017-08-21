@@ -15,7 +15,7 @@ router.use(function timeLog(req, res, next) {
             .send({ message: "Tu petición no tiene cabecera de autorización" });
     }
     var token = req.headers.authorization.split(" ")[1];
-    console.log('## API Token: ' + token);
+    console.log('\n\n## API Token: ' + token + "\n\n");
     if (!token || token == undefined) {
         console.log('## Cookie Token not found');
         res.status(403).send('Session expired!');

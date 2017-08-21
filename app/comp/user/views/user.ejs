@@ -83,11 +83,12 @@
                                                         <% } else { %>
                                                             <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                                             <% }   %>
-                                                                <button id="modifymodal" data-params='{"id" : "<%= users[i]._id %>",
+                                                                <button id="modifymodal" data-params='{"_id" : "<%= users[i]._id %>",
                                                                         "nombre" : "<%= users[i].nombre %>",
                                                                         "apellido1" : "<%= users[i].apellido1 %>",
                                                                         "apellido2" : "<%= users[i].apellido2 %>",
-                                                                        "login" : "<%= users[i].login %>"
+                                                                        "login" : "<%= users[i].login %>",
+                                                                        "password" : "<%= users[i].password %>"
                                                                     }' class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyUser"><i class="fa fa-pencil"></i></button>
                                                                 <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                                                 </div>
@@ -169,15 +170,12 @@
                 // alert(res);
                 var obj = JSON.parse(res);
                 console.log(obj);
-                // alert(obj.nombre);
-                $("input[name*='user[_id]']").val(obj.id);
-                $("input[name*='user[nombre]']").val(obj.nombre);
-                $("input[name*='user[apellido1]']").val(obj.apellido1);
-                $("input[name*='user[apellido2]']").val(obj.apellido2);
-                $("input[name*='user[login]']").val(obj.login);
-                // $("input[name*='user[password]']").val(obj.password);
-
-
+                //console.log(obj[0].key);
+                //console.log(obj[1].key);
+                $.each(obj, function(key, value) {
+                    console.log(key, value);
+                    $("input[name*='user[" + key + "]']").val(value);
+                });
             });
         </script>
 
