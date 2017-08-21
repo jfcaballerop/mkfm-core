@@ -23,6 +23,7 @@ var fileuploadSchema = new Schema({
     mimetype: { type: String },
     owner: { type: String },
     type: { type: String },
+    status: { type: String, enum: ['pending', 'validate', 'error'] },
     originalname: { type: String },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }

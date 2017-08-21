@@ -11,6 +11,7 @@ var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var multer = require('multer');
+var GJV = require("geojson-validation");
 
 var fileuploadModels = require(path.join(__dirname, './models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -84,6 +85,7 @@ router.post('/upload', uploading, function(req, resp) {
         var postData = extend({}, req.file);
         postData.owner = req.user_login;
         postData.type = req.body.type;
+        postData.status = 'pending';
 
         console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
         var options = {
@@ -123,6 +125,11 @@ router.post('/upload', uploading, function(req, resp) {
         request.end();
 
     }
+
+});
+
+/* VALIDATE File */
+router.post('/validate/:id', function(req, resp) {
 
 });
 

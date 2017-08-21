@@ -113,8 +113,19 @@
                                                             <%= moment(fup[i].created_at).format( 'DD-MM-YYYY HH:mm:ss') %>
                                                         </td>
                                                         <td>
-                                                            <button onclick="validate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-question-circle"></i> Sin validar</button>
-
+                                                            <% if( "pending" == fup[i].status ) {   %>
+                                                                <button onclick="validate('<%= fup[i]._id %>');" class="btn btn-warning btn-xs">
+                                                                        <i class="fa fa-question-circle"> Sin validar</i> 
+                                                                    </button>
+                                                                <% } else if( "validate" == fup[i].status ) { %>
+                                                                    <button class="btn btn-success btn-xs">
+                                                                            <i class="fa fa-check"> Valido</i> 
+                                                                        </button>
+                                                                    <% } else if( "error" == fup[i].status ) { %>
+                                                                        <button class="btn btn-danger btn-xs">
+                                                                                <i class="fa fa-exclamation-triangle"> Error</i> 
+                                                                            </button>
+                                                                        <% } %>
                                                         </td>
                                                     </tr>
                                                     <% } %>
@@ -147,6 +158,18 @@
     <% include partials/footer_scripts %>
 
         <!--script for this page-->
+        <script>
+            function validate(id) {
+                alert("VALIDATE " + id);
+                $.post('/auth/WEB/gis/validate/' + id, function(returnedData) {
+                    //console.log(returnedData);
+                    // $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
+                    // $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                });
+
+            };
+        </script>
 
 
 </body>
