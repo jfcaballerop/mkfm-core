@@ -37,6 +37,41 @@ router.use(bodyParser.json());
 /*******************************************************
         WEB CALLS
 **********************************************************/
+/* GET List Files */
+router.get('/list_files', function(req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
 /* GET Form upload */
 router.get('/upload', function(req, resp, next) {
     var options = {
@@ -165,101 +200,15 @@ router.post('/validate/:id', function(req, resp) {
 
 });
 
-/* POST API REST new user */
-router.post('/new_user', function(req, resp, next) {
-    // TODO: Pendiente hacer una validacion de los campos de la request.
-    // //console.log("## REQ: " + JSON.stringify(req.body.user));
-    var postData = extend({}, req.body.user);
-    postData.admin = (req.body.user.admin == "" ? true : false);
-    postData.activo = true;
-
+/**
+ * GET File Valid
+ */
+router.get('/getfile/:id', function(req, resp) {
+    console.log('## WEB GET File: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        // //console.log('STATUS: ' + res.statusCode);
-        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            // //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            // //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //success(data);
-            resp.redirect('/auth/WEB/users/list_users');
-
-        });
-    });
-    request.on('error', function(err) {
-        console.error('problem with request: ${err.message}');
-    });
-    request.write(JSON.stringify(postData));
-    request.end();
-});
-
-/* UPDATE API REST user */
-router.post('/update_user', function(req, resp, next) {
-    // TODO: Pendiente hacer una validacion de los campos de la request.
-    //console.log("\n\n## REQ: " + JSON.stringify(req.body.user));
-    var postData = extend({}, req.body.user);
-    //console.log('postData: ' + JSON.stringify(postData));
-    // postData.admin = (req.body.user.admin == "" ? true : false);
-    // postData.activo = (req.body.user.activo == "" ? true : false);
-
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/update_user/' + req.body.user._id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        // //console.log('STATUS: ' + res.statusCode);
-        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            // //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            // //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //success(data);
-            resp.redirect('/auth/WEB/users/list_users');
-
-        });
-    });
-    request.on('error', function(err) {
-        console.error('problem with request: ${err.message}');
-    });
-    request.write(JSON.stringify(postData));
-    request.end();
-});
-
-/* GET API REST users listing. */
-router.get('/list_users', function(req, resp, next) {
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/',
+        path: config.PATH_API + '/gis/V1/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -267,8 +216,8 @@ router.get('/list_users', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        console.log('STATUS: ' + res.statusCode);
+        console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
@@ -279,127 +228,14 @@ router.get('/list_users', function(req, resp, next) {
         res.on('end', function() {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
-            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.status(200).jsonp(responseObject);
 
         });
     });
 
     request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-
-
-});
-/* DESACTIVATE USER */
-router.post('/desactivate/:id', function(req, resp, next) {
-    //console.log('## WEB DESACTIVATE USER: ' + req.params.id);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/desactivate/' + req.params.id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-        });
-    });
-
-    request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-
-
-});
-
-/* ACTIVATE USER */
-router.post('/activate/:id', function(req, resp, next) {
-    //console.log('## WEB DESACTIVATE USER: ' + req.params.id);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/activate/' + req.params.id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-        });
-    });
-
-    request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-});
-
-
-/* DEL USER */
-router.post('/delete/:id', function(req, resp, next) {
-    //console.log('## WEB DELETE USER: ' + req.params.id);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/users/V1/delete/' + req.params.id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-        });
-    });
-
-    request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-
 
 });
 
@@ -425,6 +261,26 @@ router.get('/V1/', function(req, res, next) {
             res.send(500, err.message);
         }
         res.status(200).jsonp(files);
+    });
+
+});
+
+/* GET JSON file by id. */
+router.get('/V1/:id', function(req, res, next) {
+    Fileupload.findById(req.params.id, function(err, fup) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        var validFeatureCollection = {};
+        fs.readFile(fup.path, function(err, dataFile) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            // console.log('## File DATA:: ' + dataFile);
+            validFeatureCollection = JSON.parse(dataFile);
+
+            res.status(200).jsonp(validFeatureCollection);
+        });
     });
 
 });

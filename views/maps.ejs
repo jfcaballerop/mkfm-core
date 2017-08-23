@@ -52,54 +52,59 @@
             <section class="wrapper site-min-height">
                 <h3><i class="fa fa-angle-right"></i> Google Maps</h3>
                 <!-- page start-->
-                <div id="morris">
-                    <div class="row mt">
-                        <div class="col-md-12" style="height:80vh;">
-                            <div id="map"></div>
-                            <script>
-                                // This example uses the Google Maps JavaScript API's Data layer
-                                // to create a rectangular polygon with 2 holes in it.
+                <div class="row mt">
+                    <div class="col-md-2">
+                        <div class="form-panel">
+                            <h5 class="mb"><i class="fa fa-angle-right"></i> Capas</h5>
+                            <select multiple class="form-control">
 
-                                function initMap() {
-                                    var map = new google.maps.Map(document.getElementById('map'), {
-                                        zoom: 12,
-                                        center: {
-                                            lat: 15.41,
-                                            lng: -61.32
-                                        },
-                                    });
-
-                                    // Define the LatLng coordinates for the outer path.
-                                    var outerCoords = [{
-                                            lat: 15.42,
-                                            lng: -61.35
-                                        }, // north west
-                                        {
-                                            lat: 15.39,
-                                            lng: -61.35
-                                        }, // south west
-                                        {
-                                            lat: 15.39,
-                                            lng: -61.32
-                                        }, // south east
-                                        {
-                                            lat: 15.42,
-                                            lng: -61.32
-                                        } // north east
-                                    ];
-
-
-
-                                    map.data.add({
-                                        geometry: new google.maps.Data.Polygon([outerCoords])
-                                    })
-                                }
-                            </script>
-                            <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
-                            </script>
-                            <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
-                            <!-- </iframe> -->
+                                          </select>
                         </div>
+                    </div>
+                    <div class="col-md-10" style="height:80vh;">
+                        <div id="map"></div>
+                        <script>
+                            // This example uses the Google Maps JavaScript API's Data layer
+                            // to create a rectangular polygon with 2 holes in it.
+
+                            function initMap() {
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                    zoom: 12,
+                                    center: {
+                                        lat: 15.41,
+                                        lng: -61.32
+                                    },
+                                });
+
+                                // Define the LatLng coordinates for the outer path.
+                                var outerCoords = [{
+                                        lat: 15.42,
+                                        lng: -61.35
+                                    }, // north west
+                                    {
+                                        lat: 15.39,
+                                        lng: -61.35
+                                    }, // south west
+                                    {
+                                        lat: 15.39,
+                                        lng: -61.32
+                                    }, // south east
+                                    {
+                                        lat: 15.42,
+                                        lng: -61.32
+                                    } // north east
+                                ];
+
+
+
+                                map.data.loadGeoJson('/uploads/tracks2.geojson');
+                                map.data.loadGeoJson('/uploads/tracks.geojson');
+                            }
+                        </script>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
+                        </script>
+                        <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
+                        <!-- </iframe> -->
                     </div>
                 </div>
                 <!-- page end-->
@@ -110,12 +115,7 @@
         <!--main content end-->
         <!--footer start-->
         <footer class="site-footer">
-            <div class="text-center">
-                2014 - Alvarez.is
-                <a href="morris.html#" class="go-top">
-                    <i class="fa fa-angle-up"></i>
-                </a>
-            </div>
+            <% include partials/footer %>
         </footer>
         <!--footer end-->
     </section>
@@ -130,11 +130,9 @@
 
     <!--common script for all pages-->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="/assets/js/common-scripts.js"></script>
 
     <!--script for this page-->
-    <script src="/assets/js/morris-conf.js"></script>
 
     <script>
         //custom select box
