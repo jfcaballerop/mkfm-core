@@ -55,10 +55,12 @@
                 <div class="row mt">
                     <div class="col-md-2">
                         <div class="form-panel">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i> Capas</h5>
-                            <select multiple class="form-control">
-
-                                          </select>
+                            <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
+                            <select multiple id="layergps" class="form-control" size="<% if(files.length < 6) { %>5<%} else{%>10<%}%>">
+                                <% files.forEach(function(item){ %>
+                                    <option value="<%= item%>"><%= item %></option>
+                                <% }); %>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-10" style="height:80vh;">
@@ -137,8 +139,34 @@
     <script>
         //custom select box
 
-        $(function() {
-            $('select.styled').customSelect();
+        $(document).on('change', "#layergps", function() {
+            alert($('#layergps').find(":selected").val());
+        });
+
+        $(document).ready(function() {
+            // TODO: Cambiar la lectura de DIR local por la BD o API REST
+            // var res = '{"id" :"' + $(this).data('data') + '"}'
+            //var res = JSON.stringify($(this).data('params'));
+            var fileNames = new Array();
+            $.ajax({
+                //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+                url: /uploads/,
+                success: function(data) {
+                    //List all .png file names in the page
+                    $(data).find("td > a").each(function() {
+                        fileNames.push($(this).attr("href"));
+                        //var filename = $(this).attr("href").replace(window.location.host, "").replace("http://", "");
+                        //$("body").append("<img src='" + dir + filename + "'>");
+                        // $('#layergps').append($('<option>', {
+                        //     value: filename,
+                        //     text: filename
+                        // }));
+                    });
+                }
+            });
+            console.log(fileNames);
+
+
         });
     </script>
 
