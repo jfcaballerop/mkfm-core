@@ -238,7 +238,80 @@ router.get('/getfile/:id', function(req, resp) {
     request.end();
 
 });
+/* DESACTIVATE file */
+router.post('/desactivate/:id', function(req, resp, next) {
+    //console.log('## WEB DESACTIVATE file: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/desactivate/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
 
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+
+
+});
+
+/* ACTIVATE file */
+router.post('/activate/:id', function(req, resp, next) {
+    //console.log('## WEB DESACTIVATE file: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/activate/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            resp.render('upload', { token: req.token, fup: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
 
 /*******************************************************
  API REST CALLS
@@ -257,6 +330,16 @@ router.post('/V1/fileupload/', function(req, res, next) {
 /* GET JSON files listing. */
 router.get('/V1/', function(req, res, next) {
     Fileupload.find(function(err, files) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(files);
+    });
+
+});
+/* GET JSON files listing active_valid. */
+router.get('/V1/active_valid/', function(req, res, next) {
+    Fileupload.find({ activo: true, status: 'validate' }, function(err, files) {
         if (err) {
             res.send(500, err.message);
         }
@@ -294,7 +377,15 @@ router.post('/V1/validate/:id', function(req, res, next) {
                 return res.status(500).send(err.message);
             }
             console.log('## File DATA:: ' + dataFile);
-            validFeatureCollection = JSON.parse(dataFile);
+            try {
+                validFeatureCollection = JSON.parse(dataFile);
+            } catch (e) {
+                if (e) {
+                    fup.status = 'error';
+
+                }
+            }
+            console.log('ENTRO ####');
             //simple test 
             if (GJV.valid(validFeatureCollection)) {
                 console.log("this is valid GeoJSON!");
@@ -302,8 +393,8 @@ router.post('/V1/validate/:id', function(req, res, next) {
             } else {
                 fup.status = 'error';
             }
-            //console.log('## API DESACTIVATE USER: ' + req.params.id);
-            fup.save(function(err, user) {
+            //console.log('## API DESACTIVATE file: ' + req.params.id);
+            fup.save(function(err, file) {
                 if (err) {
                     return res.status(500).send(err.message);
                 }
@@ -318,86 +409,89 @@ router.post('/V1/validate/:id', function(req, res, next) {
     });
 
 });
-/* GET JSON user by login. */
-router.get('/V1/:login', function(req, res, next) {
-    //console.log(req.params.login);
-    User.findOne({ 'login': req.params.login }, function(err, user) {
+/* GET JSON file by login. */
+router.get('/V1/:originalname', function(req, res, next) {
+    Fileupload.findOne({ 'name': req.params.originalname }, function(err, file) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(user);
+        res.status(200).jsonp(file);
     });
 
 });
-/* DEL user */
+/* DEL file */
 router.delete('/V1/:id', function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
-        user.remove(function(err) {
+    Fileupload.findById(req.params.id, function(err, file) {
+        file.remove(function(err) {
             if (err) {
                 res.send(500, err.message);
             }
-            res.status(200).jsonp(user);
+            res.status(200).jsonp(file);
 
         });
     });
 
 });
 
-/* ACTIVATE user */
+/* ACTIVATE file */
 router.post('/V1/activate/:id', function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
-        //console.log('## API ACTIVATE USER: ' + req.params.id);
-        user.activo = true;
-        user.save(function(err, user) {
+    Fileupload.findById(req.params.id, function(err, file) {
+        //console.log('## API ACTIVATE file: ' + req.params.id);
+        file.activo = true;
+        file.save(function(err, file) {
             if (err) {
                 return res.status(500).send(err.message);
             }
-            User.find(function(err, users) {
+            Fileupload.find(function(err, files) {
                 if (err) {
                     res.send(500, err.message);
                 }
-                res.status(200).jsonp(users);
+                res.status(200).jsonp(files);
             });
         });
     });
 
 });
-/* DEL user */
+/* DESACTIVATE file */
+router.post('/V1/desactivate/:id', function(req, res, next) {
+    Fileupload.findById(req.params.id, function(err, file) {
+        //console.log('## API ACTIVATE file: ' + req.params.id);
+        file.activo = false;
+        file.save(function(err, file) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            Fileupload.find(function(err, files) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                res.status(200).jsonp(files);
+            });
+        });
+    });
+
+});
+/* DEL file */
 router.post('/V1/delete/:id', function(req, res, next) {
-    User.findByIdAndRemove(req.params.id, function(err, user) {
-        //console.log('## API DEL USER: ' + req.params.id);
+    Fileupload.findByIdAndRemove(req.params.id, function(err, file) {
+        //console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        User.find(function(err, users) {
+        Fileupload.find(function(err, files) {
             if (err) {
                 res.send(500, err.message);
             }
-            res.status(200).jsonp(users);
+            res.status(200).jsonp(files);
         });
     });
 
 });
 
-/* UPDATE user */
-router.post('/V1/update_user/:id', function(req, res, next) {
-    // TODO: Revisar como cambiar la password
-    //console.log('\n#### UPDATE user ####');
-    //console.log('BODY: ' + JSON.stringify(req.body));
-    User.findById(req.params.id, function(err, user) {
-        var saveUser = extend({}, req.body);
-        saveUser.password = user.generateHash(req.body.password);
-        //console.log('\n\n##### Update User:: ' + JSON.stringify(saveUser));
+/* UPDATE file */
+router.post('/V1/update_file/:id', function(req, res, next) {
 
-        User.findByIdAndUpdate(req.params.id, { $set: saveUser }, function(err, result) {
-            if (err) {
-                //console.log(err);
-                return res.status(500).send(err.message);
-            }
-            //console.log("RESULT: " + result);
-            res.status(200).jsonp(result);
-            // res.send('Done')
-        });
-    });
+    res.send('Upoload File');
+
 });
 module.exports = router;

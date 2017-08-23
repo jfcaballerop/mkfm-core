@@ -58,7 +58,7 @@
                             <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
                             <select multiple id="layergps" class="form-control" size="<% if(files.length < 6) { %>5<%} else{%>10<%}%>">
                                 <% files.forEach(function(item){ %>
-                                    <option value="<%= item%>"><%= item %></option>
+                                    <option value="<%= item.filename %>"><%= item.originalname %></option>
                                 <% }); %>
                             </select>
                         </div>
@@ -69,15 +69,22 @@
                             // This example uses the Google Maps JavaScript API's Data layer
                             // to create a rectangular polygon with 2 holes in it.
 
-                            function initMap() {
-                                var map = new google.maps.Map(document.getElementById('map'), {
-                                    zoom: 12,
+                            function initMap(file, zoom) {
+                                var vfile = file || '';
+                                var optionsMap = {
                                     center: {
                                         lat: 15.41,
                                         lng: -61.32
                                     },
-                                });
-
+                                };
+                                // optionsMap.zoom = vzoom;
+                                var map = new google.maps.Map(document.getElementById('map'), optionsMap);
+                                //var bounds = new google.maps.LatLngBounds(optionsMap);
+                                //map.fitBounds(bounds);
+                                if (zoom)
+                                    map.setZoom(zoom);
+                                else
+                                    map.setZoom(12);
                                 // Define the LatLng coordinates for the outer path.
                                 var outerCoords = [{
                                         lat: 15.42,
@@ -99,8 +106,8 @@
 
 
 
-                                map.data.loadGeoJson('/uploads/tracks2.geojson');
-                                map.data.loadGeoJson('/uploads/tracks.geojson');
+                                // map.data.loadGeoJson('/uploads/tracks2.geojson');
+                                map.data.loadGeoJson('/uploads/' + vfile);
                             }
                         </script>
                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
@@ -141,6 +148,8 @@
 
         $(document).on('change', "#layergps", function() {
             alert($('#layergps').find(":selected").val());
+            initMap($('#layergps').find(":selected").val(), 0);
+
         });
 
         $(document).ready(function() {

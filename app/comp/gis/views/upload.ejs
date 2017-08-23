@@ -127,6 +127,11 @@
                                                                                 <i class="fa fa-exclamation-triangle"> Error</i> 
                                                                             </button>
                                                                             <% } %>
+                                                                                <% if(fup[i].activo){ %>
+                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close">desactivar</i></button>
+                                                                                    <% } else { %>
+                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check">activar</i></button>
+                                                                                        <% }   %>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -166,6 +171,26 @@
                 $.post('/auth/WEB/gis/validate/' + id, function(returnedData) {
                     //console.log(returnedData);
                     // $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
+                    $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                });
+
+            };
+
+            function desactivate(id) {
+                // alert("DES " + id);
+                $.post('/auth/WEB/gis/desactivate/' + id, function(returnedData) {
+                    //console.log(returnedData);
+                    $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                });
+
+            };
+
+            function activate(id) {
+                // alert("ACT " + id);
+                $.post('/auth/WEB/gis/activate/' + id, function(returnedData) {
+                    //console.log(returnedData);
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
 
                 });
