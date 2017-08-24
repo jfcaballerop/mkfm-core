@@ -66,7 +66,7 @@ ejecutar en dev:
 
 * Es necesario crear un usuario de instalacion, para lo cual, se debe crear la coleccion en mongo de:
     * `db.createCollection('users')`
-    * db.collection('inventory').insertOne(    {
+    * db.getCollection('users').insertOne(    {
     "login" : "admin",
     "password" : "unapasswdqueteacuerdes",
     "nombre" : "Admin",
@@ -74,7 +74,6 @@ ejecutar en dev:
     "apellido2" : "Admin",
     "admin" : true,
     "activo" : false,
-    }
     })
     * El solo se encarga de encriptar la pass y activar el usuario. Este usuario no se podrá usar más desde el método de instalacion.
 
