@@ -17,7 +17,7 @@ router.get('/V1/:login', function(req, res, next) {
         if (err) {
             res.send(500, err.message);
         }
-        console.log('## User Encontrado para la install::' + user);
+        console.log('## User Encontrado para la install::' + JSON.stringify(user));
         if (user.admin && !user.activo) {
             user.password = user.generateHash(user.password);
             user.activo = true;
