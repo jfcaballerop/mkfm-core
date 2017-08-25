@@ -68,15 +68,16 @@
                         <script>
                             // This example uses the Google Maps JavaScript API's Data layer
                             // to create a rectangular polygon with 2 holes in it.
-                            var optionsMap = {
-                                center: {
-                                    lat: 15.41,
-                                    lng: -61.32
-                                },
-                            };
-                            var map = new google.maps.Map(document.getElementById('map'), optionsMap);
 
-                            function paintMap(file, zoom) {
+                            function initMap(file, zoom) {
+                                var optionsMap = {
+                                    center: {
+                                        lat: 15.41,
+                                        lng: -61.32
+                                    },
+                                };
+
+                                var map = new google.maps.Map(document.getElementById('map'), optionsMap);
                                 var vfile = file || [];
                                 if (zoom)
                                     map.setZoom(zoom);
@@ -87,7 +88,7 @@
                                     map.data.loadGeoJson('/uploads/' + item);
 
                                 });
-                            }
+                            };
                         </script>
                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
                         </script>
@@ -127,7 +128,7 @@
 
 
         $(document).on('change', "#layergps", function() {
-            paintMap($("#layergps").val(), 0);
+            initMap($("#layergps").val(), 0);
 
         });
 
