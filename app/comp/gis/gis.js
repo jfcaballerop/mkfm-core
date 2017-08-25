@@ -276,10 +276,9 @@ router.post('/desactivate/:id', function(req, resp, next) {
 
 
 });
-
 /* ACTIVATE file */
 router.post('/activate/:id', function(req, resp, next) {
-    //console.log('## WEB DESACTIVATE file: ' + req.params.id);
+    //console.log('## WEB ACTIVATE file: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -303,7 +302,8 @@ router.post('/activate/:id', function(req, resp, next) {
         res.on('end', function() {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
-            resp.render('upload', { token: req.token, fup: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
         });
     });
@@ -311,7 +311,11 @@ router.post('/activate/:id', function(req, resp, next) {
     request.end();
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
+
+
 });
+
+
 
 /*******************************************************
  API REST CALLS
@@ -393,7 +397,7 @@ router.post('/V1/validate/:id', function(req, res, next) {
             } else {
                 fup.status = 'error';
             }
-            //console.log('## API DESACTIVATE file: ' + req.params.id);
+            //console.log('## API ACTIVATE file: ' + req.params.id);
             fup.save(function(err, file) {
                 if (err) {
                     return res.status(500).send(err.message);
@@ -455,7 +459,7 @@ router.post('/V1/activate/:id', function(req, res, next) {
 /* DESACTIVATE file */
 router.post('/V1/desactivate/:id', function(req, res, next) {
     Fileupload.findById(req.params.id, function(err, file) {
-        //console.log('## API ACTIVATE file: ' + req.params.id);
+        //console.log('## API DESACTIVATE file: ' + req.params.id);
         file.activo = false;
         file.save(function(err, file) {
             if (err) {

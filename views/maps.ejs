@@ -68,44 +68,21 @@
                         <script>
                             // This example uses the Google Maps JavaScript API's Data layer
                             // to create a rectangular polygon with 2 holes in it.
-                            function initMap(file, zoom) {
+                            var optionsMap = {
+                                center: {
+                                    lat: 15.41,
+                                    lng: -61.32
+                                },
+                            };
+                            var map = new google.maps.Map(document.getElementById('map'), optionsMap);
+
+                            function paintMap(file, zoom) {
                                 var vfile = file || [];
-                                var optionsMap = {
-                                    center: {
-                                        lat: 15.41,
-                                        lng: -61.32
-                                    },
-                                };
-                                // optionsMap.zoom = vzoom;
-                                var map = new google.maps.Map(document.getElementById('map'), optionsMap);
-                                //var bounds = new google.maps.LatLngBounds(optionsMap);
-                                //map.fitBounds(bounds);
                                 if (zoom)
                                     map.setZoom(zoom);
                                 else
                                     map.setZoom(12);
-                                // Define the LatLng coordinates for the outer path.
-                                var outerCoords = [{
-                                        lat: 15.42,
-                                        lng: -61.35
-                                    }, // north west
-                                    {
-                                        lat: 15.39,
-                                        lng: -61.35
-                                    }, // south west
-                                    {
-                                        lat: 15.39,
-                                        lng: -61.32
-                                    }, // south east
-                                    {
-                                        lat: 15.42,
-                                        lng: -61.32
-                                    } // north east
-                                ];
 
-
-
-                                // map.data.loadGeoJson('/uploads/tracks2.geojson');
                                 vfile.forEach(function(item) {
                                     map.data.loadGeoJson('/uploads/' + item);
 
@@ -150,7 +127,7 @@
 
 
         $(document).on('change', "#layergps", function() {
-            initMap($("#layergps").val(), 0);
+            paintMap($("#layergps").val(), 0);
 
         });
 
