@@ -30,6 +30,7 @@
         "validator": "^8.0.0"
     },
     "devDependencies": {
+        "@mapbox/togeojson": "^0.16.0",
         "nodemon": "^1.11.0"
     }
 }
