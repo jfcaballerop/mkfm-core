@@ -381,7 +381,18 @@ router.post('/V1/update_user/:id', function(req, res, next) {
     //console.log('BODY: ' + JSON.stringify(req.body));
     User.findById(req.params.id, function(err, user) {
         var saveUser = extend({}, req.body);
-        saveUser.password = user.generateHash(req.body.password);
+        // console.log('## Compruebo pass ::');
+        if (user.password !== req.body.password) {
+            // console.log('## Cambio la pass ::');
+            saveUser.password = user.generateHash(req.body.password);
+        } else {
+            // En este caso solo ha modificado datos personales
+            // y no la pass.
+            // console.log('## No Cambio la pass ::');
+            delete(saveUser.password);
+            // console.log('## No Cambio la pass - cambiada ::');
+        }
+
         //console.log('\n\n##### Update User:: ' + JSON.stringify(saveUser));
 
         User.findByIdAndUpdate(req.params.id, { $set: saveUser }, function(err, result) {
