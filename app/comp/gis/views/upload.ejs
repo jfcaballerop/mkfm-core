@@ -70,12 +70,9 @@
                                                 <div class="col-sm-2">
 
                                                     <select id="type_file" class="form-control" name="type">
-                                                            <option>GeoJson</option>
-                                                            <option>GPX</option>
-                                                            <option>CSV</option>
-                                                            <!-- <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option> -->
+                                                        <% for (var j=0; j < ft.length; j++){ %>
+                                                            <option value="<%= ft[j].extension%>"><%= ft[j].type %></option>
+                                                            <% } %>
                                                           </select>
                                                 </div>
                                             </div>
@@ -145,6 +142,9 @@
                                                                     <% } else if( "validate" == fup[i].status ) { %>
                                                                         <button class="btn btn-success btn-xs">
                                                                             <i class="fa fa-check"></i> 
+                                                                        </button>
+                                                                        <button class="btn btn-warning btn-xs">
+                                                                            <i class="fa fa-exchange"></i> 
                                                                         </button>
                                                                         <% } else if( "error" == fup[i].status ) { %>
                                                                             <button class="btn btn-danger btn-xs">
@@ -238,15 +238,11 @@
                 // above check 
                 var ext = $('#file_upload').val().split('.').pop().toLowerCase();
                 var ext_sel = $('#type_file').val();
-                /*
-                <option>GeoJson</option>
-                <option>GPX</option>
-                <option>CSV</option>
-                 */
+
                 $('#modal_checkext').modal() // initialized with defaults
 
                 switch (ext_sel) {
-                    case 'GeoJson':
+                    case 'geojson':
                         if ($.inArray(ext, [ext_sel]) == -1) {
                             $('#modal_check_ext_val').text(ext_sel);
                             $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
@@ -255,7 +251,7 @@
                             return false;
                         }
                         break;
-                    case 'GPX':
+                    case 'gpx':
                         if ($.inArray(ext, [ext_sel]) == -1) {
                             $('#modal_check_ext_val').text(ext_sel);
                             $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
@@ -264,7 +260,7 @@
                             return false;
                         }
                         break;
-                    case 'CSV':
+                    case 'csv':
                         if ($.inArray(ext, [ext_sel]) == -1) {
                             $('#modal_check_ext_val').text(ext_sel);
                             $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());

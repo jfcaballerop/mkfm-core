@@ -50,6 +50,9 @@ router.use('/users', require(path.join(__dirname, '../app/comp/user/users')));
 // GIS auth
 router.use('/gis', require(path.join(__dirname, '../app/comp/gis/gis')));
 
+// FILETYPE auth
+router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/filetype')));
+
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 
