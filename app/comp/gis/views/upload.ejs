@@ -41,12 +41,35 @@
                             <div class="row mt">
                                 <div class="col-md-12">
                                     <div class="form-panel">
+                                        <!-- Modal -->
+                                        <div id="modal_checkext" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
 
-                                        <form class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="/auth/WEB/gis/upload">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Comprobacion</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>El fichero adjuntado (
+                                                            <span id="modal_check_ext_orig"> </span> ) no corresponde con lo esperado (
+                                                            <span id="modal_check_ext_val"> </span> )
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <form id="upload_file_form" class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="/auth/WEB/gis/upload">
                                             <div class="form-group">
                                                 <label class="col-sm-2 col-sm-2 control-label">Type file</label>
                                                 <div class="col-sm-2">
-                                                    <select class="form-control" name="type">
+
+                                                    <select id="type_file" class="form-control" name="type">
                                                             <option>GeoJson</option>
                                                             <option>GPX</option>
                                                             <option>CSV</option>
@@ -58,7 +81,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-10">
-                                                    <input type="file" name="file" class="alert alert-info">
+                                                    <input id="file_upload" type="file" name="file" class="alert alert-info">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -210,6 +233,49 @@
                 });
 
             };
+
+            $("#upload_file_form").bind("submit", function() {
+                // above check 
+                var ext = $('#file_upload').val().split('.').pop().toLowerCase();
+                var ext_sel = $('#type_file').val();
+                /*
+                <option>GeoJson</option>
+                <option>GPX</option>
+                <option>CSV</option>
+                 */
+                $('#modal_checkext').modal() // initialized with defaults
+
+                switch (ext_sel) {
+                    case 'GeoJson':
+                        if ($.inArray(ext, [ext_sel]) == -1) {
+                            $('#modal_check_ext_val').text(ext_sel);
+                            $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                            $('#modal_checkext').modal('show');
+
+                            return false;
+                        }
+                        break;
+                    case 'GPX':
+                        if ($.inArray(ext, [ext_sel]) == -1) {
+                            $('#modal_check_ext_val').text(ext_sel);
+                            $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                            $('#modal_checkext').modal('show');
+
+                            return false;
+                        }
+                        break;
+                    case 'CSV':
+                        if ($.inArray(ext, [ext_sel]) == -1) {
+                            $('#modal_check_ext_val').text(ext_sel);
+                            $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                            $('#modal_checkext').modal('show');
+
+                            return false;
+                        }
+                        break;
+                }
+
+            });
         </script>
 
 
