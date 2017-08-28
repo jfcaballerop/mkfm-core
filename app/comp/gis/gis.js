@@ -13,6 +13,8 @@ var extend = require('util')._extend;
 var multer = require('multer');
 var GJV = require("geojson-validation");
 var fs = require('fs');
+var tj = require('togeojson');
+var DOMParser = require('xmldom').DOMParser;
 
 var fileuploadModels = require(path.join(__dirname, './models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -616,41 +618,100 @@ router.get('/V1/:id', function(req, res, next) {
 // TODO: Este método debería realizar la carga en BD una vez validado
 router.post('/V1/validate/:id', function(req, res, next) {
     Fileupload.findById(req.params.id, function(err, fup) {
-        var validFeatureCollection = {};
-        fs.readFile(fup.path, function(err, dataFile) {
-            if (err) {
-                return res.status(500).send(err.message);
-            }
-            //console.log('## File DATA:: ' + dataFile);
-            try {
-                validFeatureCollection = JSON.parse(dataFile);
-            } catch (e) {
-                if (e) {
-                    fup.status = 'error';
-
+        if (fup.type === 'geojson') {
+            var validFeatureCollection = {};
+            fs.readFile(fup.path, function(err, dataFile) {
+                if (err) {
+                    return res.status(500).send(err.message);
                 }
-            }
+                //console.log('## File DATA:: ' + dataFile);
+                try {
+                    validFeatureCollection = JSON.parse(dataFile);
+                } catch (e) {
+                    if (e) {
+                        fup.status = 'error';
+
+                    }
+                }
+                //console.log('ENTRO ####');
+                //simple test 
+                if (GJV.valid(validFeatureCollection)) {
+                    //console.log("this is valid GeoJSON!");
+                    fup.status = 'validate';
+                } else {
+                    fup.status = 'error';
+                }
+                //console.log('## API ACTIVATE file: ' + req.params.id);
+                fup.save(function(err, file) {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+                    Fileupload.find(function(err, fup) {
+                        if (err) {
+                            res.send(500, err.message);
+                        }
+                        res.status(200).jsonp(fup);
+                    });
+                });
+            });
+        } else if (fup.type === 'gpx') {
+            // Primero: transformar el fichero GPX a GeoJson
+            var gpx = new DOMParser().parseFromString(fs.readFileSync(fup.path, 'utf8'));
+            var fconv = tj.gpx(gpx);
+            var fconvwithstyles = tj.gpx(gpx, { styles: true });
+
+            console.log('## FILE CONV:: ' + JSON.stringify(fconv));
+            console.log('## FILE CONV STYLES:: ' + JSON.stringify(fconvwithstyles));
             //console.log('ENTRO ####');
             //simple test 
-            if (GJV.valid(validFeatureCollection)) {
-                //console.log("this is valid GeoJSON!");
+            if (GJV.valid(fconvwithstyles)) {
+                console.log("this is valid GeoJSON!");
                 fup.status = 'validate';
             } else {
                 fup.status = 'error';
             }
-            //console.log('## API ACTIVATE file: ' + req.params.id);
+            fup.activo = false;
             fup.save(function(err, file) {
                 if (err) {
                     return res.status(500).send(err.message);
                 }
-                Fileupload.find(function(err, fup) {
+
+            });
+            // Guardo un nuevo File en formato GeoJson
+            var fname_new = fup.filename + moment().format('YYYYMMDDHHmmss');
+            fs.writeFile(path.join(process.env.PWD, '/public/uploads/', fname_new), fconvwithstyles, function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+                var fname_new_noext = fup.originalname.split('.');
+                fname_new_noext.pop();
+                var new_fu = new Fileupload({
+                    "size": Buffer.byteLength(JSON.stringify(fconvwithstyles)),
+                    "path": path.join(process.env.PWD, '/public/uploads/', fname_new),
+                    "filename": fname_new,
+                    "destination": path.join(process.env.PWD, '/public/uploads/'),
+                    "mimetype": "application/octet-stream",
+                    "originalname": fname_new_noext + '.geojson',
+                    "owner": fup.owner,
+                    "type": "geojson",
+                    "status": "validate"
+                });
+                new_fu.save(function(err, file) {
                     if (err) {
-                        res.send(500, err.message);
+                        return res.status(500).send(err.message);
                     }
-                    res.status(200).jsonp(fup);
+                    console.log(' SAVE Documento ' + new_fu);
+                    // res.status(200).jsonp(file);
                 });
             });
-        });
+            Fileupload.find(function(err, fup) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                res.status(200).jsonp(fup);
+            });
+        }
     });
 
 });
