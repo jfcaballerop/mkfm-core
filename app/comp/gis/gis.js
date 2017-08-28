@@ -314,6 +314,45 @@ router.post('/activate/:id', function(req, resp, next) {
 
 
 });
+/* DELETE file */
+router.post('/delete/:id', function(req, resp, next) {
+    //console.log('## WEB ACTIVATE file: ' + req.params.id);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/delete/' + req.params.id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            console.log('DATA DELETE:: ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //resp.redirect('/auth/WEB/gis/upload');
+
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+
+
+});
 
 
 
@@ -373,6 +412,7 @@ router.get('/V1/:id', function(req, res, next) {
 });
 
 /* VALIDATE File */
+// TODO: Este método debería realizar la carga en BD una vez validado
 router.post('/V1/validate/:id', function(req, res, next) {
     Fileupload.findById(req.params.id, function(err, fup) {
         var validFeatureCollection = {};
@@ -423,19 +463,6 @@ router.get('/V1/:originalname', function(req, res, next) {
     });
 
 });
-/* DEL file */
-router.delete('/V1/:id', function(req, res, next) {
-    Fileupload.findById(req.params.id, function(err, file) {
-        file.remove(function(err) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            res.status(200).jsonp(file);
-
-        });
-    });
-
-});
 
 /* ACTIVATE file */
 router.post('/V1/activate/:id', function(req, res, next) {
@@ -475,18 +502,30 @@ router.post('/V1/desactivate/:id', function(req, res, next) {
     });
 
 });
+
 /* DEL file */
 router.post('/V1/delete/:id', function(req, res, next) {
     Fileupload.findByIdAndRemove(req.params.id, function(err, file) {
-        //console.log('## API DEL file: ' + req.params.id);
+        console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        Fileupload.find(function(err, files) {
-            if (err) {
-                res.send(500, err.message);
+        console.log('### File located: ' + file.path);
+        fs.unlink(file.path, function(ferr) {
+            if (ferr) {
+                //throw ferr;
+                console.log('Error: ' + ferr);
+                res.status(400).jsonp(file);
+
             }
-            res.status(200).jsonp(files);
+            Fileupload.find(function(err, files) {
+                console.log('Locate files:: ' + files);
+                if (err) {
+                    res.send(500, err.message);
+                }
+                console.log('Send files:: ' + files);
+                res.status(200).jsonp(files);
+            });
         });
     });
 

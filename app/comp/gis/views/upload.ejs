@@ -47,7 +47,8 @@
                                                 <label class="col-sm-2 col-sm-2 control-label">Type file</label>
                                                 <div class="col-sm-2">
                                                     <select class="form-control" name="type">
-                                                            <option>GeoJson - SHP</option>
+                                                            <option>GeoJson</option>
+                                                            <option>GPX</option>
                                                             <option>CSV</option>
                                                             <!-- <option>3</option>
                                                                 <option>4</option>
@@ -77,7 +78,7 @@
                             <!-- /row -->
                             <div class="row mt">
                                 <div class="col-md-12">
-                                    <div class="content-panel">
+                                    <div class="content-panel" id="listado_ficheros">
                                         <h4><i class="fa fa-angle-right"></i> Listado de Ficheros</h4>
                                         <table class="table table-striped table-advance table-hover">
                                             <thead>
@@ -120,7 +121,7 @@
                                                                     </button>
                                                                     <% } else if( "validate" == fup[i].status ) { %>
                                                                         <button class="btn btn-success btn-xs">
-                                                                            <i class="fa fa-check"> Valido</i> 
+                                                                            <i class="fa fa-check"></i> 
                                                                         </button>
                                                                         <% } else if( "error" == fup[i].status ) { %>
                                                                             <button class="btn btn-danger btn-xs">
@@ -128,10 +129,14 @@
                                                                             </button>
                                                                             <% } %>
                                                                                 <% if(fup[i].activo){ %>
-                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close">desactivar</i></button>
+                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close"> Desactivar</i></button>
                                                                                     <% } else { %>
-                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check">activar</i></button>
+                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check" > Activar</i></button>
                                                                                         <% }   %>
+
+                                                                                            <button onclick="delfile('<%= fup[i]._id %>');" class="btn btn-danger btn-xs">
+                                                                        <i class="fa fa-trash-o"></i> 
+                                                                     </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -192,6 +197,15 @@
                 $.post('/auth/WEB/gis/activate/' + id, function(returnedData) {
                     //console.log(returnedData);
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                });
+
+            };
+
+            function delfile(id) {
+                $.post('/auth/WEB/gis/delete/' + id, function(returnedData) {
+                    //     //console.log(returnedData);
+                    $("#listado_ficheros").load(location.href + " #listado_ficheros"); // Add space between URL and selector.
 
                 });
 
