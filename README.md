@@ -61,7 +61,7 @@ ejecutar en dev:
         }
         )
 * `mongo  --port 27017 -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
-
+* `mongo localhost:27017/mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 ## APP Install
 
 * Es necesario crear un usuario de instalacion, para lo cual, se debe crear la coleccion en mongo de:
