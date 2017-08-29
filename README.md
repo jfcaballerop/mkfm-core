@@ -60,7 +60,6 @@ ejecutar en dev:
                     { role: "dbOwner", db: "mkfwcoredb" } ]
         }
         )
-* `mongo  --port 27017 -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 * `mongo localhost:27017/mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 ## APP Install
 

@@ -100,7 +100,7 @@
                                 <div class="col-md-12">
                                     <div class="content-panel" id="listado_ficheros">
                                         <h4><i class="fa fa-angle-right"></i> Listado de Ficheros</h4>
-                                        <table class="table table-striped table-advance table-hover">
+                                        <table id="table_files" class="table table-striped table-advance table-hover">
                                             <thead>
                                                 <tr>
                                                     <th><i class="fa fa-file"></i> Original name</th>
@@ -143,18 +143,18 @@
                                                                         <button class="btn btn-success btn-xs">
                                                                             <i class="fa fa-check"></i> 
                                                                         </button>
-                                                                        <button class="btn btn-warning btn-xs">
+                                                                        <!-- <button class="btn btn-warning btn-xs">
                                                                             <i class="fa fa-exchange"></i> 
-                                                                        </button>
+                                                                        </button> -->
                                                                         <% } else if( "error" == fup[i].status ) { %>
                                                                             <button class="btn btn-danger btn-xs">
                                                                                 <i class="fa fa-exclamation-triangle"> Error</i> 
                                                                             </button>
                                                                             <% } %>
                                                                                 <% if(fup[i].activo){ %>
-                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close"> Desactivar</i></button>
+                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-eye-slash"> Desactivar</i></button>
                                                                                     <% } else { %>
-                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check" > Activar</i></button>
+                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-eye" > Activar</i></button>
                                                                                         <% }   %>
 
                                                                                             <button onclick="delfile('<%= fup[i]._id %>');" class="btn btn-danger btn-xs">
@@ -197,7 +197,17 @@
             function validate(id) {
                 // alert("VALIDATE " + id);
                 $.post('/auth/WEB/gis/validate/' + id, function(returnedData) {
-                    //console.log(returnedData);
+                    console.log(returnedData);
+                    var rowCount = $('#table_files tr').length - 1; //Hay que quitar el TH
+                    console.log('rowCount ' + rowCount);
+                    console.log('returnedData.length ' + returnedData.length);
+
+                    if (returnedData.length > rowCount) {
+                        // ha devuelto un fichero de más y debemos recargar la pagina.    
+                        location.reload();
+
+                    }
+
                     // $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
 

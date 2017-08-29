@@ -302,8 +302,8 @@ router.post('/validate/:id', function(req, resp) {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-
+            //resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.status(200).send(responseObject);
         });
     });
 
@@ -654,11 +654,18 @@ router.post('/V1/validate/:id', function(req, res, next) {
                     });
                 });
             });
-        } else if (fup.type === 'gpx') {
+        } else if ((fup.type === 'gpx') || (fup.type === 'kml')) {
             // Primero: transformar el fichero GPX a GeoJson
-            var gpx = new DOMParser().parseFromString(fs.readFileSync(fup.path, 'utf8'));
-            var fconv = tj.gpx(gpx);
-            var fconvwithstyles = tj.gpx(gpx, { styles: true });
+            var fileConv = new DOMParser().parseFromString(fs.readFileSync(fup.path, 'utf8'));
+            var fconv;
+            var fconvwithstyles;
+            if (fup.type === 'gpx') {
+                fconv = tj.gpx(fileConv);
+                fconvwithstyles = tj.gpx(fileConv, { styles: true });
+            } else {
+                fconv = tj.kml(fileConv);
+                fconvwithstyles = tj.kml(fileConv, { styles: true });
+            }
 
             console.log('## FILE CONV:: ' + JSON.stringify(fconv));
             console.log('## FILE CONV STYLES:: ' + JSON.stringify(fconvwithstyles));
@@ -679,7 +686,7 @@ router.post('/V1/validate/:id', function(req, res, next) {
             });
             // Guardo un nuevo File en formato GeoJson
             var fname_new = fup.filename + moment().format('YYYYMMDDHHmmss');
-            fs.writeFile(path.join(process.env.PWD, '/public/uploads/', fname_new), fconvwithstyles, function(err) {
+            fs.writeFile(path.join(process.env.PWD, '/public/uploads/', fname_new), JSON.stringify(fconvwithstyles), function(err) {
                 if (err) {
                     return console.log(err);
                 }
@@ -703,13 +710,13 @@ router.post('/V1/validate/:id', function(req, res, next) {
                     }
                     console.log(' SAVE Documento ' + new_fu);
                     // res.status(200).jsonp(file);
+                    Fileupload.find(function(err, fup) {
+                        if (err) {
+                            res.send(500, err.message);
+                        }
+                        res.status(200).jsonp(fup);
+                    });
                 });
-            });
-            Fileupload.find(function(err, fup) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                res.status(200).jsonp(fup);
             });
         }
     });
