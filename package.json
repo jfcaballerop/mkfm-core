@@ -23,6 +23,7 @@
         "jwt-simple": "^0.5.1",
         "method-override": "^2.3.9",
         "moment": "^2.18.1",
+        "mongodb-geojson-normalize": "^0.1.2",
         "mongoose": "~4.10.8",
         "morgan": "~1.8.1",
         "multer": "^1.3.0",

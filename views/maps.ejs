@@ -94,7 +94,7 @@
                                 else
                                     map.setZoom(12);
 
-                                var prueba = {
+                                /*var prueba = {
                                     'type': 'Feature',
                                     'geometry': {
                                         'type': 'LineString',
@@ -113,17 +113,17 @@
                                         'fill': '#b0c634',
                                         'fill-opacity': 1
                                     }
-                                };
+                                };*/
                                 vfile.forEach(function(item) {
-                                    // map.data.loadGeoJson('/uploads/' + item);
-                                    map.data.addGeoJson(prueba);
+                                    map.data.loadGeoJson('/uploads/' + item);
+                                    // map.data.addGeoJson(prueba);
                                     // Add some style.
-                                    map.data.setStyle(function(feature) {
-                                        return /** @type {google.maps.Data.StyleOptions} */ ({
-                                            strokeColor: feature.getProperty('color'),
-                                            strokeWeight: 5
-                                        });
-                                    });
+                                    // map.data.setStyle(function(feature) {
+                                    //     return /** @type {google.maps.Data.StyleOptions} */ ({
+                                    //         strokeColor: feature.getProperty('color'),
+                                    //         strokeWeight: 5
+                                    //     });
+                                    // });
 
 
                                 });
