@@ -5,6 +5,14 @@ var jwt = require('jwt-simple');
 var jwtweb = require('jsonwebtoken');
 var moment = require('moment');
 var config = require(path.join(__dirname, '../config/config'));
+var bodyParser = require('body-parser');
+
+
+router.use(bodyParser.urlencoded({
+    limit: '5000mb',
+    extended: true
+}));
+router.use(bodyParser.json({ limit: '5000mb' }));
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -52,6 +60,9 @@ router.use('/users', require(path.join(__dirname, '../app/comp/user/users')));
 
 // GIS FUNCTIONS auth
 router.use('/gis', require(path.join(__dirname, '../app/comp/gis/gis')));
+
+// GIS FUNCTIONS auth
+router.use('/road', require(path.join(__dirname, '../app/comp/gis/road')));
 
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));

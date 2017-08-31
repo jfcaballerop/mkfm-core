@@ -21,6 +21,7 @@
         "i18n-express": "^1.1.2",
         "jsonwebtoken": "^7.4.2",
         "jwt-simple": "^0.5.1",
+        "meanio": "^0.9.4",
         "method-override": "^2.3.9",
         "moment": "^2.18.1",
         "mongodb-geojson-normalize": "^0.1.2",
