@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partials/head %>
+
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            
+            #map {
+                height: 100%;
+            }
+            /* Optional: Makes the sample page fill the window. */
+            
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+</head>
+
+<body>
+
+    <section id="container">
+        <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+        <!--header start-->
+        <header class="header black-bg">
+            <% include partials/header %>
+        </header>
+        <!--header end-->
+
+        <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+        <!--sidebar start-->
+        <aside>
+            <% include partials/left_menu %>
+
+        </aside>
+        <!--sidebar end-->
+
+        <!-- **********************************************************************************************************************************************************
+        ***** Google Maps      
+        *********************************************************************************************************************************************************** -->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                <h3><i class="fa fa-angle-right"></i> Data</h3>
+                <!-- page start-->
+                <div class="row mt">
+                    <div class="col-md-12" style="height:80vh;">
+                        <div class="content-panel">
+                            <% roads.forEach(function(road){ %>
+
+                                <h5><i class="fa fa-angle-right"></i>
+                                    <button class="btn btn-theme03" type="button" data-toggle="collapse" data-target="#collapse<%=road._id %>" aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="fa fa-plus-square"> Ampliar </i>
+                                    </button>
+                                    <%= moment(road.properties.time).format('DD-MM-YYYY HH:mm:ss') %> -
+                                        <%= road.properties.name %>
+                                </h5>
+                                <hr>
+                                <div id="collapse<%=road._id %>" class="collapse">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Time</th>
+                                                <th>GPS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% Object.keys(road.properties.coordTimes).forEach(function(key){  %>
+                                                <tr>
+
+                                                    <td>
+                                                        <%= key %>
+                                                    </td>
+                                                    <td>
+                                                        <%= moment(road.properties.coordTimes[key]).format('DD-MM-YYYY HH:mm:ss') %>
+                                                    </td>
+                                                    <td>
+                                                        [
+                                                        <%= road.geometry.coordinates[key]%>]</td>
+                                                </tr>
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% }); %>
+
+                        </div>
+                        <!--/content-panel -->
+                    </div>
+                </div>
+                <!-- page end-->
+            </section>
+        </section>
+        <!-- /MAIN CONTENT -->
+
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <% include partials/footer %>
+        </footer>
+        <!--footer end-->
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+    <!--common script for all pages-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="/assets/js/common-scripts.js"></script>
+
+    <!--script for this page-->
+
+    <script>
+        //custom select box
+    </script>
+
+</body>
+
+</html>
