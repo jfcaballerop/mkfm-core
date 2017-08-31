@@ -1,0 +1,1 @@
+db.roads.updateMany({},{$currentDate:{created_at: true, updated_at: true}})
