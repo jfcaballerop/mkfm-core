@@ -56,16 +56,21 @@
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
                             <div class="form-panel">
+
                                 <h4><i class="fa fa-angle-right">Filtros</i></h4>
                                 <hr>
-                                <select id="roads" class="form-control" style="width:auto;">
-                                    <option>- Select a road -</option>
-                                    <% roadsvals.forEach(function(val){ %>
-                                        <option value="<%- val._id %>"><%= val.properties.name %></option>
-                                        
-                                        <% }); %>
-                                        
-                                </select>
+                                <span class="btn-group">
+                                    <button type="button" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-pencil-square-o"> Edit </i></button>
+                                    
+                                    <select id="roads" class="form-control" style="width:auto;">
+                                        <option>- Select a road -</option>
+                                        <% roadsvals.forEach(function(val){ %>
+                                            <option value="<%- val._id %>"><%= val.properties.name %></option>
+                                            
+                                            <% }); %>
+                                            
+                                        </select>
+                                        </span>
 
                                 <div id="accordion" style="display:none;">
                                     <table id="dataTable" class="table">
