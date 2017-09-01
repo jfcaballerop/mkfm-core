@@ -9,10 +9,10 @@ var bodyParser = require('body-parser');
 
 
 router.use(bodyParser.urlencoded({
-    limit: '50mb',
+    limit: '200mb',
     extended: true
 }));
-router.use(bodyParser.json({ limit: '50mb' }));
+router.use(bodyParser.json({ limit: '200mb' }));
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
