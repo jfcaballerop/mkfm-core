@@ -50,23 +50,25 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Data</h3>
+                <h3><i class="fa fa-angle-right"></i> Database</h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
-                            <% roads.forEach(function(road){ %>
-
-                                <h5><i class="fa fa-angle-right"></i>
-                                    <button class="btn btn-theme03" type="button" data-toggle="collapse" data-target="#collapse<%=road._id %>" aria-expanded="false" aria-controls="collapseExample">
-                                            <i class="fa fa-plus-square"> Ampliar </i>
-                                    </button>
-                                    <%= moment(road.properties.time).format('DD-MM-YYYY HH:mm:ss') %> -
-                                        <%= road.properties.name %>
-                                </h5>
+                            <div class="form-panel">
+                                <h4><i class="fa fa-angle-right">Filtros</i></h4>
                                 <hr>
-                                <div id="collapse<%=road._id %>" class="collapse">
-                                    <table class="table">
+                                <select id="roads" class="form-control" style="width:auto;">
+                                    <option>- Select a road -</option>
+                                    <% roadsvals.forEach(function(val){ %>
+                                        <option value="<%- val._id %>"><%= val.properties.name %></option>
+                                        
+                                        <% }); %>
+                                        
+                                </select>
+
+                                <div id="accordion" style="display:none;">
+                                    <table id="dataTable" class="table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -75,25 +77,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% Object.keys(road.properties.coordTimes).forEach(function(key){  %>
-                                                <tr>
+                                            <tr>
 
-                                                    <td>
-                                                        <%= key %>
-                                                    </td>
-                                                    <td>
-                                                        <%= moment(road.properties.coordTimes[key]).format('DD-MM-YYYY HH:mm:ss') %>
-                                                    </td>
-                                                    <td>
-                                                        [
-                                                        <%= road.geometry.coordinates[key]%>]</td>
-                                                </tr>
-                                                <% }); %>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
-                                <% }); %>
 
+                            </div>
+                            <!-- form panel-->
                         </div>
                         <!--/content-panel -->
                     </div>
@@ -127,6 +126,34 @@
 
     <script>
         //custom select box
+        $(document).on('change', "#roads", function() {
+            alert($("#roads").val());
+            $("#accordion").hide();
+            $("#accordion").slideToggle('slow');
+
+            function activate(id) {
+                // alert("ACT " + id);
+                $.post('/auth/WEB/road/' + id, function(data) {
+                    //console.log(returnedData);
+                    var r = new Array(),
+                        j = -1;
+                    for (var key = 0, size = data.properties.coordTimes.length; key < size; key++) {
+                        r[++j] = '<tr><td>';
+                        r[++j] = data.properties.coordTimes[key];
+                        r[++j] = '</td></tr>';
+                        // <td>';
+                        // r[++j] = data[key][1];
+                        // r[++j] = '</td><td>';
+                        // r[++j] = data[key][2];
+                        // r[++j] = '</td></tr>';
+                    }
+                    $('#dataTable').html(r.join(''));
+                    // $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                });
+
+            };
+        });
     </script>
 
 </body>

@@ -103,7 +103,7 @@ router.get('/V1/', function(req, res, next) {
 });
 /* GET JSON Roads listing id. */
 router.get('/V1/list_id/', function(req, res, next) {
-    Road.find({}, { _id: 1 }).exec(function(err, roads) {
+    Road.find({}, { _id: 1, "properties.name": 1 }).exec(function(err, roads) {
         if (err) {
             res.send(500, err.message);
         }
