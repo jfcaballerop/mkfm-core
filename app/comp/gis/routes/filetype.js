@@ -6,14 +6,14 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var validator = require('validator');
 var flash = require('connect-flash');
-var config = require(path.join(__dirname, '../../../config/config'));
+var config = require(path.join(__dirname, '../../../../config/config'));
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 
-var fileuploadModels = require(path.join(__dirname, './models/fileupload'));
+var fileuploadModels = require(path.join(__dirname, '../models/fileupload'));
 var Filetype = mongoose.model('Filetype');
-var filetypeModels = require(path.join(__dirname, './models/filetype'));
+var filetypeModels = require(path.join(__dirname, '../models/filetype'));
 var Filetype = mongoose.model('Filetype');
 
 

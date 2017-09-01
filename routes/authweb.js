@@ -59,16 +59,16 @@ router.get('/', function(req, res, next) {
 router.use('/users', require(path.join(__dirname, '../app/comp/user/users')));
 
 // GIS FUNCTIONS auth
-router.use('/gis', require(path.join(__dirname, '../app/comp/gis/gis')));
+router.use('/gis', require(path.join(__dirname, '../app/comp/gis/routes/gis')));
 
 // GIS FUNCTIONS auth
-router.use('/road', require(path.join(__dirname, '../app/comp/gis/road')));
+router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 
 // MAPS auth
-router.use('/maps', require(path.join(__dirname, './maps')));
+router.use('/maps', require(path.join(__dirname, '../app/comp/gis/routes/maps')));
 
 
 module.exports = router;

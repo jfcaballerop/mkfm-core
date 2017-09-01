@@ -6,12 +6,12 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var validator = require('validator');
 var flash = require('connect-flash');
-var config = require(path.join(__dirname, '../../../config/config'));
+var config = require(path.join(__dirname, '../../../../config/config'));
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 
-var roadModels = require(path.join(__dirname, './models/road'));
+var roadModels = require(path.join(__dirname, '../models/road'));
 var Road = mongoose.model('Road');
 
 
@@ -66,7 +66,7 @@ router.get('/list_roads', function(req, resp, next) {
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             delete responseObject[_id];
-            console.log(JSON.stringify(responseObject));
+            //console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });
@@ -107,7 +107,7 @@ router.post('/list_roads/:id', function(req, resp, next) {
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
-            console.log(JSON.stringify(responseObject));
+            //console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });

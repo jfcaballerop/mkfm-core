@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var config = require(path.join(__dirname, '../config/config'));
+var config = require(path.join(__dirname, '../../../../config/config'));
 var fs = require('fs');
 var http = require('http');
 var moment = require('moment');

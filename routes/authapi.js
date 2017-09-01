@@ -48,13 +48,13 @@ router.use(function timeLog(req, res, next) {
 router.use('/users', require(path.join(__dirname, '../app/comp/user/users')));
 
 // GIS auth
-router.use('/gis', require(path.join(__dirname, '../app/comp/gis/gis')));
+router.use('/gis', require(path.join(__dirname, '../app/comp/gis/routes/gis')));
 
 // FILETYPE auth
-router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/filetype')));
+router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/filetype')));
 
 // ROAD auth
-router.use('/road', require(path.join(__dirname, '../app/comp/gis/road')));
+router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));

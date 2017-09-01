@@ -6,7 +6,7 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var validator = require('validator');
 var flash = require('connect-flash');
-var config = require(path.join(__dirname, '../../../config/config'));
+var config = require(path.join(__dirname, '../../../../config/config'));
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
@@ -16,9 +16,9 @@ var fs = require('fs');
 var tj = require('togeojson');
 var DOMParser = require('xmldom').DOMParser;
 
-var fileuploadModels = require(path.join(__dirname, './models/fileupload'));
+var fileuploadModels = require(path.join(__dirname, '../models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
-var filetypeModels = require(path.join(__dirname, './models/filetype'));
+var filetypeModels = require(path.join(__dirname, '../models/filetype'));
 var Filetype = mongoose.model('Filetype');
 
 
