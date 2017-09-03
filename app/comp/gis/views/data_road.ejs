@@ -4,22 +4,7 @@
 <head>
     <% include partials/head %>
 
-        <style>
-            /* Always set the map height explicitly to define the size of the div
-             * element that contains the map. */
-            
-            #map {
-                height: 100%;
-            }
-            /* Optional: Makes the sample page fill the window. */
-            
-            html,
-            body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-        </style>
+
 </head>
 
 <body>
@@ -50,27 +35,19 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Database</h3>
+                <h3><i class="fa fa-angle-right"></i> Edit Road</h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
                             <div class="form-panel">
 
-                                <h4><i class="fa fa-angle-right">Filtros</i></h4>
+                                <h4><i class="fa fa-angle-right">road</i></h4>
                                 <hr>
                                 <span class="btn-group">
-                                    <button onclick="go_edit_road();" type="button" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-pencil-square-o"> Edit </i></button>
-                                    
-                                    <select id="roads" class="form-control" style="width:auto;">
-                                        <option value="0">- Select a road -</option>
-                                        <% roadsvals.forEach(function(val){ %>
-                                            <option value="<%- val._id %>"><%= val.properties.name %></option>
-                                            
-                                            <% }); %>
-                                            
-                                        </select>
-                                        </span>
+                                    <!-- <button type="button" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-pencil-square-o"> Edit </i></button> -->
+                                    <option value="<%- val._id %>"><%= road.properties.name %></option>
+                                </span>
 
                                 <div id="accordion" style="display:none;">
                                     <table id="dataTable" class="table">
@@ -124,47 +101,6 @@
     <!--script for this page-->
 
     <script>
-        function go_edit_road() {
-            // alert($("#roads").val());
-            var id = $("#roads").val();
-            if (id == 0) {
-                window.location = '#';
-            } else {
-                window.location = '/auth/WEB/road/edit_road/' + id;
-            }
-        }
-        //custom select box
-        $(document).on('change', "#roads", function() {
-            var id = $("#roads").val();
-            $("#accordion").hide();
-            $("#accordion").slideToggle('slow');
-
-            // alert("ACT " + id);
-            $.post('/auth/WEB/road/list_roads/' + id, function(data) {
-                console.log(data);
-                var r = new Array(),
-                    j = 1;
-                r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > GPS </th> </tr> </thead> <tbody>';
-                for (var key = 0, size = data.properties.coordTimes.length; key < size; key++) {
-                    r[++j] = '<tr><td>';
-                    r[++j] = key;
-                    r[++j] = '</td><td>';
-                    r[++j] = moment(data.properties.coordTimes[key]).format('DD-MM-YYYY HH:mm:ss');
-                    r[++j] = '</td><td>';
-                    r[++j] = '[ ' + data.geometry.coordinates[key] + ' ]';
-                    r[++j] = '</td></tr>';
-                    // <td>';
-                    // r[++j] = '</td><td>';
-                    // r[++j] = data[key][2];
-                    // r[++j] = '</td></tr>';
-                }
-                r[++j] = '</tbody>';
-                $('#dataTable').html(r.join(''));
-                // $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
-
-            });
-
-        });
     </script>
 
 </body>
