@@ -41,33 +41,79 @@
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
                             <div class="form-panel">
+                                <form class="form-horizontal style-form" method="post" action="/auth/WEB/road/update_road">
 
-                                <h4><i class="fa fa-angle-right">road</i></h4>
-                                <hr>
-                                <span class="btn-group">
-                                    <!-- <button type="button" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-pencil-square-o"> Edit </i></button> -->
-                                    <option value="<%- val._id %>"><%= road.properties.name %></option>
-                                </span>
+                                    <div class="form-group">
+                                        <input type="hidden" name="road[_id]" value="<%- road._id %>">
+                                        <label class="col-xs-2 control-label">ROAD:</label>
+                                        <div class="col-xs-6">
+                                            <input name="road[properties][name]" type="text" class="form-control round-form input-sm" value="<%- road.properties.name %>" required>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Modificar</button>
+                                            <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button> </div>
+                                    </div>
 
-                                <div id="accordion" style="display:none;">
-                                    <table id="dataTable" class="table">
+                                    <div id="accordion">
+                                        <table id="dataTable" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td>#</td>
+                                                    <td>Time</td>
+                                                    <td>GPS</td>
+                                                    <td>PK (m)</td>
+                                                    <td>UTM</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% var i=0;
+                                                    var pk = 0;
+                                                road.properties.coordTimes.forEach(function(val){ 
+                                                   %>
 
-                                        <tr>
+                                                    <tr>
 
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
+                                                        <td>
+                                                            <%= i%>
+                                                        </td>
+                                                        <td>
+                                                            <%- moment(road.properties.coordTimes[i]).format('DD-MM-YYYY HH:mm:ss') %>
+                                                        </td>
+                                                        <td>
+                                                            [
+                                                            <%- road.geometry.coordinates[i] %>]
+                                                        </td>
+                                                        <td>
+                                                            <% var utmValAct= utm.fromLatLon(road.geometry.coordinates[i][0], road.geometry.coordinates[i][1],20);
+                                                             if(i>0){ 
+                                                                var utmValAnt= utm.fromLatLon(road.geometry.coordinates[i-1][0], road.geometry.coordinates[i-1][1],20);
 
-                                        </tbody>
-                                    </table>
-                                </div>
-
+                                                                var easting =  utmValAct.easting - utmValAnt.easting;
+                                                                if (easting<0) easting*=-1;
+                                                                var northing =  utmValAct.northing - utmValAnt.northing;
+                                                                if (northing<0) northing*=-1;
+                                                                pk += Math.sqrt(Math.pow(easting,2) + Math.pow(northing,2));
+                                                                %>
+                                                                <%-  Math.round(pk * 100) / 100  %>
+                                                                    <%}else{%>
+                                                                        0
+                                                                        <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <%- JSON.stringify(utmValAct ) %>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                    <% i++;
+                                                }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
                             </div>
                             <!-- form panel-->
+
                         </div>
                         <!--/content-panel -->
                     </div>
@@ -101,6 +147,9 @@
     <!--script for this page-->
 
     <script>
+        function saveRoad() {
+            alert('Save ROAD');
+        }
     </script>
 
 </body>

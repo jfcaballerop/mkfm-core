@@ -10,6 +10,7 @@ var config = require(path.join(__dirname, '../../../../config/config'));
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
+var utm = require('utm');
 
 var roadModels = require(path.join(__dirname, '../models/road'));
 var Road = mongoose.model('Road');
@@ -145,8 +146,9 @@ router.get('/edit_road/:id', function(req, resp, next) {
         res.on('end', function() {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
+
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            resp.render('data_road', { token: req.token, road: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.render('data_road', { token: req.token, utm: utm, road: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //console.log(JSON.stringify(responseObject));
         });
     });
@@ -156,6 +158,47 @@ router.get('/edit_road/:id', function(req, resp, next) {
 
 });
 
+/*
+UPDATE ROAD
+*/
+
+router.post('/update_road', function(req, resp, next) {
+    var postData = extend({}, req.body.road);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/road/V1/update_road/' + req.body.road._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // //console.log('STATUS: ' + res.statusCode);
+        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            // //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/road/edit_road/' + req.body.road._id);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
 
 /*******************************************************
  API REST CALLS
@@ -222,10 +265,39 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 });
 
-/* UPDATE file */
-router.post('/V1/update_file/:id', function(req, res, next) {
+/* UPDATE Road */
+router.post('/V1/update_road/:id', function(req, res, next) {
+    // console.log('## UPDATE ROAD ##\nBODY: ' + JSON.stringify(req.body));
+    Road.findById(req.params.id, function(err, road) {
+        var saveRoad = extend({}, req.body);
+        // console.log('## UPDATE ROAD ##\nsaveRoad: ' + JSON.stringify(saveRoad));
 
-    res.send('Upoload Road');
+        for (var key in saveRoad) {
+            // console.log(key + " = " + saveRoad[key]);
+            if (saveRoad[key] !== null && typeof(saveRoad[key]) == "object") {
+                // Estoy dentro de un subobjeto
+                for (var key2 in saveRoad[key]) {
+                    // console.log(key2 + " = " + saveRoad[key][key2]);
+                    road[key][key2] = saveRoad[key][key2];
+
+                }
+            } else {
+                road[key] = saveRoad[key];
+
+            }
+        }
+
+        // console.log('## UPDATE ROAD ##\nfind&update: ' + JSON.stringify(road));
+        Road.findByIdAndUpdate(req.params.id, { $set: road }, function(err, result) {
+            if (err) {
+                //console.log(err);
+                return res.status(500).send(err.message);
+            }
+            //console.log("RESULT: " + result);
+            res.status(200).jsonp(result);
+            // res.send('Done')
+        });
+    });
 
 });
 module.exports = router;
