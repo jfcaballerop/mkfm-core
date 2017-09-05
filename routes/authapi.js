@@ -56,6 +56,9 @@ router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/fil
 // ROAD auth
 router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 
+// ROADLAB auth
+router.use('/roadlab', require(path.join(__dirname, '../app/comp/gis/routes/roadlab')));
+
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 
