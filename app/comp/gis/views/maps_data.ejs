@@ -140,30 +140,48 @@
             $("#accordion").slideToggle('slow');
 
             // alert("ACT " + id);
-            $.post('/auth/WEB/road/list_roads/' + id, function(data) {
-                console.log(data);
+            var p1 = $.post('/auth/WEB/road/list_roads/' + id, function(data) {
+                data.returnId = "roads";
+                console.log('dataRoad ' + JSON.stringify(data));
+                return (data);
+            });
+            var p2 = $.post('/auth/WEB/roadlab/list_roadlabs/' + id, function(data) {
+                data.returnId = "roadlabs";
+                console.log('dataRoadLab ' + JSON.stringify(data));
+                return (data);
+            });
+
+
+            Promise.all([p1, p2]).then(function(values) {
                 var r = new Array(),
                     j = 1;
                 r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > GPS </th> </tr> </thead> <tbody>';
-                for (var key = 0, size = data.properties.coordTimes.length; key < size; key++) {
-                    r[++j] = '<tr><td>';
-                    r[++j] = key;
-                    r[++j] = '</td><td>';
-                    r[++j] = moment(data.properties.coordTimes[key]).format('DD-MM-YYYY HH:mm:ss');
-                    r[++j] = '</td><td>';
-                    r[++j] = '[ ' + data.geometry.coordinates[key] + ' ]';
-                    r[++j] = '</td></tr>';
-                    // <td>';
-                    // r[++j] = '</td><td>';
-                    // r[++j] = data[key][2];
-                    // r[++j] = '</td></tr>';
-                }
-                r[++j] = '</tbody>';
-                $('#dataTable').html(r.join(''));
-                // $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
 
+                values.forEach(function(item) {
+                    if (item.returnId === "roads") {
+                        var dataRoad = item;
+                        for (var key = 0, size = dataRoad.properties.coordTimes.length; key < size; key++) {
+                            r[++j] = '<tr><td>';
+                            r[++j] = key;
+                            r[++j] = '</td><td>';
+                            r[++j] = moment(dataRoad.properties.coordTimes[key]).format('DD-MM-YYYY HH:mm:ss');
+                            r[++j] = '</td><td>';
+                            r[++j] = '[ ' + dataRoad.geometry.coordinates[key] + ' ]';
+                            r[++j] = '</td></tr>';
+                            // <td>';
+                            // r[++j] = '</td><td>';
+                            // r[++j] = dataRoad[key][2];
+                            // r[++j] = '</td></tr>';
+                        }
+                        r[++j] = '</tbody>';
+                        $('#dataTable').html(r.join(''));
+                        // $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+                    }
+                });
+
+            }).catch(function(reason) {
+                console.log(reason)
             });
-
         });
     </script>
 

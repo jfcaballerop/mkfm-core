@@ -6,6 +6,15 @@ var fs = require('fs');
 var http = require('http');
 var moment = require('moment');
 
+
+
+
+/*
+ * Global VBLES
+ */
+var roadlabObject = {};
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var list_files = [];
@@ -72,6 +81,18 @@ router.get('/view_data', function(req, resp, next) {
     request.end();
 });
 
+/*
+    Write data
+*/
+router.get('/stream', function(req, resp, next) {
+    resp.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    resp.write("event: message\n data: Prueba de envío\n\n");
+});
+
 /* GET List Files */
 router.get('/list_files', function(req, resp, next) {
     var options = {
@@ -84,6 +105,44 @@ router.get('/list_files', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
+    var optionsRoadlab = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/roadlab/V1/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var requestRL = http.request(optionsRoadlab, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data = chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            roadlabObject = JSON.parse(data);
+            roadlabObject.forEach(function(item) {
+                delete item["_id"];
+                delete item["updated_at"];
+                delete item["created_at"];
+                //delete item["properties"]["coordTimes"];
+
+            });
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //resp.status(200).jsonp(filetypesObject);
+        });
+    });
+    requestRL.end();
+
+
     var optionsRoad = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -124,7 +183,7 @@ router.get('/list_files', function(req, resp, next) {
             // });
             // console.log(JSON.stringify(responseObject));
 
-            resp.render('maps', { roads: responseObject, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+            resp.render('maps', { roadlabs: roadlabObject, roads: responseObject, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
             //resp.status(200).send(responseObject);
 
         });

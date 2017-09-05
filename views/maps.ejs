@@ -58,6 +58,7 @@
                             <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
                             <select multiple id="layergps" class="form-control" size="<% if(roads.length < 6) { %>5<%} else{%>10<%}%>">
                                     <option value="ROADS" selected>ROADS</option>
+                                    <option value="ROADLABS" selected>ROADLABS</option>
                             </select>
                         </div>
                         <div class="form-panel">
@@ -100,18 +101,30 @@
                                 var jsonObject;
                                 <% roads.forEach(function(element) { %>
                                 jsonObject = <%- JSON.stringify(element) %>;
-                                //console.log(jsonObject);
+                                jsonObject.properties.color = "red";
+                                // console.log(JSON.stringify(jsonObject));
                                 map.data.addGeoJson(jsonObject);
-                                map.data.setStyle(function(feature) {
-                                    return /** @type {google.maps.Data.StyleOptions} */ ({
-                                        strokeColor: 'red',
-                                        strokeWeight: 5
-                                    });
-                                });
+
+
 
                                 <%}); %>
 
+                                <% roadlabs.forEach(function(element) { %>
+                                jsonObject = <%- JSON.stringify(element) %>;
+                                jsonObject.properties.color = "blue";
+                                //console.log(JSON.stringify(jsonObject));
+                                map.data.addGeoJson(jsonObject);
 
+                                <%}); %>
+
+                                map.data.setStyle(function(feature) {
+                                    var color = feature.getProperty('color');
+                                    return {
+                                        fillColor: color,
+                                        strokeColor: color,
+                                        strokeWeight: 3
+                                    }
+                                });
 
                                 // });
                             };
@@ -182,6 +195,33 @@
 
 
         });
+
+        if (!!window.EventSource) {
+            var source = new EventSource('/auth/WEB/maps/stream')
+
+            source.addEventListener('message', function(e) {
+                votes = JSON.parse(e.data);
+                console.log(votes);
+                // $("#votes").text("Yes: " + votes.yes + ", No: " + votes.no)
+            }, false)
+
+            source.addEventListener('open', function(e) {
+                console.log("Connected");
+                // $("#state").text("Connected")
+            }, false)
+
+            source.addEventListener('error', function(e) {
+                if (e.target.readyState == EventSource.CLOSED) {
+                    console.log("Disconnected");
+                    // $("#state").text("Disconnected")
+                } else if (e.target.readyState == EventSource.CONNECTING) {
+                    console.log("Connecting...");
+                    // $("#state").text("Connecting...")
+                }
+            }, false)
+        } else {
+            console.log("Your browser doesn't support SSE")
+        }
     </script>
 
 </body>

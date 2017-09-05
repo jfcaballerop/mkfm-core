@@ -1,0 +1,1 @@
+db.roadlabs.createIndex( { geometry : "2dsphere" } )
