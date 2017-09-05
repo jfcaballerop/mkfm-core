@@ -199,6 +199,12 @@
         if (!!window.EventSource) {
             var source = new EventSource('/auth/WEB/maps/stream')
 
+            source.onmessage = function(event) {
+                console.log("message");
+                var top3 = JSON.parse(event.data);
+                console.log("message " + top3);
+
+            };
             source.addEventListener('message', function(e) {
                 votes = JSON.parse(e.data);
                 console.log(votes);

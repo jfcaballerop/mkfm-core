@@ -85,12 +85,16 @@ router.get('/view_data', function(req, resp, next) {
     Write data
 */
 router.get('/stream', function(req, resp, next) {
+
+    // resp.setEncoding('utf8');
     resp.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive'
     });
-    resp.write("event: message\n data: Prueba de envío\n\n");
+
+    resp.write("event: message\n data: Prueba de envío \n\n");
+    resp.end();
 });
 
 /* GET List Files */
