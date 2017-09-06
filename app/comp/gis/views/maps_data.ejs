@@ -151,7 +151,9 @@
                 var promRL = new Array(values[0].properties.coordTimes.length)
                 var r = new Array(),
                     j = 1;
-                r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > GPS </th><th > PK </th><th > IRI </th> </tr> </thead> <tbody>';
+                r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > Long - Lat - Cota </th><th > PK </th><th>Road Category</th><th > IRI </th>  ' +
+                    '<th>Date of construction</th>' +
+                    '</tr></thead> <tbody>';
 
                 itkey = -1;
                 values.forEach(function(item) {
@@ -166,8 +168,13 @@
                         r[++j] = '</td><td>';
                         r[++j] = dataRoad.properties.pk[drindex];
                         r[++j] = '</td><td>';
+                        r[++j] = 'RC';
+                        r[++j] = '</td><td>';
                         r[++j] = dataRoad.properties.Roadlab[drindex];
-                        r[++j] = '</td></tr>';
+                        r[++j] = '</td><td>';
+                        r[++j] = 'dd/mm/yyyy';
+                        r[++j] = '</td>';
+                        r[++j] = '</tr>';
                     });
                     r[++j] = '</tbody>';
                     $('#dataTable').html(r.join(''));
