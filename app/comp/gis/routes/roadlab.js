@@ -216,7 +216,7 @@ router.post('/V1/', function(req, res, next) {
 
 /* GET JSON Roadlabs listing. */
 router.get('/V1/', function(req, res, next) {
-    Roadlab.find().limit(150).exec(function(err, roadlabs) {
+    Roadlab.find().exec(function(err, roadlabs) {
         if (err) {
             res.send(500, err.message);
         }
