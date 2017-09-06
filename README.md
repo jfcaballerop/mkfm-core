@@ -79,4 +79,4 @@ ejecutar en dev:
 ## IMPORT/EXPORT Documents
 * `mongoimport <path doc> -c <collection> --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 * `mongoimport /home/jfcp/Documentos/Workspace/domininesv3/public/uploads/9dcb96df8a82ebf47856a0f4ca679743.1 -c roads --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb" --jsonArray`
-* ` mongoexport --db mkfwcoredb -c roads --out roads.json --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin"--authenticationDatabase "mkfwcoredb"` 
+* ` mongoexport --db mkfwcoredb -c roads --out roads.json --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"` 

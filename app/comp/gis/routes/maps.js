@@ -7,6 +7,7 @@ var http = require('http');
 var moment = require('moment');
 var sseExpress = require('sse-express');
 var bodyParser = require('body-parser');
+var utm = require('utm');
 
 
 /*
@@ -81,7 +82,7 @@ router.get('/view_data', function(req, resp, next) {
             // });
             // console.log(JSON.stringify(responseObject));
 
-            resp.render('maps_data', { roadsvals: responseObject, moment: moment, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+            resp.render('maps_data', { utm: utm, roadsvals: responseObject, moment: moment, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
             //resp.status(200).send(responseObject);
 
         });

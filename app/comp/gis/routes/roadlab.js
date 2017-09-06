@@ -58,7 +58,7 @@ router.get('/list_roadlabs', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -76,6 +76,49 @@ router.get('/list_roadlabs', function(req, resp, next) {
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
 });
+
+/* GET Near roadlabs */
+router.post('/list_roadlabs/:lng/:lat', function(req, resp, next) {
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/roadlab/V1/getNear/' + req.params.lng + '/' + req.params.lat,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+            //console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+
 /* GET List roadlabs */
 router.post('/list_roadlabs/:id', function(req, resp, next) {
 
@@ -117,6 +160,7 @@ router.post('/list_roadlabs/:id', function(req, resp, next) {
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
 });
+
 /* GET List roadlabs */
 router.get('/edit_roadlab/:id', function(req, resp, next) {
 
@@ -300,4 +344,23 @@ router.post('/V1/update_roadlab/:id', function(req, res, next) {
     });
 
 });
+/* GET JSON Roadlabs near. */
+router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
+    var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
+
+    Roadlab.geoNear(point, { maxDistance: 100, spherical: true }, function(err, roadlabs) {
+        if (err) {
+            //console.log(err);
+            return res.status(500).send(err.message);
+        }
+        if (roadlabs && roadlabs.length > 0) {
+            res.status(200).jsonp(roadlabs[0]);
+        } else {
+            res.status(200).jsonp({});
+        }
+    });
+
+
+});
+
 module.exports = router;
