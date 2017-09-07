@@ -85,12 +85,12 @@ router.post('/save_tabular_data/', function(req, resp, next) {
 
 
 /* GET List infodatatracks */
-router.get('/list_infodatatracks', function(req, resp, next) {
+router.get('/list_infodatatrack/:id', function(req, resp, next) {
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/',
+        path: config.PATH_API + '/infodatatrack/V1/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ router.get('/list_infodatatracks', function(req, resp, next) {
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            delete responseObject[_id];
+            //delete responseObject[_id];
             //console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
@@ -310,6 +310,18 @@ router.post('/V1/', function(req, res, next) {
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/', function(req, res, next) {
     Infodatatrack.find().exec(function(err, infodatatracks) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(infodatatracks);
+    });
+
+});
+
+
+/* GET JSON Infodatatracks listing. */
+router.get('/V1/:id_video', function(req, res, next) {
+    Infodatatrack.findOne({ 'properties.video_roads': req.params.id_video }).sort({ "updated_at": -1 }).exec(function(err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
