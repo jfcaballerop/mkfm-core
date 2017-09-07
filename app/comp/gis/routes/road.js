@@ -339,10 +339,16 @@ router.get('/V1/tabular_data/:id', function(req, res, next) {
         Promise.all(roadlabProm).then(function(values) {
             var arrIRI = [];
             values.forEach(function(val, index) {
-                //console.log('PROMISE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description));
+                if (val.length > 0) {
+                    // console.log('VAL ' + JSON.stringify(val));
+                    arrIRI[index] = val[0].obj.properties.description.replace(/^(.*)IRI: (.*) Suspension(.*)$/, '$2');
+                } else {
+                    // console.log('UNDEFINED');
+                    arrIRI[index] = '';
+                }
+                //console.log('PROMISE ALL ' + index + '-PROMI ? SE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description) :'-' );
                 //rldata = JSON.parse(val);
-                arrIRI[index] = val[0].obj.properties.description.replace(/^(.*)IRI: (.*) Suspension(.*)$/, '$2');
-                // tabdata.properties.IRI = val[0].obj.properties.description;
+                // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
             });
             tabdata.properties.Roadlab = arrIRI;
             // console.log('TABDATA ' + JSON.stringify(tabdata));
