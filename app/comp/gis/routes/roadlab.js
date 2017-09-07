@@ -348,7 +348,7 @@ router.post('/V1/update_roadlab/:id', function(req, res, next) {
 router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
     var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
 
-    Roadlab.geoNear(point, { maxDistance: 100, spherical: true }, function(err, roadlabs) {
+    Roadlab.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, roadlabs) {
         if (err) {
             //console.log(err);
             return res.status(500).send(err.message);

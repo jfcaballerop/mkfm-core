@@ -24,6 +24,7 @@
             });
 
             Promise.all([p1]).then(function(values) {
+                // console.log(values);
                 var promRL = new Array(values[0].properties.coordTimes.length)
                 var r = new Array(),
                     j = 1;
@@ -45,17 +46,17 @@
                         r[++j] = '</td><td>';
                         r[++j] = dataRoad.properties.pk[drindex];
                         r[++j] = '</td><td>';
-                        r[++j] = 'RC';
+                        r[++j] = ' - RC - ';
                         r[++j] = '</td><td>';
                         r[++j] = dataRoad.properties.Roadlab[drindex];
                         r[++j] = '</td><td>';
                         r[++j] = 'dd/mm/yyyy';
                         r[++j] = '</td><td>';
-                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '[Y/N/NA/Unkown/1]';
                         r[++j] = '</td><td>';
-                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '[Y/N/NA/Unkown/1]';
                         r[++j] = '</td><td>';
-                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '[Y/N/NA/Unkown/1]';
                         r[++j] = '</td><td>';
                         r[++j] = '--';
                         r[++j] = '</td><td>';

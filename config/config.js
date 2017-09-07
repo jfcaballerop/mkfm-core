@@ -11,6 +11,7 @@ module.exports = {
     PATH_API: '/auth/API',
     PATH_WEB: '/auth/WEB',
     URL_BASE_API: 'http://localhost:3000/auth/API',
-    URL_BASE_WEB: 'http://localhost:3000/auth/WEB'
+    URL_BASE_WEB: 'http://localhost:3000/auth/WEB',
+    MAXDISTANCE: 100 // PRECISION in meters
 
 };
