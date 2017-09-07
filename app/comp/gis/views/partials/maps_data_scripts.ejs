@@ -1,0 +1,79 @@
+<script>
+    function go_edit_road() {
+        // alert($("#roads").val());
+        var id = $("#roads").val();
+        if (id == 0) {
+            window.location = '#';
+        } else {
+            window.location = '/auth/WEB/road/edit_road/' + id;
+        }
+    }
+
+
+    $(document).on('change', "#roads", function() {
+        var id = $("#roads").val();
+        $("#accordion").hide();
+        $("#accordion").slideToggle('slow');
+
+        // alert("ACT " + id);
+        if (id != 0) {
+            var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
+                data.returnId = "roads";
+                // console.log('dataRoad ' + JSON.stringify(data));
+                return (data);
+            });
+
+            Promise.all([p1]).then(function(values) {
+                var promRL = new Array(values[0].properties.coordTimes.length)
+                var r = new Array(),
+                    j = 1;
+                r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > Long - Lat - Cota </th><th > PK </th><th>Road Category</th><th > IRI </th>  ' +
+                    '<th>Date of construction</th><th>Existence of Alternative Itinerary</th><th>Open to traffic?</th><th>Existence of Gauging Stations</th>' +
+                    '<th>ADT</th><th>Traffic high peak</th>' +
+                    '</tr></thead> <tbody>';
+
+                itkey = -1;
+                values.forEach(function(item) {
+                    var dataRoad = item;
+                    dataRoad.properties.coordTimes.forEach(function(drval, drindex) {
+                        r[++j] = '<tr><td>';
+                        r[++j] = drindex;
+                        r[++j] = '</td><td>';
+                        r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
+                        r[++j] = '</td><td>';
+                        r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
+                        r[++j] = '</td><td>';
+                        r[++j] = dataRoad.properties.pk[drindex];
+                        r[++j] = '</td><td>';
+                        r[++j] = 'RC';
+                        r[++j] = '</td><td>';
+                        r[++j] = dataRoad.properties.Roadlab[drindex];
+                        r[++j] = '</td><td>';
+                        r[++j] = 'dd/mm/yyyy';
+                        r[++j] = '</td><td>';
+                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '</td><td>';
+                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '</td><td>';
+                        r[++j] = '[Y/N/A/1]';
+                        r[++j] = '</td><td>';
+                        r[++j] = '--';
+                        r[++j] = '</td><td>';
+                        r[++j] = '--';
+                        r[++j] = '</td>';
+                        r[++j] = '</tr>';
+                    });
+                    r[++j] = '</tbody>';
+                    $('#dataTable').html(r.join(''));
+                });
+
+            }).catch(function(reason) {
+                console.log(reason)
+            });
+        } else {
+            $('#dataTable').html('');
+            $("#accordion").hide();
+
+        }
+    });
+</script>
