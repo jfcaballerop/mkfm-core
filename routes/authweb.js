@@ -67,6 +67,9 @@ router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road'))
 // GIS - ROADLAB FUNCTIONS auth
 router.use('/roadlab', require(path.join(__dirname, '../app/comp/gis/routes/roadlab')));
 
+// GIS - INFODATATRACK FUNCTIONS auth
+router.use('/infodatatrack', require(path.join(__dirname, '../app/comp/gis/routes/infodatatrack')));
+
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 

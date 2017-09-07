@@ -1,4 +1,12 @@
 <script>
+    var dataPost;
+    $(document).ready(function() {
+        console.log("ready!");
+        // $('#editbutton').hide();
+        // $('#versionbutton').hide();
+
+    });
+
     function go_edit_road() {
         // alert($("#roads").val());
         var id = $("#roads").val();
@@ -9,12 +17,39 @@
         }
     }
 
+    $('#versionbutton').click(function() {
+        // alert('Versionando documento');
+        dataPost.properties.video_roads = dataPost._id;
+        delete dataPost._id;
+        delete dataPost.returnId;
+        delete dataPost.created_at;
+        delete dataPost.updated_at;
+        //console.log(dataPost);
+        var p1 = $.ajax({
+            url: '/auth/WEB/infodatatrack/save_tabular_data',
+            data: JSON.stringify(dataPost),
+            type: 'POST',
+            contentType: 'application/json'
+        }, function(data) {
+            // console.log('dataRoad ' + JSON.stringify(data));
+            return (data);
+        });
+
+        Promise.all([p1]).then(function(values) {
+            $('#editbutton').show();
+            //console.log(JSON.stringify(values));
+            $('#ultimaversion').append(' Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss'));
+            $('#ultimaversion').show();
+        }).catch(function(reason) {
+            console.log(reason)
+        });
+    });
 
     $(document).on('change', "#roads", function() {
         var id = $("#roads").val();
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
-
+        $('#versionbutton').show();
         // alert("ACT " + id);
         if (id != 0) {
             var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
@@ -24,6 +59,7 @@
             });
 
             Promise.all([p1]).then(function(values) {
+                dataPost = values[0];
                 // console.log(values);
                 var promRL = new Array(values[0].properties.coordTimes.length)
                 var r = new Array(),

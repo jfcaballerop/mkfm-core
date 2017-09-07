@@ -59,43 +59,43 @@
 
                                 <h4><i class="fa fa-angle-right">Filtros</i></h4>
                                 <hr>
-                                <span class="btn-group">
-                                    <button onclick="go_edit_road();" type="button" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-pencil-square-o"> Edit </i></button>
-                                    
+                                <div class="form-inline">
                                     <select id="roads" class="form-control" style="width:auto;">
-                                        <option value="0">- Select a road -</option>
-                                        <% roadsvals.forEach(function(val, indexrv){ %>
-                                            <option value="<%- val._id %>"><%= val.properties.name %></option>
-                                            
-                                            <% }); %>
-                                            
-                                        </select>
-                                        </span>
+                                    <option value="0">- Select a road -</option>
+                                    <% roadsvals.forEach(function(val, indexrv){ %>
+                                        <option value="<%- val._id %>"><%= val.properties.name %></option>
+                                        
+                                        <% }); %>
+                                        
+                                    </select>
+                                    <button id="editbutton" onclick="go_edit_road();" type="button" class="btn btn-primary" style="display: none;"><i class="fa fa-pencil-square-o"> Edit </i></button>
+                                    <button id="versionbutton" type="button" class="btn btn-theme02" style="display: none;"><i class="fa fa-code-fork" ></i> Versionar</button>
+                                    <span id="ultimaversion" style="display: none;"></span>
+                                    <div>
+                                        <div id="accordion" style="display:none;">
+                                            <table id="dataTable" class="table">
 
-                                <div id="accordion" style="display:none;">
-                                    <table id="dataTable" class="table">
+                                                <tr>
 
-                                        <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
 
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-                                        </tbody>
-                                    </table>
+                                    </div>
+                                    <!-- form panel-->
                                 </div>
-
+                                <!--/content-panel -->
                             </div>
-                            <!-- form panel-->
                         </div>
-                        <!--/content-panel -->
-                    </div>
-                </div>
-                <!-- page end-->
+                        <!-- page end-->
             </section>
         </section>
         <!-- /MAIN CONTENT -->

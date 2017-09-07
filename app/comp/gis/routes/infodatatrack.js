@@ -12,10 +12,9 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var utm = require('utm');
 
-var roadModels = require(path.join(__dirname, '../models/road'));
-var Road = mongoose.model('Road');
-var roadlabModels = require(path.join(__dirname, '../models/roadlab'));
-var Roadlab = mongoose.model('Roadlab');
+var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
+var Infodatatrack = mongoose.model('Infodatatrack');
+
 
 
 router.use(function timeLog(req, res, next) {
@@ -36,13 +35,62 @@ router.use(bodyParser.json());
 /*******************************************************
         WEB CALLS
 **********************************************************/
-/* GET List roads */
-router.get('/list_roads', function(req, resp, next) {
+
+/**
+ * SAVE DATA
+ */
+router.post('/save_tabular_data/', function(req, resp, next) {
+
+    var postData = extend({}, req.body);
+    console.log('INFODATA TRACK postData ' + JSON.stringify(req.body));
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/',
+        path: config.PATH_API + '/infodatatrack/V1/save_tabular_data/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+            //console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
+
+
+/* GET List infodatatracks */
+router.get('/list_infodatatracks', function(req, resp, next) {
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -59,7 +107,7 @@ router.get('/list_roads', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -78,14 +126,55 @@ router.get('/list_roads', function(req, resp, next) {
 
 });
 
-
-/* GET List roads */
-router.post('/list_roads/:id', function(req, resp, next) {
+/* GET Near infodatatracks */
+router.post('/list_infodatatracks/:lng/:lat', function(req, resp, next) {
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/' + req.params.id,
+        path: config.PATH_API + '/infodatatrack/V1/getNear/' + req.params.lng + '/' + req.params.lat,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+            //console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+
+/* GET List infodatatracks */
+router.post('/list_infodatatracks/:id', function(req, resp, next) {
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -121,56 +210,13 @@ router.post('/list_roads/:id', function(req, resp, next) {
 
 });
 
-/* GET List roads */
-router.post('/tabular_data/:id', function(req, resp, next) {
+/* GET List infodatatracks */
+router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/tabular_data/' + req.params.id,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-
-
-
-    var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
-            data = chunk;
-
-        });
-        res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            //delete responseObject[_id];
-            //console.log(JSON.stringify(responseObject));
-            resp.status(200).jsonp(responseObject);
-        });
-    });
-
-    request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-
-});
-
-
-/* GET List roads */
-router.get('/edit_road/:id', function(req, resp, next) {
-
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/' + req.params.id,
+        path: config.PATH_API + '/infodatatrack/V1/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -195,7 +241,7 @@ router.get('/edit_road/:id', function(req, resp, next) {
             var responseObject = JSON.parse(data);
 
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            resp.render('data_road', { token: req.token, utm: utm, road: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.render('data_infodatatrack', { token: req.token, utm: utm, infodatatrack: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //console.log(JSON.stringify(responseObject));
         });
     });
@@ -209,12 +255,12 @@ router.get('/edit_road/:id', function(req, resp, next) {
 UPDATE ROAD
 */
 
-router.post('/update_road', function(req, resp, next) {
-    var postData = extend({}, req.body.road);
+router.post('/update_infodatatrack', function(req, resp, next) {
+    var postData = extend({}, req.body.infodatatrack);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/update_road/' + req.body.road._id,
+        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -236,7 +282,7 @@ router.post('/update_road', function(req, resp, next) {
             // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
-            resp.redirect('/auth/WEB/road/edit_road/' + req.body.road._id);
+            resp.redirect('/auth/WEB/infodatatrack/edit_infodatatrack/' + req.body.infodatatrack._id);
 
         });
     });
@@ -250,114 +296,45 @@ router.post('/update_road', function(req, resp, next) {
 /*******************************************************
  API REST CALLS
  **********************************************************/
-/* POST road */
+/* POST infodatatrack */
 router.post('/V1/', function(req, res, next) {
-    fu = new Road(req.body);
-    fu.save(function(err, road) {
+    fu = new Infodatatrack(req.body);
+    fu.save(function(err, infodatatrack) {
         if (err) {
             return res.status(500).send(err.message);
         }
-        res.status(200).jsonp(road);
+        res.status(200).jsonp(infodatatrack);
     });
 });
 
-/* GET JSON Roads listing. */
+/* GET JSON Infodatatracks listing. */
 router.get('/V1/', function(req, res, next) {
-    Road.find().exec(function(err, roads) {
+    Infodatatrack.find().exec(function(err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(roads);
+        res.status(200).jsonp(infodatatracks);
     });
 
 });
-/* GET JSON Roads listing id. */
+/* GET JSON Infodatatracks listing id. */
 router.get('/V1/list_id/', function(req, res, next) {
-    Road.find({}, { _id: 1, "properties.name": 1 }).exec(function(err, roads) {
+    Infodatatrack.find({}, { _id: 1, "properties.name": 1 }).exec(function(err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(roads);
+        res.status(200).jsonp(infodatatracks);
     });
 
 });
-/* GET JSON road by id. */
+/* GET JSON infodatatrack by id. */
 router.get('/V1/:id', function(req, res, next) {
-    Road.findById(req.params.id, function(err, road) {
+    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
 
-        // Obtener para cada 
-
-        res.status(200).jsonp(road);
-    });
-
-});
-/* GET JSON road by id. */
-router.get('/V1/tabular_data/:id', function(req, res, next) {
-    Road.findById(req.params.id, function(err, tabdata) {
-        if (err) {
-            res.send(500, err.message);
-        }
-
-        // Obtener para cada coordenada el JSON del resto de colecciones.
-        //ROADLAB
-        var roadlabProm = new Array();
-        var arrPK = new Array();
-        i = -1;
-        tabdata.geometry.coordinates.forEach(function(element, tabindex) {
-            var utmValAct = utm.fromLatLon(element[0], element[1], 20);
-            if (tabindex > 0) {
-                var elemant = tabdata.geometry.coordinates[tabindex - 1];
-                // console.log('Coordinate ant ' + JSON.stringify(elemant));
-                var utmValAnt = utm.fromLatLon(elemant[0], elemant[1], 20);
-                var easting = utmValAct.easting - utmValAnt.easting;
-                if (easting < 0) easting *= -1;
-                var northing = utmValAct.northing - utmValAnt.northing;
-                if (northing < 0) northing *= -1;
-                pk += Math.sqrt(Math.pow(easting, 2) + Math.pow(northing, 2));
-                pk = Math.round(pk * 100) / 100;
-            } else {
-                pk = 0;
-            }
-            //console.log('ELEMENT ' + JSON.stringify(element));
-            arrPK[tabindex] = pk;
-
-            var point = { type: "Point", coordinates: [parseFloat(element[0]), parseFloat(element[1])] };
-            roadlabProm[tabindex] = Roadlab.geoNear(point, { maxDistance: 100, spherical: true }, function(err, roadlabs) {
-                if (err) {
-                    //console.log(err);
-                    return res.status(500).send(err.message);
-                }
-                return roadlabs[0];
-            });
-
-        });
-        tabdata.properties.pk = arrPK;
-
-        Promise.all(roadlabProm).then(function(values) {
-            var arrIRI = [];
-            values.forEach(function(val, index) {
-                if (val.length > 0) {
-                    // console.log('VAL ' + JSON.stringify(val));
-                    arrIRI[index] = val[0].obj.properties.description.replace(/^(.*)IRI: (.*) Suspension(.*)$/, '$2');
-                } else {
-                    // console.log('UNDEFINED');
-                    arrIRI[index] = '';
-                }
-                //console.log('PROMISE ALL ' + index + '-PROMI ? SE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description) :'-' );
-                //rldata = JSON.parse(val);
-                // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
-            });
-            tabdata.properties.Roadlab = arrIRI;
-            // console.log('TABDATA ' + JSON.stringify(tabdata));
-            res.status(200).jsonp(tabdata);
-        }).catch(function(reason) {
-            console.log(reason);
-            return res.status(500).send(reason);
-
-        });
+        res.status(200).jsonp(infodatatrack);
     });
 
 });
@@ -366,12 +343,12 @@ router.get('/V1/tabular_data/:id', function(req, res, next) {
 
 /* DEL file */
 router.post('/V1/delete/:id', function(req, res, next) {
-    Road.findByIdAndRemove(req.params.id, function(err, file) {
+    Infodatatrack.findByIdAndRemove(req.params.id, function(err, file) {
         // console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        Road.find(function(err, files) {
+        Infodatatrack.find(function(err, files) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -381,30 +358,30 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 });
 
-/* UPDATE Road */
-router.post('/V1/update_road/:id', function(req, res, next) {
+/* UPDATE Infodatatrack */
+router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
     // console.log('## UPDATE ROAD ##\nBODY: ' + JSON.stringify(req.body));
-    Road.findById(req.params.id, function(err, road) {
-        var saveRoad = extend({}, req.body);
-        // console.log('## UPDATE ROAD ##\nsaveRoad: ' + JSON.stringify(saveRoad));
+    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+        var saveInfodatatrack = extend({}, req.body);
+        // console.log('## UPDATE ROAD ##\nsaveInfodatatrack: ' + JSON.stringify(saveInfodatatrack));
 
-        for (var key in saveRoad) {
-            // console.log(key + " = " + saveRoad[key]);
-            if (saveRoad[key] !== null && typeof(saveRoad[key]) == "object") {
+        for (var key in saveInfodatatrack) {
+            // console.log(key + " = " + saveInfodatatrack[key]);
+            if (saveInfodatatrack[key] !== null && typeof(saveInfodatatrack[key]) == "object") {
                 // Estoy dentro de un subobjeto
-                for (var key2 in saveRoad[key]) {
-                    // console.log(key2 + " = " + saveRoad[key][key2]);
-                    road[key][key2] = saveRoad[key][key2];
+                for (var key2 in saveInfodatatrack[key]) {
+                    // console.log(key2 + " = " + saveInfodatatrack[key][key2]);
+                    infodatatrack[key][key2] = saveInfodatatrack[key][key2];
 
                 }
             } else {
-                road[key] = saveRoad[key];
+                infodatatrack[key] = saveInfodatatrack[key];
 
             }
         }
 
-        // console.log('## UPDATE ROAD ##\nfind&update: ' + JSON.stringify(road));
-        Road.findByIdAndUpdate(req.params.id, { $set: road }, function(err, result) {
+        // console.log('## UPDATE ROAD ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        Infodatatrack.findByIdAndUpdate(req.params.id, { $set: infodatatrack }, function(err, result) {
             if (err) {
                 //console.log(err);
                 return res.status(500).send(err.message);
@@ -415,6 +392,36 @@ router.post('/V1/update_road/:id', function(req, res, next) {
         });
     });
 
+});
+/* GET JSON Infodatatracks near. */
+router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
+    var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
+
+    Infodatatrack.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, infodatatracks) {
+        if (err) {
+            //console.log(err);
+            return res.status(500).send(err.message);
+        }
+        if (infodatatracks && infodatatracks.length > 0) {
+            res.status(200).jsonp(infodatatracks[0]);
+        } else {
+            res.status(200).jsonp({});
+        }
+    });
+
+
+});
+
+/* POST Data Road Track */
+router.post('/V1/save_tabular_data/', function(req, res, next) {
+    // console.log('API save_tabular_data ' + JSON.stringify(req.body));
+    infodatatrack = new Infodatatrack(req.body);
+    infodatatrack.save(function(err, data) {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        res.status(200).jsonp(data);
+    });
 });
 
 module.exports = router;
