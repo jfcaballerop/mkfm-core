@@ -389,25 +389,9 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
     console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
-        console.log('\n\n\n## UPDATE Infodatatrack 2 ##\nsaveInfodatatrack: ' + JSON.stringify(saveInfodatatrack));
 
-        for (var key in saveInfodatatrack) {
-            // console.log(key + " = " + saveInfodatatrack[key]);
-            if (saveInfodatatrack[key] !== null && typeof(saveInfodatatrack[key]) == "object") {
-                // Estoy dentro de un subobjeto
-                for (var key2 in saveInfodatatrack[key]) {
-                    // console.log(key2 + " = " + saveInfodatatrack[key][key2]);
-                    infodatatrack[key][key2] = saveInfodatatrack[key][key2];
-
-                }
-            } else {
-                infodatatrack[key] = saveInfodatatrack[key];
-
-            }
-        }
-
-        // console.log('## UPDATE ROAD ##\nfind&update: ' + JSON.stringify(infodatatrack));
-        Infodatatrack.findByIdAndUpdate(req.params.id, { $set: infodatatrack }, function(err, result) {
+        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
             if (err) {
                 //console.log(err);
                 return res.status(500).send(err.message);
