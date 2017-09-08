@@ -22,8 +22,11 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 router.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    parameterLimit: 1000000
 }));
+router.use(bodyParser.json({ limit: 1024 * 1024 * 200, type: 'application/json', parameterLimit: 1000000 }));
+
 //router.use(fileUpload());
 //router.use(uploading.single('foofield'));
 
@@ -216,7 +219,7 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/' + req.params.id,
+        path: config.PATH_API + '/infodatatrack/V1/list_infobyid/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -318,6 +321,17 @@ router.get('/V1/', function(req, res, next) {
 
 });
 
+/* GET JSON Infodatatracks listing. */
+router.get('/V1/list_info/:id', function(req, res, next) {
+    Infodatatrack.find().exec(function(err, infodatatracks) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(infodatatracks);
+    });
+
+});
+
 
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/:id_video', function(req, res, next) {
@@ -340,7 +354,7 @@ router.get('/V1/list_id/', function(req, res, next) {
 
 });
 /* GET JSON infodatatrack by id. */
-router.get('/V1/:id', function(req, res, next) {
+router.get('/V1/list_infobyid/:id', function(req, res, next) {
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
@@ -372,10 +386,10 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 /* UPDATE Infodatatrack */
 router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
-    // console.log('## UPDATE ROAD ##\nBODY: ' + JSON.stringify(req.body));
+    console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
-        // console.log('## UPDATE ROAD ##\nsaveInfodatatrack: ' + JSON.stringify(saveInfodatatrack));
+        console.log('\n\n\n## UPDATE Infodatatrack 2 ##\nsaveInfodatatrack: ' + JSON.stringify(saveInfodatatrack));
 
         for (var key in saveInfodatatrack) {
             // console.log(key + " = " + saveInfodatatrack[key]);

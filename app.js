@@ -35,9 +35,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
     limit: 1024 * 1024 * 200,
-    extended: true
+    extended: true,
+    parameterLimit: 1000000
 }));
-app.use(bodyParser.json({ limit: 1024 * 1024 * 200, type: 'application/json' }));
+app.use(bodyParser.json({ limit: 1024 * 1024 * 200, type: 'application/json', parameterLimit: 1000000 }));
 app.use(bodyParser.raw({ inflate: true, limit: 1024 * 1024 * 200 }));
 
 app.use(session({

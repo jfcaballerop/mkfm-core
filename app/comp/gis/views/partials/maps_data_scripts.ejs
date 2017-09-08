@@ -1,5 +1,7 @@
 <script>
     var dataPost;
+    var dataTrack;
+
     $(document).ready(function() {
         console.log("ready!");
         // $('#editbutton').hide();
@@ -13,7 +15,7 @@
         if (id == 0) {
             window.location = '#';
         } else {
-            window.location = '/auth/WEB/road/edit_road/' + id;
+            window.location = '/auth/WEB/infodatatrack/edit_infodatatrack/' + dataTrack._id;
         }
     }
 
@@ -36,10 +38,12 @@
         });
 
         Promise.all([p1]).then(function(values) {
+            $('#ultimaversion').empty();
             $('#editbutton').show();
             //console.log(JSON.stringify(values));
-            $('#ultimaversion').append(' Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss'));
+            $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
+            dataTrack = values[0];
         }).catch(function(reason) {
             console.log(reason)
         });
@@ -74,11 +78,14 @@
                 console.log(dataTrack);
 
                 if (dataTrack !== "undefined" && dataTrack != null) {
+                    $('#ultimaversion').empty();
                     $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
                     $('#ultimaversion').show();
                     $('#editbutton').show();
 
                 } else {
+                    // TODO: Borrar lo escrito anteriormente
+                    $('#ultimaversion').empty();
                     $('#ultimaversion').hide();
                     $('#editbutton').hide();
                 }

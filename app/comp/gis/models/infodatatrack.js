@@ -9,8 +9,16 @@ var infodatatrackSchema = new Schema({
         time: Date,
         coordTimes: [],
         pk: [],
+        road_category: [],
         Roadlab: [],
-        video_roads: { type: Schema.Types.ObjectId, ref: 'Road' }
+        video_roads: { type: Schema.Types.ObjectId, ref: 'Road' },
+        inventario: [],
+        date_construction: [],
+        alternative_itinerary: [],
+        open_traffic: [],
+        existence_gauging_stations: [],
+        adt: [],
+        traffic_high_peak: []
     },
     geometry: {
         type: { type: String },
