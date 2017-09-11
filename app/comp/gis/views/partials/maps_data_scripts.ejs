@@ -76,52 +76,55 @@
                 dataPost = values[0];
                 dataTrack = values[1];
                 console.log(dataTrack);
-
+                var dataRoad;
                 if (dataTrack !== "undefined" && dataTrack != null) {
                     $('#ultimaversion').empty();
                     $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
                     $('#ultimaversion').show();
                     $('#editbutton').show();
+                    dataRoad = dataTrack;
 
                 } else {
                     // TODO: Borrar lo escrito anteriormente
                     $('#ultimaversion').empty();
                     $('#ultimaversion').hide();
                     $('#editbutton').hide();
+                    dataRoad = dataPost;
                 }
                 var r = new Array(),
                     j = 1;
-                r[0] = '<thead> <tr><th> # </th> <th> Time </th> <th > Long - Lat - Cota </th><th > PK </th><th>Road Category</th><th > IRI </th>  ' +
+                r[0] = '<thead> <tr><th> # </th> <th> Time </th><th>INV</th> <th > Long - Lat - Cota </th><th > PK </th><th>Road Category</th><th > IRI </th>  ' +
                     '<th>Date of construction</th><th>Existence of Alternative Itinerary</th><th>Open to traffic?</th><th>Existence of Gauging Stations</th>' +
                     '<th>ADT</th><th>Traffic high peak</th>' +
                     '</tr></thead> <tbody>';
 
-                var dataRoad = dataPost;
                 dataRoad.properties.coordTimes.forEach(function(drval, drindex) {
                     r[++j] = '<tr><td>';
                     r[++j] = drindex;
                     r[++j] = '</td><td>';
                     r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
                     r[++j] = '</td><td>';
+                    r[++j] = dataRoad.properties.inventario ? dataRoad.properties.inventario[drindex] : '--';
+                    r[++j] = '</td><td>';
                     r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.pk[drindex];
                     r[++j] = '</td><td>';
-                    r[++j] = ' - RC - ';
+                    r[++j] = dataRoad.properties.road_category ? dataRoad.properties.road_category[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.Roadlab[drindex];
+                    r[++j] = dataRoad.properties.Roadlab ? dataRoad.properties.Roadlab[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = 'dd/mm/yyyy';
+                    r[++j] = dataRoad.properties.date_construction ? dataRoad.properties.date_construction[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = '[Y/N/NA/Unkown/1]';
+                    r[++j] = dataRoad.properties.alternative_itinerary ? dataRoad.properties.alternative_itinerary[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = '[Y/N/NA/Unkown/1]';
+                    r[++j] = dataRoad.properties.open_traffic ? dataRoad.properties.open_traffic[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = '[Y/N/NA/Unkown/1]';
+                    r[++j] = dataRoad.properties.existence_gauging_stations ? dataRoad.properties.existence_gauging_stations[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = '--';
+                    r[++j] = dataRoad.properties.adt ? dataRoad.properties.adt[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = '--';
+                    r[++j] = dataRoad.properties.traffic_high_peak ? dataRoad.properties.traffic_high_peak[drindex] : '--';
                     r[++j] = '</td>';
                     r[++j] = '</tr>';
                 });

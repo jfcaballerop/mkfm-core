@@ -389,17 +389,37 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
     console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
+        for (var key in saveInfodatatrack) {
+            console.log(key + ": " + saveInfodatatrack[key]);
+            if (typeof saveInfodatatrack[key] === 'object') {
+                // estoy dentro de properties
+                for (var key2 in saveInfodatatrack[key]) {
+                    console.log(key2 + ": " + saveInfodatatrack[key][key2]);
+                    infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+
+                }
+            } else {
+                infodatatrack[key] = saveInfodatatrack[key];
+            }
+        };
 
         console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
-        Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
+        infodatatrack.updated_at = new Date();
+        infodatatrack.save(function(err, data) {
             if (err) {
-                //console.log(err);
                 return res.status(500).send(err.message);
             }
-            //console.log("RESULT: " + result);
-            res.status(200).jsonp(result);
-            // res.send('Done')
+            res.status(200).jsonp(data);
         });
+        // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
+        //     if (err) {
+        //         //console.log(err);
+        //         return res.status(500).send(err.message);
+        //     }
+        //     //console.log("RESULT: " + result);
+        //     res.status(200).jsonp(result);
+        //     // res.send('Done')
+        // });
     });
 
 });

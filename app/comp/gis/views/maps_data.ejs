@@ -19,6 +19,15 @@
                 margin: 0;
                 padding: 0;
             }
+            
+            th,
+            td {
+                /*use this property to disbale soft wrap*/
+                white-space: nowrap;
+                /*To make extra certain,add this css property*/
+                word-break: keep-all;
+                background-color: white;
+            }
         </style>
 </head>
 
@@ -73,20 +82,22 @@
                                     <span id="ultimaversion" style="display: none;"></span>
                                     <div>
                                         <div id="accordion" style="display:none;">
-                                            <table id="dataTable" class="table">
+                                            <div class="table-responsive">
+                                                <table id="dataTable" class="table table-bordered">
 
-                                                <tr>
+                                                    <tr>
 
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                </tr>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
 
                                     </div>

@@ -3,8 +3,16 @@
 
 <head>
     <% include partials/head %>
-
-
+        <style>
+            th,
+            td {
+                /*use this property to disbale soft wrap*/
+                white-space: nowrap;
+                /*To make extra certain,add this css property*/
+                word-break: keep-all;
+                background-color: white;
+            }
+        </style>
 </head>
 
 <body>
@@ -52,57 +60,66 @@
                                         </div>
                                         <div class="col-xs-4">
                                             <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Modificar</button>
-                                            <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button> </div>
+                                            <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                        <br>
+                                        <div class="col-xs-4">
+                                            <b>Actualizado:</b>
+                                            <%- moment(infodatatrack.updated_at).format('DD/MM/YYYY HH:mm:ss') %>
+                                        </div>
                                     </div>
 
                                     <div id="accordion">
-                                        <table id="dataTable" class="table table-striped table-xs">
-                                            <thead>
-                                                <tr>
-                                                    <th title="ID">#</th>
-                                                    <th title="Selection"> Sel </th>
-                                                    <th title="Inventary">INV</th>
-                                                    <th title="Date Time"> TIME </th>
-                                                    <th title="GPS - POS: Long - Lat - Cota">GPS </th>
-                                                    <th title="PK"> PK </th>
-                                                    <th title="Road Category"> RC</th>
-                                                    <th title="IRI"> IRI </th>
-                                                    <th title="Date of construction">DC</th>
-                                                    <th title="Existence of Alternative Itinerary">EAI</th>
-                                                    <th title="Open to traffic?">OPEN</th>
-                                                    <th title="Existence of Gauging Stations">GS</th>
-                                                    <th title="ADT">ADT</th>
-                                                    <th title="Traffic high peak"> THP</th>
-                                                    <!-- <td>UTM</td> -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% 
+                                        <div class="table-responsive">
+
+
+                                            <table id="dataTable" class="table table-bordered table-xs">
+                                                <thead>
+                                                    <tr>
+                                                        <th title="ID">#</th>
+                                                        <th title="Selection"> Sel </th>
+                                                        <th title="Inventary">INV</th>
+                                                        <th title="Date Time"> TIME </th>
+                                                        <th title="GPS - POS: Long - Lat - Cota">GPS </th>
+                                                        <th title="PK"> PK </th>
+                                                        <th title="Road Category"> RC</th>
+                                                        <th title="IRI"> IRI </th>
+                                                        <th title="Date of construction">DC</th>
+                                                        <th title="Existence of Alternative Itinerary">EAI</th>
+                                                        <th title="Open to traffic?">OPEN</th>
+                                                        <th title="Existence of Gauging Stations">GS</th>
+                                                        <th title="ADT">ADT</th>
+                                                        <th title="Traffic high peak"> THP</th>
+                                                        <!-- <td>UTM</td> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% 
                                                     var pk = 0;
                                                 infodatatrack.properties.coordTimes.forEach(function(val, index){ 
                                                    %>
 
-                                                    <tr>
-                                                        <td>
-                                                            <%= index%>
-                                                        </td>
-                                                        <td>
-                                                            <input name="infodatatrack[_id]" type="checkbox" class="input-xs" id="<%- infodatatrack._id%>" value="<%- infodatatrack._id %>">
-                                                        </td>
-                                                        <td>
-                                                            <input name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario %>">
-                                                        </td>
-                                                        <td>
-                                                            <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
-                                                        </td>
-                                                        <td>
-                                                            <%- '[' + infodatatrack.geometry.coordinates[index] +']' %>
-                                                        </td>
-                                                        <td>
-                                                            <%- infodatatrack.properties.pk[index] %>
-                                                        </td>
-                                                        <td>
-                                                            <select name="infodatatrack[properties][road_category]" class="form-control">
+                                                        <tr>
+                                                            <td>
+                                                                <%= index%>
+                                                            </td>
+                                                            <td>
+                                                                <input name="infodatatrack[_id]" type="checkbox" class="input-xs" id="<%- infodatatrack._id%>" value="<%- infodatatrack._id %>">
+                                                            </td>
+                                                            <td>
+                                                                <input name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
+                                                            </td>
+                                                            <td>
+                                                                <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
+                                                            </td>
+                                                            <td>
+                                                                <%- '[' + infodatatrack.geometry.coordinates[index] +']' %>
+                                                            </td>
+                                                            <td>
+                                                                <%- infodatatrack.properties.pk[index] %>
+                                                            </td>
+                                                            <td>
+                                                                <select name="infodatatrack[properties][road_category]" class="form-control">
                                                                         <option>Main Road</option>
                                                                         <option>Secondary</option>
                                                                         <option>Feeder</option>
@@ -110,24 +127,24 @@
                                                                         <option>1</option>
                                                                       </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <% if(infodatatrack.properties.Roadlab){ %>
-                                                                <input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.Roadlab[index] %>">
-                                                                <%} else {%>
-                                                                    <input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="">
-                                                                    <% } %>
-                                                        </td>
-                                                        <td>
-                                                            <% 
-                                                                if(typeof(infodatatrack.properties.date_construction[index]) !== "undefined"){ %>
-                                                                <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="<%- moment(infodatatrack.properties.date_construction[index]).format('DD-MM-YYYY') %>">
-                                                                <% } else {%>
-                                                                    <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="">
-                                                                    <% } %>
-                                                        </td>
-                                                        <td>
-                                                            <select name="infodatatrack[properties][alternative_itinerary]" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <% if(infodatatrack.properties.Roadlab){ %>
+                                                                    <input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.Roadlab[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% 
+                                                                if(typeof(infodatatrack.properties.date_construction[index]) !== "undefined" && infodatatrack.properties.date_construction[index] !== ""){ %>
+                                                                    <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="<%- moment(infodatatrack.properties.date_construction[index]).format('DD-MM-YYYY') %>">
+                                                                    <% } else {%>
+                                                                        <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <select name="infodatatrack[properties][alternative_itinerary]" class="form-control">
                                                                             <option>Y</option>
                                                                             <option>N</option>
                                                                             <option>NA</option>
@@ -135,9 +152,9 @@
                                                                             <option>1</option>
                                                                           </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <select name="infodatatrack[properties][open_traffic]" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <select name="infodatatrack[properties][open_traffic]" class="form-control">
                                                                             <option>Y</option>
                                                                             <option>N</option>
                                                                             <option>NA</option>
@@ -145,9 +162,9 @@
                                                                             <option>1</option>
                                                                           </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <select name="infodatatrack[properties][existence_gauging_stations]" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <select name="infodatatrack[properties][existence_gauging_stations]" class="form-control">
                                                                             <option>Y</option>
                                                                             <option>N</option>
                                                                             <option>NA</option>
@@ -155,25 +172,26 @@
                                                                             <option>1</option>
                                                                           </select>
 
-                                                        </td>
-                                                        <td>
-                                                            <% if(infodatatrack.properties.adt){ %>
-                                                                <input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.adt[index] %>">
-                                                                <%} else {%>
-                                                                    <input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="">
-                                                                    <% } %>
-                                                        </td>
-                                                        <td>
-                                                            <% if(infodatatrack.properties.traffic_high_peak){ %>
-                                                                <input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.traffic_high_peak[index] %>">
-                                                                <%} else {%>
-                                                                    <input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="">
-                                                                    <% } %>
-                                                        </td>
-                                                    </tr>
-                                                    <% }); %>
-                                            </tbody>
-                                        </table>
+                                                            </td>
+                                                            <td>
+                                                                <% if(infodatatrack.properties.adt){ %>
+                                                                    <input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.adt[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(infodatatrack.properties.traffic_high_peak){ %>
+                                                                    <input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.traffic_high_peak[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
