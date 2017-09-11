@@ -48,6 +48,7 @@
                                         <label class="col-xs-2 control-label">ROAD:</label>
                                         <div class="col-xs-6">
                                             <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>" required>
+                                            <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>" required>
                                         </div>
                                         <div class="col-xs-4">
                                             <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Modificar</button>
@@ -118,10 +119,11 @@
                                                                     <% } %>
                                                         </td>
                                                         <td>
-                                                            <% if(infodatatrack.properties.date_construction){ %>
-                                                                <input name="infodatatrack.properties.date_construction" type="text" class="form-control round-form input-sm" value="<%- moment(infodatatrack.properties.date_construction[index]).format('DD-MM-YYYY') %>">
+                                                            <% 
+                                                                if(typeof(infodatatrack.properties.date_construction[index]) !== "undefined"){ %>
+                                                                <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="<%- moment(infodatatrack.properties.date_construction[index]).format('DD-MM-YYYY') %>">
                                                                 <% } else {%>
-                                                                    <input name="infodatatrack.properties.date_construction" type="text" class="form-control round-form input-sm" value="">
+                                                                    <input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="">
                                                                     <% } %>
                                                         </td>
                                                         <td>

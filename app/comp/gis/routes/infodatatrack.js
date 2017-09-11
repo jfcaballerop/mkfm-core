@@ -301,8 +301,8 @@ router.post('/update_infodatatrack', function(req, resp, next) {
  **********************************************************/
 /* POST infodatatrack */
 router.post('/V1/', function(req, res, next) {
-    fu = new Infodatatrack(req.body);
-    fu.save(function(err, infodatatrack) {
+    idata = new Infodatatrack(req.body);
+    idata.save(function(err, infodatatrack) {
         if (err) {
             return res.status(500).send(err.message);
         }
@@ -424,7 +424,7 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 
 /* POST Data Road Track */
 router.post('/V1/save_tabular_data/', function(req, res, next) {
-    // console.log('API save_tabular_data ' + JSON.stringify(req.body));
+    console.log('API save_tabular_data ' + JSON.stringify(req.body));
     infodatatrack = new Infodatatrack(req.body);
     infodatatrack.save(function(err, data) {
         if (err) {
