@@ -18,7 +18,18 @@ var infodatatrackSchema = new Schema({
         open_traffic: [],
         existence_gauging_stations: [],
         adt: [],
-        traffic_high_peak: []
+        traffic_high_peak: [],
+        pavement_material: [],
+        base_material: [],
+        subbase_material: [],
+        number_lanes_inc: [],
+        number_lanes_dec: [],
+        total_number_lanes: [],
+        total_width: [],
+        location_doc_road_projects: []
+
+
+
     },
     geometry: {
         type: { type: String },
