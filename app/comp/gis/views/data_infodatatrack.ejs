@@ -49,7 +49,7 @@
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
                             <div class="form-panel">
-                                <form class="form-horizontal style-form" method="post" action="/auth/WEB/infodatatrack/update_infodatatrack">
+                                <form id="form" class="form-horizontal style-form" method="post" action="/auth/WEB/infodatatrack/update_infodatatrack">
 
                                     <div class="form-group">
                                         <input type="hidden" name="infodatatrack[_id]" value="<%- infodatatrack._id %>">
@@ -104,10 +104,10 @@
                                                                 <%= index%>
                                                             </td>
                                                             <td>
-                                                                <input name="infodatatrack[_id]" type="checkbox" class="input-xs" id="<%- infodatatrack._id%>" value="<%- infodatatrack._id %>">
+                                                                <input id="check<%- index %>" name="check[_id]" type="checkbox" class="input-xs" value="<%- infodatatrack._id %>">
                                                             </td>
                                                             <td>
-                                                                <input id="inventario<%- infodatatrack._id %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
+                                                                <input id="<%- index %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
                                                             </td>
                                                             <td>
                                                                 <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
