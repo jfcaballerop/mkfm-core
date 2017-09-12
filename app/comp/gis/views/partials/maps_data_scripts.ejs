@@ -58,7 +58,7 @@
         if (id != 0) {
             var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
                 data.returnId = "roads";
-                // console.log('dataRoad ' + JSON.stringify(data));
+                console.log('dataRoad ' + JSON.stringify(data));
                 return (data);
             });
 
@@ -85,7 +85,6 @@
                     dataRoad = dataTrack;
 
                 } else {
-                    // TODO: Borrar lo escrito anteriormente
                     $('#ultimaversion').empty();
                     $('#ultimaversion').hide();
                     $('#editbutton').hide();

@@ -69,7 +69,7 @@ router.get('/list_files', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -105,7 +105,7 @@ router.get('/upload', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -139,7 +139,7 @@ router.get('/upload', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -177,7 +177,7 @@ router.post('/upload', uploading, function(req, resp) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -221,7 +221,7 @@ router.post('/upload', uploading, function(req, resp) {
             var data = '';
             res.on('data', function(chunk) {
                 // //console.log('BODY: ' + chunk);
-                data = chunk;
+                data += chunk;
 
             });
             res.on('end', function() {
@@ -264,7 +264,7 @@ router.post('/validate/:id', function(req, resp) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -295,7 +295,7 @@ router.post('/validate/:id', function(req, resp) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -333,7 +333,7 @@ router.get('/getfile/:id', function(req, resp) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -369,7 +369,7 @@ router.post('/desactivate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -399,7 +399,7 @@ router.post('/desactivate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -437,7 +437,7 @@ router.post('/activate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -468,7 +468,7 @@ router.post('/activate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -507,7 +507,7 @@ router.post('/delete/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -537,7 +537,7 @@ router.post('/delete/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {

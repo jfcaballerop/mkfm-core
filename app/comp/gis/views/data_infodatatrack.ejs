@@ -107,7 +107,7 @@
                                                                 <input name="infodatatrack[_id]" type="checkbox" class="input-xs" id="<%- infodatatrack._id%>" value="<%- infodatatrack._id %>">
                                                             </td>
                                                             <td>
-                                                                <input name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
+                                                                <input id="inventario<%- infodatatrack._id %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
                                                             </td>
                                                             <td>
                                                                 <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
@@ -228,12 +228,7 @@
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
     <!--script for this page-->
-
-    <script>
-        function saveRoad() {
-            alert('Save ROAD');
-        }
-    </script>
+    <% include ./partials/data_infodatatrack_scripts %>
 
 </body>
 

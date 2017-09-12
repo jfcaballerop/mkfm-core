@@ -59,7 +59,7 @@ router.get('/list_roads', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -102,7 +102,7 @@ router.post('/list_roads/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -144,7 +144,7 @@ router.post('/tabular_data/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -187,7 +187,7 @@ router.get('/edit_road/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -229,7 +229,7 @@ router.post('/update_road', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             // //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {

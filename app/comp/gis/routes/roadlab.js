@@ -142,7 +142,7 @@ router.post('/list_roadlabs/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -184,7 +184,7 @@ router.get('/edit_roadlab/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -226,7 +226,7 @@ router.post('/update_roadlab', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             // //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {

@@ -103,7 +103,7 @@ router.post('/update_user', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             // //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -140,8 +140,7 @@ router.get('/list_users', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
-
+            data += chunk;
         });
         res.on('end', function() {
             //console.log('DATA ' + data.length + ' ' + data);
@@ -177,7 +176,7 @@ router.post('/desactivate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -215,7 +214,7 @@ router.post('/activate/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -252,7 +251,7 @@ router.post('/delete/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {

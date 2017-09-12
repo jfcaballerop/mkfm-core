@@ -194,7 +194,7 @@ router.post('/list_infodatatracks/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -236,7 +236,7 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -278,7 +278,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
         var data = '';
         res.on('data', function(chunk) {
             // //console.log('BODY: ' + chunk);
-            data = chunk;
+            data += chunk;
 
         });
         res.on('end', function() {
@@ -401,7 +401,7 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
             } else {
                 infodatatrack[key] = saveInfodatatrack[key];
             }
-        };
+        }
 
         console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
         infodatatrack.updated_at = new Date();
