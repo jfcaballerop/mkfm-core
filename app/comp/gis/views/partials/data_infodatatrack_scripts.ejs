@@ -7,6 +7,14 @@
     var $checks = $('#form').find("input[name='check[_id]']");
 
 
+    $("input[name='infodatatrack[properties][date_construction]']").datepicker({
+        dateFormat: 'dd-mm-yy',
+        onSelect: function(date) {
+            $inputsDC.trigger("blur");
+        }
+
+    });
+
     $checks.on("change", function() {
         if ($(this).is(':checked'))
             $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
@@ -17,11 +25,11 @@
     $inputsINV.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
-            console.log('ID: ' + $this.attr("id"));
+            // //console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
-                    console.log('Check: ' + (index));
+                    // //console.log('Check: ' + (index));
                     $inputsINV[index].value = $this.val();
                 }
 
@@ -32,11 +40,11 @@
     $inputsRL.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
-            console.log('ID: ' + $this.attr("id"));
+            //console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
-                    console.log('Check: ' + (index));
+                    //console.log('Check: ' + (index));
                     $inputsRL[index].value = $this.val();
                 }
 
@@ -47,11 +55,11 @@
     $inputsDC.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
-            console.log('ID: ' + $this.attr("id"));
+            //console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
-                    console.log('Check: ' + (index));
+                    //console.log('Check: ' + (index));
                     $inputsDC[index].value = $this.val();
                 }
 
@@ -59,14 +67,16 @@
             });
         }
     });
+
+
     $inputsADT.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
-            console.log('ID: ' + $this.attr("id"));
+            //console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
-                    console.log('Check: ' + (index));
+                    //console.log('Check: ' + (index));
                     $inputsADT[index].value = $this.val();
                 }
 
@@ -77,11 +87,11 @@
     $inputsTHP.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
-            console.log('ID: ' + $this.attr("id"));
+            //console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
-                    console.log('Check: ' + (index));
+                    //console.log('Check: ' + (index));
                     $inputsTHP[index].value = $this.val();
                 }
 
