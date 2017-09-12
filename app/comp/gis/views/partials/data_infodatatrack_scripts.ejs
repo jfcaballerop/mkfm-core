@@ -15,6 +15,26 @@
 
     });
 
+
+    $("thead > tr > th", $('#dataTable')).click(function() {
+        // alert("Handler for .click() called.");
+        // console.log($(this).attr("id"));
+        if ($(this).attr("id")) {
+            $(this).hide();
+            $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
+        }
+
+    });
+
+    $("#showall").click(function() {
+        $("thead > tr > th", $('#dataTable')).each(function(index, elem) {
+            if ($(this).attr("id")) {
+                $(this).show();
+                $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).show();
+            }
+        });
+    });
+
     $checks.on("change", function() {
         if ($(this).is(':checked'))
             $(this).closest('tr').children('td').css('background-color', '#ccf5ff');

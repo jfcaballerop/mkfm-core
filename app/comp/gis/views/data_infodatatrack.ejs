@@ -67,6 +67,10 @@
                                             <b>Actualizado:</b>
                                             <%- moment(infodatatrack.updated_at).format('DD/MM/YYYY HH:mm:ss') %>
                                         </div>
+                                        <div class="col-xs-4">
+                                            <button id="showall" type="button" class="btn btn-round btn-success"><i class="fa fa-eye"></i> SHOW ALL COLUMNS</button>
+
+                                        </div>
                                     </div>
 
                                     <div id="accordion">
@@ -79,7 +83,7 @@
                                                         <th title="ID">#</th>
                                                         <th title="Selection"> Sel </th>
                                                         <th title="Inventary">INV</th>
-                                                        <th title="Date Time"> TIME </th>
+                                                        <th id="infodatatrack[properties][coordTimes]" title="Date Time"> TIME </th>
                                                         <th title="GPS - POS: Long - Lat - Cota">GPS </th>
                                                         <th title="PK"> PK </th>
                                                         <th title="Road Category"> RC</th>
@@ -109,7 +113,7 @@
                                                             <td>
                                                                 <input id="<%- index %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
                                                             </td>
-                                                            <td>
+                                                            <td id="infodatatrack[properties][coordTimes]">
                                                                 <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
                                                             </td>
                                                             <td>
