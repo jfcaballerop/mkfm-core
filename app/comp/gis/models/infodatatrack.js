@@ -42,7 +42,24 @@ var infodatatrackSchema = new Schema({
         maint_issues: [],
         investment10years: [],
         investment_required: [],
-        om_comments: []
+        om_comments: [],
+        acess_airports_ferry_ports: [], //ROADS Group 4
+        distance_airports_ferry_ports: [],
+        access_turistic_sites: [],
+        distance_turistic_sites: [],
+        acess_industry_agriculture_fishing_sites: [],
+        distance_industries_agriculture_fishing_sites: [],
+        access_social_services: [],
+        distance_social_services: [],
+        located_within_an_environmentally_protected_area: [],
+        distance_a_dumping_area: [],
+        current_condition: [],
+        criticality: [],
+        exposure_landslide_hazard: [],
+        exposure_flood_hazard: [],
+        asset_response_against_hazards: [],
+        asset_sensitivity: [],
+        risk: []
     },
     geometry: {
         type: { type: String },

@@ -102,6 +102,39 @@
                                                         <th id="infodatatrack[properties][total_number_lanes]" title="Total number of lanes"> TOT NOL</th>
                                                         <th id="infodatatrack[properties][total_width]" title="Total width (m)"> TOT WIDTH</th>
                                                         <th id="infodatatrack[properties][location_doc_road_projects]" title="Location of the documentation of road projects"> LOC DOC RP</th>
+                                                        <th id="infodatatrack[properties][last_inspection]" title="Date of last inspection"> DLI</th>
+                                                        <th id="infodatatrack[properties][prev_condition]" title="Previous condition rate"> PCR</th>
+                                                        <th id="infodatatrack[properties][failure_history]" title="Failure history"> FH</th>
+                                                        <th id="infodatatrack[properties][cons_LOS]" title="Consequences of failure on LOS"> CF LOS</th>
+                                                        <th id="infodatatrack[properties][survey_freq]" title="Survey frequency"> SF</th>
+                                                        <th id="infodatatrack[properties][next_survey]" title="Date of Next survey"> DNS</th>
+                                                        <th id="infodatatrack[properties][past_interv]" title="Has there been past interventions?"> PINT</th>
+                                                        <th id="infodatatrack[properties][interv_extent]" title="Have they been global or partial interventions?"> GPI</th>
+                                                        <th id="infodatatrack[properties][year_interv]" title="Year of performance of past interventions"> YPI</th>
+                                                        <th id="infodatatrack[properties][scope_interv]" title="Scope of past interventions"> SI</th>
+                                                        <th id="infodatatrack[properties][impact_interv]" title="Impact on condition of past interventions"> II</th>
+                                                        <th id="infodatatrack[properties][loc_doc_interv]" title="Location of the documentation of past interventions"> LDI</th>
+                                                        <th id="infodatatrack[properties][maint_issues]" title="Maintainability issues"> MI</th>
+                                                        <th id="infodatatrack[properties][investment10years]" title="Investment undertaken in the last 10 years"> I10Y</th>
+                                                        <th id="infodatatrack[properties][investment_required]" title="Investment required to upgrade to A class"> IR</th>
+                                                        <th id="infodatatrack[properties][om_comments]" title="Comments to Operation and Maintainance"> OM COM</th>
+                                                        <th id="infodatatrack[properties][acess_airports_ferry_ports]" title="Acess_airports_ferry_ports">AAFP</th>
+                                                        <th id="infodatatrack[properties][distance_airports_ferry_ports]" title="Distance_airports_ferry_ports">DAFP</th>
+                                                        <th id="infodatatrack[properties][access_turistic_sites]" title="Accessuristic_sites">AS</th>
+                                                        <th id="infodatatrack[properties][distance_turistic_sites]" title="Distanceuristic_sites">DS</th>
+                                                        <th id="infodatatrack[properties][acess_industry_agriculture_fishing_sites]" title="Acess_Industry_Agriculture_Fishing_sites">AIAF</th>
+                                                        <th id="infodatatrack[properties][distance_industries_agriculture_fishing_sites]" title="Distance_industries_agriculture_fishing_sites">DIAFS</th>
+                                                        <th id="infodatatrack[properties][access_social_services]" title="Access_Social_Services">ASS</th>
+                                                        <th id="infodatatrack[properties][distance_social_services]" title="Distance_social_services">DSS</th>
+                                                        <th id="infodatatrack[properties][located_within_an_environmentally_protected_area]" title="Located_within_an_environmentally_protected_area">LOC PA</th>
+                                                        <th id="infodatatrack[properties][distance_a_dumping_area]" title="Distance_a_dumping_area">DDA</th>
+                                                        <th id="infodatatrack[properties][current_condition]" title="Current_condition">CC</th>
+                                                        <th id="infodatatrack[properties][criticality]" title="Criticality">CRIT</th>
+                                                        <th id="infodatatrack[properties][exposure_landslide_hazard]" title="Exposure_landslide_hazard">ELH</th>
+                                                        <th id="infodatatrack[properties][exposure_flood_hazard]" title="Exposure_flood_hazard">EFH</th>
+                                                        <th id="infodatatrack[properties][asset_response_against_hazards]" title="Asset_Response_against_hazards">ARAH</th>
+                                                        <th id="infodatatrack[properties][asset_sensitivity]" title="Asset_Sensitivity">AS</th>
+                                                        <th id="infodatatrack[properties][risk]" title="RISK">RISK</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -268,6 +301,321 @@
                                                                         <input name="infodatatrack[properties][location_doc_road_projects]" type="text" class="form-control round-form input-sm" value="">
                                                                         <% } %>
                                                             </td>
+                                                            <td id="infodatatrack[properties][last_inspection]">
+                                                                <% if(infodatatrack.properties.last_inspection){ %>
+                                                                    <input name="infodatatrack[properties][last_inspection]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.last_inspection[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][last_inspection]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][prev_condition]">
+                                                                <select name="infodatatrack[properties][prev_condition]" class="form-control">
+                                                                    <option>A
+                                                                    </option>
+                                                                    <option>B
+                                                                    </option>
+                                                                    <option>C
+                                                                    </option>
+                                                                    <option>C
+                                                                    </option>
+                                                                    <option>D
+                                                                    </option>
+                                                                    <option>E
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>N/A
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][failure_history]">
+                                                                <% if(infodatatrack.properties.failure_history){ %>
+                                                                    <input name="infodatatrack[properties][failure_history]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.failure_history[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][failure_history]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][cons_LOS]">
+                                                                <% if(infodatatrack.properties.cons_LOS){ %>
+                                                                    <input name="infodatatrack[properties][cons_LOS]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.cons_LOS[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][cons_LOS]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][survey_freq]">
+                                                                <select name="infodatatrack[properties][survey_freq]" class="form-control">
+                                                                    <option>Less than once a year_interv
+                                                                    </option>
+                                                                    <option>Once a year
+                                                                    </option>
+                                                                    <option>Every 6 months
+                                                                    </option>
+                                                                    <option>Every 6 months
+                                                                    </option>
+                                                                    <option>More than once every 3 months
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][next_survey]">
+                                                                <% if(infodatatrack.properties.next_survey){ %>
+                                                                    <input name="infodatatrack[properties][next_survey]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.next_survey[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][next_survey]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][past_interv]">
+                                                                <select name="infodatatrack[properties][past_interv]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][interv_extent]">
+                                                                <select name="infodatatrack[properties][interv_extent]" class="form-control">
+                                                                    <option>Global
+                                                                    </option>
+                                                                    <option>Partial
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][year_interv]">
+                                                                <% if(infodatatrack.properties.year_interv){ %>
+                                                                    <input name="infodatatrack[properties][year_interv]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.year_interv[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][year_interv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][scope_interv]">
+                                                                <% if(infodatatrack.properties.scope_interv){ %>
+                                                                    <input name="infodatatrack[properties][scope_interv]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.scope_interv[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][scope_interv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][impact_interv]">
+                                                                <% if(infodatatrack.properties.impact_interv){ %>
+                                                                    <input name="infodatatrack[properties][impact_interv]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.impact_interv[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][impact_interv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][loc_doc_interv]">
+                                                                <% if(infodatatrack.properties.loc_doc_interv){ %>
+                                                                    <input name="infodatatrack[properties][loc_doc_interv]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.loc_doc_interv[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][loc_doc_interv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][maint_issues]">
+                                                                <% if(infodatatrack.properties.maint_issues){ %>
+                                                                    <input name="infodatatrack[properties][maint_issues]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.maint_issues[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][maint_issues]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][investment10years]">
+                                                                <% if(infodatatrack.properties.investment10years){ %>
+                                                                    <input name="infodatatrack[properties][investment10years]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.investment10years[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][investment10years]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][investment_required]">
+                                                                <% if(infodatatrack.properties.investment_required){ %>
+                                                                    <input name="infodatatrack[properties][investment_required]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.investment_required[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][investment_required]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][om_comments]">
+                                                                <% if(infodatatrack.properties.om_comments){ %>
+                                                                    <input name="infodatatrack[properties][om_comments]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.om_comments[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][om_comments]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][acess_airports_ferry_ports]">
+                                                                <select name="infodatatrack[properties][acess_airports_ferry_ports]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][distance_airports_ferry_ports]">
+                                                                <% if(infodatatrack.properties.distance_airports_ferry_ports) { %>
+                                                                    <input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.distance_airports_ferry_ports[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][access_turistic_sites]">
+                                                                <select name="infodatatrack[properties][access_turistic_sites]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][distance_turistic_sites]">
+                                                                <% if(infodatatrack.properties.distance_turistic_sites) { %>
+                                                                    <input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.distance_turistic_sites[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][acess_industry_agriculture_fishing_sites]">
+                                                                <select name="infodatatrack[properties][acess_industry_agriculture_fishing_sites]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][distance_industries_agriculture_fishing_sites]">
+                                                                <% if(infodatatrack.properties.distance_industries_agriculture_fishing_sites) { %>
+                                                                    <input name="infodatatrack[properties][distance_industries_agriculture_fishing_sites]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.distance_industries_agriculture_fishing_sites[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][distance_industries_agriculture_fishing_sites]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][access_social_services]">
+                                                                <select name="infodatatrack[properties][access_social_services]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][distance_social_services]">
+                                                                <% if(infodatatrack.properties.distance_social_services) { %>
+                                                                    <input name="infodatatrack[properties][distance_social_services]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.distance_social_services[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][distance_social_services]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][located_within_an_environmentally_protected_area]">
+                                                                <select name="infodatatrack[properties][located_within_an_environmentally_protected_area]" class="form-control">
+                                                                    <option>Yes
+                                                                    </option>
+                                                                    <option>No
+                                                                    </option>
+                                                                    <option>NA
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                        </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][distance_a_dumping_area]">
+                                                                <% if(infodatatrack.properties.distance_a_dumping_area) { %>
+                                                                    <input name="infodatatrack[properties][distance_a_dumping_area]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.distance_a_dumping_area[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][distance_a_dumping_area]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][current_condition]">
+                                                                <select name="infodatatrack[properties][current_condition]" class="form-control">
+                                                                    <option>A</option>
+                                                                    <option>B</option>
+                                                                    <option>C</option>
+                                                                    <option>D</option>
+                                                                    <option>E</option>
+                                                                    <option>Unknown</option>
+                                                                    <option>N/A</option>
+                                                                    <option>1</option>
+                                                                </select>
+                                                            </td>
+
+                                                            <td id="infodatatrack[properties][criticality]">
+                                                                <select name="infodatatrack[properties][criticality]" class="form-control">
+                                                                    <option>Very High</option>
+                                                                    <option>High</option>
+                                                                    <option>Medium</option>
+                                                                    <option>Low</option>
+                                                                    <option>Very Low</option>
+                                                                    <option>Unknown</option>
+                                                                    <option>1</option>
+                                                                </select>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][exposure_landslide_hazard]">
+                                                                <% if(infodatatrack.properties.exposure_landslide_hazard) { %>
+                                                                    <input name="infodatatrack[properties][exposure_landslide_hazard]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.exposure_landslide_hazard[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][exposure_landslide_hazard]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][exposure_flood_hazard]">
+                                                                <% if(infodatatrack.properties.exposure_flood_hazard) { %>
+                                                                    <input name="infodatatrack[properties][exposure_flood_hazard]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.exposure_flood_hazard[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][exposure_flood_hazard]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][asset_response_against_hazards]">
+                                                                <% if(infodatatrack.properties.asset_response_against_hazards) { %>
+                                                                    <input name="infodatatrack[properties][asset_response_against_hazards]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.asset_response_against_hazards[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][asset_response_against_hazards]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][asset_sensitivity]">
+                                                                <% if(infodatatrack.properties.asset_sensitivity) { %>
+                                                                    <input name="infodatatrack[properties][asset_sensitivity]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.asset_sensitivity[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][asset_sensitivity]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][risk]">
+                                                                <% if(infodatatrack.properties.risk) { %>
+                                                                    <input name="infodatatrack[properties][risk]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.risk[index] %>">
+                                                                    <%} else {%>
+                                                                        <input name="infodatatrack[properties][risk]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
                                                         </tr>
                                                         <% }); %>
                                                 </tbody>
@@ -289,7 +637,7 @@
 
         <!--main content end-->
         <!--footer start-->
-        <footer class="site-footer">
+        <footer class="site-footer ">
             <% include partials/footer %>
         </footer>
         <!--footer end-->
@@ -298,17 +646,17 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <% include partials/footer_scripts %>
 
-        <!-- <script src="/assets/js/jquery.js"></script> -->
-        <script src="/assets/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="/assets/js/jquery.scrollTo.min.js"></script>
-        <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+        <!-- <script src="/assets/js/jquery.js "></script> -->
+        <script src="/assets/js/bootstrap.min.js "></script>
+        <script class="include " type="text/javascript " src="/assets/js/jquery.dcjqaccordion.2.7.js "></script>
+        <script src="/assets/js/jquery.scrollTo.min.js "></script>
+        <script src="/assets/js/jquery.nicescroll.js " type="text/javascript "></script>
 
 
         <!--common script for all pages-->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="/assets/js/common-scripts.js"></script>
-        <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js "></script>
+        <script src="/assets/js/common-scripts.js "></script>
+        <script src="https://momentjs.com/downloads/moment-with-locales.min.js "></script>
 
         <!--script for this page-->
         <% include ./partials/data_infodatatrack_scripts %>

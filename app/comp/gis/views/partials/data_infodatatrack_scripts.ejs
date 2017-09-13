@@ -11,6 +11,39 @@
     var $inputsTNL = $('#form').find("input[name='infodatatrack[properties][total_number_lanes]']");
     var $inputsTW = $('#form').find("input[name='infodatatrack[properties][total_width]']");
     var $inputsLOC = $('#form').find("input[name='infodatatrack[properties][location_doc_road_projects]']");
+    var $inputsLI = $('#form').find("input[name='infodatatrack[properties][last_inspection]']");
+    var $inputsPC = $('#form').find("input[name='infodatatrack[properties][prev_condition]']");
+    var $inputsFH = $('#form').find("input[name='infodatatrack[properties][failure_history]']");
+    var $inputsCL = $('#form').find("input[name='infodatatrack[properties][cons_LOS]']");
+    var $inputsSF = $('#form').find("input[name='infodatatrack[properties][survey_freq]']");
+    var $inputsNS = $('#form').find("input[name='infodatatrack[properties][next_survey]']");
+    var $inputsPI = $('#form').find("input[name='infodatatrack[properties][past_interv]']");
+    var $inputsIE = $('#form').find("input[name='infodatatrack[properties][interv_extent]']");
+    var $inputsYI = $('#form').find("input[name='infodatatrack[properties][year_interv]']");
+    var $inputsSI = $('#form').find("input[name='infodatatrack[properties][scope_interv]']");
+    var $inputsII = $('#form').find("input[name='infodatatrack[properties][impact_interv]']");
+    var $inputsLDI = $('#form').find("input[name='infodatatrack[properties][loc_doc_interv]']");
+    var $inputsMI = $('#form').find("input[name='infodatatrack[properties][maint_issues]']");
+    var $inputsI10Y = $('#form').find("input[name='infodatatrack[properties][investment10years]']");
+    var $inputsIR = $('#form').find("input[name='infodatatrack[properties][investment_required]']");
+    var $inputsOC = $('#form').find("input[name='infodatatrack[properties][om_comments]']");
+    var $inputs_acess_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][acess_airports_ferry_ports]']");
+    var $inputs_distance_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][distance_airports_ferry_ports]']");
+    var $inputs_access_turistic_sites = $('#form').find("input[name='infodatatrack[properties][access_turistic_sites]']");
+    var $inputs_distance_turistic_sites = $('#form').find("input[name='infodatatrack[properties][distance_turistic_sites]']");
+    var $inputs_acess_industry_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][acess_industry_agriculture_fishing_sites]']");
+    var $inputs_distance_industries_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][distance_industries_agriculture_fishing_sites]']");
+    var $inputs_access_social_services = $('#form').find("input[name='infodatatrack[properties][access_social_services]']");
+    var $inputs_distance_social_services = $('#form').find("input[name='infodatatrack[properties][distance_social_services]']");
+    var $inputs_located_within_an_environmentally_protected_area = $('#form').find("input[name='infodatatrack[properties][located_within_an_environmentally_protected_area]']");
+    var $inputs_distance_a_dumping_area = $('#form').find("input[name='infodatatrack[properties][distance_a_dumping_area]']");
+    var $inputs_current_condition = $('#form').find("input[name='infodatatrack[properties][current_condition]']");
+    var $inputs_criticality = $('#form').find("input[name='infodatatrack[properties][criticality]']");
+    var $inputs_exposure_landslide_hazard = $('#form').find("input[name='infodatatrack[properties][exposure_landslide_hazard]']");
+    var $inputs_exposure_flood_hazard = $('#form').find("input[name='infodatatrack[properties][exposure_flood_hazard]']");
+    var $inputs_asset_response_against_hazards = $('#form').find("input[name='infodatatrack[properties][asset_response_against_hazards]']");
+    var $inputs_asset_sensitivity = $('#form').find("input[name='infodatatrack[properties][asset_sensitivity]']");
+    var $inputs_risk = $('#form').find("input[name='infodatatrack[properties][risk]']");
     var $checks = $('#form').find("input[name='check[_id]']");
 
 
@@ -97,8 +130,6 @@
             });
         }
     });
-
-
     $inputsADT.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
@@ -228,6 +259,501 @@
                 if ($check.prop("checked")) {
                     //console.log('Check: ' + (index));
                     $inputsLOC[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsLI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsLI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsPC.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsPC[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsFH.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsFH[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsCL.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsCL[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsSF.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsSF[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsNS.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsNS[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsPI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsPI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsIE.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsIE[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsYI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsYI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsSI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsSI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsII.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsII[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsLDI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsLDI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsMI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsMI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsI10Y.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsI10Y[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsIR.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsIR[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsOC.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsOC[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_acess_airports_ferry_ports.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_acess_airports_ferry_ports[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_distance_airports_ferry_ports.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_distance_airports_ferry_ports[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_access_turistic_sites.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_access_turistic_sites[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_distance_turistic_sites.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_distance_turistic_sites[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_acess_industry_agriculture_fishing_sites.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_acess_industry_agriculture_fishing_sites[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_distance_industries_agriculture_fishing_sites.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_distance_industries_agriculture_fishing_sites[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_access_social_services.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_access_social_services[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_distance_social_services.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_distance_social_services[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_located_within_an_environmentally_protected_area.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_located_within_an_environmentally_protected_area[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_distance_a_dumping_area.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_distance_a_dumping_area[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_current_condition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_current_condition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_criticality.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_criticality[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_exposure_landslide_hazard.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_exposure_landslide_hazard[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_exposure_flood_hazard.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_exposure_flood_hazard[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_asset_response_against_hazards.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_asset_response_against_hazards[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_asset_sensitivity.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_asset_sensitivity[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_risk.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_risk[index].value = $this.val();
                 }
 
 
