@@ -4,6 +4,13 @@
     var $inputsDC = $('#form').find("input[name='infodatatrack[properties][date_construction]']");
     var $inputsADT = $('#form').find("input[name='infodatatrack[properties][adt]']");
     var $inputsTHP = $('#form').find("input[name='infodatatrack[properties][traffic_high_peak]']");
+    var $inputsBM = $('#form').find("input[name='infodatatrack[properties][base_material]']");
+    var $inputsSBM = $('#form').find("input[name='infodatatrack[properties][subbase_material]']");
+    var $inputsNLI = $('#form').find("input[name='infodatatrack[properties][number_lanes_inc]']");
+    var $inputsNLD = $('#form').find("input[name='infodatatrack[properties][number_lanes_dec]']");
+    var $inputsTNL = $('#form').find("input[name='infodatatrack[properties][total_number_lanes]']");
+    var $inputsTW = $('#form').find("input[name='infodatatrack[properties][total_width]']");
+    var $inputsLOC = $('#form').find("input[name='infodatatrack[properties][location_doc_road_projects]']");
     var $checks = $('#form').find("input[name='check[_id]']");
 
 
@@ -14,8 +21,10 @@
         }
 
     });
+    $('#form').find("input").css('min-width', '50px');
+    // $('#form').find("input[type='text']").css('min-width', '50px');
+    $('#form').find("input[name='infodatatrack[properties][date_construction]']").css('min-width', '80px');
     $('#form').find("select").css('min-width', '100px');
-    $('#form').find("input").css('min-width', '100px');
 
     $("thead > tr > th", $('#dataTable')).click(function() {
         // alert("Handler for .click() called.");
@@ -114,6 +123,111 @@
                 if ($check.prop("checked")) {
                     //console.log('Check: ' + (index));
                     $inputsTHP[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsBM.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsBM[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsSBM.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsSBM[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsNLI.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsNLI[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsNLD.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsNLD[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsTNL.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsTNL[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsTW.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsTW[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputsLOC.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputsLOC[index].value = $this.val();
                 }
 
 
