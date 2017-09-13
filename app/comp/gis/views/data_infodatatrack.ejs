@@ -135,6 +135,19 @@
                                                         <th id="infodatatrack[properties][asset_response_against_hazards]" title="Asset_Response_against_hazards">ARAH</th>
                                                         <th id="infodatatrack[properties][asset_sensitivity]" title="Asset_Sensitivity">AS</th>
                                                         <th id="infodatatrack[properties][risk]" title="RISK">RISK</th>
+                                                        <th id="infodatatrack[properties][existence_barriers_condition]" title="existence_barriers_condition"> EBC</th>
+                                                        <th id="infodatatrack[properties][typology_barriers]" title="typology_barriers"> TB</th>
+                                                        <th id="infodatatrack[properties][typology_safety_fence]" title="typology_safety_fence"> TSF</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" title="functionality_asset_functioning_expected_barrier"> FAFEB</th>
+                                                        <th id="infodatatrack[properties][existence_signposting_road_signs_condition]" title="existence_signposting_road_signs_condition"> ESR</th>
+                                                        <th id="infodatatrack[properties][typology_signaling]" title="typology_signaling"> TS</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_signal]" title="functionality_asset_functioning_expected_signal"> FAFES</th>
+                                                        <th id="infodatatrack[properties][existence_street_lighting]" title="existence_street_lighting"> ESL </th>
+                                                        <th id="infodatatrack[properties][typology_street_lighting]" title="typology_street_lighting"> TSL</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_light]" title="functionality_asset_functioning_expected_light"> FAFEL</th>
+                                                        <th id="infodatatrack[properties][has_there_been_past_interventions]" title="has_there_been_past_interventions"> INTER</th>
+                                                        <th id="infodatatrack[properties][year_performance_past_interventions]" title="year_performance_past_interventions"> PAST INT</th>
+                                                        <th id="infodatatrack[properties][comments]" title="comments"> COMM</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -614,6 +627,110 @@
                                                                     <input name="infodatatrack[properties][risk]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.risk[index] %>">
                                                                     <%} else {%>
                                                                         <input name="infodatatrack[properties][risk]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][existence_barriers_condition]">
+                                                                <% if(infodatatrack.properties.existence_barriers_condition){%>
+                                                                    <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_barriers_condition[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][typology_barriers]">
+                                                                <% if(infodatatrack.properties.typology_barriers){%>
+                                                                    <input name="infodatatrack[properties][typology_barriers]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.typology_barriers[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][typology_barriers]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][typology_safety_fence]">
+                                                                <% if(infodatatrack.properties.typology_safety_fence){%>
+                                                                    <input name="infodatatrack[properties][typology_safety_fence]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.typology_safety_fence[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][typology_safety_fence]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]">
+                                                                <% if(infodatatrack.properties.functionality_asset_functioning_expected_barrier){%>
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_barrier[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][existence_signposting_road_signs_condition]">
+                                                                <% if(infodatatrack.properties.existence_signposting_road_signs_condition){%>
+                                                                    <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_signposting_road_signs_condition[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][typology_signaling]">
+                                                                <% if(infodatatrack.properties.typology_signaling){%>
+                                                                    <input name="infodatatrack[properties][typology_signaling]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.typology_signaling[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][typology_signaling]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][functionality_asset_functioning_expected_signal]">
+                                                                <% if(infodatatrack.properties.functionality_asset_functioning_expected_signal){%>
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_signal[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][existence_street_lighting]">
+                                                                <% if(infodatatrack.properties.existence_street_lighting){%>
+                                                                    <input name="infodatatrack[properties][existence_street_lighting]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_street_lighting[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][existence_street_lighting]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][typology_street_lighting]">
+                                                                <% if(infodatatrack.properties.typology_street_lighting){%>
+                                                                    <input name="infodatatrack[properties][typology_street_lighting]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.typology_street_lighting[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][typology_street_lighting]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][functionality_asset_functioning_expected_light]">
+                                                                <% if(infodatatrack.properties.functionality_asset_functioning_expected_light){%>
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_light[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][has_there_been_past_interventions]">
+                                                                <% if(infodatatrack.properties.has_there_been_past_interventions){%>
+                                                                    <input name="infodatatrack[properties][has_there_been_past_interventions]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.has_there_been_past_interventions[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][has_there_been_past_interventions]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][year_performance_past_interventions]">
+                                                                <% if(infodatatrack.properties.year_performance_past_interventions){%>
+                                                                    <input name="infodatatrack[properties][year_performance_past_interventions]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.year_performance_past_interventions[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][year_performance_past_interventions]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <% } %>
+                                                            </td>
+                                                            <td id="infodatatrack[properties][comments]">
+                                                                <% if(infodatatrack.properties.comments){%>
+                                                                    <input name="infodatatrack[properties][comments]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.comments[index] %>">
+
+                                                                    <% } else { %>
+                                                                        <input name="infodatatrack[properties][comments: []]" type="text" class="form-control round-form input-sm" value="">
                                                                         <% } %>
                                                             </td>
                                                         </tr>

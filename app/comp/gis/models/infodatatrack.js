@@ -59,7 +59,20 @@ var infodatatrackSchema = new Schema({
         exposure_flood_hazard: [],
         asset_response_against_hazards: [],
         asset_sensitivity: [],
-        risk: []
+        risk: [],
+        existence_barriers_condition: [],
+        typology_barriers: [],
+        typology_safety_fence: [],
+        functionality_asset_functioning_expected_barrier: [],
+        existence_signposting_road_signs_condition: [],
+        typology_signaling: [],
+        functionality_asset_functioning_expected_signal: [],
+        existence_street_lighting: [],
+        typology_street_lighting: [],
+        functionality_asset_functioning_expected_light: [],
+        has_there_been_past_interventions: [],
+        year_performance_past_interventions: [],
+        comments: []
     },
     geometry: {
         type: { type: String },
