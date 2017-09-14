@@ -242,6 +242,11 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
         res.on('end', function() {
             //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
+            // 'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            resp.set({
+                'Content-Length': Buffer.byteLength(JSON.stringify(responseObject)),
+                'Content-Type': 'text/html'
+            });
 
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             resp.render('data_infodatatrack', { token: req.token, utm: utm, infodatatrack: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -355,11 +360,11 @@ router.get('/V1/list_id/', function(req, res, next) {
 });
 /* GET JSON infodatatrack by id. */
 router.get('/V1/list_infobyid/:id', function(req, res, next) {
-    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+    Infodatatrack.findById(req.params.id).exec(function(err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
-
+        // console.log(JSON.stringify(infodatatrack));
         res.status(200).jsonp(infodatatrack);
     });
 
