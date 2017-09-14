@@ -60,8 +60,100 @@
     var $inputs_has_there_been_past_interventions = $('#form').find("input[name='infodatatrack[properties][has_there_been_past_interventions]']");
     var $inputs_year_performance_past_interventions = $('#form').find("input[name='infodatatrack[properties][year_performance_past_interventions]']");
     var $inputs_comments = $('#form').find("input[name='infodatatrack[properties][comments]']");
-
-
+    // BRIDGES
+    var $inputs_bcode = $('#form').find("input[name='infodatatrack[properties][bcode]']");
+    var $inputs_bname = $('#form').find("input[name='infodatatrack[properties][bname]']");
+    var $inputs_byearconstruc = $('#form').find("input[name='infodatatrack[properties][byearconstruc]']");
+    var $inputs_btype = $('#form').find("input[name='infodatatrack[properties][btype]']");
+    var $inputs_bsurrounding = $('#form').find("input[name='infodatatrack[properties][bsurrounding]']");
+    var $inputs_balternative = $('#form').find("input[name='infodatatrack[properties][balternative]']");
+    var $inputs_bobstaclesaved = $('#form').find("input[name='infodatatrack[properties][bobstaclesaved]']");
+    var $inputs_bfloodscenario = $('#form').find("input[name='infodatatrack[properties][bfloodscenario]']");
+    var $inputs_bmaterialdeck = $('#form').find("input[name='infodatatrack[properties][bmaterialdeck]']");
+    var $inputs_bmaterialpiers = $('#form').find("input[name='infodatatrack[properties][bmaterialpiers]']");
+    var $inputs_bmaterialabutments = $('#form').find("input[name='infodatatrack[properties][bmaterialabutments]']");
+    var $inputs_balignment = $('#form').find("input[name='infodatatrack[properties][balignment]']");
+    var $inputs_bspans = $('#form').find("input[name='infodatatrack[properties][bspans]']");
+    var $inputs_blenght = $('#form').find("input[name='infodatatrack[properties][blenght]']");
+    var $inputs_bmaxspan = $('#form').find("input[name='infodatatrack[properties][bmaxspan]']");
+    var $inputs_bwidth = $('#form').find("input[name='infodatatrack[properties][bwidth]']");
+    var $inputs_bfreeheight = $('#form').find("input[name='infodatatrack[properties][bfreeheight]']");
+    var $inputs_bfoundation = $('#form').find("input[name='infodatatrack[properties][bfoundation]']");
+    var $inputs_bpiersriver = $('#form').find("input[name='infodatatrack[properties][bpiersriver]']");
+    var $inputs_bprotectabut = $('#form').find("input[name='infodatatrack[properties][bprotectabut]']");
+    var $inputs_bprojectlocation = $('#form').find("input[name='infodatatrack[properties][bprojectlocation]']");
+    var $inputs_bphoto = $('#form').find("input[name='infodatatrack[properties][bphoto]']");
+    var $inputs_blastinspection = $('#form').find("input[name='infodatatrack[properties][blastinspection]']");
+    var $inputs_bprevcondition = $('#form').find("input[name='infodatatrack[properties][bprevcondition]']");
+    var $inputs_bvisualcondition = $('#form').find("input[name='infodatatrack[properties][bvisualcondition]']");
+    var $inputs_bdamagesfoundations = $('#form').find("input[name='infodatatrack[properties][bdamagesfoundations]']");
+    var $inputs_bdamagesstructural = $('#form').find("input[name='infodatatrack[properties][bdamagesstructural]']");
+    var $inputs_bdamagesnonstructural = $('#form').find("input[name='infodatatrack[properties][bdamagesnonstructural]']");
+    var $inputs_bconslos = $('#form').find("input[name='infodatatrack[properties][bconslos]']");
+    var $inputs_bfailure = $('#form').find("input[name='infodatatrack[properties][bfailure]']");
+    var $inputs_bsurveyfreq = $('#form').find("input[name='infodatatrack[properties][bsurveyfreq]']");
+    var $inputs_bnextsurvey = $('#form').find("input[name='infodatatrack[properties][bnextsurvey]']");
+    var $inputs_bpastinterv = $('#form').find("input[name='infodatatrack[properties][bpastinterv]']");
+    var $inputs_bintervextent = $('#form').find("input[name='infodatatrack[properties][bintervextent]']");
+    var $inputs_bdateinterv = $('#form').find("input[name='infodatatrack[properties][bdateinterv]']");
+    var $inputs_bscopeinterv = $('#form').find("input[name='infodatatrack[properties][bscopeinterv]']");
+    var $inputs_bimpactinterv = $('#form').find("input[name='infodatatrack[properties][bimpactinterv]']");
+    var $inputs_blocdocinterv = $('#form').find("input[name='infodatatrack[properties][blocdocinterv]']");
+    var $inputs_bmaintissues = $('#form').find("input[name='infodatatrack[properties][bmaintissues]']");
+    var $inputs_binvestment10years = $('#form').find("input[name='infodatatrack[properties][binvestment10years]']");
+    var $inputs_binvestmentrequired = $('#form').find("input[name='infodatatrack[properties][binvestmentrequired]']");
+    var $inputs_bomcomments = $('#form').find("input[name='infodatatrack[properties][bomcomments]']");
+    var $inputs_bcondition = $('#form').find("input[name='infodatatrack[properties][bcondition]']");
+    var $inputs_bcriticality = $('#form').find("input[name='infodatatrack[properties][bcriticality]']");
+    var $inputs_blandslide = $('#form').find("input[name='infodatatrack[properties][blandslide]']");
+    var $inputs_bflood = $('#form').find("input[name='infodatatrack[properties][bflood]']");
+    var $inputs_bresphazard = $('#form').find("input[name='infodatatrack[properties][bresphazard]']");
+    var $inputs_bsensitivity = $('#form').find("input[name='infodatatrack[properties][bsensitivity]']");
+    var $inputs_brisk = $('#form').find("input[name='infodatatrack[properties][brisk]']");
+    // GEOTECHNICAL ASSETS
+    var $inputs_gcode = $('#form').find("input[name='infodatatrack[properties][gcode]']");
+    var $inputs_gyearconstruct = $('#form').find("input[name='infodatatrack[properties][gyearconstruct]']");
+    var $inputs_gtype = $('#form').find("input[name='infodatatrack[properties][gtype]']");
+    var $inputs_gposition = $('#form').find("input[name='infodatatrack[properties][gposition]']");
+    var $inputs_gmaterial = $('#form').find("input[name='infodatatrack[properties][gmaterial]']");
+    var $inputs_gnature = $('#form').find("input[name='infodatatrack[properties][gnature]']");
+    var $inputs_gheight = $('#form').find("input[name='infodatatrack[properties][gheight]']");
+    var $inputs_gh_h = $('#form').find("input[name='infodatatrack[properties][gh_h]']");
+    var $inputs_gslope = $('#form').find("input[name='infodatatrack[properties][gslope]']");
+    var $inputs_gdistance = $('#form').find("input[name='infodatatrack[properties][gdistance]']");
+    var $inputs_glength = $('#form').find("input[name='infodatatrack[properties][glength]']");
+    var $inputs_gblocks = $('#form').find("input[name='infodatatrack[properties][gblocks]']");
+    var $inputs_gcorrectmeas = $('#form').find("input[name='infodatatrack[properties][gcorrectmeas]']");
+    var $inputs_gvegetation = $('#form').find("input[name='infodatatrack[properties][gvegetation]']");
+    var $inputs_gtypevegetation = $('#form').find("input[name='infodatatrack[properties][gtypevegetation]']");
+    var $inputs_gphoto = $('#form').find("input[name='infodatatrack[properties][gphoto]']");
+    var $inputs_glastinspection = $('#form').find("input[name='infodatatrack[properties][glastinspection]']");
+    var $inputs_gprevcondition = $('#form').find("input[name='infodatatrack[properties][gprevcondition]']");
+    var $inputs_gvisualcondition = $('#form').find("input[name='infodatatrack[properties][gvisualcondition]']");
+    var $inputs_gevidrecfailures = $('#form').find("input[name='infodatatrack[properties][gevidrecfailures]']");
+    var $inputs_gtypefailure = $('#form').find("input[name='infodatatrack[properties][gtypefailure]']");
+    var $inputs_gextentfailure = $('#form').find("input[name='infodatatrack[properties][gextentfailure]']");
+    var $inputs_gconslos = $('#form').find("input[name='infodatatrack[properties][gconslos]']");
+    var $inputs_gfailure = $('#form').find("input[name='infodatatrack[properties][gfailure]']");
+    var $inputs_gsurveyfreq = $('#form').find("input[name='infodatatrack[properties][gsurveyfreq]']");
+    var $inputs_gnextsurvey = $('#form').find("input[name='infodatatrack[properties][gnextsurvey]']");
+    var $inputs_gpastinterv = $('#form').find("input[name='infodatatrack[properties][gpastinterv]']");
+    var $inputs_gintervextent = $('#form').find("input[name='infodatatrack[properties][gintervextent]']");
+    var $inputs_gdateinterv = $('#form').find("input[name='infodatatrack[properties][gdateinterv]']");
+    var $inputs_gscopeinterv = $('#form').find("input[name='infodatatrack[properties][gscopeinterv]']");
+    var $inputs_gimpactinterv = $('#form').find("input[name='infodatatrack[properties][gimpactinterv]']");
+    var $inputs_glocdocinterv = $('#form').find("input[name='infodatatrack[properties][glocdocinterv]']");
+    var $inputs_gmaintissues = $('#form').find("input[name='infodatatrack[properties][gmaintissues]']");
+    var $inputs_ginvestment10years = $('#form').find("input[name='infodatatrack[properties][ginvestment10years]']");
+    var $inputs_rgnvestmentrequired = $('#form').find("input[name='infodatatrack[properties][rgnvestmentrequired]']");
+    var $inputs_gomcomments = $('#form').find("input[name='infodatatrack[properties][gomcomments]']");
+    var $inputs_gcondition = $('#form').find("input[name='infodatatrack[properties][gcondition]']");
+    var $inputs_gcriticality = $('#form').find("input[name='infodatatrack[properties][gcriticality]']");
+    var $inputs_glandslide = $('#form').find("input[name='infodatatrack[properties][glandslide]']");
+    var $inputs_gflood = $('#form').find("input[name='infodatatrack[properties][gflood]']");
+    var $inputs_gresphazard = $('#form').find("input[name='infodatatrack[properties][gresphazard]']");
+    var $inputs_gsensitivity = $('#form').find("input[name='infodatatrack[properties][gsensitivity]']");
+    var $inputs_grisk = $('#form').find("input[name='infodatatrack[properties][grisk]']");
 
 
     $("input[name='infodatatrack[properties][date_construction]']").datepicker({
@@ -966,6 +1058,1388 @@
                 if ($check.prop("checked")) {
                     //console.log('Check: ' + (index));
                     $inputs_comments[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+
+    $inputs_bcode.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bcode[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bname.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bname[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_byearconstruc.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_byearconstruc[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_btype.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_btype[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bsurrounding.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bsurrounding[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_balternative.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_balternative[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bobstaclesaved.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bobstaclesaved[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bfloodscenario.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bfloodscenario[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bmaterialdeck.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bmaterialdeck[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bmaterialpiers.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bmaterialpiers[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bmaterialabutments.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bmaterialabutments[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_balignment.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_balignment[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bspans.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bspans[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_blenght.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_blenght[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bmaxspan.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bmaxspan[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bwidth.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bwidth[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bfreeheight.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bfreeheight[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bfoundation.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bfoundation[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bpiersriver.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bpiersriver[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bprotectabut.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bprotectabut[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bprojectlocation.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bprojectlocation[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bphoto.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bphoto[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_blastinspection.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_blastinspection[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bprevcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bprevcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bvisualcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bvisualcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bdamagesfoundations.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bdamagesfoundations[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bdamagesstructural.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bdamagesstructural[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bdamagesnonstructural.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bdamagesnonstructural[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bconslos.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bconslos[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bfailure.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bfailure[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bsurveyfreq.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bsurveyfreq[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bnextsurvey.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bnextsurvey[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bpastinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bpastinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bintervextent.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bintervextent[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bdateinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bdateinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bscopeinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bscopeinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bimpactinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bimpactinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_blocdocinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_blocdocinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bmaintissues.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bmaintissues[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_binvestment10years.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_binvestment10years[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_binvestmentrequired.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_binvestmentrequired[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bomcomments.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bomcomments[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bcriticality.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bcriticality[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_blandslide.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_blandslide[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bflood.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bflood[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bresphazard.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bresphazard[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_bsensitivity.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_bsensitivity[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_brisk.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_brisk[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+
+    $inputs_gcode.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_brisk[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gyearconstruct.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gcode[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gtype.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gyearconstruct[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gposition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gtype[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gmaterial.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gposition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gnature.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gmaterial[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gheight.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gnature[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gh_h.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gheight[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gslope.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gh_h[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gdistance.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gslope[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_glength.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gdistance[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gblocks.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_glength[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gcorrectmeas.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gblocks[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gvegetation.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gcorrectmeas[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gtypevegetation.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gvegetation[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gphoto.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gtypevegetation[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_glastinspection.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gphoto[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gprevcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_glastinspection[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gvisualcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gprevcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gevidrecfailures.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gvisualcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gtypefailure.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gevidrecfailures[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gextentfailure.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gtypefailure[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gconslos.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gextentfailure[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gfailure.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gconslos[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gsurveyfreq.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gfailure[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gnextsurvey.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gsurveyfreq[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gpastinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gnextsurvey[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gintervextent.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gpastinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gdateinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gintervextent[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gscopeinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gdateinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gimpactinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gscopeinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_glocdocinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gimpactinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gmaintissues.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_glocdocinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_ginvestment10years.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gmaintissues[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_rgnvestmentrequired.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_ginvestment10years[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gomcomments.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_rgnvestmentrequired[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gomcomments[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gcriticality.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_glandslide.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gcriticality[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gflood.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_glandslide[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gresphazard.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gflood[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_gsensitivity.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gresphazard[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_grisk.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_gsensitivity[index].value = $this.val();
                 }
 
 
