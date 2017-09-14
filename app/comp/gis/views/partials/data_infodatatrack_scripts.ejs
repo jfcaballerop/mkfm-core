@@ -154,7 +154,46 @@
     var $inputs_gresphazard = $('#form').find("input[name='infodatatrack[properties][gresphazard]']");
     var $inputs_gsensitivity = $('#form').find("input[name='infodatatrack[properties][gsensitivity]']");
     var $inputs_grisk = $('#form').find("input[name='infodatatrack[properties][grisk]']");
-
+    // DRAINAGES
+    var $inputs_dcode = $('#form').find("input[name='infodatatrack[properties][dcode]']");
+    var $inputs_dyearconstruc = $('#form').find("input[name='infodatatrack[properties][dyearconstruc]']");
+    var $inputs_dtype = $('#form').find("input[name='infodatatrack[properties][dtype]']");
+    var $inputs_dcapacity = $('#form').find("input[name='infodatatrack[properties][dcapacity]']");
+    var $inputs_drainpeak = $('#form').find("input[name='infodatatrack[properties][drainpeak]']");
+    var $inputs_dmaterial = $('#form').find("input[name='infodatatrack[properties][dmaterial]']");
+    var $inputs_dslope = $('#form').find("input[name='infodatatrack[properties][dslope]']");
+    var $inputs_dsection = $('#form').find("input[name='infodatatrack[properties][dsection]']");
+    var $inputs_ddiameter = $('#form').find("input[name='infodatatrack[properties][ddiameter]']");
+    var $inputs_dlength = $('#form').find("input[name='infodatatrack[properties][dlength]']");
+    var $inputs_dprotentrance = $('#form').find("input[name='infodatatrack[properties][dprotentrance]']");
+    var $inputs_dprotexit = $('#form').find("input[name='infodatatrack[properties][dprotexit]']");
+    var $inputs_dphoto = $('#form').find("input[name='infodatatrack[properties][dphoto]']");
+    var $inputs_dlastinspection = $('#form').find("input[name='infodatatrack[properties][dlastinspection]']");
+    var $inputs_dprevcondition = $('#form').find("input[name='infodatatrack[properties][dprevcondition]']");
+    var $inputs_dvisualcondition = $('#form').find("input[name='infodatatrack[properties][dvisualcondition]']");
+    var $inputs_dcrossdamages = $('#form').find("input[name='infodatatrack[properties][dcrossdamages]']");
+    var $inputs_dlostsection = $('#form').find("input[name='infodatatrack[properties][dlostsection]']");
+    var $inputs_dconslos = $('#form').find("input[name='infodatatrack[properties][dconslos]']");
+    var $inputs_dfailure = $('#form').find("input[name='infodatatrack[properties][dfailure]']");
+    var $inputs_dsurveyfreq = $('#form').find("input[name='infodatatrack[properties][dsurveyfreq]']");
+    var $inputs_dnextsurvey = $('#form').find("input[name='infodatatrack[properties][dnextsurvey]']");
+    var $inputs_dpastinterv = $('#form').find("input[name='infodatatrack[properties][dpastinterv]']");
+    var $inputs_dintervextent = $('#form').find("input[name='infodatatrack[properties][dintervextent]']");
+    var $inputs_ddateinterv = $('#form').find("input[name='infodatatrack[properties][ddateinterv]']");
+    var $inputs_dscopeinterv = $('#form').find("input[name='infodatatrack[properties][dscopeinterv]']");
+    var $inputs_dimpactinterv = $('#form').find("input[name='infodatatrack[properties][dimpactinterv]']");
+    var $inputs_dlocdocinterv = $('#form').find("input[name='infodatatrack[properties][dlocdocinterv]']");
+    var $inputs_dmaintissues = $('#form').find("input[name='infodatatrack[properties][dmaintissues]']");
+    var $inputs_dinvestment10years = $('#form').find("input[name='infodatatrack[properties][dinvestment10years]']");
+    var $inputs_dinvestmentrequired = $('#form').find("input[name='infodatatrack[properties][dinvestmentrequired]']");
+    var $inputs_domcomments = $('#form').find("input[name='infodatatrack[properties][domcomments]']");
+    var $inputs_dcondition = $('#form').find("input[name='infodatatrack[properties][dcondition]']");
+    var $inputs_dcriticality = $('#form').find("input[name='infodatatrack[properties][dcriticality]']");
+    var $inputs_dlandslide = $('#form').find("input[name='infodatatrack[properties][dlandslide]']");
+    var $inputs_dflood = $('#form').find("input[name='infodatatrack[properties][dflood]']");
+    var $inputs_dresphazard = $('#form').find("input[name='infodatatrack[properties][dresphazard]']");
+    var $inputs_dsensitivity = $('#form').find("input[name='infodatatrack[properties][dsensitivity]']");
+    var $inputs_drisk = $('#form').find("input[name='infodatatrack[properties][drisk]']");
 
     $("input[name='infodatatrack[properties][date_construction]']").datepicker({
         dateFormat: 'dd-mm-yy',
@@ -1800,23 +1839,9 @@
             });
         }
     });
+    // GEOTECHNICAL ASSETS
 
     $inputs_gcode.blur(function() {
-        var $this = $(this);
-        if ($this.val() != '') {
-            //console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    //console.log('Check: ' + (index));
-                    $inputs_brisk[index].value = $this.val();
-                }
-
-
-            });
-        }
-    });
-    $inputs_gyearconstruct.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1831,7 +1856,7 @@
             });
         }
     });
-    $inputs_gtype.blur(function() {
+    $inputs_gyearconstruct.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1846,7 +1871,7 @@
             });
         }
     });
-    $inputs_gposition.blur(function() {
+    $inputs_gtype.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1861,7 +1886,7 @@
             });
         }
     });
-    $inputs_gmaterial.blur(function() {
+    $inputs_gposition.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1876,7 +1901,7 @@
             });
         }
     });
-    $inputs_gnature.blur(function() {
+    $inputs_gmaterial.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1891,7 +1916,7 @@
             });
         }
     });
-    $inputs_gheight.blur(function() {
+    $inputs_gnature.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1906,7 +1931,7 @@
             });
         }
     });
-    $inputs_gh_h.blur(function() {
+    $inputs_gheight.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1921,7 +1946,7 @@
             });
         }
     });
-    $inputs_gslope.blur(function() {
+    $inputs_gh_h.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1936,7 +1961,7 @@
             });
         }
     });
-    $inputs_gdistance.blur(function() {
+    $inputs_gslope.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1951,7 +1976,7 @@
             });
         }
     });
-    $inputs_glength.blur(function() {
+    $inputs_gdistance.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1966,7 +1991,7 @@
             });
         }
     });
-    $inputs_gblocks.blur(function() {
+    $inputs_glength.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1981,7 +2006,7 @@
             });
         }
     });
-    $inputs_gcorrectmeas.blur(function() {
+    $inputs_gblocks.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -1996,7 +2021,7 @@
             });
         }
     });
-    $inputs_gvegetation.blur(function() {
+    $inputs_gcorrectmeas.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2011,7 +2036,7 @@
             });
         }
     });
-    $inputs_gtypevegetation.blur(function() {
+    $inputs_gvegetation.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2026,7 +2051,7 @@
             });
         }
     });
-    $inputs_gphoto.blur(function() {
+    $inputs_gtypevegetation.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2041,7 +2066,7 @@
             });
         }
     });
-    $inputs_glastinspection.blur(function() {
+    $inputs_gphoto.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2056,7 +2081,7 @@
             });
         }
     });
-    $inputs_gprevcondition.blur(function() {
+    $inputs_glastinspection.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2071,7 +2096,7 @@
             });
         }
     });
-    $inputs_gvisualcondition.blur(function() {
+    $inputs_gprevcondition.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2086,7 +2111,7 @@
             });
         }
     });
-    $inputs_gevidrecfailures.blur(function() {
+    $inputs_gvisualcondition.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2101,7 +2126,7 @@
             });
         }
     });
-    $inputs_gtypefailure.blur(function() {
+    $inputs_gevidrecfailures.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2116,7 +2141,7 @@
             });
         }
     });
-    $inputs_gextentfailure.blur(function() {
+    $inputs_gtypefailure.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2131,7 +2156,7 @@
             });
         }
     });
-    $inputs_gconslos.blur(function() {
+    $inputs_gextentfailure.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2146,7 +2171,7 @@
             });
         }
     });
-    $inputs_gfailure.blur(function() {
+    $inputs_gconslos.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2161,7 +2186,7 @@
             });
         }
     });
-    $inputs_gsurveyfreq.blur(function() {
+    $inputs_gfailure.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2176,7 +2201,7 @@
             });
         }
     });
-    $inputs_gnextsurvey.blur(function() {
+    $inputs_gsurveyfreq.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2191,7 +2216,7 @@
             });
         }
     });
-    $inputs_gpastinterv.blur(function() {
+    $inputs_gnextsurvey.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2206,7 +2231,7 @@
             });
         }
     });
-    $inputs_gintervextent.blur(function() {
+    $inputs_gpastinterv.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2221,7 +2246,7 @@
             });
         }
     });
-    $inputs_gdateinterv.blur(function() {
+    $inputs_gintervextent.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2236,7 +2261,7 @@
             });
         }
     });
-    $inputs_gscopeinterv.blur(function() {
+    $inputs_gdateinterv.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2251,7 +2276,7 @@
             });
         }
     });
-    $inputs_gimpactinterv.blur(function() {
+    $inputs_gscopeinterv.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2266,7 +2291,7 @@
             });
         }
     });
-    $inputs_glocdocinterv.blur(function() {
+    $inputs_gimpactinterv.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2281,7 +2306,7 @@
             });
         }
     });
-    $inputs_gmaintissues.blur(function() {
+    $inputs_glocdocinterv.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2296,7 +2321,7 @@
             });
         }
     });
-    $inputs_ginvestment10years.blur(function() {
+    $inputs_gmaintissues.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2311,7 +2336,7 @@
             });
         }
     });
-    $inputs_rgnvestmentrequired.blur(function() {
+    $inputs_ginvestment10years.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2326,7 +2351,7 @@
             });
         }
     });
-    $inputs_gomcomments.blur(function() {
+    $inputs_rgnvestmentrequired.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2341,7 +2366,7 @@
             });
         }
     });
-    $inputs_gcondition.blur(function() {
+    $inputs_gomcomments.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2356,7 +2381,7 @@
             });
         }
     });
-    $inputs_gcriticality.blur(function() {
+    $inputs_gcondition.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2371,7 +2396,7 @@
             });
         }
     });
-    $inputs_glandslide.blur(function() {
+    $inputs_gcriticality.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2386,7 +2411,7 @@
             });
         }
     });
-    $inputs_gflood.blur(function() {
+    $inputs_glandslide.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2401,7 +2426,7 @@
             });
         }
     });
-    $inputs_gresphazard.blur(function() {
+    $inputs_gflood.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2416,7 +2441,7 @@
             });
         }
     });
-    $inputs_gsensitivity.blur(function() {
+    $inputs_gresphazard.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2431,7 +2456,7 @@
             });
         }
     });
-    $inputs_grisk.blur(function() {
+    $inputs_gsensitivity.blur(function() {
         var $this = $(this);
         if ($this.val() != '') {
             //console.log('ID: ' + $this.attr("id"));
@@ -2440,6 +2465,609 @@
                 if ($check.prop("checked")) {
                     //console.log('Check: ' + (index));
                     $inputs_gsensitivity[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_grisk.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_grisk[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+
+    // drainages
+
+    $inputs_dcode.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dcode[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dyearconstruc.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dyearconstruc[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dtype.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dtype[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dcapacity.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dcapacity[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_drainpeak.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_drainpeak[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dmaterial.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dmaterial[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dslope.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dslope[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dsection.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dsection[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_ddiameter.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_ddiameter[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dlength.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dlength[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dprotentrance.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dprotentrance[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dprotexit.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dprotexit[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dphoto.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dphoto[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dlastinspection.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dlastinspection[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dprevcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dprevcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dvisualcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dvisualcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dcrossdamages.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dcrossdamages[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dlostsection.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dlostsection[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dconslos.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dconslos[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dfailure.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dfailure[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dsurveyfreq.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dsurveyfreq[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dnextsurvey.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dnextsurvey[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dpastinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dpastinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dintervextent.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dintervextent[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_ddateinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_ddateinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dscopeinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dscopeinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dimpactinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dimpactinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dlocdocinterv.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dlocdocinterv[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dmaintissues.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dmaintissues[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dinvestment10years.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dinvestment10years[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dinvestmentrequired.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dinvestmentrequired[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_domcomments.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_domcomments[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dcondition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dcondition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dcriticality.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dcriticality[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dlandslide.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dlandslide[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dflood.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dflood[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dresphazard.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dresphazard[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_dsensitivity.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_dsensitivity[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_drisk.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_drisk[index].value = $this.val();
                 }
 
 
