@@ -18,7 +18,7 @@ var Infodatatrack = mongoose.model('Infodatatrack');
 
 
 router.use(function timeLog(req, res, next) {
-    //console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
+    //// console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
 });
 router.use(bodyParser.urlencoded({
@@ -45,7 +45,7 @@ router.use(bodyParser.json());
 router.post('/save_tabular_data/', function(req, resp, next) {
 
     var postData = extend({}, req.body);
-    console.log('INFODATA TRACK postData ' + JSON.stringify(req.body));
+    // console.log('INFODATA TRACK postData ' + JSON.stringify(req.body));
 
     var options = {
         host: config.HOST_API,
@@ -62,22 +62,22 @@ router.post('/save_tabular_data/', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        // console.log('STATUS: ' + res.statusCode);
-        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // // console.log('STATUS: ' + res.statusCode);
+        // // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            // console.log('DATA ' + data.length + ' ' + data);
+            // // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
-            //console.log(JSON.stringify(responseObject));
+            //// console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });
@@ -104,22 +104,22 @@ router.get('/list_infodatatrack/:id', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
-            //console.log(JSON.stringify(responseObject));
+            //// console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });
@@ -146,22 +146,22 @@ router.post('/list_infodatatracks/:lng/:lat', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
-            //console.log(JSON.stringify(responseObject));
+            //// console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });
@@ -188,22 +188,22 @@ router.post('/list_infodatatracks/:id', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
-            //console.log(JSON.stringify(responseObject));
+            //// console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
         });
     });
@@ -230,22 +230,22 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             resp.render('data_infodatatrack', { token: req.token, utm: utm, infodatatrack: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            //console.log(JSON.stringify(responseObject));
+            //// console.log(JSON.stringify(responseObject));
         });
     });
 
@@ -272,17 +272,17 @@ router.post('/update_infodatatrack', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        // //console.log('STATUS: ' + res.statusCode);
-        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // //// console.log('STATUS: ' + res.statusCode);
+        // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            // //console.log('BODY: ' + chunk);
+            // //// console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            // //console.log('DATA ' + data.length + ' ' + data);
+            // //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/infodatatrack/edit_infodatatrack/' + req.body.infodatatrack._id);
@@ -370,7 +370,7 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
 /* DEL file */
 router.post('/V1/delete/:id', function(req, res, next) {
     Infodatatrack.findByIdAndRemove(req.params.id, function(err, file) {
-        // console.log('## API DEL file: ' + req.params.id);
+        // // console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
@@ -386,15 +386,15 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 /* UPDATE Infodatatrack */
 router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
-    console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
+    // console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
         for (var key in saveInfodatatrack) {
-            console.log(key + ": " + saveInfodatatrack[key]);
+            // console.log(key + ": " + saveInfodatatrack[key]);
             if (typeof saveInfodatatrack[key] === 'object') {
                 // estoy dentro de properties
                 for (var key2 in saveInfodatatrack[key]) {
-                    console.log(key2 + ": " + saveInfodatatrack[key][key2]);
+                    // console.log(key2 + ": " + saveInfodatatrack[key][key2]);
                     infodatatrack[key][key2] = saveInfodatatrack[key][key2];
 
                 }
@@ -403,7 +403,7 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
             }
         }
 
-        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        // console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
         infodatatrack.updated_at = new Date();
         infodatatrack.save(function(err, data) {
             if (err) {
@@ -413,10 +413,10 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
         });
         // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
         //     if (err) {
-        //         //console.log(err);
+        //         //// console.log(err);
         //         return res.status(500).send(err.message);
         //     }
-        //     //console.log("RESULT: " + result);
+        //     //// console.log("RESULT: " + result);
         //     res.status(200).jsonp(result);
         //     // res.send('Done')
         // });
@@ -429,7 +429,7 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 
     Infodatatrack.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, infodatatracks) {
         if (err) {
-            //console.log(err);
+            //// console.log(err);
             return res.status(500).send(err.message);
         }
         if (infodatatracks && infodatatracks.length > 0) {
@@ -444,7 +444,7 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 
 /* POST Data Road Track */
 router.post('/V1/save_tabular_data/', function(req, res, next) {
-    console.log('API save_tabular_data ' + JSON.stringify(req.body));
+    // console.log('API save_tabular_data ' + JSON.stringify(req.body));
     infodatatrack = new Infodatatrack(req.body);
     infodatatrack.save(function(err, data) {
         if (err) {
