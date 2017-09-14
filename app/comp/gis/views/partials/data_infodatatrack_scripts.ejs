@@ -1,4 +1,6 @@
 <script>
+    var $checks = $('#form').find("input[name='check[_id]']");
+
     var $inputsINV = $('#form').find("input[name='infodatatrack[properties][inventario]']");
     var $inputsRL = $('#form').find("input[name='infodatatrack[properties][Roadlab]']");
     var $inputsDC = $('#form').find("input[name='infodatatrack[properties][date_construction]']");
@@ -44,7 +46,22 @@
     var $inputs_asset_response_against_hazards = $('#form').find("input[name='infodatatrack[properties][asset_response_against_hazards]']");
     var $inputs_asset_sensitivity = $('#form').find("input[name='infodatatrack[properties][asset_sensitivity]']");
     var $inputs_risk = $('#form').find("input[name='infodatatrack[properties][risk]']");
-    var $checks = $('#form').find("input[name='check[_id]']");
+    // ROAD FURNITURE DATA
+    var $inputs_existence_barriers_condition = $('#form').find("input[name='infodatatrack[properties][existence_barriers_condition]']");
+    var $inputs_typology_barriers = $('#form').find("input[name='infodatatrack[properties][typology_barriers]']");
+    var $inputs_typology_safety_fence = $('#form').find("input[name='infodatatrack[properties][typology_safety_fence]']");
+    var $inputs_functionality_asset_functioning_expected_barrier = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_barrier]']");
+    var $inputs_existence_signposting_road_signs_condition = $('#form').find("input[name='infodatatrack[properties][existence_signposting_road_signs_condition]']");
+    var $inputs_typology_signaling = $('#form').find("input[name='infodatatrack[properties][typology_signaling]']");
+    var $inputs_functionality_asset_functioning_expected_signal = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_signal]']");
+    var $inputs_existence_street_lighting = $('#form').find("input[name='infodatatrack[properties][existence_street_lighting]']");
+    var $inputs_typology_street_lighting = $('#form').find("input[name='infodatatrack[properties][typology_street_lighting]']");
+    var $inputs_functionality_asset_functioning_expected_light = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_light]']");
+    var $inputs_has_there_been_past_interventions = $('#form').find("input[name='infodatatrack[properties][has_there_been_past_interventions]']");
+    var $inputs_year_performance_past_interventions = $('#form').find("input[name='infodatatrack[properties][year_performance_past_interventions]']");
+    var $inputs_comments = $('#form').find("input[name='infodatatrack[properties][comments]']");
+
+
 
 
     $("input[name='infodatatrack[properties][date_construction]']").datepicker({
@@ -754,6 +771,201 @@
                 if ($check.prop("checked")) {
                     //console.log('Check: ' + (index));
                     $inputs_risk[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_existence_barriers_condition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_existence_barriers_condition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_typology_barriers.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_typology_barriers[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_typology_safety_fence.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_typology_safety_fence[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_functionality_asset_functioning_expected_barrier.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_functionality_asset_functioning_expected_barrier[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_existence_signposting_road_signs_condition.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_existence_signposting_road_signs_condition[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_typology_signaling.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_typology_signaling[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_functionality_asset_functioning_expected_signal.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_functionality_asset_functioning_expected_signal[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_existence_street_lighting.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_existence_street_lighting[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_typology_street_lighting.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_typology_street_lighting[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_functionality_asset_functioning_expected_light.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_functionality_asset_functioning_expected_light[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_has_there_been_past_interventions.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_has_there_been_past_interventions[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_year_performance_past_interventions.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_year_performance_past_interventions[index].value = $this.val();
+                }
+
+
+            });
+        }
+    });
+    $inputs_comments.blur(function() {
+        var $this = $(this);
+        if ($this.val() != '') {
+            //console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    //console.log('Check: ' + (index));
+                    $inputs_comments[index].value = $this.val();
                 }
 
 

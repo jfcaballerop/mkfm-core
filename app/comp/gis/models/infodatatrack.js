@@ -60,7 +60,7 @@ var infodatatrackSchema = new Schema({
         asset_response_against_hazards: [],
         asset_sensitivity: [],
         risk: [],
-        existence_barriers_condition: [],
+        existence_barriers_condition: [], //Road Furniture Data        
         typology_barriers: [],
         typology_safety_fence: [],
         functionality_asset_functioning_expected_barrier: [],
