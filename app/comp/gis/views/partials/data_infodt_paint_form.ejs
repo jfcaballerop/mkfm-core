@@ -28,34 +28,34 @@
                 '<option>1</option>' +
                 '</select>');
 
-            $('#row' + index).append('<td id="infodatatrack[properties][Roadlab]"><input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.Roadlab[index] + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][date_construction]"><input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.date_construction[index] + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][alternative_itinerary]">' +
-                '<select name="infodatatrack[properties][alternative_itinerary]" class="form-control">' +
-                '<option>Y</option>' +
-                '<option>N</option>' +
-                '<option>NA</option>' +
-                '<option>Unkown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][open_traffic]">' +
-                '<select name="infodatatrack[properties][open_traffic]" class="form-control">' +
-                '<option>Y</option>' +
-                '<option>N</option>' +
-                '<option>NA</option>' +
-                '<option>Unkown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][existence_gauging_stations]">' +
-                '<select name="infodatatrack[properties][existence_gauging_stations]" class="form-control">' +
-                '<option>Y</option>' +
-                '<option>N</option>' +
-                '<option>NA</option>' +
-                '<option>Unkown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][adt]"><input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.adt[index] + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][traffic_high_peak]"><input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.traffic_high_peak[index] + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][Roadlab]"><input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.Roadlab[index] + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][date_construction]"><input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.date_construction[index] + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][alternative_itinerary]">' +
+            //     '<select name="infodatatrack[properties][alternative_itinerary]" class="form-control">' +
+            //     '<option>Y</option>' +
+            //     '<option>N</option>' +
+            //     '<option>NA</option>' +
+            //     '<option>Unkown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][open_traffic]">' +
+            //     '<select name="infodatatrack[properties][open_traffic]" class="form-control">' +
+            //     '<option>Y</option>' +
+            //     '<option>N</option>' +
+            //     '<option>NA</option>' +
+            //     '<option>Unkown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][existence_gauging_stations]">' +
+            //     '<select name="infodatatrack[properties][existence_gauging_stations]" class="form-control">' +
+            //     '<option>Y</option>' +
+            //     '<option>N</option>' +
+            //     '<option>NA</option>' +
+            //     '<option>Unkown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][adt]"><input name="infodatatrack[properties][adt]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.adt[index] + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][traffic_high_peak]"><input name="infodatatrack[properties][traffic_high_peak]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.traffic_high_peak[index] + '">');
             $('#row' + index).append('<td id="infodatatrack[properties][pavement_material]">' +
                 '<select name="infodatatrack[properties][pavement_material]" class="form-control">' +
                 '<option>Asphalt</option>' +
@@ -69,10 +69,10 @@
                 '<option>1</option>' +
                 '</select>');
 
-            $('#row' + index).append('<td id="infodatatrack[properties][base_material]"><input name="infodatatrack[properties][base_material]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.base_material[index] !== "undefined" ? rObject.properties.base_material[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][subbase_material]"><input name="infodatatrack[properties][subbase_material]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.subbase_material[index] !== "undefined" ? rObject.properties.subbase_material[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][base_material]"><input name="infodatatrack[properties][base_material]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.base_material[index] !== "undefined" ? rObject.properties.base_material[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][subbase_material]"><input name="infodatatrack[properties][subbase_material]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.subbase_material[index] !== "undefined" ? rObject.properties.subbase_material[index] : '') + '">');
             $('#row' + index).append('<td id="infodatatrack[properties][number_lanes_inc]"><input name="infodatatrack[properties][number_lanes_inc]" type="text" class="form-control round-form input-sm" value="' +
                 (typeof rObject.properties.number_lanes_inc[index] !== "undefined" ? rObject.properties.number_lanes_inc[index] : '') + '">');
             $('#row' + index).append('<td id="infodatatrack[properties][number_lanes_dec]"><input name="infodatatrack[properties][number_lanes_dec]" type="text" class="form-control round-form input-sm" value="' +
@@ -81,12 +81,121 @@
                 (typeof rObject.properties.total_number_lanes[index] !== "undefined" ? rObject.properties.total_number_lanes[index] : '') + '">');
             $('#row' + index).append('<td id="infodatatrack[properties][total_width]"><input name="infodatatrack[properties][total_width]" type="text" class="form-control round-form input-sm" value="' +
                 (typeof rObject.properties.total_width[index] !== "undefined" ? rObject.properties.total_width[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][location_doc_road_projects]"><input name="infodatatrack[properties][location_doc_road_projects]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.location_doc_road_projects[index] !== "undefined" ? rObject.properties.location_doc_road_projects[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][last_inspection]"><input name="infodatatrack[properties][last_inspection]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.last_inspection[index] !== "undefined" ? rObject.properties.last_inspection[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][prev_condition]">' +
-                '<select name="infodatatrack[properties][prev_condition]" class="form-control">' +
+            // $('#row' + index).append('<td id="infodatatrack[properties][location_doc_road_projects]"><input name="infodatatrack[properties][location_doc_road_projects]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.location_doc_road_projects[index] !== "undefined" ? rObject.properties.location_doc_road_projects[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][last_inspection]"><input name="infodatatrack[properties][last_inspection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.last_inspection[index] !== "undefined" ? rObject.properties.last_inspection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][prev_condition]">' +
+            //     '<select name="infodatatrack[properties][prev_condition]" class="form-control">' +
+            //     '<option>A</option>' +
+            //     '<option>B</option>' +
+            //     '<option>C</option>' +
+            //     '<option>D</option>' +
+            //     '<option>E</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][failure_history]"><input name="infodatatrack[properties][failure_history]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.failure_history[index] !== "undefined" ? rObject.properties.failure_history[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][cons_LOS]"><input name="infodatatrack[properties][cons_LOS]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.cons_LOS[index] !== "undefined" ? rObject.properties.cons_LOS[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][survey_freq]">' +
+            //     '<select name="infodatatrack[properties][survey_freq]" class="form-control">' +
+            //     '<option>Less than once a year_interv</option>' +
+            //     '<option>Once a year</option>' +
+            //     '<option>Every 6 months</option>' +
+            //     '<option>Every 6 months</option>' +
+            //     '<option>More than once every 3 months</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][next_survey]"><input name="infodatatrack[properties][next_survey]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.next_survey[index] !== "undefined" ? rObject.properties.next_survey[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][past_interv]">' +
+            //     '<select name="infodatatrack[properties][past_interv]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][interv_extent]">' +
+            //     '<select name="infodatatrack[properties][interv_extent]" class="form-control">' +
+            //     '<option>Global</option>' +
+            //     '<option>Partial</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][year_interv]"><input name="infodatatrack[properties][year_interv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.year_interv[index] !== "undefined" ? rObject.properties.year_interv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][scope_interv]"><input name="infodatatrack[properties][scope_interv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.scope_interv[index] !== "undefined" ? rObject.properties.scope_interv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][impact_interv]"><input name="infodatatrack[properties][impact_interv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.impact_interv[index] !== "undefined" ? rObject.properties.impact_interv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][loc_doc_interv]"><input name="infodatatrack[properties][loc_doc_interv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.loc_doc_interv[index] !== "undefined" ? rObject.properties.loc_doc_interv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][maint_issues]"><input name="infodatatrack[properties][maint_issues]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.maint_issues[index] !== "undefined" ? rObject.properties.maint_issues[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][investment10years]"><input name="infodatatrack[properties][investment10years]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.investment10years[index] !== "undefined" ? rObject.properties.investment10years[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][investment_required]"><input name="infodatatrack[properties][investment_required]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.investment_required[index] !== "undefined" ? rObject.properties.investment_required[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][om_comments]"><input name="infodatatrack[properties][om_comments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.om_comments[index] !== "undefined" ? rObject.properties.om_comments[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][acess_airports_ferry_ports]">' +
+            //     '<select name="infodatatrack[properties][acess_airports_ferry_ports]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][distance_airports_ferry_ports]"><input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.distance_airports_ferry_ports[index] !== "undefined" ? rObject.properties.distance_airports_ferry_ports[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][access_turistic_sites]">' +
+            //     '<select name="infodatatrack[properties][access_turistic_sites]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][distance_turistic_sites]"><input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.distance_turistic_sites[index] !== "undefined" ? rObject.properties.distance_turistic_sites[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][acess_industry_agriculture_fishing_sites]">' +
+            //     '<select name="infodatatrack[properties][acess_industry_agriculture_fishing_sites]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][distance_industries_agriculture_fishing_sites]"><input name="infodatatrack[properties][distance_industries_agriculture_fishing_sites]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.distance_industries_agriculture_fishing_sites[index] !== "undefined" ? rObject.properties.distance_industries_agriculture_fishing_sites[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][access_social_services]">' +
+            //     '<select name="infodatatrack[properties][access_social_services]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][distance_social_services]"><input name="infodatatrack[properties][distance_social_services]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.distance_social_services[index] !== "undefined" ? rObject.properties.distance_social_services[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][located_within_an_environmentally_protected_area]">' +
+            //     '<select name="infodatatrack[properties][located_within_an_environmentally_protected_area]" class="form-control">' +
+            //     '<option>Yes</option>' +
+            //     '<option>No</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][distance_a_dumping_area]"><input name="infodatatrack[properties][distance_a_dumping_area]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.distance_a_dumping_area[index] !== "undefined" ? rObject.properties.distance_a_dumping_area[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][current_visual_condition]">' +
+                '<select name="infodatatrack[properties][current_visual_condition]" class="form-control">' +
                 '<option>A</option>' +
                 '<option>B</option>' +
                 '<option>C</option>' +
@@ -96,75 +205,335 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][failure_history]"><input name="infodatatrack[properties][failure_history]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.failure_history[index] !== "undefined" ? rObject.properties.failure_history[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][cons_LOS]"><input name="infodatatrack[properties][cons_LOS]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.cons_LOS[index] !== "undefined" ? rObject.properties.cons_LOS[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][survey_freq]">' +
-                '<select name="infodatatrack[properties][survey_freq]" class="form-control">' +
-                '<option>Less than once a year_interv</option>' +
-                '<option>Once a year</option>' +
-                '<option>Every 6 months</option>' +
-                '<option>Every 6 months</option>' +
-                '<option>More than once every 3 months</option>' +
-                '<option>Unknown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][next_survey]"><input name="infodatatrack[properties][next_survey]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.next_survey[index] !== "undefined" ? rObject.properties.next_survey[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][past_interv]">' +
-                '<select name="infodatatrack[properties][past_interv]" class="form-control">' +
-                '<option>Yes</option>' +
-                '<option>No</option>' +
-                '<option>N/A</option>' +
-                '<option>Unknown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][interv_extent]">' +
-                '<select name="infodatatrack[properties][interv_extent]" class="form-control">' +
-                '<option>Global</option>' +
-                '<option>Partial</option>' +
-                '<option>N/A</option>' +
-                '<option>Unknown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][year_interv]"><input name="infodatatrack[properties][year_interv]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.year_interv[index] !== "undefined" ? rObject.properties.year_interv[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][scope_interv]"><input name="infodatatrack[properties][scope_interv]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.scope_interv[index] !== "undefined" ? rObject.properties.scope_interv[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][impact_interv]"><input name="infodatatrack[properties][impact_interv]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.impact_interv[index] !== "undefined" ? rObject.properties.impact_interv[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][loc_doc_interv]"><input name="infodatatrack[properties][loc_doc_interv]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.loc_doc_interv[index] !== "undefined" ? rObject.properties.loc_doc_interv[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][maint_issues]"><input name="infodatatrack[properties][maint_issues]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.maint_issues[index] !== "undefined" ? rObject.properties.maint_issues[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][investment10years]"><input name="infodatatrack[properties][investment10years]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.investment10years[index] !== "undefined" ? rObject.properties.investment10years[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][investment_required]"><input name="infodatatrack[properties][investment_required]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.investment_required[index] !== "undefined" ? rObject.properties.investment_required[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][om_comments]"><input name="infodatatrack[properties][om_comments]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.om_comments[index] !== "undefined" ? rObject.properties.om_comments[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][acess_airports_ferry_ports]">' +
-                '<select name="infodatatrack[properties][acess_airports_ferry_ports]" class="form-control">' +
-                '<option>Yes</option>' +
-                '<option>No</option>' +
-                '<option>N/A</option>' +
-                '<option>Unknown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][distance_airports_ferry_ports]"><input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.distance_airports_ferry_ports[index] !== "undefined" ? rObject.properties.distance_airports_ferry_ports[index] : '') + '">');
-            $('#row' + index).append('<td id="infodatatrack[properties][access_turistic_sites]">' +
-                '<select name="infodatatrack[properties][access_turistic_sites]" class="form-control">' +
-                '<option>Yes</option>' +
-                '<option>No</option>' +
-                '<option>N/A</option>' +
-                '<option>Unknown</option>' +
-                '<option>1</option>' +
-                '</select>');
-            $('#row' + index).append('<td id="infodatatrack[properties][distance_turistic_sites]"><input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="' +
-                (typeof rObject.properties.distance_turistic_sites[index] !== "undefined" ? rObject.properties.distance_airports_ferry_ports[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][current_condition]">' +
+            //     '<select name="infodatatrack[properties][current_condition]" class="form-control">' +
+            //     '<option>A</option>' +
+            //     '<option>B</option>' +
+            //     '<option>C</option>' +
+            //     '<option>D</option>' +
+            //     '<option>E</option>' +
+            //     '<option>Unknown</option>' +
+            //     '<option>N/A</option>' +
+            //     '<option>1</option>' +
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][criticality]">' +
+            //     '<select name="infodatatrack[properties][criticality]" class="form-control">' +
+            //     '<option>Very High</option>'+
+            //     '<option>High</option>'+
+            //     '<option>Medium</option>'+
+            //     '<option>Low</option>'+
+            //     '<option>Very Low</option>'+
+            //     '<option>Unknown</option>'+
+            //     '<option>1</option>'+
+            //     '</select>');
+            // $('#row' + index).append('<td id="infodatatrack[properties][exposure_landslide_hazard]"><input name="infodatatrack[properties][exposure_landslide_hazard]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.exposure_landslide_hazard[index] !== "undefined" ? rObject.properties.exposure_landslide_hazard[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][exposure_flood_hazard]"><input name="infodatatrack[properties][exposure_flood_hazard]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.exposure_flood_hazard[index] !== "undefined" ? rObject.properties.exposure_flood_hazard[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][asset_response_against_hazards]"><input name="infodatatrack[properties][asset_response_against_hazards]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.asset_response_against_hazards[index] !== "undefined" ? rObject.properties.asset_response_against_hazards[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][asset_sensitivity]"><input name="infodatatrack[properties][asset_sensitivity]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.asset_sensitivity[index] !== "undefined" ? rObject.properties.asset_sensitivity[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][risk]"><input name="infodatatrack[properties][risk]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.risk[index] !== "undefined" ? rObject.properties.risk[index] : '') + '">');
 
+            // <!-- ROAD FURNITURE DATA -->
+            $('#row' + index).append('<td id="infodatatrack[properties][existence_barriers_condition]"><input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.existence_barriers_condition[index] !== "undefined" ? rObject.properties.existence_barriers_condition[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][typology_barriers]"><input name="infodatatrack[properties][typology_barriers]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.typology_barriers[index] !== "undefined" ? rObject.properties.typology_barriers[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][typology_safety_fence]"><input name="infodatatrack[properties][typology_safety_fence]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.typology_safety_fence[index] !== "undefined" ? rObject.properties.typology_safety_fence[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.functionality_asset_functioning_expected_barrier[index] !== "undefined" ? rObject.properties.functionality_asset_functioning_expected_barrier[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][existence_signposting_road_signs_condition]"><input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.existence_signposting_road_signs_condition[index] !== "undefined" ? rObject.properties.existence_signposting_road_signs_condition[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][typology_signaling]"><input name="infodatatrack[properties][typology_signaling]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.typology_signaling[index] !== "undefined" ? rObject.properties.typology_signaling[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][typology_vertical_signaling]"><input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.typology_vertical_signaling[index] !== "undefined" ? rObject.properties.typology_vertical_signaling[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][functionality_asset_functioning_expected_signal]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.functionality_asset_functioning_expected_signal[index] !== "undefined" ? rObject.properties.functionality_asset_functioning_expected_signal[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][existence_street_lighting]"><input name="infodatatrack[properties][existence_street_lighting]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.existence_street_lighting[index] !== "undefined" ? rObject.properties.existence_street_lighting[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][typology_street_lighting]"><input name="infodatatrack[properties][typology_street_lighting]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.typology_street_lighting[index] !== "undefined" ? rObject.properties.typology_street_lighting[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][functionality_asset_functioning_expected_light]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.functionality_asset_functioning_expected_light[index] !== "undefined" ? rObject.properties.functionality_asset_functioning_expected_light[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][has_there_been_past_interventions]"><input name="infodatatrack[properties][has_there_been_past_interventions]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.has_there_been_past_interventions[index] !== "undefined" ? rObject.properties.has_there_been_past_interventions[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][year_performance_past_interventions]"><input name="infodatatrack[properties][year_performance_past_interventions]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.year_performance_past_interventions[index] !== "undefined" ? rObject.properties.year_performance_past_interventions[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][comments]"><input name="infodatatrack[properties][comments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.comments[index] !== "undefined" ? rObject.properties.comments[index] : '') + '">');
+
+            // <!-- // Bridge groups -->
+            $('#row' + index).append('<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.bcode[index] !== "undefined" ? rObject.properties.bcode[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bname]"><input name="infodatatrack[properties][bname]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bname[index] !== "undefined" ? rObject.properties.bname[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][byearconstruc]"><input name="infodatatrack[properties][byearconstruc]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.byearconstruc[index] !== "undefined" ? rObject.properties.byearconstruc[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][btype]"><input name="infodatatrack[properties][btype]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.btype[index] !== "undefined" ? rObject.properties.btype[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bsurrounding]"><input name="infodatatrack[properties][bsurrounding]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bsurrounding[index] !== "undefined" ? rObject.properties.bsurrounding[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][balternative]"><input name="infodatatrack[properties][balternative]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.balternative[index] !== "undefined" ? rObject.properties.balternative[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bobstaclesaved]"><input name="infodatatrack[properties][bobstaclesaved]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bobstaclesaved[index] !== "undefined" ? rObject.properties.bobstaclesaved[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bfloodscenario]"><input name="infodatatrack[properties][bfloodscenario]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bfloodscenario[index] !== "undefined" ? rObject.properties.bfloodscenario[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bmaterialdeck]"><input name="infodatatrack[properties][bmaterialdeck]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bmaterialdeck[index] !== "undefined" ? rObject.properties.bmaterialdeck[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bmaterialpiers]"><input name="infodatatrack[properties][bmaterialpiers]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bmaterialpiers[index] !== "undefined" ? rObject.properties.bmaterialpiers[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bmaterialabutments]"><input name="infodatatrack[properties][bmaterialabutments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bmaterialabutments[index] !== "undefined" ? rObject.properties.bmaterialabutments[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][balignment]"><input name="infodatatrack[properties][balignment]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.balignment[index] !== "undefined" ? rObject.properties.balignment[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bspans]"><input name="infodatatrack[properties][bspans]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bspans[index] !== "undefined" ? rObject.properties.bspans[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.blenght[index] !== "undefined" ? rObject.properties.blenght[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bmaxspan]"><input name="infodatatrack[properties][bmaxspan]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bmaxspan[index] !== "undefined" ? rObject.properties.bmaxspan[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bwidth[index] !== "undefined" ? rObject.properties.bwidth[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bfreeheight]"><input name="infodatatrack[properties][bfreeheight]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bfreeheight[index] !== "undefined" ? rObject.properties.bfreeheight[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bfoundation]"><input name="infodatatrack[properties][bfoundation]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bfoundation[index] !== "undefined" ? rObject.properties.bfoundation[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bpiersriver]"><input name="infodatatrack[properties][bpiersriver]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bpiersriver[index] !== "undefined" ? rObject.properties.bpiersriver[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bprotectabut]"><input name="infodatatrack[properties][bprotectabut]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bprotectabut[index] !== "undefined" ? rObject.properties.bprotectabut[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bprojectlocation]"><input name="infodatatrack[properties][bprojectlocation]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bprojectlocation[index] !== "undefined" ? rObject.properties.bprojectlocation[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bphoto]"><input name="infodatatrack[properties][bphoto]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bphoto[index] !== "undefined" ? rObject.properties.bphoto[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][blastinspection]"><input name="infodatatrack[properties][blastinspection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.blastinspection[index] !== "undefined" ? rObject.properties.blastinspection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bprevcondition]"><input name="infodatatrack[properties][bprevcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bprevcondition[index] !== "undefined" ? rObject.properties.bprevcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bvisualcondition]"><input name="infodatatrack[properties][bvisualcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bvisualcondition[index] !== "undefined" ? rObject.properties.bvisualcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bdamagesfoundations]"><input name="infodatatrack[properties][bdamagesfoundations]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bdamagesfoundations[index] !== "undefined" ? rObject.properties.bdamagesfoundations[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bdamagesstructural]"><input name="infodatatrack[properties][bdamagesstructural]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bdamagesstructural[index] !== "undefined" ? rObject.properties.bdamagesstructural[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bdamagesnonstructural]"><input name="infodatatrack[properties][bdamagesnonstructural]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bdamagesnonstructural[index] !== "undefined" ? rObject.properties.bdamagesnonstructural[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bconslos]"><input name="infodatatrack[properties][bconslos]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bconslos[index] !== "undefined" ? rObject.properties.bconslos[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bfailure]"><input name="infodatatrack[properties][bfailure]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bfailure[index] !== "undefined" ? rObject.properties.bfailure[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bsurveyfreq]"><input name="infodatatrack[properties][bsurveyfreq]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bsurveyfreq[index] !== "undefined" ? rObject.properties.bsurveyfreq[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bnextsurvey]"><input name="infodatatrack[properties][bnextsurvey]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bnextsurvey[index] !== "undefined" ? rObject.properties.bnextsurvey[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bpastinterv]"><input name="infodatatrack[properties][bpastinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bpastinterv[index] !== "undefined" ? rObject.properties.bpastinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bintervextent]"><input name="infodatatrack[properties][bintervextent]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bintervextent[index] !== "undefined" ? rObject.properties.bintervextent[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bdateinterv]"><input name="infodatatrack[properties][bdateinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bdateinterv[index] !== "undefined" ? rObject.properties.bdateinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bscopeinterv]"><input name="infodatatrack[properties][bscopeinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bscopeinterv[index] !== "undefined" ? rObject.properties.bscopeinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bimpactinterv]"><input name="infodatatrack[properties][bimpactinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bimpactinterv[index] !== "undefined" ? rObject.properties.bimpactinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][blocdocinterv]"><input name="infodatatrack[properties][blocdocinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.blocdocinterv[index] !== "undefined" ? rObject.properties.blocdocinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bmaintissues]"><input name="infodatatrack[properties][bmaintissues]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bmaintissues[index] !== "undefined" ? rObject.properties.bmaintissues[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][binvestment10years]"><input name="infodatatrack[properties][binvestment10years]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.binvestment10years[index] !== "undefined" ? rObject.properties.binvestment10years[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][binvestmentrequired]"><input name="infodatatrack[properties][binvestmentrequired]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.binvestmentrequired[index] !== "undefined" ? rObject.properties.binvestmentrequired[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bomcomments]"><input name="infodatatrack[properties][bomcomments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bomcomments[index] !== "undefined" ? rObject.properties.bomcomments[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bcondition]"><input name="infodatatrack[properties][bcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bcondition[index] !== "undefined" ? rObject.properties.bcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bcriticality]"><input name="infodatatrack[properties][bcriticality]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bcriticality[index] !== "undefined" ? rObject.properties.bcriticality[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][blandslide]"><input name="infodatatrack[properties][blandslide]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.blandslide[index] !== "undefined" ? rObject.properties.blandslide[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bflood]"><input name="infodatatrack[properties][bflood]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bflood[index] !== "undefined" ? rObject.properties.bflood[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bresphazard]"><input name="infodatatrack[properties][bresphazard]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bresphazard[index] !== "undefined" ? rObject.properties.bresphazard[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][bsensitivity]"><input name="infodatatrack[properties][bsensitivity]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.bsensitivity[index] !== "undefined" ? rObject.properties.bsensitivity[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][brisk]"><input name="infodatatrack[properties][brisk]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.brisk[index] !== "undefined" ? rObject.properties.brisk[index] : '') + '">');
+
+            // <!-- GEOTECHNICALS -->
+            $('#row' + index).append('<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gcode[index] !== "undefined" ? rObject.properties.gcode[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gyearconstruct]"><input name="infodatatrack[properties][gyearconstruct]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gyearconstruct[index] !== "undefined" ? rObject.properties.gyearconstruct[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][gtype]"><input name="infodatatrack[properties][gtype]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gtype[index] !== "undefined" ? rObject.properties.gtype[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][gposition]"><input name="infodatatrack[properties][gposition]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gposition[index] !== "undefined" ? rObject.properties.gposition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gmaterial]"><input name="infodatatrack[properties][gmaterial]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gmaterial[index] !== "undefined" ? rObject.properties.gmaterial[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gnature]"><input name="infodatatrack[properties][gnature]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gnature[index] !== "undefined" ? rObject.properties.gnature[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gheight]"><input name="infodatatrack[properties][gheight]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gheight[index] !== "undefined" ? rObject.properties.gheight[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gh_h]"><input name="infodatatrack[properties][gh_h]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gh_h[index] !== "undefined" ? rObject.properties.gh_h[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][gslope]"><input name="infodatatrack[properties][gslope]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gslope[index] !== "undefined" ? rObject.properties.gslope[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gdistance]"><input name="infodatatrack[properties][gdistance]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gdistance[index] !== "undefined" ? rObject.properties.gdistance[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.glength[index] !== "undefined" ? rObject.properties.glength[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gblocks]"><input name="infodatatrack[properties][gblocks]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gblocks[index] !== "undefined" ? rObject.properties.gblocks[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gcorrectmeas]"><input name="infodatatrack[properties][gcorrectmeas]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gcorrectmeas[index] !== "undefined" ? rObject.properties.gcorrectmeas[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][gvegetation]"><input name="infodatatrack[properties][gvegetation]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gvegetation[index] !== "undefined" ? rObject.properties.gvegetation[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gtypevegetation]"><input name="infodatatrack[properties][gtypevegetation]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gtypevegetation[index] !== "undefined" ? rObject.properties.gtypevegetation[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gphoto]"><input name="infodatatrack[properties][gphoto]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gphoto[index] !== "undefined" ? rObject.properties.gphoto[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][glastinspection]"><input name="infodatatrack[properties][glastinspection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.glastinspection[index] !== "undefined" ? rObject.properties.glastinspection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gprevcondition]"><input name="infodatatrack[properties][gprevcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gprevcondition[index] !== "undefined" ? rObject.properties.gprevcondition[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][gvisualcondition]"><input name="infodatatrack[properties][gvisualcondition]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.gvisualcondition[index] !== "undefined" ? rObject.properties.gvisualcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gevidrecfailures]"><input name="infodatatrack[properties][gevidrecfailures]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gevidrecfailures[index] !== "undefined" ? rObject.properties.gevidrecfailures[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gtypefailure]"><input name="infodatatrack[properties][gtypefailure]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gtypefailure[index] !== "undefined" ? rObject.properties.gtypefailure[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gextentfailure]"><input name="infodatatrack[properties][gextentfailure]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gextentfailure[index] !== "undefined" ? rObject.properties.gextentfailure[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gconslos]"><input name="infodatatrack[properties][gconslos]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gconslos[index] !== "undefined" ? rObject.properties.gconslos[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gfailure]"><input name="infodatatrack[properties][gfailure]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gfailure[index] !== "undefined" ? rObject.properties.gfailure[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gsurveyfreq]"><input name="infodatatrack[properties][gsurveyfreq]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gsurveyfreq[index] !== "undefined" ? rObject.properties.gsurveyfreq[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gnextsurvey]"><input name="infodatatrack[properties][gnextsurvey]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gnextsurvey[index] !== "undefined" ? rObject.properties.gnextsurvey[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gpastinterv]"><input name="infodatatrack[properties][gpastinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gpastinterv[index] !== "undefined" ? rObject.properties.gpastinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gintervextent]"><input name="infodatatrack[properties][gintervextent]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gintervextent[index] !== "undefined" ? rObject.properties.gintervextent[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gdateinterv]"><input name="infodatatrack[properties][gdateinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gdateinterv[index] !== "undefined" ? rObject.properties.gdateinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gscopeinterv]"><input name="infodatatrack[properties][gscopeinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gscopeinterv[index] !== "undefined" ? rObject.properties.gscopeinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gimpactinterv]"><input name="infodatatrack[properties][gimpactinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gimpactinterv[index] !== "undefined" ? rObject.properties.gimpactinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][glocdocinterv]"><input name="infodatatrack[properties][glocdocinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.glocdocinterv[index] !== "undefined" ? rObject.properties.glocdocinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gmaintissues]"><input name="infodatatrack[properties][gmaintissues]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gmaintissues[index] !== "undefined" ? rObject.properties.gmaintissues[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][ginvestment10years]"><input name="infodatatrack[properties][ginvestment10years]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.ginvestment10years[index] !== "undefined" ? rObject.properties.ginvestment10years[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][rgnvestmentrequired]"><input name="infodatatrack[properties][rgnvestmentrequired]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.rgnvestmentrequired[index] !== "undefined" ? rObject.properties.rgnvestmentrequired[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gomcomments]"><input name="infodatatrack[properties][gomcomments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gomcomments[index] !== "undefined" ? rObject.properties.gomcomments[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gcondition]"><input name="infodatatrack[properties][gcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gcondition[index] !== "undefined" ? rObject.properties.gcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gcriticality]"><input name="infodatatrack[properties][gcriticality]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gcriticality[index] !== "undefined" ? rObject.properties.gcriticality[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][glandslide]"><input name="infodatatrack[properties][glandslide]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.glandslide[index] !== "undefined" ? rObject.properties.glandslide[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gflood]"><input name="infodatatrack[properties][gflood]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gflood[index] !== "undefined" ? rObject.properties.gflood[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gresphazard]"><input name="infodatatrack[properties][gresphazard]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gresphazard[index] !== "undefined" ? rObject.properties.gresphazard[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][gsensitivity]"><input name="infodatatrack[properties][gsensitivity]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.gsensitivity[index] !== "undefined" ? rObject.properties.gsensitivity[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][grisk]"><input name="infodatatrack[properties][grisk]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.grisk[index] !== "undefined" ? rObject.properties.grisk[index] : '') + '">');
+
+            // Drainages
+            $('#row' + index).append('<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.dcode[index] !== "undefined" ? rObject.properties.dcode[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dyearconstruc]"><input name="infodatatrack[properties][dyearconstruc]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dyearconstruc[index] !== "undefined" ? rObject.properties.dyearconstruc[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][dtype]"><input name="infodatatrack[properties][dtype]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.dtype[index] !== "undefined" ? rObject.properties.dtype[index] : '') + '">');
+            $('#row' + index).append('<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" class="form-control round-form input-sm" value="' +
+                (typeof rObject.properties.dcapacity[index] !== "undefined" ? rObject.properties.dcapacity[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][drainpeak]"><input name="infodatatrack[properties][drainpeak]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.drainpeak[index] !== "undefined" ? rObject.properties.drainpeak[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dmaterial]"><input name="infodatatrack[properties][dmaterial]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dmaterial[index] !== "undefined" ? rObject.properties.dmaterial[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dslope]"><input name="infodatatrack[properties][dslope]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dslope[index] !== "undefined" ? rObject.properties.dslope[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dsection]"><input name="infodatatrack[properties][dsection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dsection[index] !== "undefined" ? rObject.properties.dsection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][ddiameter]"><input name="infodatatrack[properties][ddiameter]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.ddiameter[index] !== "undefined" ? rObject.properties.ddiameter[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dlength]"><input name="infodatatrack[properties][dlength]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dlength[index] !== "undefined" ? rObject.properties.dlength[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dprotentrance]"><input name="infodatatrack[properties][dprotentrance]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dprotentrance[index] !== "undefined" ? rObject.properties.dprotentrance[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dprotexit]"><input name="infodatatrack[properties][dprotexit]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dprotexit[index] !== "undefined" ? rObject.properties.dprotexit[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dphoto]"><input name="infodatatrack[properties][dphoto]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dphoto[index] !== "undefined" ? rObject.properties.dphoto[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dlastinspection]"><input name="infodatatrack[properties][dlastinspection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dlastinspection[index] !== "undefined" ? rObject.properties.dlastinspection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dprevcondition]"><input name="infodatatrack[properties][dprevcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dprevcondition[index] !== "undefined" ? rObject.properties.dprevcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dvisualcondition]"><input name="infodatatrack[properties][dvisualcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dvisualcondition[index] !== "undefined" ? rObject.properties.dvisualcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dcrossdamages]"><input name="infodatatrack[properties][dcrossdamages]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dcrossdamages[index] !== "undefined" ? rObject.properties.dcrossdamages[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dlostsection]"><input name="infodatatrack[properties][dlostsection]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dlostsection[index] !== "undefined" ? rObject.properties.dlostsection[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dconslos]"><input name="infodatatrack[properties][dconslos]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dconslos[index] !== "undefined" ? rObject.properties.dconslos[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dfailure]"><input name="infodatatrack[properties][dfailure]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dfailure[index] !== "undefined" ? rObject.properties.dfailure[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dsurveyfreq]"><input name="infodatatrack[properties][dsurveyfreq]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dsurveyfreq[index] !== "undefined" ? rObject.properties.dsurveyfreq[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dnextsurvey]"><input name="infodatatrack[properties][dnextsurvey]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dnextsurvey[index] !== "undefined" ? rObject.properties.dnextsurvey[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dpastinterv]"><input name="infodatatrack[properties][dpastinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dpastinterv[index] !== "undefined" ? rObject.properties.dpastinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dintervextent]"><input name="infodatatrack[properties][dintervextent]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dintervextent[index] !== "undefined" ? rObject.properties.dintervextent[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][ddateinterv]"><input name="infodatatrack[properties][ddateinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.ddateinterv[index] !== "undefined" ? rObject.properties.ddateinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dscopeinterv]"><input name="infodatatrack[properties][dscopeinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dscopeinterv[index] !== "undefined" ? rObject.properties.dscopeinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dimpactinterv]"><input name="infodatatrack[properties][dimpactinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dimpactinterv[index] !== "undefined" ? rObject.properties.dimpactinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dlocdocinterv]"><input name="infodatatrack[properties][dlocdocinterv]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dlocdocinterv[index] !== "undefined" ? rObject.properties.dlocdocinterv[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dmaintissues]"><input name="infodatatrack[properties][dmaintissues]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dmaintissues[index] !== "undefined" ? rObject.properties.dmaintissues[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dinvestment10years]"><input name="infodatatrack[properties][dinvestment10years]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dinvestment10years[index] !== "undefined" ? rObject.properties.dinvestment10years[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dinvestmentrequired]"><input name="infodatatrack[properties][dinvestmentrequired]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dinvestmentrequired[index] !== "undefined" ? rObject.properties.dinvestmentrequired[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][domcomments]"><input name="infodatatrack[properties][domcomments]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.domcomments[index] !== "undefined" ? rObject.properties.domcomments[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dcondition]"><input name="infodatatrack[properties][dcondition]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dcondition[index] !== "undefined" ? rObject.properties.dcondition[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dcriticality]"><input name="infodatatrack[properties][dcriticality]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dcriticality[index] !== "undefined" ? rObject.properties.dcriticality[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dlandslide]"><input name="infodatatrack[properties][dlandslide]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dlandslide[index] !== "undefined" ? rObject.properties.dlandslide[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dflood]"><input name="infodatatrack[properties][dflood]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dflood[index] !== "undefined" ? rObject.properties.dflood[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dresphazard]"><input name="infodatatrack[properties][dresphazard]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dresphazard[index] !== "undefined" ? rObject.properties.dresphazard[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][dsensitivity]"><input name="infodatatrack[properties][dsensitivity]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.dsensitivity[index] !== "undefined" ? rObject.properties.dsensitivity[index] : '') + '">');
+            // $('#row' + index).append('<td id="infodatatrack[properties][drisk]"><input name="infodatatrack[properties][drisk]" type="text" class="form-control round-form input-sm" value="' +
+            //     (typeof rObject.properties.drisk[index] !== "undefined" ? rObject.properties.drisk[index] : '') + '">');
 
 
             $('#bodytable').append('</tr>');
@@ -240,6 +609,7 @@
         var $inputs_functionality_asset_functioning_expected_barrier = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_barrier]']");
         var $inputs_existence_signposting_road_signs_condition = $('#form').find("input[name='infodatatrack[properties][existence_signposting_road_signs_condition]']");
         var $inputs_typology_signaling = $('#form').find("input[name='infodatatrack[properties][typology_signaling]']");
+        var $inputs_typology_vertical_signaling = $('#form').find("input[name='infodatatrack[properties][typology_vertical_signaling]']");
         var $inputs_functionality_asset_functioning_expected_signal = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_signal]']");
         var $inputs_existence_street_lighting = $('#form').find("input[name='infodatatrack[properties][existence_street_lighting]']");
         var $inputs_typology_street_lighting = $('#form').find("input[name='infodatatrack[properties][typology_street_lighting]']");
@@ -1171,6 +1541,21 @@
                     if ($check.prop("checked")) {
                         ////console.log('Check: ' + (index));
                         $inputs_typology_signaling[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        $inputs_typology_vertical_signaling.blur(function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputs_typology_vertical_signaling[index].value = $this.val();
                     }
 
 

@@ -213,7 +213,7 @@ router.post('/list_infodatatracks/:id', function(req, resp, next) {
 
 });
 
-/* GET List infodatatracks */
+/* EDIT List infodatatracks */
 router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
     var options = {
@@ -259,6 +259,51 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
 });
 
+router.get('/edit_video_infodatatrack/:id', function(req, resp, next) {
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/list_infobyid/' + req.params.id,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // 'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            resp.set({
+                'Content-Length': Buffer.byteLength(JSON.stringify(responseObject)),
+                'Content-Type': 'text/html'
+            });
+
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('data_infodatatrack_jquery', { token: req.token, utm: utm, infodatatrack: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //// console.log(JSON.stringify(responseObject));
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+
 /*
 UPDATE ROAD
 */
@@ -291,6 +336,43 @@ router.post('/update_infodatatrack', function(req, resp, next) {
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/infodatatrack/edit_infodatatrack/' + req.body.infodatatrack._id);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
+router.post('/update_videoinfodatatrack', function(req, resp, next) {
+    var postData = extend({}, req.body.infodatatrack);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // //// console.log('STATUS: ' + res.statusCode);
+        // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
 
         });
     });

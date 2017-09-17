@@ -19,6 +19,16 @@
         }
     }
 
+    function go_edit_video_road() {
+        // alert($("#roads").val());
+        var id = $("#roads").val();
+        if (id == 0) {
+            window.location = '#';
+        } else {
+            window.location = '/auth/WEB/infodatatrack/edit_video_infodatatrack/' + dataTrack._id;
+        }
+    }
+
     $('#versionbutton').click(function() {
         // alert('Versionando documento');
         dataPost.properties.video_roads = dataPost._id;
@@ -40,6 +50,7 @@
         Promise.all([p1]).then(function(values) {
             $('#ultimaversion').empty();
             $('#editbutton').show();
+            $('#editvideobutton').show();
             ////console.log(JSON.stringify(values));
             $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
@@ -82,6 +93,7 @@
                     $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
                     $('#ultimaversion').show();
                     $('#editbutton').show();
+                    $('#editvideobutton').show();
                     dataRoad = dataTrack;
                     //console.log('dataTrack ' + dataRoad);
                     //console.log(dataRoad);
@@ -89,6 +101,7 @@
                     $('#ultimaversion').empty();
                     $('#ultimaversion').hide();
                     $('#editbutton').hide();
+                    $('#editvideobutton').hide();
                     dataRoad = dataPost;
                     //console.log('dataPost ' + dataPost);
                     //console.log(dataPost);

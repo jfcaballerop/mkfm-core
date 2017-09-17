@@ -51,7 +51,7 @@
 
                             <div id="accordion">
                                 <div class="form-panel">
-                                    <form id="form" class="form-horizontal style-form" method="post" action="/auth/WEB/infodatatrack/update_infodatatrack">
+                                    <form id="form" class="form-horizontal style-form" method="post" action="/auth/WEB/infodatatrack/update_videoinfodatatrack">
 
                                         <div class="form-group">
                                             <input type="hidden" name="infodatatrack[_id]" value="<%- infodatatrack._id %>">
@@ -89,7 +89,7 @@
                                             <table id="dataTable" class="table table-bordered table-xs">
                                                 <thead>
                                                     <tr>
-                                                        <th title="ID">#.</th>
+                                                        <th title="ID">#</th>
                                                         <th title="Selection"> Sel </th>
                                                         <th title="Inventary">INV</th>
 
@@ -99,21 +99,21 @@
                                                         <th id="infodatatrack[geometry][coordinates]" title="GPS - POS: Long - Lat - Cota">GPS </th>
                                                         <th id="infodatatrack[properties][pk]" title="PK" class="road"> PK </th>
                                                         <th id="infodatatrack[properties][road_category]" title="Road Category" class="road"> RC</th>
-                                                        <th id="infodatatrack[properties][Roadlab]" title="IRI" class="road"> IRI </th>
+                                                        <!-- <th id="infodatatrack[properties][Roadlab]" title="IRI" class="road"> IRI </th>
                                                         <th id="infodatatrack[properties][date_construction]" title="Date of construction" class="road">DC</th>
                                                         <th id="infodatatrack[properties][alternative_itinerary]" title="Existence of Alternative Itinerary" class="road">EAI</th>
                                                         <th id="infodatatrack[properties][open_traffic]" title="Open to traffic?" class="road">OPEN</th>
                                                         <th id="infodatatrack[properties][existence_gauging_stations]" title="Existence of Gauging Stations" class="road">GS</th>
                                                         <th id="infodatatrack[properties][adt]" title="ADT" class="road">ADT</th>
-                                                        <th id="infodatatrack[properties][traffic_high_peak]" title="Traffic high peak" class="road"> THP</th>
+                                                        <th id="infodatatrack[properties][traffic_high_peak]" title="Traffic high peak" class="road"> THP</th> -->
                                                         <th id="infodatatrack[properties][pavement_material]" title="pavement material" class="road"> PM</th>
-                                                        <th id="infodatatrack[properties][base_material]" title="base material" class="road"> BM</th>
-                                                        <th id="infodatatrack[properties][subbase_material]" title="subbase material" class="road"> SM</th>
+                                                        <!-- <th id="infodatatrack[properties][base_material]" title="base material" class="road"> BM</th>
+                                                        <th id="infodatatrack[properties][subbase_material]" title="subbase material" class="road"> SM</th> -->
                                                         <th id="infodatatrack[properties][number_lanes_inc]" title="Number of lanes (increasing KP)" class="road"> NOL INC</th>
                                                         <th id="infodatatrack[properties][number_lanes_dec]" title="Number of lanes (decreasing KP)" class="road"> NOL DEC</th>
                                                         <th id="infodatatrack[properties][total_number_lanes]" title="Total number of lanes" class="road"> TOT NOL</th>
                                                         <th id="infodatatrack[properties][total_width]" title="Total width (m)" class="road"> TOT WIDTH</th>
-                                                        <th id="infodatatrack[properties][location_doc_road_projects]" title="Location of the documentation of road projects" class="road"> LOC DOC RP</th>
+                                                        <!-- <th id="infodatatrack[properties][location_doc_road_projects]" title="Location of the documentation of road projects" class="road"> LOC DOC RP</th>
                                                         <th id="infodatatrack[properties][last_inspection]" title="Date of last inspection" class="road"> DLI</th>
                                                         <th id="infodatatrack[properties][prev_condition]" title="Previous condition rate" class="road"> PCR</th>
                                                         <th id="infodatatrack[properties][failure_history]" title="Failure history" class="road"> FH</th>
@@ -139,14 +139,15 @@
                                                         <th id="infodatatrack[properties][access_social_services]" title="Access_Social_Services" class="road">ASS</th>
                                                         <th id="infodatatrack[properties][distance_social_services]" title="Distance_social_services" class="road">DSS</th>
                                                         <th id="infodatatrack[properties][located_within_an_environmentally_protected_area]" title="Located_within_an_environmentally_protected_area" class="road">LOC PA</th>
-                                                        <th id="infodatatrack[properties][distance_a_dumping_area]" title="Distance_a_dumping_area" class="road">DDA</th>
-                                                        <th id="infodatatrack[properties][current_condition]" title="Current_condition" class="road">CC</th>
+                                                        <th id="infodatatrack[properties][distance_a_dumping_area]" title="Distance_a_dumping_area" class="road">DDA</th> -->
+                                                        <th id="infodatatrack[properties][current_visual_condition]" title="Current_Visual_condition" class="road">CVC</th>
+                                                        <!-- <th id="infodatatrack[properties][current_condition]" title="Current_condition" class="road">CC</th>
                                                         <th id="infodatatrack[properties][criticality]" title="Criticality" class="road">CRIT</th>
                                                         <th id="infodatatrack[properties][exposure_landslide_hazard]" title="Exposure_landslide_hazard" class="road">ELH</th>
                                                         <th id="infodatatrack[properties][exposure_flood_hazard]" title="Exposure_flood_hazard" class="road">EFH</th>
                                                         <th id="infodatatrack[properties][asset_response_against_hazards]" title="Asset_Response_against_hazards" class="road">ARAH</th>
                                                         <th id="infodatatrack[properties][asset_sensitivity]" title="Asset_Sensitivity" class="road">AS</th>
-                                                        <th id="infodatatrack[properties][risk]" title="RISK" class="road">RISK</th>
+                                                        <th id="infodatatrack[properties][risk]" title="RISK" class="road">RISK</th> -->
 
                                                         <!-- ROAD FURNITURE DATA -->
                                                         <th id="infodatatrack[properties][existence_barriers_condition]" title="existence_barriers_condition" class="furniture"> EBC</th>
@@ -155,17 +156,18 @@
                                                         <th id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" title="functionality_asset_functioning_expected_barrier" class="furniture"> FAFEB</th>
                                                         <th id="infodatatrack[properties][existence_signposting_road_signs_condition]" title="existence_signposting_road_signs_condition" class="furniture"> ESR</th>
                                                         <th id="infodatatrack[properties][typology_signaling]" title="typology_signaling" class="furniture"> TS</th>
+                                                        <th id="infodatatrack[properties][typology_vertical_signaling]" title="typology_vertical_signaling" class="furniture"> TVS</th>
                                                         <th id="infodatatrack[properties][functionality_asset_functioning_expected_signal]" title="functionality_asset_functioning_expected_signal" class="furniture"> FAFES</th>
                                                         <th id="infodatatrack[properties][existence_street_lighting]" title="existence_street_lighting" class="furniture"> ESL </th>
                                                         <th id="infodatatrack[properties][typology_street_lighting]" title="typology_street_lighting" class="furniture"> TSL</th>
                                                         <th id="infodatatrack[properties][functionality_asset_functioning_expected_light]" title="functionality_asset_functioning_expected_light" class="furniture"> FAFEL</th>
-                                                        <th id="infodatatrack[properties][has_there_been_past_interventions]" title="has_there_been_past_interventions" class="furniture"> INTER</th>
+                                                        <!-- <th id="infodatatrack[properties][has_there_been_past_interventions]" title="has_there_been_past_interventions" class="furniture"> INTER</th>
                                                         <th id="infodatatrack[properties][year_performance_past_interventions]" title="year_performance_past_interventions" class="furniture"> PAST INT</th>
-                                                        <th id="infodatatrack[properties][comments]" title="comments" class="furniture"> COMM</th>
+                                                        <th id="infodatatrack[properties][comments]" title="comments" class="furniture"> COMM</th> -->
 
                                                         <!-- BRIDGES -->
                                                         <th id="infodatatrack[properties][bcode]" title="CODE" class="bridges">CODE</th>
-                                                        <th id="infodatatrack[properties][bname]" title="Name" class="bridges">NAME</th>
+                                                        <!-- <th id="infodatatrack[properties][bname]" title="Name" class="bridges">NAME</th>
                                                         <th id="infodatatrack[properties][byearconstruc]" title="Year of construction" class="bridges">YEAR CONS</th>
                                                         <th id="infodatatrack[properties][btype]" title="Type of structure" class="bridges">TYPE</th>
                                                         <th id="infodatatrack[properties][bsurrounding]" title="Surroundings - Environment" class="bridges">SURROUNDING</th>
@@ -212,28 +214,28 @@
                                                         <th id="infodatatrack[properties][bflood]" title="Exposure to flood hazard" class="bridges">FLOOD</th>
                                                         <th id="infodatatrack[properties][bresphazard]" title="Asset Response against hazards" class="bridges">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][bsensitivity]" title="Asset Sensitivity" class="bridges">SENSITIVITY</th>
-                                                        <th id="infodatatrack[properties][brisk]" title="RISK" class="bridges">RISK</th>
+                                                        <th id="infodatatrack[properties][brisk]" title="RISK" class="bridges">RISK</th> -->
                                                         <!-- GEOTECHNICALS -->
                                                         <th id="infodatatrack[properties][gcode]" title="CODE" class="geotechnicals">CODE</th>
-                                                        <th id="infodatatrack[properties][gyearconstruct]" title="Year of construction" class="geotechnicals">YEAR CONS</th>
+                                                        <!-- <th id="infodatatrack[properties][gyearconstruct]" title="Year of construction" class="geotechnicals">YEAR CONS</th> -->
                                                         <th id="infodatatrack[properties][gtype]" title="Type of earthwork" class="geotechnicals">TYPE</th>
                                                         <th id="infodatatrack[properties][gposition]" title="Position" class="geotechnicals">POS</th>
-                                                        <th id="infodatatrack[properties][gmaterial]" title="Material - Retaining walls" class="geotechnicals">MAT</th>
+                                                        <!-- <th id="infodatatrack[properties][gmaterial]" title="Material - Retaining walls" class="geotechnicals">MAT</th>
                                                         <th id="infodatatrack[properties][gnature]" title="Nature - Earthworks" class="geotechnicals">NATURE</th>
                                                         <th id="infodatatrack[properties][gheight]" title="Height (m)" class="geotechnicals">HEIGHT</th>
-                                                        <th id="infodatatrack[properties][gh_h]" title="Relation h/H (m)" class="geotechnicals">H_H</th>
+                                                        <th id="infodatatrack[properties][gh_h]" title="Relation h/H (m)" class="geotechnicals">H_H</th> -->
                                                         <th id="infodatatrack[properties][gslope]" title="Slope (º)" class="geotechnicals">SLOPE</th>
-                                                        <th id="infodatatrack[properties][gdistance]" title="Distance to road (m)" class="geotechnicals">DIST</th>
+                                                        <!-- <th id="infodatatrack[properties][gdistance]" title="Distance to road (m)" class="geotechnicals">DIST</th>
                                                         <th id="infodatatrack[properties][glength]" title="Length (m)" class="geotechnicals">LENGTH</th>
                                                         <th id="infodatatrack[properties][gblocks]" title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>
-                                                        <th id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th>
+                                                        <th id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th> -->
                                                         <th id="infodatatrack[properties][gvegetation]" title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>
-                                                        <th id="infodatatrack[properties][gtypevegetation]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
+                                                        <!-- <th id="infodatatrack[properties][gtypevegetation]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
                                                         <th id="infodatatrack[properties][gphoto]" title="Photographs" class="geotechnicals">PHOTO</th>
                                                         <th id="infodatatrack[properties][glastinspection]" title="Date of last inspection" class="geotechnicals">LAST INSP</th>
-                                                        <th id="infodatatrack[properties][gprevcondition]" title="Previous condition rate" class="geotechnicals">PREV COND</th>
+                                                        <th id="infodatatrack[properties][gprevcondition]" title="Previous condition rate" class="geotechnicals">PREV COND</th> -->
                                                         <th id="infodatatrack[properties][gvisualcondition]" title="Current visual condition" class="geotechnicals">VISUAL COND</th>
-                                                        <th id="infodatatrack[properties][gevidrecfailures]" title="Evidence of recent failures?" class="geotechnicals">EVID REC FAIL</th>
+                                                        <!-- <th id="infodatatrack[properties][gevidrecfailures]" title="Evidence of recent failures?" class="geotechnicals">EVID REC FAIL</th>
                                                         <th id="infodatatrack[properties][gtypefailure]" title="Type of failure process" class="geotechnicals">TYPE FAIL</th>
                                                         <th id="infodatatrack[properties][gextentfailure]" title="Extent of failure" class="geotechnicals">EXT ENT FAIL</th>
                                                         <th id="infodatatrack[properties][gconslos]" title="Consequences of failure on LOS" class="geotechnicals">CONS LOS</th>
@@ -256,13 +258,13 @@
                                                         <th id="infodatatrack[properties][gflood]" title="Exposure to flood hazard" class="geotechnicals">FLOOD</th>
                                                         <th id="infodatatrack[properties][gresphazard]" title="Asset Response against hazards" class="geotechnicals">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][gsensitivity]" title="Asset Sensitivity" class="geotechnicals">SENSITIVITY</th>
-                                                        <th id="infodatatrack[properties][grisk]" title="RISK" class="geotechnicals">RISK</th>
+                                                        <th id="infodatatrack[properties][grisk]" title="RISK" class="geotechnicals">RISK</th> -->
                                                         <!-- DRAINAGE -->
                                                         <th id="infodatatrack[properties][dcode]" title="CODE" class="drainage">CODE</th>
-                                                        <th id="infodatatrack[properties][dyearconstruc]" title="Year of construction" class="drainage">YEAR CONS</th>
+                                                        <!-- <th id="infodatatrack[properties][dyearconstruc]" title="Year of construction" class="drainage">YEAR CONS</th> -->
                                                         <th id="infodatatrack[properties][dtype]" title="Type of drainage" class="drainage">TYPE</th>
                                                         <th id="infodatatrack[properties][dcapacity]" title="Capacity" class="drainage">CAPACITY</th>
-                                                        <th id="infodatatrack[properties][drainpeak]" title="Rain Peak Values" class="drainage">RAIN PEAK</th>
+                                                        <!-- <th id="infodatatrack[properties][drainpeak]" title="Rain Peak Values" class="drainage">RAIN PEAK</th>
                                                         <th id="infodatatrack[properties][dmaterial]" title="Material" class="drainage">MATERIAL</th>
                                                         <th id="infodatatrack[properties][dslope]" title="Slope (%)" class="drainage">SLOPE</th>
                                                         <th id="infodatatrack[properties][dsection]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>
@@ -296,7 +298,7 @@
                                                         <th id="infodatatrack[properties][dflood]" title="Exposure to flood hazard" class="drainage">FLOOD</th>
                                                         <th id="infodatatrack[properties][dresphazard]" title="Asset Response against hazards" class="drainage">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][dsensitivity]" title="Asset Sensitivity" class="drainage">SENS</th>
-                                                        <th id="infodatatrack[properties][drisk]" title="RISK" class="drainage">RISK</th>
+                                                        <th id="infodatatrack[properties][drisk]" title="RISK" class="drainage">RISK</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody id="bodytable">
