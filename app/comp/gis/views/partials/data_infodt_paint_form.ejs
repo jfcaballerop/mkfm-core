@@ -3666,5 +3666,20 @@
                 });
             }
         });
+
+        $("#checkcoord").click(function() {
+            $trf = $('#dataTable').children('tbody').children('tr').filter(':first');
+            $clonef = $trf.clone();
+            $trl = $('#dataTable').children('tbody').children('tr').filter(':last');
+            $clonel = $trl.clone();
+
+            // console.log($clonef[0]);
+            $trf.before($clonef[0]);
+            $trl.after($clonel[0]);
+
+        });
+
+
+
     });
 </script>
