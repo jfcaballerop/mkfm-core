@@ -568,21 +568,7 @@
 
 
         });
-        // Añado valores de formato
-        $('#form').find("input").css('min-width', '50px');
-        // $('#form').find("input[type='text']").css('min-width', '50px');
-        $('#form').find("input[name='infodatatrack[properties][date_construction]']").css('min-width', '80px');
-        $('#form').find("select").css('min-width', '100px');
-        $('.table-responsive').show();
 
-        // Check clic - ROW colored
-        var $checks = $('#form').find("input[name='check[_id]']");
-        $checks.on("change", function() {
-            if ($(this).is(':checked'))
-                $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
-            else
-                $(this).closest('tr').children('td').css('background-color', '');
-        });
 
 
         var $inputsINV = $('#form').find("input[name='infodatatrack[properties][inventario]']");
@@ -780,6 +766,8 @@
         var $inputs_dsensitivity = $('#form').find("input[name='infodatatrack[properties][dsensitivity]']");
         var $inputs_drisk = $('#form').find("input[name='infodatatrack[properties][drisk]']");
 
+        var $checks = $('#form').find("input[name='check[_id]']");
+
         $("input[name='infodatatrack[properties][date_construction]']").datepicker({
             dateFormat: 'dd-mm-yy',
             onSelect: function(date) {
@@ -795,6 +783,16 @@
             if ($(this).attr("id")) {
                 $(this).hide();
                 $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
+            }
+            if ($(this).attr("title") === 'Selection') {
+                if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') == false) {
+                    $('[id^=check]').prop('checked', true);
+                } else {
+                    $('[id^=check]').prop('checked', false);
+
+                }
+                $checks.trigger("change");
+
             }
 
         });
@@ -3676,10 +3674,33 @@
             // console.log($clonef[0]);
             $trf.before($clonef[0]);
             $trl.after($clonel[0]);
+            $('[id="infodatatrack[geometry][coordinates]"]').each(function(index, elem) {
+                // console.log(elem);
+                if (index > 0) {
+                    $val = $(this)[0].textContent;
+                    // console.log($val);
+                    $(this).html('<input name="infodatatrack[geometry][coordinates]" type="text" class="form-control round-form input-sm" value="' + $val + '">');
+                }
+            });
+            $('#form').find("input[name='infodatatrack[geometry][coordinates]']").css('min-width', '200px');
+
 
         });
 
+        // Añado valores de formato
+        $('#form').find("input").css('min-width', '50px');
+        // $('#form').find("input[type='text']").css('min-width', '50px');
+        $('#form').find("input[name='infodatatrack[properties][date_construction]']").css('min-width', '80px');
+        $('#form').find("select").css('min-width', '100px');
+        $('.table-responsive').show();
 
+        // Check clic - ROW colored
+        $checks.on("change", function() {
+            if ($(this).is(':checked'))
+                $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
+            else
+                $(this).closest('tr').children('td').css('background-color', '');
+        });
 
     });
 </script>

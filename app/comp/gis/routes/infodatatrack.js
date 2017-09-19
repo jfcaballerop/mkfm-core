@@ -473,11 +473,11 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 /* UPDATE Infodatatrack */
 router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
-    // console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
+    console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
         for (var key in saveInfodatatrack) {
-            // console.log(key + ": " + saveInfodatatrack[key]);
+            console.log(key + ": " + saveInfodatatrack[key]);
             if (typeof saveInfodatatrack[key] === 'object') {
                 // estoy dentro de properties
                 for (var key2 in saveInfodatatrack[key]) {
@@ -490,7 +490,7 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
             }
         }
 
-        // console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
         infodatatrack.updated_at = new Date();
         infodatatrack.save(function(err, data) {
             if (err) {
