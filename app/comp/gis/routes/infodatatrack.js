@@ -449,8 +449,21 @@ router.post('/update_infodatatrack', function(req, resp, next) {
  */
 router.post('/duplicate_rows', function(req, resp, next) {
     var _id = req.body._id;
-    console.log('## WEB/duplicate_rows ID ##::' + _id);
+    console.log('## WEB/duplicate_rows ID ##:: ' + _id);
+    var postData = { _id: _id };
     // TODO: Primero find _id y luego duplico + POST y SAVE
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/list_infobyid/' + _id,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
 
     // var arrOneCoord = [];
     // var arrCoord = [];
@@ -481,28 +494,31 @@ router.post('/duplicate_rows', function(req, resp, next) {
     //         'Authorization': 'Bearer ' + req.cookies.jwtToken
     //     }
     // };
-    // var request = http.request(options, function(res) {
-    //     // //// console.log('STATUS: ' + res.statusCode);
-    //     // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function(chunk) {
-    //         // //// console.log('BODY: ' + chunk);
-    //         data += chunk;
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data += chunk;
 
-    //     });
-    //     res.on('end', function() {
-    //         // //// console.log('DATA ' + data.length + ' ' + data);
-    //         var responseObject = JSON.parse(data);
-    //         //success(data);
-    //         resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+        });
+        res.on('end', function() {
+            // console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            postData = responseObject;
+            // console.log('postData:: ' + JSON.stringify(postData));
+            //success(data);
+            // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + _id);
+            resp.status(200).jsonp(responseObject);
 
-    //     });
-    // });
-    // request.on('error', function(err) {
-    //     console.error('problem with request: ${err.message}');
-    // });
-    // request.write(JSON.stringify(postData));
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
     request.end();
 });
 
