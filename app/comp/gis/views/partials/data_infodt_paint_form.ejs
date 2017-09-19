@@ -380,6 +380,7 @@
                 '<option>Retaining wall</option>' +
                 '<option>Other</option>' +
                 '<option>Unknown</option>' +
+                '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
             $('#row' + index).append('<td id="infodatatrack[properties][gposition]">' +
@@ -387,6 +388,7 @@
                 '<option>Right</option>' +
                 '<option>Left</option>' +
                 '<option>Both</option>' +
+                '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
             // $('#row' + index).append('<td id="infodatatrack[properties][gmaterial]"><input name="infodatatrack[properties][gmaterial]" type="text" class="form-control round-form input-sm" value="' +
@@ -488,6 +490,7 @@
                 '<option>Culvert</option>' +
                 '<option>Ford</option>' +
                 '<option>Unknown</option>' +
+                '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
             $('#row' + index).append('<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" class="form-control round-form input-sm" value="' +
@@ -3664,16 +3667,44 @@
                 });
             }
         });
+        $("#addcoord").click(function() {
+            $('#addcoord').prop('disabled', true);
+            // TODO: llamada Ajax para duplicar primera y ultima fila
+            var dataPost = {};
+            dataPost._id = "<%- infodatatrack._id %>";
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/infodatatrack/duplicate_rows',
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function(data) {
+                // //console.log('dataRoad ' + JSON.stringify(data));
+                return (data);
+            });
+            Promise.all([p1]).then(function(values) {
+                dataTrack = values[0];
+                console.log(dataTrack);
+            });
+
+
+            // $trf = $('#dataTable').children('tbody').children('tr').filter(':first');
+            // $clonef = $trf.clone();
+            // $trl = $('#dataTable').children('tbody').children('tr').filter(':last');
+            // $clonel = $trl.clone();
+
+            // // console.log($clonef[0]);
+            // $trf.before($clonef[0]);
+            // $val = $('[id="infodatatrack[geometry][coordinates]"]').eq(1)[0].textContent;
+            // $('[id="infodatatrack[geometry][coordinates]"]').eq(1).html('<input name="infodatatrack[geometry][coordinates]" type="text" class="form-control round-form input-sm" value="' + $val + '">');
+
+            // $trl.after($clonel[0]);
+            // $val2 = $('[id="infodatatrack[geometry][coordinates]"]').filter(':last')[0].textContent;
+            // $('[id="infodatatrack[geometry][coordinates]"]').filter(':last').html('<input name="infodatatrack[geometry][coordinates]" type="text" class="form-control round-form input-sm" value="' + $val2 + '">');
+        });
 
         $("#checkcoord").click(function() {
-            $trf = $('#dataTable').children('tbody').children('tr').filter(':first');
-            $clonef = $trf.clone();
-            $trl = $('#dataTable').children('tbody').children('tr').filter(':last');
-            $clonel = $trl.clone();
 
-            // console.log($clonef[0]);
-            $trf.before($clonef[0]);
-            $trl.after($clonel[0]);
             $('[id="infodatatrack[geometry][coordinates]"]').each(function(index, elem) {
                 // console.log(elem);
                 if (index > 0) {

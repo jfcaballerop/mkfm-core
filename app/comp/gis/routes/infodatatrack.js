@@ -304,6 +304,104 @@ router.get('/edit_video_infodatatrack/:id', function(req, resp, next) {
 
 });
 
+
+router.post('/update_infodatatrack', function(req, resp, next) {
+    var postData = extend({}, req.body.infodatatrack);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // //// console.log('STATUS: ' + res.statusCode);
+        // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/infodatatrack/edit_infodatatrack/' + req.body.infodatatrack._id);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
+
+
+router.post('/update_videoinfodatatrack', function(req, resp, next) {
+    var postData = extend({}, req.body.infodatatrack);
+    var arrOneCoord = [];
+    var arrCoord = [];
+    // Comprobar si trae geometry
+    if (postData.geometry !== undefined) {
+        console.log('## WEB/update_videoinfodatatrack geometry ##');
+        if (postData.geometry.coordinates !== undefined) {
+            console.log(JSON.stringify(postData.geometry.coordinates));
+            postData.geometry.coordinates.forEach(function(element, index) {
+                arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
+                arrOneCoord.forEach(function(e, i) {
+                    arrOneCoord[i] = parseFloat(e.trim());
+                });
+                arrCoord[index] = arrOneCoord;
+            });
+            postData.geometry.coordinates = arrCoord;
+            console.log(JSON.stringify(postData.geometry.coordinates));
+        }
+    }
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // //// console.log('STATUS: ' + res.statusCode);
+        // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
+
+
 /*
 UPDATE ROAD
 */
@@ -345,43 +443,69 @@ router.post('/update_infodatatrack', function(req, resp, next) {
     request.write(JSON.stringify(postData));
     request.end();
 });
-router.post('/update_videoinfodatatrack', function(req, resp, next) {
-    var postData = extend({}, req.body.infodatatrack);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function(res) {
-        // //// console.log('STATUS: ' + res.statusCode);
-        // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            // //// console.log('BODY: ' + chunk);
-            data += chunk;
 
-        });
-        res.on('end', function() {
-            // //// console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //success(data);
-            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+/**
+ * duplicate rows
+ */
+router.post('/duplicate_rows', function(req, resp, next) {
+    var _id = req.body._id;
+    console.log('## WEB/duplicate_rows ID ##::' + _id);
+    // TODO: Primero find _id y luego duplico + POST y SAVE
 
-        });
-    });
-    request.on('error', function(err) {
-        console.error('problem with request: ${err.message}');
-    });
-    request.write(JSON.stringify(postData));
+    // var arrOneCoord = [];
+    // var arrCoord = [];
+    // // Comprobar si trae geometry
+    // if (postData.geometry !== undefined) {
+    //     if (postData.geometry.coordinates !== undefined) {
+    //         console.log(JSON.stringify(postData.geometry.coordinates));
+    //         postData.geometry.coordinates.forEach(function(element, index) {
+    //             arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
+    //             arrOneCoord.forEach(function(e, i) {
+    //                 arrOneCoord[i] = parseFloat(e.trim());
+    //             });
+    //             arrCoord[index] = arrOneCoord;
+    //         });
+    //         postData.geometry.coordinates = arrCoord;
+    //         console.log(JSON.stringify(postData.geometry.coordinates));
+    //     }
+    // }
+
+    // var options = {
+    //     host: config.HOST_API,
+    //     port: config.PORT_API,
+    //     path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+    //         'Authorization': 'Bearer ' + req.cookies.jwtToken
+    //     }
+    // };
+    // var request = http.request(options, function(res) {
+    //     // //// console.log('STATUS: ' + res.statusCode);
+    //     // //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+    //     res.setEncoding('utf8');
+    //     var data = '';
+    //     res.on('data', function(chunk) {
+    //         // //// console.log('BODY: ' + chunk);
+    //         data += chunk;
+
+    //     });
+    //     res.on('end', function() {
+    //         // //// console.log('DATA ' + data.length + ' ' + data);
+    //         var responseObject = JSON.parse(data);
+    //         //success(data);
+    //         resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+
+    //     });
+    // });
+    // request.on('error', function(err) {
+    //     console.error('problem with request: ${err.message}');
+    // });
+    // request.write(JSON.stringify(postData));
     request.end();
 });
+
 
 /*******************************************************
  API REST CALLS
@@ -473,29 +597,29 @@ router.post('/V1/delete/:id', function(req, res, next) {
 
 /* UPDATE Infodatatrack */
 router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
-    console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
+    //console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
     Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
         for (var key in saveInfodatatrack) {
-            console.log(key + ": " + saveInfodatatrack[key]);
+            //console.log(key + ": " + saveInfodatatrack[key]);
             if (typeof saveInfodatatrack[key] === 'object') {
                 // estoy dentro de properties
                 for (var key2 in saveInfodatatrack[key]) {
-                    // console.log(key2 + ": " + saveInfodatatrack[key][key2]);
+                    //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
                     infodatatrack[key][key2] = saveInfodatatrack[key][key2];
-
                 }
             } else {
                 infodatatrack[key] = saveInfodatatrack[key];
             }
         }
 
-        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        //console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
         infodatatrack.updated_at = new Date();
         infodatatrack.save(function(err, data) {
             if (err) {
                 return res.status(500).send(err.message);
             }
+            //console.log('RESULT OK :\n' + JSON.stringify(data));
             res.status(200).jsonp(data);
         });
         // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
