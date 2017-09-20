@@ -450,50 +450,18 @@ router.post('/update_infodatatrack', function(req, resp, next) {
 router.post('/duplicate_rows', function(req, resp, next) {
     var _id = req.body._id;
     console.log('## WEB/duplicate_rows ID ##:: ' + _id);
-    var postData = { _id: _id };
-    // TODO: Primero find _id y luego duplico + POST y SAVE
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/list_infobyid/' + _id,
-        method: 'GET',
+        path: config.PATH_API + '/infodatatrack/V1/duplicate_rows/' + _id,
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
 
-    // var arrOneCoord = [];
-    // var arrCoord = [];
-    // // Comprobar si trae geometry
-    // if (postData.geometry !== undefined) {
-    //     if (postData.geometry.coordinates !== undefined) {
-    //         console.log(JSON.stringify(postData.geometry.coordinates));
-    //         postData.geometry.coordinates.forEach(function(element, index) {
-    //             arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
-    //             arrOneCoord.forEach(function(e, i) {
-    //                 arrOneCoord[i] = parseFloat(e.trim());
-    //             });
-    //             arrCoord[index] = arrOneCoord;
-    //         });
-    //         postData.geometry.coordinates = arrCoord;
-    //         console.log(JSON.stringify(postData.geometry.coordinates));
-    //     }
-    // }
-
-    // var options = {
-    //     host: config.HOST_API,
-    //     port: config.PORT_API,
-    //     path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-    //         'Authorization': 'Bearer ' + req.cookies.jwtToken
-    //     }
-    // };
     var request = http.request(options, function(res) {
         // console.log('STATUS: ' + res.statusCode);
         // console.log('HEADERS: ' + JSON.stringify(res.headers));
@@ -507,7 +475,6 @@ router.post('/duplicate_rows', function(req, resp, next) {
         res.on('end', function() {
             // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
-            postData = responseObject;
             // console.log('postData:: ' + JSON.stringify(postData));
             //success(data);
             // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + _id);
@@ -518,7 +485,7 @@ router.post('/duplicate_rows', function(req, resp, next) {
     request.on('error', function(err) {
         console.error('problem with request: ${err.message}');
     });
-    request.write(JSON.stringify(postData));
+    // request.write(JSON.stringify(postData));
     request.end();
 });
 
@@ -680,5 +647,79 @@ router.post('/V1/save_tabular_data/', function(req, res, next) {
         res.status(200).jsonp(data);
     });
 });
+/**
+ * Duplicate ROWS
+ */
+router.post('/V1/duplicate_rows/:id', function(req, res, next) {
+    console.log('## duplicate_rows Infodatatrack ## ' + req.params.id);
+    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+        //console.log('infodatatrack:: \n' + infodatatrack._id);
+        //console.log('infodatatrack2:: \n' + JSON.stringify(infodatatrack));
 
+        for (var key in infodatatrack) {
+            if (key === "_doc") {
+                for (var key2 in infodatatrack[key]) {
+                    //console.log(key2 + " : " + infodatatrack[key2]);
+                    // Hay que duplicar Properties y geometry
+                    if (key2 === "geometry") {
+                        var coordinatesNew = infodatatrack.geometry.coordinates.slice(0);
+                        coordinatesNew.push(infodatatrack.geometry.coordinates[infodatatrack.geometry.coordinates.length - 1]);
+                        coordinatesNew.unshift(infodatatrack.geometry.coordinates[0]);
+                        // console.log('Entro:: ' + coordinatesNew);
+                        infodatatrack.geometry.coordinates = coordinatesNew.slice(0);
+
+                    } else if (key2 === "properties") {
+                        for (var key3 in infodatatrack.properties) {
+                            //console.log("ANTES: " + key2 + " - " + key3 + " : " + (infodatatrack.properties[key3] !== undefined ? infodatatrack.properties[key3].length : ''));
+                            if (infodatatrack.properties[key3] !== undefined &&
+                                Array.isArray(infodatatrack.properties[key3]) &&
+                                infodatatrack.properties[key3].length > 0) {
+                                var arrNew = infodatatrack.properties[key3].slice(0);
+                                arrNew.push(infodatatrack.properties[key3][infodatatrack.properties[key3].length - 1]);
+                                arrNew.unshift(infodatatrack.properties[key3][0]);
+                                //console.log(arrNew);
+                                // console.log(typeof infodatatrack.properties[key3]);
+                                // console.log(typeof arrNew);
+                                infodatatrack.properties[key3] = arrNew;
+                                //console.log("DESP: " + key3 + " : " + infodatatrack.properties[key3].length);
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+            // if (typeof saveInfodatatrack[key] === 'object') {
+            //     // estoy dentro de properties
+            //     for (var key2 in saveInfodatatrack[key]) {
+            //         //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
+            //         infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+            //     }
+            // } else {
+            //     infodatatrack[key] = saveInfodatatrack[key];
+            // }
+        }
+
+        //console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack);
+        infodatatrack.updated_at = new Date();
+        infodatatrack.save(function(err, data) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            //console.log('RESULT OK :\n' + JSON.stringify(data));
+            res.status(200).jsonp(data);
+        });
+        // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
+        //     if (err) {
+        //         //// console.log(err);
+        //         return res.status(500).send(err.message);
+        //     }
+        //     //// console.log("RESULT: " + result);
+        //     res.status(200).jsonp(result);
+        //     // res.send('Done')
+        // });
+    });
+
+});
 module.exports = router;
