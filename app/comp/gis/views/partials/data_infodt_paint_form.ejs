@@ -3669,7 +3669,6 @@
         });
         $("#addcoord").click(function() {
             $('#addcoord').prop('disabled', true);
-            // TODO: llamada Ajax para duplicar primera y ultima fila
             var dataPost = {};
             dataPost._id = "<%- infodatatrack._id %>";
 
@@ -3684,7 +3683,9 @@
             });
             Promise.all([p1]).then(function(values) {
                 dataTrack = values[0];
-                console.log(dataTrack);
+                // console.log(dataTrack);
+                // location.reload();
+                window.location.reload(true);
             });
 
 

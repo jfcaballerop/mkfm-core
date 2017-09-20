@@ -11,6 +11,7 @@ var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var utm = require('utm');
+var service = require(path.join(__dirname, '../../../services/services'));
 
 var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
@@ -348,20 +349,29 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
     var postData = extend({}, req.body.infodatatrack);
     var arrOneCoord = [];
     var arrCoord = [];
+    var arrPK = [];
     // Comprobar si trae geometry
     if (postData.geometry !== undefined) {
         console.log('## WEB/update_videoinfodatatrack geometry ##');
         if (postData.geometry.coordinates !== undefined) {
-            console.log(JSON.stringify(postData.geometry.coordinates));
+            //console.log(JSON.stringify(postData.geometry.coordinates));
             postData.geometry.coordinates.forEach(function(element, index) {
                 arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
                 arrOneCoord.forEach(function(e, i) {
                     arrOneCoord[i] = parseFloat(e.trim());
                 });
                 arrCoord[index] = arrOneCoord;
+                if (index > 0) {
+                    arrPK[index] = Math.round((arrPK[index - 1] + service.calPK(arrCoord[index], arrCoord[index - 1])) * 100) / 100;
+                } else {
+                    arrPK[index] = 0;
+                }
             });
             postData.geometry.coordinates = arrCoord;
-            console.log(JSON.stringify(postData.geometry.coordinates));
+            postData.properties.pk = arrPK;
+
+            //TODO: si se modifican las COORD, hay que recalcular los PK/UTM
+            console.log(JSON.stringify(postData.properties));
         }
     }
 
@@ -674,12 +684,14 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
                             if (infodatatrack.properties[key3] !== undefined &&
                                 Array.isArray(infodatatrack.properties[key3]) &&
                                 infodatatrack.properties[key3].length > 0) {
+
                                 var arrNew = infodatatrack.properties[key3].slice(0);
                                 arrNew.push(infodatatrack.properties[key3][infodatatrack.properties[key3].length - 1]);
                                 arrNew.unshift(infodatatrack.properties[key3][0]);
                                 //console.log(arrNew);
                                 // console.log(typeof infodatatrack.properties[key3]);
                                 // console.log(typeof arrNew);
+
                                 infodatatrack.properties[key3] = arrNew;
                                 //console.log("DESP: " + key3 + " : " + infodatatrack.properties[key3].length);
                             }
