@@ -3678,6 +3678,27 @@
                 });
             }
         });
+
+        // SELECTS CHANGES
+        var $inputsRC = $('#form').find('select[ name="infodatatrack[properties][road_category]"]');
+        $inputsRC.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsRC[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+
+
+
         $("#addcoord").click(function() {
             $('#addcoord').prop('disabled', true);
             var dataPost = {};
