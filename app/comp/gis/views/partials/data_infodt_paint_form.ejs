@@ -21,13 +21,13 @@
             $('#row' + index).append('<td id="infodatatrack[properties][pk]">' + rObject.properties.pk[index] + '</td>');
             $('#row' + index).append('<td id="infodatatrack[properties][road_category]">' +
                 '<select name="infodatatrack[properties][road_category]" class="form-control">' +
-                '<option>Main Road</option>' +
-                '<option>Secondary</option>' +
-                '<option>Feeder</option>' +
-                '<option>Urban</option>' +
-                '<option>1</option>' +
+                '<option >Main Road</option>' +
+                '<option >Secondary</option>' +
+                '<option >Feeder</option>' +
+                '<option >Urban</option>' +
+                '<option >1</option>' +
                 '</select>');
-
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][road_category]"]').val(rObject.properties.road_category[index]);
             // $('#row' + index).append('<td id="infodatatrack[properties][Roadlab]"><input name="infodatatrack[properties][Roadlab]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.Roadlab[index] + '">');
             // $('#row' + index).append('<td id="infodatatrack[properties][date_construction]"><input name="infodatatrack[properties][date_construction]" type="text" class="form-control round-form input-sm" value="' + rObject.properties.date_construction[index] + '">');
             // $('#row' + index).append('<td id="infodatatrack[properties][alternative_itinerary]">' +
@@ -68,6 +68,7 @@
                 '<option>Unknown</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][pavement_material]"]').val(rObject.properties.pavement_material[index]);
 
             // $('#row' + index).append('<td id="infodatatrack[properties][base_material]"><input name="infodatatrack[properties][base_material]" type="text" class="form-control round-form input-sm" value="' +
             //     (typeof rObject.properties.base_material[index] !== "undefined" ? rObject.properties.base_material[index] : '') + '">');
@@ -205,6 +206,8 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][current_visual_condition]"]').val(rObject.properties.current_visual_condition[index]);
+
             // $('#row' + index).append('<td id="infodatatrack[properties][current_condition]">' +
             //     '<select name="infodatatrack[properties][current_condition]" class="form-control">' +
             //     '<option>A</option>' +
@@ -383,6 +386,8 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(rObject.properties.gtype[index]);
+
             $('#row' + index).append('<td id="infodatatrack[properties][gposition]">' +
                 '<select name="infodatatrack[properties][gposition]" class="form-control">' +
                 '<option>Right</option>' +
@@ -391,6 +396,8 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(rObject.properties.gposition[index]);
+
             // $('#row' + index).append('<td id="infodatatrack[properties][gmaterial]"><input name="infodatatrack[properties][gmaterial]" type="text" class="form-control round-form input-sm" value="' +
             //     (typeof rObject.properties.gmaterial[index] !== "undefined" ? rObject.properties.gmaterial[index] : '') + '">');
             // $('#row' + index).append('<td id="infodatatrack[properties][gnature]"><input name="infodatatrack[properties][gnature]" type="text" class="form-control round-form input-sm" value="' +
@@ -430,6 +437,8 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(rObject.properties.gvisualcondition[index]);
+
             // $('#row' + index).append('<td id="infodatatrack[properties][gevidrecfailures]"><input name="infodatatrack[properties][gevidrecfailures]" type="text" class="form-control round-form input-sm" value="' +
             //     (typeof rObject.properties.gevidrecfailures[index] !== "undefined" ? rObject.properties.gevidrecfailures[index] : '') + '">');
             // $('#row' + index).append('<td id="infodatatrack[properties][gtypefailure]"><input name="infodatatrack[properties][gtypefailure]" type="text" class="form-control round-form input-sm" value="' +
@@ -493,6 +502,8 @@
                 '<option>N/A</option>' +
                 '<option>1</option>' +
                 '</select>');
+            $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(rObject.properties.dtype[index]);
+
             $('#row' + index).append('<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" class="form-control round-form input-sm" value="' +
                 (typeof rObject.properties.dcapacity[index] !== "undefined" ? rObject.properties.dcapacity[index] : '') + '">');
             // $('#row' + index).append('<td id="infodatatrack[properties][drainpeak]"><input name="infodatatrack[properties][drainpeak]" type="text" class="form-control round-form input-sm" value="' +
