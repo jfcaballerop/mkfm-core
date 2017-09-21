@@ -3696,6 +3696,102 @@
                 });
             }
         });
+        var $inputsPM = $('#form').find('select[ name="infodatatrack[properties][pavement_material]"]');
+        $inputsPM.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsPM[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        var $inputsCVC = $('#form').find('select[ name="infodatatrack[properties][current_visual_condition]"]');
+        $inputsCVC.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsCVC[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        var $inputsGT = $('#form').find('select[ name="infodatatrack[properties][gtype]"]');
+        $inputsGT.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsGT[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        var $inputsGPOS = $('#form').find('select[ name="infodatatrack[properties][gposition]"]');
+        $inputsGPOS.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsGPOS[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        var $inputsGVPOS = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition]"]');
+        $inputsGVPOS.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsGVPOS[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+        var $inputsDT = $('#form').find('select[ name="infodatatrack[properties][dtype]"]');
+        $inputsDT.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsDT[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
 
 
 
