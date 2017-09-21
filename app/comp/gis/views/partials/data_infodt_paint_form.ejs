@@ -16,6 +16,27 @@
             $('#row' + index).append('<td><input id="' + index + '" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="' +
                 (typeof rObject.properties.inventario[index] !== "undefined" ? rObject.properties.inventario[index] : '') + '"></td>');
             $('#row' + index).append('<td id="infodatatrack[properties][coordTimes]">' + $.format.date(rObject.properties.coordTimes[index], "dd-MM-yyyy HH:mm:ss") + '</td>');
+            if (index == 0) {
+                $('#row' + index).append('<td id="infodatatrack[properties][videoTime]">' + index + '</td>');
+            } else {
+                var d2 = new Date($.format.date(rObject.properties.coordTimes[0], "yyyy-MM-dd HH:mm:ss"))
+                var d1 = new Date($.format.date(rObject.properties.coordTimes[index], "yyyy-MM-dd HH:mm:ss"))
+                var sec = (d1 - d2) / 1000;
+                var min = 0;
+                if (sec >= 60) {
+                    var minutes = Math.floor(sec / 60);
+                    var formattedSec = ("0" + (sec - minutes * 60)).slice(-2);
+                    var seconds = formattedSec;
+                } else {
+                    var minutes = 0;
+                    var formattedSec = ("0" + sec).slice(-2);
+
+                    var seconds = formattedSec;
+                }
+                $('#row' + index).append('<td id="infodatatrack[properties][videoTime]">' + minutes + ':' + seconds + '</td>');
+
+            }
+
             $('#row' + index).append('<td id="infodatatrack[geometry][coordinates]">[ ' + rObject.geometry.coordinates[index] + ' ]</td>');
             // ROAD GROUPS
             $('#row' + index).append('<td id="infodatatrack[properties][pk]">' + rObject.properties.pk[index] + '</td>');
