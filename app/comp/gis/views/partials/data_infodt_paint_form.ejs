@@ -64,6 +64,7 @@
                 '<option>Cement Stabilized</option>' +
                 '<option>Gravel surface</option>' +
                 '<option>Earth</option>' +
+                '<option>Concrete</option>' +
                 '<option>Other</option>' +
                 '<option>Unknown</option>' +
                 '<option>1</option>' +
@@ -3854,13 +3855,36 @@
         $('#form').find("select").css('min-width', '100px');
         $('.table-responsive').show();
 
+
         // Check clic - ROW colored
+        var lastChecked = null;
+        $checks.bind("click", function(e) {
+            if (!lastChecked) {
+                lastChecked = this;
+                return;
+            }
+
+            if (e.shiftKey) {
+                var start = $checks.index(this);
+                var end = $checks.index(lastChecked);
+
+                $checks.slice(Math.min(start, end), Math.max(start, end) + 1).prop('checked', lastChecked.checked);
+                $checks.trigger("change");
+            }
+
+            lastChecked = this;
+        });
         $checks.on("change", function() {
             if ($(this).is(':checked'))
                 $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
             else
                 $(this).closest('tr').children('td').css('background-color', '');
         });
+
+
+
+
+
 
     });
 </script>
