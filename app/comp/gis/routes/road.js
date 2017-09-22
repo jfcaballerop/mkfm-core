@@ -85,7 +85,7 @@ router.post('/list_roads/:id', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/' + req.params.id,
+        path: config.PATH_API + '/road/V1/list_roads/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ router.get('/edit_road/:id', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/' + req.params.id,
+        path: config.PATH_API + '/road/V1/list_roads/' + req.params.id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -282,7 +282,7 @@ router.get('/V1/list_id/', function(req, res, next) {
 
 });
 /* GET JSON road by id. */
-router.get('/V1/:id', function(req, res, next) {
+router.get('/V1/list_roads/:id', function(req, res, next) {
     Road.findById(req.params.id, function(err, road) {
         if (err) {
             res.send(500, err.message);
