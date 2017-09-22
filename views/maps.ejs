@@ -57,8 +57,8 @@
                         <div class="form-panel">
                             <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
                             <select multiple id="layergps" class="form-control" size="<% if(roads.length < 6) { %>5<%} else{%>10<%}%>">
-                                    <option value="ROADS" >ROADS</option>
-                                    <option value="ROADLABS" >ROADLABS</option>
+                                    <option value="ROADS" >INFO DATA ROAD</option>
+                                    <!-- <option value="ROADLABS" >ROADLABS</option> -->
                             </select>
                         </div>
                         <div class="form-panel">
@@ -110,14 +110,7 @@
 
                                 <%}); %>
 
-                                <% roadlabs.forEach(function(element) { %>
-                                jsonObject = <%- JSON.stringify(element) %>;
-                                jsonObject.properties.color = "blue";
-                                jsonObject.properties.nameoption = "ROADLABS";
-                                //console.log(JSON.stringify(jsonObject));
-                                map.data.addGeoJson(jsonObject);
 
-                                <%}); %>
 
                                 map.data.setStyle(function(feature) {
                                     var color = feature.getProperty('color');
@@ -153,87 +146,88 @@
         <!--footer end-->
     </section>
 
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="/assets/js/jquery.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="/assets/js/jquery.scrollTo.min.js"></script>
-    <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <% include partials/footer_scripts %>
+        <!-- js placed at the end of the document so the pages load faster -->
+        <!-- <script src="/assets/js/jquery.js"></script> -->
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="/assets/js/jquery.scrollTo.min.js"></script>
+        <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 
 
-    <!--common script for all pages-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="/assets/js/common-scripts.js"></script>
+        <!--common script for all pages-->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="/assets/js/common-scripts.js"></script>
 
-    <!--script for this page-->
+        <!--script for this page-->
 
-    <script>
-        //custom select box
+        <script>
+            //custom select box
 
 
-        $(document).on('change', "#layergps", function() {
-            //initMap($("#layergps").val(), 0);
+            $(document).on('change', "#layergps", function() {
+                //initMap($("#layergps").val(), 0);
 
-        });
+            });
 
-        // TODO: Cambiar la lectura de DIR local por la BD o API REST
-        // var res = '{"id" :"' + $(this).data('data') + '"}'
-        //var res = JSON.stringify($(this).data('params'));
-        $(document).ready(function() {
-            // $.ajax({
-            //     //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-            //     url: /uploads/,
-            //     success: function(data) {
-            //         //List all .png file names in the page
-            //         $(data).find("td > a").each(function() {
-            //             fileNames.push($(this).attr("href"));
-            //             //var filename = $(this).attr("href").replace(window.location.host, "").replace("http://", "");
-            //             //$("body").append("<img src='" + dir + filename + "'>");
-            //             // $('#layergps').append($('<option>', {
-            //                 //     value: filename,
-            //                 //     text: filename
-            //                 // }));
-            // console.log(fileNames);
-            //             });
+            // TODO: Cambiar la lectura de DIR local por la BD o API REST
+            // var res = '{"id" :"' + $(this).data('data') + '"}'
+            //var res = JSON.stringify($(this).data('params'));
+            $(document).ready(function() {
+                // $.ajax({
+                //     //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+                //     url: /uploads/,
+                //     success: function(data) {
+                //         //List all .png file names in the page
+                //         $(data).find("td > a").each(function() {
+                //             fileNames.push($(this).attr("href"));
+                //             //var filename = $(this).attr("href").replace(window.location.host, "").replace("http://", "");
+                //             //$("body").append("<img src='" + dir + filename + "'>");
+                //             // $('#layergps').append($('<option>', {
+                //                 //     value: filename,
+                //                 //     text: filename
+                //                 // }));
+                // console.log(fileNames);
+                //             });
+                //         }
+                //     });
+
+
+            });
+
+            // if (!!window.EventSource) {
+            //     var source = new EventSource('/auth/WEB/maps/stream')
+
+            //     source.onmessage = function(event) {
+            //         console.log("onmessage");
+            //         var roadlabData = JSON.parse(event.data);
+            //         console.log("onmessage " + JSON.stringify(roadlabData));
+
+            //     };
+            //     // source.addEventListener('message', function(e) {
+            //     //     votes = JSON.parse(e.data);
+            //     //     console.log('message ADDEVL ' + JSON.stringify(votes));
+            //     //     // $("#votes").text("Yes: " + votes.yes + ", No: " + votes.no)
+            //     // }, false)
+
+            //     source.addEventListener('open', function(e) {
+            //         console.log("Connected");
+            //         // $("#state").text("Connected")
+            //     }, false)
+
+            //     source.addEventListener('error', function(e) {
+            //         if (e.target.readyState == EventSource.CLOSED) {
+            //             console.log("Disconnected");
+            //             // $("#state").text("Disconnected")
+            //         } else if (e.target.readyState == EventSource.CONNECTING) {
+            //             console.log("Connecting...");
+            //             // $("#state").text("Connecting...")
             //         }
-            //     });
-
-
-        });
-
-        // if (!!window.EventSource) {
-        //     var source = new EventSource('/auth/WEB/maps/stream')
-
-        //     source.onmessage = function(event) {
-        //         console.log("onmessage");
-        //         var roadlabData = JSON.parse(event.data);
-        //         console.log("onmessage " + JSON.stringify(roadlabData));
-
-        //     };
-        //     // source.addEventListener('message', function(e) {
-        //     //     votes = JSON.parse(e.data);
-        //     //     console.log('message ADDEVL ' + JSON.stringify(votes));
-        //     //     // $("#votes").text("Yes: " + votes.yes + ", No: " + votes.no)
-        //     // }, false)
-
-        //     source.addEventListener('open', function(e) {
-        //         console.log("Connected");
-        //         // $("#state").text("Connected")
-        //     }, false)
-
-        //     source.addEventListener('error', function(e) {
-        //         if (e.target.readyState == EventSource.CLOSED) {
-        //             console.log("Disconnected");
-        //             // $("#state").text("Disconnected")
-        //         } else if (e.target.readyState == EventSource.CONNECTING) {
-        //             console.log("Connecting...");
-        //             // $("#state").text("Connecting...")
-        //         }
-        //     }, false)
-        // } else {
-        //     console.log("Your browser doesn't support SSE")
-        // }
-    </script>
+            //     }, false)
+            // } else {
+            //     console.log("Your browser doesn't support SSE")
+            // }
+        </script>
 
 </body>
 
