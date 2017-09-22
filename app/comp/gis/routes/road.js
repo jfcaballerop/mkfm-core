@@ -204,6 +204,46 @@ router.get('/edit_road/:id', function(req, resp, next) {
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
 });
+/* GET total_traveled */
+router.get('/total_traveled', function(req, resp, next) {
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/road/V1/tot_km_trav/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            resp.render('data_road_total_traveled', { token: req.token, utm: utm, road_tk: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //console.log(JSON.stringify(responseObject));
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
 
 /*
 UPDATE ROAD
@@ -417,4 +457,94 @@ router.post('/V1/update_road/:id', function(req, res, next) {
 
 });
 
+
+/* GET JSON road by id. */
+router.get('/V1/tot_km_trav', function(req, res, next) {
+    var resJSON = {
+        roadName: [],
+        roadKm: []
+    };
+    var arrPK = [];
+    Road.find().exec(function(err, roads) {
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        roads.forEach(function(elem, ind) {
+            arrPK = [];
+            // console.log(JSON.stringify(road));
+            elem.geometry.coordinates.forEach(function(element, tabindex) {
+                var utmValAct = utm.fromLatLon(element[0], element[1], 20);
+                if (tabindex > 0) {
+                    var elemant = elem.geometry.coordinates[tabindex - 1];
+                    // console.log('Coordinate ant ' + JSON.stringify(elemant));
+                    var utmValAnt = utm.fromLatLon(elemant[0], elemant[1], 20);
+                    var easting = utmValAct.easting - utmValAnt.easting;
+                    if (easting < 0) easting *= -1;
+                    var northing = utmValAct.northing - utmValAnt.northing;
+                    if (northing < 0) northing *= -1;
+                    pk += Math.sqrt(Math.pow(easting, 2) + Math.pow(northing, 2));
+                    pk = Math.round(pk * 100) / 100;
+                } else {
+                    pk = 0;
+                }
+                //console.log('ELEMENT ' + JSON.stringify(element));
+                arrPK[tabindex] = pk;
+            });
+            resJSON.roadName.push(elem.properties.name);
+            resJSON.roadKm.push(arrPK[arrPK.length - 1]);
+
+
+        });
+        res.status(200).jsonp(resJSON);
+    });
+    // Road.findById(req.params.id, function(err, tabdata) {
+    //     if (err) {
+    //         res.send(500, err.message);
+    //     }
+
+    //     // Obtener para cada coordenada el JSON del resto de colecciones.
+    //     //ROADLAB
+    //     var roadlabProm = new Array();
+    //     var arrPK = new Array();
+    //     i = -1;
+
+
+    //         var point = { type: "Point", coordinates: [parseFloat(element[0]), parseFloat(element[1])] };
+    //         roadlabProm[tabindex] = Roadlab.geoNear(point, { maxDistance: 100, spherical: true }, function(err, roadlabs) {
+    //             if (err) {
+    //                 //console.log(err);
+    //                 return res.status(500).send(err.message);
+    //             }
+    //             return roadlabs[0];
+    //         });
+
+    //     });
+    //     tabdata.properties.pk = arrPK;
+
+    //     Promise.all(roadlabProm).then(function(values) {
+    //         var arrIRI = [];
+    //         values.forEach(function(val, index) {
+    //             if (val.length > 0) {
+    //                 // console.log('VAL ' + JSON.stringify(val));
+    //                 arrIRI[index] = val[0].obj.properties.description.replace(/^(.*)IRI: (.*) Suspension(.*)$/, '$2');
+    //             } else {
+    //                 // console.log('UNDEFINED');
+    //                 arrIRI[index] = '';
+    //             }
+    //             //console.log('PROMISE ALL ' + index + '-PROMI ? SE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description) :'-' );
+    //             //rldata = JSON.parse(val);
+    //             // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
+    //         });
+    //         tabdata.properties.Roadlab = arrIRI;
+    //         // console.log('TABDATA ' + JSON.stringify(tabdata));
+    //         res.status(200).jsonp(tabdata);
+    //     }).catch(function(reason) {
+    //         console.log(reason);
+    //         return res.status(500).send(reason);
+
+    //     });
+    // });
+
+});
 module.exports = router;
