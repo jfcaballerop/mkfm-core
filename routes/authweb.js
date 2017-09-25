@@ -64,6 +64,9 @@ router.use('/gis', require(path.join(__dirname, '../app/comp/gis/routes/gis')));
 // GIS - ROAD FUNCTIONS auth
 router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 
+// GIS - KOBO FUNCTIONS auth
+router.use('/koboinfo', require(path.join(__dirname, '../app/comp/gis/routes/koboinfo')));
+
 // GIS - ROADLAB FUNCTIONS auth
 router.use('/roadlab', require(path.join(__dirname, '../app/comp/gis/routes/roadlab')));
 

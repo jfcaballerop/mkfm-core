@@ -56,6 +56,9 @@ router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/fil
 // ROAD auth
 router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 
+// KOBO auth
+router.use('/koboinfo', require(path.join(__dirname, '../app/comp/gis/routes/koboinfo')));
+
 // ROADLAB auth
 router.use('/roadlab', require(path.join(__dirname, '../app/comp/gis/routes/roadlab')));
 
