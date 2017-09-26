@@ -98,6 +98,8 @@
                                     map.setZoom(11);
 
                                 // 
+
+
                                 var jsonObject;
                                 <% roads.forEach(function(element) { %>
                                 jsonObject = <%- JSON.stringify(element) %>;
@@ -113,6 +115,7 @@
                                 jsonObject.properties.nameoption = "KOBOS";
                                 console.log(JSON.stringify(jsonObject));
                                 map.data.addGeoJson(jsonObject);
+
                                 <%}); %>
 
 
@@ -125,9 +128,17 @@
                                     return {
                                         fillColor: color,
                                         strokeColor: color,
-                                        strokeWeight: 3
+                                        strokeWeight: 3,
+                                        strokeOpacity: 0.7,
+                                        icon: {
+                                            path: google.maps.SymbolPath.CIRCLE,
+                                            strokeColor: color,
+                                            strokeOpacity: 0.5,
+                                            scale: 3
+                                        }
                                     }
                                 });
+
 
                                 // });
                             };
