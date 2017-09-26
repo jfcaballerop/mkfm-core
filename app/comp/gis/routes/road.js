@@ -462,7 +462,8 @@ router.post('/V1/update_road/:id', function(req, res, next) {
 router.get('/V1/tot_km_trav', function(req, res, next) {
     var resJSON = {
         roadName: [],
-        roadKm: []
+        roadKm: [],
+        roadTime: []
     };
     var arrPK = [];
     Road.find().exec(function(err, roads) {
@@ -493,8 +494,16 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
             });
             resJSON.roadName.push(elem.properties.name);
             resJSON.roadKm.push(arrPK[arrPK.length - 1]);
+            var time = elem.geometry.coordinates.length;
+            var minutes = Math.floor(time / 60);
+            var seconds = time - minutes * 60;
 
+            function str_pad_left(string, pad, length) {
+                return (new Array(length + 1).join(pad) + string).slice(-length);
+            }
+            var finalTime = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
 
+            resJSON.roadTime.push(finalTime);
         });
         res.status(200).jsonp(resJSON);
     });

@@ -53,6 +53,7 @@
                                                 <tr>
                                                     <td>#</td>
                                                     <td>Road</td>
+                                                    <td>Seg</td>
                                                     <td>KM</td>
                                                 </tr>
                                             </thead>
@@ -70,6 +71,9 @@
                                                         </td>
                                                         <td>
                                                             <%- val %>
+                                                        </td>
+                                                        <td>
+                                                            <%- road_tk.roadTime[index] %>
                                                         </td>
                                                         <td>
                                                             <%- Math.round(road_tk.roadKm[index]/10)/100 %>
