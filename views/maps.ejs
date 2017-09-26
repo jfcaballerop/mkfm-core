@@ -58,7 +58,7 @@
                             <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
                             <select multiple id="layergps" class="form-control" size="<% if(roads.length < 6) { %>5<%} else{%>10<%}%>">
                                     <option value="ROADS" >INFO DATA ROAD</option>
-                                    <option value="KOBO" >KOBO INFO</option>
+                                    <option value="KOBOS" >KOBO INFO</option>
                             </select>
                         </div>
                         <div class="form-panel">
@@ -103,11 +103,16 @@
                                 jsonObject = <%- JSON.stringify(element) %>;
                                 jsonObject.properties.color = "red";
                                 jsonObject.properties.nameoption = "ROADS";
-                                // console.log(JSON.stringify(jsonObject));
+                                console.log(JSON.stringify(jsonObject));
                                 map.data.addGeoJson(jsonObject);
+                                <%}); %>
 
-
-
+                                <% koboinfos.forEach(function(element) { %>
+                                jsonObject = <%- JSON.stringify(element) %>;
+                                jsonObject.properties.color = "blue";
+                                jsonObject.properties.nameoption = "KOBOS";
+                                console.log(JSON.stringify(jsonObject));
+                                map.data.addGeoJson(jsonObject);
                                 <%}); %>
 
 

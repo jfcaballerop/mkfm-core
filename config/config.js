@@ -4,6 +4,8 @@ module.exports = {
     TOKEN_SECRET: process.env.TOKEN_SECRET || "mkfwcorev1_20170815",
     MAPS_API_KEY: 'AIzaSyA9u-Lw4kqLsjaKaZCfFEtxVbeXZJpW67c',
     SESSION_TTL: 3600, //sec
+    PROTO_API: 'http://',
+    PROTO_WEB: 'http://',
     HOST_API: 'localhost',
     HOST_WEB: 'localhost',
     PORT_API: 3000,
