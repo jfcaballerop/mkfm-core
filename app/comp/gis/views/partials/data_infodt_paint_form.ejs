@@ -1,11 +1,186 @@
 <script>
     $(document).ready(function() {
+
+        function fillTable(data) {
+            //var e = esc;
+            var html = [];
+            var h = -1;
+
+            data.geometry.coordinates.forEach(function(element, index) {
+                html[++h] = '<tr id="row' + index + '"><td>' + index + '</td>';
+                html[++h] = '<td><input id="check' + index + '" name="check[_id]" type="checkbox" class="input-xs" value="' + data._id + '"></td>'
+                html[++h] = '<td><input id="' + index + '" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.inventario[index] !== "undefined" ? data.properties.inventario[index] : '') + '"></td>';
+                html[++h] = '<td id="infodatatrack[properties][coordTimes]">' + $.format.date(data.properties.coordTimes[index], "dd-MM-yyyy HH:mm:ss") + '</td>';
+
+
+                if (index == 0) {
+                    html[++h] = '<td id="infodatatrack[properties][videoTime]">' + index + '</td>';
+                } else {
+                    var d2 = new Date($.format.date(data.properties.coordTimes[0], "yyyy-MM-dd HH:mm:ss"))
+                    var d1 = new Date($.format.date(data.properties.coordTimes[index], "yyyy-MM-dd HH:mm:ss"))
+                    var sec = (d1 - d2) / 1000;
+                    var min = 0;
+                    if (sec >= 60) {
+                        var minutes = Math.floor(sec / 60);
+                        var formattedSec = ("0" + (sec - minutes * 60)).slice(-2);
+                        var seconds = formattedSec;
+                    } else {
+                        var minutes = 0;
+                        var formattedSec = ("0" + sec).slice(-2);
+                        var seconds = formattedSec;
+                    }
+                    html[++h] = '<td id="infodatatrack[properties][videoTime]">' + minutes + ':' + seconds + '</td>';
+                }
+                html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[index] + ' ]</td>';
+                html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
+                html[++h] = '<td id="infodatatrack[properties][road_category]">' +
+                    '<select name="infodatatrack[properties][road_category]" class="form-control">' +
+                    '<option >Main Road</option>' +
+                    '<option >Secondary</option>' +
+                    '<option >Feeder</option>' +
+                    '<option >Urban</option>' +
+                    '<option >1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][pavement_material]">' +
+                    '<select name="infodatatrack[properties][pavement_material]" class="form-control">' +
+                    '<option>Asphalt</option>' +
+                    '<option>Bituminous pavement</option>' +
+                    '<option>Macadam</option>' +
+                    '<option>Cement Stabilized</option>' +
+                    '<option>Gravel surface</option>' +
+                    '<option>Earth</option>' +
+                    '<option>Concrete</option>' +
+                    '<option>Other</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][number_lanes_inc]"><input name="infodatatrack[properties][number_lanes_inc]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.number_lanes_inc[index] !== "undefined" ? data.properties.number_lanes_inc[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][number_lanes_dec]"><input name="infodatatrack[properties][number_lanes_dec]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.number_lanes_dec[index] !== "undefined" ? data.properties.number_lanes_dec[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][total_number_lanes]"><input name="infodatatrack[properties][total_number_lanes]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.total_number_lanes[index] !== "undefined" ? data.properties.total_number_lanes[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][total_width]"><input name="infodatatrack[properties][total_width]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.total_width[index] !== "undefined" ? data.properties.total_width[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][current_visual_condition]">' +
+                    '<select name="infodatatrack[properties][current_visual_condition]" class="form-control">' +
+                    '<option>A</option>' +
+                    '<option>B</option>' +
+                    '<option>C</option>' +
+                    '<option>D</option>' +
+                    '<option>E</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][existence_barriers_condition]"><input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.existence_barriers_condition[index] !== "undefined" ? data.properties.existence_barriers_condition[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][typology_barriers]"><input name="infodatatrack[properties][typology_barriers]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.typology_barriers[index] !== "undefined" ? data.properties.typology_barriers[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][typology_safety_fence]"><input name="infodatatrack[properties][typology_safety_fence]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.typology_safety_fence[index] !== "undefined" ? data.properties.typology_safety_fence[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.functionality_asset_functioning_expected_barrier[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_barrier[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][existence_signposting_road_signs_condition]"><input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.existence_signposting_road_signs_condition[index] !== "undefined" ? data.properties.existence_signposting_road_signs_condition[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][typology_signaling]"><input name="infodatatrack[properties][typology_signaling]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.typology_signaling[index] !== "undefined" ? data.properties.typology_signaling[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][typology_vertical_signaling]"><input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.typology_vertical_signaling[index] !== "undefined" ? data.properties.typology_vertical_signaling[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_signal]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.functionality_asset_functioning_expected_signal[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_signal[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][existence_street_lighting]"><input name="infodatatrack[properties][existence_street_lighting]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.existence_street_lighting[index] !== "undefined" ? data.properties.existence_street_lighting[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][typology_street_lighting]"><input name="infodatatrack[properties][typology_street_lighting]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.typology_street_lighting[index] !== "undefined" ? data.properties.typology_street_lighting[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_light]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.functionality_asset_functioning_expected_light[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_light[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][gtype]">' +
+                    '<select name="infodatatrack[properties][gtype]" class="form-control">' +
+                    '<option>Embankment</option>' +
+                    '<option>Cutting</option>' +
+                    '<option>Retaining wall</option>' +
+                    '<option>Other</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][gposition]">' +
+                    '<select name="infodatatrack[properties][gposition]" class="form-control">' +
+                    '<option>Right</option>' +
+                    '<option>Left</option>' +
+                    '<option>Both</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][gslope]"><input name="infodatatrack[properties][gslope]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gslope[index] !== "undefined" ? data.properties.gslope[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][gvegetation]"><input name="infodatatrack[properties][gvegetation]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gvegetation[index] !== "undefined" ? data.properties.gvegetation[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][gvisualcondition]">' +
+                    '<select name="infodatatrack[properties][gvisualcondition]" class="form-control">' +
+                    '<option>A</option>' +
+                    '<option>B</option>' +
+                    '<option>C</option>' +
+                    '<option>D</option>' +
+                    '<option>E</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][dtype]">' +
+                    '<select name="infodatatrack[properties][dtype]" class="form-control">' +
+                    '<option>Longitudinal</option>' +
+                    '<option>Culvert</option>' +
+                    '<option>Ford</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>';
+
+                html[++h] = '<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcapacity[index] !== "undefined" ? data.properties.dcapacity[index] : '') + '">';
+                html[++h] = '</tr>';
+            });
+
+            $('#bodytable').html(html.join(''));
+
+        };
+
+
+
+
         console.log("ready DOM!");
         var rObject = <%- JSON.stringify(infodatatrack) %>
 
         var avance = 100 / rObject.geometry.coordinates.length;
         $('.table-responsive').hide();
 
+        fillTable(rObject);
+
+        rObject.geometry.coordinates.forEach(function(element, index) {
+            rObject.properties.road_category[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][road_category]"]').val(rObject.properties.road_category[index]) : false;
+            rObject.properties.pavement_material[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][pavement_material]"]').val(rObject.properties.pavement_material[index]) : false;
+            rObject.properties.current_visual_condition[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][current_visual_condition]"]').val(rObject.properties.current_visual_condition[index]) : false;
+            rObject.properties.gtype[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(rObject.properties.gtype[index]) : false;
+            rObject.properties.gposition[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(rObject.properties.gposition[index]) : false;
+            rObject.properties.gvisualcondition[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(rObject.properties.gvisualcondition[index]) : false;
+            rObject.properties.dtype[index] ? $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(rObject.properties.dtype[index]) : false;
+        });
+        /*       
         rObject.geometry.coordinates.forEach(function(element, index) {
             // $('#progressbar').attr("aria-valuenow", avance++);
             // $('#progressbar').css("width", avance + "%");
@@ -604,7 +779,7 @@
 
 
         });
-
+*/
 
 
         var $inputsINV = $('#form').find("input[name='infodatatrack[properties][inventario]']");
