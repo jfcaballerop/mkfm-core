@@ -60,6 +60,7 @@
             $('#ultimaversion').empty();
             $('#editbutton').show();
             $('#editvideobutton').show();
+            $('#downloadbutton').show();
             ////console.log(JSON.stringify(values));
             $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
@@ -74,7 +75,6 @@
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
         $('#versionbutton').show();
-        $('#downloadbutton').show();
         // alert("ACT " + id);
         if (id != 0) {
             var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
@@ -104,6 +104,7 @@
                     $('#ultimaversion').show();
                     $('#editbutton').show();
                     $('#editvideobutton').show();
+                    $('#downloadbutton').show();
                     dataRoad = dataTrack;
                     //console.log('dataTrack ' + dataRoad);
                     //console.log(dataRoad);
@@ -112,6 +113,7 @@
                     $('#ultimaversion').hide();
                     $('#editbutton').hide();
                     $('#editvideobutton').hide();
+                    $('#downloadbutton').hide();
                     dataRoad = dataPost;
                     //console.log('dataPost ' + dataPost);
                     //console.log(dataPost);
