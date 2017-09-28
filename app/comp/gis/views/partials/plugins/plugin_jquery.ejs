@@ -1,0 +1,70 @@
+<script>
+    (function($) {
+        $.fn.extend({
+            clickPage: function(l, v, np) {
+                return this.each(function() {
+                    $(this).click(function() {
+                        //alert(l + ' - ' + v);
+                        var ini = $(this).closest('li').index();
+                        //alert(ini);
+                        ini == 0 ? ini = 1 : false;
+                        ini == np + 1 ? ini = np : false;
+                        var $trows = $('#dataTable').children('tbody').children('tr');
+                        // 2. Hide ROWS
+                        $.each($trows, function(index, value) {
+                            //alert(index);
+                            ((ini - 1) * v.page_size <= index) && (index < (ini * v.page_size)) ? $(value).eq(0).show(): $(value).eq(0).hide();
+                        });
+                        $('.paging').children('ul').children('.active').removeClass('active');
+                        $(this).closest('li').addClass('active');
+                    });
+
+                });
+
+            },
+            pagination: function(data, opt) {
+                var vopt = opt || {
+                    page_size: 10
+                };
+                return this.each(function() {
+                    //$(this).click(function() {
+
+                    //console.log(data);
+                    //console.log(vopt);
+                    var len = data.geometry.coordinates.length;
+                    var npages = Math.ceil(len / opt.page_size);
+                    //console.log(npages);
+
+                    // 1. Assign id to ROWS
+                    $trows = $(this).children('tbody').children('tr');
+                    $.each($trows, function(index, value) {
+                        $(value).attr("id", 'row' + index);
+                        // $(value).hide();
+                    });
+
+                    // 2. Hide ROWS
+                    $.each($trows, function(index, value) {
+                        //console.log(index);
+                        index < vopt.page_size ? $(value).eq(0).show() : $(value).eq(0).hide();
+                    });
+
+                    // 3. Create paginate
+                    var html = [];
+                    var h = -1;
+                    html[++h] = '<ul><li><a href="#" id="pag1">|<<</a></li>';
+                    for (var i = 0; i < npages; i++) {
+                        html[++h] = '<li><a href="#" id="pag' + (i + 1) + '">' + (i + 1) + '</a></li>';
+                    }
+                    html[++h] = '<li><a href="#" id="pag' + npages + '">>>|</a></li></ul>';
+                    $('.paging').html(html.join(''));
+                    $('.paging').children('ul').addClass('pagination').children('li').eq(1).addClass('active');
+                    $('.paging').children('ul').children('li').children('a').clickPage(len, vopt, npages);
+
+                    //});
+                });
+            }
+        });
+
+
+    })(jQuery)
+</script>

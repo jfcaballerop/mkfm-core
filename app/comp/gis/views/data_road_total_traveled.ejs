@@ -45,6 +45,7 @@
 
                                     <div class="form-group">
                                         <label class="col-xs-2 control-label">DISTANCE: <span id="totalkm"></span></label>
+                                        <label class="col-xs-2 control-label">TIME: <span id="totaltime"><%- road_tk.roadTotTime %></span></label>
                                     </div>
 
                                     <div id="accordion">
@@ -124,6 +125,7 @@
                 var val = <%- totalKM %>
                 $('#totalkm').text(Math.round(val / 10) / 100 + ' km');
                 $('#totalkm').css('font-weight', 'bold');
+                $('#totaltime').css('font-weight', 'bold');
             });
         </script>
 

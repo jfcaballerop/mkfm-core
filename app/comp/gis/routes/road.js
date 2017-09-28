@@ -463,13 +463,15 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
     var resJSON = {
         roadName: [],
         roadKm: [],
-        roadTime: []
+        roadTime: [],
+        roadTotTime: 0
     };
     var arrPK = [];
     Road.find().exec(function(err, roads) {
         if (err) {
             res.send(500, err.message);
         }
+        var timetot = 0;
 
         roads.forEach(function(elem, ind) {
             arrPK = [];
@@ -495,6 +497,7 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
             resJSON.roadName.push(elem.properties.name);
             resJSON.roadKm.push(arrPK[arrPK.length - 1]);
             var time = elem.geometry.coordinates.length;
+            timetot += elem.geometry.coordinates.length;
             var minutes = Math.floor(time / 60);
             var seconds = time - minutes * 60;
 
@@ -504,6 +507,10 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
             var finalTime = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
 
             resJSON.roadTime.push(finalTime);
+            var hoursTot = Math.floor(timetot / 3600);
+            var minutesTot = Math.floor(timetot / 60);
+            var secondsTot = timetot - minutesTot * 60;
+            resJSON.roadTotTime = str_pad_left(hoursTot, '0', 2) + ':' + str_pad_left(minutesTot, '0', 2) + ':' + str_pad_left(secondsTot, '0', 2);
         });
         res.status(200).jsonp(resJSON);
     });
