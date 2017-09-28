@@ -169,8 +169,6 @@
         };
 
 
-
-
         console.log("ready DOM!");
         rObject = <%- JSON.stringify(infodatatrack) %>
         fillTable(rObject)
@@ -3439,9 +3437,24 @@
                 }
             });
             $('#form').find("input[name='infodatatrack[geometry][coordinates]']").css('min-width', '200px');
+            var $inputsCOOR = $('#form').find("input[name='infodatatrack[geometry][coordinates]']");
+            $inputsCOOR.blur(function() {
+                var $this = $(this);
+                if ($this.val() != '') {
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            $inputsCOOR[index].value = $this.val();
+                        }
 
 
+                    });
+                }
+            });
         });
+
 
         // Añado valores de formato
         $('#form').find("input").css('min-width', '50px');
