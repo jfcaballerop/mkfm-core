@@ -6,6 +6,7 @@
         //console.log("ready!");
         // $('#editbutton').hide();
         // $('#versionbutton').hide();
+        // $('#downloadbutton').hide();
 
     });
 
@@ -28,7 +29,15 @@
             window.location = '/auth/WEB/infodatatrack/edit_video_infodatatrack/' + dataTrack._id;
         }
     }
-
+    $('#downloadbutton').click(function() {
+        $("<a />", {
+                "download": "data.json",
+                "href": "data:application/json," + encodeURIComponent(JSON.stringify(dataTrack))
+            }).appendTo("body")
+            .click(function() {
+                $(this).remove()
+            })[0].click()
+    });
     $('#versionbutton').click(function() {
         // alert('Versionando documento');
         dataPost.properties.video_roads = dataPost._id;
@@ -65,6 +74,7 @@
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
         $('#versionbutton').show();
+        $('#downloadbutton').show();
         // alert("ACT " + id);
         if (id != 0) {
             var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
