@@ -20,6 +20,8 @@ var fileuploadModels = require(path.join(__dirname, '../models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
 var filetypeModels = require(path.join(__dirname, '../models/filetype'));
 var Filetype = mongoose.model('Filetype');
+var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
+var Infodatatrack = mongoose.model('Infodatatrack');
 
 
 
@@ -636,23 +638,66 @@ router.post('/V1/validate/:id', function(req, res, next) {
                 //console.log('ENTRO ####');
                 //simple test 
                 if (GJV.valid(validFeatureCollection)) {
-                    //console.log("this is valid GeoJSON!");
-                    fup.status = 'validate';
+                    //console.log("this is valid GeoJSON!\n" + JSON.stringify(validFeatureCollection));
+                    if (validFeatureCollection._id !== undefined) {
+                        Infodatatrack.findById(validFeatureCollection._id).exec(function(err, infodatatrack) {
+                            if (err) {
+                                fup.status = 'error';
+                                res.send(500, err.message);
+                            }
+                            //console.log('\ninfodatatrack::\n' + JSON.stringify(infodatatrack));
+                            //res.status(200).jsonp(infodatatrack);
+                            // TODO: Añadir poder modificar el resto de opciones
+                            // Por ahora solo modifico las Coordenadas
+
+                            // Paso 1. Comprobar longitud de las Coordenadas
+                            if (validFeatureCollection.geometry.coordinates.length !== infodatatrack.geometry.coordinates.length) {
+                                fup.status = 'error';
+                                console.log('Error en longitud de coordenadas');
+                            } else {
+                                infodatatrack.geometry.coordinates = validFeatureCollection.geometry.coordinates;
+                                infodatatrack.save(function(err, info) {
+                                    if (err) {
+                                        console.log('Error en grabar infodatatrack');
+                                        fup.status = 'error';
+                                        // return res.status(500).send(err.message);
+                                    }
+                                    console.log('infodatatrack grabado OK !!!');
+                                    fup.status = 'validate';
+                                    //console.log('## API ACTIVATE file: ' + req.params.id);
+                                    fup.save(function(err, file) {
+                                        if (err) {
+                                            return res.status(500).send(err.message);
+                                        }
+                                        Fileupload.find(function(err, fup) {
+                                            if (err) {
+                                                res.send(500, err.message);
+                                            }
+                                            res.status(200).jsonp(fup);
+                                        });
+                                    });
+                                });
+                            }
+
+                        });
+                    }
+
                 } else {
                     fup.status = 'error';
-                }
-                //console.log('## API ACTIVATE file: ' + req.params.id);
-                fup.save(function(err, file) {
-                    if (err) {
-                        return res.status(500).send(err.message);
-                    }
-                    Fileupload.find(function(err, fup) {
+                    //console.log('## API ACTIVATE file: ' + req.params.id);
+                    fup.save(function(err, file) {
                         if (err) {
-                            res.send(500, err.message);
+                            return res.status(500).send(err.message);
                         }
-                        res.status(200).jsonp(fup);
+                        Fileupload.find(function(err, fup) {
+                            if (err) {
+                                res.send(500, err.message);
+                            }
+                            res.status(200).jsonp(fup);
+                        });
                     });
-                });
+                }
+
             });
         } else if ((fup.type === 'gpx') || (fup.type === 'kml')) {
             // Primero: transformar el fichero GPX a GeoJson
