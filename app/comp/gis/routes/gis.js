@@ -575,7 +575,7 @@ router.post('/V1/fileupload/', function(req, res, next) {
 
 /* GET JSON files listing. */
 router.get('/V1/', function(req, res, next) {
-    Fileupload.find(function(err, files) {
+    Fileupload.find().sort({ updated_at: -1 }).exec(function(err, files) {
         if (err) {
             res.send(500, err.message);
         }

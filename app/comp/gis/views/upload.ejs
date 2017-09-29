@@ -151,11 +151,11 @@
                                                                                 <i class="fa fa-exclamation-triangle"> Error</i> 
                                                                             </button>
                                                                             <% } %>
-                                                                                <% if(fup[i].activo){ %>
-                                                                                    <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-eye-slash"> Desactivar</i></button>
-                                                                                    <% } else { %>
-                                                                                        <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-eye" > Activar</i></button>
-                                                                                        <% }   %>
+                                                                                <%# if(fup[i].activo){ %>
+                                                                                    <!-- <button onclick="desactivate('<%= fup[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-eye-slash"> Desactivar</i></button> -->
+                                                                                    <%# } else { %>
+                                                                                        <!-- <button onclick="activate('<%= fup[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-eye" > Activar</i></button> -->
+                                                                                        <%# }   %>
 
                                                                                             <button onclick="delfile('<%= fup[i]._id %>');" class="btn btn-danger btn-xs">
                                                                         <i class="fa fa-trash-o"></i> 

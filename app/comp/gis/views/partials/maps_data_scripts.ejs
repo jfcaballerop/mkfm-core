@@ -31,7 +31,7 @@
     }
     $('#downloadbutton').click(function() {
         $("<a />", {
-                "download": "data.json",
+                "download": "data.geojson",
                 "href": "data:application/json," + encodeURIComponent(JSON.stringify(dataTrack))
             }).appendTo("body")
             .click(function() {
