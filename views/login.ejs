@@ -44,21 +44,21 @@
 
             <form class="form-login" action="/login" method="post">
                 <h2 class="form-login-heading-theme03">
-                    <%=trans.WELCOME_MSG%><br>
-                        <%=trans.LOGIN%>
+                    <%=trans('WELCOME_MSG')%><br>
+                        <%=trans('LOGIN')%>
                 </h2>
                 <div class="login-wrap">
 
-                    <input type="text" class="form-control" placeholder="<%= trans.USER_ID %>" name="user_login" autofocus required>
+                    <input type="text" class="form-control" placeholder="<%= trans('USER_ID') %>" name="user_login" autofocus required>
                     <br>
-                    <input type="password" class="form-control" placeholder="<%= trans.PASSWD %>" name="user_passwd" required>
+                    <input type="password" class="form-control" placeholder="<%= trans('PASSWD') %>" name="user_passwd" required>
                     <label class="checkbox">
 		                <span class="pull-right">
 		                    <!-- <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a> -->
 		
 		                </span>
 		            </label>
-                    <button class="btn btn-theme03 btn-block" type="submit"><i class="fa fa-lock"></i> <%= trans.SIGN_IN %></button>
+                    <button class="btn btn-theme03 btn-block" type="submit"><i class="fa fa-lock"></i> <%= trans('SIGN_IN') %></button>
                     <% if (message) { %>
                         <h3 class="error">
                             <%= message %>
@@ -66,18 +66,18 @@
                         <% } %>
                             <hr>
                             <div class="login-social-link centered">
-                                <%= trans.CHANGE_LANG %>
+                                <%= trans('CHANGE_LANG') %>
                                     <ul>
                                         <li>
-                                            <a class="<%=(lang==" es " ? "active " : " ")%>" href="/?clang=es">
+                                            <a class="es active" href="/?clang=es">
                                                 <img class="flag flag-es " alt="" />
-                                                <%= trans.FLAG_ES %>
+                                                <%= trans('FLAG_ES') %>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="<%=(lang==" en " ? "active " : " ")%>" href="/?clang=en">
+                                            <a class="en active" href="/?clang=en">
                                                 <img class="flag flag-gb" alt="" />
-                                                <%= trans.FLAG_GB %>
+                                                <%= trans('FLAG_GB') %>
                                             </a>
                                         </li>
                                     </ul>
@@ -132,8 +132,8 @@
     <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
     <script>
         /*$.backstretch("assets/img/login-bg.jpg", {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    speed: 500
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                });*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            speed: 500
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        });*/
     </script>
 
 

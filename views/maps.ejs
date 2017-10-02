@@ -50,20 +50,26 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Google Maps</h3>
+                <h3><i class="fa fa-angle-right"></i>
+                    <%- trans('MENU_MAPS_GMAPS') %>
+                </h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-2">
                         <div class="form-panel">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i> Capas GPS</h5>
+                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                                <%- trans('GMAPS_CAPAS') %>
+                            </h5>
                             <select multiple id="layergps" class="form-control" size="<% if(roads.length < 6) { %>5<%} else{%>10<%}%>">
                                     <option value="ROADS" >INFO DATA ROAD</option>
                                     <option value="KOBOS" >KOBO INFO</option>
                             </select>
                         </div>
                         <div class="form-panel">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>Data</h5>
-                            <a href="/auth/WEB/maps/view_data"><button type="button" class="btn btn-theme04"><i class="fa  fa-table"></i> Export</button></a>
+                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                                <%- trans('GMAPS_DATOS') %>
+                            </h5>
+                            <a href="/auth/WEB/maps/view_data"><button type="button" class="btn btn-theme04"><i class="fa  fa-table"></i> <%- trans('GMAPS_DATOS_BUTTON_EXPORT') %></button></a>
                         </div>
                     </div>
                     <div class="col-md-10" style="height:80vh;">

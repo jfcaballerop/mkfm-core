@@ -7,7 +7,6 @@ var moment = require('moment');
 var config = require(path.join(__dirname, '../config/config'));
 var bodyParser = require('body-parser');
 
-
 router.use(bodyParser.urlencoded({
     limit: '300mb',
     extended: true
@@ -16,6 +15,7 @@ router.use(bodyParser.json({ limit: '300mb' }));
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
+
     console.log('### COMPROBAR AUTH WEB ### ');
     var token = req.cookies.jwtToken;
     console.log('\n\n## WEB Token: ' + token + "\n\n");
@@ -49,6 +49,8 @@ router.use(function timeLog(req, res, next) {
 
     }
 });
+
+
 
 // LOGIN Page
 router.get('/', function(req, res, next) {

@@ -5,7 +5,9 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var i18n = require("i18n-express");
+var i18n = require("i18n");
+//var i18n = require('./config/i18n');
+//var i18n = require('i18n');
 var methodOverride = require("method-override");
 var flash = require('connect-flash');
 //var cors = require('cors');
@@ -32,6 +34,21 @@ app.set('views', [
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser());
+// TRANSLATE CONFIG
+
+i18n.configure({
+    locales: ['es', 'en'],
+    directory: path.join(__dirname, '/app/translate/i18n'),
+    defaultLocale: 'es',
+    autoReload: true,
+    cookie: 'ulang',
+    api: {
+        '__': 'trans', //now req.__ becomes req.t 
+        '__n': 'tn' //and req.__n can be called as req.tn 
+    }
+
+});
+app.use(i18n.init);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
     limit: 1024 * 1024 * 300,
@@ -54,6 +71,7 @@ app.use(session({
     name: "id"
 
 }));
+
 app.use(flash());
 app.use(methodOverride());
 //app.use(cors());
@@ -67,13 +85,6 @@ mongoose.connect(configDB.url, function(err, res) {
     }
 });
 
-// TRANSLATE CONFIG
-app.use(i18n({
-    translationsPath: path.join(__dirname, '/app/translate/i18n'), // <--- use here. Specify translations files path. 
-    siteLangs: ["es", "en"],
-    textsVarName: 'trans',
-    defaultLang: 'es'
-}));
 
 /*********************************
  *  URL - Routes 
@@ -84,6 +95,8 @@ var index = require('./routes/index');
 var install = require('./routes/install');
 var auth_web = require('./routes/authweb');
 var auth_api = require('./routes/authapi');
+
+
 
 // AUTH de puntos de entrada
 app.use('/auth/WEB', auth_web);

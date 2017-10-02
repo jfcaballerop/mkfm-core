@@ -12,17 +12,25 @@
         <li class="mt">
             <a class="active" href="/auth/WEB/index">
                 <i class="fa fa-dashboard"></i>
-                <span>Dashboard</span>
+                <span><%- trans('MENU_DASHBOARD') %></span>
             </a>
         </li>
         <li class="sub-menu">
             <a href="javascript:;">
                 <i class=" fa fa-map-marker"></i>
-                <span>Maps</span>
+                <span><%- trans('MENU_MAPS') %></span>
             </a>
             <ul class="sub">
-                <li><a href="/auth/WEB/maps/list_info">google maps</a></li>
-                <li><a href="/auth/WEB/road/total_traveled">recorridos</a></li>
+                <li>
+                    <a href="/auth/WEB/maps/list_info">
+                        <%- trans('MENU_MAPS_GMAPS') %>
+                    </a>
+                </li>
+                <li>
+                    <a href="/auth/WEB/road/total_traveled">
+                        <%- trans('MENU_MAPS_TAVEL') %>
+                    </a>
+                </li>
             </ul>
         </li>
         <!--
@@ -32,13 +40,13 @@
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class=" fa fa-cogs"></i>
-                    <span>Control Panel</span>
+                    <span><%- trans('MENU_CP') %></span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/auth/WEB/users/list_users"><span class=" fa fa-user"> List users </span></a></li>
+                    <li><a href="/auth/WEB/users/list_users"><span class=" fa fa-user"> <%- trans('MENU_CP_USERS') %></span></a></li>
                 </ul>
                 <ul class="sub">
-                    <li><a href="/auth/WEB/gis/upload"><span class=" fa fa-upload"> Upload file </span></a></li>
+                    <li><a href="/auth/WEB/gis/upload"><span class=" fa fa-upload"> <%- trans('MENU_CP_UPFILE') %> </span></a></li>
                 </ul>
             </li>
             <% } %>

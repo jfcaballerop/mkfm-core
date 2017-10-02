@@ -59,28 +59,30 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Database</h3>
+                <h3><i class="fa fa-angle-right"></i>
+                    <%- trans('MAPSDATA_TITLE') %>
+                </h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-12" style="height:80vh;">
                         <div class="content-panel">
                             <div class="form-panel">
 
-                                <h4><i class="fa fa-angle-right">Filtros</i></h4>
+                                <h4><i class="fa fa-angle-right"><%- trans('MAPSDATA_FILTER') %></i></h4>
                                 <hr>
                                 <div class="form-inline">
                                     <select id="roads" class="form-control" style="width:auto;">
-                                    <option value="0">- Select a road -</option>
+                                    <option value="0">- <%- trans('MAPSDATA_SELECT_ROAD') %> -</option>
                                     <% roadsvals.forEach(function(val, indexrv){ %>
                                         <option value="<%- val._id %>"><%= val.properties.name %></option>
                                         
                                         <% }); %>
                                         
                                     </select>
-                                    <button id="editbutton" onclick="go_edit_road();" type="button" class="btn btn-primary" style="display: none;"><i class="fa fa-pencil-square-o"> Edit </i></button>
-                                    <button id="editvideobutton" onclick="go_edit_video_road();" type="button" class="btn btn-theme04" style="display: none;"><i class="fa fa-video-camera"> Edit Video Info </i></button>
-                                    <button id="versionbutton" type="button" class="btn btn-theme02" style="display: none;"><i class="fa fa-code-fork" ></i> Nueva version</button>
-                                    <button id="downloadbutton" type="button" class="btn btn-theme03" style="display: none;"><i class="fa fa-download" ></i> Descargar</button>
+                                    <button id="editbutton" onclick="go_edit_road();" type="button" class="btn btn-primary" style="display: none;"><i class="fa fa-pencil-square-o"> <%- trans('MAPSDATA_BUTTON_EDIT') %></i></button>
+                                    <button id="editvideobutton" onclick="go_edit_video_road();" type="button" class="btn btn-theme04" style="display: none;"><i class="fa fa-video-camera"> <%- trans('MAPSDATA_BUTTON_EDITVIDEO') %></i></button>
+                                    <button id="versionbutton" type="button" class="btn btn-theme02" style="display: none;"><i class="fa fa-code-fork" ></i> <%- trans('MAPSDATA_BUTTON_NEWVER') %></button>
+                                    <button id="downloadbutton" type="button" class="btn btn-theme03" style="display: none;"><i class="fa fa-download" ></i> <%- trans('MAPSDATA_BUTTON_DOWN') %></button>
                                     <span id="ultimaversion" style="display: none;"></span>
                                     <div>
                                         <div id="accordion" style="display:none;">

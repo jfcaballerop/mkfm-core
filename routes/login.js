@@ -9,11 +9,21 @@ var flash = require('connect-flash');
 var userModels = require(path.join(__dirname, '../app/comp/user/models/user'));
 var User = mongoose.model('User');
 var service = require(path.join(__dirname, '../app/services/services'));
+var i18n = require('i18n');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    var lang = req.query.clang || 'es';
+    console.log('## LANG:: ## ' + lang);
+
+    res.cookie('ulang', lang);
+    i18n.setLocale(res, lang);
+    res.setLocale(lang);
+
     res.render('login', { title: 'Login', cname: config.client_name, message: req.flash('message') });
+
 });
+
 
 /* LOGIN action */
 router.post('/login', function(req, res, next) {
