@@ -54,5 +54,11 @@
     "MAPSDATA_BUTTON_EDIT": "Editar",
     "MAPSDATA_BUTTON_EDITVIDEO": "Editar video",
     "MAPSDATA_BUTTON_NEWVER": "Nueva Ver",
-    "MAPSDATA_BUTTON_DOWN": "Descarga"
+    "MAPSDATA_BUTTON_DOWN": "Descarga",
+    "EDIT_VIDEO_INFO_TITLE": "Editar informacion carretera",
+    "MODIFY": "Modificar",
+    "UPDATED": "Actualizado",
+    "EDIT_VIDEO_INFO_SHOW": "Mostrar columnas",
+    "EDIT_VIDEO_INFO_CHECK": "Revisar coord",
+    "EDIT_VIDEO_INFO_ADD": "Añadir coord"
 }

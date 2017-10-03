@@ -43,7 +43,9 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Edit Road</h3>
+                <h3><i class="fa fa-angle-right"></i>
+                    <%- trans('EDIT_VIDEO_INFO_TITLE') %>
+                </h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-12" style="height:80vh;">
@@ -55,24 +57,24 @@
 
                                         <div class="form-group">
                                             <input type="hidden" name="infodatatrack[_id]" value="<%- infodatatrack._id %>">
-                                            <label class="col-xs-2 control-label">ROAD:</label>
+                                            <label class="col-xs-2 control-label"><%- trans('ROAD') %> : </label>
                                             <div class="col-xs-6">
                                                 <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>" required>
                                                 <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>" required>
                                             </div>
                                             <div class="col-xs-4">
-                                                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Modificar</button>
-                                                <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> <%- trans('MODIFY') %></button>
+                                                <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal"><%- trans('CANCEL') %></button>
                                             </div>
                                             <br>
                                             <div class="col-xs-4">
-                                                <b>Actualizado:</b>
+                                                <b><%- trans('UPDATED') %>:</b>
                                                 <%- moment(infodatatrack.updated_at).format('DD/MM/YYYY HH:mm:ss') %>
                                             </div>
                                             <div class="col-xs-4">
-                                                <button id="showall" type="button" class="btn btn-round btn-success"><i class="fa fa-eye"></i> SHOW ALL COLUMNS</button>
-                                                <button id="checkcoord" type="button" class="btn btn-round btn-warning"><i class="fa fa-files-o"></i> CHECK COORD</button>
-                                                <button id="addcoord" type="button" class="btn btn-round btn-theme03"><i class="fa fa-plus"></i> ADD COORD</button>
+                                                <button id="showall" type="button" class="btn btn-round btn-success"><i class="fa fa-eye"></i> <%- trans('EDIT_VIDEO_INFO_SHOW')%></button>
+                                                <button id="checkcoord" type="button" class="btn btn-round btn-warning"><i class="fa fa-files-o"></i> <%- trans('EDIT_VIDEO_INFO_CHECK')%></button>
+                                                <button id="addcoord" type="button" class="btn btn-round btn-theme03"><i class="fa fa-plus"></i> <%- trans('EDIT_VIDEO_INFO_ADD')%></button>
                                             </div>
 
                                             <br><br>

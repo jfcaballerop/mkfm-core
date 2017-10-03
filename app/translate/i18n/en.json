@@ -40,6 +40,7 @@
     "TYPE_FILE": "File type",
     "UPLOAD": "Upload",
     "CANCEL": "Cancel",
+    "MODIFY": "Modify",
     "LOADFILE_TITLE_LISTADO": "File List",
     "LOADFILE_TITLE_ORIGNAME": "Original name",
     "LOADFILE_TITLE_TYPE": "Type",
@@ -54,5 +55,10 @@
     "MAPSDATA_BUTTON_EDIT": "Edit",
     "MAPSDATA_BUTTON_EDITVIDEO": "Edit video",
     "MAPSDATA_BUTTON_NEWVER": "New Version",
-    "MAPSDATA_BUTTON_DOWN": "Download"
+    "MAPSDATA_BUTTON_DOWN": "Download",
+    "EDIT_VIDEO_INFO_TITLE": "Edit road info",
+    "UPDATED": "Updated",
+    "EDIT_VIDEO_INFO_SHOW": "Show all columns",
+    "EDIT_VIDEO_INFO_CHECK": "Check Coord",
+    "EDIT_VIDEO_INFO_ADD": "Add coord"
 }
