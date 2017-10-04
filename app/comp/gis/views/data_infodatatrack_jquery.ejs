@@ -94,7 +94,7 @@
                                                 <tr>
                                                     <th title="ID">#</th>
                                                     <th title="Selection"> Sel </th>
-                                                    <th title="Inventary">INV</th>
+                                                    <!-- <th title="Inventary">INV</th> -->
 
                                                     <!-- ROAD DATA -->
 
@@ -102,12 +102,13 @@
                                                     <th id="infodatatrack[properties][videoTime]" title="Video Time"> VIDEO TIME </th>
                                                     <th id="infodatatrack[geometry][coordinates]" title="GPS - POS: Long - Lat - Cota">GPS </th>
                                                     <th id="infodatatrack[properties][pk]" title="PK" class="road"> PK </th>
+                                                    <th id="infodatatrack[properties][rcode]" title="Road Code" class="road"> RCODE </th>
                                                     <th id="infodatatrack[properties][road_category]" title="Road Category" class="road"> RC</th>
                                                     <!-- <th id="infodatatrack[properties][Roadlab]" title="IRI" class="road"> IRI </th>
                                                         <th id="infodatatrack[properties][date_construction]" title="Date of construction" class="road">DC</th>
-                                                        <th id="infodatatrack[properties][alternative_itinerary]" title="Existence of Alternative Itinerary" class="road">EAI</th>
-                                                        <th id="infodatatrack[properties][open_traffic]" title="Open to traffic?" class="road">OPEN</th>
-                                                        <th id="infodatatrack[properties][existence_gauging_stations]" title="Existence of Gauging Stations" class="road">GS</th>
+                                                        <th id="infodatatrack[properties][alternative_itinerary]" title="Existence of Alternative Itinerary" class="road">EAI</th>-->
+                                                    <th id="infodatatrack[properties][open_traffic]" title="Open to traffic?" class="road">OPEN</th>
+                                                    <!--<th id="infodatatrack[properties][existence_gauging_stations]" title="Existence of Gauging Stations" class="road">GS</th>
                                                         <th id="infodatatrack[properties][adt]" title="ADT" class="road">ADT</th>
                                                         <th id="infodatatrack[properties][traffic_high_peak]" title="Traffic high peak" class="road"> THP</th> -->
                                                     <th id="infodatatrack[properties][pavement_material]" title="pavement material" class="road"> PM</th>
@@ -170,7 +171,8 @@
                                                         <th id="infodatatrack[properties][comments]" title="comments" class="furniture"> COMM</th> -->
 
                                                     <!-- BRIDGES -->
-                                                    <th id="infodatatrack[properties][bcode]" title="CODE" class="bridges">CODE</th>
+                                                    <th id="infodatatrack[properties][bexists]" title="BEXISTS" class="bridges">BRI EXITS</th>
+                                                    <!-- <th id="infodatatrack[properties][bcode]" title="CODE" class="bridges">CODE</th> -->
                                                     <!-- <th id="infodatatrack[properties][bname]" title="Name" class="bridges">NAME</th>
                                                         <th id="infodatatrack[properties][byearconstruc]" title="Year of construction" class="bridges">YEAR CONS</th>
                                                         <th id="infodatatrack[properties][btype]" title="Type of structure" class="bridges">TYPE</th>
@@ -182,11 +184,11 @@
                                                         <th id="infodatatrack[properties][bmaterialpiers]" title="Material - Piers" class="bridges">MAT PIERS</th>
                                                         <th id="infodatatrack[properties][bmaterialabutments]" title="Material - Abutments" class="bridges">MAT ABUTS</th>
                                                         <th id="infodatatrack[properties][balignment]" title="Alignment" class="bridges">ALIGN</th>
-                                                        <th id="infodatatrack[properties][bspans]" title="Number of spans" class="bridges">SPANS</th>
-                                                        <th id="infodatatrack[properties][blenght]" title="Total Length (m)" class="bridges">LENGHT</th>
-                                                        <th id="infodatatrack[properties][bmaxspan]" title="Max span (m)" class="bridges">MAXSPAN</th>
-                                                        <th id="infodatatrack[properties][bwidth]" title="Width (m)" class="bridges">WIDTH</th>
-                                                        <th id="infodatatrack[properties][bfreeheight]" title="Free height (m)" class="bridges">FREE HEIGHT</th>
+                                                        <th id="infodatatrack[properties][bspans]" title="Number of spans" class="bridges">SPANS</th>-->
+                                                    <th id="infodatatrack[properties][blenght]" title="Total Length (m)" class="bridges">LENGHT</th>
+                                                    <!--<th id="infodatatrack[properties][bmaxspan]" title="Max span (m)" class="bridges">MAXSPAN</th>-->
+                                                    <th id="infodatatrack[properties][bwidth]" title="Width (m)" class="bridges">WIDTH</th>
+                                                    <!-- <th id="infodatatrack[properties][bfreeheight]" title="Free height (m)" class="bridges">FREE HEIGHT</th>
                                                         <th id="infodatatrack[properties][bfoundation]" title="Type of foundations" class="bridges">FOUNDATION</th>
                                                         <th id="infodatatrack[properties][bpiersriver]" title="Piers over riverbed" class="bridges">PIERS RIVER</th>
                                                         <th id="infodatatrack[properties][bprotectabut]" title="Protection of abutments and nearby areas" class="bridges">PROT ABUT</th>
@@ -220,22 +222,23 @@
                                                         <th id="infodatatrack[properties][bsensitivity]" title="Asset Sensitivity" class="bridges">SENSITIVITY</th>
                                                         <th id="infodatatrack[properties][brisk]" title="RISK" class="bridges">RISK</th> -->
                                                     <!-- GEOTECHNICALS -->
-                                                    <th id="infodatatrack[properties][gcode]" title="CODE" class="geotechnicals">CODE</th>
+                                                    <!-- <th id="infodatatrack[properties][gcode]" title="CODE" class="geotechnicals">CODE</th> -->
                                                     <!-- <th id="infodatatrack[properties][gyearconstruct]" title="Year of construction" class="geotechnicals">YEAR CONS</th> -->
                                                     <th id="infodatatrack[properties][gtype]" title="Type of earthwork" class="geotechnicals">TYPE</th>
                                                     <th id="infodatatrack[properties][gposition]" title="Position" class="geotechnicals">POS</th>
-                                                    <!-- <th id="infodatatrack[properties][gmaterial]" title="Material - Retaining walls" class="geotechnicals">MAT</th>
-                                                        <th id="infodatatrack[properties][gnature]" title="Nature - Earthworks" class="geotechnicals">NATURE</th>
-                                                        <th id="infodatatrack[properties][gheight]" title="Height (m)" class="geotechnicals">HEIGHT</th>
-                                                        <th id="infodatatrack[properties][gh_h]" title="Relation h/H (m)" class="geotechnicals">H_H</th> -->
+                                                    <th id="infodatatrack[properties][gmaterial]" title="Material - Retaining walls" class="geotechnicals">MAT</th>
+                                                    <th id="infodatatrack[properties][gnature]" title="Nature - Earthworks" class="geotechnicals">NATURE</th>
+                                                    <th id="infodatatrack[properties][gheight]" title="Height (m)" class="geotechnicals">HEIGHT</th>
+                                                    <th id="infodatatrack[properties][gh_h]" title="Relation h/H (m)" class="geotechnicals">H_H</th>
                                                     <th id="infodatatrack[properties][gslope]" title="Slope (º)" class="geotechnicals">SLOPE</th>
-                                                    <!-- <th id="infodatatrack[properties][gdistance]" title="Distance to road (m)" class="geotechnicals">DIST</th>
-                                                        <th id="infodatatrack[properties][glength]" title="Length (m)" class="geotechnicals">LENGTH</th>
-                                                        <th id="infodatatrack[properties][gblocks]" title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>
-                                                        <th id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th> -->
+                                                    <th id="infodatatrack[properties][gdistance]" title="Distance to road (m)" class="geotechnicals">DIST</th>
+                                                    <!--    <th id="infodatatrack[properties][glength]" title="Length (m)" class="geotechnicals">LENGTH</th>
+                                                        <th id="infodatatrack[properties][gblocks]" title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>-->
+                                                    <th id="infodatatrack[properties][gtreatments]" title="Existence of Geotech Treatments" class="geotechnicals">GEO TREAT</th>
+                                                    <!--<th id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th> -->
                                                     <th id="infodatatrack[properties][gvegetation]" title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>
-                                                    <!-- <th id="infodatatrack[properties][gtypevegetation]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
-                                                        <th id="infodatatrack[properties][gphoto]" title="Photographs" class="geotechnicals">PHOTO</th>
+                                                    <th id="infodatatrack[properties][gtypevegetation]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
+                                                    <!--    <th id="infodatatrack[properties][gphoto]" title="Photographs" class="geotechnicals">PHOTO</th>
                                                         <th id="infodatatrack[properties][glastinspection]" title="Date of last inspection" class="geotechnicals">LAST INSP</th>
                                                         <th id="infodatatrack[properties][gprevcondition]" title="Previous condition rate" class="geotechnicals">PREV COND</th> -->
                                                     <th id="infodatatrack[properties][gvisualcondition]" title="Current visual condition" class="geotechnicals">VISUAL COND</th>
@@ -267,12 +270,12 @@
                                                     <th id="infodatatrack[properties][dcode]" title="CODE" class="drainage">CODE</th>
                                                     <!-- <th id="infodatatrack[properties][dyearconstruc]" title="Year of construction" class="drainage">YEAR CONS</th> -->
                                                     <th id="infodatatrack[properties][dtype]" title="Type of drainage" class="drainage">TYPE</th>
-                                                    <th id="infodatatrack[properties][dcapacity]" title="Capacity" class="drainage">CAPACITY</th>
-                                                    <!-- <th id="infodatatrack[properties][drainpeak]" title="Rain Peak Values" class="drainage">RAIN PEAK</th>
+                                                    <!--<th id="infodatatrack[properties][dcapacity]" title="Capacity" class="drainage">CAPACITY</th>
+                                                        <th id="infodatatrack[properties][drainpeak]" title="Rain Peak Values" class="drainage">RAIN PEAK</th>
                                                         <th id="infodatatrack[properties][dmaterial]" title="Material" class="drainage">MATERIAL</th>
-                                                        <th id="infodatatrack[properties][dslope]" title="Slope (%)" class="drainage">SLOPE</th>
-                                                        <th id="infodatatrack[properties][dsection]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>
-                                                        <th id="infodatatrack[properties][ddiameter]" title="Diameter (m)" class="drainage">DIAMETER</th>
+                                                        <th id="infodatatrack[properties][dslope]" title="Slope (%)" class="drainage">SLOPE</th>-->
+                                                    <th id="infodatatrack[properties][dsection]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>
+                                                    <!--<th id="infodatatrack[properties][ddiameter]" title="Diameter (m)" class="drainage">DIAMETER</th>
                                                         <th id="infodatatrack[properties][dlength]" title="Length (m)" class="drainage">LENGTH</th>
                                                         <th id="infodatatrack[properties][dprotentrance]" title="Protection of embankment at the drain entrance" class="drainage">PROTENTRANCE</th>
                                                         <th id="infodatatrack[properties][dprotexit]" title="Protection bed / inverter arch at the drain exit" class="drainage">PROTEXIT</th>

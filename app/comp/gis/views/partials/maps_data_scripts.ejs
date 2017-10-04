@@ -126,6 +126,7 @@
                     '<th title="Date Time"> TIME </th>' +
                     '<th title="GPS - POS: Long - Lat - Cota">GPS </th>' +
                     '<th title="PK" class="road"> PK </th>' +
+                    '<th title="Road Code " class="road"> R CODE </th>' +
                     '<th title="Road Category" class="road"> RC</th>' +
                     '<th title="IRI" class="road"> IRI </th>' +
                     '<th title="Date of construction" class="road">DC</th>' +
@@ -189,6 +190,7 @@
                     '<th title="year_performance_past_interventions" class="furniture"> PAST INT</th>' +
                     '<th title="comments" class="furniture"> COMM</th>' +
                     '<th title="CODE" class="bridges">CODE</th>' +
+                    '<th title="Bridge Exists" class="bridges">B EXIST</th>' +
                     '<th title="Name" class="bridges">NAME</th>' +
                     '<th title="Year of construction" class="bridges">YEAR CONS</th>' +
                     '<th title="Type of structure" class="bridges">TYPE</th>' +
@@ -249,6 +251,7 @@
                     '<th title="Distance to road (m)" class="geotechnicals">DIST</th>' +
                     '<th title="Length (m)" class="geotechnicals">LENGTH</th>' +
                     '<th title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>' +
+                    '<th title="Existence of Geotech Treatments" class="geotechnicals">GEO TREATM</th>' +
                     '<th title="Corrective measures" class="geotechnicals">CORRECT MEAS</th>' +
                     '<th title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>' +
                     '<th title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>' +
@@ -331,6 +334,8 @@
                     r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
                     r[++j] = '</td><td>';
                     r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
+                    r[++j] = '</td><td>';
+                    r[++j] = dataRoad.properties.rcode[drindex];
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.pk[drindex];
                     r[++j] = '</td><td>';
@@ -460,6 +465,8 @@
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.bcode ? dataRoad.properties.bcode[drindex] : '--';
                     r[++j] = '</td><td>';
+                    r[++j] = dataRoad.properties.bexists ? dataRoad.properties.bexists[drindex] : '--';
+                    r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.bname ? dataRoad.properties.bname[drindex] : '--';
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.byearconstruc ? dataRoad.properties.byearconstruc[drindex] : '--';
@@ -579,6 +586,8 @@
                     r[++j] = dataRoad.properties.glength ? dataRoad.properties.glength[drindex] : '--';
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.gblocks ? dataRoad.properties.gblocks[drindex] : '--';
+                    r[++j] = '</td><td>';
+                    r[++j] = dataRoad.properties.gtreatments ? dataRoad.properties.gtreatments[drindex] : '--';
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.gcorrectmeas ? dataRoad.properties.gcorrectmeas[drindex] : '--';
                     r[++j] = '</td><td>';

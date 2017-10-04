@@ -9,8 +9,9 @@ var infodatatrackSchema = new Schema({
         time: Date,
         coordTimes: [],
         pk: [],
-        road_category: [], // ROADS Group 1
+        rcode: [], // ROADS Group 1
         Roadlab: [],
+        road_category: [],
         video_roads: { type: Schema.Types.ObjectId, ref: 'Road' },
         inventario: [],
         date_construction: [],
@@ -76,6 +77,7 @@ var infodatatrackSchema = new Schema({
         year_performance_past_interventions: [],
         comments: [],
         bcode: [], // BRIDGES        
+        bexists: [],
         bname: [],
         byearconstruc: [],
         btype: [],
@@ -136,6 +138,7 @@ var infodatatrackSchema = new Schema({
         gdistance: [],
         glength: [],
         gblocks: [],
+        gtreatments: [],
         gcorrectmeas: [],
         gvegetation: [],
         gtypevegetation: [],
