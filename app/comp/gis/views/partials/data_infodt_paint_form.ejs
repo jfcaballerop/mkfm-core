@@ -170,6 +170,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(data.properties.gposition[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(data.properties.gvisualcondition[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition]"]').val(data.properties.dposition[index]);
             });
 
         };
@@ -356,6 +357,23 @@
                     if ($check.prop("checked")) {
                         ////console.log('Check: ' + (index));
                         $inputsDT[index].value = $this.val();
+                    }
+
+
+                });
+            }
+        });
+
+        var $inputsDP = $('#form').find('select[ name="infodatatrack[properties][dposition]"]');
+        $inputsDP.on('change', function() {
+            var $this = $(this);
+            if ($this.val() != '') {
+                ////console.log('ID: ' + $this.attr("id"));
+                $checks.each(function(index) {
+                    $check = $(this);
+                    if ($check.prop("checked")) {
+                        ////console.log('Check: ' + (index));
+                        $inputsDP[index].value = $this.val();
                     }
 
 
