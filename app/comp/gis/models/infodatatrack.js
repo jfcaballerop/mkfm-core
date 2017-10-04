@@ -205,7 +205,8 @@ var infodatatrackSchema = new Schema({
         dflood: [],
         dresphazard: [],
         dsensitivity: [],
-        drisk: []
+        drisk: [],
+        dposition: []
     },
     geometry: {
         type: { type: String },

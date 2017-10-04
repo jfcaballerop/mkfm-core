@@ -152,6 +152,12 @@
 
                 html[++h] = '<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.dcapacity[index] !== "undefined" ? data.properties.dcapacity[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][dposition]">' +
+                    '<select name="infodatatrack[properties][dposition]" class="form-control">' +
+                    '<option>Right</option>' +
+                    '<option>Left</option>' +
+                    '<option>Both</option>' +
+                    '</select>';
                 html[++h] = '</tr>';
             });
 

@@ -319,6 +319,7 @@
                     '<th title="Asset Response against hazards" class="drainage">RESPHAZARD</th>' +
                     '<th title="Asset Sensitivity" class="drainage">SENS</th>' +
                     '<th title="RISK" class="drainage">RISK</th>' +
+                    '<th title="Drainage position" class="drainage">DPOS</th>' +
                     '</tr></thead> <tbody>';
 
                 dataRoad.properties.coordTimes.forEach(function(drval, drindex) {
@@ -717,7 +718,9 @@
                     r[++j] = '</td><td>';
                     r[++j] = dataRoad.properties.dsensitivity ? dataRoad.properties.dsensitivity[drindex] : '--';
                     r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.drisk ? dataRoad.properties.drisk[drindex] : '--';
+                    r[++j] = dataRoad.properties.dsensitivity ? dataRoad.properties.drisk[drindex] : '--';
+                    r[++j] = '</td><td>';
+                    r[++j] = dataRoad.properties.drisk ? dataRoad.properties.dposition[drindex] : '--';
                     r[++j] = '</td>';
                     r[++j] = '</tr>';
                 });
