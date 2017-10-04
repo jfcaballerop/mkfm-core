@@ -35,7 +35,7 @@
                 }
                 html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[index] + ' ]</td>';
                 html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 150px;" class="form-control round-form input-sm" value="' +
+                html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][road_category]">' +
                     '<select name="infodatatrack[properties][road_category]" class="form-control">' +
