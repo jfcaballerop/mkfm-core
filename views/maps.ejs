@@ -19,6 +19,16 @@
                 margin: 0;
                 padding: 0;
             }
+            
+            #info-box {
+                background-color: white;
+                border: 1px solid black;
+                bottom: 30px;
+                height: 20px;
+                padding: 10px;
+                position: absolute;
+                left: 30px;
+            }
         </style>
 </head>
 
@@ -74,10 +84,13 @@
                     </div>
                     <div class="col-md-10" style="height:80vh;">
                         <div id="map"></div>
+                        <div id="info-box">?</div>
+
                         <script>
                             // This example uses the Google Maps JavaScript API's Data layer
                             // to create a rectangular polygon with 2 holes in it.
                             var map;
+                            var activeInfoWindow;
 
                             function getRandomColor() {
                                 var letters = '0123456789ABCDEF';
@@ -124,8 +137,34 @@
 
                                 <%}); %>
 
+                                var infoWnd = new google.maps.InfoWindow();
 
+                                // on mouseout (moved mouse off marker) make infoWindow disappear
+                                map.data.addListener('mouseout', function(event) {
+                                    infoWnd.close();
+                                });
 
+                                // Set mouseover event for each feature.
+                                map.data.addListener('mouseover', function(event) {
+                                    console.log(event.latLng);
+                                    infoWnd.setPosition(event.latLng);
+                                    infoWnd.setContent('<div class="scrollFix">' +
+                                        '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>' +
+                                        event.feature.getProperty('xform_id_string') + '<br>' +
+                                        '</div>');
+                                    // Close active window if exists - [one might expect this to be default behaviour no?]				
+                                    if (activeInfoWindow != null) activeInfoWindow.close();
+
+                                    // Open new InfoWindow for mouseover event
+                                    if (event.feature.getProperty('nameoption') === 'KOBOS') {
+                                        infoWnd.open(map);
+                                    }
+
+                                    // Store new open InfoWindow in global variable
+                                    activeInfoWindow = infoWnd;
+                                    document.getElementById('info-box').textContent =
+                                        event.feature.getProperty('nameoption');
+                                });
                                 map.data.setStyle(function(feature) {
                                     var color = feature.getProperty('color');
                                     var nameopt = feature.getProperty('nameoption');
