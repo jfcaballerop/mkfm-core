@@ -342,7 +342,20 @@ router.get('/list_info', function(req, resp, next) {
         //   when all the https.request() calls are done
         //runISYGetCallback(allData, resInput);
         // console.log(JSON.stringify(allData[0].body));
-        resp.render('maps', { koboinfos: allData[1].body, roads: allData[0].body, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        var koboinfos_odt = [];
+        var koboinfos_bridge = [];
+        var koboinfos_geo = [];
+        allData[1].body.forEach(function(elem, index) {
+            if (elem.properties.kobo_type === "ODT") {
+                koboinfos_odt.push(elem);
+            } else if (elem.properties.kobo_type === "Bridge") {
+                koboinfos_bridge.push(elem);
+
+            } else {
+                koboinfos_geo.push(elem);
+            }
+        });
+        resp.render('maps', { koboinfos_geo: koboinfos_geo, koboinfos_odt: koboinfos_odt, koboinfos_bridge: koboinfos_bridge, roads: allData[0].body, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
     }, function(reason) {
