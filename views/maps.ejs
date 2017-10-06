@@ -124,7 +124,7 @@
                                 jsonObject = <%- JSON.stringify(element) %>;
                                 jsonObject.properties.color = "red";
                                 jsonObject.properties.nameoption = "ROADS";
-                                console.log(JSON.stringify(jsonObject));
+                                //console.log(JSON.stringify(jsonObject));
                                 map.data.addGeoJson(jsonObject);
                                 <%}); %>
 
@@ -132,7 +132,7 @@
                                 jsonObject = <%- JSON.stringify(element) %>;
                                 jsonObject.properties.color = "blue";
                                 jsonObject.properties.nameoption = "KOBOS";
-                                console.log(JSON.stringify(jsonObject));
+                                //console.log(JSON.stringify(jsonObject));
                                 map.data.addGeoJson(jsonObject);
 
                                 <%}); %>
@@ -146,7 +146,7 @@
 
                                 // Set mouseover event for each feature.
                                 map.data.addListener('mouseover', function(event) {
-                                    console.log(event.latLng);
+                                    //console.log(event.latLng);
                                     infoWnd.setPosition(event.latLng);
                                     infoWnd.setContent('<div class="scrollFix">' +
                                         '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>' +
