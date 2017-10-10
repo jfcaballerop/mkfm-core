@@ -26,7 +26,7 @@ var Infodatatrack = mongoose.model('Infodatatrack');
 
 
 router.use(function timeLog(req, res, next) {
-    //console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
+    ////console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
 });
 router.use(bodyParser.urlencoded({
@@ -65,17 +65,17 @@ router.get('/list_files', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -101,17 +101,17 @@ router.get('/upload', function(req, resp, next) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -135,12 +135,12 @@ router.get('/upload', function(req, resp, next) {
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -173,17 +173,17 @@ router.post('/upload', uploading, function(req, resp) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -192,19 +192,19 @@ router.post('/upload', uploading, function(req, resp) {
     });
     requestft.end();
 
-    //console.log('## upload:: ');
+    ////console.log('## upload:: ');
     if (!req.file)
         return resp.status(400).send('No files were uploaded.');
     else {
-        //console.log(req.body); //form fields
-        //console.log(req.file); //form files
+        ////console.log(req.body); //form fields
+        ////console.log(req.file); //form files
         // SAVE File to DB
         var postData = extend({}, req.file);
         postData.owner = req.user_login;
         postData.type = req.body.type;
         postData.status = 'pending';
 
-        //console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
+        ////console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
         var options = {
             host: config.HOST_API,
             port: config.PORT_API,
@@ -217,17 +217,17 @@ router.post('/upload', uploading, function(req, resp) {
             }
         };
         var request = http.request(options, function(res) {
-            // //console.log('STATUS: ' + res.statusCode);
-            // //console.log('HEADERS: ' + JSON.stringify(res.headers));
+            // ////console.log('STATUS: ' + res.statusCode);
+            // ////console.log('HEADERS: ' + JSON.stringify(res.headers));
             res.setEncoding('utf8');
             var data = '';
             res.on('data', function(chunk) {
-                // //console.log('BODY: ' + chunk);
+                // ////console.log('BODY: ' + chunk);
                 data += chunk;
 
             });
             res.on('end', function() {
-                // //console.log('DATA ' + data.length + ' ' + data);
+                // ////console.log('DATA ' + data.length + ' ' + data);
                 var responseObject = JSON.parse(data);
                 //success(data);
                 resp.redirect('/auth/WEB/gis/upload');
@@ -247,7 +247,7 @@ router.post('/upload', uploading, function(req, resp) {
 
 /* VALIDATE File */
 router.post('/validate/:id', function(req, resp) {
-    //console.log('## WEB Validate File: ' + req.params.id);
+    //console.log('## WEB Validate File: ' + req.params.id + '\n\n\n');
     // Obtengo la lista de extensiones de ficheros
     var ft_options = {
         host: config.HOST_API,
@@ -260,17 +260,17 @@ router.post('/validate/:id', function(req, resp) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -291,17 +291,17 @@ router.post('/validate/:id', function(req, resp) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            //console.log('\n\nDATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -317,7 +317,7 @@ router.post('/validate/:id', function(req, resp) {
  * GET File Valid
  */
 router.get('/getfile/:id', function(req, resp) {
-    //console.log('## WEB GET File: ' + req.params.id);
+    ////console.log('## WEB GET File: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -329,17 +329,17 @@ router.get('/getfile/:id', function(req, resp) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -365,17 +365,17 @@ router.post('/desactivate/:id', function(req, resp, next) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -383,7 +383,7 @@ router.post('/desactivate/:id', function(req, resp, next) {
         });
     });
     requestft.end();
-    //console.log('## WEB DESACTIVATE file: ' + req.params.id);
+    ////console.log('## WEB DESACTIVATE file: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -395,17 +395,17 @@ router.post('/desactivate/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -433,17 +433,17 @@ router.post('/activate/:id', function(req, resp, next) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -452,7 +452,7 @@ router.post('/activate/:id', function(req, resp, next) {
     });
     requestft.end();
 
-    //console.log('## WEB ACTIVATE file: ' + req.params.id);
+    ////console.log('## WEB ACTIVATE file: ' + req.params.id);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -464,17 +464,17 @@ router.post('/activate/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -490,7 +490,7 @@ router.post('/activate/:id', function(req, resp, next) {
 });
 /* DELETE file */
 router.post('/delete/:id', function(req, resp, next) {
-    //console.log('## WEB ACTIVATE file: ' + req.params.id);
+    ////console.log('## WEB ACTIVATE file: ' + req.params.id);
     // Obtengo la lista de extensiones de ficheros
     var ft_options = {
         host: config.HOST_API,
@@ -503,17 +503,17 @@ router.post('/delete/:id', function(req, resp, next) {
         }
     };
     var requestft = http.request(ft_options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA ' + data.length + ' ' + data);
+            ////console.log('DATA ' + data.length + ' ' + data);
             filetypesObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -533,17 +533,17 @@ router.post('/delete/:id', function(req, resp, next) {
         }
     };
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        ////console.log('STATUS: ' + res.statusCode);
+        ////console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function(chunk) {
-            //console.log('BODY: ' + chunk);
+            ////console.log('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function() {
-            //console.log('DATA DELETE:: ' + data.length + ' ' + data);
+            ////console.log('DATA DELETE:: ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // resp.render('upload', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
             resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
@@ -607,7 +607,7 @@ router.get('/V1/:id', function(req, res, next) {
             if (err) {
                 return res.status(500).send(err.message);
             }
-            // console.log('## File DATA:: ' + dataFile);
+            // //console.log('## File DATA:: ' + dataFile);
             validFeatureCollection = JSON.parse(dataFile);
 
             res.status(200).jsonp(validFeatureCollection);
@@ -626,7 +626,7 @@ router.post('/V1/validate/:id', function(req, res, next) {
                 if (err) {
                     return res.status(500).send(err.message);
                 }
-                //console.log('## File DATA:: ' + dataFile);
+                ////console.log('## File DATA:: ' + dataFile);
                 try {
                     validFeatureCollection = JSON.parse(dataFile);
                 } catch (e) {
@@ -635,10 +635,17 @@ router.post('/V1/validate/:id', function(req, res, next) {
 
                     }
                 }
-                //console.log('ENTRO ####');
+                console.log('ENTRO ####');
                 //simple test 
+                GJV.valid(validFeatureCollection, function(valid, errs) {
+                    if (!valid) {
+                        console.log("this is INVALID GeoJSON! :" + errs);
+
+                    }
+
+                });
                 if (GJV.valid(validFeatureCollection)) {
-                    //console.log("this is valid GeoJSON!\n" + JSON.stringify(validFeatureCollection));
+                    console.log("this is valid GeoJSON!\n" + JSON.stringify(validFeatureCollection));
                     if (validFeatureCollection._id !== undefined) {
                         Infodatatrack.findById(validFeatureCollection._id).exec(function(err, infodatatrack) {
                             if (err) {
@@ -653,18 +660,19 @@ router.post('/V1/validate/:id', function(req, res, next) {
                             // Paso 1. Comprobar longitud de las Coordenadas
                             if (validFeatureCollection.geometry.coordinates.length !== infodatatrack.geometry.coordinates.length) {
                                 fup.status = 'error';
-                                console.log('Error en longitud de coordenadas');
+                                //console.log('Error en longitud de coordenadas');
                             } else {
                                 infodatatrack.geometry.coordinates = validFeatureCollection.geometry.coordinates;
                                 infodatatrack.save(function(err, info) {
                                     if (err) {
-                                        console.log('Error en grabar infodatatrack');
+                                        //console.log('Error en grabar infodatatrack');
                                         fup.status = 'error';
                                         // return res.status(500).send(err.message);
                                     }
-                                    console.log('infodatatrack grabado OK !!!');
+                                    //console.log('infodatatrack grabado OK !!!');
                                     fup.status = 'validate';
                                     //console.log('## API ACTIVATE file: ' + req.params.id);
+                                    //console.log('## API RES STATUS: ' + fup.status);
                                     fup.save(function(err, file) {
                                         if (err) {
                                             return res.status(500).send(err.message);
@@ -683,17 +691,22 @@ router.post('/V1/validate/:id', function(req, res, next) {
                     }
 
                 } else {
-                    fup.status = 'error';
-                    //console.log('## API ACTIVATE file: ' + req.params.id);
-                    fup.save(function(err, file) {
-                        if (err) {
-                            return res.status(500).send(err.message);
+                    GJV.isGeoJSONObject(validFeatureCollection, function(valid, errs) {
+                        if (!valid) {
+                            console.log('## API ERROR isGeoJSONObject: ' + errs);
                         }
-                        Fileupload.find(function(err, fup) {
+                        fup.status = 'error';
+                        console.log('## API ACTIVATE file: ' + req.params.id + ' STATUS: ' + fup.status);
+                        fup.save(function(err, file) {
                             if (err) {
-                                res.send(500, err.message);
+                                return res.status(500).send(err.message);
                             }
-                            res.status(200).jsonp(fup);
+                            Fileupload.find(function(err, fup) {
+                                if (err) {
+                                    res.send(500, err.message);
+                                }
+                                res.status(200).jsonp(fup);
+                            });
                         });
                     });
                 }
@@ -712,12 +725,12 @@ router.post('/V1/validate/:id', function(req, res, next) {
                 fconvwithstyles = tj.kml(fileConv, { styles: true });
             }
 
-            console.log('## FILE CONV:: ' + JSON.stringify(fconv));
-            console.log('## FILE CONV STYLES:: ' + JSON.stringify(fconvwithstyles));
-            //console.log('ENTRO ####');
+            //console.log('## FILE CONV:: ' + JSON.stringify(fconv));
+            //console.log('## FILE CONV STYLES:: ' + JSON.stringify(fconvwithstyles));
+            ////console.log('ENTRO ####');
             //simple test 
             if (GJV.valid(fconvwithstyles)) {
-                console.log("this is valid GeoJSON!");
+                //console.log("this is valid GeoJSON!");
                 fup.status = 'validate';
             } else {
                 fup.status = 'error';
@@ -733,9 +746,9 @@ router.post('/V1/validate/:id', function(req, res, next) {
             var fname_new = fup.filename + moment().format('YYYYMMDDHHmmss');
             fs.writeFile(path.join(process.env.PWD, '/public/uploads/', fname_new), JSON.stringify(fconvwithstyles), function(err) {
                 if (err) {
-                    return console.log(err);
+                    return //console.log(err);
                 }
-                console.log("The file was saved!");
+                //console.log("The file was saved!");
                 var fname_new_noext = fup.originalname.split('.');
                 fname_new_noext.pop();
                 var new_fu = new Fileupload({
@@ -753,7 +766,7 @@ router.post('/V1/validate/:id', function(req, res, next) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
-                    console.log(' SAVE Documento ' + new_fu);
+                    //console.log(' SAVE Documento ' + new_fu);
                     // res.status(200).jsonp(file);
                     Fileupload.find(function(err, fup) {
                         if (err) {
@@ -781,7 +794,7 @@ router.get('/V1/:originalname', function(req, res, next) {
 /* ACTIVATE file */
 router.post('/V1/activate/:id', function(req, res, next) {
     Fileupload.findById(req.params.id, function(err, file) {
-        //console.log('## API ACTIVATE file: ' + req.params.id);
+        ////console.log('## API ACTIVATE file: ' + req.params.id);
         file.activo = true;
         file.save(function(err, file) {
             if (err) {
@@ -800,7 +813,7 @@ router.post('/V1/activate/:id', function(req, res, next) {
 /* DESACTIVATE file */
 router.post('/V1/desactivate/:id', function(req, res, next) {
     Fileupload.findById(req.params.id, function(err, file) {
-        //console.log('## API DESACTIVATE file: ' + req.params.id);
+        ////console.log('## API DESACTIVATE file: ' + req.params.id);
         file.activo = false;
         file.save(function(err, file) {
             if (err) {
@@ -820,24 +833,24 @@ router.post('/V1/desactivate/:id', function(req, res, next) {
 /* DEL file */
 router.post('/V1/delete/:id', function(req, res, next) {
     Fileupload.findByIdAndRemove(req.params.id, function(err, file) {
-        //console.log('## API DEL file: ' + req.params.id);
+        ////console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        //console.log('### File located: ' + file.path);
+        ////console.log('### File located: ' + file.path);
         fs.unlink(file.path, function(ferr) {
             if (ferr) {
                 //throw ferr;
-                //console.log('Error: ' + ferr);
+                ////console.log('Error: ' + ferr);
                 res.status(400).jsonp(file);
 
             }
             Fileupload.find(function(err, files) {
-                //console.log('Locate files:: ' + files);
+                ////console.log('Locate files:: ' + files);
                 if (err) {
                     res.send(500, err.message);
                 }
-                //console.log('Send files:: ' + files);
+                ////console.log('Send files:: ' + files);
                 res.status(200).jsonp(files);
             });
         });
