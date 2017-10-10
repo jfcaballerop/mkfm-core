@@ -80,3 +80,8 @@ ejecutar en dev:
 * `mongoimport <path doc> -c <collection> --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 * `mongoimport /home/jfcp/Documentos/Workspace/domininesv3/public/uploads/9dcb96df8a82ebf47856a0f4ca679743.1 -c roads --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb" --jsonArray`
 * ` mongoexport --db mkfwcoredb -c roads --out roads.json --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"` 
+
+## DUMP/RESTORE Database
+* `mongodump --db mkfwcoredb --out /tmp/dump20171010.json --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
+
+* `mongorestore --drop --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb" dump20171010/mkfwcoredb`
