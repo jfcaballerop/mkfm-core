@@ -80,28 +80,35 @@
                     '<option>1</option>' +
                     '</select>';
 
-                html[++h] = '<td id="infodatatrack[properties][existence_barriers_condition]"><input name="infodatatrack[properties][existence_barriers_condition]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.existence_barriers_condition[index] !== "undefined" ? data.properties.existence_barriers_condition[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][typology_barriers]"><input name="infodatatrack[properties][typology_barriers]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.typology_barriers[index] !== "undefined" ? data.properties.typology_barriers[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][typology_safety_fence]"><input name="infodatatrack[properties][typology_safety_fence]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.typology_safety_fence[index] !== "undefined" ? data.properties.typology_safety_fence[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.functionality_asset_functioning_expected_barrier[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_barrier[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][existence_signposting_road_signs_condition]"><input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.existence_signposting_road_signs_condition[index] !== "undefined" ? data.properties.existence_signposting_road_signs_condition[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][typology_signaling]"><input name="infodatatrack[properties][typology_signaling]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.typology_signaling[index] !== "undefined" ? data.properties.typology_signaling[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][typology_vertical_signaling]"><input name="infodatatrack[properties][typology_vertical_signaling]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.typology_vertical_signaling[index] !== "undefined" ? data.properties.typology_vertical_signaling[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_signal]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.functionality_asset_functioning_expected_signal[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_signal[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][existence_street_lighting]"><input name="infodatatrack[properties][existence_street_lighting]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.existence_street_lighting[index] !== "undefined" ? data.properties.existence_street_lighting[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][typology_street_lighting]"><input name="infodatatrack[properties][typology_street_lighting]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.typology_street_lighting[index] !== "undefined" ? data.properties.typology_street_lighting[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][functionality_asset_functioning_expected_light]"><input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.functionality_asset_functioning_expected_light[index] !== "undefined" ? data.properties.functionality_asset_functioning_expected_light[index] : '') + '">';
+                //ROAD Furniture
+                html[++h] = '<td id="infodatatrack[properties][RBarriersExist]"><input name="infodatatrack[properties][RBarriersExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RBarriersExist[index] !== "undefined" ? data.properties.RBarriersExist[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RBarriersType]"><input name="infodatatrack[properties][RBarriersType]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RBarriersType[index] !== "undefined" ? data.properties.RBarriersType[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RSafetyFence]"><input name="infodatatrack[properties][RSafetyFence]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RSafetyFence[index] !== "undefined" ? data.properties.RSafetyFence[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RBarrierFunct]"><input name="infodatatrack[properties][RBarrierFunct]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RBarrierFunct[index] !== "undefined" ? data.properties.RBarrierFunct[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RSignalsExist]"><input name="infodatatrack[properties][RSignalsExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RSignalsExist[index] !== "undefined" ? data.properties.RSignalsExist[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RSignalsType]"><input name="infodatatrack[properties][RSignalsType]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RSignalsType[index] !== "undefined" ? data.properties.RSignalsType[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RVSignalsType]"><input name="infodatatrack[properties][RVSignalsType]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RVSignalsType[index] !== "undefined" ? data.properties.RVSignalsType[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RSignalsFunct]"><input name="infodatatrack[properties][RSignalsFunct]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RSignalsFunct[index] !== "undefined" ? data.properties.RSignalsFunct[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RLightExist]"><input name="infodatatrack[properties][RLightExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RLightExist[index] !== "undefined" ? data.properties.RLightExist[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RLightType]"><input name="infodatatrack[properties][RLightType]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RLightType[index] !== "undefined" ? data.properties.RLightType[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][RLightFunct]"><input name="infodatatrack[properties][RLightFunct]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.RLightFunct[index] !== "undefined" ? data.properties.RLightFunct[index] : '') + '">';
+                // html[++h] = '<td id="infodatatrack[properties][RFPastInterv]"><input name="infodatatrack[properties][RFPastInterv]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.RFPastInterv[index] !== "undefined" ? data.properties.RFPastInterv[index] : '') + '">';
+                // html[++h] = '<td id="infodatatrack[properties][RFYearInterv]"><input name="infodatatrack[properties][RFYearInterv]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.RFYearInterv[index] !== "undefined" ? data.properties.RFYearInterv[index] : '') + '">';
+                // html[++h] = '<td id="infodatatrack[properties][RFComments]"><input name="infodatatrack[properties][RFComments]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.RFComments[index] !== "undefined" ? data.properties.RFComments[index] : '') + '">';
                 // html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][bexists]">' +
