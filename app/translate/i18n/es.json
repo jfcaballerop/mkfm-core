@@ -60,5 +60,6 @@
     "UPDATED": "Actualizado",
     "EDIT_VIDEO_INFO_SHOW": "Mostrar columnas",
     "EDIT_VIDEO_INFO_CHECK": "Revisar coord",
-    "EDIT_VIDEO_INFO_ADD": "Añadir coord"
+    "EDIT_VIDEO_INFO_ADD": "Añadir coord",
+    "EDIT_VIDEO_INFO_DUPLI": "DUPLICAR"
 }
