@@ -1,4 +1,6 @@
 <script>
+    var $checks;
+
     $(document).ready(function() {
         var rObject;
 
@@ -44,9 +46,11 @@
                     '<option >Feeder</option>' +
                     '<option >Urban</option>' +
                     '<option >1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][open_traffic]"><input name="infodatatrack[properties][open_traffic]" type="text" style="min-width: 50;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.open_traffic[index] !== "undefined" ? data.properties.open_traffic[index] : '') + '">';
+                    (typeof data.properties.open_traffic[index] !== "undefined" ? data.properties.open_traffic[index] : '') + '">' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][pavement_material]">' +
                     '<select name="infodatatrack[properties][pavement_material]" class="form-control">' +
@@ -58,16 +62,21 @@
                     '<option>Earth / Grass</option>' +
                     '<option>Other</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][number_lanes_inc]"><input name="infodatatrack[properties][number_lanes_inc]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.number_lanes_inc[index] !== "undefined" ? data.properties.number_lanes_inc[index] : '') + '">';
+                    (typeof data.properties.number_lanes_inc[index] !== "undefined" ? data.properties.number_lanes_inc[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][number_lanes_dec]"><input name="infodatatrack[properties][number_lanes_dec]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.number_lanes_dec[index] !== "undefined" ? data.properties.number_lanes_dec[index] : '') + '">';
+                    (typeof data.properties.number_lanes_dec[index] !== "undefined" ? data.properties.number_lanes_dec[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][total_number_lanes]"><input name="infodatatrack[properties][total_number_lanes]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.total_number_lanes[index] !== "undefined" ? data.properties.total_number_lanes[index] : '') + '">';
+                    (typeof data.properties.total_number_lanes[index] !== "undefined" ? data.properties.total_number_lanes[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][total_width]"><input name="infodatatrack[properties][total_width]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.total_width[index] !== "undefined" ? data.properties.total_width[index] : '') + '">';
+                    (typeof data.properties.total_width[index] !== "undefined" ? data.properties.total_width[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][current_visual_condition]">' +
                     '<select name="infodatatrack[properties][current_visual_condition]" class="form-control">' +
                     '<option>A</option>' +
@@ -78,87 +87,107 @@
                     '<option>Unknown</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 //ROAD Furniture
                 html[++h] = '<td id="infodatatrack[properties][RBarriersExist]"><input name="infodatatrack[properties][RBarriersExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.RBarriersExist[index] !== "undefined" ? data.properties.RBarriersExist[index] : '') + '">';
+                    (typeof data.properties.RBarriersExist[index] !== "undefined" ? data.properties.RBarriersExist[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RBarriersType]">' +
                     '<select name="infodatatrack[properties][RBarriersType]" class="form-control">' +
                     '<option>Safety Fences</option>' +
                     '<option>Pedestrian guardrail</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSafetyFence]">' +
                     '<select name="infodatatrack[properties][RSafetyFence]" class="form-control">' +
                     '<option>Bollard</option>' +
                     '<option>Concrete / Masonry</option>' +
                     '<option>Metal</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RBarrierFunct]">' +
                     '<select name="infodatatrack[properties][RBarrierFunct]" class="form-control">' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSignalsExist]"><input name="infodatatrack[properties][RSignalsExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.RSignalsExist[index] !== "undefined" ? data.properties.RSignalsExist[index] : '') + '">';
+                    (typeof data.properties.RSignalsExist[index] !== "undefined" ? data.properties.RSignalsExist[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSignalsType]">' +
                     '<select name="infodatatrack[properties][RSignalsType]" class="form-control">' +
                     '<option>Vertical sign</option>' +
                     '<option>Horizontal sign</option>' +
                     '<option>Lit sign</option>' +
                     '<option>Gantry</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RVSignalsType]">' +
                     '<select name="infodatatrack[properties][RVSignalsType]" class="form-control">' +
                     '<option>Directional / Information</option>' +
                     '<option>Regulatory</option>' +
                     '<option>Warning</option>' +
                     '<option>Other</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSignalsFunct]">' +
                     '<select name="infodatatrack[properties][RSignalsFunct]" class="form-control">' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RLightExist]"><input name="infodatatrack[properties][RLightExist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.RLightExist[index] !== "undefined" ? data.properties.RLightExist[index] : '') + '">';
+                    (typeof data.properties.RLightExist[index] !== "undefined" ? data.properties.RLightExist[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RLightType]">' +
                     '<select name="infodatatrack[properties][RLightType]" class="form-control">' +
                     '<option>Lighting point</option>' +
                     '<option>Switch room</option>' +
                     '<option>Distribution point</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RLightFunct]">' +
                     '<select name="infodatatrack[properties][RLightFunct]" class="form-control">' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>'; // html[++h] = '<td id="infodatatrack[properties][RFPastInterv]"><input name="infodatatrack[properties][RFPastInterv]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.RFPastInterv[index] !== "undefined" ? data.properties.RFPastInterv[index] : '') + '">';
+                    '</select>' +
+                    '</td>'; // html[++h] = '<td id="infodatatrack[properties][RFPastInterv]"><input name="infodatatrack[properties][RFPastInterv]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.RFPastInterv[index] !== "undefined" ? data.properties.RFPastInterv[index] : '') + '">'+
+                '</td>';
                 // html[++h] = '<td id="infodatatrack[properties][RFYearInterv]"><input name="infodatatrack[properties][RFYearInterv]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.RFYearInterv[index] !== "undefined" ? data.properties.RFYearInterv[index] : '') + '">';
+                //     (typeof data.properties.RFYearInterv[index] !== "undefined" ? data.properties.RFYearInterv[index] : '') + '">'+
+                '</td>';
                 // html[++h] = '<td id="infodatatrack[properties][RFComments]"><input name="infodatatrack[properties][RFComments]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.RFComments[index] !== "undefined" ? data.properties.RFComments[index] : '') + '">';
+                //     (typeof data.properties.RFComments[index] !== "undefined" ? data.properties.RFComments[index] : '') + '">'+
+                '</td>';
                 // html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">';
+                //     (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">'+
+                '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bexists]">' +
                     '<select name="infodatatrack[properties][bexists]" class="form-control">' +
                     '<option>YES</option>' +
                     '<option>NO</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[index] : '') + '">';
+                    (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[index] : '') + '">';
+                    (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[index] : '') + '">' +
+                    '</td>';
                 // html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">';
+                //     (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">'+
+                '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype]">' +
                     '<select name="infodatatrack[properties][gtype]" class="form-control">' +
                     '<option>Embankment</option>' +
@@ -168,7 +197,8 @@
                     '<option>Unknown</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gposition]">' +
                     '<select name="infodatatrack[properties][gposition]" class="form-control">' +
@@ -177,7 +207,8 @@
                     '<option>Both</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gmaterial]">' +
                     '<select name="infodatatrack[properties][gmaterial]" class="form-control">' +
@@ -186,7 +217,8 @@
                     '<option>Gabion/Teramesh</option>' +
                     '<option>Other</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gnature]">' +
                     '<select name="infodatatrack[properties][gnature]" class="form-control">' +
                     '<option>Homogeneous - massive rock</option>' +
@@ -197,9 +229,11 @@
                     '<option>Heterogeneous - rock blocks embedded in soft soil</option>' +
                     '<option>Other</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gheight]"><input name="infodatatrack[properties][gheight]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gheight[index] !== "undefined" ? data.properties.gheight[index] : '') + '">';
+                    (typeof data.properties.gheight[index] !== "undefined" ? data.properties.gheight[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gh_h]">' +
                     '<select name="infodatatrack[properties][gh_h]" class="form-control">' +
                     '<option>0 - 10%</option>' +
@@ -209,7 +243,8 @@
                     '<option>>75%</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gslope]">' +
                     '<select name="infodatatrack[properties][gslope]" class="form-control">' +
                     '<option>Vertical (90º)</option>' +
@@ -217,9 +252,11 @@
                     '<option>Low (45-75º)</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gdistance]"><input name="infodatatrack[properties][gdistance]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gdistance[index] !== "undefined" ? data.properties.gdistance[index] : '') + '">';
+                    (typeof data.properties.gdistance[index] !== "undefined" ? data.properties.gdistance[index] : '') + '">' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
                     '<select name="infodatatrack[properties][gtreatments]" class="form-control">' +
@@ -227,14 +264,16 @@
                     '<option>No</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gvegetation]">' +
                     '<select name="infodatatrack[properties][gvegetation]" class="form-control">' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtypevegetation]">' +
                     '<select name="infodatatrack[properties][gtypevegetation]" class="form-control">' +
                     '<option>Arboreal</option>' +
@@ -244,7 +283,8 @@
                     '<option>Other</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gvisualcondition]">' +
                     '<select name="infodatatrack[properties][gvisualcondition]" class="form-control">' +
                     '<option>A</option>' +
@@ -255,10 +295,12 @@
                     '<option>Unknown</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 // html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">';
+                //     (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">'+
+                //'</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype]">' +
                     '<select name="infodatatrack[properties][dtype]" class="form-control">' +
                     '<option>Longitudinal</option>' +
@@ -267,7 +309,8 @@
                     '<option>Unknown</option>' +
                     '<option>N/A</option>' +
                     '<option>1</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dsection]">' +
                     '<select name="infodatatrack[properties][dsection]" class="form-control">' +
                     '<option>Concrete lined rectangular</option>' +
@@ -276,16 +319,19 @@
                     '<option>Kerb / Triangular</option>' +
                     '<option>Earth</option>' +
                     '<option>Other</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
 
                 // html[++h] = '<td id="infodatatrack[properties][dcapacity]"><input name="infodatatrack[properties][dcapacity]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.dcapacity[index] !== "undefined" ? data.properties.dcapacity[index] : '') + '">';
+                //     (typeof data.properties.dcapacity[index] !== "undefined" ? data.properties.dcapacity[index] : '') + '">'+
+                '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dposition]">' +
                     '<select name="infodatatrack[properties][dposition]" class="form-control">' +
                     '<option>Right</option>' +
                     '<option>Left</option>' +
                     '<option>Both</option>' +
-                    '</select>';
+                    '</select>' +
+                    '</td>';
                 html[++h] = '</tr>';
             });
 
@@ -333,7 +379,7 @@
 
 
 
-        var $checks = $('#form').find("input[name='check[_id]']");
+        $checks = $('#form').find("input[name='check[_id]']");
 
         var $inputsDC = $('#form').find("input[name='infodatatrack[properties][date_construction]']");
         $("input[name='infodatatrack[properties][date_construction]']").datepicker({
@@ -344,8 +390,28 @@
 
         });
 
+        $('#road, #furniture, #bridges, #geotechnicals, #drainage').click(function() {
+            // alert("Hidden." + $(this).attr("id"));
+            var $clase = $(this).attr("id");
+            $('.' + $clase).each(function() {
+                $(this).hide();
+                $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
+                if ($(this).attr("title") === 'Selection') {
+                    if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') == false) {
+                        $('[id^=check]').prop('checked', true);
+                    } else {
+                        $('[id^=check]').prop('checked', false);
+
+                    }
+                    $checks.trigger("change");
+
+                }
+            });
+
+        });
 
         $("thead > tr > th", $('#dataTable')).click(function() {
+            // Clic en cabecera individual
             // alert("Handler for .click() called.");
             // //console.log($(this).attr("id"));
             if ($(this).attr("id")) {
@@ -370,6 +436,9 @@
                 if ($(this).attr("id")) {
                     $(this).show();
                     $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).show();
+                } else {
+                    $(this).show();
+
                 }
             });
         });
@@ -897,15 +966,427 @@
     function duplicateCols(option) {
         switch (option) {
             case 'geo':
-                alert('geo')
+                // alert('geotechnicals');
+                var geo_html = '<td id="infodatatrack[properties][gtype2]">' +
+                    '<select name="infodatatrack[properties][gtype2]" class="form-control">' +
+                    '<option>Embankment</option>' +
+                    '<option>Cutting</option>' +
+                    '<option>Retaining wall</option>' +
+                    '<option>Other</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+
+                geo_html += '<td id="infodatatrack[properties][gposition2]">' +
+                    '<select name="infodatatrack[properties][gposition2]" class="form-control">' +
+                    '<option>Right</option>' +
+                    '<option>Left</option>' +
+                    '<option>Both</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+
+                geo_html += '<td id="infodatatrack[properties][gmaterial2]">' +
+                    '<select name="infodatatrack[properties][gmaterial2]" class="form-control">' +
+                    '<option>Concrete</option>' +
+                    '<option>Masonry</option>' +
+                    '<option>Gabion/Teramesh</option>' +
+                    '<option>Other</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gnature2]">' +
+                    '<select name="infodatatrack[properties][gnature2]" class="form-control">' +
+                    '<option>Homogeneous - massive rock</option>' +
+                    '<option>Homogeneous - cracked rock</option>' +
+                    '<option>Homogeneous - soil</option>' +
+                    '<option>Heterogeneous – interstratified rock/soil</option>' +
+                    '<option>Heterogeneous - rock blocks embedded in hard soil</option>' +
+                    '<option>Heterogeneous - rock blocks embedded in soft soil</option>' +
+                    '<option>Other</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gheight2]">' +
+                    '<input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gh_h2]">' +
+                    '<select name="infodatatrack[properties][gh_h2]" class="form-control">' +
+                    '<option>0 - 10%</option>' +
+                    '<option>10 - 25%</option>' +
+                    '<option>25 - 50%</option>' +
+                    '<option>50 - 75%</option>' +
+                    '<option>>75%</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gslope2]">' +
+                    '<select name="infodatatrack[properties][gslope2]" class="form-control">' +
+                    '<option>Vertical (90º)</option>' +
+                    '<option>Steep (75-90º)</option>' +
+                    '<option>Low (45-75º)</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gdistance2]">' +
+                    '<input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
+                    '</td>';
+
+                geo_html += '<td id="infodatatrack[properties][gtreatments2]">' +
+                    '<select name="infodatatrack[properties][gtreatments2]" class="form-control">' +
+                    '<option>Yes</option>' +
+                    '<option>No</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gvegetation2]">' +
+                    '<select name="infodatatrack[properties][gvegetation2]" class="form-control">' +
+                    '<option>Yes</option>' +
+                    '<option>No</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gtypevegetation2]">' +
+                    '<select name="infodatatrack[properties][gtypevegetation2]" class="form-control">' +
+                    '<option>Arboreal</option>' +
+                    '<option>Bush / Shrub</option>' +
+                    '<option>Herbaceus</option>' +
+                    '<option>No vegetation</option>' +
+                    '<option>Other</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                geo_html += '<td id="infodatatrack[properties][gvisualcondition2]">' +
+                    '<select name="infodatatrack[properties][gvisualcondition2]" class="form-control">' +
+                    '<option>A</option>' +
+                    '<option>B</option>' +
+                    '<option>C</option>' +
+                    '<option>D</option>' +
+                    '<option>E</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+                $('#bodytable').find('tr').each(function() {
+                    $(this).find("td[id='" + $.escapeSelector('infodatatrack[properties][gvisualcondition]') + "']")
+                        .eq(0).after(geo_html);
+                });
+                geo_header = '<th id="infodatatrack[properties][gtype2]" title="Type of earthwork" class="geotechnicals">TYPE2</th>';
+                geo_header += '<th id="infodatatrack[properties][gposition2]" title="Position" class="geotechnicals">POS2</th>';
+                geo_header += '<th id="infodatatrack[properties][gmaterial2]" title="Material - Retaining walls" class="geotechnicals">MAT2</th>';
+                geo_header += '<th id="infodatatrack[properties][gnature2]" title="Nature - Earthworks" class="geotechnicals">NATURE2</th>';
+                geo_header += '<th id="infodatatrack[properties][gheight2]" title="Height (m)" class="geotechnicals">HEIGHT2</th>';
+                geo_header += '<th id="infodatatrack[properties][gh_h2]" title="Relation h/H (m)" class="geotechnicals">H_H2</th>';
+                geo_header += '<th id="infodatatrack[properties][gslope2]" title="Slope (º)" class="geotechnicals">SLOPE2</th>';
+                geo_header += '<th id="infodatatrack[properties][gdistance2]" title="Distance to road (m)" class="geotechnicals">DIST2</th>';
+                geo_header += '<th id="infodatatrack[properties][gtreatments2]" title="Existence of Geotech Treatments" class="geotechnicals">GEO TREAT2</th>';
+                geo_header += '<th id="infodatatrack[properties][gvegetation2]" title="Existence of Vegetation" class="geotechnicals">VEGETATION2</th>';
+                geo_header += '<th id="infodatatrack[properties][gtypevegetation2]" title="Type of Vegetation" class="geotechnicals">TYPE VEG2</th>';
+                geo_header += '<th id="infodatatrack[properties][gvisualcondition2]" title="Current visual condition" class="geotechnicals">VISUAL COND2</th>';
+                $('#dataTable').find('thead > tr').each(function(key, value) {
+                    if (key === 0) {
+                        $(this).find("th").eq(4).after('<th colspan="12" scope="colgroup" class="geotechnicals">' +
+                            'NEW GEOTECHNICALS</th>');
+                    } else {
+                        $(this).find("th[id='" + $.escapeSelector('infodatatrack[properties][gvisualcondition]') + "']")
+                            .eq(0).after(geo_header);
+
+                    }
+                });
+                $('#geo_link').hide();
+                var $inputsGS2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
+                $inputsGS2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsGS2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
+                $inputsgmaterial2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgmaterial2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
+                $inputsgnature2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgnature2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
+                $inputsgh_h2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgh_h2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
+                $inputsgtreatments2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgtreatments2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
+                $inputsgvegetation2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgvegetation2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
+                $inputsgtypevegetation2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsgtypevegetation2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsGT2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
+                $inputsGT2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsGT2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsGPOS2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
+                $inputsGPOS2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsGPOS2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsGVPOS2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
+                $inputsGVPOS2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsGVPOS2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
                 break;
             case 'drainage':
-                alert('drainage ')
+                // alert('drainage ');
+                var dra_html = '<td id="infodatatrack[properties][dtype2]">' +
+                    '<select name="infodatatrack[properties][dtype2]" class="form-control">' +
+                    '<option>Longitudinal</option>' +
+                    '<option>Culvert</option>' +
+                    '<option>Ford</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+                dra_html += '<td id="infodatatrack[properties][dsection2]">' +
+                    '<select name="infodatatrack[properties][dsection2]" class="form-control">' +
+                    '<option>Concrete lined rectangular</option>' +
+                    '<option>Concrete lined rectangular with cover</option>' +
+                    '<option>Concrete lined V drain</option>' +
+                    '<option>Kerb / Triangular</option>' +
+                    '<option>Earth</option>' +
+                    '<option>Other</option>' +
+                    '</select>' +
+                    '</td>';
+
+                dra_html += '<td id="infodatatrack[properties][dposition2]">' +
+                    '<select name="infodatatrack[properties][dposition2]" class="form-control">' +
+                    '<option>Right</option>' +
+                    '<option>Left</option>' +
+                    '<option>Both</option>' +
+                    '</select>' +
+                    '</td>';
+                $('#bodytable').find('tr').each(function() {
+                    $(this).find("td[id='" + $.escapeSelector('infodatatrack[properties][dposition]') + "']")
+                        .eq(0).after(dra_html);
+                });
+                var dra_head = '<th id="infodatatrack[properties][dtype2]" title="Type of drainage" class="drainage">TYPE</th>';
+                dra_head += '<th id="infodatatrack[properties][dsection2]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>';
+                dra_head += '<th id="infodatatrack[properties][dposition2]" title="Drainage position" class="drainage">DPOS</th>';
+                $('#dataTable').find('thead > tr').each(function(key, value) {
+                    if (key === 0) {
+                        $(this).find("th").eq(5).after('<th colspan="3" scope="colgroup" class="drainage">' +
+                            'NEW DRAINAGES</th>');
+                    } else {
+                        $(this).find("th[id='" + $.escapeSelector('infodatatrack[properties][dposition]') + "']")
+                            .eq(0).after(dra_head);
+
+                    }
+                });
+                $('#dra_link').hide();
+
+                var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
+                $inputsdsection2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsdsection2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+                var $inputsDT2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
+                $inputsDT2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsDT2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+
+                var $inputsDP2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
+                $inputsDP2.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        $checks.each(function(index) {
+                            $check = $(this);
+                            if ($check.prop("checked")) {
+                                ////console.log('Check: ' + (index));
+                                $inputsDP2[index].value = $this.val();
+                            }
+
+
+                        });
+                    }
+                });
+
                 break;
 
             default:
                 break;
         }
+        $('#form').find("select").css('min-width', '100px');
+        // INPUTS BLUR
+
+        $(":text,input[name^=infodatatrack]").blur(function() {
+            // console.log($(this));
+            var $this = $(this);
+            // console.log($this[0].name);
+            var $val = $this[0].value;
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    // ////console.log('Check: ' + (index));
+                    $("form").find("input[name=" + $.escapeSelector($this[0].name) + "]")[index].value = $val;
+
+                }
+
+
+            });
+        });
 
     };
 </script>
