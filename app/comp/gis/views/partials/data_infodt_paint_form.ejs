@@ -41,6 +41,7 @@
                     (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][road_category]">' +
                     '<select name="infodatatrack[properties][road_category]" class="form-control">' +
+                    '<option ></option>' +
                     '<option >Main Road</option>' +
                     '<option >Secondary</option>' +
                     '<option >Feeder</option>' +
@@ -54,6 +55,7 @@
 
                 html[++h] = '<td id="infodatatrack[properties][pavement_material]">' +
                     '<select name="infodatatrack[properties][pavement_material]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Asphalt</option>' +
                     '<option>Concrete</option>' +
                     '<option>Concrete Wheel Track</option>' +
@@ -79,6 +81,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][current_visual_condition]">' +
                     '<select name="infodatatrack[properties][current_visual_condition]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>A</option>' +
                     '<option>B</option>' +
                     '<option>C</option>' +
@@ -96,12 +99,14 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RBarriersType]">' +
                     '<select name="infodatatrack[properties][RBarriersType]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Safety Fences</option>' +
                     '<option>Pedestrian guardrail</option>' +
                     '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSafetyFence]">' +
                     '<select name="infodatatrack[properties][RSafetyFence]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Bollard</option>' +
                     '<option>Concrete / Masonry</option>' +
                     '<option>Metal</option>' +
@@ -109,6 +114,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RBarrierFunct]">' +
                     '<select name="infodatatrack[properties][RBarrierFunct]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -120,6 +126,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSignalsType]">' +
                     '<select name="infodatatrack[properties][RSignalsType]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Vertical sign</option>' +
                     '<option>Horizontal sign</option>' +
                     '<option>Lit sign</option>' +
@@ -128,6 +135,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RVSignalsType]">' +
                     '<select name="infodatatrack[properties][RVSignalsType]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Directional / Information</option>' +
                     '<option>Regulatory</option>' +
                     '<option>Warning</option>' +
@@ -136,6 +144,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RSignalsFunct]">' +
                     '<select name="infodatatrack[properties][RSignalsFunct]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -147,6 +156,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RLightType]">' +
                     '<select name="infodatatrack[properties][RLightType]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Lighting point</option>' +
                     '<option>Switch room</option>' +
                     '<option>Distribution point</option>' +
@@ -154,6 +164,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][RLightFunct]">' +
                     '<select name="infodatatrack[properties][RLightFunct]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -173,6 +184,7 @@
                 '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bexists]">' +
                     '<select name="infodatatrack[properties][bexists]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>YES</option>' +
                     '<option>NO</option>' +
                     '<option>N/A</option>' +
@@ -190,6 +202,7 @@
                 '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype]">' +
                     '<select name="infodatatrack[properties][gtype]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Embankment</option>' +
                     '<option>Cutting</option>' +
                     '<option>Retaining wall</option>' +
@@ -202,6 +215,7 @@
 
                 html[++h] = '<td id="infodatatrack[properties][gposition]">' +
                     '<select name="infodatatrack[properties][gposition]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Right</option>' +
                     '<option>Left</option>' +
                     '<option>Both</option>' +
@@ -212,6 +226,7 @@
 
                 html[++h] = '<td id="infodatatrack[properties][gmaterial]">' +
                     '<select name="infodatatrack[properties][gmaterial]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Concrete</option>' +
                     '<option>Masonry</option>' +
                     '<option>Gabion/Teramesh</option>' +
@@ -221,6 +236,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gnature]">' +
                     '<select name="infodatatrack[properties][gnature]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Homogeneous - massive rock</option>' +
                     '<option>Homogeneous - cracked rock</option>' +
                     '<option>Homogeneous - soil</option>' +
@@ -236,6 +252,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gh_h]">' +
                     '<select name="infodatatrack[properties][gh_h]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>0 - 10%</option>' +
                     '<option>10 - 25%</option>' +
                     '<option>25 - 50%</option>' +
@@ -247,6 +264,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gslope]">' +
                     '<select name="infodatatrack[properties][gslope]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Vertical (90º)</option>' +
                     '<option>Steep (75-90º)</option>' +
                     '<option>Low (45-75º)</option>' +
@@ -260,6 +278,7 @@
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
                     '<select name="infodatatrack[properties][gtreatments]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -268,6 +287,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gvegetation]">' +
                     '<select name="infodatatrack[properties][gvegetation]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -276,6 +296,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtypevegetation]">' +
                     '<select name="infodatatrack[properties][gtypevegetation]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Arboreal</option>' +
                     '<option>Bush / Shrub</option>' +
                     '<option>Herbaceus</option>' +
@@ -287,6 +308,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gvisualcondition]">' +
                     '<select name="infodatatrack[properties][gvisualcondition]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>A</option>' +
                     '<option>B</option>' +
                     '<option>C</option>' +
@@ -303,6 +325,7 @@
                 //'</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype]">' +
                     '<select name="infodatatrack[properties][dtype]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Longitudinal</option>' +
                     '<option>Culvert</option>' +
                     '<option>Ford</option>' +
@@ -313,6 +336,7 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dsection]">' +
                     '<select name="infodatatrack[properties][dsection]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Concrete lined rectangular</option>' +
                     '<option>Concrete lined rectangular with cover</option>' +
                     '<option>Concrete lined V drain</option>' +
@@ -327,6 +351,7 @@
                 '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dposition]">' +
                     '<select name="infodatatrack[properties][dposition]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Right</option>' +
                     '<option>Left</option>' +
                     '<option>Both</option>' +
@@ -969,6 +994,7 @@
                 // alert('geotechnicals');
                 var geo_html = '<td id="infodatatrack[properties][gtype2]">' +
                     '<select name="infodatatrack[properties][gtype2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Embankment</option>' +
                     '<option>Cutting</option>' +
                     '<option>Retaining wall</option>' +
@@ -981,6 +1007,7 @@
 
                 geo_html += '<td id="infodatatrack[properties][gposition2]">' +
                     '<select name="infodatatrack[properties][gposition2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Right</option>' +
                     '<option>Left</option>' +
                     '<option>Both</option>' +
@@ -991,6 +1018,7 @@
 
                 geo_html += '<td id="infodatatrack[properties][gmaterial2]">' +
                     '<select name="infodatatrack[properties][gmaterial2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Concrete</option>' +
                     '<option>Masonry</option>' +
                     '<option>Gabion/Teramesh</option>' +
@@ -1000,6 +1028,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gnature2]">' +
                     '<select name="infodatatrack[properties][gnature2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Homogeneous - massive rock</option>' +
                     '<option>Homogeneous - cracked rock</option>' +
                     '<option>Homogeneous - soil</option>' +
@@ -1015,6 +1044,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gh_h2]">' +
                     '<select name="infodatatrack[properties][gh_h2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>0 - 10%</option>' +
                     '<option>10 - 25%</option>' +
                     '<option>25 - 50%</option>' +
@@ -1026,6 +1056,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gslope2]">' +
                     '<select name="infodatatrack[properties][gslope2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Vertical (90º)</option>' +
                     '<option>Steep (75-90º)</option>' +
                     '<option>Low (45-75º)</option>' +
@@ -1039,6 +1070,7 @@
 
                 geo_html += '<td id="infodatatrack[properties][gtreatments2]">' +
                     '<select name="infodatatrack[properties][gtreatments2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -1047,6 +1079,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gvegetation2]">' +
                     '<select name="infodatatrack[properties][gvegetation2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Yes</option>' +
                     '<option>No</option>' +
                     '<option>NA</option>' +
@@ -1055,6 +1088,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gtypevegetation2]">' +
                     '<select name="infodatatrack[properties][gtypevegetation2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Arboreal</option>' +
                     '<option>Bush / Shrub</option>' +
                     '<option>Herbaceus</option>' +
@@ -1066,6 +1100,7 @@
                     '</td>';
                 geo_html += '<td id="infodatatrack[properties][gvisualcondition2]">' +
                     '<select name="infodatatrack[properties][gvisualcondition2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>A</option>' +
                     '<option>B</option>' +
                     '<option>C</option>' +
@@ -1268,6 +1303,7 @@
                 // alert('drainage ');
                 var dra_html = '<td id="infodatatrack[properties][dtype2]">' +
                     '<select name="infodatatrack[properties][dtype2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Longitudinal</option>' +
                     '<option>Culvert</option>' +
                     '<option>Ford</option>' +
@@ -1278,6 +1314,7 @@
                     '</td>';
                 dra_html += '<td id="infodatatrack[properties][dsection2]">' +
                     '<select name="infodatatrack[properties][dsection2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Concrete lined rectangular</option>' +
                     '<option>Concrete lined rectangular with cover</option>' +
                     '<option>Concrete lined V drain</option>' +
@@ -1289,6 +1326,7 @@
 
                 dra_html += '<td id="infodatatrack[properties][dposition2]">' +
                     '<select name="infodatatrack[properties][dposition2]" class="form-control">' +
+                    '<option ></option>' +
                     '<option>Right</option>' +
                     '<option>Left</option>' +
                     '<option>Both</option>' +
