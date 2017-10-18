@@ -102,13 +102,21 @@
                                                         <i id="bridges" class="fa fa-eye-slash" aria-hidden="true"></i>BRIDGES</th>
                                                     <th colspan="12" scope="colgroup" class="geotechnicals">
                                                         <i id="geotechnicals" class="fa fa-eye-slash" aria-hidden="true"></i>
-                                                        <a id="geo_link" title="<%- trans('EDIT_VIDEO_INFO_DUPLI') %>" onclick="duplicateCols('geo')"><i class="fa fa-clone" onclick=""></i>
-                                                        </a> GEOTECHNICALS
+                                                        <!-- <a id="geo_link" title="<%- trans('EDIT_VIDEO_INFO_DUPLI') %>" onclick="duplicateCols('geo')"><i class="fa fa-clone" onclick=""></i>
+                                                        </a>  -->
+                                                        GEOTECHNICALS IZDA
+                                                    </th>
+                                                    <th colspan="12" scope="colgroup" class="geotechnicals">
+                                                        GEOTECHNICALS DCHA
                                                     </th>
                                                     <th colspan="3" scope="colgroup" class="drainage">
                                                         <i id="drainage" class="fa fa-eye-slash" aria-hidden="true"></i>
-                                                        <a id="dra_link" title="<%- trans('EDIT_VIDEO_INFO_DUPLI') %>" onclick="duplicateCols('drainage')"><i class="fa fa-clone" onclick=""></i>
-                                                    </a> DRAINAGES
+                                                        <!-- <a id="dra_link" title="<%- trans('EDIT_VIDEO_INFO_DUPLI') %>" onclick="duplicateCols('drainage')"><i class="fa fa-clone" onclick=""></i>
+                                                    </a>  -->
+                                                        DRAINAGES
+                                                    </th>
+                                                    <th colspan="3" scope="colgroup" class="drainage">
+                                                        DRAINAGES
                                                     </th>
                                                 </tr>
                                                 <tr>
@@ -286,6 +294,51 @@
                                                         <th id="infodatatrack[properties][gresphazard]" title="Asset Response against hazards" class="geotechnicals">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][gsensitivity]" title="Asset Sensitivity" class="geotechnicals">SENSITIVITY</th>
                                                         <th id="infodatatrack[properties][grisk]" title="RISK" class="geotechnicals">RISK</th> -->
+                                                    <!-- GEOTECHNICALS DCHA -->
+                                                    <!-- <th id="infodatatrack[properties][gcode2]" title="CODE" class="geotechnicals">CODE</th> -->
+                                                    <!-- <th id="infodatatrack[properties][gyearconstruct2]" title="Year of construction" class="geotechnicals">YEAR CONS</th> -->
+                                                    <th id="infodatatrack[properties][gtype2]" title="Type of earthwork" class="geotechnicals">TYPE</th>
+                                                    <th id="infodatatrack[properties][gposition2]" title="Position" class="geotechnicals">POS</th>
+                                                    <th id="infodatatrack[properties][gmaterial2]" title="Material - Retaining walls" class="geotechnicals">MAT</th>
+                                                    <th id="infodatatrack[properties][gnature2]" title="Nature - Earthworks" class="geotechnicals">NATURE</th>
+                                                    <th id="infodatatrack[properties][gheight2]" title="Height (m)" class="geotechnicals">HEIGHT</th>
+                                                    <th id="infodatatrack[properties][gh_h2]" title="Relation h/H (m)" class="geotechnicals">H_H</th>
+                                                    <th id="infodatatrack[properties][gslope2]" title="Slope (º)" class="geotechnicals">SLOPE</th>
+                                                    <th id="infodatatrack[properties][gdistance2]" title="Distance to road (m)" class="geotechnicals">DIST</th>
+                                                    <!--    <th id="infodatatrack[properties][glength2]" title="Length (m)" class="geotechnicals">LENGTH</th>
+                                                        <th id="infodatatrack[properties][gblocks2]" title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>-->
+                                                    <th id="infodatatrack[properties][gtreatments2]" title="Existence of Geotech Treatments" class="geotechnicals">GEO TREAT</th>
+                                                    <!--<th id="infodatatrack[properties][gcorrectmeas2]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th> -->
+                                                    <th id="infodatatrack[properties][gvegetation2]" title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>
+                                                    <th id="infodatatrack[properties][gtypevegetation2]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
+                                                    <!--    <th id="infodatatrack[properties][gphoto2]" title="Photographs" class="geotechnicals">PHOTO</th>
+                                                        <th id="infodatatrack[properties][glastinspection2]" title="Date of last inspection" class="geotechnicals">LAST INSP</th>
+                                                        <th id="infodatatrack[properties][gprevcondition2]" title="Previous condition rate" class="geotechnicals">PREV COND</th> -->
+                                                    <th id="infodatatrack[properties][gvisualcondition2]" title="Current visual condition" class="geotechnicals">VISUAL COND</th>
+                                                    <!-- <th id="infodatatrack[properties][gevidrecfailures2]" title="Evidence of recent failures?" class="geotechnicals">EVID REC FAIL</th>
+                                                        <th id="infodatatrack[properties][gtypefailure2]" title="Type of failure process" class="geotechnicals">TYPE FAIL</th>
+                                                        <th id="infodatatrack[properties][gextentfailure2]" title="Extent of failure" class="geotechnicals">EXT ENT FAIL</th>
+                                                        <th id="infodatatrack[properties][gconslos2]" title="Consequences of failure on LOS" class="geotechnicals">CONS LOS</th>
+                                                        <th id="infodatatrack[properties][gfailure2]" title="Failure history" class="geotechnicals">FAIL</th>
+                                                        <th id="infodatatrack[properties][gsurveyfreq2]" title="Survey frequency" class="geotechnicals">SURVEY FREQ</th>
+                                                        <th id="infodatatrack[properties][gnextsurvey2]" title="Next survey" class="geotechnicals">NEXT SURV</th>
+                                                        <th id="infodatatrack[properties][gpastinterv2]" title="Has there been past interventions?" class="geotechnicals">PAST INTERV</th>
+                                                        <th id="infodatatrack[properties][gintervextent2]" title="Have they been global or partial interventions?" class="geotechnicals">INT EXT ENT</th>
+                                                        <th id="infodatatrack[properties][gdateinterv2]" title="Date of performance of past interventions" class="geotechnicals">DATE INT</th>
+                                                        <th id="infodatatrack[properties][gscopeinterv2]" title="Scope of past interventions" class="geotechnicals">SCOPE INT</th>
+                                                        <th id="infodatatrack[properties][gimpactinterv2]" title="Impact on condition of past interventions" class="geotechnicals">IMPACT INT</th>
+                                                        <th id="infodatatrack[properties][glocdocinterv2]" title="Location of the documentation of past interventions" class="geotechnicals">LOC DOC INT</th>
+                                                        <th id="infodatatrack[properties][gmaintissues2]" title="Maintainability issues" class="geotechnicals">MAINT ISSUES</th>
+                                                        <th id="infodatatrack[properties][ginvestment10years2]" title="Investment undertaken in the last 10 years" class="geotechnicals">INV10Y</th>
+                                                        <th id="infodatatrack[properties][rgnvestmentrequired2]" title="Investment required to upgrade to A class" class="geotechnicals">INVEST REQ</th>
+                                                        <th id="infodatatrack[properties][gomcomments2]" title="Comments to Maintainance" class="geotechnicals">OM_COM</th>
+                                                        <th id="infodatatrack[properties][gcondition2]" title="Current Condition" class="geotechnicals">COND</th>
+                                                        <th id="infodatatrack[properties][gcriticality2]" title="Criticality" class="geotechnicals">CRIT</th>
+                                                        <th id="infodatatrack[properties][glandslide2]" title="Exposure to landslide hazard" class="geotechnicals">LANDSLIDE</th>
+                                                        <th id="infodatatrack[properties][gflood2]" title="Exposure to flood hazard" class="geotechnicals">FLOOD</th>
+                                                        <th id="infodatatrack[properties][gresphazard2]" title="Asset Response against hazards" class="geotechnicals">RESPHAZARD</th>
+                                                        <th id="infodatatrack[properties][gsensitivity2]" title="Asset Sensitivity" class="geotechnicals">SENSITIVITY</th>
+                                                        <th id="infodatatrack[properties][grisk2]" title="RISK" class="geotechnicals">RISK</th> -->
                                                     <!-- DRAINAGE -->
                                                     <!-- <th id="infodatatrack[properties][dcode]" title="CODE" class="drainage">CODE</th> -->
                                                     <!-- <th id="infodatatrack[properties][dyearconstruc]" title="Year of construction" class="drainage">YEAR CONS</th> -->
@@ -327,6 +380,47 @@
                                                         <th id="infodatatrack[properties][dsensitivity]" title="Asset Sensitivity" class="drainage">SENS</th>
                                                         <th id="infodatatrack[properties][drisk]" title="RISK" class="drainage">RISK</th> -->
                                                     <th id="infodatatrack[properties][dposition]" title="Drainage position" class="drainage">DPOS</th>
+                                                    <!-- DRAINAGE DCHA -->
+                                                    <!-- <th id="infodatatrack[properties][dcode2]" title="CODE" class="drainage">CODE</th> -->
+                                                    <!-- <th id="infodatatrack[properties][dyearconstruc2]" title="Year of construction" class="drainage">YEAR CONS</th> -->
+                                                    <th id="infodatatrack[properties][dtype2]" title="Type of drainage" class="drainage">TYPE</th>
+                                                    <!--<th id="infodatatrack[properties][dcapacity2]" title="Capacity" class="drainage">CAPACITY</th>
+                                                        <th id="infodatatrack[properties][drainpeak2]" title="Rain Peak Values" class="drainage">RAIN PEAK</th>
+                                                        <th id="infodatatrack[properties][dmaterial2]" title="Material" class="drainage">MATERIAL</th>
+                                                        <th id="infodatatrack[properties][dslope2]" title="Slope (%)" class="drainage">SLOPE</th>-->
+                                                    <th id="infodatatrack[properties][dsection2]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>
+                                                    <!--<th id="infodatatrack[properties][ddiameter2]" title="Diameter (m)" class="drainage">DIAMETER</th>
+                                                        <th id="infodatatrack[properties][dlength2]" title="Length (m)" class="drainage">LENGTH</th>
+                                                        <th id="infodatatrack[properties][dprotentrance2]" title="Protection of embankment at the drain entrance" class="drainage">PROTENTRANCE</th>
+                                                        <th id="infodatatrack[properties][dprotexit2]" title="Protection bed / inverter arch at the drain exit" class="drainage">PROTEXIT</th>
+                                                        <th id="infodatatrack[properties][dphoto2]" title="Photographs" class="drainage">PHOTO</th>
+                                                        <th id="infodatatrack[properties][dlastinspection2]" title="Date of last inspection" class="drainage">LAST INS</th>
+                                                        <th id="infodatatrack[properties][dprevcondition2]" title="Previous condition rate" class="drainage">PREV COND</th>
+                                                        <th id="infodatatrack[properties][dvisualcondition2]" title="Current Visual Condition" class="drainage">VISUAL COND</th>
+                                                        <th id="infodatatrack[properties][dcrossdamages2]" title="Damages on Cross Drainage" class="drainage">CROSS DAM</th>
+                                                        <th id="infodatatrack[properties][dlostsection2]" title="Lost of section due to blocking/silting/obstacles (%)" class="drainage">LOST SEC</th>
+                                                        <th id="infodatatrack[properties][dconslos2]" title="Consequences of failure on LOS" class="drainage">CONS LOS</th>
+                                                        <th id="infodatatrack[properties][dfailure2]" title="Failure history" class="drainage">FAILURE</th>
+                                                        <th id="infodatatrack[properties][dsurveyfreq2]" title="Survey frequency" class="drainage">SURVEY FREQ</th>
+                                                        <th id="infodatatrack[properties][dnextsurvey2]" title="Date of Next survey" class="drainage">NEXT SURVEY</th>
+                                                        <th id="infodatatrack[properties][dpastinterv2]" title="Has there been past interventions?" class="drainage">PAST INT</th>
+                                                        <th id="infodatatrack[properties][dintervextent2]" title="Have they been global or partial interventions?" class="drainage">INT EXT ENT</th>
+                                                        <th id="infodatatrack[properties][ddateinterv2]" title="Date of performance of past interventions" class="drainage">DATE INT</th>
+                                                        <th id="infodatatrack[properties][dscopeinterv2]" title="Scope of past interventions" class="drainage">SCOPE INT</th>
+                                                        <th id="infodatatrack[properties][dimpactinterv2]" title="Impact on condition of past interventions" class="drainage">IMPACT INTV</th>
+                                                        <th id="infodatatrack[properties][dlocdocinterv2]" title="Location of the documentation of past interventions" class="drainage">LOC DOC INT</th>
+                                                        <th id="infodatatrack[properties][dmaintissues2]" title="Maintainability issues" class="drainage">MAINT ISSUES</th>
+                                                        <th id="infodatatrack[properties][dinvestment10years2]" title="Investment undertaken in the last 10 years" class="drainage">INV10YS</th>
+                                                        <th id="infodatatrack[properties][dinvestmentrequired2]" title="Investment required to upgrade to A class" class="drainage">INV REQ</th>
+                                                        <th id="infodatatrack[properties][domcomments2]" title="Comments to Operation and Maintainance" class="drainage">OM_COMMENTS</th>
+                                                        <th id="infodatatrack[properties][dcondition2]" title="Current Condition" class="drainage">COND</th>
+                                                        <th id="infodatatrack[properties][dcriticality2]" title="Criticality" class="drainage">CRIT</th>
+                                                        <th id="infodatatrack[properties][dlandslide2]" title="Exposure to landslide hazard" class="drainage">LANDSLIDE</th>
+                                                        <th id="infodatatrack[properties][dflood2]" title="Exposure to flood hazard" class="drainage">FLOOD</th>
+                                                        <th id="infodatatrack[properties][dresphazard2]" title="Asset Response against hazards" class="drainage">RESPHAZARD</th>
+                                                        <th id="infodatatrack[properties][dsensitivity2]" title="Asset Sensitivity" class="drainage">SENS</th>
+                                                        <th id="infodatatrack[properties][drisk2]" title="RISK" class="drainage">RISK</th> -->
+                                                    <th id="infodatatrack[properties][dposition2]" title="Drainage position" class="drainage">DPOS</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="bodytable">
