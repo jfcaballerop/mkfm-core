@@ -352,7 +352,7 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
     var arrPK = [];
     // Comprobar si trae geometry
     if (postData.geometry !== undefined) {
-        console.log('## WEB/update_videoinfodatatrack geometry ##');
+        // console.log('## WEB/update_videoinfodatatrack geometry ##');
         if (postData.geometry.coordinates !== undefined) {
             //console.log(JSON.stringify(postData.geometry.coordinates));
             postData.geometry.coordinates.forEach(function(element, index) {
@@ -371,7 +371,7 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
             postData.properties.pk = arrPK;
 
             //TODO: si se modifican las COORD, hay que recalcular los PK/UTM
-            console.log(JSON.stringify(postData.properties));
+            // console.log(JSON.stringify(postData.properties));
         }
     }
 
@@ -459,7 +459,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
  */
 router.post('/duplicate_rows', function(req, resp, next) {
     var _id = req.body._id;
-    console.log('## WEB/duplicate_rows ID ##:: ' + _id);
+    // console.log('## WEB/duplicate_rows ID ##:: ' + _id);
 
     var options = {
         host: config.HOST_API,
