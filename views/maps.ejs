@@ -97,7 +97,6 @@
                             function getContent(type, event) {
                                 var content = '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>';
                                 var subcontent = "";
-
                                 if (event.feature.getProperty('kobo_type') === "ODT") {
                                     subcontent += '<span style="font-weight: bold;">Clearing required : </span>' + event.feature.getProperty("dclearing") + '<br>';
                                     subcontent += '<span style="font-weight: bold;"> Lost of section due to blocking/silting/obstacles (%): </span>' + event.feature.getProperty("dlostsection") + '<br>';
@@ -298,8 +297,12 @@
 
                                     // Store new open InfoWindow in global variable
                                     activeInfoWindow = infoWnd;
-                                    document.getElementById('info-box').textContent =
-                                        event.feature.getProperty('nameoption');
+                                    var infoTextContent = event.feature.getProperty('nameoption');
+                                    if (event.feature.getProperty('nameoption') === 'ROADS') {
+                                        infoTextContent += ' ' + event.feature.getProperty('name');
+                                    }
+                                    document.getElementById('info-box').textContent = infoTextContent;
+
                                 });
                                 map.data.setStyle(function(feature) {
                                     var color = feature.getProperty('color');

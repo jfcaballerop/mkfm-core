@@ -8,6 +8,10 @@ var infodatatrackSchema = new Schema({
         name: String,
         time: Date,
         coordTimes: [],
+        kobo: [{
+            kobo_id: String,
+            kobo_type: String
+        }],
         pk: [],
         rcode: [], // ROADS Group 1
         Roadlab: [],

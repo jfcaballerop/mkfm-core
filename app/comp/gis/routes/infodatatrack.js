@@ -15,6 +15,8 @@ var service = require(path.join(__dirname, '../../../services/services'));
 
 var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
+var koboinfoModels = require(path.join(__dirname, '../models/koboinfo'));
+var Koboinfo = mongoose.model('Koboinfo');
 
 
 
@@ -564,7 +566,48 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
             res.send(500, err.message);
         }
         // console.log(JSON.stringify(infodatatrack));
-        res.status(200).jsonp(infodatatrack);
+        // TODO: cargar la info de los Kobos
+        var koboProm = new Array();
+
+        infodatatrack.geometry.coordinates.forEach(function(element, tabindex) {
+
+            var point = { type: "Point", coordinates: [parseFloat(element[0]), parseFloat(element[1])] };
+            koboProm[tabindex] = Koboinfo.geoNear(point, { maxDistance: 100, spherical: true }, function(err, kobos) {
+                if (err) {
+                    //console.log(err);
+                    return res.status(500).send(err.message);
+                }
+                return kobos[0];
+            });
+        });
+
+        Promise.all(koboProm).then(function(values) {
+            var koboarr = [];
+            values.forEach(function(val, index) {
+                if (val.length > 0) {
+                    console.log('VAL: ' + val[0].dis);
+                    koboarr[index] = {
+                        kobo_id: val[0].obj._id,
+                        kobo_type: val[0].obj.properties.kobo_type.toUpperCase()
+                    };
+                } else {
+                    console.log('UNDEFINED');
+                    koboarr[index] = undefined;
+                }
+                //console.log('PROMISE ALL ' + index + '-PROMI ? SE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description) :'-' );
+                //rldata = JSON.parse(val);
+                // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
+            });
+            infodatatrack.properties.kobo = koboarr;
+            // console.log('TABDATA ' + JSON.stringify(tabdata));
+            res.status(200).jsonp(infodatatrack);
+        }).catch(function(reason) {
+            console.log(reason);
+            return res.status(500).send(reason);
+
+        });
+
+        // res.status(200).jsonp(infodatatrack);
     });
 
 });

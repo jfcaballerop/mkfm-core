@@ -349,4 +349,23 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
     });
 
 });
+
+/* GET JSON Koboinfo labs near. */
+router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
+    var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
+
+    Koboinfo.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, koboinfos) {
+        if (err) {
+            //console.log(err);
+            return res.status(500).send(err.message);
+        }
+        if (koboinfos && koboinfos.length > 0) {
+            res.status(200).jsonp(koboinfos[0]);
+        } else {
+            res.status(200).jsonp({});
+        }
+    });
+
+
+});
 module.exports = router;
