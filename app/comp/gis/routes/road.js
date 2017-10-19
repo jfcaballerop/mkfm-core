@@ -321,6 +321,15 @@ router.get('/V1/list_id/', function(req, res, next) {
     });
 
 });
+router.get('/V1/list_id_not_proccesed/', function(req, res, next) {
+    Road.find({ proccessed: false }, { _id: 1, "properties.name": 1 }).exec(function(err, roads) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(roads);
+    });
+
+});
 /* GET JSON road by id. */
 router.get('/V1/list_roads/:id', function(req, res, next) {
     Road.findById(req.params.id, function(err, road) {

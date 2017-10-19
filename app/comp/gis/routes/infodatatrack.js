@@ -572,7 +572,7 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
         infodatatrack.geometry.coordinates.forEach(function(element, tabindex) {
 
             var point = { type: "Point", coordinates: [parseFloat(element[0]), parseFloat(element[1])] };
-            koboProm[tabindex] = Koboinfo.geoNear(point, { maxDistance: 100, spherical: true }, function(err, kobos) {
+            koboProm[tabindex] = Koboinfo.geoNear(point, { maxDistance: config.QUERYMAXDISTANCE, spherical: true }, function(err, kobos) {
                 if (err) {
                     //console.log(err);
                     return res.status(500).send(err.message);

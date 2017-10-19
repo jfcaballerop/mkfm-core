@@ -47,7 +47,7 @@ router.get('/view_data', function(req, resp, next) {
     var optionsRoad = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/road/V1/list_id/',
+        path: config.PATH_API + '/road/V1/list_id_not_proccesed/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

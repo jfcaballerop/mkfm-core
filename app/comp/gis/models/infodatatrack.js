@@ -7,6 +7,7 @@ var infodatatrackSchema = new Schema({
     properties: {
         name: String,
         time: Date,
+        proccessed: { type: Boolean, default: false },
         coordTimes: [],
         kobo: [{
             kobo_id: String,
