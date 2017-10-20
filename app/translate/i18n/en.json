@@ -52,6 +52,7 @@
     "MAPSDATA_TITLE": "Database data",
     "MAPSDATA_FILTER": "Filters",
     "MAPSDATA_SELECT_ROAD": "Select a road",
+    "MAPSDATA_SELECT_TRACK": "Select proccessed track",
     "MAPSDATA_BUTTON_EDIT": "Edit",
     "MAPSDATA_BUTTON_EDITVIDEO": "Edit video",
     "MAPSDATA_BUTTON_NEWVER": "New Version",

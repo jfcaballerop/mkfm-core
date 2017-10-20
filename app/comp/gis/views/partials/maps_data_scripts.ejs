@@ -12,7 +12,7 @@
 
     function go_edit_road() {
         // alert($("#roads").val());
-        var id = $("#roads").val();
+        var id = $("#infodatas").val();
         if (id == 0) {
             window.location = '#';
         } else {
@@ -22,7 +22,7 @@
 
     function go_edit_video_road() {
         // alert($("#roads").val());
-        var id = $("#roads").val();
+        var id = $("#infodatas").val();
         if (id == 0) {
             window.location = '#';
         } else {
@@ -38,6 +38,7 @@
                 $(this).remove()
             })[0].click()
     });
+
     $('#versionbutton').click(function() {
         // alert('Versionando documento');
         dataPost.properties.video_roads = dataPost._id;
@@ -69,55 +70,38 @@
             //console.log(reason)
         });
     });
-
-    $(document).on('change', "#roads", function() {
-        var id = $("#roads").val();
+    $(document).on('change', "#infodatas", function() {
+        var id = $("#infodatas").val();
+        // alert("ACT " + id);
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
-        $('#versionbutton').show();
-        // alert("ACT " + id);
-        if (id != 0) {
-            var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
-                data.returnId = "roads";
-                //console.log('dataRoad ' + JSON.stringify(data));
-                return (data);
-            });
+        var p2 = $.get('/auth/WEB/infodatatrack/list_infodatatrackbyid/' + id, function(data) {
+            // console.log('list_infodatatrack ' + JSON.stringify(data));
+            if (data) {
+                data.returnId = "datatrack";
+                return data;
+            } else {
+                return undefined;
+            }
 
-            var p2 = $.get('/auth/WEB/infodatatrack/list_infodatatrack/' + id, function(data) {
-                if (data) {
-                    data.returnId = "datatrack";
-                    return data;
-                } else {
-                    return undefined;
-                }
-                // //console.log('dataRoad ' + JSON.stringify(data));
+        });
 
-            });
-            Promise.all([p1, p2]).then(function(values) {
-                dataPost = values[0];
-                dataTrack = values[1];
-                //console.log(dataTrack);
-                var dataRoad;
-                if (dataTrack !== "undefined" && dataTrack != null) {
-                    $('#ultimaversion').empty();
-                    $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
-                    $('#ultimaversion').show();
-                    $('#editbutton').show();
-                    $('#editvideobutton').show();
-                    $('#downloadbutton').show();
-                    dataRoad = dataTrack;
-                    //console.log('dataTrack ' + dataRoad);
-                    //console.log(dataRoad);
-                } else {
-                    $('#ultimaversion').empty();
-                    $('#ultimaversion').hide();
-                    $('#editbutton').hide();
-                    $('#editvideobutton').hide();
-                    $('#downloadbutton').hide();
-                    dataRoad = dataPost;
-                    //console.log('dataPost ' + dataPost);
-                    //console.log(dataPost);
-                }
+        Promise.all([p2]).then(function(values) {
+            var dataRoad;
+            dataTrack = values[0];
+            // console.log(JSON.stringify(dataTrack));
+            if (dataTrack !== "undefined" && dataTrack != null) {
+                $('#ultimaversion').empty();
+                $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
+                $('#ultimaversion').show();
+                $('#editbutton').show();
+                $('#editvideobutton').show();
+                $('#downloadbutton').show();
+                $('#versionbutton').hide();
+
+                dataRoad = dataTrack;
+                //console.log('dataTrack ' + dataRoad);
+                //console.log(dataRoad);
                 var r = new Array(),
                     j = 1;
                 r[0] = '<thead> <tr>' +
@@ -735,6 +719,43 @@
                 });
                 r[++j] = '</tbody>';
                 $('#dataTable').html(r.join(''));
+            }
+            //else {
+            //     $('#ultimaversion').empty();
+            //     $('#ultimaversion').hide();
+            //     $('#editbutton').hide();
+            //     $('#editvideobutton').hide();
+            //     $('#downloadbutton').hide();
+            //     dataRoad = dataPost;
+            //     //console.log('dataPost ' + dataPost);
+            //     //console.log(dataPost);
+            // }
+
+        });
+    });
+    $(document).on('change', "#roads", function() {
+        var id = $("#roads").val();
+        $('#ultimaversion').empty();
+        $('#ultimaversion').hide();
+        $('#editbutton').hide();
+        $('#editvideobutton').hide();
+        $('#downloadbutton').hide();
+        $('#dataTable').empty();
+        $('#versionbutton').show();
+        // alert("ACT " + id);
+        if (id != 0) {
+            var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
+                data.returnId = "roads";
+                //console.log('dataRoad ' + JSON.stringify(data));
+                return (data);
+            });
+
+
+            Promise.all([p1]).then(function(values) {
+                dataPost = values[0];
+                //console.log(dataTrack);
+
+
 
             }).catch(function(reason) {
                 //console.log(reason)

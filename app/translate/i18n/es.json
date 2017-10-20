@@ -51,6 +51,7 @@
     "MAPSDATA_TITLE": "Datos de base de datos",
     "MAPSDATA_FILTER": "Filtros",
     "MAPSDATA_SELECT_ROAD": "Selecciona una carretera",
+    "MAPSDATA_SELECT_TRACK": "Selecciona un track procesado",
     "MAPSDATA_BUTTON_EDIT": "Editar",
     "MAPSDATA_BUTTON_EDITVIDEO": "Editar video",
     "MAPSDATA_BUTTON_NEWVER": "Nueva Ver",

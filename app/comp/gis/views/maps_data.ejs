@@ -79,6 +79,15 @@
                                         <% }); %>
                                         
                                     </select>
+                                    <select id="infodatas" class="form-control" style="width:auto;">
+                                    <option value="0">- <%- trans('MAPSDATA_SELECT_TRACK') %> -</option>
+                                    <% infodatasvals.forEach(function(val, indexrv){ %>
+                                        <option value="<%- val._id %>"><%- moment(val.updated_at).format('DD-MM-YYYY HH:mm:ss') %> :: <%- val.properties.name %></option>
+                                        
+                                        <% }); %>
+                                        
+                                    </select>
+                                    <br>
                                     <button id="editbutton" onclick="go_edit_road();" type="button" class="btn btn-primary" style="display: none;"><i class="fa fa-pencil-square-o"> <%- trans('MAPSDATA_BUTTON_EDIT') %></i></button>
                                     <button id="editvideobutton" onclick="go_edit_video_road();" type="button" class="btn btn-theme04" style="display: none;"><i class="fa fa-video-camera"> <%- trans('MAPSDATA_BUTTON_EDITVIDEO') %></i></button>
                                     <button id="versionbutton" type="button" class="btn btn-theme02" style="display: none;"><i class="fa fa-code-fork" ></i> <%- trans('MAPSDATA_BUTTON_NEWVER') %></button>
