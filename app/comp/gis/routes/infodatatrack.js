@@ -15,6 +15,8 @@ var service = require(path.join(__dirname, '../../../services/services'));
 
 var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
+var roadModels = require(path.join(__dirname, '../models/road'));
+var Road = mongoose.model('Road');
 var koboinfoModels = require(path.join(__dirname, '../models/koboinfo'));
 var Koboinfo = mongoose.model('Koboinfo');
 
@@ -646,13 +648,13 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
             var koboarr = [];
             values.forEach(function(val, index) {
                 if (val.length > 0) {
-                    console.log('VAL: ' + val[0].dis);
+                    // console.log('VAL: ' + val[0].dis);
                     koboarr[index] = {
                         kobo_id: val[0].obj._id,
                         kobo_type: val[0].obj.properties.kobo_type.toUpperCase()
                     };
                 } else {
-                    console.log('UNDEFINED');
+                    // console.log('UNDEFINED');
                     koboarr[index] = undefined;
                 }
                 //console.log('PROMISE ALL ' + index + '-PROMI ? SE ALL ' + index + '- ' + JSON.stringify(val[0].obj.properties.description) :'-' );
@@ -758,6 +760,23 @@ router.post('/V1/save_tabular_data/', function(req, res, next) {
         if (err) {
             return res.status(500).send(err.message);
         }
+
+        Road.find({ "properties.name": infodatatrack.properties.name }).exec(function(err, roads) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            roads.forEach(function(road, index) {
+                road.proccessed = true;
+                road.save(function(err2, data2) {
+                    if (err2) {
+                        return res.status(500).send(err2.message);
+                    }
+                    console.log('ROAD modified ' + JSON.stringify(data2._id));
+
+                });
+            });
+        });
+
         res.status(200).jsonp(data);
     });
 });
