@@ -571,7 +571,7 @@ router.get('/V1/', function(req, res, next) {
 });
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/list_order', function(req, res, next) {
-    Infodatatrack.find().sort({ 'updated_at': -1 }).exec(function(err, infodatatracks) {
+    Infodatatrack.find().sort({ 'properties.name': 1 }).exec(function(err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
