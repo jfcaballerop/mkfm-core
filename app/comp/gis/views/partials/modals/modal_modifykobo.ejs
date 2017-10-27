@@ -10,42 +10,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal style-form" method="post" action="/auth/WEB/users/update_user2">
-                    <input name="user[_id]" required type="hidden" class="form-control">
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Nombre</label>
-                        <div class="col-sm-10">
-                            <input name="user[nombre]" required type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Apellido1</label>
-                        <div class="col-sm-10">
-                            <input name="user[apellido1]" required type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Apellido2</label>
-                        <div class="col-sm-10">
-                            <input name="user[apellido2]" required type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Login</label>
-                        <div class="col-sm-10">
-                            <input name="user[login]" required type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Password</label>
-                        <div class="col-sm-10">
-                            <input name="user[password]" required type="password" class="form-control">
-                        </div>
-                    </div>
-                    <!-- <div class="checkbox">
-                            <label>
-                                <input name="user[admin]"  type="checkbox" value> Administrador
-                                </label>
-                        </div> -->
+                    <input name="kobo[_id]" required class="form-control">
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Modificar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

@@ -39,11 +39,11 @@
                 html[++h] = '<td id="infodatatrack[properties][kobo]">';
                 if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null && typeof data.properties.kobo[index] !== "undefined") {
                     if (data.properties.kobo[index].kobo_type === "BRIDGE") {
-                        html[++h] = '<i class="fa fa-circle" data-toggle="modal" data-params="{"_id" : "' + data.properties.kobo[index]._id + '"}" data-target="#modalKobo" aria-hidden = "true" style="color: #F47983;" title="BRIDGE"> </i>';
+                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"id\":\"' + data.properties.kobo[index]._id + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
                     } else if (data.properties.kobo[index].kobo_type === "ODT") {
-                        html[++h] = '<i class="fa fa-circle" data-toggle="modal" data-target="#modalKobo" aria-hidden = "true" style="color: blue;" title="ODT"> </i>';
+                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"id\":\"' + data.properties.kobo[index]._id + '\"}\' aria-hidden="true" style="color: blue;" title="ODT"> </i>';
                     } else {
-                        html[++h] = '<i class="fa fa-circle" data-toggle="modal" data-target="#modalKobo" aria-hidden = "true" style="color: green;" title="GEOTECHNICAL"> </i>';
+                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"id\":\"' + data.properties.kobo[index]._id + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
 
                     }
 
@@ -1364,7 +1364,41 @@
                 $(this).closest('tr').children('td').css('background-color', '');
         });
 
+        var $elemkobos = $('#form').find('i[ name="modalKoboElem"]');
+        var koboid;
+        $elemkobos.on('click', function() {
+            var res = JSON.stringify($(this).data('params'));
+            var obj = JSON.parse(res);
+            console.log(obj);
+            // alert('The modal is about to be shown.' + obj.id);
+            koboid = obj.id;
+            $("#modalKobo").modal("show");
+        });
+        $("#modalKobo").on('show.bs.modal', function() {
+            var dataPost = {};
+            dataPost._id = koboid;
+            alert('Mostrando ALERT ' + dataPost._id);
+            $.each(dataPost, function(key, value) {
+                console.log(key, value);
+                $("input[name*='kobo[" + key + "]']").val(value);
+            });
+            // var p1 = $.ajax({
+            //     url: '/auth/WEB/infodatatrack/duplicate_rows',
+            //     data: JSON.stringify(dataPost),
+            //     type: 'POST',
+            //     contentType: 'application/json'
+            // }, function(data) {
+            //     // //console.log('dataRoad ' + JSON.stringify(data));
+            //     return (data);
+            // });
+            // Promise.all([p1]).then(function(values) {
+            //     dataTrack = values[0];
+            //     // console.log(dataTrack);
+            //     // location.reload();
+            //     window.location.reload(true);
+            // });
 
+        });
 
 
 
@@ -1808,12 +1842,6 @@
 
             });
         });
-
-
-        $("#modalKobo").on('show.bs.modal', function() {
-            alert('The modal is about to be shown.');
-        });
-
 
     };
 </script>

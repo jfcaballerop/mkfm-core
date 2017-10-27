@@ -761,20 +761,20 @@ router.post('/V1/save_tabular_data/', function(req, res, next) {
             return res.status(500).send(err.message);
         }
 
-        Road.find({ "properties.name": infodatatrack.properties.name }).exec(function(err, roads) {
+        Road.findOne({ "properties.name": infodatatrack.properties.name }).exec(function(err, road) {
             if (err) {
                 res.send(500, err.message);
             }
-            roads.forEach(function(road, index) {
-                road.proccessed = true;
-                road.save(function(err2, data2) {
-                    if (err2) {
-                        return res.status(500).send(err2.message);
-                    }
-                    console.log('ROAD modified ' + JSON.stringify(data2._id));
+            // roads.forEach(function(road, index) {
+            road.proccessed = true;
+            road.save(function(err2, data2) {
+                if (err2) {
+                    return res.status(500).send(err2.message);
+                }
+                console.log('ROAD modified ' + JSON.stringify(data2._id));
 
-                });
             });
+            // });
         });
 
         res.status(200).jsonp(data);
