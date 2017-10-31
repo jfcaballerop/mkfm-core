@@ -96,8 +96,6 @@ var install = require('./routes/install');
 var auth_web = require('./routes/authweb');
 var auth_api = require('./routes/authapi');
 
-
-
 // AUTH de puntos de entrada
 app.use('/auth/WEB', auth_web);
 app.use('/auth/API', auth_api);

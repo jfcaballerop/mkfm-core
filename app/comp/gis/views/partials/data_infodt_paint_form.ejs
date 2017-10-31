@@ -1373,7 +1373,7 @@
         $elemkobos.on('click', function() {
             var res = JSON.stringify($(this).data('params'));
             obj = JSON.parse(res);
-            console.log(obj);
+            // console.log(obj);
             // alert('The modal is about to be shown.' + obj.id);
             koboid = obj._id;
             $("#modalKobo").modal("show");
@@ -1390,34 +1390,37 @@
                 type: 'POST',
                 contentType: 'application/json'
             }, function(data) {
-                console.log('koboinfo ' + JSON.stringify(data));
+                // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
             Promise.all([p1]).then(function(values) {
                 koboinfo = values[0];
-                console.log(koboinfo);
+                //console.log(koboinfo);
                 $.each(koboinfo, function(key, value) {
                     if (key === 'properties') {
                         $.each(value, function(kprop, vprop) {
-                            console.log(kprop, vprop);
+                            //console.log(kprop, vprop);
                             $("input[name*='kobo[properties][" + kprop + "]']").val(vprop);
-
+                            // TODO: Busco las fotos con el _id
+                            /** 
+                             * https://{{host}}/api/v1/media?instance=_id
+                             */
+                            if (kprop === "_attachments") {
+                                $("#photo").empty();
+                                $.each(vprop, function(kfoto, vfoto) {
+                                    var fotosmall = vfoto.replace(".jpg", "-small.jpg");
+                                    $("#photo").append('<img src="' + fotosmall + '">');
+                                });
+                            }
                         });
                     } else if (key === 'geometry') {
                         $.each(value, function(kgeom, vgeom) {
-                            console.log(kgeom, vgeom);
-                            (kgeom === 'coordinates') ? $("input[name*='kobo[geometry][" + kgeom + "]']").val(vgeom): false;
-
-                        });
-                    } else if (key === 'dphoto') {
-                        // TODO: Añadir CASE para cada tipo de kobo
-                        $.each(value, function(kphoto, vphoto) {
-                            console.log(kphoto, vphoto);
+                            // console.log(kgeom, vgeom);
                             (kgeom === 'coordinates') ? $("input[name*='kobo[geometry][" + kgeom + "]']").val(vgeom): false;
 
                         });
                     }
-                    console.log(key, value);
+                    // console.log(key, value);
                     //$("input[name*='kobo[" + key + "]']").val(value);
                 });
                 // location.reload();
