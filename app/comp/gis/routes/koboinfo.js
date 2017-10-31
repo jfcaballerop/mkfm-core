@@ -34,6 +34,49 @@ router.use(bodyParser.json());
 /*******************************************************
         WEB CALLS
 **********************************************************/
+/**
+ * 20171031 - jfcaballero
+ * Save Kobo info
+ */
+
+router.post('/save_kobo_info', function(req, resp, next) {
+    var postData = extend({}, req.body.kobo);
+    console.log(postData.ifdtid);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/koboinfo/V1/updateKobo/' + req.body.kobo._id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    var request = http.request(options, function(res) {
+        // //console.log('STATUS: ' + res.statusCode);
+        // //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // //console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //success(data);
+            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.kobo.ifdtid);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+});
 /* GET List koboinfos */
 router.get('/list_koboinfos', function(req, resp, next) {
 
@@ -397,6 +440,25 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
 router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
     var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
 
+    Koboinfo.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, koboinfos) {
+        if (err) {
+            //console.log(err);
+            return res.status(500).send(err.message);
+        }
+        if (koboinfos && koboinfos.length > 0) {
+            res.status(200).jsonp(koboinfos[0]);
+        } else {
+            res.status(200).jsonp({});
+        }
+    });
+
+
+});
+
+/* POST JSON Koboinfo */
+router.post('/V1/updateKobo/:id', function(req, res, next) {
+
+    var kobomod = new Koboinfo();
     Koboinfo.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, koboinfos) {
         if (err) {
             //console.log(err);

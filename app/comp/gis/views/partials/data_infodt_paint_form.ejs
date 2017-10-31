@@ -1396,6 +1396,9 @@
             Promise.all([p1]).then(function(values) {
                 $("#formkobo").empty();
                 koboinfo = values[0];
+                var ifdtid = $("input[name*='infodatatrack[_id]']").val();
+                $("#formkobo").append('<input name="kobo[ifdtid]" required class="form-control" value="' + ifdtid + '" type="hidden">');
+                // alert(ifdtid);
                 //console.log(koboinfo);
                 $.each(koboinfo, function(key, value) {
                     if (key === 'properties') {
