@@ -1382,8 +1382,8 @@
             var dataPost = {};
             dataPost = obj;
             dataPost._id = koboid;
-            //alert('Mostrando ALERT ' + dataPost._id);
-
+            var camposShow = ["_id", "kobo_type", "_xform_id_string", "gposition", "gheight", "glength", "gdistance", "gslope", "blenght", "bwidth", "dlength", "coordinates"];
+            var camposShowdisabled = ["_id", "kobo_type", "_xform_id_string"];
             var p1 = $.ajax({
                 url: '/auth/WEB/koboinfo/list_koboinfos/' + koboid,
                 data: JSON.stringify(dataPost),
@@ -1394,31 +1394,64 @@
                 return (data);
             });
             Promise.all([p1]).then(function(values) {
+                $("#formkobo").empty();
                 koboinfo = values[0];
                 //console.log(koboinfo);
                 $.each(koboinfo, function(key, value) {
                     if (key === 'properties') {
                         $.each(value, function(kprop, vprop) {
                             //console.log(kprop, vprop);
-                            $("input[name*='kobo[properties][" + kprop + "]']").val(vprop);
-                            // TODO: Busco las fotos con el _id
-                            /** 
-                             * https://{{host}}/api/v1/media?instance=_id
-                             */
                             if (kprop === "_attachments") {
                                 $("#photo").empty();
                                 $.each(vprop, function(kfoto, vfoto) {
                                     var fotosmall = vfoto.replace(".jpg", "-small.jpg");
                                     $("#photo").append('<img src="' + fotosmall + '">');
+
                                 });
+                            } else {
+                                if (camposShow.indexOf(kprop) >= 0) {
+                                    $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kprop + '</label>');
+                                    if (camposShowdisabled.indexOf(kprop) >= 0) {
+                                        $("#formkobo").append('<div class="col-sm-4">' +
+                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" disabled>' +
+                                            '</div>');
+                                    } else {
+                                        $("#formkobo").append('<div class="col-sm-4">' +
+                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '">' +
+                                            '</div>');
+                                    }
+                                } else {
+                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" type="hidden">');
+                                }
                             }
+
                         });
                     } else if (key === 'geometry') {
                         $.each(value, function(kgeom, vgeom) {
                             // console.log(kgeom, vgeom);
-                            (kgeom === 'coordinates') ? $("input[name*='kobo[geometry][" + kgeom + "]']").val(vgeom): false;
+                            if (kgeom === 'coordinates') {
+                                $("#formkobo").append('<div class="form-group">');
+                                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kgeom + '</label>');
+                                $("#formkobo").append('<div class="col-sm-10">' +
+                                    '<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '">' +
+                                    '</div>');
+                                $("#formkobo").append('</div>');
+                            } else {
+                                $("#formkobo").append('<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '" type="hidden">');
+                            }
+                            // (kgeom === 'coordinates') ? $("input[name*='kobo[geometry][" + kgeom + "]']").val(vgeom): false;
 
                         });
+                    } else {
+                        if (camposShow.indexOf(key) >= 0) {
+                            $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + key + '</label>');
+                            $("#formkobo").append('<div class="col-sm-4">' +
+                                '<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" disabled>' +
+                                '</div>');
+                        } else {
+                            $("#formkobo").append('<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" type="hidden">');
+                        }
+
                     }
                     // console.log(key, value);
                     //$("input[name*='kobo[" + key + "]']").val(value);
