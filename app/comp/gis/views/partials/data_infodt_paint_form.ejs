@@ -49,7 +49,25 @@
                             ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
 
                     }
+                }
+                if (data.properties.koboedit !== undefined && data.properties.koboedit[index] !== null &&
+                    typeof data.properties.koboedit[index] !== "undefined" && data.properties.koboedit[index] !== '') {
+                    if (data.properties.koboedit[index.kobo_type] === "BRIDGE") {
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
+                    } else if (data.properties.koboedit[index].kobo_type === "ODT") {
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: blue;" title="ODT"> </i>';
+                    } else {
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
 
+                    }
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_id + '">';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_type + '">';
+                } else {
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
 
                 }
                 html[++h] = '</td>';
@@ -1397,6 +1415,8 @@
                 $("#formkobo").empty();
                 koboinfo = values[0];
                 var ifdtid = $("input[name*='infodatatrack[_id]']").val();
+                var ini = 0;
+                var fin = rObject.geometry.coordinates.length;
                 $("#formkobo").append('<input name="kobo[ifdtid]" required class="form-control" value="' + ifdtid + '" type="hidden">');
                 // alert(ifdtid);
                 //console.log(koboinfo);
@@ -1409,14 +1429,18 @@
                                 $.each(vprop, function(kfoto, vfoto) {
                                     var fotosmall = vfoto.replace(".jpg", "-small.jpg");
                                     $("#photo").append('<img src="' + fotosmall + '">');
-
+                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
+                                });
+                            } else if (kprop === "dphoto" || kprop === "bphoto" || kprop === "gphoto") {
+                                $.each(vprop, function(kfoto, vfoto) {
+                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
                                 });
                             } else {
                                 if (camposShow.indexOf(kprop) >= 0) {
                                     $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kprop + '</label>');
                                     if (camposShowdisabled.indexOf(kprop) >= 0) {
                                         $("#formkobo").append('<div class="col-sm-4">' +
-                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" disabled>' +
+                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" readonly>' +
                                             '</div>');
                                     } else {
                                         $("#formkobo").append('<div class="col-sm-4">' +
@@ -1436,7 +1460,7 @@
                                 $("#formkobo").append('<div class="form-group">');
                                 $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kgeom + '</label>');
                                 $("#formkobo").append('<div class="col-sm-10">' +
-                                    '<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '">' +
+                                    '<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '" readonly>' +
                                     '</div>');
                                 $("#formkobo").append('</div>');
                             } else {
@@ -1449,16 +1473,42 @@
                         if (camposShow.indexOf(key) >= 0) {
                             $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + key + '</label>');
                             $("#formkobo").append('<div class="col-sm-4">' +
-                                '<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" disabled>' +
+                                '<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" readonly>' +
                                 '</div>');
                         } else {
                             $("#formkobo").append('<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" type="hidden">');
                         }
 
                     }
+
+
                     // console.log(key, value);
                     //$("input[name*='kobo[" + key + "]']").val(value);
                 });
+                var optionsstr = '';
+                for (var i = ini; i < fin; i++) {
+                    optionsstr += '<option>' + i + '</option>';
+                }
+                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">coord ini</label>');
+                $("#formkobo").append('<div class="col-sm-4">' +
+                    '<select class="form-control" name="kobo[ifdtini]" required class="form-control">' +
+                    optionsstr +
+                    '</select></div>');
+
+                var $inputsCOORini = $('#formkobo').find('select[ name="kobo[ifdtini]"]');
+                $inputsCOORini.on('change', function() {
+                    var $this = $(this);
+                    if ($this.val() != '') {
+                        ////console.log('ID: ' + $this.attr("id"));
+                        ////console.log('Check: ' + (index));
+                        $('#formkobo').find("input[name='kobo[geometry][coordinates]']").val(rObject.geometry.coordinates[parseInt($this.val())]);
+                    }
+                });
+                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">coord fin</label>');
+                $("#formkobo").append('<div class="col-sm-4">' +
+                    '<select class="form-control" name="kobo[ifdtfin]" required class="form-control">' +
+                    optionsstr +
+                    '</select></div>');
                 // location.reload();
                 // window.location.reload(true);
             });

@@ -14,7 +14,8 @@ var utm = require('utm');
 
 var koboinfoModels = require(path.join(__dirname, '../models/koboinfo'));
 var Koboinfo = mongoose.model('Koboinfo');
-
+var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
+var Infodatatrack = mongoose.model('Infodatatrack');
 
 router.use(function timeLog(req, res, next) {
     //console.log('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
@@ -457,18 +458,73 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 
 /* POST JSON Koboinfo */
 router.post('/V1/updateKobo/:id', function(req, res, next) {
+    var datamod = extend({}, req.body);
+    var arrcoord = datamod.geometry.coordinates.split(",");
 
-    var kobomod = new Koboinfo();
-    Koboinfo.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, koboinfos) {
+    arrcoord[0] != undefined ? arrcoord[0] = parseFloat(arrcoord[0]) : false;
+    arrcoord[1] != undefined ? arrcoord[1] = parseFloat(arrcoord[1]) : false;
+    arrcoord[2] != undefined ? arrcoord[2] = parseFloat(arrcoord[2]) : false;
+
+    datamod.geometry.coordinates = arrcoord;
+    //console.log('\n ##KOBO Datamod: ' + JSON.stringify(datamod));
+    var koboinfo = new Koboinfo(datamod);
+    koboinfo.isNew = false;
+    // console.log('\n## koboinfo ' + JSON.stringify(koboinfo));
+    // res.status(200).jsonp(koboinfo);
+
+    koboinfo.save(function(err, kobomod) {
         if (err) {
-            //console.log(err);
             return res.status(500).send(err.message);
         }
-        if (koboinfos && koboinfos.length > 0) {
-            res.status(200).jsonp(koboinfos[0]);
-        } else {
-            res.status(200).jsonp({});
-        }
+        Infodatatrack.findById(datamod.ifdtid, function(err, ifdt) {
+            if (err) return handleError(err);
+
+            var arrkoboedit = [];
+            var properties = [];
+
+            var ini = datamod.ifdtini;
+            var fin = datamod.ifdtfin != 0 ? datamod.ifdtfin : datamod.ifdtini;
+            for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
+                // TODO: terminar
+                for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
+                    if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
+                        console.log(kprop + ' - ' + vprop);
+                        console.log(ifdt.properties[vprop]);
+
+                    }
+                }
+
+                var newkobo = {};
+                if (cindex >= ini && cindex <= fin) {
+                    newkobo.kobo_id = datamod._id;
+                    newkobo.kobo_type = datamod.properties.kobo_type;
+                    arrkoboedit.push(newkobo);
+
+                } else {
+                    if (ifdt.properties.koboedit.length != 0) {
+                        arrkoboedit.push(ifdt.properties.koboedit[cindex]);
+
+                    } else {
+                        arrkoboedit.push(newkobo);
+
+                    }
+                }
+                // console.log(cindex + JSON.stringify(arrkoboedit[cindex]));
+
+            }
+            ifdt.properties.koboedit = arrkoboedit;
+            ifdt.isNew = false;
+
+            ifdt.save(function(err, imod) {
+                if (err) {
+                    return res.status(500).send(err.message);
+                }
+                // console.log('imod.properties.koboedit: ' + JSON.stringify(imod.properties.koboedit));
+
+                res.status(200).jsonp(kobomod);
+            });
+        });
+
     });
 
 
