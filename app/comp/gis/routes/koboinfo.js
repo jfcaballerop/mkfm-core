@@ -476,7 +476,6 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
         if (err) {
             return res.status(500).send(err.message);
         }
-        console.log('\n### kobomod: ' + JSON.stringify(kobomod));
         Infodatatrack.findById(datamod.ifdtid, function(err, ifdt) {
             if (err) return handleError(err);
 
@@ -485,11 +484,8 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
 
             var ini = datamod.ifdtini;
             var fin = datamod.ifdtfin != 0 ? datamod.ifdtfin : datamod.ifdtini;
-            // TODO: terminar
             for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
                 if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
-                    console.log(kprop + ' - ' + vprop);
-                    console.log(ifdt.properties[vprop]);
                     var arrprop = [];
 
 
