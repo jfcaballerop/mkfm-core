@@ -45,6 +45,51 @@ router.use(bodyParser.json());
 **********************************************************/
 
 /**
+ * Modify ROWS
+ */
+router.post('/delrows/:idifdt/:rowid', function(req, resp, next) {
+    var postData = extend({}, req.body);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/delrowskobo/' + req.params.idifdt + '/' + req.params.rowid,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+            //// console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+/**
  * SAVE DATA
  */
 router.post('/save_tabular_data/', function(req, resp, next) {
@@ -857,4 +902,39 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
     });
 
 });
+
+/* UPDATE Infodatatrack */
+router.post('/V1/delrowskobo/:idifdt/:rowid', function(req, res, next) {
+    console.log('## UPDATE delrowskobo ##\nBODY: ' + JSON.stringify(req.body));
+
+    Infodatatrack.findById(req.params.idifdt, function(err, infodatatrack) {
+        var saveInfodatatrack = extend({}, req.body);
+        // for (var key in saveInfodatatrack) {
+        //     //console.log(key + ": " + saveInfodatatrack[key]);
+        //     if (typeof saveInfodatatrack[key] === 'object') {
+        //         // estoy dentro de properties
+        //         for (var key2 in saveInfodatatrack[key]) {
+        //             //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
+        //             infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+        //         }
+        //     } else {
+        //         infodatatrack[key] = saveInfodatatrack[key];
+        //     }
+        // }
+
+        //console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
+        // infodatatrack.updated_at = new Date();
+        // infodatatrack.save(function(err, data) {
+        //     if (err) {
+        //         return res.status(500).send(err.message);
+        //     }
+        //     //console.log('RESULT OK :\n' + JSON.stringify(data));
+        //     res.status(200).jsonp(data);
+        // });
+
+        res.status(200).jsonp(infodatatrack);
+    });
+
+});
+
 module.exports = router;
