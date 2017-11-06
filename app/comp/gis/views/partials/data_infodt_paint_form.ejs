@@ -52,7 +52,7 @@
                     }
                 }
                 if (data.properties.koboedit !== undefined && data.properties.koboedit !== null &&
-                    typeof data.properties.koboedit !== "undefined" && data.properties.koboedit !== '' &&
+                    typeof data.properties.koboedit !== "undefined" && data.properties.koboedit !== '' && data.properties.koboedit.length > 0 &&
                     data.properties.koboedit[0].kobo_type[index] !== undefined && data.properties.koboedit[0].kobo_type[index] !== '') {
                     if (data.properties.koboedit[0].kobo_type[index].toUpperCase() === "BRIDGE") {
                         html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[0].kobo_id[index] + '\",' +
