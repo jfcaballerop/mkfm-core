@@ -37,7 +37,8 @@
                 }
                 html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[index] + ' ]</td>';
                 html[++h] = '<td id="infodatatrack[properties][kobo]">';
-                if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null && typeof data.properties.kobo[index] !== "undefined") {
+                if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null && typeof data.properties.kobo[index] !== "undefined" &&
+                    data.properties.kobo[index].kobo_type !== undefined && data.properties.kobo[index].kobo_type !== '') {
                     if (data.properties.kobo[index].kobo_type.toUpperCase() === "BRIDGE") {
                         html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.kobo[index].kobo_id + '\",' +
                             ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
@@ -50,25 +51,26 @@
 
                     }
                 }
-                if (data.properties.koboedit !== undefined && data.properties.koboedit[index] !== null &&
-                    typeof data.properties.koboedit[index] !== "undefined" && data.properties.koboedit[index] !== '') {
-                    if (data.properties.koboedit[index].kobo_type.toUpperCase() === "BRIDGE") {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
+                if (data.properties.koboedit !== undefined && data.properties.koboedit !== null &&
+                    typeof data.properties.koboedit !== "undefined" && data.properties.koboedit !== '' &&
+                    data.properties.koboedit[0].kobo_type[index] !== undefined && data.properties.koboedit[0].kobo_type[index] !== '') {
+                    if (data.properties.koboedit[0].kobo_type[index].toUpperCase() === "BRIDGE") {
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[0].kobo_id[index] + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[0].kobo_type[index] + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
                         html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: #F47983;" title="DELETE BRIDGE"> </i>';
-                    } else if (data.properties.koboedit[index].kobo_type.toUpperCase() === "ODT") {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: blue;" title="ODT"> </i>';
+                    } else if (data.properties.koboedit[0].kobo_type[index].toUpperCase() === "ODT") {
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[0].kobo_id[index] + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[0].kobo_type[index] + '\"}\' aria-hidden="true" style="color: blue;" title="ODT"> </i>';
                         html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: blue;" title="DELETE ODT"> </i>';
                     } else {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
+                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[0].kobo_id[index] + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[0].kobo_type[index] + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
                         html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: green;" title="DELETE GEOTECHNICAL"> </i>';
 
                     }
 
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_id + '">';
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_type + '">';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[0].kobo_id[index] + '">';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[0].kobo_type[index] + '">';
                 } else {
                     html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
                     html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
