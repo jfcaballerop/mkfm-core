@@ -57,15 +57,18 @@
                     if (data.properties.koboedit[index].kobo_type.toUpperCase() === "BRIDGE") {
                         html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
                             ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: #F47983;" title="DELETE BRIDGE"> </i>';
+                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: #F47983;" title="DELETE BRIDGE"> </i>';
                     } else if (data.properties.koboedit[index].kobo_type.toUpperCase() === "ODT") {
                         html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
                             ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: blue;" title="ODT"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: blue;" title="DELETE ODT"> </i>';
+                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: blue;" title="DELETE ODT"> </i>';
                     } else {
                         html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
                             ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: green;" title="DELETE GEOTECHNICAL"> </i>';
+                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index + '\"}\' aria-hidden="true " style="color: green;" title="DELETE GEOTECHNICAL "> </i>';
 
                     }
 
@@ -1547,10 +1550,10 @@
             dataPost = obj;
             dataPost._id = rObject._id;
             console.log(dataPost);
-            console.log('/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index);
+            console.log('/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index + '/' + obj.kobo_id);
 
             var p1 = $.ajax({
-                url: '/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index,
+                url: '/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index + '/' + obj.kobo_id,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'

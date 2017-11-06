@@ -47,13 +47,13 @@ router.use(bodyParser.json());
 /**
  * Modify ROWS
  */
-router.post('/delrows/:idifdt/:rowid', function(req, resp, next) {
+router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
     var postData = extend({}, req.body);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/delrowskobo/' + req.params.idifdt + '/' + req.params.rowid,
+        path: config.PATH_API + '/infodatatrack/V1/delrowskobo/' + req.params.idifdt + '/' + req.params.rowid + '/' + req.params.koboid,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -904,35 +904,84 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
 });
 
 /* UPDATE Infodatatrack */
-router.post('/V1/delrowskobo/:idifdt/:rowid', function(req, res, next) {
+router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
     console.log('## UPDATE delrowskobo ##\nBODY: ' + JSON.stringify(req.body));
+    Koboinfo.findById(req.params.koboid, function(err, kobomod) {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        console.log('kobomod ' + kobomod);
+        Infodatatrack.findById(req.params.idifdt, function(err, ifdt) {
+            if (err) return handleError(err);
 
-    Infodatatrack.findById(req.params.idifdt, function(err, infodatatrack) {
-        var saveInfodatatrack = extend({}, req.body);
-        // for (var key in saveInfodatatrack) {
-        //     //console.log(key + ": " + saveInfodatatrack[key]);
-        //     if (typeof saveInfodatatrack[key] === 'object') {
-        //         // estoy dentro de properties
-        //         for (var key2 in saveInfodatatrack[key]) {
-        //             //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
-        //             infodatatrack[key][key2] = saveInfodatatrack[key][key2];
-        //         }
-        //     } else {
-        //         infodatatrack[key] = saveInfodatatrack[key];
-        //     }
-        // }
+            var arrkoboedit = [];
+            var properties = [];
 
-        //console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
-        // infodatatrack.updated_at = new Date();
-        // infodatatrack.save(function(err, data) {
-        //     if (err) {
-        //         return res.status(500).send(err.message);
-        //     }
-        //     //console.log('RESULT OK :\n' + JSON.stringify(data));
-        //     res.status(200).jsonp(data);
-        // });
+            var ini = parseInt(req.params.rowid);
+            var fin = parseInt(req.params.rowid);
 
-        res.status(200).jsonp(infodatatrack);
+            for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
+                if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
+                    var arrprop = [];
+
+
+                    for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
+                        var newprop = '';
+                        if (cindex >= ini && cindex <= fin) {
+                            newprop = kobomod.properties[vprop];
+                            arrprop.push(newprop);
+                        } else {
+
+                            if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
+                                arrprop.push(ifdt.properties[vprop][cindex]);
+
+                            } else {
+                                arrprop.push(newprop);
+
+                            }
+                        }
+
+                    }
+                    if (ifdt.properties[vprop] === undefined) {
+                        ifdt.properties[vprop] = [];
+                    }
+                    ifdt.properties[vprop] = arrprop;
+                }
+            }
+
+            for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
+                var newkobo = {};
+                if (cindex >= ini && cindex <= fin) {
+                    newkobo.kobo_id = datamod._id;
+                    newkobo.kobo_type = datamod.properties.kobo_type;
+                    arrkoboedit.push(newkobo);
+
+                } else {
+                    if (ifdt.properties.koboedit.length != 0) {
+                        arrkoboedit.push(ifdt.properties.koboedit[cindex]);
+
+                    } else {
+                        arrkoboedit.push(newkobo);
+
+                    }
+                }
+                // console.log(cindex + JSON.stringify(arrkoboedit[cindex]));
+
+            }
+            ifdt.properties.koboedit = arrkoboedit;
+            ifdt.isNew = false;
+
+            ifdt.save(function(err, imod) {
+                if (err) {
+                    return res.status(500).send(err.message);
+                }
+                // console.log('imod.properties.koboedit: ' + JSON.stringify(imod.properties.koboedit));
+
+                res.status(200).jsonp(kobomod);
+            });
+        });
+
+
     });
 
 });
