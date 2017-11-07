@@ -750,7 +750,13 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
                 // estoy dentro de properties
                 for (var key2 in saveInfodatatrack[key]) {
                     //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
-                    infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+                    if (key2 === 'koboedit') {
+                        infodatatrack[key][key2]["kobo_id"] = saveInfodatatrack[key][key2]["kobo_id"];
+                        infodatatrack[key][key2]["kobo_type"] = saveInfodatatrack[key][key2]["kobo_type"];
+
+                    } else {
+                        infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+                    }
                 }
             } else {
                 infodatatrack[key] = saveInfodatatrack[key];
@@ -910,7 +916,7 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
         if (err) {
             return res.status(500).send(err.message);
         }
-        console.log('kobomod ' + kobomod);
+        console.log('kobomod ' + kobomod._id);
         Infodatatrack.findById(req.params.idifdt, function(err, ifdt) {
             if (err) return handleError(err);
 

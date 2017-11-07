@@ -75,8 +75,9 @@
                     html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_id + '">';
                     html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_type + '">';
                 } else {
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="">';
+                    var strblnk = '';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + strblnk + '">';
+                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + strblnk + '">';
 
                 }
                 html[++h] = '</td>';
