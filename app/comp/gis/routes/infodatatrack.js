@@ -82,6 +82,8 @@ router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
             //delete responseObject[_id];
             //// console.log(JSON.stringify(responseObject));
             resp.status(200).jsonp(responseObject);
+            // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.params.idifdt);
+
         });
     });
     request.write(JSON.stringify(postData));
@@ -934,10 +936,16 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
                     for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
                         var newprop = '';
                         if (cindex >= ini && cindex <= fin) {
-                            newprop = kobomod.properties[vprop];
+                            /**
+                             * Si estoy dentro de las filas a borrar
+                             * relleno con info vacía
+                             */
+                            // newprop = kobomod.properties[vprop];
                             arrprop.push(newprop);
                         } else {
-
+                            /**
+                             * El resto de valores los dejo como están
+                             */
                             if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
                                 arrprop.push(ifdt.properties[vprop][cindex]);
 
@@ -958,8 +966,8 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
             for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
                 var newkobo = {};
                 if (cindex >= ini && cindex <= fin) {
-                    newkobo.kobo_id = datamod._id;
-                    newkobo.kobo_type = datamod.properties.kobo_type;
+                    newkobo.kobo_id = '';
+                    newkobo.kobo_type = '';
                     arrkoboedit.push(newkobo);
 
                 } else {

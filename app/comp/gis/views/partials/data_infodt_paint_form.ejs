@@ -1549,10 +1549,13 @@
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            // Promise.all([p1]).then(function(values) {
-            //     $("#formkobo").empty();
-            //     koboinfo = values[0];
-            // });
+            Promise.all([p1]).then(function(values) {
+                dataTrack = values[0];
+                // console.log(dataTrack);
+                // location.reload();
+                window.location.reload(true);
+
+            });
 
         });
 
