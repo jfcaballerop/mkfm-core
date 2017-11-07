@@ -1496,8 +1496,6 @@
                     //$("input[name*='kobo[" + key + "]']").val(value);
                 });
                 var optionsstr = '';
-                var notchangecoordinates = true;
-                var unique = false;
                 for (var i = ini; i < fin; i++) {
                     optionsstr += '<option>' + i + '</option>';
                 }
@@ -1506,26 +1504,15 @@
                     '<select class="form-control" name="kobo[ifdtini]" required class="form-control">' +
                     optionsstr +
                     '</select></div>');
-                $('#formkoboform').bind("submit", function(event) {
-                    if (notchangecoordinates) {
-                        !unique ? alert("Lista de coordenadas no cambiadas") : false;
-                        event.preventDefault();
-                    } else {
-                        alert("grabando info...");
-                        notchangecoordinates = true;
-                        $("#formkoboform").trigger("submit");
-                    }
-                });
 
                 var $inputsCOORini = $('#formkobo').find('select[ name="kobo[ifdtini]"]');
                 $inputsCOORini.on('change', function() {
+                    $('#coordsubmit').prop('disabled', false);
                     var $this = $(this);
                     if ($this.val() != '') {
                         ////console.log('ID: ' + $this.attr("id"));
                         ////console.log('Check: ' + (index));
                         $('#formkobo').find("input[name='kobo[geometry][coordinates]']").val(rObject.geometry.coordinates[parseInt($this.val())]);
-                        notchangecoordinates = false;
-                        unique = true;
 
                     }
                 });
