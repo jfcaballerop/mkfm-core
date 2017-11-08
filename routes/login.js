@@ -13,7 +13,7 @@ var i18n = require('i18n');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var lang = req.query.clang || 'es';
+    var lang = req.query.clang || 'en';
     console.log('## LANG:: ## ' + lang);
 
     res.cookie('ulang', lang);

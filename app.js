@@ -37,9 +37,9 @@ app.use(cookieParser());
 // TRANSLATE CONFIG
 
 i18n.configure({
-    locales: ['es', 'en'],
+    locales: ['en', 'es'],
     directory: path.join(__dirname, '/app/translate/i18n'),
-    defaultLocale: 'es',
+    defaultLocale: 'en',
     autoReload: true,
     cookie: 'ulang',
     api: {
