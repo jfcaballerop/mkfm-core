@@ -38,6 +38,20 @@
                 $(this).remove()
             })[0].click()
     });
+    $('#exportbutton').click(function(e) {
+        e.preventDefault();
+
+        //getting data from our table
+        var data_type = 'data:application/vnd.ms-excel';
+        var table_div = document.getElementById('dataTable');
+        var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+        var a = document.createElement('a');
+        a.href = data_type + ', ' + table_html;
+        a.download = 'exported_track_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+        a.click();
+    });
+
 
     $('#versionbutton').click(function() {
         // alert('Versionando documento');
@@ -62,6 +76,7 @@
             $('#editbutton').show();
             $('#editvideobutton').show();
             $('#downloadbutton').show();
+            $('#exportbutton').show();
             ////console.log(JSON.stringify(values));
             $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
@@ -97,6 +112,7 @@
                 $('#editbutton').show();
                 $('#editvideobutton').show();
                 $('#downloadbutton').show();
+                $('#exportbutton').show();
                 $('#versionbutton').hide();
 
                 dataRoad = dataTrack;
@@ -740,6 +756,7 @@
         $('#editbutton').hide();
         $('#editvideobutton').hide();
         $('#downloadbutton').hide();
+        $('#exportbutton').hide();
         $('#dataTable').empty();
         $('#versionbutton').show();
         // alert("ACT " + id);
