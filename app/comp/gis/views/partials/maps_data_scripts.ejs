@@ -390,18 +390,24 @@
                 $(this).remove()
             })[0].click()
     });
+
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
     $('#exportbutton').click(function(e) {
-        e.preventDefault();
 
-        //getting data from our table
-        var data_type = 'data:application/vnd.ms-excel';
-        var table_div = document.getElementById('dataTable');
-        var table_html = table_div.outerHTML.replace(/ /g, '%20');
+        var name = 'exported_track_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+        $("#dataTable").table2excel({
+            // exclude CSS class
+            exclude: ".noExl",
+            name: "Export data",
+            filename: name //do not include extension
+        });
 
-        var a = document.createElement('a');
-        a.href = data_type + ', ' + table_html;
-        a.download = 'exported_track_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
-        a.click();
+
     });
 
 
