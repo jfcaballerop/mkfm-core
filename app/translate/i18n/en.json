@@ -63,5 +63,6 @@
     "EDIT_VIDEO_INFO_CHECK": "Check Coord",
     "EDIT_VIDEO_INFO_ADD": "Add coord",
     "EDIT_VIDEO_INFO_DUPLI": "DUPLICATE",
-    "MAPSDATA_BUTTON_EXPORT": "Export excel"
+    "MAPSDATA_BUTTON_EXPORT": "Export excel",
+    "GMAPS_DATOS_BUTTON_ROADS": "Roads"
 }

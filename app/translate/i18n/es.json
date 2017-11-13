@@ -63,6 +63,7 @@
     "EDIT_VIDEO_INFO_CHECK": "Revisar coord",
     "EDIT_VIDEO_INFO_ADD": "Añadir coord",
     "EDIT_VIDEO_INFO_DUPLI": "DUPLICAR",
-    "MAPSDATA_BUTTON_EXPORT": "Exportar excel"
+    "MAPSDATA_BUTTON_EXPORT": "Exportar excel",
+    "GMAPS_DATOS_BUTTON_ROADS": "Carreteras"
 
 }
