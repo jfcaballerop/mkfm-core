@@ -1,0 +1,239 @@
+<script>
+    // This example uses the Google Maps JavaScript API's Data layer
+    // to create a rectangular polygon with 2 holes in it.
+    var map;
+    var activeInfoWindow;
+
+    function getContent(type, event) {
+        var content = '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>';
+        var subcontent = "";
+        if (event.feature.getProperty('kobo_type') === "ODT") {
+            subcontent += '<span style="font-weight: bold;">Clearing required : </span>' + event.feature.getProperty("dclearing") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Lost of section due to blocking/silting/obstacles (%): </span>' + event.feature.getProperty("dlostsection") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Diameter : </span>' + event.feature.getProperty("ddiameter") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Section: </span>' + event.feature.getProperty("dsection") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Protection bed / inverter arch at the drain exit: </span>' + event.feature.getProperty("dprotexit") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Protection bed / inverter arch at the drain entrance: </span>' + event.feature.getProperty("dprotentrance") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Culvert Number of elements: </span>' + event.feature.getProperty("dculnumelem") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Consequences of failure on LOS: </span>' + event.feature.getProperty("dconslos") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Protection of embankment at the drain entrance: </span>' + event.feature.getProperty("dprotentrance") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Current Visual Condition: </span>' + event.feature.getProperty("dvisualcondition") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Material: </span>' + event.feature.getProperty("dmaterial") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Damages on Culverts: </span>' + event.feature.getProperty("dcrossdamages") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Comments to Operation and Maintainance: </span>' + event.feature.getProperty("domcomments") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Type of drainage: </span>' + event.feature.getProperty("dtype") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Length: </span>' + event.feature.getProperty("dlength") + '<br>';
+            subcontent += '<span style="font-weight: bold;"> Culvert Width (m): </span>' + event.feature.getProperty("dculwidth") + '<br>';
+
+        } else if (event.feature.getProperty('kobo_type') === "Bridge") {
+            event.feature.getProperty("bomcomments") !== undefined ? subcontent += '<span style="font-weight: bold;"> Comments to Operation and Maintainance: </span>' + event.feature.getProperty("bomcomments") + '<br>' : false;
+            event.feature.getProperty("bconslos") !== undefined ? subcontent += '<span style="font-weight: bold;"> Consequences of failure on LOS: </span>' + event.feature.getProperty("bconslos") + '<br>' : false;
+            event.feature.getProperty("bdamagesnonstructural") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages on non structural elements: </span>' + event.feature.getProperty("bdamagesnonstructural") + '<br>' : false;
+            event.feature.getProperty("bdamagesstructural") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages on structural elements: </span>' + event.feature.getProperty("bdamagesstructural") + '<br>' : false;
+            event.feature.getProperty("bdamagesstructuralgeneraltype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages structural general type: </span>' + event.feature.getProperty("bdamagesstructuralgeneraltype") + '<br>' : false;
+            event.feature.getProperty("bdamagesvaultsarchesmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages vaults arches mechanical durable: </span>' + event.feature.getProperty("bdamagesvaultsarchesmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagesvaultsarchesimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages vaults arches importance: </span>' + event.feature.getProperty("bdamagesvaultsarchesimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagespiersmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages piers mechanical durable: </span>' + event.feature.getProperty("bdamagespiersmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagespiersimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages piers importance: </span>' + event.feature.getProperty("bdamagespiersimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesspandrelwallmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages spandrel wall mechanical durable: </span>' + event.feature.getProperty("bdamagesspandrelwallmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagesspandrelwallimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages spandrel wall importance: </span>' + event.feature.getProperty("bdamagesspandrelwallimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesabutmentsmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages abutments mechanical durable: </span>' + event.feature.getProperty("bdamagesabutmentsmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagesabutmentsimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages abutments importance: </span>' + event.feature.getProperty("bdamagesabutmentsimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagessidewallsmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages side walls mechanical durable: </span>' + event.feature.getProperty("bdamagessidewallsmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagessidewallsimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages side walls importance: </span>' + event.feature.getProperty("bdamagessidewallsimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesslabmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages slab mechanical durable: </span>' + event.feature.getProperty("bdamagesslabmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagesslabimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages slab importance: </span>' + event.feature.getProperty("bdamagesslabimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesbeamsbracesmechanicaldurable") !== undefined ? subcontent += '<span style="font-weight: bold;"> Dmages beams braces mechanical durable: </span>' + event.feature.getProperty("bdamagesbeamsbracesmechanicaldurable") + '<br>' : false;
+            event.feature.getProperty("bdamagesbeamsbracesimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages beams braces importance: </span>' + event.feature.getProperty("bdamagesbeamsbracesimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesbearingstype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages bearings type: </span>' + event.feature.getProperty("bdamagesbearingstype") + '<br>' : false;
+            event.feature.getProperty("bdamagesbearingsimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages bearings importance: </span>' + event.feature.getProperty("bdamagesbearingsimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesspecialareastype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages special areas type: </span>' + event.feature.getProperty("bdamagesspecialareastype") + '<br>' : false;
+            event.feature.getProperty("bdamagesspecialareasimportance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages special areas importance: </span>' + event.feature.getProperty("bdamagesspecialareasimportance") + '<br>' : false;
+            event.feature.getProperty("bdamagesfoundations") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages foundations: </span>' + event.feature.getProperty("bdamagesfoundations") + '<br>' : false;
+            event.feature.getProperty("bdamagesfoundationsgeneraltype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages foundations general type: </span>' + event.feature.getProperty("bdamagesfoundationsgeneraltype") + '<br>' : false;
+            event.feature.getProperty("bdamagesfoundationsdetailedtype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Damages foundations detailed type: </span>' + event.feature.getProperty("bdamagesfoundationsdetailedtype") + '<br>' : false;
+            event.feature.getProperty("bvisualcondition") !== undefined ? subcontent += '<span style="font-weight: bold;"> Visual condition: </span>' + event.feature.getProperty("bvisualcondition") + '<br>' : false;
+            event.feature.getProperty("bprotectabut") !== undefined ? subcontent += '<span style="font-weight: bold;"> Protect abut: </span>' + event.feature.getProperty("bprotectabut") + '<br>' : false;
+            event.feature.getProperty("bpiersriver") !== undefined ? subcontent += '<span style="font-weight: bold;"> Piers river: </span>' + event.feature.getProperty("bpiersriver") + '<br>' : false;
+            event.feature.getProperty("bfoundation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Foundation: </span>' + event.feature.getProperty("bfoundation") + '<br>' : false;
+            event.feature.getProperty("bfreeheight") !== undefined ? subcontent += '<span style="font-weight: bold;"> Free height: </span>' + event.feature.getProperty("bfreeheight") + '<br>' : false;
+            event.feature.getProperty("bwidth") !== undefined ? subcontent += '<span style="font-weight: bold;"> Width: </span>' + event.feature.getProperty("bwidth") + '<br>' : false;
+            event.feature.getProperty("bmaxspan") !== undefined ? subcontent += '<span style="font-weight: bold;"> Max span: </span>' + event.feature.getProperty("bmaxspan") + '<br>' : false;
+            event.feature.getProperty("blenght") !== undefined ? subcontent += '<span style="font-weight: bold;"> Lenght: </span>' + event.feature.getProperty("blenght") + '<br>' : false;
+            event.feature.getProperty("bspans") !== undefined ? subcontent += '<span style="font-weight: bold;"> Spans: </span>' + event.feature.getProperty("bspans") + '<br>' : false;
+            event.feature.getProperty("bnumberspans") !== undefined ? subcontent += '<span style="font-weight: bold;"> Number spans: </span>' + event.feature.getProperty("bnumberspans") + '<br>' : false;
+            event.feature.getProperty("balignment") !== undefined ? subcontent += '<span style="font-weight: bold;"> Alignment: </span>' + event.feature.getProperty("balignment") + '<br>' : false;
+            event.feature.getProperty("bmaterialabutments") !== undefined ? subcontent += '<span style="font-weight: bold;"> Material abutments: </span>' + event.feature.getProperty("bmaterialabutments") + '<br>' : false;
+            event.feature.getProperty("bmaterialpiers") !== undefined ? subcontent += '<span style="font-weight: bold;"> Material piers: </span>' + event.feature.getProperty("bmaterialpiers") + '<br>' : false;
+            event.feature.getProperty("bmaterialdeck") !== undefined ? subcontent += '<span style="font-weight: bold;"> Material deck: </span>' + event.feature.getProperty("bmaterialdeck") + '<br>' : false;
+            event.feature.getProperty("bmaterialgirder") !== undefined ? subcontent += '<span style="font-weight: bold;"> Material girder: </span>' + event.feature.getProperty("bmaterialgirder") + '<br>' : false;
+            event.feature.getProperty("bobstaclesaved") !== undefined ? subcontent += '<span style="font-weight: bold;"> Obstacle saved: </span>' + event.feature.getProperty("bobstaclesaved") + '<br>' : false;
+            event.feature.getProperty("bsurrounding") !== undefined ? subcontent += '<span style="font-weight: bold;"> Surrounding: </span>' + event.feature.getProperty("bsurrounding") + '<br>' : false;
+        } else {
+            event.feature.getProperty("gconslos") !== undefined ? subcontent += '<span style="font-weight: bold;"> Consequences of failure on LOS: </span>' + event.feature.getProperty("gconslos") + '<br>' : false;
+            event.feature.getProperty("gextentfailure") !== undefined ? subcontent += '<span style="font-weight: bold;"> Extent of failure (%): </span>' + event.feature.getProperty("gextentfailure") + '<br>' : false;
+            event.feature.getProperty("gtypefailure") !== undefined ? subcontent += '<span style="font-weight: bold;"> Type of failure process: </span>' + event.feature.getProperty("gtypefailure") + '<br>' : false;
+            event.feature.getProperty("gintensityfailure") !== undefined ? subcontent += '<span style="font-weight: bold;"> Intensity of failure process: </span>' + event.feature.getProperty("gintensityfailure") + '<br>' : false;
+            event.feature.getProperty("gevidrecfailures") !== undefined ? subcontent += '<span style="font-weight: bold;"> Evidence of recent failures?: </span>' + event.feature.getProperty("gevidrecfailures") + '<br>' : false;
+            event.feature.getProperty("gvisualcondition") !== undefined ? subcontent += '<span style="font-weight: bold;"> Current visual condition: </span>' + event.feature.getProperty("gvisualcondition") + '<br>' : false;
+            event.feature.getProperty("gtypevegetation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Type of Vegetation: </span>' + event.feature.getProperty("gtypevegetation") + '<br>' : false;
+            event.feature.getProperty("gvegetation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Vegetation: </span>' + event.feature.getProperty("gvegetation") + '<br>' : false;
+            event.feature.getProperty("gtreatments") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments: </span>' + event.feature.getProperty("gtreatments") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretaining") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining: </span>' + event.feature.getProperty("gtreatmentsretaining") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretainingtype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining type: </span>' + event.feature.getProperty("gtreatmentsretainingtype") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretainingextension") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining extension: </span>' + event.feature.getProperty("gtreatmentsretainingextension") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretainingeffectiveness") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining effectiveness: </span>' + event.feature.getProperty("gtreatmentsretainingeffectiveness") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretainingconservation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining conservation: </span>' + event.feature.getProperty("gtreatmentsretainingconservation") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsretainingother") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments retaining other: </span>' + event.feature.getProperty("gtreatmentsretainingother") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefence") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence: </span>' + event.feature.getProperty("gtreatmentsdefence") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefencetype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence type: </span>' + event.feature.getProperty("gtreatmentsdefencetype") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefenceextension") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence extension: </span>' + event.feature.getProperty("gtreatmentsdefenceextension") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefenceeffectiveness") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence effectiveness: </span>' + event.feature.getProperty("gtreatmentsdefenceeffectiveness") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefenceconservation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence conservation: </span>' + event.feature.getProperty("gtreatmentsdefenceconservation") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsdefenceother") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments defence other: </span>' + event.feature.getProperty("gtreatmentsdefenceother") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoating") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating: </span>' + event.feature.getProperty("gtreatmentscoating") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoatingtype") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating type: </span>' + event.feature.getProperty("gtreatmentscoatingtype") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoatingextension") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating extension: </span>' + event.feature.getProperty("gtreatmentscoatingextension") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoatingeffectiveness") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating effectiveness: </span>' + event.feature.getProperty("gtreatmentscoatingeffectiveness") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoatingconservation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating conservation: </span>' + event.feature.getProperty("gtreatmentscoatingconservation") + '<br>' : false;
+            event.feature.getProperty("gtreatmentscoatingother") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments coating other: </span>' + event.feature.getProperty("gtreatmentscoatingother") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsinternaldrainages") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments internal drainages: </span>' + event.feature.getProperty("gtreatmentsinternaldrainages") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsinternaldrainagesextension") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments internal drainages extension: </span>' + event.feature.getProperty("gtreatmentsinternaldrainagesextension") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsinternaldrainageseffectiveness") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments internal drainages effectiveness: </span>' + event.feature.getProperty("gtreatmentsinternaldrainageseffectiveness") + '<br>' : false;
+            event.feature.getProperty("gtreatmentsinternaldrainagesconservation") !== undefined ? subcontent += '<span style="font-weight: bold;"> Treatments internal drainages conservation: </span>' + event.feature.getProperty("gtreatmentsinternaldrainagesconservation") + '<br>' : false;
+            event.feature.getProperty("gblocks") !== undefined ? subcontent += '<span style="font-weight: bold;"> Size of blocks (m): </span>' + event.feature.getProperty("gblocks") + '<br>' : false;
+            event.feature.getProperty("gshoulders") !== undefined ? subcontent += '<span style="font-weight: bold;"> Shoulders / Verges: </span>' + event.feature.getProperty("gshoulders") + '<br>' : false;
+            event.feature.getProperty("glength") !== undefined ? subcontent += '<span style="font-weight: bold;"> Length (m): </span>' + event.feature.getProperty("glength") + '<br>' : false;
+            event.feature.getProperty("gdistance") !== undefined ? subcontent += '<span style="font-weight: bold;"> Distance to road (m): </span>' + event.feature.getProperty("gdistance") + '<br>' : false;
+            event.feature.getProperty("gslope") !== undefined ? subcontent += '<span style="font-weight: bold;"> Slope / Angle (º): </span>' + event.feature.getProperty("gslope") + '<br>' : false;
+            event.feature.getProperty("gh_h") !== undefined ? subcontent += '<span style="font-weight: bold;"> Relation h/H (m): </span>' + event.feature.getProperty("gh_h") + '<br>' : false;
+            event.feature.getProperty("gheight") !== undefined ? subcontent += '<span style="font-weight: bold;"> Height (m): </span>' + event.feature.getProperty("gheight") + '<br>' : false;
+            event.feature.getProperty("gnature") !== undefined ? subcontent += '<span style="font-weight: bold;"> Nature - Earthworks: </span>' + event.feature.getProperty("gnature") + '<br>' : false;
+            event.feature.getProperty("gmaterial") !== undefined ? subcontent += '<span style="font-weight: bold;"> Material - Retaining walls: </span>' + event.feature.getProperty("gmaterial") + '<br>' : false;
+            event.feature.getProperty("gposition") !== undefined ? subcontent += '<span style="font-weight: bold;"> Position: </span>' + event.feature.getProperty("gposition") + '<br>' : false;
+        }
+
+        content += '<div class="scrollFix">' +
+            event.feature.getProperty('xform_id_string') + " -- " +
+            event.feature.getProperty('_id') + '<br>' +
+            '[ ' + event.latLng.toUrlValue(6) + ' ]<hr>' +
+            subcontent +
+            '</div>'
+        return content;
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function initMap(file, zoom, color) {
+        var optionsMap = {
+            center: {
+                lat: 15.41,
+                lng: -61.32
+            },
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), optionsMap);
+        var vfile = file || [];
+        if (zoom)
+            map.setZoom(zoom);
+        else
+            map.setZoom(11);
+
+        // 
+
+
+        var jsonObject;
+        <% roads.forEach(function(element) { %>
+        jsonObject = <%- JSON.stringify(element) %>;
+        jsonObject.properties.color = "#5b5e63";
+        jsonObject.properties.nameoption = "ROADS";
+        //console.log(JSON.stringify(jsonObject));
+        map.data.addGeoJson(jsonObject);
+        <%}); %>
+
+        <% koboinfos_odt.forEach(function(element) { %>
+        jsonObject = <%- JSON.stringify(element) %>;
+        jsonObject.properties.color = "blue";
+        jsonObject.properties.nameoption = "ODT";
+        //console.log(JSON.stringify(jsonObject));
+        map.data.addGeoJson(jsonObject);
+
+        <%}); %>
+        <% koboinfos_bridge.forEach(function(element) { %>
+        jsonObject = <%- JSON.stringify(element) %>;
+        jsonObject.properties.color = "#F47983";
+        jsonObject.properties.nameoption = "BRIDGE";
+        //console.log(JSON.stringify(jsonObject));
+        map.data.addGeoJson(jsonObject);
+
+        <%}); %>
+        <% koboinfos_geo.forEach(function(element) { %>
+        jsonObject = <%- JSON.stringify(element) %>;
+        jsonObject.properties.color = "green";
+        jsonObject.properties.nameoption = "GEOT";
+        //console.log(JSON.stringify(jsonObject));
+        map.data.addGeoJson(jsonObject);
+
+        <%}); %>
+
+        var infoWnd = new google.maps.InfoWindow();
+
+        // on mouseout (moved mouse off marker) make infoWindow disappear
+        map.data.addListener('mouseout', function(event) {
+            infoWnd.close();
+        });
+
+        // Set mouseover event for each feature.
+        map.data.addListener('mouseover', function(event) {
+            //console.log(event.latLng);
+            infoWnd.setPosition(event.latLng);
+            infoWnd.setContent(getContent(event.feature.getProperty('kobo_type'), event));
+            // Close active window if exists - [one might expect this to be default behaviour no?]				
+            if (activeInfoWindow != null) activeInfoWindow.close();
+
+            // Open new InfoWindow for mouseover event
+            if (event.feature.getProperty('nameoption') === 'ODT' ||
+                event.feature.getProperty('nameoption') === 'BRIDGE' ||
+                event.feature.getProperty('nameoption') === 'GEOT') {
+                infoWnd.open(map);
+            }
+
+            // Store new open InfoWindow in global variable
+            activeInfoWindow = infoWnd;
+            var infoTextContent = event.feature.getProperty('nameoption');
+            if (event.feature.getProperty('nameoption') === 'ROADS') {
+                infoTextContent += ' ' + event.feature.getProperty('name');
+            }
+            document.getElementById('info-box').textContent = infoTextContent;
+
+        });
+        map.data.setStyle(function(feature) {
+            var color = feature.getProperty('color');
+            var nameopt = feature.getProperty('nameoption');
+            $('#layergps option[value="' + nameopt + '"]').prop('style', 'color: ' + color);
+
+            return {
+                fillColor: color,
+                strokeColor: color,
+                strokeWeight: 3,
+                strokeOpacity: 0.7,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    strokeColor: color,
+                    strokeOpacity: 0.5,
+                    scale: 3
+                }
+            }
+        });
+
+
+        // });
+    };
+</script>
