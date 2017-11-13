@@ -236,4 +236,24 @@
 
         // });
     };
+
+    $(document).ready(function() {
+        console.log("Funciones Listas a ejecutarse!");
+
+        $('#layergps').click(function() {
+            var $this = $(this);
+
+            switch ($this.val()) {
+                case 'ROADS':
+                    alert(' ## ROADS ##');
+                    break;
+
+                default:
+                    break;
+            };
+        })
+    });
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
 </script>

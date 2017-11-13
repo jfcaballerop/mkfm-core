@@ -87,12 +87,10 @@
                     <div class="col-md-10" style="height:80vh;">
                         <div id="map"></div>
                         <div id="info-box">--</div>
-                        <% include partials/gmaps_functions %>
 
-                            <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
-                            </script>
-                            <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
-                            <!-- </iframe> -->
+
+                        <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
+                        <!-- </iframe> -->
                     </div>
                 </div>
                 <!-- page end-->
@@ -123,8 +121,7 @@
 
         <!--script for this page-->
 
-        <script>
-        </script>
+        <% include partials/gmaps_functions %>
 
 </body>
 
