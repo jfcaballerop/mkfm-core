@@ -484,6 +484,19 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
 
             var ini = datamod.ifdtini;
             var fin = datamod.ifdtfin != 0 ? datamod.ifdtfin : datamod.ifdtini;
+            if (kobomod._doc.properties.gtype === undefined) {
+                /**
+                 * Si no es GEO, aplico el método normal
+                 */
+                console.log(' Kobomod NO ES GEOTECH ');
+            } else {
+                /**
+                 * En caso de ser GEO necesito revisar el lado al que aplica IZDA o DCHA
+                 */
+
+                console.log('\n Kobomod position:: ' + JSON.stringify(kobomod._doc.properties.gposition));
+
+            }
             for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
                 if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
                     var arrprop = [];
@@ -509,7 +522,20 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
                     if (ifdt.properties[vprop] === undefined) {
                         ifdt.properties[vprop] = [];
                     }
-                    ifdt.properties[vprop] = arrprop;
+                    if (kobomod._doc.properties.gtype === undefined) {
+                        ifdt.properties[vprop] = arrprop;
+                    } else {
+                        /**
+                         * Si es un GEO
+                         * Reviso si es LEFT y RIGTH para ver si los campos son nomcampo2 o no
+                         */
+                        if (kobomod._doc.properties.gposition === 'LEFT') {
+                            ifdt.properties[vprop] = arrprop;
+                        } else {
+                            ifdt.properties[vprop + '2'] = arrprop;
+
+                        }
+                    }
                 }
             }
 
