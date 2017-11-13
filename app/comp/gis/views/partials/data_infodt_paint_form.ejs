@@ -700,612 +700,748 @@
         var $inputsRLightFunct = $('#form').find('select[ name="infodatatrack[properties][RLightFunct]"]');
         $inputsRLightFunct.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRLightFunct[index].value = $this.val();
+                    } else {
+                        $inputsRLightFunct[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRLightType = $('#form').find('select[ name="infodatatrack[properties][RLightType]"]');
         $inputsRLightType.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRLightType[index].value = $this.val();
+                    } else {
+                        $inputsRLightType[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsRSignalsFunct = $('#form').find('select[ name="infodatatrack[properties][RSignalsFunct]"]');
         $inputsRSignalsFunct.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRSignalsFunct[index].value = $this.val();
+                    } else {
+                        $inputsRSignalsFunct[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRVSignalsType = $('#form').find('select[ name="infodatatrack[properties][RVSignalsType]"]');
         $inputsRVSignalsType.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRVSignalsType[index].value = $this.val();
+                    } else {
+                        $inputsRVSignalsType[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRSignalsType = $('#form').find('select[ name="infodatatrack[properties][RSignalsType]"]');
         $inputsRSignalsType.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRSignalsType[index].value = $this.val();
+                    } else {
+                        $inputsRSignalsType[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRBarrierFunct = $('#form').find('select[ name="infodatatrack[properties][RBarrierFunct]"]');
         $inputsRBarrierFunct.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRBarrierFunct[index].value = $this.val();
+                    } else {
+                        $inputsRBarrierFunct[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRSafetyFence = $('#form').find('select[ name="infodatatrack[properties][RSafetyFence]"]');
         $inputsRSafetyFence.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRSafetyFence[index].value = $this.val();
+                    } else {
+                        $inputsRSafetyFence[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRBarriersType = $('#form').find('select[ name="infodatatrack[properties][RBarriersType]"]');
         $inputsRBarriersType.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRBarriersType[index].value = $this.val();
+                    } else {
+                        $inputsRBarriersType[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsRC = $('#form').find('select[ name="infodatatrack[properties][road_category]"]');
         $inputsRC.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsRC[index].value = $this.val();
+                    } else {
+                        $inputsRC[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
+
         });
         var $inputsPM = $('#form').find('select[ name="infodatatrack[properties][pavement_material]"]');
         $inputsPM.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsPM[index].value = $this.val();
+                    } else {
+                        $inputsPM[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsCVC = $('#form').find('select[ name="infodatatrack[properties][current_visual_condition]"]');
         $inputsCVC.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsCVC[index].value = $this.val();
+                    } else {
+                        $inputsCVC[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsGT = $('#form').find('select[ name="infodatatrack[properties][gtype]"]');
         $inputsGT.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGT[index].value = $this.val();
+                    } else {
+                        $inputsGT[index].value = '';
+
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsGPOS = $('#form').find('select[ name="infodatatrack[properties][gposition]"]');
         $inputsGPOS.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+
                         $inputsGPOS[index].value = $this.val();
+                    } else {
+                        $inputsGPOS[index].value = '';
                     }
+                }
 
-
-                });
-            }
+            });
         });
         var $inputsGVPOS = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition]"]');
         $inputsGVPOS.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+
                         $inputsGVPOS[index].value = $this.val();
+                    } else {
+                        $inputsGVPOS[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsDT = $('#form').find('select[ name="infodatatrack[properties][dtype]"]');
         $inputsDT.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+
+                    if ($this.val() != '') {
+
                         $inputsDT[index].value = $this.val();
+                    } else {
+                        $inputsDT[index].value = '';
                     }
 
-
-                });
-            }
+                }
+            });
         });
 
         var $inputsDP = $('#form').find('select[ name="infodatatrack[properties][dposition]"]');
         $inputsDP.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsDP[index].value = $this.val();
+                    } else {
+                        $inputsDP[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
         });
         var $inputsBE = $('#form').find('select[ name="infodatatrack[properties][bexists]"]');
         $inputsBE.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsBE[index].value = $this.val();
+                    } else {
+                        $inputsBE[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsGS = $('#form').find('select[ name="infodatatrack[properties][gslope]"]');
         $inputsGS.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGS[index].value = $this.val();
+                    } else {
+                        $inputsGS[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgmaterial = $('#form').find('select[ name="infodatatrack[properties][gmaterial]"]');
         $inputsgmaterial.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgmaterial[index].value = $this.val();
+                    } else {
+                        $inputsgmaterial[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgnature = $('#form').find('select[ name="infodatatrack[properties][gnature]"]');
         $inputsgnature.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgnature[index].value = $this.val();
+                    } else {
+                        $inputsgnature[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgh_h = $('#form').find('select[ name="infodatatrack[properties][gh_h]"]');
         $inputsgh_h.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgh_h[index].value = $this.val();
+                    } else {
+                        $inputsgh_h[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgtreatments = $('#form').find('select[ name="infodatatrack[properties][gtreatments]"]');
         $inputsgtreatments.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgtreatments[index].value = $this.val();
+                    } else {
+                        $inputsgtreatments[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgvegetation = $('#form').find('select[ name="infodatatrack[properties][gvegetation]"]');
         $inputsgvegetation.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgvegetation[index].value = $this.val();
+                    } else {
+                        $inputsgvegetation[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgtypevegetation = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation]"]');
         $inputsgtypevegetation.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgtypevegetation[index].value = $this.val();
+                    } else {
+                        $inputsgtypevegetation[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsdsection = $('#form').find('select[ name="infodatatrack[properties][dsection]"]');
         $inputsdsection.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsdsection[index].value = $this.val();
+                    } else {
+                        $inputsdsection[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsGS2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
         $inputsGS2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGS2[index].value = $this.val();
+                    } else {
+                        $inputsGS2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
         $inputsgmaterial2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgmaterial2[index].value = $this.val();
+                    } else {
+                        $inputsgmaterial2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
         $inputsgnature2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgnature2[index].value = $this.val();
+                    } else {
+                        $inputsgnature2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
         $inputsgh_h2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgh_h2[index].value = $this.val();
+                    } else {
+                        $inputsgh_h2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
         $inputsgtreatments2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgtreatments2[index].value = $this.val();
+                    } else {
+                        $inputsgtreatments2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
         $inputsgvegetation2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgvegetation2[index].value = $this.val();
+                    } else {
+                        $inputsgvegetation2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
         $inputsgtypevegetation2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsgtypevegetation2[index].value = $this.val();
+                    } else {
+                        $inputsgtypevegetation2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsGT2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
         $inputsGT2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGT2[index].value = $this.val();
+                    } else {
+                        $inputsGT2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsGPOS2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
         $inputsGPOS2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGPOS2[index].value = $this.val();
+                    } else {
+                        $inputsGPOS2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsGVPOS2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
         $inputsGVPOS2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsGVPOS2[index].value = $this.val();
+                    } else {
+                        $inputsGVPOS2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
         $inputsdsection2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsdsection2[index].value = $this.val();
+                    } else {
+                        $inputsdsection2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
         var $inputsDT2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
         $inputsDT2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsDT2[index].value = $this.val();
+                    } else {
+                        $inputsDT2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
 
         var $inputsDP2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
         $inputsDP2.on('change', function() {
             var $this = $(this);
-            if ($this.val() != '') {
-                ////console.log('ID: ' + $this.attr("id"));
-                $checks.each(function(index) {
-                    $check = $(this);
-                    if ($check.prop("checked")) {
-                        ////console.log('Check: ' + (index));
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
                         $inputsDP2[index].value = $this.val();
+                    } else {
+                        $inputsDP2[index].value = '';
                     }
+                }
 
 
-                });
-            }
+            });
+
         });
 
         $("#addcoord").click(function() {
@@ -1717,162 +1853,212 @@
                 var $inputsGS2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
                 $inputsGS2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsGS2[index].value = $this.val();
+                            } else {
+                                $inputsGS2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
                 $inputsgmaterial2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgmaterial2[index].value = $this.val();
+                            } else {
+                                $inputsgmaterial2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
                 $inputsgnature2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgnature2[index].value = $this.val();
+                            } else {
+                                $inputsgnature2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
                 $inputsgh_h2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgh_h2[index].value = $this.val();
+                            } else {
+                                $inputsgh_h2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
                 $inputsgtreatments2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgtreatments2[index].value = $this.val();
+                            } else {
+                                $inputsgtreatments2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
                 $inputsgvegetation2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgvegetation2[index].value = $this.val();
+                            } else {
+                                $inputsgvegetation2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
                 $inputsgtypevegetation2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsgtypevegetation2[index].value = $this.val();
+                            } else {
+                                $inputsgtypevegetation2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsGT2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
                 $inputsGT2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsGT2[index].value = $this.val();
+                            } else {
+                                $inputsGT2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsGPOS2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
                 $inputsGPOS2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsGPOS2[index].value = $this.val();
+                            } else {
+                                $inputsGPOS2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsGVPOS2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
                 $inputsGVPOS2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsGVPOS2[index].value = $this.val();
+                            } else {
+                                $inputsGVPOS2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 break;
             case 'drainage':
@@ -1930,51 +2116,66 @@
                 var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
                 $inputsdsection2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsdsection2[index].value = $this.val();
+                            } else {
+                                $inputsdsection2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
                 var $inputsDT2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
                 $inputsDT2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsDT2[index].value = $this.val();
+                            } else {
+                                $inputsDT2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
 
                 var $inputsDP2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
                 $inputsDP2.on('change', function() {
                     var $this = $(this);
-                    if ($this.val() != '') {
-                        ////console.log('ID: ' + $this.attr("id"));
-                        $checks.each(function(index) {
-                            $check = $(this);
-                            if ($check.prop("checked")) {
-                                ////console.log('Check: ' + (index));
+
+                    ////console.log('ID: ' + $this.attr("id"));
+                    $checks.each(function(index) {
+                        $check = $(this);
+                        if ($check.prop("checked")) {
+                            ////console.log('Check: ' + (index));
+                            if ($this.val() != '') {
                                 $inputsDP2[index].value = $this.val();
+                            } else {
+                                $inputsDP2[index].value = '';
+
                             }
+                        }
 
 
-                        });
-                    }
+                    });
+
                 });
 
                 break;
