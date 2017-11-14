@@ -84,7 +84,11 @@
                             <a href="/auth/WEB/maps/view_data"><button type="button" class="btn btn-theme04"><i class="fa  fa-road"></i> <%- trans('GMAPS_DATOS_BUTTON_ROADS') %></button></a>
                         </div>
                     </div>
+
                     <div class="col-md-10" style="height:80vh;">
+                        <div id="spinner" class="spinner">
+                            <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
+                        </div>
                         <div id="map"></div>
                         <div id="info-box">--</div>
 

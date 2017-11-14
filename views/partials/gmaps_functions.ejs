@@ -201,6 +201,7 @@
             }
         });
 
+        $('#spinner').hide();
 
         // });
     };
@@ -211,6 +212,7 @@
 
 
         $('#layergps').click(function() {
+            $('#spinner').show();
             var $this = $(this);
             var opc = $this.val()[0];
             console.log(opc);
@@ -226,6 +228,8 @@
                         featureActive['ROADS'] = true;
                         map.data.addGeoJson(jsonObject);
                         <%}); %>
+                        $('#spinner').hide(2000);
+
                     } else {
                         // alert(' ## DESACTIVO ROADS ##');
                         map.data.forEach(function(feature) {
@@ -236,7 +240,9 @@
                             featureActive['ROADS'] = false;
 
                         });
+                        $('#spinner').hide(2000);
                     }
+
                     break;
                 case 'ODT':
                     if (featureActive['ODT'] === undefined || featureActive['ODT'] == false) {
@@ -249,6 +255,8 @@
                         featureActive['ODT'] = true;
                         map.data.addGeoJson(jsonObject);
                         <%}); %>
+                        $('#spinner').hide(2000);
+
                     } else {
                         // alert(' ## DESACTIVO ODT ##');
                         map.data.forEach(function(feature) {
@@ -259,6 +267,8 @@
                             featureActive['ODT'] = false;
 
                         });
+                        $('#spinner').hide(2000);
+
                     }
 
                     break;
@@ -274,6 +284,8 @@
                         map.data.addGeoJson(jsonObject);
 
                         <%}); %>
+                        $('#spinner').hide(2000);
+
                     } else {
                         // alert(' ## DESACTIVO BRIDGE ##');
                         map.data.forEach(function(feature) {
@@ -284,7 +296,10 @@
                             featureActive['ODT'] = false;
 
                         });
+                        $('#spinner').hide(2000);
+
                     }
+
                     break;
                 case 'GEOT':
                     if (featureActive['GEOT'] === undefined || featureActive['GEOT'] == false) {
@@ -298,6 +313,8 @@
                         map.data.addGeoJson(jsonObject);
 
                         <%}); %>
+                        $('#spinner').hide(2000);
+
                     } else {
                         // alert(' ## DESACTIVO GEOT ##');
                         map.data.forEach(function(feature) {
@@ -308,13 +325,19 @@
                             featureActive['ODT'] = false;
 
                         });
+                        $('#spinner').hide(2000);
+
                     }
+
                     break;
 
                 default:
+                    $('#spinner').hide(2000);
+
                     break;
             };
         })
+
     });
 </script>
 
