@@ -411,8 +411,8 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gheight2]">' +
-                    '<input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
+                html[++h] = '<td id="infodatatrack[properties][gheight2]"><input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gheight2[index] !== "undefined" ? data.properties.gheight2[index] : '') + '">' +
                     '</td>';
                 html[++h] += '<td id="infodatatrack[properties][gh_h2]">' +
                     '<select name="infodatatrack[properties][gh_h2]" class="form-control">' +
@@ -436,8 +436,8 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gdistance2]">' +
-                    '<input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
+                html[++h] = '<td id="infodatatrack[properties][gdistance2]"><input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gdistance2[index] !== "undefined" ? data.properties.gdistance2[index] : '') + '">' +
                     '</td>';
 
                 html[++h] += '<td id="infodatatrack[properties][gtreatments2]">' +
