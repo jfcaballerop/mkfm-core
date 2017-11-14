@@ -150,38 +150,6 @@
 
 
         var jsonObject;
-        <% roads.forEach(function(element) { %>
-        jsonObject = <%- JSON.stringify(element) %>;
-        jsonObject.properties.color = "#5b5e63";
-        jsonObject.properties.nameoption = "ROADS";
-        //console.log(JSON.stringify(jsonObject));
-        map.data.addGeoJson(jsonObject);
-        <%}); %>
-
-        <% koboinfos_odt.forEach(function(element) { %>
-        jsonObject = <%- JSON.stringify(element) %>;
-        jsonObject.properties.color = "blue";
-        jsonObject.properties.nameoption = "ODT";
-        //console.log(JSON.stringify(jsonObject));
-        map.data.addGeoJson(jsonObject);
-
-        <%}); %>
-        <% koboinfos_bridge.forEach(function(element) { %>
-        jsonObject = <%- JSON.stringify(element) %>;
-        jsonObject.properties.color = "#F47983";
-        jsonObject.properties.nameoption = "BRIDGE";
-        //console.log(JSON.stringify(jsonObject));
-        map.data.addGeoJson(jsonObject);
-
-        <%}); %>
-        <% koboinfos_geo.forEach(function(element) { %>
-        jsonObject = <%- JSON.stringify(element) %>;
-        jsonObject.properties.color = "green";
-        jsonObject.properties.nameoption = "GEOT";
-        //console.log(JSON.stringify(jsonObject));
-        map.data.addGeoJson(jsonObject);
-
-        <%}); %>
 
         var infoWnd = new google.maps.InfoWindow();
 
@@ -239,13 +207,75 @@
 
     $(document).ready(function() {
         console.log("Funciones Listas a ejecutarse!");
+        var featureActive = [];
+
 
         $('#layergps').click(function() {
             var $this = $(this);
-
-            switch ($this.val()) {
+            var opc = $this.val()[0];
+            console.log(opc);
+            switch (opc) {
                 case 'ROADS':
-                    alert(' ## ROADS ##');
+                    if (featureActive['ROADS'] === undefined || featureActive['ROADS'] == false) {
+                        // alert(' ## ACTIVO ROADS ##');
+                        <% roads.forEach(function(element) { %>
+                        jsonObject = <%- JSON.stringify(element) %>;
+                        jsonObject.properties.color = "#5b5e63";
+                        jsonObject.properties.nameoption = "ROADS";
+                        //console.log(JSON.stringify(jsonObject));
+                        featureActive['ROADS'] = true;
+                        map.data.addGeoJson(jsonObject);
+                        <%}); %>
+                    } else {
+                        // alert(' ## DESACTIVO ROADS ##');
+                        map.data.forEach(function(feature) {
+                            // If you want, check here for some constraints.
+                            if (feature.getProperty('nameoption') === 'ROADS') {
+                                map.data.remove(feature);
+                            }
+                            featureActive['ROADS'] = false;
+
+                        });
+                    }
+                    break;
+                case 'ODT':
+                    alert(' ## ODT ##');
+                    <% koboinfos_odt.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "blue";
+                    jsonObject.properties.nameoption = "ODT";
+                    //console.log(JSON.stringify(jsonObject));
+                    featureActive['ODT'] = true;
+                    map.data.addGeoJson(jsonObject);
+
+                    <%}); %>
+
+                    break;
+                case 'BRIDGE':
+                    alert(' ## BRIDGE ##');
+                    <% koboinfos_bridge.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "#F47983";
+                    jsonObject.properties.nameoption = "BRIDGE";
+                    //console.log(JSON.stringify(jsonObject));
+                    featureActive['BRIDGE'] = true;
+                    map.data.addGeoJson(jsonObject);
+
+                    <%}); %>
+
+                    break;
+                case 'GEOT':
+                    alert(' ## GEOT ##');
+                    <% koboinfos_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    featureActive['GEOT'] = true;
+                    map.data.addGeoJson(jsonObject);
+
+                    <%}); %>
+
                     break;
 
                 default:
