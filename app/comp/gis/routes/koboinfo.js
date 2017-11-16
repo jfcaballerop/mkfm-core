@@ -521,7 +521,7 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
 
                                 }
 
-                            } else {
+                            } else if (kobomod._doc.properties.gposition === 'RIGHT') {
                                 if (ifdt.properties[vprop + '2'] != undefined && ifdt.properties[vprop + '2'].length != 0) {
                                     arrprop.push(ifdt.properties[vprop + '2'][cindex]);
 
@@ -531,6 +531,17 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
                                 }
 
 
+                            } else {
+                                /**
+                                 * Si no tiene gposition, es un kobo de otra manera y no debo tocar los campos 2
+                                 */
+                                if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
+                                    arrprop.push(ifdt.properties[vprop][cindex]);
+
+                                } else {
+                                    arrprop.push(newprop);
+
+                                }
                             }
 
                         }
@@ -552,7 +563,7 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
                          */
                         if (kobomod._doc.properties.gposition === 'LEFT') {
                             ifdt.properties[vprop] = arrprop;
-                        } else {
+                        } else if (kobomod._doc.properties.gposition === 'RIGHT') {
                             ifdt.properties[vprop + '2'] = arrprop;
 
                         }
