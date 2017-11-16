@@ -399,7 +399,7 @@ router.get('/V1/tabular_data/:id', function(req, res, next) {
                 //rldata = JSON.parse(val);
                 // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
             });
-            tabdata.properties.Roadlab = arrIRI;
+            tabdata.properties.iri = arrIRI;
             // console.log('TABDATA ' + JSON.stringify(tabdata));
             res.status(200).jsonp(tabdata);
         }).catch(function(reason) {
@@ -561,7 +561,7 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
     //             //rldata = JSON.parse(val);
     //             // tabdata.properties.IRI = v ? al[0rties.IRI = val[0].obj.properties.descriptio :'-' n;
     //         });
-    //         tabdata.properties.Roadlab = arrIRI;
+    //         tabdata.properties.iri = arrIRI;
     //         // console.log('TABDATA ' + JSON.stringify(tabdata));
     //         res.status(200).jsonp(tabdata);
     //     }).catch(function(reason) {
