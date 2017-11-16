@@ -94,6 +94,9 @@
                     '<option >1</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][iri]"><input name="infodatatrack[properties][iri]" type="text" style="min-width: 50;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.iri[index] !== "undefined" ? data.properties.iri[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][open_traffic]"><input name="infodatatrack[properties][open_traffic]" type="text" style="min-width: 50;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.open_traffic[index] !== "undefined" ? data.properties.open_traffic[index] : '') + '">' +
                     '</td>';
