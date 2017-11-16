@@ -84,8 +84,8 @@
                 html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][road_category]">' +
-                    '<select name="infodatatrack[properties][road_category]" class="form-control">' +
+                html[++h] = '<td id="infodatatrack[properties][rcategory]">' +
+                    '<select name="infodatatrack[properties][rcategory]" class="form-control">' +
                     '<option ></option>' +
                     '<option >Main Road</option>' +
                     '<option >Secondary</option>' +
@@ -559,7 +559,7 @@
 
             $('#bodytable').html(html.join(''));
             data.geometry.coordinates.forEach(function(element, index) {
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][road_category]"]').val(data.properties.road_category[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][pavement_material]"]').val(data.properties.pavement_material[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][current_visual_condition]"]').val(data.properties.current_visual_condition[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(data.properties.gtype[index]);
@@ -853,7 +853,7 @@
 
             });
         });
-        var $inputsRC = $('#form').find('select[ name="infodatatrack[properties][road_category]"]');
+        var $inputsRC = $('#form').find('select[ name="infodatatrack[properties][rcategory]"]');
         $inputsRC.on('change', function() {
             var $this = $(this);
             ////console.log('ID: ' + $this.attr("id"));

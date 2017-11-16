@@ -15,9 +15,10 @@ var infodatatrackSchema = new Schema({
         }],
         koboedit: [],
         pk: [],
+        district: [],
         rcode: [], // ROADS Group 1
+        rcategory: [],
         iri: [],
-        road_category: [],
         video_roads: { type: Schema.Types.ObjectId, ref: 'Road' },
         inventario: [],
         date_construction: [],
