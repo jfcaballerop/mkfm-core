@@ -476,6 +476,7 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
         if (err) {
             return res.status(500).send(err.message);
         }
+        console.log('kobomod ' + JSON.stringify(kobomod.properties.kobo_type));
         Infodatatrack.findById(datamod.ifdtid, function(err, ifdt) {
             if (err) return handleError(err);
 
@@ -484,57 +485,51 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
 
             var ini = datamod.ifdtini;
             var fin = datamod.ifdtfin != 0 ? datamod.ifdtfin : datamod.ifdtini;
-            if (kobomod._doc.properties.gtype === undefined) {
-                /**
-                 * Si no es GEO, aplico el método normal
-                 */
-                console.log(' Kobomod NO ES GEOTECH ');
-            } else {
-                /**
-                 * En caso de ser GEO necesito revisar el lado al que aplica IZDA o DCHA
-                 */
-
-                console.log('\n Kobomod position:: ' + JSON.stringify(kobomod._doc.properties.gposition));
-
-            }
             for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
                 if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
                     var arrprop = [];
 
-
+                    /**
+                     * Genero el array con el valor de los campos del Kobo a rellenar en IFDT
+                     */
                     for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
                         var newprop = '';
                         if (cindex >= ini && cindex <= fin) {
                             newprop = kobomod.properties[vprop];
+                            // console.log('kobo vprop ' + vprop + ': ' + newprop);
                             arrprop.push(newprop);
                         } else {
-                            /**
-                             * Si es un GEO
-                             * Reviso si es LEFT y RIGTH para ver si los campos son nomcampo2 o no
-                             */
-                            if (kobomod._doc.properties.gposition === 'LEFT') {
-                                if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
-                                    arrprop.push(ifdt.properties[vprop][cindex]);
+                            if (kobomod.properties.kobo_type === "Cutting" || kobomod.properties.kobo_type === "Embankment" ||
+                                kobomod.properties.kobo_type === "Retaining_walls" || kobomod.properties.kobo_type === "ford") {
+                                /*
+                                 * Si es GEOT, busco el lado a actualizar
+                                 */
+                                if (kobomod.properties.gposition === 'LEFT') {
+                                    // console.log('kobo a modificar GEOT ' + kobomod.properties.kobo_type + ' LADO ' + kobomod.properties.gposition);
+                                    // console.log('LEFT vprop ' + vprop + ' VAL ' + arrprop);
+                                    if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
+                                        arrprop.push(ifdt.properties[vprop][cindex]);
 
-                                } else {
-                                    arrprop.push(newprop);
+                                    } else {
+                                        arrprop.push(newprop);
+
+                                    }
+
+                                } else if (kobomod.properties.gposition === 'RIGHT') {
+                                    // console.log('kobo a modificar GEOT ' + kobomod.properties.kobo_type + ' LADO ' + kobomod.properties.gposition);
+                                    // var prop2 = vprop + '2';
+                                    // console.log('RIGHT vprop2 ' + prop2 + ' VAL ' + arrprop);
+                                    if (ifdt.properties[vprop + '2'] != undefined && ifdt.properties[vprop + '2'].length != 0) {
+                                        arrprop.push(ifdt.properties[vprop + '2'][cindex]);
+
+                                    } else {
+                                        arrprop.push(newprop);
+
+                                    }
 
                                 }
-
-                            } else if (kobomod._doc.properties.gposition === 'RIGHT') {
-                                if (ifdt.properties[vprop + '2'] != undefined && ifdt.properties[vprop + '2'].length != 0) {
-                                    arrprop.push(ifdt.properties[vprop + '2'][cindex]);
-
-                                } else {
-                                    arrprop.push(newprop);
-
-                                }
-
 
                             } else {
-                                /**
-                                 * Si no tiene gposition, es un kobo de otra manera y no debo tocar los campos 2
-                                 */
                                 if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
                                     arrprop.push(ifdt.properties[vprop][cindex]);
 
@@ -550,23 +545,27 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
                     if (ifdt.properties[vprop] === undefined) {
                         ifdt.properties[vprop] = [];
                     }
-                    if (ifdt.properties[vprop + '2'] === undefined) {
-                        ifdt.properties[vprop + '2'] = [];
-                    }
-                    if (kobomod._doc.properties.gtype === undefined) {
-                        ifdt.properties[vprop] = arrprop;
-                        ifdt.properties[vprop + '2'] = arrprop;
-                    } else {
-                        /**
-                         * Si es un GEO
-                         * Reviso si es LEFT y RIGTH para ver si los campos son nomcampo2 o no
+                    if (kobomod.properties.kobo_type === "Cutting" || kobomod.properties.kobo_type === "Embankment" ||
+                        kobomod.properties.kobo_type === "Retaining_walls" || kobomod.properties.kobo_type === "ford") {
+                        /*
+                         * Si es GEOT, busco el lado a actualizar
                          */
-                        if (kobomod._doc.properties.gposition === 'LEFT') {
+                        if (kobomod.properties.gposition === 'LEFT') {
+                            // console.log('kobo a modificar GEOT ' + kobomod.properties.kobo_type + ' LADO ' + kobomod.properties.gposition);
+                            // console.log('LEFT vprop ' + vprop + ' VAL ' + arrprop);
                             ifdt.properties[vprop] = arrprop;
-                        } else if (kobomod._doc.properties.gposition === 'RIGHT') {
+
+                        } else if (kobomod.properties.gposition === 'RIGHT') {
+                            // console.log('kobo a modificar GEOT ' + kobomod.properties.kobo_type + ' LADO ' + kobomod.properties.gposition);
+                            // var prop2 = vprop + '2';
+                            // console.log('RIGHT vprop2 ' + prop2 + ' VAL ' + arrprop);
                             ifdt.properties[vprop + '2'] = arrprop;
 
                         }
+
+                    } else {
+                        // console.log('kobo a modificar OTHER ' + kobomod.properties.kobo_type);
+                        ifdt.properties[vprop] = arrprop;
                     }
                 }
             }
