@@ -508,22 +508,43 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
                             newprop = kobomod.properties[vprop];
                             arrprop.push(newprop);
                         } else {
+                            /**
+                             * Si es un GEO
+                             * Reviso si es LEFT y RIGTH para ver si los campos son nomcampo2 o no
+                             */
+                            if (kobomod._doc.properties.gposition === 'LEFT') {
+                                if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
+                                    arrprop.push(ifdt.properties[vprop][cindex]);
 
-                            if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
-                                arrprop.push(ifdt.properties[vprop][cindex]);
+                                } else {
+                                    arrprop.push(newprop);
+
+                                }
 
                             } else {
-                                arrprop.push(newprop);
+                                if (ifdt.properties[vprop + '2'] != undefined && ifdt.properties[vprop + '2'].length != 0) {
+                                    arrprop.push(ifdt.properties[vprop + '2'][cindex]);
+
+                                } else {
+                                    arrprop.push(newprop);
+
+                                }
+
 
                             }
+
                         }
 
                     }
                     if (ifdt.properties[vprop] === undefined) {
                         ifdt.properties[vprop] = [];
                     }
+                    if (ifdt.properties[vprop + '2'] === undefined) {
+                        ifdt.properties[vprop + '2'] = [];
+                    }
                     if (kobomod._doc.properties.gtype === undefined) {
                         ifdt.properties[vprop] = arrprop;
+                        ifdt.properties[vprop + '2'] = arrprop;
                     } else {
                         /**
                          * Si es un GEO
