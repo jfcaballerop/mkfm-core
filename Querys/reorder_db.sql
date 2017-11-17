@@ -120,6 +120,7 @@ bdamagesfoundationsdetailedtype,BDamagesFoundationsdetailedtype,
 bdamagesstructural,BDamagesStructural,
 bdamagesvaultsarchesmechanicaldurable,BDamagesVaultArches,db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArches"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArches"}},false,true);
 bdamagesvaultsarchesimportance,BDamagesVaultArchesSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesimportance": "properties.BDamagesVaultArches"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesimportance": "properties.BDamagesVaultArches"}},false,true);db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArchesSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArchesSeverity"}},false,true);
+//TODO: voy por aqui
 bdamagespiersmechanicaldurable,BDamagesPiers,db.infodatatracks.update({},{$rename: {"properties.bdamagespiersmechanicaldurable": "properties.BDamagesPiers"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagespiersmechanicaldurable": "properties.BDamagesPiers"}},false,true);
 bdamagespiersimportance,BDamagesPiersSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagespiersimportance": "properties.BDamagesPiersSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagespiersimportance": "properties.BDamagesPiersSeverity"}},false,true);
 bdamagesspandrelwallmechanicaldurable,BDamagesSpandrel,db.infodatatracks.update({},{$rename: {"properties.bdamagesspandrelwallmechanicaldurable": "properties.BDamagesSpandrel"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesspandrelwallmechanicaldurable": "properties.BDamagesSpandrel"}},false,true);
@@ -136,24 +137,24 @@ bdamagesbearingstype,BDamagesBearings,db.infodatatracks.update({},{$rename: {"pr
 bdamagesbearingsimportance,BDamagesBearingsSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagesbearingsimportance": "properties.BDamagesBearingsSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesbearingsimportance": "properties.BDamagesBearingsSeverity"}},false,true);
 bdamagesspecialareastype,BDamagesSpecialareas,db.infodatatracks.update({},{$rename: {"properties.bdamagesspecialareastype": "properties.BDamagesSpecialareas"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesspecialareastype": "properties.BDamagesSpecialareas"}},false,true);
 bdamagesspecialareasimportance,BDamagesSpecialareasSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagesspecialareasimportance": "properties.BDamagesSpecialareasSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesspecialareasimportance": "properties.BDamagesSpecialareasSeverity"}},false,true);
-bdamagesnonstructural,BDamagesNonStructural,db.infodatatracks.update({},{$rename: {"properties.bdamagesnonstructural": "properties.BDamagesNonStructural"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesnonstructural": "properties.BDamagesNonStructural"}},false,true);
+bdamagesnonstructural,BDamagesNonStructural,
 bpastinterv,BLastYearInterv,db.infodatatracks.update({},{$rename: {"properties.bpastinterv": "properties.BLastYearInterv"}},false,true); db.koboinfos.update({},{$rename: {"properties.bpastinterv": "properties.BLastYearInterv"}},false,true);
 bintervextent,BLastYearIntervExtent,db.infodatatracks.update({},{$rename: {"properties.bintervextent": "properties.BLastYearIntervExtent"}},false,true); db.koboinfos.update({},{$rename: {"properties.bintervextent": "properties.BLastYearIntervExtent"}},false,true);
 bdateinterv,BLastYearIntervDate,db.infodatatracks.update({},{$rename: {"properties.bdateinterv": "properties.BLastYearIntervDate"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdateinterv": "properties.BLastYearIntervDate"}},false,true);
 bscopeinterv,BLastYearIntervScope,db.infodatatracks.update({},{$rename: {"properties.bscopeinterv": "properties.BLastYearIntervScope"}},false,true); db.koboinfos.update({},{$rename: {"properties.bscopeinterv": "properties.BLastYearIntervScope"}},false,true);
-BLastYearIntervCost,BLastYearIntervCost,db.infodatatracks.update({},{$rename: {"properties.BLastYearIntervCost": "properties.BLastYearIntervCost"}},false,true); db.koboinfos.update({},{$rename: {"properties.BLastYearIntervCost": "properties.BLastYearIntervCost"}},false,true);
+BLastYearIntervCost,BLastYearIntervCost,
 bimpactinterv,BLastYearIntervImpactCond,db.infodatatracks.update({},{$rename: {"properties.bimpactinterv": "properties.BLastYearIntervImpactCond"}},false,true); db.koboinfos.update({},{$rename: {"properties.bimpactinterv": "properties.BLastYearIntervImpactCond"}},false,true);
 blocdocinterv,BLocDocLastYearInterv,db.infodatatracks.update({},{$rename: {"properties.blocdocinterv": "properties.BLocDocLastYearInterv"}},false,true); db.koboinfos.update({},{$rename: {"properties.blocdocinterv": "properties.BLocDocLastYearInterv"}},false,true);
-BCurrYearInterv,BCurrYearInterv,db.infodatatracks.update({},{$rename: {"properties.BCurrYearInterv": "properties.BCurrYearInterv"}},false,true); db.koboinfos.update({},{$rename: {"properties.BCurrYearInterv": "properties.BCurrYearInterv"}},false,true);
-BCurrYearIntervExtent,BCurrYearIntervExtent,db.infodatatracks.update({},{$rename: {"properties.BCurrYearIntervExtent": "properties.BCurrYearIntervExtent"}},false,true); db.koboinfos.update({},{$rename: {"properties.BCurrYearIntervExtent": "properties.BCurrYearIntervExtent"}},false,true);
-BCurrYearIntervDate,BCurrYearIntervDate,db.infodatatracks.update({},{$rename: {"properties.BCurrYearIntervDate": "properties.BCurrYearIntervDate"}},false,true); db.koboinfos.update({},{$rename: {"properties.BCurrYearIntervDate": "properties.BCurrYearIntervDate"}},false,true);
-BCurrYearIntervScope,BCurrYearIntervScope,db.infodatatracks.update({},{$rename: {"properties.BCurrYearIntervScope": "properties.BCurrYearIntervScope"}},false,true); db.koboinfos.update({},{$rename: {"properties.BCurrYearIntervScope": "properties.BCurrYearIntervScope"}},false,true);
-BCurrYearIntervCost,BCurrYearIntervCost,db.infodatatracks.update({},{$rename: {"properties.BCurrYearIntervCost": "properties.BCurrYearIntervCost"}},false,true); db.koboinfos.update({},{$rename: {"properties.BCurrYearIntervCost": "properties.BCurrYearIntervCost"}},false,true);
-BLocDocCurrYearInterv,BLocDocCurrYearInterv,db.infodatatracks.update({},{$rename: {"properties.BLocDocCurrYearInterv": "properties.BLocDocCurrYearInterv"}},false,true); db.koboinfos.update({},{$rename: {"properties.BLocDocCurrYearInterv": "properties.BLocDocCurrYearInterv"}},false,true);
-bmaintissues,BMaintIssues,db.infodatatracks.update({},{$rename: {"properties.bmaintissues": "properties.BMaintIssues"}},false,true); db.koboinfos.update({},{$rename: {"properties.bmaintissues": "properties.BMaintIssues"}},false,true);
-binvestment10years,Binvestment10years,db.infodatatracks.update({},{$rename: {"properties.binvestment10years": "properties.Binvestment10years"}},false,true); db.koboinfos.update({},{$rename: {"properties.binvestment10years": "properties.Binvestment10years"}},false,true);
-binvestmentrequired,Binvestmentrequired,db.infodatatracks.update({},{$rename: {"properties.binvestmentrequired": "properties.Binvestmentrequired"}},false,true); db.koboinfos.update({},{$rename: {"properties.binvestmentrequired": "properties.Binvestmentrequired"}},false,true);
-bomcomments,BOMComments,db.infodatatracks.update({},{$rename: {"properties.bomcomments": "properties.BOMComments"}},false,true); db.koboinfos.update({},{$rename: {"properties.bomcomments": "properties.BOMComments"}},false,true);
+BCurrYearInterv,BCurrYearInterv,
+BCurrYearIntervExtent,BCurrYearIntervExtent,
+BCurrYearIntervDate,BCurrYearIntervDate,
+BCurrYearIntervScope,BCurrYearIntervScope,
+BCurrYearIntervCost,BCurrYearIntervCost,
+BLocDocCurrYearInterv,BLocDocCurrYearInterv,
+bmaintissues,BMaintIssues,
+binvestment10years,Binvestment10years,
+binvestmentrequired,Binvestmentrequired,
+bomcomments,BOMComments,
 
 , bcondition
 , bcriticality
