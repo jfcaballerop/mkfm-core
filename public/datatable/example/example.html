@@ -41,7 +41,7 @@
                     '<option>1</option>' +
                     '</select>');
 
-                dataObj.push('<select name="infodatatrack[properties][pavement_material]" class="form-control">' +
+                dataObj.push('<select name="infodatatrack[properties][rmaterial]" class="form-control">' +
                     '<option>Asphalt</option>' +
                     '<option>Bituminous pavement</option>' +
                     '<option>Macadam</option>' +
@@ -53,15 +53,15 @@
                     '<option>Unknown</option>' +
                     '<option>1</option>' +
                     '</select>');
-                dataObj.push('<input name="infodatatrack[properties][number_lanes_inc]" type="text" class="form-control round-form input-sm" value="' +
-                    (typeof rObject.properties.number_lanes_inc[index] !== "undefined" ? rObject.properties.number_lanes_inc[index] : '') + '">');
-                dataObj.push('<input name="infodatatrack[properties][number_lanes_dec]" type="text" class="form-control round-form input-sm" value="' +
-                    (typeof rObject.properties.number_lanes_dec[index] !== "undefined" ? rObject.properties.number_lanes_dec[index] : '') + '">');
-                dataObj.push('<input name="infodatatrack[properties][total_number_lanes]" type="text" class="form-control round-form input-sm" value="' +
-                    (typeof rObject.properties.total_number_lanes[index] !== "undefined" ? rObject.properties.total_number_lanes[index] : '') + '">');
-                dataObj.push('<input name="infodatatrack[properties][total_width]" type="text" class="form-control round-form input-sm" value="' +
-                    (typeof rObject.properties.total_width[index] !== "undefined" ? rObject.properties.total_width[index] : '') + '">');
-                dataObj.push('<select name="infodatatrack[properties][current_visual_condition]" class="form-control">' +
+                dataObj.push('<input name="infodatatrack[properties][rlaneinc]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof rObject.properties.rlaneinc[index] !== "undefined" ? rObject.properties.rlaneinc[index] : '') + '">');
+                dataObj.push('<input name="infodatatrack[properties][rlanedecr]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof rObject.properties.rlanedecr[index] !== "undefined" ? rObject.properties.rlanedecr[index] : '') + '">');
+                dataObj.push('<input name="infodatatrack[properties][rlanetotal]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof rObject.properties.rlanetotal[index] !== "undefined" ? rObject.properties.rlanetotal[index] : '') + '">');
+                dataObj.push('<input name="infodatatrack[properties][rwidth]" type="text" class="form-control round-form input-sm" value="' +
+                    (typeof rObject.properties.rwidth[index] !== "undefined" ? rObject.properties.rwidth[index] : '') + '">');
+                dataObj.push('<select name="infodatatrack[properties][rvcondition]" class="form-control">' +
                     '<option>A</option>' +
                     '<option>B</option>' +
                     '<option>C</option>' +
