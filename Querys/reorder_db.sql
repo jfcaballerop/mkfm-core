@@ -309,54 +309,55 @@ gresphazard2,LGRespHazard,
 gsensitivity2,LGsensitivity,
 grisk2,LGRISK,
 
-, ccode
-, cyearconstruc
-, ctype
-, csection
-, ccapacity
-, crainpeak
-, cmaterial
-, cnumelem
-, cdiameter
-, cwidth
-, clength
-, cprotentrance
-, cprotexit
-, cphoto
-, cvisualcondition
-, cconslos
-, cprevcondition
-, clastinspection
-, csurveyfreq
-, cnextsurvey
-, cfailure
-, cdamages
-, cclearing
-, clostsection
-, clastyearinterv
-, clastyearintervextent
-, clastyearintervdate
-, clastyearintervscope
-, clastyearintervcost
-, clastyearintervimpactcond
-, clocdoclastyearinterv
-, ccurryearinterv
-, ccurryearintervextent
-, ccurryearintervdate
-, ccurryearintervscope
-, ccurryearintervcost
-, clocdoccurryearinterv
-, cmaintissues
-, cinvestment10years
-, cinvestmentrequired
-, comcomments
-, ccondition
-, ccriticality
-, clandslide
-, cflood
-, cresphazard
-, csensitivity
-, crisk
+Ccode,Ccode,db.infodatatracks.update({}, { $set: { "properties.Ccode": [] } }, false, true);
+Cyearconstruc,Cyearconstruc,db.infodatatracks.update({}, { $set: { "properties.Cyearconstruc": [] } }, false, true);
+Ctype,Ctype,db.infodatatracks.update({}, { $set: { "properties.Ctype": [] } }, false, true);
+Csection,Csection,db.infodatatracks.update({}, { $set: { "properties.Csection": [] } }, false, true);
+Ccapacity,Ccapacity,db.infodatatracks.update({}, { $set: { "properties.Ccapacity": [] } }, false, true);
+Crainpeak,Crainpeak,db.infodatatracks.update({}, { $set: { "properties.Crainpeak": [] } }, false, true);
+Cmaterial,Cmaterial,db.infodatatracks.update({}, { $set: { "properties.Cmaterial": [] } }, false, true);
+Cnumelem,Cnumelem,db.infodatatracks.update({}, { $set: { "properties.Cnumelem": [] } }, false, true);
+Cdiameter,Cdiameter,db.infodatatracks.update({}, { $set: { "properties.Cdiameter": [] } }, false, true);
+Cwidth,Cwidth,db.infodatatracks.update({}, { $set: { "properties.Cwidth": [] } }, false, true);
+Clength,Clength,db.infodatatracks.update({}, { $set: { "properties.Clength": [] } }, false, true);
+Cprotentrance,Cprotentrance,db.infodatatracks.update({}, { $set: { "properties.Cprotentrance": [] } }, false, true);
+Cprotexit,Cprotexit,db.infodatatracks.update({}, { $set: { "properties.Cprotexit": [] } }, false, true);
+Cphoto,Cphoto,db.infodatatracks.update({}, { $set: { "properties.Cphoto": [] } }, false, true);
+CVisualCondition,CVisualCondition,db.infodatatracks.update({}, { $set: { "properties.CVisualCondition": [] } }, false, true);
+CConsLOS,CConsLOS,db.infodatatracks.update({}, { $set: { "properties.CConsLOS": [] } }, false, true);
+CPrevCondition,CPrevCondition,db.infodatatracks.update({}, { $set: { "properties.CPrevCondition": [] } }, false, true);
+CLastInspection,CLastInspection,db.infodatatracks.update({}, { $set: { "properties.CLastInspection": [] } }, false, true);
+CSurveyFreq,CSurveyFreq,db.infodatatracks.update({}, { $set: { "properties.CSurveyFreq": [] } }, false, true);
+CNextSurvey,CNextSurvey,db.infodatatracks.update({}, { $set: { "properties.CNextSurvey": [] } }, false, true);
+Cfailure,Cfailure,db.infodatatracks.update({}, { $set: { "properties.Cfailure": [] } }, false, true);
+CDamages,CDamages,db.infodatatracks.update({}, { $set: { "properties.CDamages": [] } }, false, true);
+Cclearing,Cclearing,db.infodatatracks.update({}, { $set: { "properties.Cclearing": [] } }, false, true);
+CLostSection,CLostSection,db.infodatatracks.update({}, { $set: { "properties.CLostSection": [] } }, false, true);
+CLastYearInterv,CLastYearInterv,db.infodatatracks.update({}, { $set: { "properties.CLastYearInterv": [] } }, false, true);
+CLastYearIntervExtent,CLastYearIntervExtent,db.infodatatracks.update({}, { $set: { "properties.CLastYearIntervExtent": [] } }, false, true);
+CLastYearIntervDate,CLastYearIntervDate,db.infodatatracks.update({}, { $set: { "properties.CLastYearIntervDate": [] } }, false, true);
+CLastYearIntervScope,CLastYearIntervScope,db.infodatatracks.update({}, { $set: { "properties.CLastYearIntervScope": [] } }, false, true);
+CLastYearIntervCost,CLastYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.CLastYearIntervCost": [] } }, false, true);
+CLastYearIntervImpactCond,CLastYearIntervImpactCond,db.infodatatracks.update({}, { $set: { "properties.CLastYearIntervImpactCond": [] } }, false, true);
+CLocDocLastYearInterv,CLocDocLastYearInterv,db.infodatatracks.update({}, { $set: { "properties.CLocDocLastYearInterv": [] } }, false, true);
+CCurrYearInterv,CCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.CCurrYearInterv": [] } }, false, true);
+CCurrYearIntervExtent,CCurrYearIntervExtent,db.infodatatracks.update({}, { $set: { "properties.CCurrYearIntervExtent": [] } }, false, true);
+CCurrYearIntervDate,CCurrYearIntervDate,db.infodatatracks.update({}, { $set: { "properties.CCurrYearIntervDate": [] } }, false, true);
+CCurrYearIntervScope,CCurrYearIntervScope,db.infodatatracks.update({}, { $set: { "properties.CCurrYearIntervScope": [] } }, false, true);
+CCurrYearIntervCost,CCurrYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.CCurrYearIntervCost": [] } }, false, true);
+CLocDocCurrYearInterv,CLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.CLocDocCurrYearInterv": [] } }, false, true);
+CMaintIssues,CMaintIssues,db.infodatatracks.update({}, { $set: { "properties.CMaintIssues": [] } }, false, true);
+Cinvestment10years,Cinvestment10years,db.infodatatracks.update({}, { $set: { "properties.Cinvestment10years": [] } }, false, true);
+Cinvestmentrequired,Cinvestmentrequired,db.infodatatracks.update({}, { $set: { "properties.Cinvestmentrequired": [] } }, false, true);
+COMComments,COMComments,db.infodatatracks.update({}, { $set: { "properties.COMComments": [] } }, false, true);
+Ccondition,Ccondition,db.infodatatracks.update({}, { $set: { "properties.Ccondition": [] } }, false, true);
+Ccriticality,Ccriticality,db.infodatatracks.update({}, { $set: { "properties.Ccriticality": [] } }, false, true);
+CLandslide,CLandslide,db.infodatatracks.update({}, { $set: { "properties.CLandslide": [] } }, false, true);
+CFlood,CFlood,db.infodatatracks.update({}, { $set: { "properties.CFlood": [] } }, false, true);
+CRespHazard,CRespHazard,db.infodatatracks.update({}, { $set: { "properties.CRespHazard": [] } }, false, true);
+Csensitivity,Csensitivity,db.infodatatracks.update({}, { $set: { "properties.Csensitivity": [] } }, false, true);
+CRISK,CRISK,db.infodatatracks.update({}, { $set: { "properties.CRISK": [] } }, false, true);
+
 , ldcode
 , ldyearconstruc
 , ldtype
