@@ -398,6 +398,7 @@ var infodatatrackSchema = new Schema({
         dinvestment10years: [],
         dinvestmentrequired: [],
         domcomments: [],
+        dcode2: [],
         dyearconstruc2: [],
         dtype2: [],
         dsection2: [],

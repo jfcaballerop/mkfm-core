@@ -227,9 +227,6 @@
                 // html[++h] = '<td id="infodatatrack[properties][rfcomments]"><input name="infodatatrack[properties][rfcomments]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.rfcomments[index] !== "undefined" ? data.properties.rfcomments[index] : '') + '">'+
                 '</td>';
-                // html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">'+
-                '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bexistence]">' +
                     '<select name="infodatatrack[properties][bexistence]" class="form-control">' +
                     '<option ></option>' +
@@ -239,15 +236,18 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[index] : '') + '">' +
                     '</td>';
-                // html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">'+
-                '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype]">' +
                     '<select name="infodatatrack[properties][gtype]" class="form-control">' +
                     '<option ></option>' +
@@ -323,6 +323,12 @@
                 html[++h] = '<td id="infodatatrack[properties][gdistance]"><input name="infodatatrack[properties][gdistance]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gdistance[index] !== "undefined" ? data.properties.gdistance[index] : '') + '">' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gshoulders]"><input name="infodatatrack[properties][gshoulders]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gshoulders[index] !== "undefined" ? data.properties.gshoulders[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.glength[index] !== "undefined" ? data.properties.glength[index] : '') + '">' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
                     '<select name="infodatatrack[properties][gtreatments]" class="form-control">' +
@@ -366,6 +372,9 @@
                     '<option>N/A</option>' +
                     '<option>1</option>' +
                     '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gcode2]"><input name="infodatatrack[properties][gcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gcode2[index] !== "undefined" ? data.properties.gcode2[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype2]">' +
                     '<select name="infodatatrack[properties][gtype2]" class="form-control">' +
@@ -442,7 +451,12 @@
                 html[++h] = '<td id="infodatatrack[properties][gdistance2]"><input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gdistance2[index] !== "undefined" ? data.properties.gdistance2[index] : '') + '">' +
                     '</td>';
-
+                html[++h] = '<td id="infodatatrack[properties][gshoulders2]"><input name="infodatatrack[properties][gshoulders2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gshoulders2[index] !== "undefined" ? data.properties.gshoulders2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][glength2]"><input name="infodatatrack[properties][glength2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.glength2[index] !== "undefined" ? data.properties.glength2[index] : '') + '">' +
+                    '</td>';
                 html[++h] += '<td id="infodatatrack[properties][gtreatments2]">' +
                     '<select name="infodatatrack[properties][gtreatments2]" class="form-control">' +
                     '<option ></option>' +
@@ -486,9 +500,24 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
-                // html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                //     (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">'+
-                //'</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][Ccode]"><input name="infodatatrack[properties][Ccode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Ccode[index] !== "undefined" ? data.properties.Ccode[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Ctype]">' +
+                    '<select name="infodatatrack[properties][Ctype]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Longitudinal</option>' +
+                    '<option>Culvert</option>' +
+                    '<option>Ford</option>' +
+                    '<option>Unknown</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype]">' +
                     '<select name="infodatatrack[properties][dtype]" class="form-control">' +
                     '<option ></option>' +
@@ -522,6 +551,9 @@
                     '<option>Left</option>' +
                     '<option>Both</option>' +
                     '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][dcode2]"><input name="infodatatrack[properties][dcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcode2[index] !== "undefined" ? data.properties.dcode2[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype2]">' +
                     '<select name="infodatatrack[properties][dtype2]" class="form-control">' +
@@ -625,7 +657,7 @@
 
         });
 
-        $('#road, #furniture, #bridges, #geotechnicals, #drainage').click(function() {
+        $('#road, #furniture, #bridges, #geotechnicals, #culvert, #drainage').click(function() {
             // alert("Hidden." + $(this).attr("id"));
             var $clase = $(this).attr("id");
             $('.' + $clase).each(function() {

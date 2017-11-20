@@ -379,7 +379,7 @@ dmaintissues,LDMaintIssues,
 dinvestment10years,LDinvestment10years,
 dinvestmentrequired,LDinvestmentrequired,
 domcomments,LDOMComments,
-dcode,LDcode,
+dcode2,RDcode,db.infodatatracks.update({}, { $set: { "properties.dcode2": [] } }, false, true);
 dyearconstruc2,LDyearconstruc,
 dtype2,LDtype,
 dsection2,LDLongsection,
