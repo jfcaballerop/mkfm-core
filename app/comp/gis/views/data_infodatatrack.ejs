@@ -189,14 +189,14 @@
                                                         <th id="infodatatrack[properties][bfailure]" title="Failure history" class="bridges">FAILURE</th>
                                                         <th id="infodatatrack[properties][bsurveyfreq]" title="Survey frequency" class="bridges">SURVEY FREQ</th>
                                                         <th id="infodatatrack[properties][bnextsurvey]" title="Date of Next survey" class="bridges">NEXT SURVEY</th>
-                                                        <th id="infodatatrack[properties][bpastinterv]" title="Has there been past interventions?" class="bridges">PAST INTERV</th>
-                                                        <th id="infodatatrack[properties][bintervextent]" title="Have they been global or partial interventions?" class="bridges">INT EXT ENT</th>
-                                                        <th id="infodatatrack[properties][bdateinterv]" title="Date of performance of past interventions" class="bridges">DATE INT</th>
-                                                        <th id="infodatatrack[properties][bscopeinterv]" title="Scope of past interventions" class="bridges">SCOPE INT</th>
-                                                        <th id="infodatatrack[properties][bimpactinterv]" title="Impact on condition of past interventions" class="bridges">IMPACT INTERV</th>
-                                                        <th id="infodatatrack[properties][blocdocinterv]" title="Location of the documentation of past interventions" class="bridges">LOC DOC INT</th>
-                                                        <th id="infodatatrack[properties][bmaintissues]" title="Maintainability issues" class="bridges">MAINT ISSUES</th>
-                                                        <th id="infodatatrack[properties][binvestment10years]" title="Investment undertaken in the last 10 years" class="bridges">INV10YEARS</th>
+                                                        <th id="infodatatrack[properties][BLastYearInterv]" title="Has there been past interventions?" class="bridges">PAST INTERV</th>
+                                                        <th id="infodatatrack[properties][BLastYearIntervExtent]" title="Have they been global or partial interventions?" class="bridges">INT EXT ENT</th>
+                                                        <th id="infodatatrack[properties][BLastYearIntervDate]" title="Date of performance of past interventions" class="bridges">DATE INT</th>
+                                                        <th id="infodatatrack[properties][BLastYearIntervScope]" title="Scope of past interventions" class="bridges">SCOPE INT</th>
+                                                        <th id="infodatatrack[properties][BLastYearIntervImpactCond]" title="Impact on condition of past interventions" class="bridges">IMPACT INTERV</th>
+                                                        <th id="infodatatrack[properties][BLocDocLastYearInterv]" title="Location of the documentation of past interventions" class="bridges">LOC DOC INT</th>
+                                                        <th id="infodatatrack[properties][BMaintIssues]" title="Maintainability issues" class="bridges">MAINT ISSUES</th>
+                                                        <th id="infodatatrack[properties][Binvestment10years]" title="Investment undertaken in the last 10 years" class="bridges">INV10YEARS</th>
                                                         <th id="infodatatrack[properties][binvestmentrequired]" title="Investment required to upgrade to A class" class="bridges">INVREQ</th>
                                                         <th id="infodatatrack[properties][bomcomments]" title="Comments to Operation and Maintainance" class="bridges">OM COMMENTS</th>
                                                         <th id="infodatatrack[properties][bcondition]" title="Current condition" class="bridges">COND</th>
@@ -1122,60 +1122,60 @@
                                                                         <input name="infodatatrack[properties][bnextsurvey]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bpastinterv]" title="Has there been past interventions?">
-                                                                <%#  if(infodatatrack.properties.bpastinterv){%>
-                                                                    <input name="infodatatrack[properties][bpastinterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bpastinterv[index] %>">
+                                                            <td id="infodatatrack[properties][BLastYearInterv]" title="Has there been past interventions?">
+                                                                <%#  if(infodatatrack.properties.BLastYearInterv){%>
+                                                                    <input name="infodatatrack[properties][BLastYearInterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLastYearInterv[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bpastinterv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLastYearInterv]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bintervextent]" title="Have they been global or partial interventions?">
-                                                                <%#  if(infodatatrack.properties.bintervextent){%>
-                                                                    <input name="infodatatrack[properties][bintervextent]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bintervextent[index] %>">
+                                                            <td id="infodatatrack[properties][BLastYearIntervExtent]" title="Have they been global or partial interventions?">
+                                                                <%#  if(infodatatrack.properties.BLastYearIntervExtent){%>
+                                                                    <input name="infodatatrack[properties][BLastYearIntervExtent]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLastYearIntervExtent[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bintervextent]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLastYearIntervExtent]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bdateinterv]" title="Date of performance of past interventions">
-                                                                <%#  if(infodatatrack.properties.bdateinterv){%>
-                                                                    <input name="infodatatrack[properties][bdateinterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bdateinterv[index] %>">
+                                                            <td id="infodatatrack[properties][BLastYearIntervDate]" title="Date of performance of past interventions">
+                                                                <%#  if(infodatatrack.properties.BLastYearIntervDate){%>
+                                                                    <input name="infodatatrack[properties][BLastYearIntervDate]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLastYearIntervDate[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bdateinterv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLastYearIntervDate]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bscopeinterv]" title="Scope of past interventions">
-                                                                <%#  if(infodatatrack.properties.bscopeinterv){%>
-                                                                    <input name="infodatatrack[properties][bscopeinterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bscopeinterv[index] %>">
+                                                            <td id="infodatatrack[properties][BLastYearIntervScope]" title="Scope of past interventions">
+                                                                <%#  if(infodatatrack.properties.BLastYearIntervScope){%>
+                                                                    <input name="infodatatrack[properties][BLastYearIntervScope]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLastYearIntervScope[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bscopeinterv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLastYearIntervScope]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bimpactinterv]" title="Impact on condition of past interventions">
-                                                                <%#  if(infodatatrack.properties.bimpactinterv){%>
-                                                                    <input name="infodatatrack[properties][bimpactinterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bimpactinterv[index] %>">
+                                                            <td id="infodatatrack[properties][BLastYearIntervImpactCond]" title="Impact on condition of past interventions">
+                                                                <%#  if(infodatatrack.properties.BLastYearIntervImpactCond){%>
+                                                                    <input name="infodatatrack[properties][BLastYearIntervImpactCond]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLastYearIntervImpactCond[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bimpactinterv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLastYearIntervImpactCond]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][blocdocinterv]" title="Location of the documentation of past interventions">
-                                                                <%#  if(infodatatrack.properties.blocdocinterv){%>
-                                                                    <input name="infodatatrack[properties][blocdocinterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.blocdocinterv[index] %>">
+                                                            <td id="infodatatrack[properties][BLocDocLastYearInterv]" title="Location of the documentation of past interventions">
+                                                                <%#  if(infodatatrack.properties.BLocDocLastYearInterv){%>
+                                                                    <input name="infodatatrack[properties][BLocDocLastYearInterv]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BLocDocLastYearInterv[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][blocdocinterv]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BLocDocLastYearInterv]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][bmaintissues]" title="Maintainability issues">
-                                                                <%#  if(infodatatrack.properties.bmaintissues){%>
-                                                                    <input name="infodatatrack[properties][bmaintissues]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.bmaintissues[index] %>">
+                                                            <td id="infodatatrack[properties][BMaintIssues]" title="Maintainability issues">
+                                                                <%#  if(infodatatrack.properties.BMaintIssues){%>
+                                                                    <input name="infodatatrack[properties][BMaintIssues]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.BMaintIssues[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][bmaintissues]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][BMaintIssues]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][binvestment10years]" title="Investment undertaken in the last 10 years">
-                                                                <%#  if(infodatatrack.properties.binvestment10years){%>
-                                                                    <input name="infodatatrack[properties][binvestment10years]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.binvestment10years[index] %>">
+                                                            <td id="infodatatrack[properties][Binvestment10years]" title="Investment undertaken in the last 10 years">
+                                                                <%#  if(infodatatrack.properties.Binvestment10years){%>
+                                                                    <input name="infodatatrack[properties][Binvestment10years]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.Binvestment10years[index] %>">
                                                                     <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][binvestment10years]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][Binvestment10years]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][binvestmentrequired]" title="Investment required to upgrade to A class">

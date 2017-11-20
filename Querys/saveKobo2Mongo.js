@@ -252,52 +252,52 @@ kobo2geojson.connect2Kobo(kobouser, kobopass, kobohost, kobopath)
                                         newGJson.properties.BDamagesVaultArchesSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_2/p_elemento") !== -1) {
-                                        newGJson.properties.bdamagespiersmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesPiers = e[k];
                                     }
                                     if (k.indexOf("import2") !== -1 || k.indexOf("importdurable2") !== -1) {
-                                        newGJson.properties.bdamagespiersimportance = e[k];
+                                        newGJson.properties.BDamagesPiersSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_3/t_elemento") !== -1) {
-                                        newGJson.properties.bdamagesspandrelwallmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesSpandrel = e[k];
                                     }
                                     if (k.indexOf("import3") !== -1 || k.indexOf("importdurable3") !== -1) {
-                                        newGJson.properties.bdamagesspandrelwallimportance = e[k];
+                                        newGJson.properties.BDamagesSpandrelSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_4/e_elemento") !== -1) {
-                                        newGJson.properties.bdamagesabutmentsmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesAbutments = e[k];
                                     }
                                     if (k.indexOf("import4") !== -1 || k.indexOf("importdurable4") !== -1) {
-                                        newGJson.properties.bdamagesabutmentsimportance = e[k];
+                                        newGJson.properties.BDamagesAbutmentsSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_5/a_elemento") !== -1) {
-                                        newGJson.properties.bdamagessidewallsmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesSidewalls = e[k];
                                     }
                                     if (k.indexOf("import5") !== -1 || k.indexOf("importdurable5") !== -1) {
-                                        newGJson.properties.bdamagessidewallsimportance = e[k];
+                                        newGJson.properties.BDamagessidewallsSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_6/d_losas") !== -1) {
-                                        newGJson.properties.bdamagesslabmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesSlab = e[k];
                                     }
                                     if (k.indexOf("import6") !== -1 || k.indexOf("importdurable6") !== -1) {
-                                        newGJson.properties.bdamagesslabimportance = e[k];
+                                        newGJson.properties.BDamagesslabSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_7/d_vigas") !== -1) {
-                                        newGJson.properties.bdamagesbeamsbracesmechanicaldurable = e[k];
+                                        newGJson.properties.BDamagesBeams = e[k];
                                     }
                                     if (k.indexOf("import7") !== -1 || k.indexOf("importdurable7") !== -1) {
-                                        newGJson.properties.bdamagesbeamsbracesimportance = e[k];
+                                        newGJson.properties.BDamagesBeamsSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_8/d_apoyos") !== -1) {
-                                        newGJson.properties.bdamagesbearingstype = e[k];
+                                        newGJson.properties.BDamagesBearings = e[k];
                                     }
                                     if (k.indexOf("import8") !== -1 || k.indexOf("importdurable8") !== -1) {
-                                        newGJson.properties.bdamagesbearingsimportance = e[k];
+                                        newGJson.properties.BDamagesBearingsSeverity = e[k];
                                     }
                                     if (k.indexOf("group4_2_9/d_zonas") !== -1) {
-                                        newGJson.properties.bdamagesspecialareastype = e[k];
+                                        newGJson.properties.BDamagesSpecialareas = e[k];
                                     }
                                     if (k.indexOf("import9") !== -1 || k.indexOf("importdurable9") !== -1) {
-                                        newGJson.properties.bdamagesspecialareasimportance = e[k];
+                                        newGJson.properties.BDamagesSpecialareasSeverity = e[k];
                                     }
                                     if (k.indexOf("danotipo/danotipo_cimentacion") !== -1) {
                                         newGJson.properties.bdamagesfoundations = e[k];

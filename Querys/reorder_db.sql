@@ -1,10 +1,10 @@
-pk, rklmpoint
-surveyor, surveyor
-datesurvey, datesurvey
-coordTimes, movietime
+pk, rklmpoint,
+surveyor, surveyor,
+datesurvey, datesurvey,
+coordTimes, movietime,
 district, district,db.infodatatracks.update({}, { $set: { "properties.district": [] } }, false, true);
-rcode, rcode
-rname, rname
+rcode, rcode,
+rname, rname,
 road_category, rcategory,db.infodatatracks.update({}, { $rename: { "properties.road_category": "properties.rcategory" } }, false, true);
 rutmlong, rutmlong,db.infodatatracks.update({}, { $set: { "properties.rutmlong": [] } }, false, true);
 rutmlat, rutmlat,db.infodatatracks.update({}, { $set: { "properties.rutmlat": [] } }, false, true);
@@ -64,7 +64,6 @@ exposure_flood_hazard,rflood,db.infodatatracks.update({},{$rename: {"properties.
 asset_response_against_hazards,rresphazard,db.infodatatracks.update({},{$rename: {"properties.asset_response_against_hazards": "properties.rresphazard"}},false,true);
 asset_sensitivity,rsensitivity,db.infodatatracks.update({},{$rename: {"properties.asset_sensitivity": "properties.rsensitivity"}},false,true);
 risk,rrisk,db.infodatatracks.update({},{$rename: {"properties.risk": "properties.rrisk"}},false,true);
-
 RBarriersExist,rbarriersexist,db.infodatatracks.update({},{$rename: {"properties.RBarriersExist": "properties.rbarriersexist"}},false,true);
 RBarriersType,rbarrierstype,db.infodatatracks.update({},{$rename: {"properties.RBarriersType": "properties.rbarrierstype"}},false,true);
 RSafetyFence,rsafetyfence,db.infodatatracks.update({},{$rename: {"properties.RSafetyFence": "properties.rsafetyfence"}},false,true);
@@ -79,7 +78,6 @@ RLightFunct,rlightfunct,db.infodatatracks.update({},{$rename: {"properties.RLigh
 RFPastInterv,rfpastinterv,db.infodatatracks.update({},{$rename: {"properties.RFPastInterv": "properties.rfpastinterv"}},false,true);
 RFYearInterv,rfyearinterv,db.infodatatracks.update({},{$rename: {"properties.RFYearInterv": "properties.rfyearinterv"}},false,true);
 RFComments,rfcomments,db.infodatatracks.update({},{$rename: {"properties.RFComments": "properties.rfcomments"}},false,true);
-
 bcode,BCode,
 bexists,bexistence,db.infodatatracks.update({},{$rename: {"properties.bexists": "properties.bexistence"}},false,true);
 bname,BName,
@@ -105,7 +103,6 @@ bpiersriver,BPiersRiver,
 bprotectabut,BProtectAbut,
 bprojectlocation,Bprojectlocation,
 bphoto,Bphoto,
-
 balternative,BAlternative,
 bvisualcondition,BVisualCondition,
 bconslos,BConsLOS,
@@ -120,7 +117,6 @@ bdamagesfoundationsdetailedtype,BDamagesFoundationsdetailedtype,
 bdamagesstructural,BDamagesStructural,
 bdamagesvaultsarchesmechanicaldurable,BDamagesVaultArches,db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArches"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArches"}},false,true);
 bdamagesvaultsarchesimportance,BDamagesVaultArchesSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesimportance": "properties.BDamagesVaultArches"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesimportance": "properties.BDamagesVaultArches"}},false,true);db.infodatatracks.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArchesSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesvaultsarchesmechanicaldurable": "properties.BDamagesVaultArchesSeverity"}},false,true);
-//TODO: voy por aqui
 bdamagespiersmechanicaldurable,BDamagesPiers,db.infodatatracks.update({},{$rename: {"properties.bdamagespiersmechanicaldurable": "properties.BDamagesPiers"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagespiersmechanicaldurable": "properties.BDamagesPiers"}},false,true);
 bdamagespiersimportance,BDamagesPiersSeverity,db.infodatatracks.update({},{$rename: {"properties.bdamagespiersimportance": "properties.BDamagesPiersSeverity"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagespiersimportance": "properties.BDamagesPiersSeverity"}},false,true);
 bdamagesspandrelwallmechanicaldurable,BDamagesSpandrel,db.infodatatracks.update({},{$rename: {"properties.bdamagesspandrelwallmechanicaldurable": "properties.BDamagesSpandrel"}},false,true); db.koboinfos.update({},{$rename: {"properties.bdamagesspandrelwallmechanicaldurable": "properties.BDamagesSpandrel"}},false,true);
@@ -145,172 +141,174 @@ bscopeinterv,BLastYearIntervScope,db.infodatatracks.update({},{$rename: {"proper
 BLastYearIntervCost,BLastYearIntervCost,
 bimpactinterv,BLastYearIntervImpactCond,db.infodatatracks.update({},{$rename: {"properties.bimpactinterv": "properties.BLastYearIntervImpactCond"}},false,true); db.koboinfos.update({},{$rename: {"properties.bimpactinterv": "properties.BLastYearIntervImpactCond"}},false,true);
 blocdocinterv,BLocDocLastYearInterv,db.infodatatracks.update({},{$rename: {"properties.blocdocinterv": "properties.BLocDocLastYearInterv"}},false,true); db.koboinfos.update({},{$rename: {"properties.blocdocinterv": "properties.BLocDocLastYearInterv"}},false,true);
-BCurrYearInterv,BCurrYearInterv,
-BCurrYearIntervExtent,BCurrYearIntervExtent,
-BCurrYearIntervDate,BCurrYearIntervDate,
-BCurrYearIntervScope,BCurrYearIntervScope,
-BCurrYearIntervCost,BCurrYearIntervCost,
-BLocDocCurrYearInterv,BLocDocCurrYearInterv,
-bmaintissues,BMaintIssues,
-binvestment10years,Binvestment10years,
+BCurrYearInterv,BCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.BCurrYearInterv": [] } }, false, true);
+BCurrYearIntervExtent,BCurrYearIntervExtent,db.infodatatracks.update({}, { $set: { "properties.BCurrYearIntervExtent": [] } }, false, true);
+BCurrYearIntervDate,BCurrYearIntervDate,db.infodatatracks.update({}, { $set: { "properties.BCurrYearIntervDate": [] } }, false, true);
+BCurrYearIntervScope,BCurrYearIntervScope,db.infodatatracks.update({}, { $set: { "properties.BCurrYearIntervScope": [] } }, false, true);
+BCurrYearIntervCost,BCurrYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.BCurrYearIntervCost": [] } }, false, true);
+BLocDocCurrYearInterv,BLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.BLocDocCurrYearInterv": [] } }, false, true);
+bmaintissues,BMaintIssues,db.infodatatracks.update({},{$rename: {"properties.bmaintissues": "properties.BMaintIssues"}},false,true); db.koboinfos.update({},{$rename: {"properties.bmaintissues": "properties.BMaintIssues"}},false,true);
+binvestment10years,Binvestment10years,db.infodatatracks.update({},{$rename: {"properties.binvestment10years": "properties.Binvestment10years"}},false,true); db.koboinfos.update({},{$rename: {"properties.binvestment10years": "properties.Binvestment10years"}},false,true);
 binvestmentrequired,Binvestmentrequired,
 bomcomments,BOMComments,
+bcondition,BCondition,
+bcriticality,Bcriticality,
+blandslide,BLandslide,
+bflood,BFlood,
+bresphazard,BRespHazard,
+bsensitivity,Bsensitivity,
+brisk,BRISK,
 
-, bcondition
-, bcriticality
-, blandslide
-, bflood
-, bresphazard
-, bsensitivity
-, brisk
-, lgcode
-, lgyearconstruct
-, lgtype
-, lgposition
-, lgmaterial
-, lgnature
-, lgheight
-gh_h, gh_h
-, lgslope
-, lgdistance
-, lgshoulders
-, lglength
-, lgblocks
-, lgtreatments
-, lgtreatmentsretaining
-, lgtreatmentsretainingtype
-, lgtreatmentsretainingextension
-, lgtreatmentsretainingeffectiveness
-, lgtreatmentsretainingconservation
-, lgtreatmentsretainingother
-, lgtreatmentsdefence
-, lgtreatmentsdefencetype
-, lgtreatmentsdefenceextension
-, lgtreatmentsdefenceeffectiveness
-, lgtreatmentsdefenceconservation
-, lgtreatmentsdefenceother
-, lgtreatmentscoating
-, lgtreatmentscoatingtype
-, lgtreatmentscoatingextension
-, lgtreatmentscoatingeffectiveness
-, lgtreatmentscoatingconservation
-, lgtreatmentscoatingother
-, lgtreatmentsinternaldrainages
-, lgtreatmentsinternaldrainagesextension
-, lgtreatmentsinternaldrainageseffectiveness
-, lgtreatmentsinternaldrainagesconservation
-, lgvegetation
-, lgtypevegetation
-, lgphoto
-, lgvisualcondition
-, lgconslos
-, lgprevcondition
-, lglastinspection
-, lgsurveyfreq
-, lgnextsurvey
-, lgfailure
-, lgevidrecfailures
-, lgtypefailure
-, lgintensityfailure
-, lgextentfailure
-, lglastyearinterv
-, lglastyearintervextent
-, lglastyearintervdate
-, lglastyearintervscope
-, lglastyearintervcost
-, lglastyearintervimpactcond
-, lglocdoclastyearinterv
-, lgcurryearinterv
-, lgcurryearintervextent
-, lgcurryearintervdate
-, lgcurryearintervscope
-, lgcurryearintervcost
-, lglocdoccurryearinterv
-, lgmaintissues
-, lginvestment10years
-, lgnvestmentrequired
-, lgomcomments
-, lgcondition
-, lgcriticality
-, lglandslide
-, lgflood
-, lgresphazard
-, lgsensitivity
-, lgrisk
-, rgcode
-, rgyearconstruct
-, rgtype
-, rgposition
-, rgmaterial
-, rgnature
-, rgheight
-gh_h2, gh_h2
-, rgslope
-, rgdistance
-, rgshoulders
-, rglength
-, rgblocks
-, rgtreatments
-, rgtreatmentsretaining
-, rgtreatmentsretainingtype
-, rgtreatmentsretainingextension
-, rgtreatmentsretainingeffectiveness
-, rgtreatmentsretainingconservation
-, rgtreatmentsretainingother
-, rgtreatmentsdefence
-, rgtreatmentsdefencetype
-, rgtreatmentsdefenceextension
-, rgtreatmentsdefenceeffectiveness
-, rgtreatmentsdefenceconservation
-, rgtreatmentsdefenceother
-, rgtreatmentscoating
-, rgtreatmentscoatingtype
-, rgtreatmentscoatingextension
-, rgtreatmentscoatingeffectiveness
-, rgtreatmentscoatingconservation
-, rgtreatmentscoatingother
-, rgtreatmentsinternaldrainages
-, rgtreatmentsinternaldrainagesextension
-, rgtreatmentsinternaldrainageseffectiveness
-, rgtreatmentsinternaldrainagesconservation
-, rgvegetation
-, rgtypevegetation
-, rgphoto
-, rgvisualcondition
-, rgconslos
-, rgprevcondition
-, rglastinspection
-, rgsurveyfreq
-, rgnextsurvey
-, rgfailure
-, rgevidrecfailures
-, rgtypefailure
-, rgintensityfailure
-, rgextentfailure
-, rglastyearinterv
-, rglastyearintervextent
-, rglastyearintervdate
-, rglastyearintervscope
-, rglastyearintervcost
-, rglastyearintervimpactcond
-, rglocdoclastyearinterv
-, rgcurryearinterv
-, rgcurryearintervextent
-, rgcurryearintervdate
-, rgcurryearintervscope
-, rgcurryearintervcost
-, rglocdoccurryearinterv
-, rgmaintissues
-, rginvestment10years
-, rginvestmentrequired
-, rgomcomments
-, rgcondition
-, rgcriticality
-, rglandslide
-, rgflood
-, rgresphazard
-, rgsensitivity
-, rgrisk
+gcode,LGcode,
+gyearconstruct,LGyearconstruct,
+gtype,LGtype,
+gposition,LGposition,
+gmaterial,LGmaterial,
+gnature,LGnature,
+gheight,LGheight,
+gh_h,LGh_H,
+gslope,LGslope,
+gdistance,LGdistance,
+gshoulders,LGshoulders,
+glength,LGlength,
+gblocks,LGblocks,
+gtreatments,LGtreatments,
+gtreatmentsretaining,LGtreatmentsretaining,
+gtreatmentsretainingtype,LGtreatmentsretainingtype,
+gtreatmentsretainingextension,LGtreatmentsretainingextension,
+gtreatmentsretainingeffectiveness,LGtreatmentsretainingeffectiveness,
+gtreatmentsretainingconservation,LGtreatmentsretainingconservation,
+gtreatmentsretainingother,LGtreatmentsretainingother,
+gtreatmentsdefence,LGtreatmentsDefence,
+gtreatmentsdefencetype,LGtreatmentsDefencetype,
+gtreatmentsdefenceextension,LGtreatmentsDefenceextension,
+gtreatmentsdefenceeffectiveness,LGtreatmentsDefenceeffectiveness,
+gtreatmentsdefenceconservation,LGtreatmentsDefenceconservation,
+gtreatmentsdefenceother,LGtreatmentsDefenceother,
+gtreatmentscoating,LGtreatmentsCoating,
+gtreatmentscoatingtype,LGtreatmentsCoatingtype,
+gtreatmentscoatingextension,LGtreatmentsCoatingextension,
+gtreatmentscoatingeffectiveness,LGtreatmentsCoatingeffectiveness,
+gtreatmentscoatingconservation,LGtreatmentsCoatingconservation,
+gtreatmentscoatingother,LGtreatmentsCoatingother,
+gtreatmentsinternaldrainages,LGtreatmentsInternalDrainages,
+gtreatmentsinternaldrainagesextension,LGtreatmentsInternalDrainagesextension,
+gtreatmentsinternaldrainageseffectiveness,LGtreatmentsInternalDrainageseffectiveness,
+gtreatmentsinternaldrainagesconservation,LGtreatmentsInternalDrainagesconservation,
+gvegetation,LGvegetation,
+gtypevegetation,LGtypevegetation,
+gphoto,LGphoto,
+gvisualcondition,LGVisualCondition,
+gconslos,LGConsLOS,
+gprevcondition,LGPrevCondition,
+glastinspection,LGLastInspection,
+gsurveyfreq,LGSurveyFreq,
+gnextsurvey,LGNextSurvey,
+gfailure,LGfailure,
+gevidrecfailures,LGEvidRecFailures,
+gtypefailure,LGTypeFailure,
+gintensityfailure,LGIntensityFailure,
+gextentfailure,LGExtentFailure,
+gpastinterv,LGLastYearInterv,
+gintervextent,LGLastYearIntervExtent,
+gdateinterv,LGLastYearIntervDate,
+gscopeinterv,LGLastYearIntervScope,
+qintervcost,LGLastYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.qintervcost": [] } }, false, true);
+gimpactinterv,LGLastYearIntervImpactCond,
+glocdocinterv,LGLocDocLastYearInterv,
+gcurryearinterv,LGCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.gcurryearinterv": [] } }, false, true);
+gcurryearintervextent,LGCurrYearIntervExtent,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervextent": [] } }, false, true);
+gcurryearintervdate,LGCurrYearIntervDate,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervdate": [] } }, false, true);
+gcurryearintervscope,LGCurrYearIntervScope,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervscope": [] } }, false, true);
+gcurryearintervcost,LGCurrYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervcost": [] } }, false, true);
+glocdoccurryearinterv,LGLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv": [] } }, false, true);
+gmaintissues,LGMaintIssues,
+ginvestment10years,LGinvestment10years,
+rgnvestmentrequired,LGnvestmentrequired,
+gomcomments,LGOMComments,
+gcondition,LGcondition,
+gcriticality,LGcriticality,
+glandslide,LGLandslide,
+gflood,LGFlood,
+gresphazard,LGRespHazard,
+gsensitivity,LGsensitivity,
+grisk,LGRISK,
+
+gcode2,LGcode,
+gyearconstruct2,LGyearconstruct,
+gtype2,LGtype,
+gposition2,LGposition,
+gmaterial2,LGmaterial,
+gnature2,LGnature,
+gheight2,LGheight,
+gh_h2,LGh_H,
+gslope2,LGslope,
+gdistance2,LGdistance,
+gshoulders2,LGshoulders,db.infodatatracks.update({}, { $set: { "properties.gshoulders2": [] } }, false, true);
+glength2,LGlength,
+gblocks2,LGblocks,
+gtreatments2,LGtreatments,
+gtreatmentsretaining2,LGtreatmentsretaining,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretaining2": [] } }, false, true);
+gtreatmentsretainingtype2,LGtreatmentsretainingtype,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingtype2": [] } }, false, true);
+gtreatmentsretainingextension2,LGtreatmentsretainingextension,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingextension2": [] } }, false, true);db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingextension2": [] } }, false, true);
+gtreatmentsretainingeffectiveness2,LGtreatmentsretainingeffectiveness,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingeffectiveness2": [] } }, false, true);
+gtreatmentsretainingconservation2,LGtreatmentsretainingconservation,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingconservation2": [] } }, false, true);
+gtreatmentsretainingother2,LGtreatmentsretainingother,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsretainingother2": [] } }, false, true);
+gtreatmentsdefence2,LGtreatmentsDefence,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefence2": [] } }, false, true);
+gtreatmentsdefencetype2,LGtreatmentsDefencetype,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefencetype2": [] } }, false, true);
+gtreatmentsdefenceextension2,LGtreatmentsDefenceextension,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefenceextension2": [] } }, false, true);
+gtreatmentsdefenceeffectiveness2,LGtreatmentsDefenceeffectiveness,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefenceeffectiveness2": [] } }, false, true);
+gtreatmentsdefenceconservation2,LGtreatmentsDefenceconservation,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefenceconservation2": [] } }, false, true);
+gtreatmentsdefenceother2,LGtreatmentsDefenceother,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsdefenceother2": [] } }, false, true);
+gtreatmentscoating2,LGtreatmentsCoating,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoating2": [] } }, false, true);
+gtreatmentscoatingtype2,LGtreatmentsCoatingtype,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoatingtype2": [] } }, false, true);
+gtreatmentscoatingextension2,LGtreatmentsCoatingextension,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoatingextension2": [] } }, false, true);
+gtreatmentscoatingeffectiveness2,LGtreatmentsCoatingeffectiveness,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoatingeffectiveness2": [] } }, false, true);
+gtreatmentscoatingconservation2,LGtreatmentsCoatingconservation,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoatingconservation2": [] } }, false, true);
+gtreatmentscoatingother2,LGtreatmentsCoatingother,db.infodatatracks.update({}, { $set: { "properties.gtreatmentscoatingother2": [] } }, false, true);
+gtreatmentsinternaldrainages2,LGtreatmentsInternalDrainages,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsinternaldrainages2": [] } }, false, true);
+gtreatmentsinternaldrainagesextension2,LGtreatmentsInternalDrainagesextension,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsinternaldrainagesextension2": [] } }, false, true);
+gtreatmentsinternaldrainageseffectiveness2,LGtreatmentsInternalDrainageseffectiveness,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsinternaldrainageseffectiveness2": [] } }, false, true);
+gtreatmentsinternaldrainagesconservation2,LGtreatmentsInternalDrainagesconservation,db.infodatatracks.update({}, { $set: { "properties.gtreatmentsinternaldrainagesconservation2": [] } }, false, true);
+gvegetation2,LGvegetation,
+gtypevegetation2,LGtypevegetation,
+gphoto2,LGphoto,
+gvisualcondition2,LGVisualCondition,
+gconslos2,LGConsLOS,
+gprevcondition2,LGPrevCondition,
+glastinspection2,LGLastInspection,
+gsurveyfreq2,LGSurveyFreq,
+gnextsurvey2,LGNextSurvey,
+gfailure2,LGfailure,
+gevidrecfailures2,LGEvidRecFailures,
+gtypefailure2,LGTypeFailure,
+gintensityfailure2,LGIntensityFailure,db.infodatatracks.update({}, { $set: { "properties.gintensityfailure2": [] } }, false, true);
+gextentfailure2,LGExtentFailure,
+gpastinterv2,LGLastYearInterv,
+gintervextent2,LGLastYearIntervExtent,
+gdateinterv2,LGLastYearIntervDate,
+gscopeinterv2,LGLastYearIntervScope,
+qintervcost2,LGLastYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.qintervcost2": [] } }, false, true);
+gimpactinterv2,LGLastYearIntervImpactCond,
+glocdocinterv2,LGLocDocLastYearInterv,
+gcurryearinterv2,LGCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.gcurryearinterv2": [] } }, false, true);
+gcurryearintervextent2,LGCurrYearIntervExtent,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervextent2": [] } }, false, true);
+gcurryearintervdate2,LGCurrYearIntervDate,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervdate2": [] } }, false, true);
+gcurryearintervscope2,LGCurrYearIntervScope,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervscope2": [] } }, false, true);
+gcurryearintervcost2,LGCurrYearIntervCost,db.infodatatracks.update({}, { $set: { "properties.gcurryearintervcost2": [] } }, false, true);
+glocdoccurryearinterv2,LGLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv2": [] } }, false, true);
+gmaintissues2,LGMaintIssues,
+ginvestment10years2,LGinvestment10years,
+rgnvestmentrequired2,LGnvestmentrequired,
+gomcomments2,LGOMComments,
+gcondition2,LGcondition,
+gcriticality2,LGcriticality,
+glandslide2,LGLandslide,
+gflood2,LGFlood,
+gresphazard2,LGRespHazard,
+gsensitivity2,LGsensitivity,
+grisk2,LGRISK,
+
 , ccode
 , cyearconstruc
 , ctype
