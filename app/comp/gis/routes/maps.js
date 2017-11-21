@@ -387,7 +387,7 @@ router.get('/list_info', function(req, resp, next) {
         var koboinfos_bridge = [];
         var koboinfos_geo = [];
         allData[1].body.forEach(function(elem, index) {
-            if (elem.properties.kobo_type === "ODT") {
+            if (elem.properties.kobo_type === "Culvert") {
                 koboinfos_odt.push(elem);
             } else if (elem.properties.kobo_type === "Bridge") {
                 koboinfos_bridge.push(elem);

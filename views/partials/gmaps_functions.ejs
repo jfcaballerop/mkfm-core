@@ -7,7 +7,7 @@
     function getContent(type, event) {
         var content = '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>';
         var subcontent = "";
-        if (event.feature.getProperty('kobo_type') === "ODT") {
+        if (event.feature.getProperty('kobo_type') === "Culvert") {
             subcontent += '<span style="font-weight: bold;">Clearing required : </span>' + event.feature.getProperty("dclearing") + '<br>';
             subcontent += '<span style="font-weight: bold;"> Lost of section due to blocking/silting/obstacles (%): </span>' + event.feature.getProperty("dlostsection") + '<br>';
             subcontent += '<span style="font-weight: bold;"> Diameter : </span>' + event.feature.getProperty("ddiameter") + '<br>';
@@ -167,7 +167,7 @@
             if (activeInfoWindow != null) activeInfoWindow.close();
 
             // Open new InfoWindow for mouseover event
-            if (event.feature.getProperty('nameoption') === 'ODT' ||
+            if (event.feature.getProperty('nameoption') === 'Culvert' ||
                 event.feature.getProperty('nameoption') === 'BRIDGE' ||
                 event.feature.getProperty('nameoption') === 'GEOT') {
                 infoWnd.open(map);
@@ -244,27 +244,27 @@
                     }
 
                     break;
-                case 'ODT':
-                    if (featureActive['ODT'] === undefined || featureActive['ODT'] == false) {
-                        // alert(' ## ODT ##');
+                case 'Culvert':
+                    if (featureActive['Culvert'] === undefined || featureActive['Culvert'] == false) {
+                        // alert(' ## Culvert ##');
                         <% koboinfos_odt.forEach(function(element) { %>
                         jsonObject = <%- JSON.stringify(element) %>;
                         jsonObject.properties.color = "blue";
-                        jsonObject.properties.nameoption = "ODT";
+                        jsonObject.properties.nameoption = "Culvert";
                         //console.log(JSON.stringify(jsonObject));
-                        featureActive['ODT'] = true;
+                        featureActive['Culvert'] = true;
                         map.data.addGeoJson(jsonObject);
                         <%}); %>
                         $('#spinner').hide(2000);
 
                     } else {
-                        // alert(' ## DESACTIVO ODT ##');
+                        // alert(' ## DESACTIVO Culvert ##');
                         map.data.forEach(function(feature) {
                             // If you want, check here for some constraints.
-                            if (feature.getProperty('nameoption') === 'ODT') {
+                            if (feature.getProperty('nameoption') === 'Culvert') {
                                 map.data.remove(feature);
                             }
-                            featureActive['ODT'] = false;
+                            featureActive['Culvert'] = false;
 
                         });
                         $('#spinner').hide(2000);
@@ -293,7 +293,7 @@
                             if (feature.getProperty('nameoption') === 'BRIDGE') {
                                 map.data.remove(feature);
                             }
-                            featureActive['ODT'] = false;
+                            featureActive['Culvert'] = false;
 
                         });
                         $('#spinner').hide(2000);
@@ -322,7 +322,7 @@
                             if (feature.getProperty('nameoption') === 'GEOT') {
                                 map.data.remove(feature);
                             }
-                            featureActive['ODT'] = false;
+                            featureActive['Culvert'] = false;
 
                         });
                         $('#spinner').hide(2000);
