@@ -553,7 +553,8 @@
                 r[++j] = '<thead>';
                 r[++j] = '<tr>';
                 $.each(propertiesCols, function(key1, value1) {
-                    r[++j] = '<th colspan="' + Object.keys(propertiesCols[key1]).length + '" scope="colgroup" class="' + key1 + '">' + key1 + '</th>';
+                    r[++j] = '<th colspan="' + Object.keys(propertiesCols[key1]).length + '" scope="colgroup" class="' +
+                        key1 + '" >' + key1 + '</th>';
                 });
                 r[++j] = '</tr>';
                 r[++j] = '<tr>';
@@ -561,7 +562,7 @@
                     //console.log(key1, value1);
                     $.each(value1, function(key, value) {
                         //console.log(key, value);
-                        r[++j] = '<th title="' + key + '" class="' + key1 + '">' + value + '</th>';
+                        r[++j] = '<th title="' + key + '" class="' + key1 + '" style="max-width:100px; white-space:pre-wrap;">' + value + '</th>';
                     });
                 });
                 r[++j] = '</tr></thead>';
