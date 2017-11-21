@@ -86,7 +86,7 @@ btype,Btype,
 bsurrounding,Bsurrounding,
 bobstaclesaved,BObstacleSaved,
 bfloodscenario,Bfloodscenario,
-Bloadcapacity,Bloadcapacity,
+Bloadcapacity,Bloadcapacity,db.infodatatracks.update({}, { $set: { "properties.Bloadcapacity": [] } }, false, true);
 bmaterialdeck,BMaterialDeck,
 bmaterialgirder,BMaterialGirders,
 bmaterialpiers,BMaterialPiers,

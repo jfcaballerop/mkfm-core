@@ -1,4 +1,1673 @@
 <script>
+    var propertiesCols = {
+        Trackinfo: {
+            id: {
+                title: "id",
+                visible: true
+            },
+            Selection: {
+                title: "Sel",
+                visible: true
+            },
+            inv: {
+                title: "Act",
+                visible: false
+            },
+            coordTimes: {
+                title: "Movie record time",
+                visible: true
+            },
+            time: {
+                title: "time",
+                visible: true
+            },
+            coordinates: {
+                title: "coord",
+                visible: true
+            },
+            Pk: {
+                title: "Pk",
+                visible: true
+            },
+            accion: {
+                title: "accion",
+                visible: true
+            }
+        },
+        road: {
+            surveyor: {
+                title: "Name of surveyor",
+                visible: true
+            },
+            datesurvey: {
+                title: "Date of survey",
+                visible: false
+            },
+            coordTimes: {
+                title: "Movie record time",
+                visible: false
+            },
+            district: {
+                title: "District",
+                visible: false
+            },
+            rcode: {
+                title: "Road code",
+                visible: true
+            },
+            rname: {
+                title: "Road name",
+                visible: true
+            },
+            rcategory: {
+                title: "Road category",
+                visible: true
+            },
+            rutmlong: {
+                title: "Longitude",
+                visible: false
+            },
+            rutmlat: {
+                title: "Latitude",
+                visible: false
+            },
+            rutmelevation: {
+                title: "Elevation (m)",
+                visible: false
+            },
+            rdateconstruct: {
+                title: "Date of construction",
+                visible: false
+            },
+            rmaterial: {
+                title: "Pavement material",
+                visible: true
+            },
+            rbasematerial: {
+                title: "Base material",
+                visible: false
+            },
+            rsubbasematerial: {
+                title: "Subbase material",
+                visible: false
+            },
+            rlaneinc: {
+                title: "Number of lanes (increasing KP)",
+                visible: true
+            },
+            rlanedecr: {
+                title: "Number of lanes (decreasing KP)",
+                visible: true
+            },
+            rlanetotal: {
+                title: "Total number of lanes",
+                visible: true
+            },
+            rwidth: {
+                title: "Total width (m)",
+                visible: true
+            },
+            rlocdoc: {
+                title: "Location of the documentation of road projects",
+                visible: false
+            },
+            rvideo: {
+                title: "Video",
+                visible: false
+            },
+            ralternatitinerary: {
+                title: "Existence of alternative itinerary",
+                visible: true
+            },
+            ropen: {
+                title: "Is the road open to traffic?",
+                visible: true
+            },
+            rgauging: {
+                title: "Existence of gauging stations",
+                visible: false
+            },
+            radt: {
+                title: "ADT",
+                visible: false
+            },
+            rtrafficpeak: {
+                title: "Traffic high peak",
+                visible: false
+            },
+            iri: {
+                title: "IRI - Pavement roughtness",
+                visible: false
+            },
+            rvcondition: {
+                title: "Current visual condition",
+                visible: true
+            },
+            rconslos: {
+                title: "Consequences of failure on LOS",
+                visible: false
+            },
+            rprevcondition: {
+                title: "Previous condition rate",
+                visible: false
+            },
+            rlastinspection: {
+                title: "Date of last inspection",
+                visible: false
+            },
+            rsurveyfreq: {
+                title: "Survey frequency",
+                visible: false
+            },
+            rnextsurvey: {
+                title: "Date of next survey",
+                visible: false
+            },
+            rfailure: {
+                title: "Failure history",
+                visible: false
+            },
+            rlastoverlay: {
+                title: "Date of last overlay",
+                visible: false
+            },
+            rlastyearinterv: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            rlastyearintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            rlastyearintervdate: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            rlastyearintervscope: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            rlastyearintervcost: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            rlastyearintervimpactcond: {
+                title: "Impact of last year interventions on asset condition",
+                visible: false
+            },
+            rlocdoclastyearinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            rcurryearinterv: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            rcurryearintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            rcurryearintervdate: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            rcurryearintervscope: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            rcurryearintervcost: {
+                title: "Accummulated Cost of current year interventions",
+                visible: false
+            },
+            rlocdoccurryearinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            rmaintissues: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            rinvestment10years: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            rinvestmentrequired: {
+                title: "Investment required to upgrade to A class",
+                visible: false
+            },
+            romcomments: {
+                title: "Comments to operation and maintainance",
+                visible: false
+            },
+            rinfrint: {
+                title: "Acess to airports/ferry ports",
+                visible: true
+            },
+            rtourism: {
+                title: "Access to touristic sites",
+                visible: true
+            },
+            rindustry: {
+                title: "Acess to industry, agriculture, fishing sites",
+                visible: false
+            },
+            rindustrydist: {
+                title: "Distance to industries, agriculture, fishing sites",
+                visible: false
+            },
+            rhealth: {
+                title: "Access to health care services",
+                visible: true
+            },
+            renvironment: {
+                title: "Located within an environmentally protected area",
+                visible: false
+            },
+            rwaste: {
+                title: "Distance to a dumping area",
+                visible: false
+            },
+            rccondition: {
+                title: "Current condition",
+                visible: false
+            },
+            rcriticality: {
+                title: "Criticality",
+                visible: false
+            },
+            rlandslide: {
+                title: "Exposure to landslide hazard",
+                visible: false
+            },
+            rflood: {
+                title: "Exposure to flood hazard",
+                visible: false
+            },
+            rresphazard: {
+                title: "Asset Response against hazards",
+                visible: false
+            },
+            rsensitivity: {
+                title: "Asset Sensitivity",
+                visible: false
+            },
+            rrisk: {
+                title: "RISK",
+                visible: false
+            }
+        },
+        furniture: {
+            rbarriersexist: {
+                title: "Existence of barriers",
+                visible: true
+            },
+            rbarrierstype: {
+                title: "Typology of barriers",
+                visible: true
+            },
+            rsafetyfence: {
+                title: "Typology of safety fences",
+                visible: true
+            },
+            rbarrierfunct: {
+                title: "Functionality - Is the asset functioning as it is expected?",
+                visible: true
+            },
+            rsignalsexist: {
+                title: "Existence of signposting and road signs",
+                visible: true
+            },
+            rsignalstype: {
+                title: "Typology of signaling",
+                visible: true
+            },
+            rvsignalstype: {
+                title: "Typology of vertical signaling",
+                visible: true
+            },
+            rsignalsfunct: {
+                title: "Functionality - Is the asset functioning as it is expected?",
+                visible: true
+            },
+            rlightexist: {
+                title: "Existence of street lighting",
+                visible: true
+            },
+            rlighttype: {
+                title: "Typology of street lighting",
+                visible: true
+            },
+            rlightfunct: {
+                title: "Functionality - Is the asset functioning as it is expected?",
+                visible: true
+            },
+            rfpastinterv: {
+                title: "Have there been past interventions?",
+                visible: false
+            },
+            rfyearinterv: {
+                title: "Year of performance of past interventions",
+                visible: false
+            },
+            rfcomments: {
+                title: "Comments",
+                visible: false
+            }
+        },
+        bridges: {
+            bcode: {
+                title: "Asset Code",
+                visible: true
+            },
+            bexistence: {
+                title: "Existence of bridge",
+                visible: true
+            },
+            bname: {
+                title: "Bridge name",
+                visible: false
+            },
+            byearconstruc: {
+                title: "Year of construction",
+                visible: false
+            },
+            btype: {
+                title: "Structural typology",
+                visible: false
+            },
+            bsurrounding: {
+                title: "Surrounding - Environment",
+                visible: false
+            },
+            bobstaclesaved: {
+                title: "Obstacle overpassed",
+                visible: false
+            },
+            bfloodscenario: {
+                title: "Design flood scenario",
+                visible: false
+            },
+            Bloadcapacity: {
+                title: "Load capacity",
+                visible: true
+            },
+            bmaterialdeck: {
+                title: "Material - Deck",
+                visible: false
+            },
+            bmaterialgirder: {
+                title: "Material - Girders",
+                visible: false
+            },
+            bmaterialpiers: {
+                title: "Material - Piers",
+                visible: false
+            },
+            bmaterialabutments: {
+                title: "Material - Abutments",
+                visible: false
+            },
+            balignment: {
+                title: "Bridge alignment",
+                visible: false
+            },
+            bspans: {
+                title: "Single or multiple span?",
+                visible: false
+            },
+            bnumberspans: {
+                title: "Number of spans",
+                visible: false
+            },
+            blenght: {
+                title: "Total length (m)",
+                visible: true
+            },
+            bmaxspan: {
+                title: "Maximum span (m)",
+                visible: false
+            },
+            bwidth: {
+                title: "Total width (m)",
+                visible: true
+            },
+            bfreeheight: {
+                title: "Free height (m)",
+                visible: false
+            },
+            bfoundation: {
+                title: "Foundations typology",
+                visible: false
+            },
+            bpiersriver: {
+                title: "Existence of piers over riverbed",
+                visible: false
+            },
+            bprotectabut: {
+                title: "Protection of abutments /nearby areas",
+                visible: false
+            },
+            bprojectlocation: {
+                title: "Location of the documentation of bridge projects",
+                visible: false
+            },
+            bphoto: {
+                title: "Photographs",
+                visible: false
+            },
+            balternative: {
+                title: "Existence of alternative itinerary",
+                visible: true
+            },
+            bvisualcondition: {
+                title: "Current visual condition",
+                visible: false
+            },
+            bconslos: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            bprevcondition: {
+                title: "Previous condition rate",
+                visible: false
+            },
+            blastinspection: {
+                title: "Date of last inspection",
+                visible: false
+            },
+            bsurveyfreq: {
+                title: "Survey frequency",
+                visible: false
+            },
+            bnextsurvey: {
+                title: "Date of next survey",
+                visible: false
+            },
+            bfailure: {
+                title: "Failure history",
+                visible: false
+            },
+            bdamagesfoundations: {
+                title: "Damages on foundations",
+                visible: false
+            },
+            bdamagesfoundationsgeneraltype: {
+                title: "Type of damages on foundations (from foundation-ground decay, from foundation decay)",
+                visible: false
+            },
+            bdamagesfoundationsdetailedtype: {
+                title: "Type of damages on foundations due to foundation-ground decay",
+                visible: false
+            },
+            bdamagesstructural: {
+                title: "Damages on structural elements",
+                visible: false
+            },
+            bdamagesvaultsarchesmechanicaldurable: {
+                title: "Damages on vault / arches (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesVaultArchesSeverity: {
+                title: "Severity of damages on vault / arches",
+                visible: false
+            },
+            BDamagesPiers: {
+                title: "Damages on piers (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesPiersSeverity: {
+                title: "Severity of damages on piers",
+                visible: false
+            },
+            BDamagesSpandrel: {
+                title: "Damages on spandrel walls (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesSpandrelSeverity: {
+                title: "Severity of damages on spandrel walls",
+                visible: false
+            },
+            BDamagesAbutments: {
+                title: "Damages on abutments (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesAbutmentsSeverity: {
+                title: "Severity of damages on abutments",
+                visible: false
+            },
+            BDamagesSidewalls: {
+                title: "Damages on side walls (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagessidewallsSeverity: {
+                title: "Severity of damages on side walls",
+                visible: false
+            },
+            BDamagesSlab: {
+                title: "Damages on slab (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesslabSeverity: {
+                title: "Severity of damages on slab",
+                visible: false
+            },
+            BDamagesBeams: {
+                title: "Damages on beams (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesBeamsSeverity: {
+                title: "Severity of damages on beams",
+                visible: false
+            },
+            BDamagesBearings: {
+                title: "Damages on bearings (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesBearingsSeverity: {
+                title: "Severity of damages on bearings",
+                visible: false
+            },
+            BDamagesSpecialareas: {
+                title: "Damages on special areas (mechanical vs. durable)",
+                visible: false
+            },
+            BDamagesSpecialareasSeverity: {
+                title: "Severity of damages on special areas",
+                visible: false
+            },
+            bdamagesnonstructural: {
+                title: "Damages on non structural elements",
+                visible: false
+            },
+            BLastYearInterv: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            BLastYearIntervExtent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            BLastYearIntervDate: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            BLastYearIntervScope: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            BLastYearIntervCost: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            BLastYearIntervImpactCond: {
+                title: "Impact of last year interventions on asset condition",
+                visible: false
+            },
+            BLocDocLastYearInterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            BCurrYearInterv: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            BCurrYearIntervExtent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            BCurrYearIntervDate: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            BCurrYearIntervScope: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            BCurrYearIntervCost: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            BLocDocCurrYearInterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            BMaintIssues: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            Binvestment10years: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            binvestmentrequired: {
+                title: "Investment required to upgrade to A class",
+                visible: false
+            },
+            bomcomments: {
+                title: "Comments to operation and maintainance",
+                visible: false
+            },
+            bcondition: {
+                title: "Current condition",
+                visible: false
+            },
+            bcriticality: {
+                title: "Criticality",
+                visible: false
+            },
+            blandslide: {
+                title: "Exposure to landslide hazard",
+                visible: false
+            },
+            bflood: {
+                title: "Exposure to flood hazard",
+                visible: false
+            },
+            bresphazard: {
+                title: "Asset Response against hazards",
+                visible: false
+            },
+            bsensitivity: {
+                title: "Asset Sensitivity",
+                visible: false
+            },
+            brisk: {
+                title: "RISK",
+                visible: false
+            }
+        },
+        geotechnicals: {
+            gcode: {
+                title: "Asset Code",
+                visible: true
+            },
+            gyearconstruct: {
+                title: "Year of construction",
+                visible: false
+            },
+            gtype: {
+                title: "Type of geotechnical asset",
+                visible: true
+            },
+            gposition: {
+                title: "Position",
+                visible: true
+            },
+            gmaterial: {
+                title: "Material - Retaining walls",
+                visible: true
+            },
+            gnature: {
+                title: "Nature - Earthworks",
+                visible: true
+            },
+            gheight: {
+                title: "Height (m)",
+                visible: true
+            },
+            gh_h: {
+                title: "Relation h/H ",
+                visible: true
+            },
+            gslope: {
+                title: "Slope / Angle (º)",
+                visible: true
+            },
+            gdistance: {
+                title: "Distance to road (m)",
+                visible: true
+            },
+            gshoulders: {
+                title: "Shoulders / Verges",
+                visible: true
+            },
+            glength: {
+                title: "Length (m)",
+                visible: true
+            },
+            gblocks: {
+                title: "Size of blocks (m)",
+                visible: true
+            },
+            gtreatments: {
+                title: "Existence of geotechnical treatments",
+                visible: true
+            },
+            gtreatmentsretaining: {
+                title: "Existence  of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingtype: {
+                title: "Type  of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingextension: {
+                title: "Extension of retaining treatments (%)",
+                visible: true
+            },
+            gtreatmentsretainingeffectiveness: {
+                title: "Effectiveness of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingconservation: {
+                title: "Conservation of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingother: {
+                title: "Other retaining treatments",
+                visible: true
+            },
+            gtreatmentsdefence: {
+                title: "Existence  of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefencetype: {
+                title: "Type  of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceextension: {
+                title: "Extension of defence treatments (%)",
+                visible: true
+            },
+            gtreatmentsdefenceeffectiveness: {
+                title: "Effectiveness of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceconservation: {
+                title: "Conservation of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceother: {
+                title: "Other defence treatments",
+                visible: true
+            },
+            gtreatmentscoating: {
+                title: "Existence  of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingtype: {
+                title: "Type  of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingextension: {
+                title: "Extension of coating treatments (%)",
+                visible: true
+            },
+            gtreatmentscoatingeffectiveness: {
+                title: "Effectiveness of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingconservation: {
+                title: "Conservation of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingother: {
+                title: "Other coating treatments",
+                visible: true
+            },
+            gtreatmentsinternaldrainages: {
+                title: "Existence  of internal drainages",
+                visible: true
+            },
+            gtreatmentsinternaldrainagesextension: {
+                title: "Extension of internal drainages (%)",
+                visible: true
+            },
+            gtreatmentsinternaldrainageseffectiveness: {
+                title: "Effectiveness of internal drainages",
+                visible: true
+            },
+            gtreatmentsinternaldrainagesconservation: {
+                title: "Conservation of internal drainages",
+                visible: true
+            },
+            gvegetation: {
+                title: "Existence of vegetation",
+                visible: true
+            },
+            gtypevegetation: {
+                title: "Type of vegetation",
+                visible: true
+            },
+            gphoto: {
+                title: "Photographs",
+                visible: false
+            },
+            gvisualcondition: {
+                title: "Current visual condition",
+                visible: true
+            },
+            gconslos: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            gprevcondition: {
+                title: "Previous condition rate",
+                visible: false
+            },
+            glastinspection: {
+                title: "Date of last inspection",
+                visible: false
+            },
+            gsurveyfreq: {
+                title: "Survey frequency",
+                visible: false
+            },
+            gnextsurvey: {
+                title: "Date of next survey",
+                visible: false
+            },
+            gfailure: {
+                title: "Failure history",
+                visible: false
+            },
+            gevidrecfailures: {
+                title: "Evidence of recent failures?",
+                visible: true
+            },
+            gtypefailure: {
+                title: "Type of failure process",
+                visible: true
+            },
+            gintensityfailure: {
+                title: "Intensity of failure process",
+                visible: true
+            },
+            gextentfailure: {
+                title: "Extent of failure (%)",
+                visible: true
+            },
+            gpastinterv: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            gintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            gdateinterv: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            gscopeinterv: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            qintervcost: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            gimpactinterv: {
+                title: "Impact of last year interventions on asset condition",
+                visible: false
+            },
+            glocdocinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            gcurryearinterv: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            gcurryearintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            gcurryearintervdate: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            gcurryearintervscope: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            gcurryearintervcost: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            glocdoccurryearinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            gmaintissues: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            ginvestment10years: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            rgnvestmentrequired: {
+                title: "Investment required to upgrade to A class",
+                visible: false
+            },
+            gomcomments: {
+                title: "Comments to maintainance",
+                visible: false
+            },
+            gcondition: {
+                title: "Current condition",
+                visible: false
+            },
+            gcriticality: {
+                title: "Criticality",
+                visible: false
+            },
+            glandslide: {
+                title: "Exposure to landslide hazard",
+                visible: false
+            },
+            gflood: {
+                title: "Exposure to flood hazard",
+                visible: false
+            },
+            gresphazard: {
+                title: "Asset Response against hazards",
+                visible: false
+            },
+            gsensitivity: {
+                title: "Asset Sensitivity",
+                visible: false
+            },
+            grisk: {
+                title: "RISK",
+                visible: false
+            },
+            gcode2: {
+                title: "Asset Code",
+                visible: true
+            },
+            gyearconstruct2: {
+                title: "Year of construction",
+                visible: false
+            },
+            gtype2: {
+                title: "Type of geotechnical asset",
+                visible: true
+            },
+            gposition2: {
+                title: "Position",
+                visible: true
+            },
+            gmaterial2: {
+                title: "Material - Retaining walls",
+                visible: true
+            },
+            gnature2: {
+                title: "Nature - Earthworks",
+                visible: true
+            },
+            gheight2: {
+                title: "Height (m)",
+                visible: true
+            },
+            gh_h2: {
+                title: "Relation h/H ",
+                visible: true
+            },
+            gslope2: {
+                title: "Slope / Angle (º)",
+                visible: true
+            },
+            gdistance2: {
+                title: "Distance to road (m)",
+                visible: true
+            },
+            gshoulders2: {
+                title: "Shoulders / Verges",
+                visible: true
+            },
+            glength2: {
+                title: "Length (m)",
+                visible: true
+            },
+            gblocks2: {
+                title: "Size of blocks (m)",
+                visible: true
+            },
+            gtreatments2: {
+                title: "Existence of geotechnical treatments",
+                visible: true
+            },
+            gtreatmentsretaining2: {
+                title: "Existence  of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingtype2: {
+                title: "Type  of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingextension2: {
+                title: "Extension of retaining treatments (%)",
+                visible: true
+            },
+            gtreatmentsretainingeffectiveness2: {
+                title: "Effectiveness of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingconservation2: {
+                title: "Conservation of retaining treatments",
+                visible: true
+            },
+            gtreatmentsretainingother2: {
+                title: "Other retaining treatments",
+                visible: true
+            },
+            gtreatmentsdefence2: {
+                title: "Existence  of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefencetype2: {
+                title: "Type  of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceextension2: {
+                title: "Extension of defence treatments (%)",
+                visible: true
+            },
+            gtreatmentsdefenceeffectiveness2: {
+                title: "Effectiveness of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceconservation2: {
+                title: "Conservation of defence treatments",
+                visible: true
+            },
+            gtreatmentsdefenceother2: {
+                title: "Other defence treatments",
+                visible: true
+            },
+            gtreatmentscoating2: {
+                title: "Existence  of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingtype2: {
+                title: "Type  of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingextension2: {
+                title: "Extension of coating treatments (%)",
+                visible: true
+            },
+            gtreatmentscoatingeffectiveness2: {
+                title: "Effectiveness of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingconservation2: {
+                title: "Conservation of coating treatments",
+                visible: true
+            },
+            gtreatmentscoatingother2: {
+                title: "Other coating treatments",
+                visible: true
+            },
+            gtreatmentsinternaldrainages2: {
+                title: "Existence  of internal drainages",
+                visible: true
+            },
+            gtreatmentsinternaldrainagesextension2: {
+                title: "Extension of internal drainages (%)",
+                visible: true
+            },
+            gtreatmentsinternaldrainageseffectiveness2: {
+                title: "Effectiveness of internal drainages",
+                visible: true
+            },
+            gtreatmentsinternaldrainagesconservation2: {
+                title: "Conservation of internal drainages",
+                visible: true
+            },
+            gvegetation2: {
+                title: "Existence of vegetation",
+                visible: true
+            },
+            gtypevegetation2: {
+                title: "Type of vegetation",
+                visible: true
+            },
+            gphoto2: {
+                title: "Photographs",
+                visible: false
+            },
+            gvisualcondition2: {
+                title: "Current visual condition",
+                visible: true
+            },
+            gconslos2: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            gprevcondition2: {
+                title: "Previous condition rate",
+                visible: false
+            },
+            glastinspection2: {
+                title: "Date of last inspection",
+                visible: false
+            },
+            gsurveyfreq2: {
+                title: "Survey frequency",
+                visible: false
+            },
+            gnextsurvey2: {
+                title: "Date of next survey",
+                visible: false
+            },
+            gfailure2: {
+                title: "Failure history",
+                visible: false
+            },
+            gevidrecfailures2: {
+                title: "Evidence of recent failures?",
+                visible: true
+            },
+            gtypefailure2: {
+                title: "Type of failure process",
+                visible: true
+            },
+            gintensityfailure2: {
+                title: "Intensity of failure process",
+                visible: true
+            },
+            gextentfailure2: {
+                title: "Extent of failure (%)",
+                visible: true
+            },
+            gpastinterv2: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            gintervextent2: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            gdateinterv2: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            gscopeinterv2: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            qintervcost2: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            gimpactinterv2: {
+                title: "Impact of last year interventions on asset condition",
+                visible: false
+            },
+            glocdocinterv2: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            gcurryearinterv2: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            gcurryearintervextent2: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            gcurryearintervdate2: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            gcurryearintervscope2: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            gcurryearintervcost2: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            glocdoccurryearinterv2: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            gmaintissues2: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            ginvestment10years2: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            rgnvestmentrequired2: {
+                title: "Investment required to upgrade to A class",
+                visible: false
+            },
+            gomcomments2: {
+                title: "Comments to maintainance",
+                visible: false
+            },
+            gcondition2: {
+                title: "Current condition",
+                visible: false
+            },
+            gcriticality2: {
+                title: "Criticality",
+                visible: false
+            },
+            glandslide2: {
+                title: "Exposure to landslide hazard",
+                visible: false
+            },
+            gflood2: {
+                title: "Exposure to flood hazard",
+                visible: false
+            },
+            gresphazard2: {
+                title: "Asset Response against hazards",
+                visible: false
+            },
+            gsensitivity2: {
+                title: "Asset Sensitivity",
+                visible: false
+            },
+            grisk2: {
+                title: "RISK",
+                visible: false
+            }
+        },
+        culvert: {
+            Ccode: {
+                title: "Asset Code",
+                visible: true
+            },
+            Cyearconstruc: {
+                title: "Year of construction",
+                visible: false
+            },
+            Ctype: {
+                title: "Type of drainage",
+                visible: true
+            },
+            Csection: {
+                title: "Type of section",
+                visible: false
+            },
+            Ccapacity: {
+                title: "Drain Capacity",
+                visible: false
+            },
+            Crainpeak: {
+                title: "Design rain peak values",
+                visible: false
+            },
+            Cmaterial: {
+                title: "Material",
+                visible: false
+            },
+            Cnumelem: {
+                title: "Number of elements",
+                visible: true
+            },
+            Cdiameter: {
+                title: "Diameter / Height (m)",
+                visible: false
+            },
+            Cwidth: {
+                title: "Width (m)",
+                visible: false
+            },
+            Clength: {
+                title: "Length (m)",
+                visible: true
+            },
+            Cprotentrance: {
+                title: "Protection of embankment at the drain entrance",
+                visible: false
+            },
+            Cprotexit: {
+                title: "Protection bed / inverter arch at the drain exit",
+                visible: false
+            },
+            Cphoto: {
+                title: "Photographs",
+                visible: false
+            },
+            CVisualCondition: {
+                title: "Current visual condition",
+                visible: false
+            },
+            CConsLOS: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            CPrevCondition: {
+                title: "Previous condition rate",
+                visible: false
+            },
+            CLastInspection: {
+                title: "Date of last inspection",
+                visible: false
+            },
+            CSurveyFreq: {
+                title: "Survey frequency",
+                visible: false
+            },
+            CNextSurvey: {
+                title: "Date of next survey",
+                visible: false
+            },
+            Cfailure: {
+                title: "Failure history",
+                visible: false
+            },
+            CDamages: {
+                title: "Damages on culverts",
+                visible: false
+            },
+            Cclearing: {
+                title: "Clearing required",
+                visible: true
+            },
+            CLostSection: {
+                title: "Lost of section due to blocking/silting/obstacles (%)",
+                visible: false
+            },
+            CLastYearInterv: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            CLastYearIntervExtent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            CLastYearIntervDate: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            CLastYearIntervScope: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            CLastYearIntervCost: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            CLastYearIntervImpactCond: {
+                title: "Impact of last year interventions on asset condition",
+                visible: false
+            },
+            CLocDocLastYearInterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            CCurrYearInterv: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            CCurrYearIntervExtent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            CCurrYearIntervDate: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            CCurrYearIntervScope: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            CCurrYearIntervCost: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            CLocDocCurrYearInterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            CMaintIssues: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            Cinvestment10years: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            Cinvestmentrequired: {
+                title: "Investment required to upgrade to A class",
+                visible: false
+            },
+            COMComments: {
+                title: "Comments to operation and maintainance",
+                visible: false
+            },
+            Ccondition: {
+                title: "Current condition",
+                visible: false
+            },
+            Ccriticality: {
+                title: "Criticality",
+                visible: false
+            },
+            CLandslide: {
+                title: "Exposure to landslide hazard",
+                visible: false
+            },
+            CFlood: {
+                title: "Exposure to flood hazard",
+                visible: false
+            },
+            CRespHazard: {
+                title: "Asset Response against hazards",
+                visible: false
+            },
+            Csensitivity: {
+                title: "Asset Sensitivity",
+                visible: false
+            },
+            CRISK: {
+                title: "RISK",
+                visible: false
+            }
+        },
+        drainage: {
+            dcode: {
+                title: "Asset Code",
+                visible: true
+            },
+            dyearconstruc: {
+                title: "Year of construction",
+                visible: false
+            },
+            dtype: {
+                title: "Type of drainage",
+                visible: true
+            },
+            dsection: {
+                title: "Type of section",
+                visible: true
+            },
+            dposition: {
+                title: "Position",
+                visible: true
+            },
+            dslope: {
+                title: "Slope (%)",
+                visible: false
+            },
+            dphoto: {
+                title: "Photographs",
+                visible: false
+            },
+            dconslos: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            dfailure: {
+                title: "Failure history",
+                visible: false
+            },
+            dlastinspection: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            dintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            ddateinterv: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            dscopeinterv: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            dlastyearintervcost: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            dlocdocinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            dcurryearinterv: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            dcurryearintervextent: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            dcurryearintervdate: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            dcurryearintervscope: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            dcurryearintervcost: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            dlocdoccurryearinterv: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            dmaintissues: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            dinvestment10years: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            dinvestmentrequired: {
+                title: "Investment required for replacement",
+                visible: false
+            },
+            domcomments: {
+                title: "Comments to operation and maintainance",
+                visible: false
+            },
+            dcode2: {
+                title: "Asset Code",
+                visible: true
+            },
+            dyearconstruc2: {
+                title: "Year of construction",
+                visible: false
+            },
+            dtype2: {
+                title: "Type of drainage",
+                visible: true
+            },
+            dsection2: {
+                title: "Type of section",
+                visible: true
+            },
+            dposition2: {
+                title: "Position",
+                visible: true
+            },
+            dslope2: {
+                title: "Slope (%)",
+                visible: false
+            },
+            dphoto2: {
+                title: "Photographs",
+                visible: false
+            },
+            dconslos2: {
+                title: "Consequences of failure on LOS",
+                visible: true
+            },
+            dfailure2: {
+                title: "Failure history",
+                visible: false
+            },
+            dlastinspection2: {
+                title: "Have there been past interventions performed during the last year?",
+                visible: false
+            },
+            dintervextent2: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            ddateinterv2: {
+                title: "Date of performance of last year interventions",
+                visible: false
+            },
+            dscopeinterv2: {
+                title: "Scope of last year interventions",
+                visible: false
+            },
+            dlastyearintervcost2: {
+                title: "Cost of last year interventions",
+                visible: false
+            },
+            dlocdocinterv2: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            dcurryearinterv2: {
+                title: "Have there been interventions performed during the current year?",
+                visible: false
+            },
+            dcurryearintervextent2: {
+                title: "Have they been global or partial interventions?",
+                visible: false
+            },
+            dcurryearintervdate2: {
+                title: "Date of performance of current year interventions",
+                visible: false
+            },
+            dcurryearintervscope2: {
+                title: "Scope of current year interventions",
+                visible: false
+            },
+            dcurryearintervcost2: {
+                title: "Accummulated cost of current year interventions",
+                visible: false
+            },
+            dlocdoccurryearinterv2: {
+                title: "Location of the documentation of last year interventions",
+                visible: false
+            },
+            dmaintissues2: {
+                title: "Maintainability issues",
+                visible: false
+            },
+            dinvestment10years2: {
+                title: "Investment undertaken in the last 10 years",
+                visible: false
+            },
+            dinvestmentrequired2: {
+                title: "Investment required for replacement",
+                visible: false
+            },
+            domcomments2: {
+                title: "Comments to operation and maintainance",
+                visible: false
+            }
+        }
+    };
+
     var $checks;
 
     $(document).ready(function() {
@@ -8,6 +1677,36 @@
             //var e = esc;
             var html = [];
             var h = -1;
+            html[++h] = '<thead>';
+            html[++h] = '<tr>';
+
+            $.each(propertiesCols, function(key1, value1) {
+                if (key1 === 'Trackinfo') var numfalses = 1;
+                if (key1 === 'road') var numfalses = 50;
+                if (key1 === 'furniture') var numfalses = 3;
+                if (key1 === 'bridges') var numfalses = 73;
+                if (key1 === 'geotechnicals') var numfalses = 62;
+                if (key1 === 'culvert') var numfalses = 42;
+                if (key1 === 'drainage') var numfalses = 40;
+
+                html[++h] = '<th colspan="' + (Object.keys(propertiesCols[key1]).length - numfalses) + '" scope="colgroup" class="' +
+                    key1 + '" ><i id="' + key1 + '" class="fa fa-eye-slash" aria-hidden="true"></i>' + key1 + '</th>';
+            });
+            html[++h] = '</tr>';
+            html[++h] = '<tr>';
+            $.each(propertiesCols, function(key1, value1) {
+                //console.log(key1, value1);
+                $.each(value1, function(key, value) {
+                    //console.log(key, value);
+                    if (value.visible) {
+
+                        html[++h] = '<th id="infodatatrack[properties][' + key +
+                            ']" title="' + key + '" class="' + key1 + '" style="max-width:100px; white-space:pre-wrap;">' + value.title + '</th>';
+                    }
+                });
+            });
+            html[++h] = '</tr></thead><tbody id="bodytable">';
+
 
             data.geometry.coordinates.forEach(function(element, index) {
                 html[++h] = '<tr id="row' + index + '" style="display: none;"><td>' + index + '</td>';
@@ -36,6 +1735,9 @@
                     html[++h] = '<td id="infodatatrack[properties][videoTime]">' + minutes + ':' + seconds + '</td>';
                 }
                 html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[index] + ' ]</td>';
+                html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
+
+
                 html[++h] = '<td id="infodatatrack[properties][kobo]">';
                 if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null && typeof data.properties.kobo[index] !== "undefined" &&
                     data.properties.kobo[index].kobo_type !== undefined && data.properties.kobo[index].kobo_type !== '') {
@@ -81,9 +1783,20 @@
 
                 }
                 html[++h] = '</td>';
-                html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][surveyor]">' +
+                    '<select name="infodatatrack[properties][surveyor]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option >David López</option>' +
+                    '<option >Illán Paniagua</option>' +
+                    '<option >Marta Pertierra</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][rname]"><input name="infodatatrack[properties][rname]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rname[index] !== "undefined" ? data.properties.rname[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rcategory]">' +
                     '<select name="infodatatrack[properties][rcategory]" class="form-control">' +
                     '<option ></option>' +
@@ -94,13 +1807,6 @@
                     '<option >1</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][iri]"><input name="infodatatrack[properties][iri]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.iri[index] !== "undefined" ? data.properties.iri[index] : '') + '">' +
-                    '</td>';
-                html[++h] = '<td id="infodatatrack[properties][ropen]"><input name="infodatatrack[properties][ropen]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.ropen[index] !== "undefined" ? data.properties.ropen[index] : '') + '">' +
-                    '</td>';
-
                 html[++h] = '<td id="infodatatrack[properties][rmaterial]">' +
                     '<select name="infodatatrack[properties][rmaterial]" class="form-control">' +
                     '<option ></option>' +
@@ -114,10 +1820,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-
                 html[++h] = '<td id="infodatatrack[properties][rlaneinc]"><input name="infodatatrack[properties][rlaneinc]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rlaneinc[index] !== "undefined" ? data.properties.rlaneinc[index] : '') + '">' +
                     '</td>';
+
                 html[++h] = '<td id="infodatatrack[properties][rlanedecr]"><input name="infodatatrack[properties][rlanedecr]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rlanedecr[index] !== "undefined" ? data.properties.rlanedecr[index] : '') + '">' +
                     '</td>';
@@ -126,6 +1832,12 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rwidth]"><input name="infodatatrack[properties][rwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rwidth[index] !== "undefined" ? data.properties.rwidth[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][ralternatitinerary]"><input name="infodatatrack[properties][ralternatitinerary]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.ralternatitinerary[index] !== "undefined" ? data.properties.ralternatitinerary[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][ropen]"><input name="infodatatrack[properties][ropen]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.ropen[index] !== "undefined" ? data.properties.ropen[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rvcondition]">' +
                     '<select name="infodatatrack[properties][rvcondition]" class="form-control">' +
@@ -140,6 +1852,18 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][rinfrint]"><input name="infodatatrack[properties][rinfrint]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rinfrint[index] !== "undefined" ? data.properties.rinfrint[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][rtourism]"><input name="infodatatrack[properties][rtourism]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rtourism[index] !== "undefined" ? data.properties.rtourism[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][rhealth]"><input name="infodatatrack[properties][rhealth]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[index] : '') + '">';
+                // html[++h] = '<td id="infodatatrack[properties][iri]"><input name="infodatatrack[properties][iri]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.iri[index] !== "undefined" ? data.properties.iri[index] : '') + '">' +
+                //     '</td>';
+
+
 
                 //ROAD Furniture
                 html[++h] = '<td id="infodatatrack[properties][rbarriersexist]"><input name="infodatatrack[properties][rbarriersexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
@@ -227,6 +1951,9 @@
                 // html[++h] = '<td id="infodatatrack[properties][rfcomments]"><input name="infodatatrack[properties][rfcomments]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.rfcomments[index] !== "undefined" ? data.properties.rfcomments[index] : '') + '">'+
                 '</td>';
+                html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bexistence]">' +
                     '<select name="infodatatrack[properties][bexistence]" class="form-control">' +
                     '<option ></option>' +
@@ -236,14 +1963,33 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">' +
+                html[++h] = '<td id="infodatatrack[properties][Bloadcapacity]"><input name="infodatatrack[properties][Bloadcapacity]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Bloadcapacity[index] !== "undefined" ? data.properties.Bloadcapacity[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][balternative]">' +
+                    '<select name="infodatatrack[properties][balternative]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
+                    '<option>N/A</option>' +
+                    '<option>1</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][bconslos]">' +
+                    '<select name="infodatatrack[properties][bconslos]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">' +
@@ -329,6 +2075,9 @@
                 html[++h] = '<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.glength[index] !== "undefined" ? data.properties.glength[index] : '') + '">' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gblocks]"><input name="infodatatrack[properties][gblocks]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gblocks[index] !== "undefined" ? data.properties.gblocks[index] : '') + '">' +
+                    '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
                     '<select name="infodatatrack[properties][gtreatments]" class="form-control">' +
@@ -339,6 +2088,95 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretaining]">' +
+                    '<select name="infodatatrack[properties][gtreatmentsretaining]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Yes</option>' +
+                    '<option>No</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingtype]">' +
+                    '<select name="infodatatrack[properties][gtreatmentsretainingtype]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Hanging mesh</option>' +
+                    '<option>Detatched mesh</option>' +
+                    '<option>Reinforced mesh</option>' +
+                    '<option>Cable net</option>' +
+                    '<option>Shot concrete (gunity)</option>' +
+                    '<option>Shot concrete + mesh 3T</option>' +
+                    '<option>Reinforced concrete wall</option>' +
+                    '<option>Riprap wall</option>' +
+                    '<option>Gabions wall</option>' +
+                    '<option>Anchorage wall</option>' +
+                    '<option>Systematic anchorage</option>' +
+                    '<option>Ad hoc anchorache </option>' +
+                    '<option>Others</option>' +
+                    '</select>' +
+                    '</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingextension]"><input name="infodatatrack[properties][gtreatmentsretainingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingextension[index] !== "undefined" ? data.properties.gtreatmentsretainingextension[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingeffectiveness[index] !== "undefined" ? data.properties.gtreatmentsretainingeffectiveness[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingconservation]"><input name="infodatatrack[properties][gtreatmentsretainingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingconservation[index] !== "undefined" ? data.properties.gtreatmentsretainingconservation[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingother]"><input name="infodatatrack[properties][gtreatmentsretainingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingother[index] !== "undefined" ? data.properties.gtreatmentsretainingother[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefence]"><input name="infodatatrack[properties][gtreatmentsdefence]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefence[index] !== "undefined" ? data.properties.gtreatmentsdefence[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefencetype]"><input name="infodatatrack[properties][gtreatmentsdefencetype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefencetype[index] !== "undefined" ? data.properties.gtreatmentsdefencetype[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceextension]"><input name="infodatatrack[properties][gtreatmentsdefenceextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceextension[index] !== "undefined" ? data.properties.gtreatmentsdefenceextension[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceeffectiveness[index] !== "undefined" ? data.properties.gtreatmentsdefenceeffectiveness[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceconservation]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceconservation[index] !== "undefined" ? data.properties.gtreatmentsdefenceconservation[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceother]"><input name="infodatatrack[properties][gtreatmentsdefenceother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceother[index] !== "undefined" ? data.properties.gtreatmentsdefenceother[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoating]"><input name="infodatatrack[properties][gtreatmentscoating]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoating[index] !== "undefined" ? data.properties.gtreatmentscoating[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingtype]"><input name="infodatatrack[properties][gtreatmentscoatingtype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingtype[index] !== "undefined" ? data.properties.gtreatmentscoatingtype[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingextension]"><input name="infodatatrack[properties][gtreatmentscoatingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingextension[index] !== "undefined" ? data.properties.gtreatmentscoatingextension[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingeffectiveness[index] !== "undefined" ? data.properties.gtreatmentscoatingeffectiveness[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingconservation]"><input name="infodatatrack[properties][gtreatmentscoatingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingconservation[index] !== "undefined" ? data.properties.gtreatmentscoatingconservation[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingother]"><input name="infodatatrack[properties][gtreatmentscoatingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingother[index] !== "undefined" ? data.properties.gtreatmentscoatingother[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainages]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainages[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainages[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesextension[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesextension[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesconservation[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation[index] : '') + '">' +
+                    '</td>';
+
                 html[++h] = '<td id="infodatatrack[properties][gvegetation]">' +
                     '<select name="infodatatrack[properties][gvegetation]" class="form-control">' +
                     '<option ></option>' +
@@ -373,6 +2211,28 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gconslos]">' +
+                    '<select name="infodatatrack[properties][gconslos]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gevidrecfailures]"><input name="infodatatrack[properties][gevidrecfailures]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gevidrecfailures[index] !== "undefined" ? data.properties.gevidrecfailures[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtypefailure]"><input name="infodatatrack[properties][gtypefailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtypefailure[index] !== "undefined" ? data.properties.gtypefailure[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gintensityfailure]"><input name="infodatatrack[properties][gintensityfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gintensityfailure[index] !== "undefined" ? data.properties.gintensityfailure[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gextentfailure]"><input name="infodatatrack[properties][gextentfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gextentfailure[index] !== "undefined" ? data.properties.gextentfailure[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gcode2]"><input name="infodatatrack[properties][gcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gcode2[index] !== "undefined" ? data.properties.gcode2[index] : '') + '">' +
                     '</td>';
@@ -381,7 +2241,7 @@
                     '<option ></option>' +
                     '<option>Embankment</option>' +
                     '<option>Cutting</option>' +
-                    '<option>Retaining wall</option>' +
+                    '<option>Retaining_walls</option>' +
                     '<option>Other</option>' +
                     '<option>Unknown</option>' +
                     '<option>N/A</option>' +
@@ -389,7 +2249,7 @@
                     '</select>' +
                     '</td>';
 
-                html[++h] += '<td id="infodatatrack[properties][gposition2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gposition2]">' +
                     '<select name="infodatatrack[properties][gposition2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>RIGHT</option>' +
@@ -400,7 +2260,7 @@
                     '</select>' +
                     '</td>';
 
-                html[++h] += '<td id="infodatatrack[properties][gmaterial2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gmaterial2]">' +
                     '<select name="infodatatrack[properties][gmaterial2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Concrete</option>' +
@@ -410,7 +2270,7 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gnature2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gnature2]">' +
                     '<select name="infodatatrack[properties][gnature2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Homogeneous - massive rock</option>' +
@@ -426,7 +2286,7 @@
                 html[++h] = '<td id="infodatatrack[properties][gheight2]"><input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gheight2[index] !== "undefined" ? data.properties.gheight2[index] : '') + '">' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gh_h2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gh_h2]">' +
                     '<select name="infodatatrack[properties][gh_h2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>0 - 10%</option>' +
@@ -438,7 +2298,7 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gslope2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gslope2]">' +
                     '<select name="infodatatrack[properties][gslope2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Vertical (90º)</option>' +
@@ -457,7 +2317,11 @@
                 html[++h] = '<td id="infodatatrack[properties][glength2]"><input name="infodatatrack[properties][glength2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.glength2[index] !== "undefined" ? data.properties.glength2[index] : '') + '">' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gtreatments2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gblocks2]"><input name="infodatatrack[properties][gblocks2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gblocks2[index] !== "undefined" ? data.properties.gblocks2[index] : '') + '">' +
+                    '</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][gtreatments2]">' +
                     '<select name="infodatatrack[properties][gtreatments2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Yes</option>' +
@@ -466,7 +2330,96 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gvegetation2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretaining2]">' +
+                    '<select name="infodatatrack[properties][gtreatmentsretaining2]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Yes</option>' +
+                    '<option>No</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingtype2]">' +
+                    '<select name="infodatatrack[properties][gtreatmentsretainingtype2]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Hanging mesh</option>' +
+                    '<option>Detatched mesh</option>' +
+                    '<option>Reinforced mesh</option>' +
+                    '<option>Cable net</option>' +
+                    '<option>Shot concrete (gunity)</option>' +
+                    '<option>Shot concrete + mesh 3T</option>' +
+                    '<option>Reinforced concrete wall</option>' +
+                    '<option>Riprap wall</option>' +
+                    '<option>Gabions wall</option>' +
+                    '<option>Anchorage wall</option>' +
+                    '<option>Systematic anchorage</option>' +
+                    '<option>Ad hoc anchorache </option>' +
+                    '<option>Others</option>' +
+                    '</select>' +
+                    '</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingextension2]"><input name="infodatatrack[properties][gtreatmentsretainingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingextension2[index] !== "undefined" ? data.properties.gtreatmentsretainingextension2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsretainingeffectiveness2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingconservation2]"><input name="infodatatrack[properties][gtreatmentsretainingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingconservation2[index] !== "undefined" ? data.properties.gtreatmentsretainingconservation2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingother2]"><input name="infodatatrack[properties][gtreatmentsretainingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingother2[index] !== "undefined" ? data.properties.gtreatmentsretainingother2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefence2]"><input name="infodatatrack[properties][gtreatmentsdefence2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefence2[index] !== "undefined" ? data.properties.gtreatmentsdefence2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefencetype2]"><input name="infodatatrack[properties][gtreatmentsdefencetype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefencetype2[index] !== "undefined" ? data.properties.gtreatmentsdefencetype2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceextension2]"><input name="infodatatrack[properties][gtreatmentsdefenceextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceextension2[index] !== "undefined" ? data.properties.gtreatmentsdefenceextension2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsdefenceeffectiveness2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceconservation2]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceconservation2[index] !== "undefined" ? data.properties.gtreatmentsdefenceconservation2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceother2]"><input name="infodatatrack[properties][gtreatmentsdefenceother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceother2[index] !== "undefined" ? data.properties.gtreatmentsdefenceother2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoating2]"><input name="infodatatrack[properties][gtreatmentscoating2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoating2[index] !== "undefined" ? data.properties.gtreatmentscoating2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingtype2]"><input name="infodatatrack[properties][gtreatmentscoatingtype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingtype2[index] !== "undefined" ? data.properties.gtreatmentscoatingtype2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingextension2]"><input name="infodatatrack[properties][gtreatmentscoatingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingextension2[index] !== "undefined" ? data.properties.gtreatmentscoatingextension2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentscoatingeffectiveness2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingconservation2]"><input name="infodatatrack[properties][gtreatmentscoatingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingconservation2[index] !== "undefined" ? data.properties.gtreatmentscoatingconservation2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingother2]"><input name="infodatatrack[properties][gtreatmentscoatingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingother2[index] !== "undefined" ? data.properties.gtreatmentscoatingother2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainages2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainages2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainages2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesextension2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesextension2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesconservation2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation2[index] : '') + '">' +
+                    '</td>';
+
+                html[++h] = '<td id="infodatatrack[properties][gvegetation2]">' +
                     '<select name="infodatatrack[properties][gvegetation2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Yes</option>' +
@@ -475,7 +2428,7 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gtypevegetation2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gtypevegetation2]">' +
                     '<select name="infodatatrack[properties][gtypevegetation2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>Arboreal</option>' +
@@ -487,7 +2440,7 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] += '<td id="infodatatrack[properties][gvisualcondition2]">' +
+                html[++h] = '<td id="infodatatrack[properties][gvisualcondition2]">' +
                     '<select name="infodatatrack[properties][gvisualcondition2]" class="form-control">' +
                     '<option ></option>' +
                     '<option>A</option>' +
@@ -500,6 +2453,32 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gconslos2]">' +
+                    '<select name="infodatatrack[properties][gconslos2]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gevidrecfailures2]"><input name="infodatatrack[properties][gevidrecfailures2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gevidrecfailures2[index] !== "undefined" ? data.properties.gevidrecfailures2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gtypefailure2]"><input name="infodatatrack[properties][gtypefailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtypefailure2[index] !== "undefined" ? data.properties.gtypefailure2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gintensityfailure2]"><input name="infodatatrack[properties][gintensityfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gintensityfailure2[index] !== "undefined" ? data.properties.gintensityfailure2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][gextentfailure2]"><input name="infodatatrack[properties][gextentfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gextentfailure2[index] !== "undefined" ? data.properties.gextentfailure2[index] : '') + '">' +
+                    '</td>';
+
+
+
+
 
                 html[++h] = '<td id="infodatatrack[properties][Ccode]"><input name="infodatatrack[properties][Ccode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.Ccode[index] !== "undefined" ? data.properties.Ccode[index] : '') + '">' +
@@ -514,6 +2493,25 @@
                     '<option>N/A</option>' +
                     '<option>1</option>' +
                     '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Cnumelem]"><input name="infodatatrack[properties][Cnumelem]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Cnumelem[index] !== "undefined" ? data.properties.Cnumelem[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Clength]"><input name="infodatatrack[properties][Clength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Clength[index] !== "undefined" ? data.properties.Clength[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][CConsLOS]">' +
+                    '<select name="infodatatrack[properties][CConsLOS]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Cclearing]"><input name="infodatatrack[properties][Cclearing]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Cclearing[index] !== "undefined" ? data.properties.Cclearing[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">' +
@@ -552,6 +2550,16 @@
                     '<option>Both</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][dconslos]">' +
+                    '<select name="infodatatrack[properties][dconslos]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dcode2]"><input name="infodatatrack[properties][dcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.dcode2[index] !== "undefined" ? data.properties.dcode2[index] : '') + '">' +
                     '</td>';
@@ -586,41 +2594,26 @@
                     '<option>Both</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][dconslos2]">' +
+                    '<select name="infodatatrack[properties][dconslos2]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>High</option>' +
+                    '<option>Moderate</option>' +
+                    '<option>Low/A</option>' +
+                    '<option>NA</option>' +
+                    '<option>Unknown</option>' +
+                    '</select>' +
+                    '</td>';
                 html[++h] = '</tr>';
             });
+            html[++h] = '</tbody>';
 
-            $('#bodytable').html(html.join(''));
+            $('#dataTable').html(html.join(''));
             data.geometry.coordinates.forEach(function(element, index) {
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][surveyor]"]').val(data.properties.surveyor[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(data.properties.gtype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(data.properties.gposition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(data.properties.gvisualcondition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition]"]').val(data.properties.dposition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bexistence]"]').val(data.properties.bexistence[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope]"]').val(data.properties.gslope[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial]"]').val(data.properties.gmaterial[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature]"]').val(data.properties.gnature[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h]"]').val(data.properties.gh_h[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments]"]').val(data.properties.gtreatments[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation]"]').val(data.properties.gvegetation[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation]"]').val(data.properties.gtypevegetation[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection]"]').val(data.properties.dsection[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
@@ -629,6 +2622,58 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsignalsfunct]"]').val(data.properties.rsignalsfunct[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlighttype]"]').val(data.properties.rlighttype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlightfunct]"]').val(data.properties.rlightfunct[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bexistence]"]').val(data.properties.bexistence[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][balternative]"]').val(data.properties.balternative[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bconslos]"]').val(data.properties.bconslos[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(data.properties.gtype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(data.properties.gposition[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial]"]').val(data.properties.gmaterial[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature]"]').val(data.properties.gnature[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h]"]').val(data.properties.gh_h[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope]"]').val(data.properties.gslope[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments]"]').val(data.properties.gtreatments[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretaining]"]').val(data.properties.gtreatmentsretaining[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretainingtype]"]').val(data.properties.gtreatmentsretainingtype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation]"]').val(data.properties.gvegetation[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation]"]').val(data.properties.gtypevegetation[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(data.properties.gvisualcondition[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gconslos]"]').val(data.properties.gconslos[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretaining2]"]').val(data.properties.gtreatmentsretaining2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretainingtype2]"]').val(data.properties.gtreatmentsretainingtype2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gconslos2]"]').val(data.properties.gconslos2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Ctype]"]').val(data.properties.Ctype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][CConsLOS]"]').val(data.properties.CConsLOS[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection]"]').val(data.properties.dsection[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition]"]').val(data.properties.dposition[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dconslos]"]').val(data.properties.dconslos[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dconslos2]"]').val(data.properties.dconslos2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[index]);
             });
 
         };
@@ -636,7 +2681,7 @@
 
         console.log("ready DOM!");
         rObject = <%- JSON.stringify(infodatatrack) %>
-        fillTable(rObject)
+        fillTable(rObject);
 
         $('.table-responsive').hide();
         var options = {
@@ -648,20 +2693,13 @@
 
         $checks = $('#form').find("input[name='check[_id]']");
 
-        var $inputsDC = $('#form').find("input[name='infodatatrack[properties][rdateconstruct]']");
-        $("input[name='infodatatrack[properties][rdateconstruct]']").datepicker({
-            dateFormat: 'dd-mm-yy',
-            onSelect: function(date) {
-                $inputsDC.trigger("blur");
-            }
-
-        });
-
         $('#road, #furniture, #bridges, #geotechnicals, #culvert, #drainage').click(function() {
             // alert("Hidden." + $(this).attr("id"));
             var $clase = $(this).attr("id");
             $('.' + $clase).each(function() {
                 $(this).hide();
+                // alert("Hidden2." + $(this));
+
                 $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
                 if ($(this).attr("title") === 'Selection') {
                     if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') == false) {
@@ -732,313 +2770,236 @@
 
 
         // SELECTS CHANGES
-        var $inputsRLightFunct = $('#form').find('select[ name="infodatatrack[properties][rlightfunct]"]');
-        $inputsRLightFunct.on('change', function() {
+        var $inputssurveyor = $('#form').find('select[ name="infodatatrack[properties][surveyor]"]');
+        $inputssurveyor.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRLightFunct[index].value = $this.val();
+                        $inputssurveyor[index].value = $this.val();
                     } else {
-                        $inputsRLightFunct[index].value = '';
-
+                        $inputssurveyor[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRLightType = $('#form').find('select[ name="infodatatrack[properties][rlighttype]"]');
-        $inputsRLightType.on('change', function() {
+        var $inputsrcategory = $('#form').find('select[ name="infodatatrack[properties][rcategory]"]');
+        $inputsrcategory.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRLightType[index].value = $this.val();
+                        $inputsrcategory[index].value = $this.val();
                     } else {
-                        $inputsRLightType[index].value = '';
-
-                    }
-                }
-
-
-            });
-
-        });
-        var $inputsRSignalsFunct = $('#form').find('select[ name="infodatatrack[properties][rsignalsfunct]"]');
-        $inputsRSignalsFunct.on('change', function() {
-            var $this = $(this);
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    if ($this.val() != '') {
-                        $inputsRSignalsFunct[index].value = $this.val();
-                    } else {
-                        $inputsRSignalsFunct[index].value = '';
-
+                        $inputsrcategory[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRVSignalsType = $('#form').find('select[ name="infodatatrack[properties][rvsignalstype]"]');
-        $inputsRVSignalsType.on('change', function() {
+        var $inputsrmaterial = $('#form').find('select[ name="infodatatrack[properties][rmaterial]"]');
+        $inputsrmaterial.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRVSignalsType[index].value = $this.val();
+                        $inputsrmaterial[index].value = $this.val();
                     } else {
-                        $inputsRVSignalsType[index].value = '';
-
+                        $inputsrmaterial[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRSignalsType = $('#form').find('select[ name="infodatatrack[properties][rsignalstype]"]');
-        $inputsRSignalsType.on('change', function() {
+        var $inputsrvcondition = $('#form').find('select[ name="infodatatrack[properties][rvcondition]"]');
+        $inputsrvcondition.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRSignalsType[index].value = $this.val();
+                        $inputsrvcondition[index].value = $this.val();
                     } else {
-                        $inputsRSignalsType[index].value = '';
-
+                        $inputsrvcondition[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRBarrierFunct = $('#form').find('select[ name="infodatatrack[properties][rbarrierfunct]"]');
-        $inputsRBarrierFunct.on('change', function() {
+        var $inputsrbarrierstype = $('#form').find('select[ name="infodatatrack[properties][rbarrierstype]"]');
+        $inputsrbarrierstype.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRBarrierFunct[index].value = $this.val();
+                        $inputsrbarrierstype[index].value = $this.val();
                     } else {
-                        $inputsRBarrierFunct[index].value = '';
-
+                        $inputsrbarrierstype[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRSafetyFence = $('#form').find('select[ name="infodatatrack[properties][rsafetyfence]"]');
-        $inputsRSafetyFence.on('change', function() {
+        var $inputsrsafetyfence = $('#form').find('select[ name="infodatatrack[properties][rsafetyfence]"]');
+        $inputsrsafetyfence.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRSafetyFence[index].value = $this.val();
+                        $inputsrsafetyfence[index].value = $this.val();
                     } else {
-                        $inputsRSafetyFence[index].value = '';
-
+                        $inputsrsafetyfence[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRBarriersType = $('#form').find('select[ name="infodatatrack[properties][rbarrierstype]"]');
-        $inputsRBarriersType.on('change', function() {
+        var $inputsrbarrierfunct = $('#form').find('select[ name="infodatatrack[properties][rbarrierfunct]"]');
+        $inputsrbarrierfunct.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRBarriersType[index].value = $this.val();
+                        $inputsrbarrierfunct[index].value = $this.val();
                     } else {
-                        $inputsRBarriersType[index].value = '';
-
+                        $inputsrbarrierfunct[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsRC = $('#form').find('select[ name="infodatatrack[properties][rcategory]"]');
-        $inputsRC.on('change', function() {
+        var $inputsrsignalstype = $('#form').find('select[ name="infodatatrack[properties][rsignalstype]"]');
+        $inputsrsignalstype.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsRC[index].value = $this.val();
+                        $inputsrsignalstype[index].value = $this.val();
                     } else {
-                        $inputsRC[index].value = '';
-                    }
-                }
-
-
-            });
-
-
-        });
-        var $inputsPM = $('#form').find('select[ name="infodatatrack[properties][rmaterial]"]');
-        $inputsPM.on('change', function() {
-            var $this = $(this);
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    if ($this.val() != '') {
-                        $inputsPM[index].value = $this.val();
-                    } else {
-                        $inputsPM[index].value = '';
-
+                        $inputsrsignalstype[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsCVC = $('#form').find('select[ name="infodatatrack[properties][rvcondition]"]');
-        $inputsCVC.on('change', function() {
+        var $inputsrvsignalstype = $('#form').find('select[ name="infodatatrack[properties][rvsignalstype]"]');
+        $inputsrvsignalstype.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsCVC[index].value = $this.val();
+                        $inputsrvsignalstype[index].value = $this.val();
                     } else {
-                        $inputsCVC[index].value = '';
-
+                        $inputsrvsignalstype[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsGT = $('#form').find('select[ name="infodatatrack[properties][gtype]"]');
-        $inputsGT.on('change', function() {
+        var $inputsrsignalsfunct = $('#form').find('select[ name="infodatatrack[properties][rsignalsfunct]"]');
+        $inputsrsignalsfunct.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGT[index].value = $this.val();
+                        $inputsrsignalsfunct[index].value = $this.val();
                     } else {
-                        $inputsGT[index].value = '';
-
+                        $inputsrsignalsfunct[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsGPOS = $('#form').find('select[ name="infodatatrack[properties][gposition]"]');
-        $inputsGPOS.on('change', function() {
+        var $inputsrlighttype = $('#form').find('select[ name="infodatatrack[properties][rlighttype]"]');
+        $inputsrlighttype.on('change', function() {
             var $this = $(this);
+
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-
-                        $inputsGPOS[index].value = $this.val();
+                        $inputsrlighttype[index].value = $this.val();
                     } else {
-                        $inputsGPOS[index].value = '';
-                    }
-                }
-
-            });
-        });
-        var $inputsGVPOS = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition]"]');
-        $inputsGVPOS.on('change', function() {
-            var $this = $(this);
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    if ($this.val() != '') {
-
-                        $inputsGVPOS[index].value = $this.val();
-                    } else {
-                        $inputsGVPOS[index].value = '';
+                        $inputsrlighttype[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsDT = $('#form').find('select[ name="infodatatrack[properties][dtype]"]');
-        $inputsDT.on('change', function() {
+        var $inputsrlightfunct = $('#form').find('select[ name="infodatatrack[properties][rlightfunct]"]');
+        $inputsrlightfunct.on('change', function() {
             var $this = $(this);
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
 
-                    if ($this.val() != '') {
-
-                        $inputsDT[index].value = $this.val();
-                    } else {
-                        $inputsDT[index].value = '';
-                    }
-
-                }
-            });
-        });
-
-        var $inputsDP = $('#form').find('select[ name="infodatatrack[properties][dposition]"]');
-        $inputsDP.on('change', function() {
-            var $this = $(this);
             ////console.log('ID: ' + $this.attr("id"));
             $checks.each(function(index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsDP[index].value = $this.val();
+                        $inputsrlightfunct[index].value = $this.val();
                     } else {
-                        $inputsDP[index].value = '';
+                        $inputsrlightfunct[index].value = '';
                     }
                 }
 
 
             });
         });
-        var $inputsBE = $('#form').find('select[ name="infodatatrack[properties][bexistence]"]');
-        $inputsBE.on('change', function() {
+        var $inputsbexistence = $('#form').find('select[ name="infodatatrack[properties][bexistence]"]');
+        $inputsbexistence.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1047,18 +3008,17 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsBE[index].value = $this.val();
+                        $inputsbexistence[index].value = $this.val();
                     } else {
-                        $inputsBE[index].value = '';
+                        $inputsbexistence[index].value = '';
                     }
                 }
 
 
             });
-
         });
-        var $inputsGS = $('#form').find('select[ name="infodatatrack[properties][gslope]"]');
-        $inputsGS.on('change', function() {
+        var $inputsbalternative = $('#form').find('select[ name="infodatatrack[properties][balternative]"]');
+        $inputsbalternative.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1067,15 +3027,71 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGS[index].value = $this.val();
+                        $inputsbalternative[index].value = $this.val();
                     } else {
-                        $inputsGS[index].value = '';
+                        $inputsbalternative[index].value = '';
                     }
                 }
 
 
             });
+        });
+        var $inputsbconslos = $('#form').find('select[ name="infodatatrack[properties][bconslos]"]');
+        $inputsbconslos.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsbconslos[index].value = $this.val();
+                    } else {
+                        $inputsbconslos[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgtype = $('#form').find('select[ name="infodatatrack[properties][gtype]"]');
+        $inputsgtype.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtype[index].value = $this.val();
+                    } else {
+                        $inputsgtype[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgposition = $('#form').find('select[ name="infodatatrack[properties][gposition]"]');
+        $inputsgposition.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgposition[index].value = $this.val();
+                    } else {
+                        $inputsgposition[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgmaterial = $('#form').find('select[ name="infodatatrack[properties][gmaterial]"]');
         $inputsgmaterial.on('change', function() {
@@ -1095,7 +3111,6 @@
 
 
             });
-
         });
         var $inputsgnature = $('#form').find('select[ name="infodatatrack[properties][gnature]"]');
         $inputsgnature.on('change', function() {
@@ -1115,7 +3130,6 @@
 
 
             });
-
         });
         var $inputsgh_h = $('#form').find('select[ name="infodatatrack[properties][gh_h]"]');
         $inputsgh_h.on('change', function() {
@@ -1135,7 +3149,25 @@
 
 
             });
+        });
+        var $inputsgslope = $('#form').find('select[ name="infodatatrack[properties][gslope]"]');
+        $inputsgslope.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgslope[index].value = $this.val();
+                    } else {
+                        $inputsgslope[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgtreatments = $('#form').find('select[ name="infodatatrack[properties][gtreatments]"]');
         $inputsgtreatments.on('change', function() {
@@ -1155,7 +3187,44 @@
 
 
             });
+        });
+        var $inputsgtreatmentsretaining = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretaining]"]');
+        $inputsgtreatmentsretaining.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtreatmentsretaining[index].value = $this.val();
+                    } else {
+                        $inputsgtreatmentsretaining[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgtreatmentsretainingtype = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretainingtype]"]');
+        $inputsgtreatmentsretainingtype.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtreatmentsretainingtype[index].value = $this.val();
+                    } else {
+                        $inputsgtreatmentsretainingtype[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgvegetation = $('#form').find('select[ name="infodatatrack[properties][gvegetation]"]');
         $inputsgvegetation.on('change', function() {
@@ -1175,7 +3244,6 @@
 
 
             });
-
         });
         var $inputsgtypevegetation = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation]"]');
         $inputsgtypevegetation.on('change', function() {
@@ -1195,10 +3263,9 @@
 
 
             });
-
         });
-        var $inputsdsection = $('#form').find('select[ name="infodatatrack[properties][dsection]"]');
-        $inputsdsection.on('change', function() {
+        var $inputsgvisualcondition = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition]"]');
+        $inputsgvisualcondition.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1207,18 +3274,17 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsdsection[index].value = $this.val();
+                        $inputsgvisualcondition[index].value = $this.val();
                     } else {
-                        $inputsdsection[index].value = '';
+                        $inputsgvisualcondition[index].value = '';
                     }
                 }
 
 
             });
-
         });
-        var $inputsGS2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
-        $inputsGS2.on('change', function() {
+        var $inputsgconslos = $('#form').find('select[ name="infodatatrack[properties][gconslos]"]');
+        $inputsgconslos.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1227,15 +3293,52 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGS2[index].value = $this.val();
+                        $inputsgconslos[index].value = $this.val();
                     } else {
-                        $inputsGS2[index].value = '';
+                        $inputsgconslos[index].value = '';
                     }
                 }
 
 
             });
+        });
+        var $inputsgtype2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
+        $inputsgtype2.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtype2[index].value = $this.val();
+                    } else {
+                        $inputsgtype2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgposition2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
+        $inputsgposition2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgposition2[index].value = $this.val();
+                    } else {
+                        $inputsgposition2[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
         $inputsgmaterial2.on('change', function() {
@@ -1255,7 +3358,6 @@
 
 
             });
-
         });
         var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
         $inputsgnature2.on('change', function() {
@@ -1275,7 +3377,6 @@
 
 
             });
-
         });
         var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
         $inputsgh_h2.on('change', function() {
@@ -1295,7 +3396,25 @@
 
 
             });
+        });
+        var $inputsgslope2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
+        $inputsgslope2.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgslope2[index].value = $this.val();
+                    } else {
+                        $inputsgslope2[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
         $inputsgtreatments2.on('change', function() {
@@ -1315,7 +3434,44 @@
 
 
             });
+        });
+        var $inputsgtreatmentsretaining2 = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretaining2]"]');
+        $inputsgtreatmentsretaining2.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtreatmentsretaining2[index].value = $this.val();
+                    } else {
+                        $inputsgtreatmentsretaining2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgtreatmentsretainingtype2 = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretainingtype2]"]');
+        $inputsgtreatmentsretainingtype2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtreatmentsretainingtype2[index].value = $this.val();
+                    } else {
+                        $inputsgtreatmentsretainingtype2[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
         $inputsgvegetation2.on('change', function() {
@@ -1335,7 +3491,6 @@
 
 
             });
-
         });
         var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
         $inputsgtypevegetation2.on('change', function() {
@@ -1355,10 +3510,9 @@
 
 
             });
-
         });
-        var $inputsGT2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
-        $inputsGT2.on('change', function() {
+        var $inputsgvisualcondition2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
+        $inputsgvisualcondition2.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1367,18 +3521,17 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGT2[index].value = $this.val();
+                        $inputsgvisualcondition2[index].value = $this.val();
                     } else {
-                        $inputsGT2[index].value = '';
+                        $inputsgvisualcondition2[index].value = '';
                     }
                 }
 
 
             });
-
         });
-        var $inputsGPOS2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
-        $inputsGPOS2.on('change', function() {
+        var $inputsgconslos2 = $('#form').find('select[ name="infodatatrack[properties][gconslos2]"]');
+        $inputsgconslos2.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1387,18 +3540,17 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGPOS2[index].value = $this.val();
+                        $inputsgconslos2[index].value = $this.val();
                     } else {
-                        $inputsGPOS2[index].value = '';
+                        $inputsgconslos2[index].value = '';
                     }
                 }
 
 
             });
-
         });
-        var $inputsGVPOS2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
-        $inputsGVPOS2.on('change', function() {
+        var $inputsCtype = $('#form').find('select[ name="infodatatrack[properties][Ctype]"]');
+        $inputsCtype.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1407,15 +3559,128 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsGVPOS2[index].value = $this.val();
+                        $inputsCtype[index].value = $this.val();
                     } else {
-                        $inputsGVPOS2[index].value = '';
+                        $inputsCtype[index].value = '';
                     }
                 }
 
 
             });
+        });
+        var $inputsCConsLOS = $('#form').find('select[ name="infodatatrack[properties][CConsLOS]"]');
+        $inputsCConsLOS.on('change', function() {
+            var $this = $(this);
 
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsCConsLOS[index].value = $this.val();
+                    } else {
+                        $inputsCConsLOS[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdtype = $('#form').find('select[ name="infodatatrack[properties][dtype]"]');
+        $inputsdtype.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdtype[index].value = $this.val();
+                    } else {
+                        $inputsdtype[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdsection = $('#form').find('select[ name="infodatatrack[properties][dsection]"]');
+        $inputsdsection.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdsection[index].value = $this.val();
+                    } else {
+                        $inputsdsection[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdposition = $('#form').find('select[ name="infodatatrack[properties][dposition]"]');
+        $inputsdposition.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdposition[index].value = $this.val();
+                    } else {
+                        $inputsdposition[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdconslos = $('#form').find('select[ name="infodatatrack[properties][dconslos]"]');
+        $inputsdconslos.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdconslos[index].value = $this.val();
+                    } else {
+                        $inputsdconslos[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdtype2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
+        $inputsdtype2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdtype2[index].value = $this.val();
+                    } else {
+                        $inputsdtype2[index].value = '';
+                    }
+                }
+
+
+            });
         });
         var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
         $inputsdsection2.on('change', function() {
@@ -1435,10 +3700,9 @@
 
 
             });
-
         });
-        var $inputsDT2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
-        $inputsDT2.on('change', function() {
+        var $inputsdposition2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
+        $inputsdposition2.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1447,19 +3711,17 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsDT2[index].value = $this.val();
+                        $inputsdposition2[index].value = $this.val();
                     } else {
-                        $inputsDT2[index].value = '';
+                        $inputsdposition2[index].value = '';
                     }
                 }
 
 
             });
-
         });
-
-        var $inputsDP2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
-        $inputsDP2.on('change', function() {
+        var $inputsdconslos2 = $('#form').find('select[ name="infodatatrack[properties][dconslos2]"]');
+        $inputsdconslos2.on('change', function() {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
@@ -1468,16 +3730,263 @@
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
                     if ($this.val() != '') {
-                        $inputsDP2[index].value = $this.val();
+                        $inputsdconslos2[index].value = $this.val();
                     } else {
-                        $inputsDP2[index].value = '';
+                        $inputsdconslos2[index].value = '';
                     }
                 }
 
 
             });
-
         });
+        var $inputsgtype2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
+        $inputsgtype2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtype2[index].value = $this.val();
+                    } else {
+                        $inputsgtype2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgposition2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
+        $inputsgposition2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgposition2[index].value = $this.val();
+                    } else {
+                        $inputsgposition2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
+        $inputsgmaterial2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgmaterial2[index].value = $this.val();
+                    } else {
+                        $inputsgmaterial2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
+        $inputsgnature2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgnature2[index].value = $this.val();
+                    } else {
+                        $inputsgnature2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
+        $inputsgh_h2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgh_h2[index].value = $this.val();
+                    } else {
+                        $inputsgh_h2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgslope2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
+        $inputsgslope2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgslope2[index].value = $this.val();
+                    } else {
+                        $inputsgslope2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
+        $inputsgtreatments2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtreatments2[index].value = $this.val();
+                    } else {
+                        $inputsgtreatments2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
+        $inputsgvegetation2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgvegetation2[index].value = $this.val();
+                    } else {
+                        $inputsgvegetation2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
+        $inputsgtypevegetation2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgtypevegetation2[index].value = $this.val();
+                    } else {
+                        $inputsgtypevegetation2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsgvisualcondition2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
+        $inputsgvisualcondition2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsgvisualcondition2[index].value = $this.val();
+                    } else {
+                        $inputsgvisualcondition2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdtype2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
+        $inputsdtype2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdtype2[index].value = $this.val();
+                    } else {
+                        $inputsdtype2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
+        $inputsdsection2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdsection2[index].value = $this.val();
+                    } else {
+                        $inputsdsection2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsdposition2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
+        $inputsdposition2.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsdposition2[index].value = $this.val();
+                    } else {
+                        $inputsdposition2[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+
 
         $("#addcoord").click(function() {
             $('#addcoord').prop('disabled', true);
@@ -1695,7 +4204,6 @@
                 // location.reload();
                 // window.location.reload(true);
             });
-
         });
 
         var $deleteKoboElem = $('#form').find('i[name="deleteKoboElem"]');
@@ -1734,509 +4242,4 @@
 
 
     });
-
-    function duplicateCols(option) {
-        switch (option) {
-            case 'geo':
-                // alert('geotechnicals');
-                var geo_html = '<td id="infodatatrack[properties][gtype2]">' +
-                    '<select name="infodatatrack[properties][gtype2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Embankment</option>' +
-                    '<option>Cutting</option>' +
-                    '<option>Retaining wall</option>' +
-                    '<option>Other</option>' +
-                    '<option>Unknown</option>' +
-                    '<option>N/A</option>' +
-                    '<option>1</option>' +
-                    '</select>' +
-                    '</td>';
-
-                geo_html += '<td id="infodatatrack[properties][gposition2]">' +
-                    '<select name="infodatatrack[properties][gposition2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>RIGHT</option>' +
-                    '<option>LEFT</option>' +
-                    '<option>BOTH</option>' +
-                    '<option>N/A</option>' +
-                    '<option>1</option>' +
-                    '</select>' +
-                    '</td>';
-
-                geo_html += '<td id="infodatatrack[properties][gmaterial2]">' +
-                    '<select name="infodatatrack[properties][gmaterial2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Concrete</option>' +
-                    '<option>Masonry</option>' +
-                    '<option>Gabion/Teramesh</option>' +
-                    '<option>Other</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gnature2]">' +
-                    '<select name="infodatatrack[properties][gnature2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Homogeneous - massive rock</option>' +
-                    '<option>Homogeneous - cracked rock</option>' +
-                    '<option>Homogeneous - soil</option>' +
-                    '<option>Heterogeneous – interstratified rock/soil</option>' +
-                    '<option>Heterogeneous - rock blocks embedded in hard soil</option>' +
-                    '<option>Heterogeneous - rock blocks embedded in soft soil</option>' +
-                    '<option>Other</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gheight2]">' +
-                    '<input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gh_h2]">' +
-                    '<select name="infodatatrack[properties][gh_h2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>0 - 10%</option>' +
-                    '<option>10 - 25%</option>' +
-                    '<option>25 - 50%</option>' +
-                    '<option>50 - 75%</option>' +
-                    '<option>>75%</option>' +
-                    '<option>NA</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gslope2]">' +
-                    '<select name="infodatatrack[properties][gslope2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Vertical (90º)</option>' +
-                    '<option>Steep (75-90º)</option>' +
-                    '<option>Low (45-75º)</option>' +
-                    '<option>NA</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gdistance2]">' +
-                    '<input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="">' +
-                    '</td>';
-
-                geo_html += '<td id="infodatatrack[properties][gtreatments2]">' +
-                    '<select name="infodatatrack[properties][gtreatments2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
-                    '<option>NA</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gvegetation2]">' +
-                    '<select name="infodatatrack[properties][gvegetation2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
-                    '<option>NA</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gtypevegetation2]">' +
-                    '<select name="infodatatrack[properties][gtypevegetation2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Arboreal</option>' +
-                    '<option>Bush / Shrub</option>' +
-                    '<option>Herbaceus</option>' +
-                    '<option>No vegetation</option>' +
-                    '<option>Other</option>' +
-                    '<option>NA</option>' +
-                    '<option>Unknown</option>' +
-                    '</select>' +
-                    '</td>';
-                geo_html += '<td id="infodatatrack[properties][gvisualcondition2]">' +
-                    '<select name="infodatatrack[properties][gvisualcondition2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>A</option>' +
-                    '<option>B</option>' +
-                    '<option>C</option>' +
-                    '<option>D</option>' +
-                    '<option>E</option>' +
-                    '<option>Unknown</option>' +
-                    '<option>N/A</option>' +
-                    '<option>1</option>' +
-                    '</select>' +
-                    '</td>';
-                $('#bodytable').find('tr').each(function() {
-                    $(this).find("td[id='" + $.escapeSelector('infodatatrack[properties][gvisualcondition]') + "']")
-                        .eq(0).after(geo_html);
-                });
-                geo_header = '<th id="infodatatrack[properties][gtype2]" title="Type of earthwork" class="geotechnicals">TYPE2</th>';
-                geo_header += '<th id="infodatatrack[properties][gposition2]" title="Position" class="geotechnicals">POS2</th>';
-                geo_header += '<th id="infodatatrack[properties][gmaterial2]" title="Material - Retaining walls" class="geotechnicals">MAT2</th>';
-                geo_header += '<th id="infodatatrack[properties][gnature2]" title="Nature - Earthworks" class="geotechnicals">NATURE2</th>';
-                geo_header += '<th id="infodatatrack[properties][gheight2]" title="Height (m)" class="geotechnicals">HEIGHT2</th>';
-                geo_header += '<th id="infodatatrack[properties][gh_h2]" title="Relation h/H (m)" class="geotechnicals">H_H2</th>';
-                geo_header += '<th id="infodatatrack[properties][gslope2]" title="Slope (º)" class="geotechnicals">SLOPE2</th>';
-                geo_header += '<th id="infodatatrack[properties][gdistance2]" title="Distance to road (m)" class="geotechnicals">DIST2</th>';
-                geo_header += '<th id="infodatatrack[properties][gtreatments2]" title="Existence of Geotech Treatments" class="geotechnicals">GEO TREAT2</th>';
-                geo_header += '<th id="infodatatrack[properties][gvegetation2]" title="Existence of Vegetation" class="geotechnicals">VEGETATION2</th>';
-                geo_header += '<th id="infodatatrack[properties][gtypevegetation2]" title="Type of Vegetation" class="geotechnicals">TYPE VEG2</th>';
-                geo_header += '<th id="infodatatrack[properties][gvisualcondition2]" title="Current visual condition" class="geotechnicals">VISUAL COND2</th>';
-                $('#dataTable').find('thead > tr').each(function(key, value) {
-                    if (key === 0) {
-                        $(this).find("th").eq(4).after('<th colspan="12" scope="colgroup" class="geotechnicals">' +
-                            'NEW GEOTECHNICALS</th>');
-                    } else {
-                        $(this).find("th[id='" + $.escapeSelector('infodatatrack[properties][gvisualcondition]') + "']")
-                            .eq(0).after(geo_header);
-
-                    }
-                });
-                $('#geo_link').hide();
-                var $inputsGS2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
-                $inputsGS2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsGS2[index].value = $this.val();
-                            } else {
-                                $inputsGS2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
-                $inputsgmaterial2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgmaterial2[index].value = $this.val();
-                            } else {
-                                $inputsgmaterial2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
-                $inputsgnature2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgnature2[index].value = $this.val();
-                            } else {
-                                $inputsgnature2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
-                $inputsgh_h2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgh_h2[index].value = $this.val();
-                            } else {
-                                $inputsgh_h2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
-                $inputsgtreatments2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgtreatments2[index].value = $this.val();
-                            } else {
-                                $inputsgtreatments2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
-                $inputsgvegetation2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgvegetation2[index].value = $this.val();
-                            } else {
-                                $inputsgvegetation2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
-                $inputsgtypevegetation2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsgtypevegetation2[index].value = $this.val();
-                            } else {
-                                $inputsgtypevegetation2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsGT2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
-                $inputsGT2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsGT2[index].value = $this.val();
-                            } else {
-                                $inputsGT2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsGPOS2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
-                $inputsGPOS2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsGPOS2[index].value = $this.val();
-                            } else {
-                                $inputsGPOS2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsGVPOS2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
-                $inputsGVPOS2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsGVPOS2[index].value = $this.val();
-                            } else {
-                                $inputsGVPOS2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                break;
-            case 'drainage':
-                // alert('drainage ');
-                var dra_html = '<td id="infodatatrack[properties][dtype2]">' +
-                    '<select name="infodatatrack[properties][dtype2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Longitudinal</option>' +
-                    '<option>Culvert</option>' +
-                    '<option>Ford</option>' +
-                    '<option>Unknown</option>' +
-                    '<option>N/A</option>' +
-                    '<option>1</option>' +
-                    '</select>' +
-                    '</td>';
-                dra_html += '<td id="infodatatrack[properties][dsection2]">' +
-                    '<select name="infodatatrack[properties][dsection2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Concrete lined rectangular</option>' +
-                    '<option>Concrete lined rectangular with cover</option>' +
-                    '<option>Concrete lined V drain</option>' +
-                    '<option>Kerb / Triangular</option>' +
-                    '<option>Earth</option>' +
-                    '<option>Other</option>' +
-                    '</select>' +
-                    '</td>';
-
-                dra_html += '<td id="infodatatrack[properties][dposition2]">' +
-                    '<select name="infodatatrack[properties][dposition2]" class="form-control">' +
-                    '<option ></option>' +
-                    '<option>Right</option>' +
-                    '<option>Left</option>' +
-                    '<option>Both</option>' +
-                    '</select>' +
-                    '</td>';
-                $('#bodytable').find('tr').each(function() {
-                    $(this).find("td[id='" + $.escapeSelector('infodatatrack[properties][dposition]') + "']")
-                        .eq(0).after(dra_html);
-                });
-                var dra_head = '<th id="infodatatrack[properties][dtype2]" title="Type of drainage" class="drainage">TYPE</th>';
-                dra_head += '<th id="infodatatrack[properties][dsection2]" title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>';
-                dra_head += '<th id="infodatatrack[properties][dposition2]" title="Drainage position" class="drainage">DPOS</th>';
-                $('#dataTable').find('thead > tr').each(function(key, value) {
-                    if (key === 0) {
-                        $(this).find("th").eq(5).after('<th colspan="3" scope="colgroup" class="drainage">' +
-                            'NEW DRAINAGES</th>');
-                    } else {
-                        $(this).find("th[id='" + $.escapeSelector('infodatatrack[properties][dposition]') + "']")
-                            .eq(0).after(dra_head);
-
-                    }
-                });
-                $('#dra_link').hide();
-
-                var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
-                $inputsdsection2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsdsection2[index].value = $this.val();
-                            } else {
-                                $inputsdsection2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-                var $inputsDT2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
-                $inputsDT2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsDT2[index].value = $this.val();
-                            } else {
-                                $inputsDT2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-
-                var $inputsDP2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
-                $inputsDP2.on('change', function() {
-                    var $this = $(this);
-
-                    ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
-                        $check = $(this);
-                        if ($check.prop("checked")) {
-                            ////console.log('Check: ' + (index));
-                            if ($this.val() != '') {
-                                $inputsDP2[index].value = $this.val();
-                            } else {
-                                $inputsDP2[index].value = '';
-
-                            }
-                        }
-
-
-                    });
-
-                });
-
-                break;
-
-            default:
-                break;
-        }
-        $('#form').find("select").css('min-width', '100px');
-        // INPUTS BLUR
-
-        $(":text,input[name^=infodatatrack]").blur(function() {
-            // console.log($(this));
-            var $this = $(this);
-            // console.log($this[0].name);
-            var $val = $this[0].value;
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    // ////console.log('Check: ' + (index));
-                    $("form").find("input[name=" + $.escapeSelector($this[0].name) + "]")[index].value = $val;
-
-                }
-
-
-            });
-        });
-
-    };
 </script>
