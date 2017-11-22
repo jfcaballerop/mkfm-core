@@ -386,6 +386,11 @@ router.get('/list_info', function(req, resp, next) {
         var koboinfos_odt = [];
         var koboinfos_bridge = [];
         var koboinfos_geo = [];
+        var mainr = [];
+        var secondaryr = [];
+        var feederr = [];
+        var otherr = [];
+        var urbanr = [];
         allData[1].body.forEach(function(elem, index) {
             if (elem.properties.kobo_type === "Culvert") {
                 koboinfos_odt.push(elem);
@@ -396,7 +401,24 @@ router.get('/list_info', function(req, resp, next) {
                 koboinfos_geo.push(elem);
             }
         });
-        resp.render('maps', { koboinfos_geo: koboinfos_geo, koboinfos_odt: koboinfos_odt, koboinfos_bridge: koboinfos_bridge, roads: allData[0].body, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        allData[0].body.forEach(function(elem, index) {
+            if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
+                mainr.push(elem);
+            } else if (elem.properties.rcategory.indexOf('Secondary') >= 0) {
+                secondaryr.push(elem);
+
+            } else if (elem.properties.rcategory.indexOf('Feeder') >= 0) {
+                feederr.push(elem);
+
+            } else if (elem.properties.rcategory.indexOf('Urban') >= 0) {
+                urbanr.push(elem);
+
+            } else {
+                otherr.push(elem);
+            }
+        });
+
+        resp.render('maps', { otherr: otherr, urbanr: urbanr, feederr: feederr, secondaryr: secondaryr, mainr: mainr, koboinfos_geo: koboinfos_geo, koboinfos_odt: koboinfos_odt, koboinfos_bridge: koboinfos_bridge, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
     }, function(reason) {
