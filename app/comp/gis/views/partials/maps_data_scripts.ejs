@@ -6,7 +6,11 @@
             id: "id",
             inv: "Act",
             time: "time",
-            coordinates: "coord"
+            coordinates: "coord",
+            RUTMlong: "Long",
+            RUTMlat: "Lat",
+            RUTMElevation: "Elev"
+
         },
         road: {
             surveyor: "Name of surveyor",
@@ -582,6 +586,15 @@
                             r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
                             r[++j] = '</td><td>';
                             r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][0];
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][1];
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][2];
                             r[++j] = '</td>';
                         } else {
                             $.each(value1, function(key, value) {
