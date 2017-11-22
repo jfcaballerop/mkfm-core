@@ -87,12 +87,16 @@
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ASSETS') %>
                             </h5>
-                            <select multiple id="layergps" class="form-control" size="5">
-                                    <option value="Roads" > <%- trans('GMAPS_ROADS') %></option>
-                                    <option value="Culvert" >Culvert</option>
-                                    <option value="BRIDGE" >BRIDGE</option>
-                                    <option value="GEOT" >GEOTECHNICAL</option>
-                            </select>
+                            <div class="checkbox">
+                                <label><input id="Culvert"type="checkbox" value="Culvert">Culvert</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="BRIDGE" type="checkbox" value="Bridge">Bridge</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="GEOT" type="checkbox" value="Geotechnical">Geotechnical</label>
+                            </div>
+
                         </div>
                         <div class="form-panel">
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
