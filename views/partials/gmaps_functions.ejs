@@ -176,7 +176,7 @@
             // Store new open InfoWindow in global variable
             activeInfoWindow = infoWnd;
             var infoTextContent = event.feature.getProperty('nameoption');
-            if (event.feature.getProperty('nameoption') === 'ROADS') {
+            if (event.feature.getProperty('nameoption') === 'Roads') {
                 infoTextContent += ' ' + event.feature.getProperty('name');
             }
             document.getElementById('info-box').textContent = infoTextContent;
@@ -217,27 +217,27 @@
             var opc = $this.val()[0];
             console.log(opc);
             switch (opc) {
-                case 'ROADS':
-                    if (featureActive['ROADS'] === undefined || featureActive['ROADS'] == false) {
-                        // alert(' ## ACTIVO ROADS ##');
+                case 'Roads':
+                    if (featureActive['Roads'] === undefined || featureActive['Roads'] == false) {
+                        // alert(' ## ACTIVO Roads ##');
                         <% roads.forEach(function(element) { %>
                         jsonObject = <%- JSON.stringify(element) %>;
                         jsonObject.properties.color = "#5b5e63";
-                        jsonObject.properties.nameoption = "ROADS";
+                        jsonObject.properties.nameoption = "Roads";
                         //console.log(JSON.stringify(jsonObject));
-                        featureActive['ROADS'] = true;
+                        featureActive['Roads'] = true;
                         map.data.addGeoJson(jsonObject);
                         <%}); %>
                         $('#spinner').hide(2000);
 
                     } else {
-                        // alert(' ## DESACTIVO ROADS ##');
+                        // alert(' ## DESACTIVO Roads ##');
                         map.data.forEach(function(feature) {
                             // If you want, check here for some constraints.
-                            if (feature.getProperty('nameoption') === 'ROADS') {
+                            if (feature.getProperty('nameoption') === 'Roads') {
                                 map.data.remove(feature);
                             }
-                            featureActive['ROADS'] = false;
+                            featureActive['Roads'] = false;
 
                         });
                         $('#spinner').hide(2000);
@@ -336,8 +336,112 @@
 
                     break;
             };
-        })
+        });
 
+        $('#mainr').click(function() {
+            var $this = $(this);
+            // alert($this.prop('checked'));
+            $('#spinner').show();
+            if ($this.prop('checked')) {
+
+                <% roads.forEach(function(element) { %>
+                jsonObject = <%- JSON.stringify(element) %>;
+                // console.log(jsonObject);
+                if (jsonObject.properties.rcategory.indexOf('Main Road') >= 0) {
+                    jsonObject.properties.color = "#5b5e63";
+                    jsonObject.properties.nameoption = "Main Road";
+                    map.data.addGeoJson(jsonObject);
+                }
+                <%}); %>
+            } else {
+                map.data.forEach(function(feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'Main Road') {
+                        map.data.remove(feature);
+                    }
+
+                });
+            }
+            $('#spinner').hide(2000);
+        });
+        $('#secondaryr').click(function() {
+            var $this = $(this);
+            //alert($this.val());
+            $('#spinner').show();
+            if ($this.prop('checked')) {
+
+                <% roads.forEach(function(element) { %>
+                jsonObject = <%- JSON.stringify(element) %>;
+                // console.log(jsonObject);
+                if (jsonObject.properties.rcategory.indexOf('Secondary') >= 0) {
+                    jsonObject.properties.color = "#f29318";
+                    jsonObject.properties.nameoption = "Secondary";
+                    map.data.addGeoJson(jsonObject);
+                }
+                <%}); %>
+            } else {
+                map.data.forEach(function(feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'Secondary') {
+                        map.data.remove(feature);
+                    }
+
+                });
+            }
+            $('#spinner').hide(2000);
+        });
+        $('#feederr').click(function() {
+            var $this = $(this);
+            //alert($this.val());
+            $('#spinner').show();
+            if ($this.prop('checked')) {
+
+                <% roads.forEach(function(element) { %>
+                jsonObject = <%- JSON.stringify(element) %>;
+                // console.log(jsonObject);
+                if (jsonObject.properties.rcategory.indexOf('Feeder') >= 0) {
+                    jsonObject.properties.color = "#fc1e3f";
+                    jsonObject.properties.nameoption = "Feeder";
+                    map.data.addGeoJson(jsonObject);
+                }
+                <%}); %>
+            } else {
+                map.data.forEach(function(feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'Feeder') {
+                        map.data.remove(feature);
+                    }
+
+                });
+            }
+            $('#spinner').hide(2000);
+        });
+        $('#urbanr').click(function() {
+            var $this = $(this);
+            //alert($this.val());
+            $('#spinner').show();
+            if ($this.prop('checked')) {
+
+                <% roads.forEach(function(element) { %>
+                jsonObject = <%- JSON.stringify(element) %>;
+                // console.log(jsonObject);
+                if (jsonObject.properties.rcategory.indexOf('Urban') >= 0) {
+                    jsonObject.properties.color = "#a8b2f7";
+                    jsonObject.properties.nameoption = "Urban";
+                    map.data.addGeoJson(jsonObject);
+                }
+                <%}); %>
+            } else {
+                map.data.forEach(function(feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'Urban') {
+                        map.data.remove(feature);
+                    }
+
+                });
+            }
+            $('#spinner').hide(2000);
+        });
     });
 </script>
 

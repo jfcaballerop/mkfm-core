@@ -3,7 +3,7 @@ surveyor, surveyor,db.infodatatracks.update({}, { $set: { "properties.surveyor":
 datesurvey, datesurvey,db.infodatatracks.update({}, { $set: { "properties.datesurvey": [] } }, false, true);
 coordTimes, movietime,
 district, district,db.infodatatracks.update({}, { $set: { "properties.district": [] } }, false, true);
-rcode, rcode,db.infodatatracks.update({}, { $set: { "properties.rcode": [] } }, false, true);
+rcode, rcode,
 rname, rname,db.infodatatracks.update({}, { $set: { "properties.rname": [] } }, false, true);
 rcategory,road_category,db.infodatatracks.update({}, { $rename: { "properties.road_category": "properties.rcategory" } }, false, true);
 rutmlong, rutmlong,db.infodatatracks.update({}, { $set: { "properties.rutmlong": [] } }, false, true);

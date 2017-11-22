@@ -68,10 +68,27 @@
                     <div class="col-md-2">
                         <div class="form-panel">
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
-                                <%- trans('GMAPS_CAPAS') %>
+                                <%- trans('GMAPS_ROAD_NET') %>
                             </h5>
-                            <select multiple id="layergps" class="form-control" size="<% if(roads.length < 6) { %>5<%} else{%>10<%}%>">
-                                    <option value="ROADS" >INFO DATA ROAD</option>
+                            <div class="checkbox">
+                                <label><input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="secondaryr"type="checkbox" value="Secondary">Secondary Roads</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
+                            </div>
+                        </div>
+                        <div class="form-panel">
+                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                                <%- trans('GMAPS_ASSETS') %>
+                            </h5>
+                            <select multiple id="layergps" class="form-control" size="5">
+                                    <option value="Roads" > <%- trans('GMAPS_ROADS') %></option>
                                     <option value="Culvert" >Culvert</option>
                                     <option value="BRIDGE" >BRIDGE</option>
                                     <option value="GEOT" >GEOTECHNICAL</option>
