@@ -209,7 +209,51 @@
     $(document).ready(function() {
         console.log("Funciones Listas a ejecutarse!");
         var featureActive = [];
+        $('#Criticality').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#CriticalityForm').show();
+            } else {
+                $('#CriticalityForm').hide();
 
+            }
+        });
+        $('#Condition').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#ConditionForm').show();
+            } else {
+                $('#ConditionForm').hide();
+
+            }
+        });
+        $('#Calculation').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#CalculationForm').show();
+            } else {
+                $('#CalculationForm').hide();
+
+            }
+        });
+        $('#PhysicalDeterioration').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#PhysicalCalculationForm').show();
+            } else {
+                $('#PhysicalCalculationForm').hide();
+
+            }
+        });
+        $('#NaturalHazards').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#NaturalHazardsForm').show();
+            } else {
+                $('#NaturalHazardsForm').hide();
+
+            }
+        });
         $('#Culvert').click(function() {
             $('#spinner').show();
             var $this = $(this);
