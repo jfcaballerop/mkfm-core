@@ -1,4 +1,5 @@
 <script>
+    var ifdtobject;
     var nchar = 0;
     var gen_data = [];
     var g = -1;
@@ -85,7 +86,40 @@
             }
         });
 
+        $("#searchtool").on('keyup', function(e) {
+            var $this = $(this);
 
+            if (e.keyCode == 13) {
+                // Do something
+                // alert('Buscando ...');
+                $('#error').hide();
+                $('#error').empty();
+
+                var dataPost = {};
+
+                var p1 = $.ajax({
+                    url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
+                    data: JSON.stringify(dataPost),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function(data) {
+                    // console.log('koboinfo ' + JSON.stringify(data));
+                    return (data);
+                });
+                Promise.all([p1]).then(function(values) {
+                    ifdt = values[0];
+                    console.log(ifdt);
+                    if (ifdt.length > 0) {
+                        ifdtobject = ifdt[0];
+                        console.log(ifdt[0]);
+                    } else {
+                        $('#error').show();
+                        $('#error').append("Search not found.<br>Try again.");
+                    }
+
+                });
+            }
+        });
         $('#searchtool').on('input', function() {
 
             var $this = $(this);

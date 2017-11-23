@@ -43,7 +43,49 @@ router.use(bodyParser.json());
 /*******************************************************
         WEB CALLS
 **********************************************************/
+/* GET List infodatatracks */
+router.post('/list_ifdt/:info', function(req, resp, next) {
 
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //console.log('STATUS: ' + res.statusCode);
+        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // console.log('KOBO ID: ' + req.params.id);
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+
+            console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+        });
+    });
+
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
 /**
  * Modify ROWS
  */
@@ -996,6 +1038,16 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
         });
 
 
+    });
+
+});
+/* GET JSON Infodatatracks listing. */
+router.get('/V1/list_ifdt/:info', function(req, res, next) {
+    Infodatatrack.find({ "properties.rcode": req.params.info }).exec(function(err, infodatatrack) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(infodatatrack);
     });
 
 });
