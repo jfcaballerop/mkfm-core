@@ -14,6 +14,7 @@
     "GMAPS_ROADS": "Roads",
     "GMAPS_DATOS": "Data",
     "GMAPS_ASSETS": "Assets",
+    "GMAPS_LAYERS": "Layers",
     "GMAPS_DATOS_BUTTON_EXPORT": "Export",
     "GMAPS_RISK_ASSESSMENT": "Risk Assessment",
     "MENU_DASHBOARD": "Dashboard",
@@ -69,5 +70,7 @@
     "EDIT_VIDEO_INFO_ADD": "Add coord",
     "EDIT_VIDEO_INFO_DUPLI": "DUPLICATE",
     "MAPSDATA_BUTTON_EXPORT": "Export excel",
-    "GMAPS_DATOS_BUTTON_ROADS": "Roads"
+    "GMAPS_DATOS_BUTTON_ROADS": "Roads",
+    "DSHEET_SEARCH_TOOL": "Search tool",
+    "DSHEET_DATA_INFO": "Data information"
 }

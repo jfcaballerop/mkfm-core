@@ -60,9 +60,27 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i>
-                    <%- trans('MENU_MAPS_GMAPS') %>
-                </h3>
+                <div class="row mt">
+                    <div class="col-md-10">
+                        <h3><i class="fa fa-angle-right"></i>
+                            <%- trans('MENU_MAPS_GMAPS') %>
+                        </h3>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+						  <option>- <%- trans('GMAPS_LAYERS') %> -</option>
+						  <option>Open Street Maps</option>
+						  <option>Parrishes boundaries</option>
+						  <option>Flashflood Susceptibility</option>
+						  <option>Landslide Susceptibility</option>
+						  <option>Hurricane Shelters</option>
+						  <option>Health Centers</option>
+						  <option>Airports</option>
+						  <option>Ferry Ports</option>
+						  <option>Tourist Attractions</option>
+						</select>
+                    </div>
+                </div>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-2">
