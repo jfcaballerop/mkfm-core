@@ -153,6 +153,19 @@
                             map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                             map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                             map.setZoom(22);
+                        } else if (ifdt.properties.asset_type === 'GEOT') {
+                            $('#response').empty();
+                            $('#response').show();
+                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                            jsonObject = ifdt;
+                            // console.log(jsonObject);
+                            jsonObject.properties.color = "green";
+                            jsonObject.properties.nameoption = "Geot";
+                            map.data.addGeoJson(jsonObject);
+                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.setZoom(19);
                         }
                         ifdtobject = ifdt;
                         console.log(ifdt);

@@ -1060,7 +1060,9 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
         $or: [{ "properties.rcode": req.params.info },
             { "properties.rname": req.params.info },
             { "properties.bcode": req.params.info },
-            { "properties.bname": req.params.info }
+            { "properties.bname": req.params.info },
+            { "properties.gcode": req.params.info },
+            { "properties.gcode2": req.params.info }
         ]
     }).exec(function(err, infodatatrack) {
         if (err) {
@@ -1068,7 +1070,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
         }
         if (infodatatrack.length > 0) {
             returnObject = extend({}, infodatatrack[0]._doc);
-            //console.log('returnObject1 ' + JSON.stringify(returnObject.geometry.coordinates));
+            // console.log('returnObject1 ' + JSON.stringify(returnObject.properties.gcode));
 
             if (infodatatrack[0].properties.rcode.indexOf(req.params.info) >= 0 ||
                 infodatatrack[0].properties.rname.indexOf(req.params.info) >= 0) {
@@ -1127,7 +1129,59 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                 //console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
                 //console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
 
+            } else if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0 ||
+                infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
+                returnObject["properties"]["asset_type"] = "GEOT";
+
+                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
+                    //console.log('gcode index ' + infodatatrack[0].properties.gcode.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.gcode.indexOf(req.params.info);
+                    //console.log('gcode lastindex ' + infodatatrack[0].properties.gcode.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.gcode.lastIndexOf(req.params.info);
+                } else {
+                    //console.log('gcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.gcode2.indexOf(req.params.info);
+                    //console.log('gcode2 lastindex ' + infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info);
+                }
+                if (index == 0) {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+
+                } else {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+                    returnObject.geometry.coordinates.splice(0, index);
+                }
+                /**
+                 * Recorto el resto de arrays de properties
+                 */
+                for (var [key, value] of Object.keys(returnObject.properties).entries()) {
+                    //console.log(key + ': ' + value + ' - ' + typeof(value));
+                    if (Array.isArray(returnObject.properties[value])) {
+                        //console.log(key + ': ' + value + ' - ' + typeof(returnObject.properties[value]));
+                        if (index == 0) {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+
+                        } else {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+                            returnObject.properties[value].splice(0, index);
+                        }
+                    }
+
+                }
             }
+
         } else {
 
 
