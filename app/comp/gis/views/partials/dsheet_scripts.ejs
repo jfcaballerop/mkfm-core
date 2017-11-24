@@ -140,6 +140,19 @@
                             map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                             map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                             map.setZoom(16);
+                        } else if (ifdt.properties.asset_type === 'BRIDGE') {
+                            $('#response').empty();
+                            $('#response').show();
+                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                            jsonObject = ifdt;
+                            // console.log(jsonObject);
+                            jsonObject.properties.color = "#F47983";
+                            jsonObject.properties.nameoption = "Bridge";
+                            map.data.addGeoJson(jsonObject);
+                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.setZoom(22);
                         }
                         ifdtobject = ifdt;
                         console.log(ifdt);
