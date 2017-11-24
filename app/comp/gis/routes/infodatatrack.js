@@ -45,11 +45,11 @@ router.use(bodyParser.json());
 **********************************************************/
 /* GET List infodatatracks */
 router.post('/list_ifdt/:info', function(req, resp, next) {
-
+    var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info,
+        path: encoded_url,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -57,11 +57,12 @@ router.post('/list_ifdt/:info', function(req, resp, next) {
         }
     };
 
+    console.log('\n## list_ifdt ##\n' + encoded_url);
 
 
     var request = http.request(options, function(res) {
-        //console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
         // console.log('KOBO ID: ' + req.params.id);
         res.setEncoding('utf8');
         var data = '';
@@ -77,11 +78,20 @@ router.post('/list_ifdt/:info', function(req, resp, next) {
             //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
             //delete responseObject[_id];
 
-            console.log(JSON.stringify(responseObject));
+            // console.log('## ResponseObject:: \n' + JSON.stringify(responseObject.properties));
             resp.status(200).jsonp(responseObject);
         });
-    });
 
+    });
+    request.on('error', function(e) {
+        // General error, i.e.
+        //  - ECONNRESET - server closed the socket unexpectedly
+        //  - ECONNREFUSED - server did not listen
+        //  - HPE_INVALID_VERSION
+        //  - HPE_INVALID_STATUS
+        //  - ... (other HPE_* codes) - server returned garbage
+        console.log(e);
+    });
     request.end();
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
@@ -1043,11 +1053,22 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
 });
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/list_ifdt/:info', function(req, res, next) {
+    var returnObject = {};
     Infodatatrack.find({ "properties.rcode": req.params.info }).exec(function(err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(infodatatrack);
+        if (infodatatrack.length > 0) {
+            returnObject = extend({}, infodatatrack[0]._doc);
+            returnObject["properties"]["asset_type"] = "ROAD";
+            //console.log('returnObject ' + JSON.stringify(returnObject.properties));
+        } else {
+            returnObject["properties"] = {};
+            returnObject["properties"]["asset_type"] = "ERROR";
+
+        }
+        // console.log('/V1/list_ifdt/:info properties.asset_type ' + JSON.stringify(returnObject.properties.asset_type));
+        res.status(200).jsonp(returnObject);
     });
 
 });

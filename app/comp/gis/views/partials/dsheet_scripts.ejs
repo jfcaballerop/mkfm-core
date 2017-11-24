@@ -94,6 +94,8 @@
                 // alert('Buscando ...');
                 $('#error').hide();
                 $('#error').empty();
+                $('#response').hide();
+                $('#response').empty();
 
                 var dataPost = {};
 
@@ -107,15 +109,42 @@
                     return (data);
                 });
                 Promise.all([p1]).then(function(values) {
+                    $('#spinner').show();
+                    map.data.forEach(function(feature) {
+                        // If you want, check here for some constraints.
+                        // if (feature.getProperty('nameoption') === 'Main Road') {
+                        map.data.remove(feature);
+                        // }
+
+                    });
                     ifdt = values[0];
                     console.log(ifdt);
-                    if (ifdt.length > 0) {
-                        ifdtobject = ifdt[0];
-                        console.log(ifdt[0]);
-                    } else {
+                    if (ifdt.properties.asset_type === 'ERROR') {
                         $('#error').show();
                         $('#error').append("Search not found.<br>Try again.");
+                        map.setCenter(new google.maps.LatLng(15.41, -61.32));
+                        map.panTo(new google.maps.LatLng(15.41, -61.32));
+                        map.setZoom(11);
+
+                    } else {
+                        if (ifdt.properties.asset_type === 'ROAD') {
+                            $('#response').empty();
+                            $('#response').show();
+                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                            jsonObject = ifdt;
+                            // console.log(jsonObject);
+                            jsonObject.properties.color = "#5b5e63";
+                            jsonObject.properties.nameoption = "Main Road";
+                            map.data.addGeoJson(jsonObject);
+                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                            map.setZoom(16);
+                        }
+                        ifdtobject = ifdt;
+                        console.log(ifdt);
                     }
+                    $('#spinner').hide();
 
                 });
             }
