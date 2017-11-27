@@ -1093,6 +1093,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                 var rnumbridges = 0;
                 var rnumculverts = 0;
                 var rnumLongitudinaldrainage = 0;
+                var rnumLongitudinaldrainageini = 0;
                 var rnumretainingwalls = 0;
                 var rnumcuttings = 0;
                 var rnumembankments = 0;
@@ -1110,8 +1111,12 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                         var dvalant = "";
                         var dvalant2 = "";
                         var barriersexist = "NO";
+                        var lightsexist = "NO";
                         for (var [kval, vval] of Object.keys(infodatatrack[0].properties[vprop]).entries()) {
                             if (vprop === 'bcode') {
+                                /**
+                                 * En caso de tener bcode, es porque hay un puente
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != bvalant) {
@@ -1119,18 +1124,26 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                                     bvalant = infodatatrack[0].properties[vprop][kval];
                                 }
                             } else if (vprop === 'Ccode') {
+                                /**
+                                 * En caso de Ccode hay un culvert
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != cvalant) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
                                     rnumculverts++;
                                     cvalant = infodatatrack[0].properties[vprop][kval];
                                 }
                             } else if (vprop === 'gcode') {
+                                /**
+                                 * En caso de gcode o gcode2, debo revisar en el mismo index el tipo de geot que es.
+                                 * Siendo el tipo los tres definidos
+                                 * Cutting Embankment Retaining_walls
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != gvalant) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
                                     if (infodatatrack[0].properties["gtype"][kval] === "Cutting") {
                                         rnumcuttings++;
                                     } else if (infodatatrack[0].properties["gtype"][kval] === "Embankment") {
@@ -1144,7 +1157,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != gvalant2) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
                                     if (infodatatrack[0].properties["gtype2"][kval] === "Cutting") {
                                         rnumcuttings++;
                                     } else if (infodatatrack[0].properties["gtype2"][kval] === "Embankment") {
@@ -1155,37 +1168,68 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                                     gvalant2 = infodatatrack[0].properties[vprop][kval];
                                 }
                             } else if (vprop === 'dcode') {
+                                /**
+                                 * En caso de dcode o dcode2 tenemos un drainage
+                                 * Los tipos son Longitudinales siempre, por lo que no hace falta comprobar nada
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != dvalant) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
-                                    rnumLongitudinaldrainage++;
+                                    if (rnumLongitudinaldrainage == 0) {
+                                        rnumLongitudinaldrainageini += parseFloat(infodatatrack[0].properties["pk"][kval]);
+                                        console.log(infodatatrack[0].properties["pk"][kval]);
+                                    }
+                                    rnumLongitudinaldrainage += parseFloat(infodatatrack[0].properties["pk"][kval]);
                                     dvalant = infodatatrack[0].properties[vprop][kval];
+                                    console.log(dvalant);
                                 }
                             } else if (vprop === 'dcode2') {
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval] != dvalant2) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
-                                    rnumLongitudinaldrainage++;
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (rnumLongitudinaldrainage == 0) {
+                                        rnumLongitudinaldrainageini += parseFloat(infodatatrack[0].properties["pk"][kval]);
+                                    }
+                                    rnumLongitudinaldrainage += parseFloat(infodatatrack[0].properties["pk"][kval]);
                                     dvalant2 = infodatatrack[0].properties[vprop][kval];
                                 }
                             } else if (vprop === 'rsignalstype') {
+                                /*
+                                 * En caso de rsignalstype, se tiene en cuenta el valor de VERTICAL SIGN
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval].toUpperCase() === "VERTICAL SIGN") {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
                                     rnumverticalsignaling++;
                                 }
                             } else if (vprop === 'rbarriersexist') {
+                                /**
+                                 * en caso de rbarriersexist
+                                 * Debo comprobar aquellos valores que cambien a YES desde el NO, porque por defecto es NO.
+                                 */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
                                     infodatatrack[0].properties[vprop][kval] != "" &&
                                     infodatatrack[0].properties[vprop][kval].toUpperCase() != barriersexist) {
-                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
                                     if (barriersexist.toUpperCase() === 'NO') {
                                         rnumbarriers++;
                                     }
                                     barriersexist = infodatatrack[0].properties[vprop][kval].toUpperCase();
+                                }
+                            } else if (vprop === 'rlightexist') {
+                                /**
+                                 * idem del anterior
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() != lightsexist) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (lightsexist.toUpperCase() === 'NO') {
+                                        rnumstreetlights++;
+                                    }
+                                    lightsexist = infodatatrack[0].properties[vprop][kval].toUpperCase();
                                 }
                             }
 
@@ -1198,7 +1242,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
 
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
-                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
+                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage - rnumLongitudinaldrainageini;
                 returnObject["properties"]["rnumretainingwalls"] = rnumretainingwalls;
                 returnObject["properties"]["rnumcuttings"] = rnumcuttings;
                 returnObject["properties"]["rnumembankments"] = rnumembankments;
