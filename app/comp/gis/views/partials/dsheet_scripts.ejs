@@ -1,6 +1,7 @@
 <script>
     var ifdtobject;
     var nchar = 0;
+    var resized = false;
     var gen_data = [];
     var g = -1;
     gen_data[++g] = '<div id="generaldatadiv" class="content-panel" style="display:none;">';
@@ -96,7 +97,8 @@
                 $('#error').empty();
                 $('#response').hide();
                 $('#response').empty();
-
+                $("#datainfophoto").empty();
+                $("#datainfophoto").hide();
                 var dataPost = {};
 
                 if ($this.val().length <= 0) {
@@ -127,7 +129,7 @@
 
                         });
                         ifdt = values[0];
-                        console.log(ifdt);
+                        //console.log(ifdt);
                         if (ifdt.properties.asset_type === 'ERROR') {
                             $('#error').show();
                             $('#error').append("Search not found.<br>Try again.");
@@ -154,6 +156,40 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
 
+                                if (ifdt.properties.koboedit[0] != undefined || ifdt.properties.koboedit[0].kobo_id != undefined) {
+                                    var dataPhotoPost = {};
+                                    var pphoto = $.ajax({
+                                        url: '/auth/WEB/koboinfo/list_koboinfos/' + ifdt.properties.koboedit[0].kobo_id,
+                                        data: JSON.stringify(dataPhotoPost),
+                                        type: 'POST',
+                                        contentType: 'application/json'
+                                    }, function(data) {
+                                        // console.log('koboinfo ' + JSON.stringify(data));
+                                        return (data);
+                                    });
+                                    Promise.all([pphoto]).then(function(values) {
+                                        koboinfo = values[0];
+                                        $.each(koboinfo, function(key, value) {
+                                            if (key === 'properties') {
+                                                $.each(value, function(kprop, vprop) {
+                                                    //console.log(kprop, vprop);
+                                                    if (kprop === "_attachments") {
+
+                                                        $("#datainfophoto").empty();
+                                                        $("#datainfophoto").show();
+                                                        $.each(vprop, function(kfoto, vfoto) {
+                                                            var fotosmall = vfoto.replace(".jpg", "-small.jpg");
+                                                            $("#datainfophoto").append('<img src="' + fotosmall + '">');
+                                                            // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
+                                                        });
+                                                    }
+
+
+                                                });
+                                            };
+                                        });
+                                    });
+                                }
                                 jsonObject = ifdt;
                                 // console.log(jsonObject);
                                 jsonObject.properties.color = "#F47983";
@@ -215,11 +251,12 @@
 
             var $this = $(this);
 
-            if (nchar == 0) {
+            if (nchar == 0 && !resized) {
                 nchar = $this.val().length;
                 $("#divmap2").animate({
                     width: '50%'
                 }, 1500, function() {
+                    resized = true;
                     $('#rowmap').prepend('<div id="divmap1"' +
                         'class="col-md-6" style="height:80vh;" >' +
                         '</div>'
@@ -239,7 +276,7 @@
                 nchar = $this.val().length;
 
             }
-            console.log(nchar);
+            // console.log(nchar);
 
 
         });
