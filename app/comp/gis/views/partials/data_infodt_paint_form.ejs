@@ -297,7 +297,7 @@
             }
         },
         furniture: {
-            RBarriersExist: {
+            rbarriersexist: {
                 title: "Existence of barriers",
                 visible: true
             },
@@ -1866,8 +1866,8 @@
 
 
                 //ROAD Furniture
-                html[++h] = '<td id="infodatatrack[properties][RBarriersExist]">' +
-                    '<select name="infodatatrack[properties][RBarriersExist]" class="form-control">' +
+                html[++h] = '<td id="infodatatrack[properties][rbarriersexist]">' +
+                    '<select name="infodatatrack[properties][rbarriersexist]" class="form-control">' +
                     '<option value="No" selected>No</option>' +
                     '<option value="Yes">Yes</option>' +
                     '</select>' +
@@ -2617,7 +2617,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][RBarriersExist]"]').val(data.properties.RBarriersExist[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarriersexist]"]').val(data.properties.rbarriersexist[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
@@ -2869,7 +2869,7 @@
 
             });
         });
-        var $inputsRBarriersExist = $('#form').find('select[ name="infodatatrack[properties][RBarriersExist]"]');
+        var $inputsRBarriersExist = $('#form').find('select[ name="infodatatrack[properties][rbarriersexist]"]');
         $inputsRBarriersExist.on('change', function() {
             var $this = $(this);
 

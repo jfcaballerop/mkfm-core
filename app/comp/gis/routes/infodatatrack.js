@@ -1099,6 +1099,103 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                 var rnumbarriers = 0;
                 var rnumverticalsignaling = 0;
                 var rnumstreetlights = 0;
+                for (var [kprop, vprop] of Object.keys(infodatatrack[0].properties).entries()) {
+                    // console.log(kprop + ' ' + vprop);
+                    // console.log(kprop + ' ' + vprop);
+                    if (infodatatrack[0].properties[vprop] != undefined && Array.isArray(infodatatrack[0].properties[vprop])) {
+                        var bvalant = "";
+                        var cvalant = "";
+                        var gvalant = "";
+                        var gvalant2 = "";
+                        var dvalant = "";
+                        var dvalant2 = "";
+                        var barriersexist = "NO";
+                        for (var [kval, vval] of Object.keys(infodatatrack[0].properties[vprop]).entries()) {
+                            if (vprop === 'bcode') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != bvalant) {
+                                    rnumbridges++;
+                                    bvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'Ccode') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != cvalant) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumculverts++;
+                                    cvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'gcode') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != gvalant) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (infodatatrack[0].properties["gtype"][kval] === "Cutting") {
+                                        rnumcuttings++;
+                                    } else if (infodatatrack[0].properties["gtype"][kval] === "Embankment") {
+                                        rnumembankments++;
+                                    } else if (infodatatrack[0].properties["gtype"][kval] === "Retaining_walls") {
+                                        rnumretainingwalls++;
+                                    }
+                                    gvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'gcode2') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != gvalant2) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (infodatatrack[0].properties["gtype2"][kval] === "Cutting") {
+                                        rnumcuttings++;
+                                    } else if (infodatatrack[0].properties["gtype2"][kval] === "Embankment") {
+                                        rnumembankments++;
+                                    } else if (infodatatrack[0].properties["gtype2"][kval] === "Retaining_walls") {
+                                        rnumretainingwalls++;
+                                    }
+                                    gvalant2 = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'dcode') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != dvalant) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumLongitudinaldrainage++;
+                                    dvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'dcode2') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != dvalant2) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumLongitudinaldrainage++;
+                                    dvalant2 = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'rsignalstype') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() === "VERTICAL SIGN") {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumverticalsignaling++;
+                                }
+                            } else if (vprop === 'rbarriersexist') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() != barriersexist) {
+                                    console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (barriersexist.toUpperCase() === 'NO') {
+                                        rnumbarriers++;
+                                    }
+                                    barriersexist = infodatatrack[0].properties[vprop][kval].toUpperCase();
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+                }
+
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
                 returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
