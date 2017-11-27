@@ -91,7 +91,7 @@
 
             if (e.keyCode == 13) {
                 // Do something
-                // alert('Buscando ...');
+                // alert('Buscando ...' + $this.val().length);
                 $('#error').hide();
                 $('#error').empty();
                 $('#response').hide();
@@ -99,82 +99,118 @@
 
                 var dataPost = {};
 
-                var p1 = $.ajax({
-                    url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
-                    data: JSON.stringify(dataPost),
-                    type: 'POST',
-                    contentType: 'application/json'
-                }, function(data) {
-                    // console.log('koboinfo ' + JSON.stringify(data));
-                    return (data);
-                });
-                Promise.all([p1]).then(function(values) {
-                    $('#spinner').show();
-                    map.data.forEach(function(feature) {
-                        // If you want, check here for some constraints.
-                        // if (feature.getProperty('nameoption') === 'Main Road') {
-                        map.data.remove(feature);
-                        // }
+                if ($this.val().length <= 0) {
+                    $('#error').hide();
+                    $('#error').empty();
+                    $('#error').append("Empty value.<br>Try again.");
+                    $('#error').show();
+
+                } else {
+
+
+                    var p1 = $.ajax({
+                        url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
+                        data: JSON.stringify(dataPost),
+                        type: 'POST',
+                        contentType: 'application/json'
+                    }, function(data) {
+                        // console.log('koboinfo ' + JSON.stringify(data));
+                        return (data);
+                    });
+                    Promise.all([p1]).then(function(values) {
+                        $('#spinner').show();
+                        map.data.forEach(function(feature) {
+                            // If you want, check here for some constraints.
+                            // if (feature.getProperty('nameoption') === 'Main Road') {
+                            map.data.remove(feature);
+                            // }
+
+                        });
+                        ifdt = values[0];
+                        console.log(ifdt);
+                        if (ifdt.properties.asset_type === 'ERROR') {
+                            $('#error').show();
+                            $('#error').append("Search not found.<br>Try again.");
+                            map.setCenter(new google.maps.LatLng(15.41, -61.32));
+                            map.panTo(new google.maps.LatLng(15.41, -61.32));
+                            map.setZoom(11);
+
+                        } else {
+                            if (ifdt.properties.asset_type === 'ROAD') {
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                                jsonObject = ifdt;
+                                // console.log(jsonObject);
+                                jsonObject.properties.color = "#5b5e63";
+                                jsonObject.properties.nameoption = "Main Road";
+                                map.data.addGeoJson(jsonObject);
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setZoom(16);
+                            } else if (ifdt.properties.asset_type === 'BRIDGE') {
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                                jsonObject = ifdt;
+                                // console.log(jsonObject);
+                                jsonObject.properties.color = "#F47983";
+                                jsonObject.properties.nameoption = "Bridge";
+                                map.data.addGeoJson(jsonObject);
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setZoom(22);
+                            } else if (ifdt.properties.asset_type === 'GEOT') {
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                                jsonObject = ifdt;
+                                // console.log(jsonObject);
+                                jsonObject.properties.color = "green";
+                                jsonObject.properties.nameoption = "Geot";
+                                map.data.addGeoJson(jsonObject);
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setZoom(19);
+                            } else if (ifdt.properties.asset_type === 'CULVERT') {
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+                                jsonObject = ifdt;
+                                // console.log(jsonObject); 
+                                jsonObject.properties.color = "#a17cff";
+                                jsonObject.properties.nameoption = "Culvert";
+                                map.data.addGeoJson(jsonObject);
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setZoom(22);
+                            } else if (ifdt.properties.asset_type === 'DRAINAGE') {
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+                                jsonObject = ifdt;
+                                // console.log(jsonObject); 
+                                jsonObject.properties.color = "#135dd6";
+                                jsonObject.properties.nameoption = "Drainage";
+                                map.data.addGeoJson(jsonObject);
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setZoom(22);
+                            }
+                            ifdtobject = ifdt;
+                            console.log(ifdt);
+                        }
+                        $('#spinner').hide();
 
                     });
-                    ifdt = values[0];
-                    console.log(ifdt);
-                    if (ifdt.properties.asset_type === 'ERROR') {
-                        $('#error').show();
-                        $('#error').append("Search not found.<br>Try again.");
-                        map.setCenter(new google.maps.LatLng(15.41, -61.32));
-                        map.panTo(new google.maps.LatLng(15.41, -61.32));
-                        map.setZoom(11);
-
-                    } else {
-                        if (ifdt.properties.asset_type === 'ROAD') {
-                            $('#response').empty();
-                            $('#response').show();
-                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
-                            jsonObject = ifdt;
-                            // console.log(jsonObject);
-                            jsonObject.properties.color = "#5b5e63";
-                            jsonObject.properties.nameoption = "Main Road";
-                            map.data.addGeoJson(jsonObject);
-                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.setZoom(16);
-                        } else if (ifdt.properties.asset_type === 'BRIDGE') {
-                            $('#response').empty();
-                            $('#response').show();
-                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
-                            jsonObject = ifdt;
-                            // console.log(jsonObject);
-                            jsonObject.properties.color = "#F47983";
-                            jsonObject.properties.nameoption = "Bridge";
-                            map.data.addGeoJson(jsonObject);
-                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.setZoom(22);
-                        } else if (ifdt.properties.asset_type === 'GEOT') {
-                            $('#response').empty();
-                            $('#response').show();
-                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
-                            jsonObject = ifdt;
-                            // console.log(jsonObject);
-                            jsonObject.properties.color = "green";
-                            jsonObject.properties.nameoption = "Geot";
-                            map.data.addGeoJson(jsonObject);
-                            map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                            map.setZoom(19);
-                        }
-                        ifdtobject = ifdt;
-                        console.log(ifdt);
-                    }
-                    $('#spinner').hide();
-
-                });
+                }
             }
         });
+
+
         $('#searchtool').on('input', function() {
 
             var $this = $(this);
