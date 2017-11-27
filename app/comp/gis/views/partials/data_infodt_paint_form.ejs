@@ -297,7 +297,7 @@
             }
         },
         furniture: {
-            rbarriersexist: {
+            RBarriersExist: {
                 title: "Existence of barriers",
                 visible: true
             },
@@ -1866,8 +1866,11 @@
 
 
                 //ROAD Furniture
-                html[++h] = '<td id="infodatatrack[properties][rbarriersexist]"><input name="infodatatrack[properties][rbarriersexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rbarriersexist[index] !== "undefined" ? data.properties.rbarriersexist[index] : '') + '">' +
+                html[++h] = '<td id="infodatatrack[properties][RBarriersExist]">' +
+                    '<select name="infodatatrack[properties][RBarriersExist]" class="form-control">' +
+                    '<option value="No" selected>No</option>' +
+                    '<option value="Yes">Yes</option>' +
+                    '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rbarrierstype]">' +
                     '<select name="infodatatrack[properties][rbarrierstype]" class="form-control">' +
@@ -2614,6 +2617,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][RBarriersExist]"]').val(data.properties.RBarriersExist[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
@@ -2859,6 +2863,25 @@
                         $inputsrbarrierstype[index].value = $this.val();
                     } else {
                         $inputsrbarrierstype[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsRBarriersExist = $('#form').find('select[ name="infodatatrack[properties][RBarriersExist]"]');
+        $inputsRBarriersExist.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsRBarriersExist[index].value = $this.val();
+                    } else {
+                        $inputsRBarriersExist[index].value = '';
                     }
                 }
 
