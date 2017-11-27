@@ -107,6 +107,9 @@
                             <div class="checkbox">
                                 <label><input id="operation" type="checkbox" value="Operation and Maintenance Data">Operation and Maintenance Data</label>
                             </div>
+                            <div class="checkbox">
+                                <label><input id="risk" type="checkbox" value="Indexes and risk analysis">Indexes and risk analysis</label>
+                            </div>
 
                         </div>
                         <div id="datainfophoto" class="form-panel" style="display:none;">
@@ -164,7 +167,8 @@
 
         <!--script for this page-->
         <% include partials/gmaps_functions %>
-            <% include ./partials/dsheet_scripts %>
+            <% include ./partials/dsheet_scripts_tables %>
+                <% include ./partials/dsheet_scripts %>
 
 
 </body>

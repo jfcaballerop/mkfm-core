@@ -1078,6 +1078,37 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
             if (infodatatrack[0].properties.rcode.indexOf(req.params.info) >= 0 ||
                 infodatatrack[0].properties.rname.indexOf(req.params.info) >= 0) {
                 returnObject["properties"]["asset_type"] = "ROAD";
+                /**
+                 * En caso de ROAD hay que añadir los siguientes valores
+                 * :"No. of bridges",
+                    :"No. of culverts",
+                    :"Km of Longitudinal drainage",
+                    :"No. of retaining walls",
+                    :"No. of cuttings",
+                    :"No. of embankments",
+                    :"No. of barriers",
+                    :"No. of vertical signaling",
+                    :"No. of street lights",
+                 */
+                var rnumbridges = 0;
+                var rnumculverts = 0;
+                var rnumLongitudinaldrainage = 0;
+                var rnumretainingwalls = 0;
+                var rnumcuttings = 0;
+                var rnumembankments = 0;
+                var rnumbarriers = 0;
+                var rnumverticalsignaling = 0;
+                var rnumstreetlights = 0;
+                returnObject["properties"]["rnumbridges"] = rnumbridges;
+                returnObject["properties"]["rnumculverts"] = rnumculverts;
+                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
+                returnObject["properties"]["rnumretainingwalls"] = rnumretainingwalls;
+                returnObject["properties"]["rnumcuttings"] = rnumcuttings;
+                returnObject["properties"]["rnumembankments"] = rnumembankments;
+                returnObject["properties"]["rnumbarriers"] = rnumbarriers;
+                returnObject["properties"]["rnumverticalsignaling"] = rnumverticalsignaling;
+                returnObject["properties"]["rnumstreetlights"] = rnumstreetlights;
+
             } else if (infodatatrack[0].properties.bcode.indexOf(req.params.info) >= 0 ||
                 infodatatrack[0].properties.bname.indexOf(req.params.info) >= 0) {
                 returnObject["properties"]["asset_type"] = "BRIDGE";

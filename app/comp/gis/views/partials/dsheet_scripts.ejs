@@ -2,48 +2,6 @@
     var ifdtobject;
     var nchar = 0;
     var resized = false;
-    var gen_data = [];
-    var g = -1;
-    gen_data[++g] = '<div id="generaldatadiv" class="content-panel" style="display:none;">';
-    gen_data[++g] = '<table class="table table-striped table-advance table-hover">';
-    gen_data[++g] = '<thead><tr><th colspan="2" class="text-center">General Data</th><tr></thead>';
-    gen_data[++g] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    gen_data[++g] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    gen_data[++g] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    gen_data[++g] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    gen_data[++g] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    gen_data[++g] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    gen_data[++g] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    gen_data[++g] = "<tr><td>Load Capacity</td><td> -</td></tr>";
-    gen_data[++g] = '</tbody></table></div>';
-    var inv_data = [];
-    var i = -1;
-    inv_data[++i] = '<div id="inventorydatadiv" class="content-panel" style="display:none;">';
-    inv_data[++i] = '<table class="table table-striped table-advance table-hover">';
-    inv_data[++i] = '<thead><tr><th colspan="2" class="text-center">Invetory Data</th><tr></thead>';
-    inv_data[++i] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    inv_data[++i] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    inv_data[++i] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    inv_data[++i] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    inv_data[++i] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    inv_data[++i] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    inv_data[++i] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    inv_data[++i] = "<tr><td>Load Capacity</td><td> -</td></tr>";
-    inv_data[++i] = '</tbody></table></div>';
-    var op_data = [];
-    var o = -1;
-    op_data[++o] = '<div id="operationdiv" class="content-panel" style="display:none;">';
-    op_data[++o] = '<table class="table table-striped table-advance table-hover">';
-    op_data[++o] = '<thead><tr><th colspan="2" class="text-center">Operation Data</th><tr></thead>';
-    op_data[++o] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    op_data[++o] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    op_data[++o] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    op_data[++o] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    op_data[++o] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    op_data[++o] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    op_data[++o] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    op_data[++o] = "<tr><td>Load Capacity</td><td> -</td></tr>";
-    op_data[++o] = '</tbody></table></div>';
 
     $(document).ready(function() {
 
@@ -52,7 +10,34 @@
             $('#divmap1').show();
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
-                $('#divmap1').append(gen_data.join(''));
+                $('#divmap1').prepend(gen_data.join(''));
+                if (ifdtobject.properties.asset_type === 'ROAD') {
+                    console.log(ifdtobject);
+                    $.each(ROADS, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+
+                }
                 $('#generaldatadiv').show();
 
             } else {
@@ -86,7 +71,19 @@
 
             }
         });
+        $('#risk').click(function() {
+            var $this = $(this);
+            $('#divmap1').show();
+            if ($this.prop('checked')) {
+                nchar = $this.val().length;
+                $('#divmap1').append(risk_data.join(''));
+                $('#riskdiv').show();
 
+            } else {
+                $('#riskdiv').hide();
+
+            }
+        });
         $("#searchtool").on('keyup', function(e) {
             var $this = $(this);
 
