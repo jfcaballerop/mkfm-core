@@ -74,6 +74,95 @@
             rrisk: "RISK"
         }
     };
+    var BRIDGES = {
+        general_data: {
+            bcode: "Asset Code",
+            bname: "Asset Name",
+            byearconstruc: "Year of Construction",
+            btype: "Structural Typology",
+            bsurrounding: "Environment",
+            bobstaclesaved: "Obstacle overpassed",
+            bfloodscenario: "Design Flood Scenario",
+            Bloadcapacity: "Load Capacity"
+        },
+        inventory_data: {
+            bmaterialdeck: "Material - Deck",
+            bmaterialgirder: "Material - Girders",
+            bmaterialpiers: "Material - Piers",
+            bmaterialabutments: "Material - Abutments",
+            balignment: "Bridge alignment",
+            bspans: "Single or multiple span?",
+            bnumberspans: "Number of spans",
+            blenght: "Total length (m)",
+            bmaxspan: "Maximum span (m)",
+            bwidth: "Total width (m)",
+            bfreeheight: "Free height (m)",
+            bfoundation: "Foundations typology",
+            bpiersriver: "Existence of piers over riverbed",
+            bprotectabut: "Protection of abutments /nearby areas",
+            bprojectlocation: "Location of the documentation of bridge projects"
+        },
+        operations: {
+            balternative: "Existence of alternative itinerary",
+            bvisualcondition: "Current visual condition",
+            bconslos: "Consequences of failure on LOS",
+            bprevcondition: "Previous condition rate",
+            blastinspection: "Date of last inspection",
+            bsurveyfreq: "Survey frequency",
+            bnextsurvey: "Date of next survey",
+            bfailure: "Failure history",
+            bdamagesfoundations: "Damages on foundations",
+            bdamagesfoundationsgeneraltype: "Type of damages on foundations (from foundation-ground decay, from foundation decay)",
+            bdamagesfoundationsdetailedtype: "Type of damages on foundations due to foundation-ground decay",
+            bdamagesstructural: "Damages on structural elements",
+            bdamagesvaultsarchesmechanicaldurable: "Damages on vault / arches (mechanical vs. durable)",
+            BDamagesVaultArchesSeverity: "Severity of damages on vault / arches",
+            BDamagesPiers: "Damages on piers (mechanical vs. durable)",
+            BDamagesPiersSeverity: "Severity of damages on piers",
+            BDamagesSpandrel: "Damages on spandrel walls (mechanical vs. durable)",
+            BDamagesSpandrelSeverity: "Severity of damages on spandrel walls",
+            BDamagesAbutments: "Damages on abutments (mechanical vs. durable)",
+            BDamagesAbutmentsSeverity: "Severity of damages on abutments",
+            BDamagesSidewalls: "Damages on side walls (mechanical vs. durable)",
+            BDamagessidewallsSeverity: "Severity of damages on side walls",
+            BDamagesSlab: "Damages on slab (mechanical vs. durable)",
+            BDamagesslabSeverity: "Severity of damages on slab",
+            BDamagesBeams: "Damages on beams (mechanical vs. durable)",
+            BDamagesBeamsSeverity: "Severity of damages on beams",
+            BDamagesBearings: "Damages on bearings (mechanical vs. durable)",
+            BDamagesBearingsSeverity: "Severity of damages on bearings",
+            BDamagesSpecialareas: "Damages on special areas (mechanical vs. durable)",
+            BDamagesSpecialareasSeverity: "Severity of damages on special areas",
+            bdamagesnonstructural: "Damages on non structural elements",
+            BLastYearInterv: "Have there been past interventions performed during the last year?",
+            BLastYearIntervExtent: "Have they been global or partial interventions?",
+            BLastYearIntervDate: "Date of performance of last year interventions",
+            BLastYearIntervScope: "Scope of last year interventions",
+            BLastYearIntervCost: "Cost of last year interventions",
+            BLastYearIntervImpactCond: "Impact of last year interventions on asset condition",
+            BLocDocLastYearInterv: "Location of the documentation of last year interventions",
+            BCurrYearInterv: "Have there been interventions performed during the current year?",
+            BCurrYearIntervExtent: "Have they been global or partial interventions?",
+            BCurrYearIntervDate: "Date of performance of current year interventions",
+            BCurrYearIntervScope: "Scope of current year interventions",
+            BCurrYearIntervCost: "Accummulated cost of current year interventions",
+            BLocDocCurrYearInterv: "Location of the documentation of last year interventions",
+            BMaintIssues: "Maintainability issues",
+            Binvestment10years: "Investment undertaken in the last 10 years",
+            binvestmentrequired: "Investment required to upgrade to A class",
+            bomcomments: "Comments to operation and maintainance"
+        },
+        risk: {
+            bcondition: "Current condition",
+            bcriticality: "Criticality",
+            blandslide: "Exposure to landslide hazard",
+            bflood: "Exposure to flood hazard",
+            bresphazard: "Asset Response against hazards",
+            bsensitivity: "Asset Sensitivity",
+            brisk: "RISK"
+        }
+
+    };
     var gen_data = [];
     var g = -1;
     gen_data[++g] = '<div id="generaldatadiv" class="content-panel" style="display:none;">';
