@@ -1094,6 +1094,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                 var rnumculverts = 0;
                 var rnumLongitudinaldrainage = 0;
                 var rnumLongitudinaldrainageini = 0;
+                var rnumLongitudinaldrainagefin = 0;
                 var rnumretainingwalls = 0;
                 var rnumcuttings = 0;
                 var rnumembankments = 0;
@@ -1173,26 +1174,53 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                                  * Los tipos son Longitudinales siempre, por lo que no hace falta comprobar nada
                                  */
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
-                                    infodatatrack[0].properties[vprop][kval] != "" &&
-                                    infodatatrack[0].properties[vprop][kval] != dvalant) {
-                                    if (rnumLongitudinaldrainage == 0) {
-                                        rnumLongitudinaldrainageini += parseFloat(infodatatrack[0].properties["pk"][kval]);
-                                        console.log(infodatatrack[0].properties["pk"][kval]);
+                                    infodatatrack[0].properties[vprop][kval] != "") {
+                                    //console.log(infodatatrack[0].properties[vprop][kval] + ' ' + dvalant);
+                                    if (dvalant === "") {
+                                        dvalant = infodatatrack[0].properties[vprop][kval];
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
                                     }
-                                    rnumLongitudinaldrainage += parseFloat(infodatatrack[0].properties["pk"][kval]);
+                                    if (dvalant === infodatatrack[0].properties[vprop][kval]) {
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    } else {
+                                        rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                        //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    }
+
                                     dvalant = infodatatrack[0].properties[vprop][kval];
-                                    console.log(dvalant);
+                                } else if (dvalant != infodatatrack[0].properties[vprop][kval] &&
+                                    infodatatrack[0].properties[vprop][kval] != undefined) {
+                                    rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                    //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                    rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
                                 }
                             } else if (vprop === 'dcode2') {
                                 if (infodatatrack[0].properties[vprop][kval] != undefined &&
-                                    infodatatrack[0].properties[vprop][kval] != "" &&
-                                    infodatatrack[0].properties[vprop][kval] != dvalant2) {
-                                    //console.log(infodatatrack[0].properties[vprop][kval]);
-                                    if (rnumLongitudinaldrainage == 0) {
-                                        rnumLongitudinaldrainageini += parseFloat(infodatatrack[0].properties["pk"][kval]);
+                                    infodatatrack[0].properties[vprop][kval] != "") {
+                                    //console.log(infodatatrack[0].properties[vprop][kval] + ' ' + dvalant2);
+                                    if (dvalant2 === "") {
+                                        dvalant2 = infodatatrack[0].properties[vprop][kval];
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
                                     }
-                                    rnumLongitudinaldrainage += parseFloat(infodatatrack[0].properties["pk"][kval]);
+                                    if (dvalant2 === infodatatrack[0].properties[vprop][kval]) {
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    } else {
+                                        rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                        //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    }
+
                                     dvalant2 = infodatatrack[0].properties[vprop][kval];
+                                } else if (dvalant2 != infodatatrack[0].properties[vprop][kval] &&
+                                    infodatatrack[0].properties[vprop][kval] != undefined) {
+                                    rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                    //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                    rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
                                 }
                             } else if (vprop === 'rsignalstype') {
                                 /*
@@ -1242,7 +1270,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
 
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
-                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage - rnumLongitudinaldrainageini;
+                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
                 returnObject["properties"]["rnumretainingwalls"] = rnumretainingwalls;
                 returnObject["properties"]["rnumcuttings"] = rnumcuttings;
                 returnObject["properties"]["rnumembankments"] = rnumembankments;

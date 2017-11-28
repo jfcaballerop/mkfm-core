@@ -13,7 +13,7 @@
                 $('#divmap1').prepend(gen_data.join(''));
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     console.log(ifdtobject);
-                    $.each(ROADS, function(key, value) {
+                    $.each(ROADS.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
@@ -51,6 +51,32 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(inv_data.join(''));
+                if (ifdtobject.properties.asset_type === 'ROAD') {
+                    console.log(ifdtobject);
+                    $.each(ROADS.inventory_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#inventorydatadiv').show();
 
             } else {
@@ -64,6 +90,32 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(op_data.join(''));
+                if (ifdtobject.properties.asset_type === 'ROAD') {
+                    console.log(ifdtobject);
+                    $.each(ROADS.operations, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#operationdiv').show();
 
             } else {
@@ -77,6 +129,32 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(risk_data.join(''));
+                if (ifdtobject.properties.asset_type === 'ROAD') {
+                    console.log(ifdtobject);
+                    $.each(ROADS.risk, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#riskdiv').show();
 
             } else {
@@ -96,6 +174,12 @@
                 $('#response').empty();
                 $("#datainfophoto").empty();
                 $("#datainfophoto").hide();
+                $('#divmap1').empty();
+                $("#generaldata").prop("checked", false);
+                $("#inventorydata").prop("checked", false);
+                $("#operation").prop("checked", false);
+                $("#risk").prop("checked", false);
+
                 var dataPost = {};
 
                 if ($this.val().length <= 0) {

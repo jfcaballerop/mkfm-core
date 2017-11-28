@@ -1,18 +1,78 @@
 <script>
     var ROADS = {
-        rcode: "Asset Code",
-        rname: "Asset Name",
-        rcategory: "Road Category",
-        rdateconstruct: "Year of Construction",
-        rnumbridges: "No. of bridges",
-        rnumculverts: "No. of culverts",
-        rnumLongitudinaldrainage: "Km. of Longitudinal drainage",
-        rnumretainingwalls: "No. of retaining walls",
-        rnumcuttings: "No. of cuttings",
-        rnumembankments: "No. of embankments",
-        rnumbarriers: "No. of barriers",
-        rnumverticalsignaling: "No. of vertical signaling",
-        rnumstreetlights: "No. of street lights"
+        general_data: {
+            rcode: "Asset Code",
+            rname: "Asset Name",
+            rcategory: "Road Category",
+            rdateconstruct: "Year of Construction",
+            rnumbridges: "No. of bridges",
+            rnumculverts: "No. of culverts",
+            rnumLongitudinaldrainage: "Km. of Longitudinal drainage",
+            rnumretainingwalls: "No. of retaining walls",
+            rnumcuttings: "No. of cuttings",
+            rnumembankments: "No. of embankments",
+            rnumbarriers: "No. of barriers",
+            rnumverticalsignaling: "No. of vertical signaling",
+            rnumstreetlights: "No. of street lights"
+        },
+        inventory_data: {
+            rmaterial: "Pavement material",
+            rbasematerial: "Base material",
+            rsubbasematerial: "Subbase material",
+            rlaneinc: "Number of lanes (increasing KP)",
+            rlanedecr: "Number of lanes (decreasing KP)",
+            rlanetotal: "Total number of lanes",
+            rwidth: "Total width (m)",
+            rlocdoc: "Documentation",
+            rvideo: "Video"
+        },
+        operations: {
+            ralternatitinerary: "Existence of alternative itinerary",
+            ropen: "Is the road open to traffic?",
+            rgauging: "Existence of gauging stations",
+            radt: "ADT",
+            rtrafficpeak: "Traffic high peak",
+            rinfrint: "Acess to airports/ferry ports",
+            rtourism: "Access to touristic sites",
+            rindustry: "Access to industries, agriculture, fishing sites",
+            rhealth: "Access to health care services",
+            renvironment: "Located within an environmentally protected area",
+            rwaste: "Distance to a dumping area",
+            iri: "IRI - Pavement roughtness",
+            rvcondition: "Current visual condition",
+            rconslos: "Consequences of failure on LOS",
+            rprevcondition: "Previous condition rate",
+            rlastinspection: "Date of last inspection",
+            rsurveyfreq: "Survey frequency",
+            rnextsurvey: "Date of next survey",
+            rfailure: "Failure history",
+            rlastoverlay: "Date of last overlay",
+            rlastyearinterv: "Have there been past interventions?",
+            rlastyearintervextent: "Has the last intervention been global or partial?",
+            rlastyearintervdate: "Date of performance of last intervention",
+            rlastyearintervscope: "Scope of last intervention",
+            rlastyearintervcost: "Cost of last intervention",
+            rlastyearintervimpactcond: "Impact of last intervention on asset condition",
+            rlocdoclastyearinterv: "Location of the documentation of last  intervention",
+            rcurryearinterv: "Have there been interventions performed during the current year?",
+            rcurryearintervextent: "Have they been global or partial interventions?",
+            rcurryearintervdate: "Date of performance of current year interventions",
+            rcurryearintervscope: "Scope of current year interventions",
+            rcurryearintervcost: "Accummulated Cost of current year interventions",
+            rlocdoccurryearinterv: "Location of the documentation of last year interventions",
+            rmaintissues: "Maintainability issues",
+            rinvestment10years: "Investment undertaken in the last 10 years",
+            rinvestmentrequired: "Investment required to upgrade to A class",
+            romcomments: "Comments to operation and maintainance"
+        },
+        risk: {
+            rlandslide: "Exposure to landslide hazard",
+            rflood: "Exposure to flood hazard",
+            rccondition: "Currrent Condition",
+            rcriticality: "Criticality",
+            rsensitivity: "Asset Sensitivity",
+            rrisk: "RISK"
+        }
     };
     var gen_data = [];
     var g = -1;
@@ -26,41 +86,20 @@
     inv_data[++i] = '<div id="inventorydatadiv" class="content-panel" style="display:none;">';
     inv_data[++i] = '<table class="table table-striped table-advance table-hover">';
     inv_data[++i] = '<thead><tr><th colspan="2" class="text-center">Invetory Data</th><tr></thead>';
-    inv_data[++i] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    inv_data[++i] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    inv_data[++i] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    inv_data[++i] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    inv_data[++i] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    inv_data[++i] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    inv_data[++i] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    inv_data[++i] = "<tr><td>Load Capacity</td><td> -</td></tr>";
+    inv_data[++i] = '<tbody id="inventorydatabody">';
     inv_data[++i] = '</tbody></table></div>';
     var op_data = [];
     var o = -1;
     op_data[++o] = '<div id="operationdiv" class="content-panel" style="display:none;">';
     op_data[++o] = '<table class="table table-striped table-advance table-hover">';
     op_data[++o] = '<thead><tr><th colspan="2" class="text-center">Operation Data</th><tr></thead>';
-    op_data[++o] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    op_data[++o] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    op_data[++o] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    op_data[++o] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    op_data[++o] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    op_data[++o] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    op_data[++o] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    op_data[++o] = "<tr><td>Load Capacity</td><td> -</td></tr>";
+    op_data[++o] = '<tbody id="operationdatabody">';
     op_data[++o] = '</tbody></table></div>';
     var risk_data = [];
     var r = -1;
     risk_data[++r] = '<div id="riskdiv" class="content-panel" style="display:none;">';
     risk_data[++r] = '<table class="table table-striped table-advance table-hover">';
     risk_data[++r] = '<thead><tr><th colspan="2" class="text-center">Indexes and risk analysis</th><tr></thead>';
-    risk_data[++r] = "<tr><td>Asseet Code</td><td> M1-SG-BR-000+010</td></tr>";
-    risk_data[++r] = "<tr><td>Asset Name</td><td> NA</td></tr>";
-    risk_data[++r] = "<tr><td>Year of Construction</td><td> 2004</td></tr>";
-    risk_data[++r] = "<tr><td>Structural Type</td><td> Girders</td></tr>";
-    risk_data[++r] = "<tr><td>Enviroment</td><td> Rural</td></tr>";
-    risk_data[++r] = "<tr><td>Obstade overpassed</td><td> River</td></tr>";
-    risk_data[++r] = "<tr><td>Design Flood</td><td> Scenario 100 years</td></tr>";
-    risk_data[++r] = "<tr><td>Load Capacity</td><td> -</td></tr>";
+    risk_data[++r] = '<tbody id="riskdatabody">';
     risk_data[++r] = '</tbody></table></div>';
 </script>
