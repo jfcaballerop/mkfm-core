@@ -65,6 +65,33 @@
                     });
 
                 }
+                if (ifdtobject.properties.asset_type === 'CULVERT') {
+                    console.log(ifdtobject);
+                    $.each(CULVERTS.general_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+
+                }
                 $('#generaldatadiv').show();
 
             } else {
@@ -78,6 +105,8 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(inv_data.join(''));
+                $('#inventorydatabody').empty();
+
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     console.log(ifdtobject);
                     $.each(ROADS.inventory_data, function(key, value) {
@@ -130,6 +159,32 @@
 
                     });
                 }
+                if (ifdtobject.properties.asset_type === 'CULVERT') {
+                    console.log(ifdtobject);
+                    $.each(CULVERTS.inventory_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#inventorydatadiv').show();
 
             } else {
@@ -143,6 +198,8 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(op_data.join(''));
+                $('#operationdatabody').empty();
+
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     console.log(ifdtobject);
                     $.each(ROADS.operations, function(key, value) {
@@ -195,6 +252,32 @@
 
                     });
                 }
+                if (ifdtobject.properties.asset_type === 'CULVERT') {
+                    console.log(ifdtobject);
+                    $.each(CULVERTS.operations, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#operationdiv').show();
 
             } else {
@@ -208,6 +291,8 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').append(risk_data.join(''));
+                $('#riskdatabody').empty();
+
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     console.log(ifdtobject);
                     $.each(ROADS.risk, function(key, value) {
@@ -237,6 +322,32 @@
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     console.log(ifdtobject);
                     $.each(BRIDGES.risk, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'CULVERT') {
+                    console.log(ifdtobject);
+                    $.each(CULVERTS.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
