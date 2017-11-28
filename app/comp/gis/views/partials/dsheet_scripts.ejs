@@ -231,7 +231,19 @@
                                 map.data.addGeoJson(jsonObject);
                                 map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                                 map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.setZoom(16);
+                                if (ifdt.geometry.coordinates.length > 0 && ifdt.geometry.coordinates.length <= 100) {
+                                    map.setZoom(19);
+                                } else if (ifdt.geometry.coordinates.length > 100 && ifdt.geometry.coordinates.length <= 400) {
+
+                                    map.setZoom(16);
+
+                                } else if (ifdt.geometry.coordinates.length > 400 && ifdt.geometry.coordinates.length <= 1000) {
+                                    map.setZoom(13);
+
+                                } else {
+                                    map.setZoom(11);
+
+                                }
                             } else if (ifdt.properties.asset_type === 'BRIDGE') {
                                 $('#response').empty();
                                 $('#response').show();
