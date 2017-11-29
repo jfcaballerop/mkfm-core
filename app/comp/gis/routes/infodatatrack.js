@@ -1334,7 +1334,12 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
 
             } else if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0 ||
                 infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
-                returnObject["properties"]["asset_type"] = "GEOT";
+                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
+                    returnObject["properties"]["asset_type"] = "GEOT";
+                } else if (infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
+                    returnObject["properties"]["asset_type"] = "GEOT2";
+
+                }
 
                 if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
                     //console.log('gcode index ' + infodatatrack[0].properties.gcode.indexOf(req.params.info));

@@ -92,6 +92,60 @@
                     });
 
                 }
+                if (ifdtobject.properties.asset_type === 'GEOT') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.general_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT2') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.general_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key + 2])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key + 2] != undefined) {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+
+                }
                 $('#generaldatadiv').show();
 
             } else {
@@ -175,6 +229,58 @@
                             console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.inventory_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT2') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.inventory_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key + 2])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+
+                            } else {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key + 2] != undefined) {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
@@ -278,6 +384,58 @@
 
                     });
                 }
+                if (ifdtobject.properties.asset_type === 'GEOT') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.operations, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT2') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.operations, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key + 2])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key + 2] != undefined) {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+
+                            } else {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
                 $('#operationdiv').show();
 
             } else {
@@ -361,6 +519,58 @@
                             console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.risk, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+                }
+                if (ifdtobject.properties.asset_type === 'GEOT2') {
+                    console.log(ifdtobject);
+                    $.each(GEOTS.risk, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key + 2])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+
+                            } else {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key + 2] != undefined) {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
@@ -507,7 +717,7 @@
                                 map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                                 map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
                                 map.setZoom(22);
-                            } else if (ifdt.properties.asset_type === 'GEOT') {
+                            } else if (ifdt.properties.asset_type === 'GEOT' || ifdt.properties.asset_type === 'GEOT2') {
                                 $('#response').empty();
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
