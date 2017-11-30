@@ -420,17 +420,69 @@
         $('#GEOT').click(function() {
             $('#spinner').show();
             var $this = $(this);
+            var all = true;
+
             if ($this.prop('checked')) {
 
                 // alert(' ## GEOT ##');
-                <% koboinfos_geo.forEach(function(element) { %>
-                jsonObject = <%- JSON.stringify(element) %>;
-                jsonObject.properties.color = "green";
-                jsonObject.properties.nameoption = "GEOT";
-                //console.log(JSON.stringify(jsonObject));
-                map.data.addGeoJson(jsonObject);
 
-                <%}); %>
+                if ($('#mainr').is(':checked')) {
+                    console.log('#mainr');
+                    all = false;
+                    <% kobo_mainr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#secondaryr').is(':checked')) {
+                    console.log('#secondaryr');
+                    all = false;
+
+                    <% kobo_secondaryr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#feederr').is(':checked')) {
+                    console.log('#feederr');
+                    all = false;
+
+                    <% kobo_feederr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#urbanr').is(':checked')) {
+                    console.log('#urbanr');
+                    all = false;
+
+                    <% kobo_urbanr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if (all) {
+                    <% koboinfos_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    //console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+
+                    <%}); %>
+                }
                 $('#spinner').hide(2000);
 
             } else {

@@ -449,6 +449,18 @@ router.get('/list_info', function(req, resp, next) {
                         kobo_mainr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                     }
                 }
+                var unique = elem.properties.gcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
+                    }
+                }
+                var unique = elem.properties.gcode2.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
+                    }
+                }
             } else if (elem.properties.rcategory.indexOf('Secondary') >= 0) {
                 secondaryr.push(elem);
                 var unique = elem.properties.Ccode.unique();
@@ -461,6 +473,18 @@ router.get('/list_info', function(req, resp, next) {
                 for (var u of unique) {
                     if (u != '') {
                         kobo_secondaryr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
+                var unique = elem.properties.gcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
+                    }
+                }
+                var unique = elem.properties.gcode2.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                     }
                 }
             } else if (elem.properties.rcategory.indexOf('Feeder') >= 0) {
@@ -477,6 +501,18 @@ router.get('/list_info', function(req, resp, next) {
                         kobo_feederr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                     }
                 }
+                var unique = elem.properties.gcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
+                    }
+                }
+                var unique = elem.properties.gcode2.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
+                    }
+                }
             } else if (elem.properties.rcategory.indexOf('Urban') >= 0) {
                 urbanr.push(elem);
                 var unique = elem.properties.Ccode.unique();
@@ -489,6 +525,18 @@ router.get('/list_info', function(req, resp, next) {
                 for (var u of unique) {
                     if (u != '') {
                         kobo_urbanr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
+                var unique = elem.properties.gcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
+                    }
+                }
+                var unique = elem.properties.gcode2.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                     }
                 }
             } else {
@@ -505,10 +553,27 @@ router.get('/list_info', function(req, resp, next) {
                         kobo_otherr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                     }
                 }
+                var unique = elem.properties.gcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
+                    }
+                }
+                var unique = elem.properties.gcode2.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
+                    }
+                }
             }
         });
 
         resp.render('maps', {
+            kobo_mainr_geo: kobo_mainr_geo,
+            kobo_secondaryr_geo: kobo_secondaryr_geo,
+            kobo_feederr_geo: kobo_feederr_geo,
+            kobo_urbanr_geo: kobo_urbanr_geo,
+            kobo_otherr_geo: kobo_otherr_geo,
             kobo_mainr_bridge: kobo_mainr_bridge,
             kobo_secondaryr_bridge: kobo_secondaryr_bridge,
             kobo_feederr_bridge: kobo_feederr_bridge,
