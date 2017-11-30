@@ -6,6 +6,23 @@ var config = require(path.join(__dirname, '../../config/config'));
 var moment = require('moment');
 var utm = require('utm');
 
+exports.makeKoboGeoJson = function(arr, index, type) {
+    console.log('## Services makeKoboGeoJson ##');
+    //console.log(JSON.stringify(arr) + ' ' + index + ' ' + type);
+    var retJson = {
+        type: "Feature",
+        "properties": {
+            "kobo_type": type
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": []
+        }
+    };
+    retJson.geometry.coordinates = arr.geometry.coordinates[index];
+    return retJson;
+
+}
 exports.createToken = function(user) {
     var payload = {
         sub: user._id,

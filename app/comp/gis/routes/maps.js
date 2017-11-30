@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var utm = require('utm');
 var assert = require('assert');
 var req2 = require('request');
+var services = require(path.join(__dirname, '../../../services/services'));
 
 
 /*
@@ -386,11 +387,43 @@ router.get('/list_info', function(req, resp, next) {
         var koboinfos_odt = [];
         var koboinfos_bridge = [];
         var koboinfos_geo = [];
+        var kobo_mainr_odt = [];
+        var kobo_mainr_bridge = [];
+        var kobo_mainr_geo = [];
+        var kobo_secondaryr_odt = [];
+        var kobo_secondaryr_bridge = [];
+        var kobo_secondaryr_geo = [];
+        var kobo_feederr_odt = [];
+        var kobo_feederr_bridge = [];
+        var kobo_feederr_geo = [];
+        var kobo_otherr_odt = [];
+        var kobo_otherr_bridge = [];
+        var kobo_otherr_geo = [];
+        var kobo_urbanr_odt = [];
+        var kobo_urbanr_bridge = [];
+        var kobo_urbanr_geo = [];
         var mainr = [];
         var secondaryr = [];
         var feederr = [];
         var otherr = [];
         var urbanr = [];
+
+        Array.prototype.unique = function() {
+            var arr = [];
+            for (var i = 0; i < this.length; i++) {
+                if (!arr.includes(this[i])) {
+                    arr.push(this[i]);
+                }
+            }
+            return arr;
+        };
+        Array.prototype.firstindex = function(v) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] === v) return i;
+            }
+            return -1;
+        };
+
         allData[1].body.forEach(function(elem, index) {
             if (elem.properties.kobo_type === "Culvert") {
                 koboinfos_odt.push(elem);
@@ -404,21 +437,104 @@ router.get('/list_info', function(req, resp, next) {
         allData[0].body.forEach(function(elem, index) {
             if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
                 mainr.push(elem);
+                var unique = elem.properties.Ccode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_mainr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
+                    }
+                }
+                var unique = elem.properties.bcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_mainr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
             } else if (elem.properties.rcategory.indexOf('Secondary') >= 0) {
                 secondaryr.push(elem);
-
+                var unique = elem.properties.Ccode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_secondaryr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
+                    }
+                }
+                var unique = elem.properties.bcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_secondaryr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
             } else if (elem.properties.rcategory.indexOf('Feeder') >= 0) {
                 feederr.push(elem);
-
+                var unique = elem.properties.Ccode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_feederr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
+                    }
+                }
+                var unique = elem.properties.bcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_feederr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
             } else if (elem.properties.rcategory.indexOf('Urban') >= 0) {
                 urbanr.push(elem);
-
+                var unique = elem.properties.Ccode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_urbanr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
+                    }
+                }
+                var unique = elem.properties.bcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_urbanr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
             } else {
                 otherr.push(elem);
+                var unique = elem.properties.Ccode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_otherr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
+                    }
+                }
+                var unique = elem.properties.bcode.unique();
+                for (var u of unique) {
+                    if (u != '') {
+                        kobo_otherr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
+                    }
+                }
             }
         });
 
-        resp.render('maps', { otherr: otherr, urbanr: urbanr, feederr: feederr, secondaryr: secondaryr, mainr: mainr, koboinfos_geo: koboinfos_geo, koboinfos_odt: koboinfos_odt, koboinfos_bridge: koboinfos_bridge, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        resp.render('maps', {
+            kobo_mainr_bridge: kobo_mainr_bridge,
+            kobo_secondaryr_bridge: kobo_secondaryr_bridge,
+            kobo_feederr_bridge: kobo_feederr_bridge,
+            kobo_urbanr_bridge: kobo_urbanr_bridge,
+            kobo_otherr_bridge: kobo_otherr_bridge,
+            kobo_otherr_odt: kobo_otherr_odt,
+            kobo_urbanr_odt: kobo_urbanr_odt,
+            kobo_feederr_odt: kobo_feederr_odt,
+            kobo_secondaryr_odt: kobo_secondaryr_odt,
+            kobo_mainr_odt: kobo_mainr_odt,
+            otherr: otherr,
+            urbanr: urbanr,
+            feederr: feederr,
+            secondaryr: secondaryr,
+            mainr: mainr,
+            koboinfos_geo: koboinfos_geo,
+            koboinfos_odt: koboinfos_odt,
+            koboinfos_bridge: koboinfos_bridge,
+            token: req.token,
+            title: config.CLIENT_NAME + '-' + config.APP_NAME,
+            cname: config.CLIENT_NAME,
+            id: req.user_id,
+            login: req.user_login,
+            rol: req.rol,
+            api_key: config.MAPS_API_KEY
+        });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
     }, function(reason) {
