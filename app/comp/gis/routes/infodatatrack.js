@@ -496,7 +496,8 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
     var arrPK = [];
     // Comprobar si trae geometry
     if (postData.geometry !== undefined) {
-        // console.log('## WEB/update_videoinfodatatrack geometry ##');
+        // console.log('## WEB/update_videoinfodatatrack geometry## ');
+        // console.log('## WEB/update_videoinfodatatrack inverted ## ' + postData.inverted);
         if (postData.geometry.coordinates !== undefined) {
             //console.log(JSON.stringify(postData.geometry.coordinates));
             postData.geometry.coordinates.forEach(function(element, index) {
@@ -1015,6 +1016,8 @@ router.post('/V1/invertedpk/:id', function(req, res, next) {
         console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack.inverted);
         infodatatrack.updated_at = new Date();
         infodatatrack.inverted = true;
+        var invertedpk = infodatatrack.properties.pk.slice().reverse();
+        infodatatrack.properties.pk = invertedpk;
         infodatatrack.save(function(err, data) {
             if (err) {
                 return res.status(500).send(err.message);
@@ -1022,15 +1025,7 @@ router.post('/V1/invertedpk/:id', function(req, res, next) {
             console.log('RESULT OK :\n' + JSON.stringify(data.inverted));
             res.status(200).jsonp(data);
         });
-        // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
-        //     if (err) {
-        //         //// console.log(err);
-        //         return res.status(500).send(err.message);
-        //     }
-        //     //// console.log("RESULT: " + result);
-        //     res.status(200).jsonp(result);
-        //     // res.send('Done')
-        // });
+
     });
 
 });
