@@ -92,8 +92,9 @@
                                                         <th id="infodatatrack[properties][rcategory]" title="Road Category" class="road"> RC</th>
                                                         <!-- <th id="infodatatrack[properties][iri]" title="IRI" class="road"> IRI </th>
                                                         <th id="infodatatrack[properties][rdateconstruct]" title="Date of construction" class="road">DC</th>
-                                                        <th id="infodatatrack[properties][ralternatitinerary]" title="Existence of Alternative Itinerary" class="road">EAI</th>
-                                                        <th id="infodatatrack[properties][ropen]" title="Open to traffic?" class="road">OPEN</th>
+                                                        <th id="infodatatrack[properties][ralternatitinerary]" title="Existence of Alternative Itinerary" class="road">EAI</th>-->
+                                                        <th id="infodatatrack[properties][rdendritic]" title="Road dendritic rank" class="road">RDR</th>
+                                                        <!--<th id="infodatatrack[properties][ropen]" title="Open to traffic?" class="road">OPEN</th>
                                                         <th id="infodatatrack[properties][rgauging]" title="Existence of Gauging Stations" class="road">GS</th>
                                                         <th id="infodatatrack[properties][radt]" title="ADT" class="road">ADT</th>
                                                         <th id="infodatatrack[properties][rtrafficpeak]" title="Traffic high peak" class="road"> THP</th> -->
@@ -351,8 +352,16 @@
                                                                             <option>1</option>
                                                                           </select>
 
+                                                            </td>-->
+                                                            <td id="infodatatrack[properties][rdendritic]">
+                                                                <select name="infodatatrack[properties][rdendritic]" class="form-control">
+                                                                            <option></option>
+                                                                            <option>Road leading to others</option>
+                                                                            <option>Last road of the dendritic network</option>
+                                                                          </select>
+
                                                             </td>
-                                                            <td id="infodatatrack[properties][ropen]">
+                                                            <!--<td id="infodatatrack[properties][ropen]">
                                                                 <select name="infodatatrack[properties][ropen]" class="form-control">
                                                                             <option>Y</option>
                                                                             <option>N</option>

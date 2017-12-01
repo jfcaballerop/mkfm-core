@@ -20,6 +20,7 @@ rwidth,total_width,db.infodatatracks.update({}, { $rename: { "properties.total_w
 rlocdoc,location_doc_road_projects,db.infodatatracks.update({}, { $rename: { "properties.location_doc_road_projects": "properties.rlocdoc" } }, false, true);
 rvideo,rvideo,db.infodatatracks.update({}, { $set: { "properties.rvideo": [] } }, false, true);
 ralternatitinerary,alternative_itinerary,db.infodatatracks.update({}, { $rename: { "properties.alternative_itinerary": "properties.ralternatitinerary" } }, false, true);
+rdendritic,rdendritic,db.infodatatracks.update({}, { $set: { "rdendritic": []} }, false, true);
 ropen,open_traffic,db.infodatatracks.update({}, { $rename: { "properties.open_traffic": "properties.ropen" } }, false, true);
 rgauging,existence_gauging_stations,db.infodatatracks.update({}, { $rename: { "properties.existence_gauging_stations": "properties.rgauging" } }, false, true);
 radt,adt,db.infodatatracks.update({}, { $rename: { "properties.adt": "properties.radt" } }, false, true);
@@ -309,6 +310,8 @@ grisk2,LGRISK,
 Ccode,Ccode,db.infodatatracks.update({}, { $set: { "properties.Ccode": [] } }, false, true);
 Cyearconstruc,Cyearconstruc,db.infodatatracks.update({}, { $set: { "properties.Cyearconstruc": [] } }, false, true);
 Ctype,Ctype,db.infodatatracks.update({}, { $set: { "properties.Ctype": [] } }, false, true);
+Clocation,Clocation,db.infodatatracks.update({}, { $set: { "properties.Clocation": [] } }, false, true);
+Cfeeding,Cfeeding,db.infodatatracks.update({}, { $set: { "properties.Cfeeding": [] } }, false, true);
 Csection,Csection,db.infodatatracks.update({}, { $set: { "properties.Csection": [] } }, false, true);
 Ccapacity,Ccapacity,db.infodatatracks.update({}, { $set: { "properties.Ccapacity": [] } }, false, true);
 Crainpeak,Crainpeak,db.infodatatracks.update({}, { $set: { "properties.Crainpeak": [] } }, false, true);

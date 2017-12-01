@@ -150,6 +150,8 @@ db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv2": [] }
 db.infodatatracks.update({}, { $set: { "properties.Ccode": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Cyearconstruc": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Ctype": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.Clocation": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.Cfeeding": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Csection": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Ccapacity": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Crainpeak": [] } }, false, true);
@@ -235,3 +237,4 @@ db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dcl
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dlostsection":"properties.CLostSection"}},false,true);
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.domcomments":"properties.COMComments"}},false,true);
 db.infodatatracks.update({}, { $set: { "inverted": false} }, false, true);
+db.infodatatracks.update({}, { $set: { "rdendritic": []} }, false, true);

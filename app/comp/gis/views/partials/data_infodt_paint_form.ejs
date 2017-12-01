@@ -119,6 +119,10 @@
                 title: "Existence of alternative itinerary",
                 visible: true
             },
+            rdendritic: {
+                title: "Road dendritic rank",
+                visible: true
+            },
             ropen: {
                 title: "Is the road open to traffic?",
                 visible: true
@@ -1283,6 +1287,14 @@
                 title: "Type of drainage",
                 visible: true
             },
+            Clocation: {
+                title: "Culvert location",
+                visible: true
+            },
+            Cfeeding: {
+                title: "Feeding system",
+                visible: true
+            },
             Csection: {
                 title: "Type of section",
                 visible: false
@@ -1835,6 +1847,13 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][ralternatitinerary]"><input name="infodatatrack[properties][ralternatitinerary]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.ralternatitinerary[index] !== "undefined" ? data.properties.ralternatitinerary[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][rdendritic]">' +
+                    '<select style="min-width: 100px;" name="infodatatrack[properties][rdendritic]" class="form-control">' +
+                    '<option></option>' +
+                    '<option>Road leading to others</option>' +
+                    '<option>Last road of the dendritic network</option>' +
+                    '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][ropen]"><input name="infodatatrack[properties][ropen]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.ropen[index] !== "undefined" ? data.properties.ropen[index] : '') + '">' +
@@ -2497,6 +2516,20 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Clocation]">' +
+                    '<select style="min-width: 100px;" name="infodatatrack[properties][Clocation]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Slope</option>' +
+                    '<option>Valley</option>' +
+                    '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][Cfeeding]">' +
+                    '<select style="min-width: 100px;" name="infodatatrack[properties][Cfeeding]" class="form-control">' +
+                    '<option ></option>' +
+                    '<option>Water stream</option>' +
+                    '<option>Longitudinal drainage</option>' +
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][Cnumelem]"><input name="infodatatrack[properties][Cnumelem]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.Cnumelem[index] !== "undefined" ? data.properties.Cnumelem[index] : '') + '">' +
                     '</td>';
@@ -2626,6 +2659,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsignalsfunct]"]').val(data.properties.rsignalsfunct[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlighttype]"]').val(data.properties.rlighttype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlightfunct]"]').val(data.properties.rlightfunct[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rdendritic]"]').val(data.properties.rdendritic[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bexistence]"]').val(data.properties.bexistence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][balternative]"]').val(data.properties.balternative[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bconslos]"]').val(data.properties.bconslos[index]);
@@ -2656,6 +2690,8 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gconslos2]"]').val(data.properties.gconslos2[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Ctype]"]').val(data.properties.Ctype[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Clocation]"]').val(data.properties.Clocation[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Cfeeding]"]').val(data.properties.Cfeeding[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][CConsLOS]"]').val(data.properties.CConsLOS[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection]"]').val(data.properties.dsection[index]);
@@ -3015,6 +3051,25 @@
                         $inputsrlightfunct[index].value = $this.val();
                     } else {
                         $inputsrlightfunct[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsrdendritic = $('#form').find('select[ name="infodatatrack[properties][rdendritic]"]');
+        $inputsrdendritic.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsrdendritic[index].value = $this.val();
+                    } else {
+                        $inputsrdendritic[index].value = '';
                     }
                 }
 
@@ -3585,6 +3640,44 @@
                         $inputsCtype[index].value = $this.val();
                     } else {
                         $inputsCtype[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsClocation = $('#form').find('select[ name="infodatatrack[properties][Clocation]"]');
+        $inputsClocation.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsClocation[index].value = $this.val();
+                    } else {
+                        $inputsClocation[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsCfeeding = $('#form').find('select[ name="infodatatrack[properties][Cfeeding]"]');
+        $inputsCfeeding.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsCfeeding[index].value = $this.val();
+                    } else {
+                        $inputsCfeeding[index].value = '';
                     }
                 }
 
