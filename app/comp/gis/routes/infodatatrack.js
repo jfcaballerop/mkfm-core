@@ -643,7 +643,50 @@ router.post('/duplicate_rows', function(req, resp, next) {
     request.end();
 });
 
+/**
+ * invertedpk
+ */
+router.post('/invertedpk', function(req, resp, next) {
+    var _id = req.body._id;
+    // console.log('## WEB/invertedpk ID ##:: ' + _id);
 
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/invertedpk/' + _id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // console.log('postData:: ' + JSON.stringify(postData));
+            //success(data);
+            // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + _id);
+            resp.status(200).jsonp(responseObject);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    // request.write(JSON.stringify(postData));
+    request.end();
+});
 /*******************************************************
  API REST CALLS
  **********************************************************/
@@ -948,6 +991,35 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
                 return res.status(500).send(err.message);
             }
             //console.log('RESULT OK :\n' + JSON.stringify(data));
+            res.status(200).jsonp(data);
+        });
+        // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {
+        //     if (err) {
+        //         //// console.log(err);
+        //         return res.status(500).send(err.message);
+        //     }
+        //     //// console.log("RESULT: " + result);
+        //     res.status(200).jsonp(result);
+        //     // res.send('Done')
+        // });
+    });
+
+});
+/**
+ * invertedpk
+ */
+router.post('/V1/invertedpk/:id', function(req, res, next) {
+    console.log('## invertedpk Infodatatrack ## ' + req.params.id);
+    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+
+        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack.inverted);
+        infodatatrack.updated_at = new Date();
+        infodatatrack.inverted = true;
+        infodatatrack.save(function(err, data) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            console.log('RESULT OK :\n' + JSON.stringify(data.inverted));
             res.status(200).jsonp(data);
         });
         // Infodatatrack.findByIdAndUpdate(req.params.id, { $set: saveInfodatatrack }, function(err, result) {

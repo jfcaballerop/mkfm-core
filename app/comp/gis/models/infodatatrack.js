@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 // define the schema for our user model
 var infodatatrackSchema = new Schema({
     type: { type: String },
+    inverted: { type: Boolean, default: false },
     properties: {
         name: String,
         time: Date,

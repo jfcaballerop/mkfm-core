@@ -27,7 +27,8 @@ app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
     path.join(__dirname, '/app/comp/user/views'),
-    path.join(__dirname, '/app/comp/gis/views')
+    path.join(__dirname, '/app/comp/gis/views'),
+    path.join(__dirname, '/app/comp/admin/views')
 ]);
 
 // uncomment after placing your favicon in /public

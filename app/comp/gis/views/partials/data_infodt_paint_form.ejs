@@ -4035,6 +4035,30 @@
 
         });
 
+        $("#inverted").click(function() {
+            // $('#inverted').prop('disabled', true);
+            var dataPost = {};
+            dataPost._id = "<%- infodatatrack._id %>";
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/infodatatrack/invertedpk',
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function(data) {
+                // //console.log('dataRoad ' + JSON.stringify(data));
+                return (data);
+            });
+            Promise.all([p1]).then(function(values) {
+                dataTrack = values[0];
+                // console.log(dataTrack);
+                // location.reload();
+                window.location.reload(true);
+            });
+
+
+        });
+
         $("#checkcoord").click(function() {
 
             $('[id="infodatatrack[geometry][coordinates]"]').each(function(index, elem) {

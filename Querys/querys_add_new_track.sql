@@ -234,3 +234,4 @@ db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dcr
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dclearing":"properties.Cclearing"}},false,true);
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dlostsection":"properties.CLostSection"}},false,true);
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.domcomments":"properties.COMComments"}},false,true);
+db.infodatatracks.update({}, { $set: { "inverted": false} }, false, true);

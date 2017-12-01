@@ -7,7 +7,7 @@ var moment = require('moment');
 var utm = require('utm');
 
 exports.makeKoboGeoJson = function(arr, index, type) {
-    console.log('## Services makeKoboGeoJson ##');
+    // console.log('## Services makeKoboGeoJson ##');
     //console.log(JSON.stringify(arr) + ' ' + index + ' ' + type);
     var retJson = {
         type: "Feature",
