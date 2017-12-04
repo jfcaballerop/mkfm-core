@@ -180,6 +180,8 @@ var infodatatrackSchema = new Schema({
         bresphazard: [],
         bsensitivity: [],
         brisk: [],
+        briskphysical: [],
+        brisknatural: [],
         gcode: [], // GEOTECHNICAL ASSETS        
         gyearconstruct: [],
         gtype: [],

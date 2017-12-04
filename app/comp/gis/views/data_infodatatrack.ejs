@@ -208,7 +208,9 @@
                                                         <th id="infodatatrack[properties][bflood]" title="Exposure to flood hazard" class="bridges">FLOOD</th>
                                                         <th id="infodatatrack[properties][bresphazard]" title="Asset Response against hazards" class="bridges">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][bsensitivity]" title="Asset Sensitivity" class="bridges">SENSITIVITY</th>
-                                                        <th id="infodatatrack[properties][brisk]" title="RISK" class="bridges">RISK</th> -->
+                                                        <th id="infodatatrack[properties][brisk]" title="RISK" class="bridges">RISK</th> 
+                                                        <th id="infodatatrack[properties][briskphysical]" title="RISK" class="bridges">RISK</th> 
+                                                        <th id="infodatatrack[properties][brisknatural]" title="RISK" class="bridges">RISK</th> -->
                                                         <!-- GEOTECHNICALS -->
                                                         <th id="infodatatrack[properties][gcode]" title="CODE" class="geotechnicals">CODE</th>
                                                         <!-- <th id="infodatatrack[properties][gyearconstruct]" title="Year of construction" class="geotechnicals">YEAR CONS</th> -->
@@ -1266,7 +1268,22 @@
                                                                     <%#  } else { %>
                                                                         <input name="infodatatrack[properties][brisk]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
-                                                            </td> -->
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][briskphysical]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.briskphysical){%>
+                                                                    <input name="infodatatrack[properties][briskphysical]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.briskphysical[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][briskphysical]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][brisknatural]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.brisknatural){%>
+                                                                    <input name="infodatatrack[properties][brisknatural]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.brisknatural[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][brisknatural]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                        -->
 
                                                             <!-- GEOTECHNICALS -->
 

@@ -686,6 +686,14 @@
             brisk: {
                 title: "RISK",
                 visible: false
+            },
+            briskphysical: {
+                title: "Risk due to Physical Deterioration",
+                visible: true
+            },
+            brisknatural: {
+                title: "Risk due to Natural Hazards",
+                visible: true
             }
         },
         geotechnicals: {
@@ -2024,6 +2032,12 @@
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][briskphysical]"><input name="infodatatrack[properties][briskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.briskphysical[index] !== "undefined" ? data.properties.briskphysical[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][brisknatural]"><input name="infodatatrack[properties][brisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.brisknatural[index] !== "undefined" ? data.properties.brisknatural[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">' +
