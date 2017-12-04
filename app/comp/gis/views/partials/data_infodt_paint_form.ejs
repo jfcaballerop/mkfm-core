@@ -298,6 +298,14 @@
             rrisk: {
                 title: "RISK",
                 visible: false
+            },
+            rriskphysical: {
+                title: "Risk due to Physical",
+                visible: true
+            },
+            rrisknatural: {
+                title: "Risk due to Natural",
+                visible: true
             }
         },
         furniture: {
@@ -1878,6 +1886,10 @@
                     (typeof data.properties.rtourism[index] !== "undefined" ? data.properties.rtourism[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][rhealth]"><input name="infodatatrack[properties][rhealth]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][rriskphysical]"><input name="infodatatrack[properties][rriskphysical]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rriskphysical[index] !== "undefined" ? data.properties.rriskphysical[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][rrisknatural]"><input name="infodatatrack[properties][rrisknatural]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rrisknatural[index] !== "undefined" ? data.properties.rrisknatural[index] : '') + '">';
                 // html[++h] = '<td id="infodatatrack[properties][iri]"><input name="infodatatrack[properties][iri]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.iri[index] !== "undefined" ? data.properties.iri[index] : '') + '">' +
                 //     '</td>';

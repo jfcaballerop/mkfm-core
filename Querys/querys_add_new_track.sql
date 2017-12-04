@@ -150,8 +150,6 @@ db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv2": [] }
 db.infodatatracks.update({}, { $set: { "properties.Ccode": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Cyearconstruc": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Ctype": [] } }, false, true);
-db.infodatatracks.update({}, { $set: { "properties.Clocation": [] } }, false, true);
-db.infodatatracks.update({}, { $set: { "properties.Cfeeding": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Csection": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Ccapacity": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.Crainpeak": [] } }, false, true);
@@ -238,3 +236,15 @@ db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.dlo
 db.koboinfos.update({"properties.kobo_type":"Culvert"},{$rename:{"properties.domcomments":"properties.COMComments"}},false,true);
 db.infodatatracks.update({}, { $set: { "inverted": false} }, false, true);
 db.infodatatracks.update({}, { $set: { "rdendritic": []} }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.Clocation": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.Cfeeding": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.rriskphysical": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.rrisknatural": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.briskphysical": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.brisknatural": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.griskphysical": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.grisknatural": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.grisk2physical": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.grisk2natural": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.CRISKphysical": [] } }, false, true);
+db.infodatatracks.update({}, { $set: { "properties.CRISKnatural": [] } }, false, true);

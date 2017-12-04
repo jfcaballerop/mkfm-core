@@ -85,6 +85,8 @@ var infodatatrackSchema = new Schema({
         rresphazard: [],
         rsensitivity: [],
         rrisk: [],
+        rriskphysical: [],
+        rrisknatural: [],
         rbarriersexist: [], //Road Furniture Data        
         rbarrierstype: [],
         rsafetyfence: [],

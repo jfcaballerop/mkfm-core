@@ -139,7 +139,9 @@
                                                         <th id="infodatatrack[properties][rflood]" title="Exposure_flood_hazard" class="road">EFH</th>
                                                         <th id="infodatatrack[properties][rresphazard]" title="Asset_Response_against_hazards" class="road">ARAH</th>
                                                         <th id="infodatatrack[properties][rsensitivity]" title="Asset_Sensitivity" class="road">AS</th>
-                                                        <th id="infodatatrack[properties][rrisk]" title="RISK" class="road">RISK</th> -->
+                                                        <th id="infodatatrack[properties][rrisk]" title="RISK" class="road">RISK</th> 
+                                                        <th id="infodatatrack[properties][rriskphysical]" title="RISK" class="road">RISK</th> 
+                                                        <th id="infodatatrack[properties][rrisknatural]" title="RISK" class="road">RISK</th> -->
 
                                                         <!-- ROAD FURNITURE DATA -->
                                                         <th id="infodatatrack[properties][existence_barriers_condition]" title="existence_barriers_condition" class="furniture"> EBC</th>
@@ -790,7 +792,22 @@
                                                                     <%# } else {%>
                                                                         <input name="infodatatrack[properties][rrisk]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
-                                                            </td> -->
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][rriskphysical]">
+                                                                <%#  if(infodatatrack.properties.rriskphysical) { %>
+                                                                    <input name="infodatatrack[properties][rriskphysical]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.rriskphysical[index] %>">
+                                                                    <%# } else {%>
+                                                                        <input name="infodatatrack[properties][rriskphysical]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][rrisknatural]">
+                                                                <%#  if(infodatatrack.properties.rrisknatural) { %>
+                                                                    <input name="infodatatrack[properties][rrisknatural]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.rrisknatural[index] %>">
+                                                                    <%# } else {%>
+                                                                        <input name="infodatatrack[properties][rrisknatural]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                        -->
                                                             <td id="infodatatrack[properties][existence_barriers_condition]">
                                                                 <% if(infodatatrack.properties.existence_barriers_condition){%>
                                                                     <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_barriers_condition[index] %>">
