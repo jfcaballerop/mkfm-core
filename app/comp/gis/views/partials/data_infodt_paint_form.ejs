@@ -993,6 +993,14 @@
                 title: "RISK",
                 visible: false
             },
+            griskphysical: {
+                title: "Risk due to Physical Deterioration",
+                visible: true
+            },
+            grisknatural: {
+                title: "Risk due to Natural Hazards",
+                visible: true
+            },
             gcode2: {
                 title: "Asset Code",
                 visible: true
@@ -1288,6 +1296,14 @@
             grisk2: {
                 title: "RISK",
                 visible: false
+            },
+            griskphysical2: {
+                title: "Risk due to Physical Deterioration",
+                visible: true
+            },
+            grisknatural2: {
+                title: "Risk due to Natural Hazards",
+                visible: true
             }
         },
         culvert: {
@@ -2281,6 +2297,12 @@
                 html[++h] = '<td id="infodatatrack[properties][gextentfailure]"><input name="infodatatrack[properties][gextentfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gextentfailure[index] !== "undefined" ? data.properties.gextentfailure[index] : '') + '">' +
                     '</td>';
+                html[++h] = '<td id="infodatatrack[properties][griskphysical]"><input name="infodatatrack[properties][griskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.griskphysical[index] !== "undefined" ? data.properties.griskphysical[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][grisknatural]"><input name="infodatatrack[properties][grisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.grisknatural[index] !== "undefined" ? data.properties.grisknatural[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gcode2]"><input name="infodatatrack[properties][gcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gcode2[index] !== "undefined" ? data.properties.gcode2[index] : '') + '">' +
                     '</td>';
@@ -2523,11 +2545,12 @@
                 html[++h] = '<td id="infodatatrack[properties][gextentfailure2]"><input name="infodatatrack[properties][gextentfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gextentfailure2[index] !== "undefined" ? data.properties.gextentfailure2[index] : '') + '">' +
                     '</td>';
-
-
-
-
-
+                html[++h] = '<td id="infodatatrack[properties][griskphysical2]"><input name="infodatatrack[properties][griskphysical2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.griskphysical2[index] !== "undefined" ? data.properties.griskphysical2[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][grisknatural2]"><input name="infodatatrack[properties][grisknatural2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.grisknatural2[index] !== "undefined" ? data.properties.grisknatural2[index] : '') + '">' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][Ccode]"><input name="infodatatrack[properties][Ccode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.Ccode[index] !== "undefined" ? data.properties.Ccode[index] : '') + '">' +
                     '</td>';

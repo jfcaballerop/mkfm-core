@@ -257,6 +257,8 @@ var infodatatrackSchema = new Schema({
         gresphazard: [],
         gsensitivity: [],
         grisk: [],
+        griskphysical: [],
+        grisknatural: [],
         gcode2: [], // GEOTECHNICAL ASSETS  2      
         gyearconstruct2: [],
         gtype2: [],
@@ -331,6 +333,8 @@ var infodatatrackSchema = new Schema({
         gresphazard2: [],
         gsensitivity2: [],
         grisk2: [],
+        griskphysical2: [],
+        grisknatural2: [],
         Ccode: [],
         Cyearconstruc: [],
         Ctype: [],

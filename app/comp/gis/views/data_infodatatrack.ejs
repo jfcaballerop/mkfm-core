@@ -254,7 +254,12 @@
                                                         <th id="infodatatrack[properties][gflood]" title="Exposure to flood hazard" class="geotechnicals">FLOOD</th>
                                                         <th id="infodatatrack[properties][gresphazard]" title="Asset Response against hazards" class="geotechnicals">RESPHAZARD</th>
                                                         <th id="infodatatrack[properties][gsensitivity]" title="Asset Sensitivity" class="geotechnicals">SENSITIVITY</th>
-                                                        <th id="infodatatrack[properties][grisk]" title="RISK" class="geotechnicals">RISK</th> -->
+                                                        <th id="infodatatrack[properties][grisk]" title="RISK" class="geotechnicals">RISK</th> 
+                                                        <th id="infodatatrack[properties][griskphysical]" title="RISK" class="geotechnicals">RISK</th> 
+                                                        <th id="infodatatrack[properties][grisknatural]" title="RISK" class="geotechnicals">RISK</th> 
+                                                        <th id="infodatatrack[properties][griskphysical2]" title="RISK" class="geotechnicals">RISK</th> 
+                                                        <th id="infodatatrack[properties][grisknatural2]" title="RISK" class="geotechnicals">RISK</th> 
+                                                    -->
                                                         <!-- DRAINAGE -->
                                                         <th id="infodatatrack[properties][dcode]" title="CODE" class="drainage">CODE</th>
                                                         <!-- <th id="infodatatrack[properties][dyearconstruc]" title="Year of construction" class="drainage">YEAR CONS</th> -->
@@ -1592,7 +1597,36 @@
                                                                     <%#  } else { %>
                                                                         <input name="infodatatrack[properties][grisk]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
-                                                            </td> -->
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][griskphysical]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.griskphysical){%>
+                                                                    <input name="infodatatrack[properties][griskphysical]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.griskphysical[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][griskphysical]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][grisknatural]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.grisknatural){%>
+                                                                    <input name="infodatatrack[properties][grisknatural]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.grisknatural[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][grisknatural]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][griskphysical2]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.griskphysical2){%>
+                                                                    <input name="infodatatrack[properties][griskphysical2]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.griskphysical2[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][griskphysical2]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                            <td id="infodatatrack[properties][grisknatural2]" title="RISK">
+                                                                <%#  if(infodatatrack.properties.grisknatural2){%>
+                                                                    <input name="infodatatrack[properties][grisknatural2]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.grisknatural2[index] %>">
+                                                                    <%#  } else { %>
+                                                                        <input name="infodatatrack[properties][grisknatural2]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <%#  } %>
+                                                            </td> 
+                                                        -->
 
 
                                                             <!-- DRAINAGE -->
