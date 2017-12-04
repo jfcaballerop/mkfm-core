@@ -386,6 +386,21 @@ router.get('/list_info', function(req, resp, next) {
         var koboinfos_odt = [];
         var koboinfos_bridge = [];
         var koboinfos_geo = [];
+        var kobo_mainr_odt = [];
+        var kobo_mainr_bridge = [];
+        var kobo_mainr_geo = [];
+        var kobo_secondaryr_odt = [];
+        var kobo_secondaryr_bridge = [];
+        var kobo_secondaryr_geo = [];
+        var kobo_feederr_odt = [];
+        var kobo_feederr_bridge = [];
+        var kobo_feederr_geo = [];
+        var kobo_otherr_odt = [];
+        var kobo_otherr_bridge = [];
+        var kobo_otherr_geo = [];
+        var kobo_urbanr_odt = [];
+        var kobo_urbanr_bridge = [];
+        var kobo_urbanr_geo = [];
         var mainr = [];
         var secondaryr = [];
         var feederr = [];
@@ -418,7 +433,38 @@ router.get('/list_info', function(req, resp, next) {
             }
         });
 
-        resp.render('data_sheet', { otherr: otherr, urbanr: urbanr, feederr: feederr, secondaryr: secondaryr, mainr: mainr, koboinfos_geo: koboinfos_geo, koboinfos_odt: koboinfos_odt, koboinfos_bridge: koboinfos_bridge, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        resp.render('data_sheet', {
+            kobo_mainr_geo: kobo_mainr_geo,
+            kobo_secondaryr_geo: kobo_secondaryr_geo,
+            kobo_feederr_geo: kobo_feederr_geo,
+            kobo_urbanr_geo: kobo_urbanr_geo,
+            kobo_otherr_geo: kobo_otherr_geo,
+            kobo_mainr_bridge: kobo_mainr_bridge,
+            kobo_secondaryr_bridge: kobo_secondaryr_bridge,
+            kobo_feederr_bridge: kobo_feederr_bridge,
+            kobo_urbanr_bridge: kobo_urbanr_bridge,
+            kobo_otherr_bridge: kobo_otherr_bridge,
+            kobo_otherr_odt: kobo_otherr_odt,
+            kobo_urbanr_odt: kobo_urbanr_odt,
+            kobo_feederr_odt: kobo_feederr_odt,
+            kobo_secondaryr_odt: kobo_secondaryr_odt,
+            kobo_mainr_odt: kobo_mainr_odt,
+            otherr: otherr,
+            urbanr: urbanr,
+            feederr: feederr,
+            secondaryr: secondaryr,
+            mainr: mainr,
+            koboinfos_geo: koboinfos_geo,
+            koboinfos_odt: koboinfos_odt,
+            koboinfos_bridge: koboinfos_bridge,
+            token: req.token,
+            title: config.CLIENT_NAME + '-' + config.APP_NAME,
+            cname: config.CLIENT_NAME,
+            id: req.user_id,
+            login: req.user_login,
+            rol: req.rol,
+            api_key: config.MAPS_API_KEY
+        });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
     }, function(reason) {

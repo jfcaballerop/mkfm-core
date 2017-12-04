@@ -250,6 +250,8 @@ db.infodatatracks.update({}, { $set: { "properties.griskphysical2": [] } }, fals
 db.infodatatracks.update({}, { $set: { "properties.grisknatural2": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.CRISKphysical": [] } }, false, true);
 db.infodatatracks.update({}, { $set: { "properties.CRISKnatural": [] } }, false, true);
-// v2
+// 20171204 v2
 db.infodatatracks.update({}, { $rename: {"properties.grisk2physical": "properties.griskphysical2"} }, false, true);
 db.infodatatracks.update({}, { $rename: { "properties.grisk2natural": "properties.grisknatural2"} }, false, true);
+// 20171204 v3
+db.getCollection('koboinfos').update({"properties._id":414},{$set:{"geometry.coordinates":[-61.4574757231655 , 15.5776638500912]}},false,true);
