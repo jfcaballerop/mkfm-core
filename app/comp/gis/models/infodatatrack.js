@@ -385,6 +385,8 @@ var infodatatrackSchema = new Schema({
         CRespHazard: [],
         Csensitivity: [],
         CRISK: [],
+        CRISKphysical: [],
+        CRISKnatural: [],
         dcode: [],
         dyearconstruc: [],
         dtype: [],

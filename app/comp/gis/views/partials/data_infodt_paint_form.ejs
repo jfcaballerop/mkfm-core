@@ -1506,6 +1506,14 @@
             CRISK: {
                 title: "RISK",
                 visible: false
+            },
+            CRISKphysical: {
+                title: "Risk due to Physical Deterioration",
+                visible: true
+            },
+            CRISKnatural: {
+                title: "Risk due to Natural Hazards",
+                visible: true
             }
         },
         drainage: {
@@ -2597,6 +2605,12 @@
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][Cclearing]"><input name="infodatatrack[properties][Cclearing]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.Cclearing[index] !== "undefined" ? data.properties.Cclearing[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][CRISKphysical]"><input name="infodatatrack[properties][CRISKphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.CRISKphysical[index] !== "undefined" ? data.properties.CRISKphysical[index] : '') + '">' +
+                    '</td>';
+                html[++h] = '<td id="infodatatrack[properties][CRISKnatural]"><input name="infodatatrack[properties][CRISKnatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.CRISKnatural[index] !== "undefined" ? data.properties.CRISKnatural[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">' +
