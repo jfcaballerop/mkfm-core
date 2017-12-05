@@ -22,6 +22,8 @@ var filetypeModels = require(path.join(__dirname, '../../gis/models/filetype'));
 var Filetype = mongoose.model('Filetype');
 var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
+var formulaModels = require(path.join(__dirname, '../models/formula'));
+var Formula = mongoose.model('Formula');
 
 
 
@@ -50,72 +52,40 @@ var filetypesObject = {};
 **********************************************************/
 /* GET Control panel */
 router.get('/formulas', function(req, resp, next) {
-    // Obtengo la lista de extensiones de ficheros
-    // var ft_options = {
-    //     host: config.HOST_API,
-    //     port: config.PORT_API,
-    //     path: config.PATH_API + '/filetype/V1/',
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Bearer ' + req.cookies.jwtToken
-    //     }
-    // };
-    // var requestft = http.request(ft_options, function(res) {
-    //     ////// console.log('STATUS: ' + res.statusCode);
-    //     ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function(chunk) {
-    //         ////// console.log('BODY: ' + chunk);
-    //         data += chunk;
-
-    //     });
-    //     res.on('end', function() {
-    //         ////// console.log('DATA ' + data.length + ' ' + data);
-    //         filetypesObject = JSON.parse(data);
-    //         //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-    //         //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-    //         //resp.status(200).jsonp(filetypesObject);
-    //     });
-    // });
-    // requestft.end();
-
-
-    // var options = {
-    //     host: config.HOST_API,
-    //     port: config.PORT_API,
-    //     path: config.PATH_API + '/gis/V1/',
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Bearer ' + req.cookies.jwtToken
-    //     }
-    // };
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/formulas/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
     // // Peticiones 
 
 
-    // var request = http.request(options, function(res) {
-    //     ////// console.log('STATUS: ' + res.statusCode);
-    //     ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function(chunk) {
-    //         ////// console.log('BODY: ' + chunk);
-    //         data += chunk;
+    var request = http.request(options, function(res) {
+        ////// console.log('STATUS: ' + res.statusCode);
+        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            ////// console.log('BODY: ' + chunk);
+            data += chunk;
 
-    //     });
-    //     res.on('end', function() {
-    //         //// console.log('DATA ' + data.length + ' ' + data);
-    //         var responseObject = JSON.parse(data);
-    //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-    // resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+        });
+        res.on('end', function() {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // console.log(JSON.stringify(responseObject));
+            resp.render('admin_panel_formulas', { formula: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
-    // });
-    // });
+        });
+    });
 
-    // request.end();
-    resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+    request.end();
+    // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
 
@@ -525,6 +495,20 @@ router.post('/delete/:id', function(req, resp, next) {
 /*******************************************************
  API REST CALLS
  **********************************************************/
+
+
+
+/* GET JSON files listing. */
+router.get('/V1/formulas/', function(req, res, next) {
+    Formula.find().exec(function(err, files) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        res.status(200).jsonp(files);
+        console.log(" ### GET Formulas ### \n" + files);
+    });
+
+});
 /* POST file */
 router.post('/V1/fileupload/', function(req, res, next) {
     fu = new Fileupload(req.body);
@@ -536,16 +520,7 @@ router.post('/V1/fileupload/', function(req, res, next) {
     });
 });
 
-/* GET JSON files listing. */
-router.get('/V1/', function(req, res, next) {
-    Fileupload.find().sort({ updated_at: -1 }).exec(function(err, files) {
-        if (err) {
-            res.send(500, err.message);
-        }
-        res.status(200).jsonp(files);
-    });
 
-});
 /* GET JSON files listing active_valid. */
 router.get('/V1/active_valid/', function(req, res, next) {
     Fileupload.find({ activo: true, status: 'validate' }, function(err, files) {

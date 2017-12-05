@@ -1,0 +1,65 @@
+<script>
+    var ifdtobject;
+    var nchar = 0;
+    var resized = false;
+    var formulasDB = <%- JSON.stringify(formula) %>;
+    var objectConstructor = {}.constructor;
+    var html = [];
+    var h = -1;
+    console.log(formulasDB);
+
+    $(document).ready(function() {
+        $.each(formulasDB, function(index, form) {
+            console.log(form.properties.HTML);
+            $('#' + form.properties.HTML.id).on('click', function(event) {
+                $this = $(this);
+                //alert('AssetCriticality');
+                $('#formulaName').empty();
+                $('#formulaName').append(form.properties.HTML.text);
+                // console.log(form.properties.HTML.id);
+                switch ($this[0].id) {
+                    case "AssetCriticality":
+                        $('#unseen').empty();
+                        $.each(form.formulaSpec, function(i, fspec) {
+                            html[++h] = '<i class="fa fa-calculator"></i>' + fspec.name;
+                            html[++h] = '<table id="formulaTable" class="table table-bordered table-striped table-condensed">';
+                            html[++h] = '<tbody id="formulaTableBody">';
+                            $.each(fspec, function(key, data) {
+                                console.log(key);
+                                console.log(data);
+                                if (data.constructor === objectConstructor) {
+                                    html[++h] = '<tr>';
+                                    html[++h] = '<td  rowspan="' + (Object.keys(data).length) + '">' + key + '</td>';
+                                    html[++h] = '<td rowspan="' + (Object.keys(data).length) + '">' + data.weight + ' </td>';
+                                    var tr = 0;
+                                    $.each(data, function(j, data2) {
+                                        if (data2.constructor === objectConstructor) {
+
+                                            if (tr > 0) {
+                                                html[++h] = '<tr>';
+                                            }
+                                            html[++h] = '<td>' + data2.name + '</td>';
+                                            html[++h] = '<td>' + data2.weight + '</td>';
+                                            html[++h] = '</tr>';
+                                            tr++;
+                                            console.log(j + ': ' + data2);
+                                        }
+                                    });
+                                };
+                            });
+                            //console.log(fs'</tbody></table>'pec.fname);
+                            html[++h] = '</tbody></table>';
+                            $('#unseen').html(html.join(''));
+
+                        });
+                        break;
+
+                    default:
+                        break;
+                }
+
+            });
+        });
+
+    });
+</script>
