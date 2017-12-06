@@ -85,3 +85,7 @@ ejecutar en dev:
 * `mongodump --db mkfwcoredb --out /tmp/dump20171010.json --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb"`
 
 * `mongorestore --drop --host localhost --port 27017 --db mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase "mkfwcoredb" dump20171010/mkfwcoredb`
+
+## CARGA IMAGENES MASIVA
+Cuando se cargan muchos ficheros masivos en disco, para DEV pudiera ser que nodemon suelte un error, es por la cantidad de ficheros que permite hacer WATCH sobre ellos. Para solucionarlo:
+* `echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
