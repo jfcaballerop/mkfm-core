@@ -4,8 +4,7 @@
     var resized = false;
     var formulasDB = <%- JSON.stringify(formula) %>;
     var objectConstructor = {}.constructor;
-    var html = [];
-    var h = -1;
+
     console.log(formulasDB);
 
     $(document).ready(function() {
@@ -20,6 +19,8 @@
                 switch ($this[0].id) {
                     case "AssetCriticality":
                         $('#unseen').empty();
+                        var html = [];
+                        var h = -1;
                         $.each(form.formulaSpec, function(i, fspec) {
                             html[++h] = '<i class="fa fa-calculator"></i>' + fspec.name;
                             html[++h] = '<table id="formulaTable" class="table table-bordered table-striped table-condensed">';
@@ -29,8 +30,8 @@
                                 console.log(data);
                                 if (data.constructor === objectConstructor) {
                                     html[++h] = '<tr>';
-                                    html[++h] = '<td  rowspan="' + (Object.keys(data).length) + '">' + key + '</td>';
-                                    html[++h] = '<td rowspan="' + (Object.keys(data).length) + '">' + data.weight + ' </td>';
+                                    html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
+                                    html[++h] = '<div class="col-sm-4"> <input class="form-control" id="" type="text" value="' + data.weight + '"></div></td>';
                                     var tr = 0;
                                     $.each(data, function(j, data2) {
                                         if (data2.constructor === objectConstructor) {
@@ -38,8 +39,20 @@
                                             if (tr > 0) {
                                                 html[++h] = '<tr>';
                                             }
-                                            html[++h] = '<td>' + data2.name + '</td>';
-                                            html[++h] = '<td>' + data2.weight + '</td>';
+                                            html[++h] = '<td class="col-sm-6"><label class="col-sm-6 col-sm-6 control-label">' + data2.name +
+                                                '<br>[Type: ' + data2.type + ']</label>';
+                                            html[++h] = '<div class="col-sm-6"> <input class="form-control" id="" type="text" value="' + data2.weight +
+                                                '"></div></td>';
+                                            if (data2.scoring != undefined) {
+                                                html[++h] = '<td class="col-sm-3">';
+                                                $.each(data2.scoring, function(s, scoring) {
+                                                    html[++h] = '<label class="col-sm-8 control-label">' + s +
+                                                        '</label><div class="col-sm-4"><input class="form-control" id="" type="text" value="' + scoring +
+                                                        '"></div>';
+
+                                                });
+                                                html[++h] = '</td>';
+                                            }
                                             html[++h] = '</tr>';
                                             tr++;
                                             console.log(j + ': ' + data2);
