@@ -27,7 +27,8 @@ app.set('view engine', 'ejs');
 app.set('views', [
     path.join(__dirname, 'views'),
     path.join(__dirname, '/app/comp/user/views'),
-    path.join(__dirname, '/app/comp/gis/views')
+    path.join(__dirname, '/app/comp/gis/views'),
+    path.join(__dirname, '/app/comp/admin/views')
 ]);
 
 // uncomment after placing your favicon in /public
@@ -37,9 +38,9 @@ app.use(cookieParser());
 // TRANSLATE CONFIG
 
 i18n.configure({
-    locales: ['es', 'en'],
+    locales: ['en', 'es'],
     directory: path.join(__dirname, '/app/translate/i18n'),
-    defaultLocale: 'es',
+    defaultLocale: 'en',
     autoReload: true,
     cookie: 'ulang',
     api: {

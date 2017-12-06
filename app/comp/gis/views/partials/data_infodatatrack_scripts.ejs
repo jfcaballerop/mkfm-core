@@ -5,50 +5,52 @@
     var $checks = $('#form').find("input[name='check[_id]']");
 
     var $inputsINV = $('#form').find("input[name='infodatatrack[properties][inventario]']");
-    var $inputsRL = $('#form').find("input[name='infodatatrack[properties][Roadlab]']");
-    var $inputsDC = $('#form').find("input[name='infodatatrack[properties][date_construction]']");
-    var $inputsADT = $('#form').find("input[name='infodatatrack[properties][adt]']");
-    var $inputsTHP = $('#form').find("input[name='infodatatrack[properties][traffic_high_peak]']");
-    var $inputsBM = $('#form').find("input[name='infodatatrack[properties][base_material]']");
-    var $inputsSBM = $('#form').find("input[name='infodatatrack[properties][subbase_material]']");
-    var $inputsNLI = $('#form').find("input[name='infodatatrack[properties][number_lanes_inc]']");
-    var $inputsNLD = $('#form').find("input[name='infodatatrack[properties][number_lanes_dec]']");
-    var $inputsTNL = $('#form').find("input[name='infodatatrack[properties][total_number_lanes]']");
-    var $inputsTW = $('#form').find("input[name='infodatatrack[properties][total_width]']");
-    var $inputsLOC = $('#form').find("input[name='infodatatrack[properties][location_doc_road_projects]']");
-    var $inputsLI = $('#form').find("input[name='infodatatrack[properties][last_inspection]']");
-    var $inputsPC = $('#form').find("input[name='infodatatrack[properties][prev_condition]']");
-    var $inputsFH = $('#form').find("input[name='infodatatrack[properties][failure_history]']");
-    var $inputsCL = $('#form').find("input[name='infodatatrack[properties][cons_LOS]']");
-    var $inputsSF = $('#form').find("input[name='infodatatrack[properties][survey_freq]']");
-    var $inputsNS = $('#form').find("input[name='infodatatrack[properties][next_survey]']");
-    var $inputsPI = $('#form').find("input[name='infodatatrack[properties][past_interv]']");
-    var $inputsIE = $('#form').find("input[name='infodatatrack[properties][interv_extent]']");
-    var $inputsYI = $('#form').find("input[name='infodatatrack[properties][year_interv]']");
-    var $inputsSI = $('#form').find("input[name='infodatatrack[properties][scope_interv]']");
-    var $inputsII = $('#form').find("input[name='infodatatrack[properties][impact_interv]']");
-    var $inputsLDI = $('#form').find("input[name='infodatatrack[properties][loc_doc_interv]']");
-    var $inputsMI = $('#form').find("input[name='infodatatrack[properties][maint_issues]']");
-    var $inputsI10Y = $('#form').find("input[name='infodatatrack[properties][investment10years]']");
-    var $inputsIR = $('#form').find("input[name='infodatatrack[properties][investment_required]']");
-    var $inputsOC = $('#form').find("input[name='infodatatrack[properties][om_comments]']");
-    var $inputs_acess_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][acess_airports_ferry_ports]']");
+    var $inputsRL = $('#form').find("input[name='infodatatrack[properties][iri]']");
+    var $inputsDC = $('#form').find("input[name='infodatatrack[properties][rdateconstruct]']");
+    var $inputsADT = $('#form').find("input[name='infodatatrack[properties][radt]']");
+    var $inputsTHP = $('#form').find("input[name='infodatatrack[properties][rtrafficpeak]']");
+    var $inputsBM = $('#form').find("input[name='infodatatrack[properties][rbasematerial]']");
+    var $inputsSBM = $('#form').find("input[name='infodatatrack[properties][rsubbasematerial]']");
+    var $inputsNLI = $('#form').find("input[name='infodatatrack[properties][rlaneinc]']");
+    var $inputsNLD = $('#form').find("input[name='infodatatrack[properties][rlanedecr]']");
+    var $inputsTNL = $('#form').find("input[name='infodatatrack[properties][rlanetotal]']");
+    var $inputsTW = $('#form').find("input[name='infodatatrack[properties][rwidth]']");
+    var $inputsLOC = $('#form').find("input[name='infodatatrack[properties][rlocdoc]']");
+    var $inputsLI = $('#form').find("input[name='infodatatrack[properties][rlastinspection]']");
+    var $inputsPC = $('#form').find("input[name='infodatatrack[properties][rprevcondition]']");
+    var $inputsFH = $('#form').find("input[name='infodatatrack[properties][rfailure]']");
+    var $inputsCL = $('#form').find("input[name='infodatatrack[properties][rconslos]']");
+    var $inputsSF = $('#form').find("input[name='infodatatrack[properties][rsurveyfreq]']");
+    var $inputsNS = $('#form').find("input[name='infodatatrack[properties][rnextsurvey]']");
+    var $inputsPI = $('#form').find("input[name='infodatatrack[properties][rlastyearintervdate]']");
+    var $inputsIE = $('#form').find("input[name='infodatatrack[properties][rlastyearintervextent]']");
+    var $inputsYI = $('#form').find("input[name='infodatatrack[properties][rlastyearinterv]']");
+    var $inputsSI = $('#form').find("input[name='infodatatrack[properties][rlastyearintervscope]']");
+    var $inputsII = $('#form').find("input[name='infodatatrack[properties][rlastyearintervimpactcond]']");
+    var $inputsLDI = $('#form').find("input[name='infodatatrack[properties][rlocdoclastyearinterv]']");
+    var $inputsMI = $('#form').find("input[name='infodatatrack[properties][rcurryearinterv]']");
+    var $inputsI10Y = $('#form').find("input[name='infodatatrack[properties][rinvestment10years]']");
+    var $inputsIR = $('#form').find("input[name='infodatatrack[properties][rinvestmentrequired]']");
+    var $inputsOC = $('#form').find("input[name='infodatatrack[properties][romcomments]']");
+    var $inputs_acess_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][rinfrint]']");
     var $inputs_distance_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][distance_airports_ferry_ports]']");
-    var $inputs_access_turistic_sites = $('#form').find("input[name='infodatatrack[properties][access_turistic_sites]']");
+    var $inputs_access_turistic_sites = $('#form').find("input[name='infodatatrack[properties][rtourism]']");
     var $inputs_distance_turistic_sites = $('#form').find("input[name='infodatatrack[properties][distance_turistic_sites]']");
-    var $inputs_acess_industry_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][acess_industry_agriculture_fishing_sites]']");
-    var $inputs_distance_industries_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][distance_industries_agriculture_fishing_sites]']");
-    var $inputs_access_social_services = $('#form').find("input[name='infodatatrack[properties][access_social_services]']");
+    var $inputs_acess_industry_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][rindustry]']");
+    var $inputs_distance_industries_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][rindustrydist]']");
+    var $inputs_access_social_services = $('#form').find("input[name='infodatatrack[properties][rhealth]']");
     var $inputs_distance_social_services = $('#form').find("input[name='infodatatrack[properties][distance_social_services]']");
-    var $inputs_located_within_an_environmentally_protected_area = $('#form').find("input[name='infodatatrack[properties][located_within_an_environmentally_protected_area]']");
-    var $inputs_distance_a_dumping_area = $('#form').find("input[name='infodatatrack[properties][distance_a_dumping_area]']");
-    var $inputs_current_condition = $('#form').find("input[name='infodatatrack[properties][current_condition]']");
-    var $inputs_criticality = $('#form').find("input[name='infodatatrack[properties][criticality]']");
-    var $inputs_exposure_landslide_hazard = $('#form').find("input[name='infodatatrack[properties][exposure_landslide_hazard]']");
-    var $inputs_exposure_flood_hazard = $('#form').find("input[name='infodatatrack[properties][exposure_flood_hazard]']");
-    var $inputs_asset_response_against_hazards = $('#form').find("input[name='infodatatrack[properties][asset_response_against_hazards]']");
-    var $inputs_asset_sensitivity = $('#form').find("input[name='infodatatrack[properties][asset_sensitivity]']");
-    var $inputs_risk = $('#form').find("input[name='infodatatrack[properties][risk]']");
+    var $inputs_located_within_an_environmentally_protected_area = $('#form').find("input[name='infodatatrack[properties][renvironment]']");
+    var $inputs_distance_a_dumping_area = $('#form').find("input[name='infodatatrack[properties][rwaste]']");
+    var $inputs_current_condition = $('#form').find("input[name='infodatatrack[properties][rccondition]']");
+    var $inputs_criticality = $('#form').find("input[name='infodatatrack[properties][rcriticality]']");
+    var $inputs_exposure_landslide_hazard = $('#form').find("input[name='infodatatrack[properties][rlandslide]']");
+    var $inputs_exposure_flood_hazard = $('#form').find("input[name='infodatatrack[properties][rflood]']");
+    var $inputs_asset_response_against_hazards = $('#form').find("input[name='infodatatrack[properties][rresphazard]']");
+    var $inputs_asset_sensitivity = $('#form').find("input[name='infodatatrack[properties][rsensitivity]']");
+    var $inputs_risk = $('#form').find("input[name='infodatatrack[properties][rrisk]']");
+    var $inputs_rriskphysical = $('#form').find("input[name='infodatatrack[properties][rriskphysical]']");
+    var $inputs_rrisknatural = $('#form').find("input[name='infodatatrack[properties][rrisknatural]']");
     // ROAD FURNITURE DATA
     var $inputs_existence_barriers_condition = $('#form').find("input[name='infodatatrack[properties][existence_barriers_condition]']");
     var $inputs_typology_barriers = $('#form').find("input[name='infodatatrack[properties][typology_barriers]']");
@@ -96,14 +98,14 @@
     var $inputs_bfailure = $('#form').find("input[name='infodatatrack[properties][bfailure]']");
     var $inputs_bsurveyfreq = $('#form').find("input[name='infodatatrack[properties][bsurveyfreq]']");
     var $inputs_bnextsurvey = $('#form').find("input[name='infodatatrack[properties][bnextsurvey]']");
-    var $inputs_bpastinterv = $('#form').find("input[name='infodatatrack[properties][bpastinterv]']");
-    var $inputs_bintervextent = $('#form').find("input[name='infodatatrack[properties][bintervextent]']");
-    var $inputs_bdateinterv = $('#form').find("input[name='infodatatrack[properties][bdateinterv]']");
-    var $inputs_bscopeinterv = $('#form').find("input[name='infodatatrack[properties][bscopeinterv]']");
-    var $inputs_bimpactinterv = $('#form').find("input[name='infodatatrack[properties][bimpactinterv]']");
-    var $inputs_blocdocinterv = $('#form').find("input[name='infodatatrack[properties][blocdocinterv]']");
-    var $inputs_bmaintissues = $('#form').find("input[name='infodatatrack[properties][bmaintissues]']");
-    var $inputs_binvestment10years = $('#form').find("input[name='infodatatrack[properties][binvestment10years]']");
+    var $inputs_bpastinterv = $('#form').find("input[name='infodatatrack[properties][BLastYearInterv]']");
+    var $inputs_bintervextent = $('#form').find("input[name='infodatatrack[properties][BLastYearIntervExtent]']");
+    var $inputs_bdateinterv = $('#form').find("input[name='infodatatrack[properties][BLastYearIntervDate]']");
+    var $inputs_bscopeinterv = $('#form').find("input[name='infodatatrack[properties][BLastYearIntervScope]']");
+    var $inputs_bimpactinterv = $('#form').find("input[name='infodatatrack[properties][BLastYearIntervImpactCond]']");
+    var $inputs_blocdocinterv = $('#form').find("input[name='infodatatrack[properties][BLocDocLastYearInterv]']");
+    var $inputs_bmaintissues = $('#form').find("input[name='infodatatrack[properties][BMaintIssues]']");
+    var $inputs_binvestment10years = $('#form').find("input[name='infodatatrack[properties][Binvestment10years]']");
     var $inputs_binvestmentrequired = $('#form').find("input[name='infodatatrack[properties][binvestmentrequired]']");
     var $inputs_bomcomments = $('#form').find("input[name='infodatatrack[properties][bomcomments]']");
     var $inputs_bcondition = $('#form').find("input[name='infodatatrack[properties][bcondition]']");
@@ -113,6 +115,8 @@
     var $inputs_bresphazard = $('#form').find("input[name='infodatatrack[properties][bresphazard]']");
     var $inputs_bsensitivity = $('#form').find("input[name='infodatatrack[properties][bsensitivity]']");
     var $inputs_brisk = $('#form').find("input[name='infodatatrack[properties][brisk]']");
+    var $inputs_briskphysical = $('#form').find("input[name='infodatatrack[properties][briskphysical]']");
+    var $inputs_brisknatural = $('#form').find("input[name='infodatatrack[properties][brisknatural]']");
     // GEOTECHNICAL ASSETS
     var $inputs_gcode = $('#form').find("input[name='infodatatrack[properties][gcode]']");
     var $inputs_gyearconstruct = $('#form').find("input[name='infodatatrack[properties][gyearconstruct]']");
@@ -157,8 +161,14 @@
     var $inputs_gresphazard = $('#form').find("input[name='infodatatrack[properties][gresphazard]']");
     var $inputs_gsensitivity = $('#form').find("input[name='infodatatrack[properties][gsensitivity]']");
     var $inputs_grisk = $('#form').find("input[name='infodatatrack[properties][grisk]']");
+    var $inputs_griskphysical = $('#form').find("input[name='infodatatrack[properties][griskphysical]']");
+    var $inputs_grisknatural = $('#form').find("input[name='infodatatrack[properties][grisknatural]']");
+    var $inputs_griskphysical2 = $('#form').find("input[name='infodatatrack[properties][griskphysical2]']");
+    var $inputs_grisknatural2 = $('#form').find("input[name='infodatatrack[properties][grisknatural2]']");
     // DRAINAGES
     var $inputs_dcode = $('#form').find("input[name='infodatatrack[properties][dcode]']");
+    var $inputs_CRISKphysical = $('#form').find("input[name='infodatatrack[properties][CRISKphysical]']");
+    var $inputs_CRISKnatural = $('#form').find("input[name='infodatatrack[properties][CRISKnatural]']");
     var $inputs_dyearconstruc = $('#form').find("input[name='infodatatrack[properties][dyearconstruc]']");
     var $inputs_dtype = $('#form').find("input[name='infodatatrack[properties][dtype]']");
     var $inputs_dcapacity = $('#form').find("input[name='infodatatrack[properties][dcapacity]']");
@@ -198,7 +208,7 @@
     var $inputs_dsensitivity = $('#form').find("input[name='infodatatrack[properties][dsensitivity]']");
     var $inputs_drisk = $('#form').find("input[name='infodatatrack[properties][drisk]']");
 
-    $("input[name='infodatatrack[properties][date_construction]']").datepicker({
+    $("input[name='infodatatrack[properties][rdateconstruct]']").datepicker({
         dateFormat: 'dd-mm-yy',
         onSelect: function(date) {
             $inputsDC.trigger("blur");
@@ -207,7 +217,7 @@
     });
     $('#form').find("input").css('min-width', '50px');
     // $('#form').find("input[type='text']").css('min-width', '50px');
-    $('#form').find("input[name='infodatatrack[properties][date_construction]']").css('min-width', '80px');
+    $('#form').find("input[name='infodatatrack[properties][rdateconstruct]']").css('min-width', '80px');
     $('#form').find("select").css('min-width', '100px');
 
     $("thead > tr > th", $('#dataTable')).click(function() {

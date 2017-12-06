@@ -43,7 +43,106 @@ router.use(bodyParser.json());
 /*******************************************************
         WEB CALLS
 **********************************************************/
+/* GET List infodatatracks */
+router.post('/list_ifdt/:info', function(req, resp, next) {
+    var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: encoded_url,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
 
+    console.log('\n## list_ifdt ##\n' + encoded_url);
+
+
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // console.log('KOBO ID: ' + req.params.id);
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+
+            // console.log('## ResponseObject:: \n' + JSON.stringify(responseObject.properties));
+            resp.status(200).jsonp(responseObject);
+        });
+
+    });
+    request.on('error', function(e) {
+        // General error, i.e.
+        //  - ECONNRESET - server closed the socket unexpectedly
+        //  - ECONNREFUSED - server did not listen
+        //  - HPE_INVALID_VERSION
+        //  - HPE_INVALID_STATUS
+        //  - ... (other HPE_* codes) - server returned garbage
+        console.log(e);
+    });
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+/**
+ * Modify ROWS
+ */
+router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
+    var postData = extend({}, req.body);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/delrowskobo/' + req.params.idifdt + '/' + req.params.rowid + '/' + req.params.koboid,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        //// console.log('STATUS: ' + res.statusCode);
+        //// console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+            //// console.log(JSON.stringify(responseObject));
+            resp.status(200).jsonp(responseObject);
+            // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.params.idifdt);
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
 /**
  * SAVE DATA
  */
@@ -397,7 +496,8 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
     var arrPK = [];
     // Comprobar si trae geometry
     if (postData.geometry !== undefined) {
-        // console.log('## WEB/update_videoinfodatatrack geometry ##');
+        // console.log('## WEB/update_videoinfodatatrack geometry## ');
+        // console.log('## WEB/update_videoinfodatatrack inverted ## ' + postData.inverted);
         if (postData.geometry.coordinates !== undefined) {
             //console.log(JSON.stringify(postData.geometry.coordinates));
             postData.geometry.coordinates.forEach(function(element, index) {
@@ -544,7 +644,50 @@ router.post('/duplicate_rows', function(req, resp, next) {
     request.end();
 });
 
+/**
+ * invertedpk
+ */
+router.post('/invertedpk', function(req, resp, next) {
+    var _id = req.body._id;
+    // console.log('## WEB/invertedpk ID ##:: ' + _id);
 
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/invertedpk/' + _id,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    var request = http.request(options, function(res) {
+        // console.log('STATUS: ' + res.statusCode);
+        // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            // console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // console.log('postData:: ' + JSON.stringify(postData));
+            //success(data);
+            // resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + _id);
+            resp.status(200).jsonp(responseObject);
+
+        });
+    });
+    request.on('error', function(err) {
+        console.error('problem with request: ${err.message}');
+    });
+    // request.write(JSON.stringify(postData));
+    request.end();
+});
 /*******************************************************
  API REST CALLS
  **********************************************************/
@@ -705,7 +848,13 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
                 // estoy dentro de properties
                 for (var key2 in saveInfodatatrack[key]) {
                     //console.log(key2 + ": " + saveInfodatatrack[key][key2]);
-                    infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+                    if (key2 === 'koboedit') {
+                        infodatatrack[key][key2]["kobo_id"] = saveInfodatatrack[key][key2]["kobo_id"];
+                        infodatatrack[key][key2]["kobo_type"] = saveInfodatatrack[key][key2]["kobo_type"];
+
+                    } else {
+                        infodatatrack[key][key2] = saveInfodatatrack[key][key2];
+                    }
                 }
             } else {
                 infodatatrack[key] = saveInfodatatrack[key];
@@ -857,4 +1006,568 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
     });
 
 });
+/**
+ * invertedpk
+ */
+router.post('/V1/invertedpk/:id', function(req, res, next) {
+    console.log('## invertedpk Infodatatrack ## ' + req.params.id);
+    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+
+        console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack.inverted);
+        infodatatrack.updated_at = new Date();
+        infodatatrack.inverted = true;
+        var invertedpk = infodatatrack.properties.pk.slice().reverse();
+        infodatatrack.properties.pk = invertedpk;
+        infodatatrack.save(function(err, data) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            console.log('RESULT OK :\n' + JSON.stringify(data.inverted));
+            res.status(200).jsonp(data);
+        });
+
+    });
+
+});
+
+/* UPDATE Infodatatrack */
+router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
+    console.log('## UPDATE delrowskobo ##\nBODY: ' + JSON.stringify(req.body));
+    Koboinfo.findById(req.params.koboid, function(err, kobomod) {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        console.log('kobomod ' + kobomod._id);
+        Infodatatrack.findById(req.params.idifdt, function(err, ifdt) {
+            if (err) return handleError(err);
+
+            var arrkoboedit = [];
+            var properties = [];
+
+            var ini = parseInt(req.params.rowid);
+            var fin = parseInt(req.params.rowid);
+
+            for (var [kprop, vprop] of Object.keys(kobomod._doc.properties).entries()) {
+                if (Object.keys(ifdt._doc.properties).indexOf(vprop) >= 0) {
+                    var arrprop = [];
+
+
+                    for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
+                        var newprop = '';
+                        if (cindex >= ini && cindex <= fin) {
+                            /**
+                             * Si estoy dentro de las filas a borrar
+                             * relleno con info vacía
+                             */
+                            // newprop = kobomod.properties[vprop];
+                            arrprop.push(newprop);
+                        } else {
+                            /**
+                             * El resto de valores los dejo como están
+                             */
+                            if (ifdt.properties[vprop] != undefined && ifdt.properties[vprop].length != 0) {
+                                arrprop.push(ifdt.properties[vprop][cindex]);
+
+                            } else {
+                                arrprop.push(newprop);
+
+                            }
+                        }
+
+                    }
+                    if (ifdt.properties[vprop] === undefined) {
+                        ifdt.properties[vprop] = [];
+                    }
+                    ifdt.properties[vprop] = arrprop;
+                }
+            }
+
+            for (var [cindex, cval] of ifdt.geometry.coordinates.entries()) {
+                var newkobo = {};
+                if (cindex >= ini && cindex <= fin) {
+                    newkobo.kobo_id = '';
+                    newkobo.kobo_type = '';
+                    arrkoboedit.push(newkobo);
+
+                } else {
+                    if (ifdt.properties.koboedit.length != 0) {
+                        arrkoboedit.push(ifdt.properties.koboedit[cindex]);
+
+                    } else {
+                        arrkoboedit.push(newkobo);
+
+                    }
+                }
+                // console.log(cindex + JSON.stringify(arrkoboedit[cindex]));
+
+            }
+            ifdt.properties.koboedit = arrkoboedit;
+            ifdt.isNew = false;
+
+            ifdt.save(function(err, imod) {
+                if (err) {
+                    return res.status(500).send(err.message);
+                }
+                // console.log('imod.properties.koboedit: ' + JSON.stringify(imod.properties.koboedit));
+
+                res.status(200).jsonp(kobomod);
+            });
+        });
+
+
+    });
+
+});
+/* GET JSON Infodatatracks listing. */
+router.get('/V1/list_ifdt/:info', function(req, res, next) {
+    var returnObject = {};
+    var index = 0;
+    var lastindex = 0;
+    Infodatatrack.find({
+        $or: [{ "properties.rcode": req.params.info },
+            { "properties.rname": req.params.info },
+            { "properties.bcode": req.params.info },
+            { "properties.bname": req.params.info },
+            { "properties.gcode": req.params.info },
+            { "properties.gcode2": req.params.info },
+            { "properties.dcode": req.params.info },
+            { "properties.dcode2": req.params.info },
+            { "properties.Ccode": req.params.info }
+        ]
+    }).exec(function(err, infodatatrack) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        if (infodatatrack.length > 0) {
+            returnObject = extend({}, infodatatrack[0]._doc);
+            // console.log('returnObject1 ' + JSON.stringify(infodatatrack[0].properties.Ccode));
+
+            if (infodatatrack[0].properties.rcode.indexOf(req.params.info) >= 0 ||
+                infodatatrack[0].properties.rname.indexOf(req.params.info) >= 0) {
+                returnObject["properties"]["asset_type"] = "ROAD";
+                /**
+                 * En caso de ROAD hay que añadir los siguientes valores
+                 * :"No. of bridges",
+                    :"No. of culverts",
+                    :"Km of Longitudinal drainage",
+                    :"No. of retaining walls",
+                    :"No. of cuttings",
+                    :"No. of embankments",
+                    :"No. of barriers",
+                    :"No. of vertical signaling",
+                    :"No. of street lights",
+                 */
+                var rnumbridges = 0;
+                var rnumculverts = 0;
+                var rnumLongitudinaldrainage = 0;
+                var rnumLongitudinaldrainageini = 0;
+                var rnumLongitudinaldrainagefin = 0;
+                var rnumretainingwalls = 0;
+                var rnumcuttings = 0;
+                var rnumembankments = 0;
+                var rnumbarriers = 0;
+                var rnumverticalsignaling = 0;
+                var rnumstreetlights = 0;
+                for (var [kprop, vprop] of Object.keys(infodatatrack[0].properties).entries()) {
+                    // console.log(kprop + ' ' + vprop);
+                    // console.log(kprop + ' ' + vprop);
+                    if (infodatatrack[0].properties[vprop] != undefined && Array.isArray(infodatatrack[0].properties[vprop])) {
+                        var bvalant = "";
+                        var cvalant = "";
+                        var gvalant = "";
+                        var gvalant2 = "";
+                        var dvalant = "";
+                        var dvalant2 = "";
+                        var barriersexist = "NO";
+                        var lightsexist = "NO";
+                        for (var [kval, vval] of Object.keys(infodatatrack[0].properties[vprop]).entries()) {
+                            if (vprop === 'bcode') {
+                                /**
+                                 * En caso de tener bcode, es porque hay un puente
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != bvalant) {
+                                    rnumbridges++;
+                                    bvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'Ccode') {
+                                /**
+                                 * En caso de Ccode hay un culvert
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != cvalant) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumculverts++;
+                                    cvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'gcode') {
+                                /**
+                                 * En caso de gcode o gcode2, debo revisar en el mismo index el tipo de geot que es.
+                                 * Siendo el tipo los tres definidos
+                                 * Cutting Embankment Retaining_walls
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != gvalant) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (infodatatrack[0].properties["gtype"][kval] === "Cutting") {
+                                        rnumcuttings++;
+                                    } else if (infodatatrack[0].properties["gtype"][kval] === "Embankment") {
+                                        rnumembankments++;
+                                    } else if (infodatatrack[0].properties["gtype"][kval] === "Retaining_walls") {
+                                        rnumretainingwalls++;
+                                    }
+                                    gvalant = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'gcode2') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval] != gvalant2) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (infodatatrack[0].properties["gtype2"][kval] === "Cutting") {
+                                        rnumcuttings++;
+                                    } else if (infodatatrack[0].properties["gtype2"][kval] === "Embankment") {
+                                        rnumembankments++;
+                                    } else if (infodatatrack[0].properties["gtype2"][kval] === "Retaining_walls") {
+                                        rnumretainingwalls++;
+                                    }
+                                    gvalant2 = infodatatrack[0].properties[vprop][kval];
+                                }
+                            } else if (vprop === 'dcode') {
+                                /**
+                                 * En caso de dcode o dcode2 tenemos un drainage
+                                 * Los tipos son Longitudinales siempre, por lo que no hace falta comprobar nada
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "") {
+                                    //console.log(infodatatrack[0].properties[vprop][kval] + ' ' + dvalant);
+                                    if (dvalant === "") {
+                                        dvalant = infodatatrack[0].properties[vprop][kval];
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    }
+                                    if (dvalant === infodatatrack[0].properties[vprop][kval]) {
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    } else {
+                                        rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                        //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    }
+
+                                    dvalant = infodatatrack[0].properties[vprop][kval];
+                                } else if (dvalant != infodatatrack[0].properties[vprop][kval] &&
+                                    infodatatrack[0].properties[vprop][kval] != undefined) {
+                                    rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                    //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                    rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                }
+                            } else if (vprop === 'dcode2') {
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "") {
+                                    //console.log(infodatatrack[0].properties[vprop][kval] + ' ' + dvalant2);
+                                    if (dvalant2 === "") {
+                                        dvalant2 = infodatatrack[0].properties[vprop][kval];
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    }
+                                    if (dvalant2 === infodatatrack[0].properties[vprop][kval]) {
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    } else {
+                                        rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                        //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                        rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                        rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                    }
+
+                                    dvalant2 = infodatatrack[0].properties[vprop][kval];
+                                } else if (dvalant2 != infodatatrack[0].properties[vprop][kval] &&
+                                    infodatatrack[0].properties[vprop][kval] != undefined) {
+                                    rnumLongitudinaldrainage += (rnumLongitudinaldrainagefin - rnumLongitudinaldrainageini);
+                                    //console.log('Resultados:: ' + rnumLongitudinaldrainage + ' = ' + rnumLongitudinaldrainagefin + ' - ' + rnumLongitudinaldrainageini);
+                                    rnumLongitudinaldrainageini = infodatatrack[0].properties["pk"][kval];
+                                    rnumLongitudinaldrainagefin = infodatatrack[0].properties["pk"][kval];
+                                }
+                            } else if (vprop === 'rsignalstype') {
+                                /*
+                                 * En caso de rsignalstype, se tiene en cuenta el valor de VERTICAL SIGN
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() === "VERTICAL SIGN") {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    rnumverticalsignaling++;
+                                }
+                            } else if (vprop === 'rbarriersexist') {
+                                /**
+                                 * en caso de rbarriersexist
+                                 * Debo comprobar aquellos valores que cambien a YES desde el NO, porque por defecto es NO.
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() != barriersexist) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (barriersexist.toUpperCase() === 'NO') {
+                                        rnumbarriers++;
+                                    }
+                                    barriersexist = infodatatrack[0].properties[vprop][kval].toUpperCase();
+                                }
+                            } else if (vprop === 'rlightexist') {
+                                /**
+                                 * idem del anterior
+                                 */
+                                if (infodatatrack[0].properties[vprop][kval] != undefined &&
+                                    infodatatrack[0].properties[vprop][kval] != "" &&
+                                    infodatatrack[0].properties[vprop][kval].toUpperCase() != lightsexist) {
+                                    //console.log(infodatatrack[0].properties[vprop][kval]);
+                                    if (lightsexist.toUpperCase() === 'NO') {
+                                        rnumstreetlights++;
+                                    }
+                                    lightsexist = infodatatrack[0].properties[vprop][kval].toUpperCase();
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+                }
+
+                returnObject["properties"]["rnumbridges"] = rnumbridges;
+                returnObject["properties"]["rnumculverts"] = rnumculverts;
+                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
+                returnObject["properties"]["rnumretainingwalls"] = rnumretainingwalls;
+                returnObject["properties"]["rnumcuttings"] = rnumcuttings;
+                returnObject["properties"]["rnumembankments"] = rnumembankments;
+                returnObject["properties"]["rnumbarriers"] = rnumbarriers;
+                returnObject["properties"]["rnumverticalsignaling"] = rnumverticalsignaling;
+                returnObject["properties"]["rnumstreetlights"] = rnumstreetlights;
+
+            } else if (infodatatrack[0].properties.bcode.indexOf(req.params.info) >= 0 ||
+                infodatatrack[0].properties.bname.indexOf(req.params.info) >= 0) {
+                returnObject["properties"]["asset_type"] = "BRIDGE";
+
+                if (infodatatrack[0].properties.bcode.indexOf(req.params.info) >= 0) {
+                    //console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.bcode.indexOf(req.params.info);
+                    //console.log('bcode lastindex ' + infodatatrack[0].properties.bcode.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.bcode.lastIndexOf(req.params.info);
+                } else {
+                    //console.log('bcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.bname.indexOf(req.params.info);
+                    //console.log('bname lastindex ' + infodatatrack[0].properties.bname.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.bname.lastIndexOf(req.params.info);
+                }
+                if (index == 0) {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+
+                } else {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+                    returnObject.geometry.coordinates.splice(0, index);
+                }
+                /**
+                 * Recorto el resto de arrays de properties
+                 */
+                for (var [key, value] of Object.keys(returnObject.properties).entries()) {
+                    //console.log(key + ': ' + value + ' - ' + typeof(value));
+                    if (Array.isArray(returnObject.properties[value])) {
+                        //console.log(key + ': ' + value + ' - ' + typeof(returnObject.properties[value]));
+                        if (index == 0) {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+
+                        } else {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+                            returnObject.properties[value].splice(0, index);
+                        }
+                    }
+
+                }
+                //console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
+                //console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
+
+            } else if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0 ||
+                infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
+                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
+                    returnObject["properties"]["asset_type"] = "GEOT";
+                } else if (infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
+                    returnObject["properties"]["asset_type"] = "GEOT2";
+
+                }
+
+                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
+                    //console.log('gcode index ' + infodatatrack[0].properties.gcode.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.gcode.indexOf(req.params.info);
+                    //console.log('gcode lastindex ' + infodatatrack[0].properties.gcode.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.gcode.lastIndexOf(req.params.info);
+                } else {
+                    //console.log('gcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.gcode2.indexOf(req.params.info);
+                    //console.log('gcode2 lastindex ' + infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info);
+                }
+                if (index == 0) {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+
+                } else {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+                    returnObject.geometry.coordinates.splice(0, index);
+                }
+                /**
+                 * Recorto el resto de arrays de properties
+                 */
+                for (var [key, value] of Object.keys(returnObject.properties).entries()) {
+                    //console.log(key + ': ' + value + ' - ' + typeof(value));
+                    if (Array.isArray(returnObject.properties[value])) {
+                        //console.log(key + ': ' + value + ' - ' + typeof(returnObject.properties[value]));
+                        if (index == 0) {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+
+                        } else {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+                            returnObject.properties[value].splice(0, index);
+                        }
+                    }
+
+                }
+            } else if (infodatatrack[0].properties.Ccode.indexOf(req.params.info) >= 0) {
+                returnObject["properties"]["asset_type"] = "CULVERT";
+
+                //console.log('Ccode  ' + req.params.info);
+                if (infodatatrack[0].properties.Ccode.indexOf(req.params.info) >= 0) {
+                    //console.log('Ccode index ' + infodatatrack[0].properties.Ccode.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.Ccode.indexOf(req.params.info);
+                    //console.log('Ccode lastindex ' + infodatatrack[0].properties.Ccode.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.Ccode.lastIndexOf(req.params.info);
+                }
+                if (index == 0) {
+                    //console.log('index1 ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+
+                } else {
+                    //console.log('index2 ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+                    returnObject.geometry.coordinates.splice(0, index);
+                }
+                //console.log('returnObject.geometry.coordinates ' + returnObject.geometry.coordinates);
+                /**
+                 * Recorto el resto de arrays de properties
+                 */
+                for (var [key, value] of Object.keys(returnObject.properties).entries()) {
+                    //console.log(key + ': ' + value + ' - ' + typeof(value));
+                    if (Array.isArray(returnObject.properties[value])) {
+                        //console.log(key + ': ' + value + ' - ' + typeof(returnObject.properties[value]));
+                        if (index == 0) {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+
+                        } else {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+                            returnObject.properties[value].splice(0, index);
+                        }
+                    }
+
+                }
+                //console.log('returnObject.properties ' + JSON.stringify(returnObject.properties));
+
+            } else if (infodatatrack[0].properties.dcode.indexOf(req.params.info) >= 0 ||
+                infodatatrack[0].properties.dcode2.indexOf(req.params.info) >= 0) {
+                returnObject["properties"]["asset_type"] = "DRAINAGE";
+
+                if (infodatatrack[0].properties.dcode.indexOf(req.params.info) >= 0) {
+                    //console.log('dcode index ' + infodatatrack[0].properties.dcode.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.dcode.indexOf(req.params.info);
+                    //console.log('dcode lastindex ' + infodatatrack[0].properties.dcode.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.dcode.lastIndexOf(req.params.info);
+                } else {
+                    //console.log('dcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
+                    index = infodatatrack[0].properties.dcode2.indexOf(req.params.info);
+                    //console.log('dcode2 lastindex ' + infodatatrack[0].properties.dcode2.lastIndexOf(req.params.info));
+                    lastindex = infodatatrack[0].properties.dcode2.lastIndexOf(req.params.info);
+                }
+                if (index == 0) {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+
+                } else {
+                    //console.log('index ' + index + ' ' + lastindex);
+                    if (lastindex < returnObject.geometry.coordinates.length) {
+                        returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
+                    }
+                    returnObject.geometry.coordinates.splice(0, index);
+                }
+                /**
+                 * Recorto el resto de arrays de properties
+                 */
+                for (var [key, value] of Object.keys(returnObject.properties).entries()) {
+                    //console.log(key + ': ' + value + ' - ' + typeof(value));
+                    if (Array.isArray(returnObject.properties[value])) {
+                        //console.log(key + ': ' + value + ' - ' + typeof(returnObject.properties[value]));
+                        if (index == 0) {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+
+                        } else {
+                            //console.log('index ' + index + ' ' + lastindex);
+                            if (lastindex < returnObject.properties[value].length) {
+                                returnObject.properties[value].splice(lastindex + 1, returnObject.properties[value].length - (lastindex + 1));
+                            }
+                            returnObject.properties[value].splice(0, index);
+                        }
+                    }
+
+                }
+            }
+
+        } else {
+
+
+            returnObject["properties"] = {};
+            returnObject["properties"]["asset_type"] = "ERROR";
+
+        }
+        // console.log('/V1/list_ifdt/:info properties.asset_type ' + JSON.stringify(returnObject.properties.asset_type));
+        res.status(200).jsonp(returnObject);
+    });
+
+});
+
 module.exports = router;

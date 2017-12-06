@@ -1,7 +1,448 @@
 <script>
     var dataPost;
     var dataTrack;
+    var propertiesCols = {
+        Trackinfo: {
+            id: "id",
+            inv: "Act",
+            time: "time",
+            coordinates: "coord",
+            RUTMlong: "Long",
+            RUTMlat: "Lat",
+            RUTMElevation: "Elev"
 
+        },
+        road: {
+            surveyor: "Name of surveyor",
+            datesurvey: "Date of survey",
+            coordTimes: "Movie record time",
+            district: "District",
+            rcode: "Road code",
+            rname: "Road name",
+            rcategory: "Road category",
+            rutmlong: "Longitude",
+            rutmlat: "Latitude",
+            rutmelevation: "Elevation (m)",
+            rdateconstruct: "Date of construction",
+            rmaterial: "Pavement material",
+            rbasematerial: "Base material",
+            rsubbasematerial: "Subbase material",
+            rlaneinc: "Number of lanes (increasing KP)",
+            rlanedecr: "Number of lanes (decreasing KP)",
+            rlanetotal: "Total number of lanes",
+            rwidth: "Total width (m)",
+            rlocdoc: "Location of the documentation of road projects",
+            rvideo: "Video",
+            ralternatitinerary: "Existence of alternative itinerary",
+            rdendritic: "Road dendritic rank",
+            ropen: "Is the road open to traffic?",
+            rgauging: "Existence of gauging stations",
+            radt: "ADT",
+            rtrafficpeak: "Traffic high peak",
+            iri: "IRI - Pavement roughtness",
+            rvcondition: "Current visual condition",
+            rconslos: "Consequences of failure on LOS",
+            rprevcondition: "Previous condition rate",
+            rlastinspection: "Date of last inspection",
+            rsurveyfreq: "Survey frequency",
+            rnextsurvey: "Date of next survey",
+            rfailure: "Failure history",
+            rlastoverlay: "Date of last overlay",
+            rlastyearinterv: "Have there been past interventions performed during the last year?",
+            rlastyearintervextent: "Have they been global or partial interventions?",
+            rlastyearintervdate: "Date of performance of last year interventions",
+            rlastyearintervscope: "Scope of last year interventions",
+            rlastyearintervcost: "Cost of last year interventions",
+            rlastyearintervimpactcond: "Impact of last year interventions on asset condition",
+            rlocdoclastyearinterv: "Location of the documentation of last year interventions",
+            rcurryearinterv: "Have there been interventions performed during the current year?",
+            rcurryearintervextent: "Have they been global or partial interventions?",
+            rcurryearintervdate: "Date of performance of current year interventions",
+            rcurryearintervscope: "Scope of current year interventions",
+            rcurryearintervcost: "Accummulated Cost of current year interventions",
+            rlocdoccurryearinterv: "Location of the documentation of last year interventions",
+            rmaintissues: "Maintainability issues",
+            rinvestment10years: "Investment undertaken in the last 10 years",
+            rinvestmentrequired: "Investment required to upgrade to A class",
+            romcomments: "Comments to operation and maintainance",
+            rinfrint: "Acess to airports/ferry ports",
+            rtourism: "Access to touristic sites",
+            rindustry: "Acess to industry, agriculture, fishing sites",
+            rindustrydist: "Distance to industries, agriculture, fishing sites",
+            rhealth: "Access to health care services",
+            renvironment: "Located within an environmentally protected area",
+            rwaste: "Distance to a dumping area",
+            rccondition: "Current condition",
+            rcriticality: "Criticality",
+            rlandslide: "Exposure to landslide hazard",
+            rflood: "Exposure to flood hazard",
+            rresphazard: "Asset Response against hazards",
+            rsensitivity: "Asset Sensitivity",
+            rrisk: "RISK",
+            rriskphysical: "Risk due to Physical Deterioration",
+            rrisknatural: "Risk due to Natural Hazards"
+        },
+        furniture: {
+            rbarriersexist: "Existence of barriers",
+            rbarrierstype: "Typology of barriers",
+            rsafetyfence: "Typology of safety fences",
+            rbarrierfunct: "Functionality - Is the asset functioning as it is expected?",
+            rsignalsexist: "Existence of signposting and road signs",
+            rsignalstype: "Typology of signaling",
+            rvsignalstype: "Typology of vertical signaling",
+            rsignalsfunct: "Functionality - Is the asset functioning as it is expected?",
+            rlightexist: "Existence of street lighting",
+            rlighttype: "Typology of street lighting",
+            rlightfunct: "Functionality - Is the asset functioning as it is expected?",
+            rfpastinterv: "Have there been past interventions?",
+            rfyearinterv: "Year of performance of past interventions",
+            rfcomments: "Comments"
+        },
+        bridges: {
+            bcode: "Asset Code",
+            bexistence: "Existence of bridge",
+            bname: "Bridge name",
+            byearconstruc: "Year of construction",
+            btype: "Structural typology",
+            bsurrounding: "Surrounding - Environment",
+            bobstaclesaved: "Obstacle overpassed",
+            bfloodscenario: "Design flood scenario",
+            Bloadcapacity: "Load capacity",
+            bmaterialdeck: "Material - Deck",
+            bmaterialgirder: "Material - Girders",
+            bmaterialpiers: "Material - Piers",
+            bmaterialabutments: "Material - Abutments",
+            balignment: "Bridge alignment",
+            bspans: "Single or multiple span?",
+            bnumberspans: "Number of spans",
+            blenght: "Total length (m)",
+            bmaxspan: "Maximum span (m)",
+            bwidth: "Total width (m)",
+            bfreeheight: "Free height (m)",
+            bfoundation: "Foundations typology",
+            bpiersriver: "Existence of piers over riverbed",
+            bprotectabut: "Protection of abutments /nearby areas",
+            bprojectlocation: "Location of the documentation of bridge projects",
+            bphoto: "Photographs",
+            balternative: "Existence of alternative itinerary",
+            bvisualcondition: "Current visual condition",
+            bconslos: "Consequences of failure on LOS",
+            bprevcondition: "Previous condition rate",
+            blastinspection: "Date of last inspection",
+            bsurveyfreq: "Survey frequency",
+            bnextsurvey: "Date of next survey",
+            bfailure: "Failure history",
+            bdamagesfoundations: "Damages on foundations",
+            bdamagesfoundationsgeneraltype: "Type of damages on foundations (from foundation-ground decay, from foundation decay)",
+            bdamagesfoundationsdetailedtype: "Type of damages on foundations due to foundation-ground decay",
+            bdamagesstructural: "Damages on structural elements",
+            bdamagesvaultsarchesmechanicaldurable: "Damages on vault / arches (mechanical vs. durable)",
+            BDamagesVaultArchesSeverity: "Severity of damages on vault / arches",
+            BDamagesPiers: "Damages on piers (mechanical vs. durable)",
+            BDamagesPiersSeverity: "Severity of damages on piers",
+            BDamagesSpandrel: "Damages on spandrel walls (mechanical vs. durable)",
+            BDamagesSpandrelSeverity: "Severity of damages on spandrel walls",
+            BDamagesAbutments: "Damages on abutments (mechanical vs. durable)",
+            BDamagesAbutmentsSeverity: "Severity of damages on abutments",
+            BDamagesSidewalls: "Damages on side walls (mechanical vs. durable)",
+            BDamagessidewallsSeverity: "Severity of damages on side walls",
+            BDamagesSlab: "Damages on slab (mechanical vs. durable)",
+            BDamagesslabSeverity: "Severity of damages on slab",
+            BDamagesBeams: "Damages on beams (mechanical vs. durable)",
+            BDamagesBeamsSeverity: "Severity of damages on beams",
+            BDamagesBearings: "Damages on bearings (mechanical vs. durable)",
+            BDamagesBearingsSeverity: "Severity of damages on bearings",
+            BDamagesSpecialareas: "Damages on special areas (mechanical vs. durable)",
+            BDamagesSpecialareasSeverity: "Severity of damages on special areas",
+            bdamagesnonstructural: "Damages on non structural elements",
+            BLastYearInterv: "Have there been past interventions performed during the last year?",
+            BLastYearIntervExtent: "Have they been global or partial interventions?",
+            BLastYearIntervDate: "Date of performance of last year interventions",
+            BLastYearIntervScope: "Scope of last year interventions",
+            BLastYearIntervCost: "Cost of last year interventions",
+            BLastYearIntervImpactCond: "Impact of last year interventions on asset condition",
+            BLocDocLastYearInterv: "Location of the documentation of last year interventions",
+            BCurrYearInterv: "Have there been interventions performed during the current year?",
+            BCurrYearIntervExtent: "Have they been global or partial interventions?",
+            BCurrYearIntervDate: "Date of performance of current year interventions",
+            BCurrYearIntervScope: "Scope of current year interventions",
+            BCurrYearIntervCost: "Accummulated cost of current year interventions",
+            BLocDocCurrYearInterv: "Location of the documentation of last year interventions",
+            BMaintIssues: "Maintainability issues",
+            Binvestment10years: "Investment undertaken in the last 10 years",
+            binvestmentrequired: "Investment required to upgrade to A class",
+            bomcomments: "Comments to operation and maintainance",
+            bcondition: "Current condition",
+            bcriticality: "Criticality",
+            blandslide: "Exposure to landslide hazard",
+            bflood: "Exposure to flood hazard",
+            bresphazard: "Asset Response against hazards",
+            bsensitivity: "Asset Sensitivity",
+            brisk: "RISK",
+            briskphysical: "Risk due to Physical Deterioration",
+            brisknatural: "Risk due to Natural Hazards"
+        },
+        geotechnicals: {
+            gcode: "Asset Code",
+            gyearconstruct: "Year of construction",
+            gtype: "Type of geotechnical asset",
+            gposition: "Position",
+            gmaterial: "Material - Retaining walls",
+            gnature: "Nature - Earthworks",
+            gheight: "Height (m)",
+            gh_h: "Relation h/H ",
+            gslope: "Slope / Angle (º)",
+            gdistance: "Distance to road (m)",
+            gshoulders: "Shoulders / Verges",
+            glength: "Length (m)",
+            gblocks: "Size of blocks (m)",
+            gtreatments: "Existence of geotechnical treatments",
+            gtreatmentsretaining: "Existence  of retaining treatments",
+            gtreatmentsretainingtype: "Type  of retaining treatments",
+            gtreatmentsretainingextension: "Extension of retaining treatments (%)",
+            gtreatmentsretainingeffectiveness: "Effectiveness of retaining treatments",
+            gtreatmentsretainingconservation: "Conservation of retaining treatments",
+            gtreatmentsretainingother: "Other retaining treatments",
+            gtreatmentsdefence: "Existence  of defence treatments",
+            gtreatmentsdefencetype: "Type  of defence treatments",
+            gtreatmentsdefenceextension: "Extension of defence treatments (%)",
+            gtreatmentsdefenceeffectiveness: "Effectiveness of defence treatments",
+            gtreatmentsdefenceconservation: "Conservation of defence treatments",
+            gtreatmentsdefenceother: "Other defence treatments",
+            gtreatmentscoating: "Existence  of coating treatments",
+            gtreatmentscoatingtype: "Type  of coating treatments",
+            gtreatmentscoatingextension: "Extension of coating treatments (%)",
+            gtreatmentscoatingeffectiveness: "Effectiveness of coating treatments",
+            gtreatmentscoatingconservation: "Conservation of coating treatments",
+            gtreatmentscoatingother: "Other coating treatments",
+            gtreatmentsinternaldrainages: "Existence  of internal drainages",
+            gtreatmentsinternaldrainagesextension: "Extension of internal drainages (%)",
+            gtreatmentsinternaldrainageseffectiveness: "Effectiveness of internal drainages",
+            gtreatmentsinternaldrainagesconservation: "Conservation of internal drainages",
+            gvegetation: "Existence of vegetation",
+            gtypevegetation: "Type of vegetation",
+            gphoto: "Photographs",
+            gvisualcondition: "Current visual condition",
+            gconslos: "Consequences of failure on LOS",
+            gprevcondition: "Previous condition rate",
+            glastinspection: "Date of last inspection",
+            gsurveyfreq: "Survey frequency",
+            gnextsurvey: "Date of next survey",
+            gfailure: "Failure history",
+            gevidrecfailures: "Evidence of recent failures?",
+            gtypefailure: "Type of failure process",
+            gintensityfailure: "Intensity of failure process",
+            gextentfailure: "Extent of failure (%)",
+            gpastinterv: "Have there been past interventions performed during the last year?",
+            gintervextent: "Have they been global or partial interventions?",
+            gdateinterv: "Date of performance of last year interventions",
+            gscopeinterv: "Scope of last year interventions",
+            qintervcost: "Cost of last year interventions",
+            gimpactinterv: "Impact of last year interventions on asset condition",
+            glocdocinterv: "Location of the documentation of last year interventions",
+            gcurryearinterv: "Have there been interventions performed during the current year?",
+            gcurryearintervextent: "Have they been global or partial interventions?",
+            gcurryearintervdate: "Date of performance of current year interventions",
+            gcurryearintervscope: "Scope of current year interventions",
+            gcurryearintervcost: "Accummulated cost of current year interventions",
+            glocdoccurryearinterv: "Location of the documentation of last year interventions",
+            gmaintissues: "Maintainability issues",
+            ginvestment10years: "Investment undertaken in the last 10 years",
+            rgnvestmentrequired: "Investment required to upgrade to A class",
+            gomcomments: "Comments to maintainance",
+            gcondition: "Current condition",
+            gcriticality: "Criticality",
+            glandslide: "Exposure to landslide hazard",
+            gflood: "Exposure to flood hazard",
+            gresphazard: "Asset Response against hazards",
+            gsensitivity: "Asset Sensitivity",
+            grisk: "RISK",
+            griskphysical: "Risk due to Physical Deterioration",
+            grisknatural: "Risk due to Natural Hazards",
+            gcode2: "Asset Code",
+            gyearconstruct2: "Year of construction",
+            gtype2: "Type of geotechnical asset",
+            gposition2: "Position",
+            gmaterial2: "Material - Retaining walls",
+            gnature2: "Nature - Earthworks",
+            gheight2: "Height (m)",
+            gh_h2: "Relation h/H ",
+            gslope2: "Slope / Angle (º)",
+            gdistance2: "Distance to road (m)",
+            gshoulders2: "Shoulders / Verges",
+            glength2: "Length (m)",
+            gblocks2: "Size of blocks (m)",
+            gtreatments2: "Existence of geotechnical treatments",
+            gtreatmentsretaining2: "Existence  of retaining treatments",
+            gtreatmentsretainingtype2: "Type  of retaining treatments",
+            gtreatmentsretainingextension2: "Extension of retaining treatments (%)",
+            gtreatmentsretainingeffectiveness2: "Effectiveness of retaining treatments",
+            gtreatmentsretainingconservation2: "Conservation of retaining treatments",
+            gtreatmentsretainingother2: "Other retaining treatments",
+            gtreatmentsdefence2: "Existence  of defence treatments",
+            gtreatmentsdefencetype2: "Type  of defence treatments",
+            gtreatmentsdefenceextension2: "Extension of defence treatments (%)",
+            gtreatmentsdefenceeffectiveness2: "Effectiveness of defence treatments",
+            gtreatmentsdefenceconservation2: "Conservation of defence treatments",
+            gtreatmentsdefenceother2: "Other defence treatments",
+            gtreatmentscoating2: "Existence  of coating treatments",
+            gtreatmentscoatingtype2: "Type  of coating treatments",
+            gtreatmentscoatingextension2: "Extension of coating treatments (%)",
+            gtreatmentscoatingeffectiveness2: "Effectiveness of coating treatments",
+            gtreatmentscoatingconservation2: "Conservation of coating treatments",
+            gtreatmentscoatingother2: "Other coating treatments",
+            gtreatmentsinternaldrainages2: "Existence  of internal drainages",
+            gtreatmentsinternaldrainagesextension2: "Extension of internal drainages (%)",
+            gtreatmentsinternaldrainageseffectiveness2: "Effectiveness of internal drainages",
+            gtreatmentsinternaldrainagesconservation2: "Conservation of internal drainages",
+            gvegetation2: "Existence of vegetation",
+            gtypevegetation2: "Type of vegetation",
+            gphoto2: "Photographs",
+            gvisualcondition2: "Current visual condition",
+            gconslos2: "Consequences of failure on LOS",
+            gprevcondition2: "Previous condition rate",
+            glastinspection2: "Date of last inspection",
+            gsurveyfreq2: "Survey frequency",
+            gnextsurvey2: "Date of next survey",
+            gfailure2: "Failure history",
+            gevidrecfailures2: "Evidence of recent failures?",
+            gtypefailure2: "Type of failure process",
+            gintensityfailure2: "Intensity of failure process",
+            gextentfailure2: "Extent of failure (%)",
+            gpastinterv2: "Have there been past interventions performed during the last year?",
+            gintervextent2: "Have they been global or partial interventions?",
+            gdateinterv2: "Date of performance of last year interventions",
+            gscopeinterv2: "Scope of last year interventions",
+            qintervcost2: "Cost of last year interventions",
+            gimpactinterv2: "Impact of last year interventions on asset condition",
+            glocdocinterv2: "Location of the documentation of last year interventions",
+            gcurryearinterv2: "Have there been interventions performed during the current year?",
+            gcurryearintervextent2: "Have they been global or partial interventions?",
+            gcurryearintervdate2: "Date of performance of current year interventions",
+            gcurryearintervscope2: "Scope of current year interventions",
+            gcurryearintervcost2: "Accummulated cost of current year interventions",
+            glocdoccurryearinterv2: "Location of the documentation of last year interventions",
+            gmaintissues2: "Maintainability issues",
+            ginvestment10years2: "Investment undertaken in the last 10 years",
+            rgnvestmentrequired2: "Investment required to upgrade to A class",
+            gomcomments2: "Comments to maintainance",
+            gcondition2: "Current condition",
+            gcriticality2: "Criticality",
+            glandslide2: "Exposure to landslide hazard",
+            gflood2: "Exposure to flood hazard",
+            gresphazard2: "Asset Response against hazards",
+            gsensitivity2: "Asset Sensitivity",
+            grisk2: "RISK",
+            griskphysical2: "Risk due to Physical Deterioration",
+            grisknatural2: "Risk due to Natural Hazards"
+        },
+        culvert: {
+            Ccode: "Asset Code",
+            Cyearconstruc: "Year of construction",
+            Ctype: "Type of drainage",
+            Clocation: "Culvert location",
+            Cfeeding: "Feeding system",
+            Csection: "Type of section",
+            Ccapacity: "Drain Capacity",
+            Crainpeak: "Design rain peak values",
+            Cmaterial: "Material",
+            Cnumelem: "Number of elements",
+            Cdiameter: "Diameter / Height (m)",
+            Cwidth: "Width (m)",
+            Clength: "Length (m)",
+            Cprotentrance: "Protection of embankment at the drain entrance",
+            Cprotexit: "Protection bed / inverter arch at the drain exit",
+            Cphoto: "Photographs",
+            CVisualCondition: "Current visual condition",
+            CConsLOS: "Consequences of failure on LOS",
+            CPrevCondition: "Previous condition rate",
+            CLastInspection: "Date of last inspection",
+            CSurveyFreq: "Survey frequency",
+            CNextSurvey: "Date of next survey",
+            Cfailure: "Failure history",
+            CDamages: "Damages on culverts",
+            Cclearing: "Clearing required",
+            CLostSection: "Lost of section due to blocking/silting/obstacles (%)",
+            CLastYearInterv: "Have there been past interventions performed during the last year?",
+            CLastYearIntervExtent: "Have they been global or partial interventions?",
+            CLastYearIntervDate: "Date of performance of last year interventions",
+            CLastYearIntervScope: "Scope of last year interventions",
+            CLastYearIntervCost: "Cost of last year interventions",
+            CLastYearIntervImpactCond: "Impact of last year interventions on asset condition",
+            CLocDocLastYearInterv: "Location of the documentation of last year interventions",
+            CCurrYearInterv: "Have there been interventions performed during the current year?",
+            CCurrYearIntervExtent: "Have they been global or partial interventions?",
+            CCurrYearIntervDate: "Date of performance of current year interventions",
+            CCurrYearIntervScope: "Scope of current year interventions",
+            CCurrYearIntervCost: "Accummulated cost of current year interventions",
+            CLocDocCurrYearInterv: "Location of the documentation of last year interventions",
+            CMaintIssues: "Maintainability issues",
+            Cinvestment10years: "Investment undertaken in the last 10 years",
+            Cinvestmentrequired: "Investment required to upgrade to A class",
+            COMComments: "Comments to operation and maintainance",
+            Ccondition: "Current condition",
+            Ccriticality: "Criticality",
+            CLandslide: "Exposure to landslide hazard",
+            CFlood: "Exposure to flood hazard",
+            CRespHazard: "Asset Response against hazards",
+            Csensitivity: "Asset Sensitivity",
+            CRISK: "RISK",
+            CRISKphysical: "Risk due to Physical Deterioration",
+            CRISKnatural: "Risk due to Natural Hazards"
+        },
+        drainage: {
+            dcode: "Asset Code",
+            dyearconstruc: "Year of construction",
+            dtype: "Type of drainage",
+            dsection: "Type of section",
+            dposition: "Position",
+            dslope: "Slope (%)",
+            dphoto: "Photographs",
+            dconslos: "Consequences of failure on LOS",
+            dfailure: "Failure history",
+            dlastinspection: "Have there been past interventions performed during the last year?",
+            dintervextent: "Have they been global or partial interventions?",
+            ddateinterv: "Date of performance of last year interventions",
+            dscopeinterv: "Scope of last year interventions",
+            dlastyearintervcost: "Cost of last year interventions",
+            dlocdocinterv: "Location of the documentation of last year interventions",
+            dcurryearinterv: "Have there been interventions performed during the current year?",
+            dcurryearintervextent: "Have they been global or partial interventions?",
+            dcurryearintervdate: "Date of performance of current year interventions",
+            dcurryearintervscope: "Scope of current year interventions",
+            dcurryearintervcost: "Accummulated cost of current year interventions",
+            dlocdoccurryearinterv: "Location of the documentation of last year interventions",
+            dmaintissues: "Maintainability issues",
+            dinvestment10years: "Investment undertaken in the last 10 years",
+            dinvestmentrequired: "Investment required for replacement",
+            domcomments: "Comments to operation and maintainance",
+            dcode2: "Asset Code",
+            dyearconstruc2: "Year of construction",
+            dtype2: "Type of drainage",
+            dsection2: "Type of section",
+            dposition2: "Position",
+            dslope2: "Slope (%)",
+            dphoto2: "Photographs",
+            dconslos2: "Consequences of failure on LOS",
+            dfailure2: "Failure history",
+            dlastinspection2: "Have there been past interventions performed during the last year?",
+            dintervextent2: "Have they been global or partial interventions?",
+            ddateinterv2: "Date of performance of last year interventions",
+            dscopeinterv2: "Scope of last year interventions",
+            dlastyearintervcost2: "Cost of last year interventions",
+            dlocdocinterv2: "Location of the documentation of last year interventions",
+            dcurryearinterv2: "Have there been interventions performed during the current year?",
+            dcurryearintervextent2: "Have they been global or partial interventions?",
+            dcurryearintervdate2: "Date of performance of current year interventions",
+            dcurryearintervscope2: "Scope of current year interventions",
+            dcurryearintervcost2: "Accummulated cost of current year interventions",
+            dlocdoccurryearinterv2: "Location of the documentation of last year interventions",
+            dmaintissues2: "Maintainability issues",
+            dinvestment10years2: "Investment undertaken in the last 10 years",
+            dinvestmentrequired2: "Investment required for replacement",
+            domcomments2: "Comments to operation and maintainance"
+        }
+    };
     $(document).ready(function() {
         //console.log("ready!");
         // $('#editbutton').hide();
@@ -39,6 +480,26 @@
             })[0].click()
     });
 
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+    $('#exportbutton').click(function(e) {
+
+        var name = 'exported_track_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+        $("#dataTable").table2excel({
+            // exclude CSS class
+            exclude: ".noExl",
+            name: "Export data",
+            filename: name //do not include extension
+        });
+
+
+    });
+
+
     $('#versionbutton').click(function() {
         // alert('Versionando documento');
         dataPost.properties.video_roads = dataPost._id;
@@ -62,6 +523,7 @@
             $('#editbutton').show();
             $('#editvideobutton').show();
             $('#downloadbutton').show();
+            $('#exportbutton').show();
             ////console.log(JSON.stringify(values));
             $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
@@ -97,624 +559,64 @@
                 $('#editbutton').show();
                 $('#editvideobutton').show();
                 $('#downloadbutton').show();
+                $('#exportbutton').show();
                 $('#versionbutton').hide();
 
                 dataRoad = dataTrack;
                 //console.log('dataTrack ' + dataRoad);
                 //console.log(dataRoad);
                 var r = new Array(),
-                    j = 1;
-                r[0] = '<thead> <tr>' +
-                    '<th title="ID">#</th>' +
-                    '<th title="Inventary">INV</th>' +
-                    '<th title="Date Time"> TIME </th>' +
-                    '<th title="GPS - POS: Long - Lat - Cota">GPS </th>' +
-                    '<th title="PK" class="road"> PK </th>' +
-                    '<th title="Road Code " class="road"> R CODE </th>' +
-                    '<th title="Road Category" class="road"> RC</th>' +
-                    '<th title="IRI" class="road"> IRI </th>' +
-                    '<th title="Date of construction" class="road">DC</th>' +
-                    '<th title="Existence of Alternative Itinerary" class="road">EAI</th>' +
-                    '<th title="Open to traffic?" class="road">OPEN</th>' +
-                    '<th title="Existence of Gauging Stations" class="road">GS</th>' +
-                    '<th title="ADT" class="road">ADT</th>' +
-                    '<th title="Traffic high peak" class="road"> THP</th>' +
-                    '<th title="pavement material" class="road"> PM</th>' +
-                    '<th title="base material" class="road"> BM</th>' +
-                    '<th title="subbase material" class="road"> SM</th>' +
-                    '<th title="Number of lanes (increasing KP)" class="road"> NOL INC</th>' +
-                    '<th title="Number of lanes (decreasing KP)" class="road"> NOL DEC</th>' +
-                    '<th title="Total number of lanes" class="road"> TOT NOL</th>' +
-                    '<th title="Total width (m)" class="road"> TOT WIDTH</th>' +
-                    '<th title="Location of the documentation of road projects" class="road"> LOC DOC RP</th>' +
-                    '<th title="Date of last inspection" class="road"> DLI</th>' +
-                    '<th title="Previous condition rate" class="road"> PCR</th>' +
-                    '<th title="Failure history" class="road"> FH</th>' +
-                    '<th title="Consequences of failure on LOS" class="road"> CF LOS</th>' +
-                    '<th title="Survey frequency" class="road"> SF</th>' +
-                    '<th title="Date of Next survey" class="road"> DNS</th>' +
-                    '<th title="Has there been past interventions?" class="road"> PINT</th>' +
-                    '<th title="Have they been global or partial interventions?" class="road"> GPI</th>' +
-                    '<th title="Year of performance of past interventions" class="road"> YPI</th>' +
-                    '<th title="Scope of past interventions" class="road"> SI</th>' +
-                    '<th title="Impact on condition of past interventions" class="road"> II</th>' +
-                    '<th title="Location of the documentation of past interventions" class="road"> LDI</th>' +
-                    '<th title="Maintainability issues" class="road"> MI</th>' +
-                    '<th title="Investment undertaken in the last 10 years" class="road"> I10Y</th>' +
-                    '<th title="Investment required to upgrade to A class" class="road"> IR</th>' +
-                    '<th title="Comments to Operation and Maintainance" class="road"> OM COM</th>' +
-                    '<th title="Acess_airports_ferry_ports" class="road">AAFP</th>' +
-                    '<th title="Distance_airports_ferry_ports" class="road">DAFP</th>' +
-                    '<th title="Accessuristic_sites" class="road">AS</th>' +
-                    '<th title="Distanceuristic_sites" class="road">DS</th>' +
-                    '<th title="Acess_Industry_Agriculture_Fishing_sites" class="road">AIAF</th>' +
-                    '<th title="Distance_industries_agriculture_fishing_sites" class="road">DIAFS</th>' +
-                    '<th title="Access_Social_Services" class="road">ASS</th>' +
-                    '<th title="Distance_social_services" class="road">DSS</th>' +
-                    '<th title="Located_within_an_environmentally_protected_area" class="road">LOC PA</th>' +
-                    '<th title="Distance_a_dumping_area" class="road">DDA</th>' +
-                    '<th title="Current_condition" class="road">CC</th>' +
-                    '<th title="Criticality" class="road">CRIT</th>' +
-                    '<th title="Exposure_landslide_hazard" class="road">ELH</th>' +
-                    '<th title="Exposure_flood_hazard" class="road">EFH</th>' +
-                    '<th title="Asset_Response_against_hazards" class="road">ARAH</th>' +
-                    '<th title="Asset_Sensitivity" class="road">AS</th>' +
-                    '<th title="RISK" class="road">RISK</th>' +
-                    '<th title="existence_barriers_condition" class="furniture"> EBC</th>' +
-                    '<th title="typology_barriers" class="furniture"> TB</th>' +
-                    '<th title="typology_safety_fence" class="furniture"> TSF</th>' +
-                    '<th title="functionality_asset_functioning_expected_barrier" class="furniture"> FAFEB</th>' +
-                    '<th title="existence_signposting_road_signs_condition" class="furniture"> ESR</th>' +
-                    '<th title="typology_signaling" class="furniture"> TS</th>' +
-                    '<th title="functionality_asset_functioning_expected_signal" class="furniture"> FAFES</th>' +
-                    '<th title="existence_street_lighting" class="furniture"> ESL </th>' +
-                    '<th title="typology_street_lighting" class="furniture"> TSL</th>' +
-                    '<th title="functionality_asset_functioning_expected_light" class="furniture"> FAFEL</th>' +
-                    '<th title="has_there_been_past_interventions" class="furniture"> INTER</th>' +
-                    '<th title="year_performance_past_interventions" class="furniture"> PAST INT</th>' +
-                    '<th title="comments" class="furniture"> COMM</th>' +
-                    '<th title="CODE" class="bridges">CODE</th>' +
-                    '<th title="Bridge Exists" class="bridges">B EXIST</th>' +
-                    '<th title="Name" class="bridges">NAME</th>' +
-                    '<th title="Year of construction" class="bridges">YEAR CONS</th>' +
-                    '<th title="Type of structure" class="bridges">TYPE</th>' +
-                    '<th title="Surroundings - Environment" class="bridges">SURROUNDING</th>' +
-                    '<th title="Existence of Alternative Itinerary" class="bridges">ALTERNATIVE</th>' +
-                    '<th title="Obstacle overpassed" class="bridges">OBST SAVED</th>' +
-                    '<th title="Design Flood Scenario" class="bridges">FLOOD SCEN</th>' +
-                    '<th title="Material - Deck" class="bridges">MAT DECK</th>' +
-                    '<th title="Material - Piers" class="bridges">MAT PIERS</th>' +
-                    '<th title="Material - Abutments" class="bridges">MAT ABUTS</th>' +
-                    '<th title="Alignment" class="bridges">ALIGN</th>' +
-                    '<th title="Number of spans" class="bridges">SPANS</th>' +
-                    '<th title="Total Length (m)" class="bridges">LENGHT</th>' +
-                    '<th title="Max span (m)" class="bridges">MAXSPAN</th>' +
-                    '<th title="Width (m)" class="bridges">WIDTH</th>' +
-                    '<th title="Free height (m)" class="bridges">FREE HEIGHT</th>' +
-                    '<th title="Type of foundations" class="bridges">FOUNDATION</th>' +
-                    '<th title="Piers over riverbed" class="bridges">PIERS RIVER</th>' +
-                    '<th title="Protection of abutments and nearby areas" class="bridges">PROT ABUT</th>' +
-                    '<th title="Location of the documentation of bridge projects" class="bridges">PRJ LOC</th>' +
-                    '<th title="Photographs" class="bridges">PHOTO</th>' +
-                    '<th title="Date of last inspection" class="bridges">LAST INSP</th>' +
-                    '<th title="Previous condition rate" class="bridges">PREV COND</th>' +
-                    '<th title="Current Visual condition" class="bridges">VIS COND</th>' +
-                    '<th title="Damages on foundations" class="bridges">DAM FOUND</th>' +
-                    '<th title="Damages on structural elements" class="bridges">DAM STRUCT</th>' +
-                    '<th title="Damages on non structural elements" class="bridges">DAM STRUCT</th>' +
-                    '<th title="Consequences of failure on LOS" class="bridges">CONS LOS</th>' +
-                    '<th title="Failure history" class="bridges">FAILURE</th>' +
-                    '<th title="Survey frequency" class="bridges">SURVEY FREQ</th>' +
-                    '<th title="Date of Next survey" class="bridges">NEXT SURVEY</th>' +
-                    '<th title="Has there been past interventions?" class="bridges">PAST INTERV</th>' +
-                    '<th title="Have they been global or partial interventions?" class="bridges">INT EXT ENT</th>' +
-                    '<th title="Date of performance of past interventions" class="bridges">DATE INT</th>' +
-                    '<th title="Scope of past interventions" class="bridges">SCOPE INT</th>' +
-                    '<th title="Impact on condition of past interventions" class="bridges">IMPACT INTERV</th>' +
-                    '<th title="Location of the documentation of past interventions" class="bridges">LOC DOC INT</th>' +
-                    '<th title="Maintainability issues" class="bridges">MAINT ISSUES</th>' +
-                    '<th title="Investment undertaken in the last 10 years" class="bridges">INV10YEARS</th>' +
-                    '<th title="Investment required to upgrade to A class" class="bridges">INVREQ</th>' +
-                    '<th title="Comments to Operation and Maintainance" class="bridges">OM COMMENTS</th>' +
-                    '<th title="Current condition" class="bridges">COND</th>' +
-                    '<th title="Criticality" class="bridges">CRIT</th>' +
-                    '<th title="Exposure to landslide hazard" class="bridges">LANDSLIDE</th>' +
-                    '<th title="Exposure to flood hazard" class="bridges">FLOOD</th>' +
-                    '<th title="Asset Response against hazards" class="bridges">RESPHAZARD</th>' +
-                    '<th title="Asset Sensitivity" class="bridges">SENSITIVITY</th>' +
-                    '<th title="RISK" class="bridges">RISK</th>' +
-                    '<th title="CODE" class="geotechnicals">CODE</th>' +
-                    '<th title="Year of construction" class="geotechnicals">YEAR CONS</th>' +
-                    '<th title="Type of earthwork" class="geotechnicals">TYPE</th>' +
-                    '<th title="Position" class="geotechnicals">POS</th>' +
-                    '<th title="Material - Retaining walls" class="geotechnicals">MAT</th>' +
-                    '<th title="Nature - Earthworks" class="geotechnicals">NATURE</th>' +
-                    '<th title="Height (m)" class="geotechnicals">HEIGHT</th>' +
-                    '<th title="Relation h/H (m)" class="geotechnicals">H_H</th>' +
-                    '<th title="Slope (º)" class="geotechnicals">SLOPE</th>' +
-                    '<th title="Distance to road (m)" class="geotechnicals">DIST</th>' +
-                    '<th title="Length (m)" class="geotechnicals">LENGTH</th>' +
-                    '<th title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>' +
-                    '<th title="Existence of Geotech Treatments" class="geotechnicals">GEO TREATM</th>' +
-                    '<th title="Corrective measures" class="geotechnicals">CORRECT MEAS</th>' +
-                    '<th title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>' +
-                    '<th title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>' +
-                    '<th title="Photographs" class="geotechnicals">PHOTO</th>' +
-                    '<th title="Date of last inspection" class="geotechnicals">LAST INSP</th>' +
-                    '<th title="Previous condition rate" class="geotechnicals">PREV COND</th>' +
-                    '<th title="Current visual condition" class="geotechnicals">VISUAL COND</th>' +
-                    '<th title="Evidence of recent failures?" class="geotechnicals">EVID REC FAIL</th>' +
-                    '<th title="Type of failure process" class="geotechnicals">TYPE FAIL</th>' +
-                    '<th title="Extent of failure" class="geotechnicals">EXT ENT FAIL</th>' +
-                    '<th title="Consequences of failure on LOS" class="geotechnicals">CONS LOS</th>' +
-                    '<th title="Failure history" class="geotechnicals">FAIL</th>' +
-                    '<th title="Survey frequency" class="geotechnicals">SURVEY FREQ</th>' +
-                    '<th title="Next survey" class="geotechnicals">NEXT SURV</th>' +
-                    '<th title="Has there been past interventions?" class="geotechnicals">PAST INTERV</th>' +
-                    '<th title="Have they been global or partial interventions?" class="geotechnicals">INT EXT ENT</th>' +
-                    '<th title="Date of performance of past interventions" class="geotechnicals">DATE INT</th>' +
-                    '<th title="Scope of past interventions" class="geotechnicals">SCOPE INT</th>' +
-                    '<th title="Impact on condition of past interventions" class="geotechnicals">IMPACT INT</th>' +
-                    '<th title="Location of the documentation of past interventions" class="geotechnicals">LOC DOC INT</th>' +
-                    '<th title="Maintainability issues" class="geotechnicals">MAINT ISSUES</th>' +
-                    '<th title="Investment undertaken in the last 10 years" class="geotechnicals">INV10Y</th>' +
-                    '<th title="Investment required to upgrade to A class" class="geotechnicals">INVEST REQ</th>' +
-                    '<th title="Comments to Maintainance" class="geotechnicals">OM_COM</th>' +
-                    '<th title="Current Condition" class="geotechnicals">COND</th>' +
-                    '<th title="Criticality" class="geotechnicals">CRIT</th>' +
-                    '<th title="Exposure to landslide hazard" class="geotechnicals">LANDSLIDE</th>' +
-                    '<th title="Exposure to flood hazard" class="geotechnicals">FLOOD</th>' +
-                    '<th title="Asset Response against hazards" class="geotechnicals">RESPHAZARD</th>' +
-                    '<th title="Asset Sensitivity" class="geotechnicals">SENSITIVITY</th>' +
-                    '<th title="RISK" class="geotechnicals">RISK</th>' +
-                    '<th title="CODE" class="drainage">CODE</th>' +
-                    '<th title="Year of construction" class="drainage">YEAR CONS</th>' +
-                    '<th title="Type of drainage" class="drainage">TYPE</th>' +
-                    '<th title="Capacity" class="drainage">CAPACITY</th>' +
-                    '<th title="Rain Peak Values" class="drainage">RAIN PEAK</th>' +
-                    '<th title="Material" class="drainage">MATERIAL</th>' +
-                    '<th title="Slope (%)" class="drainage">SLOPE</th>' +
-                    '<th title="Longitudinal drainage - Type of section" class="drainage">SECTION</th>' +
-                    '<th title="Diameter (m)" class="drainage">DIAMETER</th>' +
-                    '<th title="Length (m)" class="drainage">LENGTH</th>' +
-                    '<th title="Protection of embankment at the drain entrance" class="drainage">PROTENTRANCE</th>' +
-                    '<th title="Protection bed / inverter arch at the drain exit" class="drainage">PROTEXIT</th>' +
-                    '<th title="Photographs" class="drainage">PHOTO</th>' +
-                    '<th title="Date of last inspection" class="drainage">LAST INS</th>' +
-                    '<th title="Previous condition rate" class="drainage">PREV COND</th>' +
-                    '<th title="Current Visual Condition" class="drainage">VISUAL COND</th>' +
-                    '<th title="Damages on Cross Drainage" class="drainage">CROSS DAM</th>' +
-                    '<th title="Lost of section due to blocking/silting/obstacles (%)" class="drainage">LOST SEC</th>' +
-                    '<th title="Consequences of failure on LOS" class="drainage">CONS LOS</th>' +
-                    '<th title="Failure history" class="drainage">FAILURE</th>' +
-                    '<th title="Survey frequency" class="drainage">SURVEY FREQ</th>' +
-                    '<th title="Date of Next survey" class="drainage">NEXT SURVEY</th>' +
-                    '<th title="Has there been past interventions?" class="drainage">PAST INT</th>' +
-                    '<th title="Have they been global or partial interventions?" class="drainage">INT EXT ENT</th>' +
-                    '<th title="Date of performance of past interventions" class="drainage">DATE INT</th>' +
-                    '<th title="Scope of past interventions" class="drainage">SCOPE INT</th>' +
-                    '<th title="Impact on condition of past interventions" class="drainage">IMPACT INTV</th>' +
-                    '<th title="Location of the documentation of past interventions" class="drainage">LOC DOC INT</th>' +
-                    '<th title="Maintainability issues" class="drainage">MAINT ISSUES</th>' +
-                    '<th title="Investment undertaken in the last 10 years" class="drainage">INV10YS</th>' +
-                    '<th title="Investment required to upgrade to A class" class="drainage">INV REQ</th>' +
-                    '<th title="Comments to Operation and Maintainance" class="drainage">OM_COMMENTS</th>' +
-                    '<th title="Current Condition" class="drainage">COND</th>' +
-                    '<th title="Criticality" class="drainage">CRIT</th>' +
-                    '<th title="Exposure to landslide hazard" class="drainage">LANDSLIDE</th>' +
-                    '<th title="Exposure to flood hazard" class="drainage">FLOOD</th>' +
-                    '<th title="Asset Response against hazards" class="drainage">RESPHAZARD</th>' +
-                    '<th title="Asset Sensitivity" class="drainage">SENS</th>' +
-                    '<th title="RISK" class="drainage">RISK</th>' +
-                    '<th title="Drainage position" class="drainage">DPOS</th>' +
-                    '</tr></thead> <tbody>';
+                    j = -1;
+                r[++j] = '<thead>';
+                r[++j] = '<tr>';
+                $.each(propertiesCols, function(key1, value1) {
+                    r[++j] = '<th colspan="' + Object.keys(propertiesCols[key1]).length + '" scope="colgroup" class="' +
+                        key1 + '" >' + key1 + '</th>';
+                });
+                r[++j] = '</tr>';
+                r[++j] = '<tr>';
+                $.each(propertiesCols, function(key1, value1) {
+                    //console.log(key1, value1);
+                    $.each(value1, function(key, value) {
+                        //console.log(key, value);
+                        r[++j] = '<th title="' + key + '" class="' + key1 + '" style="max-width:100px; white-space:pre-wrap;">' + value + '</th>';
+                    });
+                });
+                r[++j] = '</tr></thead>';
 
                 dataRoad.properties.coordTimes.forEach(function(drval, drindex) {
-                    r[++j] = '<tr><td>';
-                    r[++j] = drindex;
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.inventario ? dataRoad.properties.inventario[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
-                    r[++j] = '</td><td>';
-                    r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.pk[drindex];
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.rcode[drindex];
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.road_category ? dataRoad.properties.road_category[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.Roadlab ? dataRoad.properties.Roadlab[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.date_construction ? dataRoad.properties.date_construction[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.alternative_itinerary ? dataRoad.properties.alternative_itinerary[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.open_traffic ? dataRoad.properties.open_traffic[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.existence_gauging_stations ? dataRoad.properties.existence_gauging_stations[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.adt ? dataRoad.properties.adt[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.traffic_high_peak ? dataRoad.properties.traffic_high_peak[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.pavement_material ? dataRoad.properties.pavement_material[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.base_material ? dataRoad.properties.base_material[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.subbase_material ? dataRoad.properties.subbase_material[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.number_lanes_inc ? dataRoad.properties.number_lanes_inc[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.number_lanes_dec ? dataRoad.properties.number_lanes_dec[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.total_number_lanes ? dataRoad.properties.total_number_lanes[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.total_width ? dataRoad.properties.total_width[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.location_doc_road_projects ? dataRoad.properties.location_doc_road_projects[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.last_inspection ? dataRoad.properties.last_inspection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.prev_condition ? dataRoad.properties.prev_condition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.failure_history ? dataRoad.properties.failure_history[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.cons_LOS ? dataRoad.properties.cons_LOS[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.survey_freq ? dataRoad.properties.survey_freq[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.next_survey ? dataRoad.properties.next_survey[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.past_interv ? dataRoad.properties.past_interv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.interv_extent ? dataRoad.properties.interv_extent[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.year_interv ? dataRoad.properties.year_interv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.scope_interv ? dataRoad.properties.scope_interv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.impact_interv ? dataRoad.properties.impact_interv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.loc_doc_interv ? dataRoad.properties.loc_doc_interv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.maint_issues ? dataRoad.properties.maint_issues[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.investment10years ? dataRoad.properties.investment10years[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.investment_required ? dataRoad.properties.investment_required[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.om_comments ? dataRoad.properties.om_comments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.acess_airports_ferry_ports ? dataRoad.properties.acess_airports_ferry_ports[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.distance_airports_ferry_ports ? dataRoad.properties.distance_airports_ferry_ports[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.access_turistic_sites ? dataRoad.properties.access_turistic_sites[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.distance_turistic_sites ? dataRoad.properties.distance_turistic_sites[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.acess_industry_agriculture_fishing_sites ? dataRoad.properties.acess_industry_agriculture_fishing_sites[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.distance_industries_agriculture_fishing_sites ? dataRoad.properties.distance_industries_agriculture_fishing_sites[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.access_social_services ? dataRoad.properties.access_social_services[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.distance_social_services ? dataRoad.properties.distance_social_services[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.located_within_an_environmentally_protected_area ? dataRoad.properties.located_within_an_environmentally_protected_area[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.distance_a_dumping_area ? dataRoad.properties.distance_a_dumping_area[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.current_condition ? dataRoad.properties.current_condition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.criticality ? dataRoad.properties.criticality[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.exposure_landslide_hazard ? dataRoad.properties.exposure_landslide_hazard[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.exposure_flood_hazard ? dataRoad.properties.exposure_flood_hazard[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.asset_response_against_hazards ? dataRoad.properties.asset_response_against_hazards[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.asset_sensitivity ? dataRoad.properties.asset_sensitivity[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.risk ? dataRoad.properties.risk[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.existence_barriers_condition ? dataRoad.properties.existence_barriers_condition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.typology_barriers ? dataRoad.properties.typology_barriers[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.typology_safety_fence ? dataRoad.properties.typology_safety_fence[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.functionality_asset_functioning_expected_barrier ? dataRoad.properties.functionality_asset_functioning_expected_barrier[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.existence_signposting_road_signs_condition ? dataRoad.properties.existence_signposting_road_signs_condition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.typology_signaling ? dataRoad.properties.typology_signaling[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.functionality_asset_functioning_expected_signal ? dataRoad.properties.functionality_asset_functioning_expected_signal[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.existence_street_lighting ? dataRoad.properties.existence_street_lighting[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.typology_street_lighting ? dataRoad.properties.typology_street_lighting[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.functionality_asset_functioning_expected_light ? dataRoad.properties.functionality_asset_functioning_expected_light[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.has_there_been_past_interventions ? dataRoad.properties.has_there_been_past_interventions[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.year_performance_past_interventions ? dataRoad.properties.year_performance_past_interventions[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.comments ? dataRoad.properties.comments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bcode ? dataRoad.properties.bcode[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bexists ? dataRoad.properties.bexists[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bname ? dataRoad.properties.bname[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.byearconstruc ? dataRoad.properties.byearconstruc[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.btype ? dataRoad.properties.btype[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bsurrounding ? dataRoad.properties.bsurrounding[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.balternative ? dataRoad.properties.balternative[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bobstaclesaved ? dataRoad.properties.bobstaclesaved[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bfloodscenario ? dataRoad.properties.bfloodscenario[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bmaterialdeck ? dataRoad.properties.bmaterialdeck[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bmaterialpiers ? dataRoad.properties.bmaterialpiers[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bmaterialabutments ? dataRoad.properties.bmaterialabutments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.balignment ? dataRoad.properties.balignment[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bspans ? dataRoad.properties.bspans[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.blenght ? dataRoad.properties.blenght[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bmaxspan ? dataRoad.properties.bmaxspan[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bwidth ? dataRoad.properties.bwidth[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bfreeheight ? dataRoad.properties.bfreeheight[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bfoundation ? dataRoad.properties.bfoundation[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bpiersriver ? dataRoad.properties.bpiersriver[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bprotectabut ? dataRoad.properties.bprotectabut[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bprojectlocation ? dataRoad.properties.bprojectlocation[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bphoto ? dataRoad.properties.bphoto[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.blastinspection ? dataRoad.properties.blastinspection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bprevcondition ? dataRoad.properties.bprevcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bvisualcondition ? dataRoad.properties.bvisualcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bdamagesfoundations ? dataRoad.properties.bdamagesfoundations[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bdamagesstructural ? dataRoad.properties.bdamagesstructural[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bdamagesnonstructural ? dataRoad.properties.bdamagesnonstructural[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bconslos ? dataRoad.properties.bconslos[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bfailure ? dataRoad.properties.bfailure[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bsurveyfreq ? dataRoad.properties.bsurveyfreq[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bnextsurvey ? dataRoad.properties.bnextsurvey[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bpastinterv ? dataRoad.properties.bpastinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bintervextent ? dataRoad.properties.bintervextent[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bdateinterv ? dataRoad.properties.bdateinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bscopeinterv ? dataRoad.properties.bscopeinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bimpactinterv ? dataRoad.properties.bimpactinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.blocdocinterv ? dataRoad.properties.blocdocinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bmaintissues ? dataRoad.properties.bmaintissues[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.binvestment10years ? dataRoad.properties.binvestment10years[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.binvestmentrequired ? dataRoad.properties.binvestmentrequired[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bomcomments ? dataRoad.properties.bomcomments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bcondition ? dataRoad.properties.bcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bcriticality ? dataRoad.properties.bcriticality[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.blandslide ? dataRoad.properties.blandslide[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bflood ? dataRoad.properties.bflood[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bresphazard ? dataRoad.properties.bresphazard[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.bsensitivity ? dataRoad.properties.bsensitivity[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.brisk ? dataRoad.properties.brisk[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gcode ? dataRoad.properties.gcode[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gyearconstruct ? dataRoad.properties.gyearconstruct[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gtype ? dataRoad.properties.gtype[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gposition ? dataRoad.properties.gposition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gmaterial ? dataRoad.properties.gmaterial[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gnature ? dataRoad.properties.gnature[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gheight ? dataRoad.properties.gheight[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gh_h ? dataRoad.properties.gh_h[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gslope ? dataRoad.properties.gslope[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gdistance ? dataRoad.properties.gdistance[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.glength ? dataRoad.properties.glength[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gblocks ? dataRoad.properties.gblocks[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gtreatments ? dataRoad.properties.gtreatments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gcorrectmeas ? dataRoad.properties.gcorrectmeas[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gvegetation ? dataRoad.properties.gvegetation[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gtypevegetation ? dataRoad.properties.gtypevegetation[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gphoto ? dataRoad.properties.gphoto[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.glastinspection ? dataRoad.properties.glastinspection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gprevcondition ? dataRoad.properties.gprevcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gvisualcondition ? dataRoad.properties.gvisualcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gevidrecfailures ? dataRoad.properties.gevidrecfailures[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gtypefailure ? dataRoad.properties.gtypefailure[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gextentfailure ? dataRoad.properties.gextentfailure[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gconslos ? dataRoad.properties.gconslos[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gfailure ? dataRoad.properties.gfailure[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gsurveyfreq ? dataRoad.properties.gsurveyfreq[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gnextsurvey ? dataRoad.properties.gnextsurvey[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gpastinterv ? dataRoad.properties.gpastinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gintervextent ? dataRoad.properties.gintervextent[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gdateinterv ? dataRoad.properties.gdateinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gscopeinterv ? dataRoad.properties.gscopeinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gimpactinterv ? dataRoad.properties.gimpactinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.glocdocinterv ? dataRoad.properties.glocdocinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gmaintissues ? dataRoad.properties.gmaintissues[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.ginvestment10years ? dataRoad.properties.ginvestment10years[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.rgnvestmentrequired ? dataRoad.properties.rgnvestmentrequired[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gomcomments ? dataRoad.properties.gomcomments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gcondition ? dataRoad.properties.gcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gcriticality ? dataRoad.properties.gcriticality[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.glandslide ? dataRoad.properties.glandslide[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gflood ? dataRoad.properties.gflood[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gresphazard ? dataRoad.properties.gresphazard[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.gsensitivity ? dataRoad.properties.gsensitivity[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.grisk ? dataRoad.properties.grisk[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dcode ? dataRoad.properties.dcode[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dyearconstruc ? dataRoad.properties.dyearconstruc[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dtype ? dataRoad.properties.dtype[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dcapacity ? dataRoad.properties.dcapacity[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.drainpeak ? dataRoad.properties.drainpeak[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dmaterial ? dataRoad.properties.dmaterial[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dslope ? dataRoad.properties.dslope[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dsection ? dataRoad.properties.dsection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.ddiameter ? dataRoad.properties.ddiameter[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dlength ? dataRoad.properties.dlength[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dprotentrance ? dataRoad.properties.dprotentrance[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dprotexit ? dataRoad.properties.dprotexit[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dphoto ? dataRoad.properties.dphoto[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dlastinspection ? dataRoad.properties.dlastinspection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dprevcondition ? dataRoad.properties.dprevcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dvisualcondition ? dataRoad.properties.dvisualcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dcrossdamages ? dataRoad.properties.dcrossdamages[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dlostsection ? dataRoad.properties.dlostsection[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dconslos ? dataRoad.properties.dconslos[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dfailure ? dataRoad.properties.dfailure[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dsurveyfreq ? dataRoad.properties.dsurveyfreq[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dnextsurvey ? dataRoad.properties.dnextsurvey[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dpastinterv ? dataRoad.properties.dpastinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dintervextent ? dataRoad.properties.dintervextent[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.ddateinterv ? dataRoad.properties.ddateinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dscopeinterv ? dataRoad.properties.dscopeinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dimpactinterv ? dataRoad.properties.dimpactinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dlocdocinterv ? dataRoad.properties.dlocdocinterv[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dmaintissues ? dataRoad.properties.dmaintissues[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dinvestment10years ? dataRoad.properties.dinvestment10years[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dinvestmentrequired ? dataRoad.properties.dinvestmentrequired[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.domcomments ? dataRoad.properties.domcomments[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dcondition ? dataRoad.properties.dcondition[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dcriticality ? dataRoad.properties.dcriticality[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dlandslide ? dataRoad.properties.dlandslide[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dflood ? dataRoad.properties.dflood[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dresphazard ? dataRoad.properties.dresphazard[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dsensitivity ? dataRoad.properties.dsensitivity[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.dsensitivity ? dataRoad.properties.drisk[drindex] : '--';
-                    r[++j] = '</td><td>';
-                    r[++j] = dataRoad.properties.drisk ? dataRoad.properties.dposition[drindex] : '--';
-                    r[++j] = '</td>';
+                    r[++j] = '<tr>';
+                    $.each(propertiesCols, function(key1, value1) {
+                        //console.log(key1, value1);
+
+                        //console.log(key, value);
+                        if (key1 === 'Trackinfo') {
+                            r[++j] = '<td>';
+                            r[++j] = drindex;
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.properties.inventario ? dataRoad.properties.inventario[drindex] : '--';
+                            r[++j] = '</td><td>';
+                            r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
+                            r[++j] = '</td><td>';
+                            r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][0];
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][1];
+                            r[++j] = '</td>';
+                            r[++j] = '</td><td>';
+                            r[++j] = dataRoad.geometry.coordinates[drindex][2];
+                            r[++j] = '</td>';
+                        } else {
+                            $.each(value1, function(key, value) {
+                                r[++j] = '<td>';
+                                r[++j] = (dataRoad.properties[key] != undefined && dataRoad.properties[key][drindex] != undefined) ? dataRoad.properties[key][drindex] : '--';
+                                r[++j] = '</td>';
+                            });
+                        }
+                    });
                     r[++j] = '</tr>';
                 });
                 r[++j] = '</tbody>';
@@ -740,6 +642,7 @@
         $('#editbutton').hide();
         $('#editvideobutton').hide();
         $('#downloadbutton').hide();
+        $('#exportbutton').hide();
         $('#dataTable').empty();
         $('#versionbutton').show();
         // alert("ACT " + id);

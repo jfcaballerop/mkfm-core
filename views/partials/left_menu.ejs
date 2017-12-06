@@ -15,8 +15,8 @@
                 <span><%- trans('MENU_DASHBOARD') %></span>
             </a>
         </li>
-        <li class="sub-menu">
-            <a href="javascript:;">
+        <li class="sub-menu dcjq-parent-li">
+            <a href="javascript:;" class="dcjq-parent">
                 <i class=" fa fa-map-marker"></i>
                 <span><%- trans('MENU_MAPS') %></span>
             </a>
@@ -33,12 +33,19 @@
                 </li>
             </ul>
         </li>
+        <li class="sub-menu dcjq-parent-li">
+            <a href="/auth/WEB/data_sheet/list_info" class="dcjq-parent">
+                <i class=" fa fa-table"></i>
+                <span><%- trans('MENU_DATASHEET') %></span>
+            </a>
+
+        </li>
         <!--
             ADMIN MENU
         -->
         <% if (token.admin) { %>
-            <li class="sub-menu">
-                <a href="javascript:;">
+            <li class="sub-menu dcjq-parent-li">
+                <a href="javascript:;" class="dcjq-parent">
                     <i class=" fa fa-cogs"></i>
                     <span><%- trans('MENU_CP') %></span>
                 </a>
@@ -47,6 +54,9 @@
                 </ul>
                 <ul class="sub">
                     <li><a href="/auth/WEB/gis/upload"><span class=" fa fa-upload"> <%- trans('MENU_CP_UPFILE') %> </span></a></li>
+                </ul>
+                <ul class="sub">
+                    <li><a href="/auth/WEB/admin/formulas"><span class=" fa fa-wrench "> <%- trans('MENU_CP_FORM') %> </span></a></li>
                 </ul>
             </li>
             <% } %>

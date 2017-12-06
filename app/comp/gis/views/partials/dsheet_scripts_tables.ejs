@@ -1,0 +1,350 @@
+<script>
+    var ROADS = {
+        general_data: {
+            rcode: "Asset Code",
+            rname: "Asset Name",
+            rcategory: "Road Category",
+            rdateconstruct: "Year of Construction",
+            rnumbridges: "No. of bridges",
+            rnumculverts: "No. of culverts",
+            rnumLongitudinaldrainage: "Km. of Longitudinal drainage",
+            rnumretainingwalls: "No. of retaining walls",
+            rnumcuttings: "No. of cuttings",
+            rnumembankments: "No. of embankments",
+            rnumbarriers: "No. of barriers",
+            rnumverticalsignaling: "No. of vertical signaling",
+            rnumstreetlights: "No. of street lights"
+        },
+        inventory_data: {
+            rmaterial: "Pavement material",
+            rbasematerial: "Base material",
+            rsubbasematerial: "Subbase material",
+            rlaneinc: "Number of lanes (increasing KP)",
+            rlanedecr: "Number of lanes (decreasing KP)",
+            rlanetotal: "Total number of lanes",
+            rwidth: "Total width (m)",
+            rlocdoc: "Documentation",
+            rvideo: "Video"
+        },
+        operations: {
+            ralternatitinerary: "Existence of alternative itinerary",
+            rdendritic: "Road dendritic rank",
+            ropen: "Is the road open to traffic?",
+            rgauging: "Existence of gauging stations",
+            radt: "ADT",
+            rtrafficpeak: "Traffic high peak",
+            rinfrint: "Acess to airports/ferry ports",
+            rtourism: "Access to touristic sites",
+            rindustry: "Access to industries, agriculture, fishing sites",
+            rhealth: "Access to health care services",
+            renvironment: "Located within an environmentally protected area",
+            rwaste: "Distance to a dumping area",
+            iri: "IRI - Pavement roughtness",
+            rvcondition: "Current visual condition",
+            rconslos: "Consequences of failure on LOS",
+            rprevcondition: "Previous condition rate",
+            rlastinspection: "Date of last inspection",
+            rsurveyfreq: "Survey frequency",
+            rnextsurvey: "Date of next survey",
+            rfailure: "Failure history",
+            rlastoverlay: "Date of last overlay",
+            rlastyearinterv: "Have there been past interventions?",
+            rlastyearintervextent: "Has the last intervention been global or partial?",
+            rlastyearintervdate: "Date of performance of last intervention",
+            rlastyearintervscope: "Scope of last intervention",
+            rlastyearintervcost: "Cost of last intervention",
+            rlastyearintervimpactcond: "Impact of last intervention on asset condition",
+            rlocdoclastyearinterv: "Location of the documentation of last  intervention",
+            rcurryearinterv: "Have there been interventions performed during the current year?",
+            rcurryearintervextent: "Have they been global or partial interventions?",
+            rcurryearintervdate: "Date of performance of current year interventions",
+            rcurryearintervscope: "Scope of current year interventions",
+            rcurryearintervcost: "Accummulated Cost of current year interventions",
+            rlocdoccurryearinterv: "Location of the documentation of last year interventions",
+            rmaintissues: "Maintainability issues",
+            rinvestment10years: "Investment undertaken in the last 10 years",
+            rinvestmentrequired: "Investment required to upgrade to A class",
+            romcomments: "Comments to operation and maintainance"
+        },
+        risk: {
+            rlandslide: "Exposure to landslide hazard",
+            rflood: "Exposure to flood hazard",
+            rccondition: "Currrent Condition",
+            rcriticality: "Criticality",
+            rsensitivity: "Asset Sensitivity",
+            rrisk: "RISK",
+            rriskphysical: "Risk due to Physical Deterioration",
+            rrisknatural: "Risk due to Natural Hazards"
+        }
+    };
+    var BRIDGES = {
+        general_data: {
+            bcode: "Asset Code",
+            bname: "Asset Name",
+            byearconstruc: "Year of Construction",
+            btype: "Structural Typology",
+            bsurrounding: "Environment",
+            bobstaclesaved: "Obstacle overpassed",
+            bfloodscenario: "Design Flood Scenario",
+            Bloadcapacity: "Load Capacity"
+        },
+        inventory_data: {
+            bmaterialdeck: "Material - Deck",
+            bmaterialgirder: "Material - Girders",
+            bmaterialpiers: "Material - Piers",
+            bmaterialabutments: "Material - Abutments",
+            balignment: "Bridge alignment",
+            bspans: "Single or multiple span?",
+            bnumberspans: "Number of spans",
+            blenght: "Total length (m)",
+            bmaxspan: "Maximum span (m)",
+            bwidth: "Total width (m)",
+            bfreeheight: "Free height (m)",
+            bfoundation: "Foundations typology",
+            bpiersriver: "Existence of piers over riverbed",
+            bprotectabut: "Protection of abutments /nearby areas",
+            bprojectlocation: "Location of the documentation of bridge projects"
+        },
+        operations: {
+            balternative: "Existence of alternative itinerary",
+            bvisualcondition: "Current visual condition",
+            bconslos: "Consequences of failure on LOS",
+            bprevcondition: "Previous condition rate",
+            blastinspection: "Date of last inspection",
+            bsurveyfreq: "Survey frequency",
+            bnextsurvey: "Date of next survey",
+            bfailure: "Failure history",
+            bdamagesfoundations: "Damages on foundations",
+            bdamagesfoundationsgeneraltype: "Type of damages on foundations (from foundation-ground decay, from foundation decay)",
+            bdamagesfoundationsdetailedtype: "Type of damages on foundations due to foundation-ground decay",
+            bdamagesstructural: "Damages on structural elements",
+            bdamagesvaultsarchesmechanicaldurable: "Damages on vault / arches (mechanical vs. durable)",
+            BDamagesVaultArchesSeverity: "Severity of damages on vault / arches",
+            BDamagesPiers: "Damages on piers (mechanical vs. durable)",
+            BDamagesPiersSeverity: "Severity of damages on piers",
+            BDamagesSpandrel: "Damages on spandrel walls (mechanical vs. durable)",
+            BDamagesSpandrelSeverity: "Severity of damages on spandrel walls",
+            BDamagesAbutments: "Damages on abutments (mechanical vs. durable)",
+            BDamagesAbutmentsSeverity: "Severity of damages on abutments",
+            BDamagesSidewalls: "Damages on side walls (mechanical vs. durable)",
+            BDamagessidewallsSeverity: "Severity of damages on side walls",
+            BDamagesSlab: "Damages on slab (mechanical vs. durable)",
+            BDamagesslabSeverity: "Severity of damages on slab",
+            BDamagesBeams: "Damages on beams (mechanical vs. durable)",
+            BDamagesBeamsSeverity: "Severity of damages on beams",
+            BDamagesBearings: "Damages on bearings (mechanical vs. durable)",
+            BDamagesBearingsSeverity: "Severity of damages on bearings",
+            BDamagesSpecialareas: "Damages on special areas (mechanical vs. durable)",
+            BDamagesSpecialareasSeverity: "Severity of damages on special areas",
+            bdamagesnonstructural: "Damages on non structural elements",
+            BLastYearInterv: "Have there been past interventions performed during the last year?",
+            BLastYearIntervExtent: "Have they been global or partial interventions?",
+            BLastYearIntervDate: "Date of performance of last year interventions",
+            BLastYearIntervScope: "Scope of last year interventions",
+            BLastYearIntervCost: "Cost of last year interventions",
+            BLastYearIntervImpactCond: "Impact of last year interventions on asset condition",
+            BLocDocLastYearInterv: "Location of the documentation of last year interventions",
+            BCurrYearInterv: "Have there been interventions performed during the current year?",
+            BCurrYearIntervExtent: "Have they been global or partial interventions?",
+            BCurrYearIntervDate: "Date of performance of current year interventions",
+            BCurrYearIntervScope: "Scope of current year interventions",
+            BCurrYearIntervCost: "Accummulated cost of current year interventions",
+            BLocDocCurrYearInterv: "Location of the documentation of last year interventions",
+            BMaintIssues: "Maintainability issues",
+            Binvestment10years: "Investment undertaken in the last 10 years",
+            binvestmentrequired: "Investment required to upgrade to A class",
+            bomcomments: "Comments to operation and maintainance"
+        },
+        risk: {
+            bcondition: "Current condition",
+            bcriticality: "Criticality",
+            blandslide: "Exposure to landslide hazard",
+            bflood: "Exposure to flood hazard",
+            bresphazard: "Asset Response against hazards",
+            bsensitivity: "Asset Sensitivity",
+            brisk: "RISK",
+            briskphysical: "Risk due to Physical Deterioration",
+            brisknatural: "Risk due to Natural Hazards"
+        }
+
+    };
+    var CULVERTS = {
+        general_data: {
+            Ccode: "Asset Code",
+            Cyearconstruc: "Year of construction",
+            Ctype: "Type of drainage",
+            Clocation: "Culvert location",
+            Cfeeding: "Feeding system",
+            Csection: "Type of section",
+            Ccapacity: "Drain Capacity",
+            Crainpeak: "Design rain peak values"
+        },
+        inventory_data: {
+            Cmaterial: "Material",
+            Cnumelem: "Number of elements",
+            Cdiameter: "Diameter / Height (m)",
+            Cwidth: "Width (m)",
+            Clength: "Length (m)",
+            Cprotentrance: "Protection of embankment at the drain entrance",
+            Cprotexit: "Protection bed / inverter arch at the drain exit"
+        },
+        operations: {
+            CVisualCondition: "Current visual condition",
+            CConsLOS: "Consequences of failure on LOS",
+            CPrevCondition: "Previous condition rate",
+            CLastInspection: "Date of last inspection",
+            CSurveyFreq: "Survey frequency",
+            CNextSurvey: "Date of next survey",
+            Cfailure: "Failure history",
+            CDamages: "Damages on culverts",
+            Cclearing: "Clearing required",
+            CLostSection: "Lost of section due to blocking/silting/obstacles (%)",
+            CLastYearInterv: "Have there been past interventions performed during the last year?",
+            CLastYearIntervExtent: "Have they been global or partial interventions?",
+            CLastYearIntervDate: "Date of performance of last year interventions",
+            CLastYearIntervScope: "Scope of last year interventions",
+            CLastYearIntervCost: "Cost of last year interventions",
+            CLastYearIntervImpactCond: "Impact of last year interventions on asset condition",
+            CLocDocLastYearInterv: "Location of the documentation of last year interventions",
+            CCurrYearInterv: "Have there been interventions performed during the current year?",
+            CCurrYearIntervExtent: "Have they been global or partial interventions?",
+            CCurrYearIntervDate: "Date of performance of current year interventions",
+            CCurrYearIntervScope: "Scope of current year interventions",
+            CCurrYearIntervCost: "Accummulated cost of current year interventions",
+            CLocDocCurrYearInterv: "Location of the documentation of last year interventions",
+            CMaintIssues: "Maintainability issues",
+            Cinvestment10years: "Investment undertaken in the last 10 years",
+            Cinvestmentrequired: "Investment required to upgrade to A class",
+            COMComments: "Comments to operation and maintainance"
+        },
+        risk: {
+            Ccondition: "Current condition",
+            Ccriticality: "Criticality",
+            CLandslide: "Exposure to landslide hazard",
+            CFlood: "Exposure to flood hazard",
+            CRespHazard: "Asset Response against hazards",
+            Csensitivity: "Asset Sensitivity",
+            CRISK: "RISK",
+            CRISKphysical: "Risk due to Physical Deterioration",
+            CRISKnatural: "Risk due to Natural Hazards"
+        }
+
+
+    };
+    var GEOTS = {
+        general_data: {
+            gcode: "Asset Code",
+            gyearconstruct: "Year of construction",
+            gtype: "Type of geotechnical asset",
+            gposition: "Position"
+        },
+        inventory_data: {
+            gmaterial: "Material - Retaining walls",
+            gnature: "Nature - Earthworks",
+            gheight: "Height (m)",
+            gh_h: "Relation h/H ",
+            gslope: "Slope / Angle (º)",
+            gdistance: "Distance to road (m)",
+            gshoulders: "Shoulders / Verges",
+            glength: "Length (m)",
+            gblocks: "Size of blocks (m)",
+            gtreatments: "Existence of geotechnical treatments",
+            gtreatmentsretaining: "Existence  of retaining treatments",
+            gtreatmentsretainingtype: "Type  of retaining treatments",
+            gtreatmentsretainingextension: "Extension of retaining treatments (%)",
+            gtreatmentsretainingeffectiveness: "Effectiveness of retaining treatments",
+            gtreatmentsretainingconservation: "Conservation of retaining treatments",
+            gtreatmentsretainingother: "Other retaining treatments",
+            gtreatmentsdefence: "Existence  of defence treatments",
+            gtreatmentsdefencetype: "Type  of defence treatments",
+            gtreatmentsdefenceextension: "Extension of defence treatments (%)",
+            gtreatmentsdefenceeffectiveness: "Effectiveness of defence treatments",
+            gtreatmentsdefenceconservation: "Conservation of defence treatments",
+            gtreatmentsdefenceother: "Other defence treatments",
+            gtreatmentscoating: "Existence  of coating treatments",
+            gtreatmentscoatingtype: "Type  of coating treatments",
+            gtreatmentscoatingextension: "Extension of coating treatments (%)",
+            gtreatmentscoatingeffectiveness: "Effectiveness of coating treatments",
+            gtreatmentscoatingconservation: "Conservation of coating treatments",
+            gtreatmentscoatingother: "Other coating treatments",
+            gtreatmentsinternaldrainages: "Existence  of internal drainages",
+            gtreatmentsinternaldrainagesextension: "Extension of internal drainages (%)",
+            gtreatmentsinternaldrainageseffectiveness: "Effectiveness of internal drainages",
+            gtreatmentsinternaldrainagesconservation: "Conservation of internal drainages",
+            gvegetation: "Existence of vegetation",
+            gtypevegetation: "Type of vegetation"
+        },
+        operations: {
+            gvisualcondition: "Current visual condition",
+            gconslos: "Consequences of failure on LOS",
+            gprevcondition: "Previous condition rate",
+            glastinspection: "Date of last inspection",
+            gsurveyfreq: "Survey frequency",
+            gnextsurvey: "Date of next survey",
+            gfailure: "Failure history",
+            gevidrecfailures: "Evidence of recent failures?",
+            gtypefailure: "Type of failure process",
+            gintensityfailure: "Intensity of failure process",
+            gextentfailure: "Extent of failure (%)",
+            gpastinterv: "Have there been past interventions performed during the last year?",
+            gintervextent: "Have they been global or partial interventions?",
+            gdateinterv: "Date of performance of last year interventions",
+            gscopeinterv: "Scope of last year interventions",
+            qintervcost: "Cost of last year interventions",
+            gimpactinterv: "Impact of last year interventions on asset condition",
+            glocdocinterv: "Location of the documentation of last year interventions",
+            gcurryearinterv: "Have there been interventions performed during the current year?",
+            gcurryearintervextent: "Have they been global or partial interventions?",
+            gcurryearintervdate: "Date of performance of current year interventions",
+            gcurryearintervscope: "Scope of current year interventions",
+            gcurryearintervcost: "Accummulated cost of current year interventions",
+            glocdoccurryearinterv: "Location of the documentation of last year interventions",
+            gmaintissues: "Maintainability issues",
+            ginvestment10years: "Investment undertaken in the last 10 years",
+            rgnvestmentrequired: "Investment required to upgrade to A class",
+            gomcomments: "Comments to maintainance"
+        },
+        risk: {
+            gcondition: "Current condition",
+            gcriticality: "Criticality",
+            glandslide: "Exposure to landslide hazard",
+            gflood: "Exposure to flood hazard",
+            gresphazard: "Asset Response against hazards",
+            gsensitivity: "Asset Sensitivity",
+            grisk: "RISK",
+            griskphysical: "Risk due to Physical Deterioration",
+            grisknatural: "Risk due to Natural Hazards"
+        }
+
+
+
+    };
+    var gen_data = [];
+    var g = -1;
+    gen_data[++g] = '<div id="generaldatadiv" class="content-panel" style="display:none;">';
+    gen_data[++g] = '<table class="table table-striped table-advance table-hover">';
+    gen_data[++g] = '<thead><tr><th colspan="2" class="text-center">General Data</th><tr></thead>';
+    gen_data[++g] = '<tbody id="generaldatatbody">';
+    gen_data[++g] = '</tbody></table></div>';
+    var inv_data = [];
+    var i = -1;
+    inv_data[++i] = '<div id="inventorydatadiv" class="content-panel" style="display:none;">';
+    inv_data[++i] = '<table class="table table-striped table-advance table-hover">';
+    inv_data[++i] = '<thead><tr><th colspan="2" class="text-center">Invetory Data</th><tr></thead>';
+    inv_data[++i] = '<tbody id="inventorydatabody">';
+    inv_data[++i] = '</tbody></table></div>';
+    var op_data = [];
+    var o = -1;
+    op_data[++o] = '<div id="operationdiv" class="content-panel" style="display:none;">';
+    op_data[++o] = '<table class="table table-striped table-advance table-hover">';
+    op_data[++o] = '<thead><tr><th colspan="2" class="text-center">Operation Data</th><tr></thead>';
+    op_data[++o] = '<tbody id="operationdatabody">';
+    op_data[++o] = '</tbody></table></div>';
+    var risk_data = [];
+    var r = -1;
+    risk_data[++r] = '<div id="riskdiv" class="content-panel" style="display:none;">';
+    risk_data[++r] = '<table class="table table-striped table-advance table-hover">';
+    risk_data[++r] = '<thead><tr><th colspan="2" class="text-center">Indexes and risk analysis</th><tr></thead>';
+    risk_data[++r] = '<tbody id="riskdatabody">';
+    risk_data[++r] = '</tbody></table></div>';
+</script>

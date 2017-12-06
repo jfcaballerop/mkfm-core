@@ -81,5 +81,11 @@ router.use('/index', require(path.join(__dirname, './index')));
 // MAPS auth
 router.use('/maps', require(path.join(__dirname, '../app/comp/gis/routes/maps')));
 
+// DATA SHEET auth
+router.use('/data_sheet', require(path.join(__dirname, '../app/comp/gis/routes/data_sheet')));
+
+// ADMIN auth
+router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/formulas')));
+
 
 module.exports = router;
