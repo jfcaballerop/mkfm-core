@@ -24,7 +24,7 @@
                         var h = -1;
 
                         $.each(form.formulaSpec, function(i, fspec) {
-                            $('#selectFormula').empty();
+                            // $('#selectFormula').empty();
                             $('#selectFormula').append('<div class="radio"><label >' +
                                 '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                                 '</label></div>');
@@ -72,6 +72,11 @@
                         });
                         $('input[type=radio][name=optionsRadios]').on('change', function() {
                             // alert(this.value);
+                            var arrRadio = $('input[type=radio][name=optionsRadios]');
+                            $.each(arrRadio, function(r, radio) {
+                                console.log(r + ' ' + radio.value);
+                                $('#formulaTable' + radio.value).hide();
+                            });
                             var capa = '#formulaTable' + this.value;
                             $(capa).show();
 
