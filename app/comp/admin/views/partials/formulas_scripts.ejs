@@ -25,7 +25,7 @@
 
                         $.each(form.formulaSpec, function(i, fspec) {
                             // $('#selectFormula').empty();
-                            $('#selectFormula').append('<div class="radio"><label >' +
+                            $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                                 '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                                 '</label></div>');
                             html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;"><table class="table table-bordered table-striped table-condensed" >';
@@ -36,7 +36,9 @@
                                 if (data.constructor === objectConstructor) {
                                     html[++h] = '<tr>';
                                     html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
-                                    html[++h] = '<div class="col-sm-4"> <input class="form-control" id="" type="text" value="' + data.weight + '"></div></td>';
+                                    html[++h] = '<div class="col-sm-4">';
+                                    html[++h] = '<input class="form-control" name="AssetCriticality_' + fspec.name + '_' + key + '" type="text" value="' + data.weight + '">';
+                                    html[++h] = '</div></td>';
                                     var tr = 0;
                                     $.each(data, function(j, data2) {
                                         if (data2.constructor === objectConstructor) {
@@ -81,6 +83,41 @@
                             $(capa).show();
 
 
+                        });
+                        var valant = '';
+                        $('input[type=text]').on('focus', function() {
+                            console.log(this.value);
+                            // On first focus, check to see if we have the default text saved
+                            // If not, save current value to data()
+                            //if (!$(this).data('')) $(this).data('', $(this).val());
+
+                            // check to see if the input currently equals the default before clearing it
+                            valant = $(this).val();
+                        });
+                        $('input[type=text]').on('blur', function() {
+                            // on blur, if there is no value, set the defaultText
+                            if ($(this).val() != valant) {
+                                // $(this).val($(this).data('defaultText'));
+                                var dataPost = {};
+                                dataPost[this.name] = this.value;
+
+
+                                console.log('New Val: ' + JSON.stringify(dataPost));
+
+                                var p1 = $.ajax({
+                                    url: '/auth/WEB/admin/update_field/' + this.name + '/' + this.value,
+                                    data: JSON.stringify(dataPost),
+                                    type: 'POST',
+                                    contentType: 'application/json'
+                                }, function(data) {
+                                    // console.log('koboinfo ' + JSON.stringify(data));
+                                    return (data);
+                                });
+                                Promise.all([p1]).then(function(values) {
+                                    console.log(values);
+                                });
+
+                            };
                         });
                         break;
 
