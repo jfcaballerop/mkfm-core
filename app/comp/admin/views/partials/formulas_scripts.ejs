@@ -8,6 +8,7 @@
     console.log(formulasDB);
 
     $(document).ready(function() {
+
         $.each(formulasDB, function(index, form) {
             console.log(form.properties.HTML);
             $('#' + form.properties.HTML.id).on('click', function(event) {
@@ -18,12 +19,16 @@
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
                     case "AssetCriticality":
-                        $('#unseen').empty();
+                        $('#formulaSpec').empty();
                         var html = [];
                         var h = -1;
+
                         $.each(form.formulaSpec, function(i, fspec) {
-                            html[++h] = '<i class="fa fa-calculator"></i>' + fspec.name;
-                            html[++h] = '<table id="formulaTable" class="table table-bordered table-striped table-condensed">';
+                            $('#selectFormula').empty();
+                            $('#selectFormula').append('<div class="radio"><label >' +
+                                '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
+                                '</label></div>');
+                            html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;"><table class="table table-bordered table-striped table-condensed" >';
                             html[++h] = '<tbody id="formulaTableBody">';
                             $.each(fspec, function(key, data) {
                                 console.log(key);
@@ -61,8 +66,15 @@
                                 };
                             });
                             //console.log(fs'</tbody></table>'pec.fname);
-                            html[++h] = '</tbody></table>';
-                            $('#unseen').html(html.join(''));
+                            html[++h] = '</tbody></table></div>';
+                            $('#formulaSpec').html(html.join(''));
+
+                        });
+                        $('input[type=radio][name=optionsRadios]').on('change', function() {
+                            // alert(this.value);
+                            var capa = '#formulaTable' + this.value;
+                            $(capa).show();
+
 
                         });
                         break;
@@ -73,6 +85,7 @@
 
             });
         });
+
 
     });
 </script>
