@@ -415,7 +415,7 @@ router.post('/V1/update_field/', function(req, res, next) {
     var field_name = Object.keys(postData)[0];
     // console.log(field_name + ": " + value);
     var sendData = {};
-    var arrField = field_name.split('_');
+    var arrField = field_name.split('__');
 
     // console.log(arrField);
 
@@ -423,14 +423,21 @@ router.post('/V1/update_field/', function(req, res, next) {
         if (err) {
             res.send(500, err.message);
         }
+        /**
+         * Si es Length = 3 estoy en las formulas de primer nivel
+         * Para Length = 4 estoy en el segundo level
+         * Para Length = 5 estoy en scoring
+         */
         if (arrField.length == 3) {
             for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
                 //console.log(fspec.name);
                 if (fspec.name === arrField[1]) {
-                    console.log(f[0].formulaSpec[key][arrField[2]].weight);
-                    console.log(arrField[2]);
-                    f[0].formulaSpec[key][arrField[2]].weight = value;
-                    f[0].save(function(err, fsaved) {
+                    var formSave = new Formula(f[0]);
+                    // console.log('formSave: \n' + JSON.stringify(formSave));
+                    // console.log(formSave.formulaSpec[key][arrField[2]].weight);
+                    // console.log(key + ' ' + value);
+                    formSave.formulaSpec[key][arrField[2]].weight = value;
+                    formSave.save(function(err, fsaved) {
                         if (err) {
                             return res.status(500).send(err.message);
                         }

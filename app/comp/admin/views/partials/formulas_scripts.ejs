@@ -37,7 +37,7 @@
                                     html[++h] = '<tr>';
                                     html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
                                     html[++h] = '<div class="col-sm-4">';
-                                    html[++h] = '<input class="form-control" name="AssetCriticality_' + fspec.name + '_' + key + '" type="text" value="' + data.weight + '">';
+                                    html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '" type="text" value="' + data.weight + '">';
                                     html[++h] = '</div></td>';
                                     var tr = 0;
                                     $.each(data, function(j, data2) {
