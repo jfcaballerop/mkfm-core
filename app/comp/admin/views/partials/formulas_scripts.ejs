@@ -7,8 +7,32 @@
 
     console.log(formulasDB);
 
-    $(document).ready(function() {
+    function clickButton(id) {
+        //alert('click');
+        // TODO: Start spinner
 
+        var $this = $('#' + id);
+        console.log($this.attr('id'));
+        var arrCallProm = $this.attr('id').split('__');
+        var dataPost = {};
+        dataPost[arrCallProm[0]] = arrCallProm[1];
+        console.log('Call update critically: ' + JSON.stringify(dataPost));
+        // var p1 = $.ajax({
+        //     url: '/auth/WEB/admin/update_formulas_tracks/' + arrCallProm[0] + '/' + arrCallProm[1],
+        //     data: JSON.stringify(dataPost),
+        //     type: 'POST',
+        //     contentType: 'application/json'
+        // }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+        // });
+        // Promise.all([p1]).then(function(values) {
+        //     console.log(values);
+        //     if (values[0].result === "OK") {
+        //         // TODO: Stop spinner
+        //     }
+        // });
+
+    };
+    $(document).ready(function() {
         $.each(formulasDB, function(index, form) {
             console.log(form.properties.HTML);
             $('#' + form.properties.HTML.id).on('click', function(event) {
@@ -29,8 +53,9 @@
                             $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                                 '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                                 '</label></div>');
-                            html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;"><table class="table table-bordered table-striped table-condensed" >';
-                            html[++h] = '<tbody id="formulaTableBody">';
+                            html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
+                            html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update tracks</button>';
+                            html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
                             $.each(fspec, function(key, data) {
                                 console.log(key);
                                 console.log(data);
