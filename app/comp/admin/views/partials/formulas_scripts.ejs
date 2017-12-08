@@ -15,6 +15,7 @@
                 $this = $(this);
                 //alert('AssetCriticality');
                 $('#formulaName').empty();
+                $('#selectFormula').empty();
                 $('#formulaName').append(form.properties.HTML.text);
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
@@ -23,8 +24,8 @@
                         var html = [];
                         var h = -1;
 
+                        $('#selectFormula').empty();
                         $.each(form.formulaSpec, function(i, fspec) {
-                            // $('#selectFormula').empty();
                             $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                                 '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                                 '</label></div>');
@@ -129,6 +130,7 @@
                         break;
 
                     default:
+                        $('#formulaSpec').empty();
                         break;
                 }
 
