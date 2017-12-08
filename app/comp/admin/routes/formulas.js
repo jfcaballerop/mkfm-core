@@ -448,6 +448,46 @@ router.post('/V1/update_field/', function(req, res, next) {
                 }
 
             };
+        } else if (arrField.length == 4) {
+            for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
+                //console.log(fspec.name);
+                if (fspec.name === arrField[1]) {
+                    var formSave = new Formula(f[0]);
+                    // console.log('formSave: \n' + JSON.stringify(formSave));
+                    // console.log(formSave.formulaSpec[key][arrField[2]].weight);
+                    // console.log(key + ' ' + value);
+                    formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
+                    formSave.save(function(err, fsaved) {
+                        if (err) {
+                            return res.status(500).send(err.message);
+                        }
+                        res.status(200).jsonp(ret);
+
+                    });
+
+                }
+
+            };
+        } else if (arrField.length == 5) {
+            for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
+                //console.log(fspec.name);
+                if (fspec.name === arrField[1]) {
+                    var formSave = new Formula(f[0]);
+                    // console.log('formSave: \n' + JSON.stringify(formSave));
+                    // console.log(formSave.formulaSpec[key][arrField[2]].weight);
+                    // console.log(key + ' ' + value);
+                    formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
+                    formSave.save(function(err, fsaved) {
+                        if (err) {
+                            return res.status(500).send(err.message);
+                        }
+                        res.status(200).jsonp(ret);
+
+                    });
+
+                }
+
+            };
         }
     });
 

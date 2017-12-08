@@ -48,13 +48,15 @@
                                             }
                                             html[++h] = '<td class="col-sm-6"><label class="col-sm-6 col-sm-6 control-label">' + data2.name +
                                                 '<br>[Type: ' + data2.type + ']</label>';
-                                            html[++h] = '<div class="col-sm-6"> <input class="form-control" id="" type="text" value="' + data2.weight +
+                                            html[++h] = '<div class="col-sm-6">';
+                                            html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight +
                                                 '"></div></td>';
                                             if (data2.scoring != undefined) {
                                                 html[++h] = '<td class="col-sm-3">';
                                                 $.each(data2.scoring, function(s, scoring) {
                                                     html[++h] = '<label class="col-sm-8 control-label">' + s +
-                                                        '</label><div class="col-sm-4"><input class="form-control" id="" type="text" value="' + scoring +
+                                                        '</label><div class="col-sm-4">';
+                                                    html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '__' + s + '" type="text" value="' + scoring +
                                                         '"></div>';
 
                                                 });
@@ -117,10 +119,12 @@
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
-                                    };
+                                    } else {
+                                        $input.css("border", "2px solid red");
+                                    }
                                 });
 
-                            };
+                            }
                         });
                         break;
 
