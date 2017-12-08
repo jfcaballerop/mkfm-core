@@ -100,7 +100,7 @@
                                 // $(this).val($(this).data('defaultText'));
                                 var dataPost = {};
                                 dataPost[this.name] = this.value;
-
+                                var $input = $(this);
 
                                 console.log('New Val: ' + JSON.stringify(dataPost));
 
@@ -115,6 +115,9 @@
                                 });
                                 Promise.all([p1]).then(function(values) {
                                     console.log(values);
+                                    if (values[0].result === "OK") {
+                                        $input.css("border", "2px solid green");
+                                    };
                                 });
 
                             };
