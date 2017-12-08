@@ -10,6 +10,7 @@
     function clickButton(id) {
         //alert('click');
         // TODO: Start spinner
+        $('#spinner' + id).show();
         $('#resultUpdate' + id).empty();
         var $this = $('#' + id);
         console.log($this.attr('id'));
@@ -27,7 +28,9 @@
         Promise.all([p1]).then(function(values) {
             console.log(values);
             if (values[0].result === "OK") {
-                // TODO: Stop spinner
+                // TODO: Stop spinner        
+                $('#spinner' + id).hide();
+
                 $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
                 console.log(values[0].tracksUpdated);
 
@@ -58,6 +61,8 @@
                                 '</label></div>');
                             html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
                             html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update tracks</button>';
+                            html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
+
                             html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
                             html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
                             $.each(fspec, function(key, data) {
