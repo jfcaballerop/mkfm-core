@@ -231,27 +231,66 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                 formResult = new Array(ifdt.geometry.coordinates.length);
                 for (index = 0; index < ifdt.geometry.coordinates.length; index++) {
                     // console.log(index);
-                    for (var fspec of f[0].formulaSpec) {
-                        if (fspec.name === asset) {
-                            // console.log(fspec);
-                            for (var [l1key, level1] of Object.entries(fspec)) {
-                                if (typeof level1 === 'object') {
-                                    for (var [fieldkey, field] of Object.entries(level1)) {
-                                        if (typeof field === 'object') {
-                                            /**
-                                             * En este nivel tengo los campos de la formula
-                                             * Debo comprobar que tienen valor para poder aplicar la formula
-                                             */
-                                            if (ifdt.properties[fieldkey] != undefined &&
-                                                ifdt.properties[fieldkey] != null &&
-                                                ifdt.properties[fieldkey] != [] &&
-                                                ifdt.properties[fieldkey][index] != undefined &&
-                                                ifdt.properties[fieldkey][index] != "") {
-                                                sendData[fieldkey] = ifdt.properties[fieldkey][index];
-                                                // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
-                                            } else {
-                                                // console.log(fieldkey + ' : UNDEFINED');
-                                                sendData[fieldkey] = undefined;
+                    var calcularValue = false;
+                    /**
+                     * debo comprobar que el asset elegido tenga CODE para poder actualizarlo
+                     * Solo sucederá en aquellos casos que esté completado
+                     */
+                    switch (asset) {
+                        case 'Pavements':
+                            if (ifdt.properties.rcode != undefined &&
+                                ifdt.properties.rcode != null &&
+                                ifdt.properties.rcode != [] &&
+                                ifdt.properties.rcode[index] != undefined &&
+                                ifdt.properties.rcode[index] != "") {
+                                calcularValue = true;
+                                // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                            } else {
+                                // console.log(fieldkey + ' : UNDEFINED');
+                                calcularValue = false;
+                            }
+                            break;
+                        case 'Bridges':
+                            if (ifdt.properties.bcode != undefined &&
+                                ifdt.properties.bcode != null &&
+                                ifdt.properties.bcode != [] &&
+                                ifdt.properties.bcode[index] != undefined &&
+                                ifdt.properties.bcode[index] != "") {
+                                calcularValue = true;
+                                // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                            } else {
+                                // console.log(fieldkey + ' : UNDEFINED');
+                                calcularValue = false;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    if (calcularValue) {
+                        for (var fspec of f[0].formulaSpec) {
+                            if (fspec.name === asset) {
+                                // console.log(fspec);
+                                for (var [l1key, level1] of Object.entries(fspec)) {
+                                    if (typeof level1 === 'object') {
+                                        for (var [fieldkey, field] of Object.entries(level1)) {
+                                            if (typeof field === 'object') {
+                                                /**
+                                                 * En este nivel tengo los campos de la formula
+                                                 * Debo comprobar que tienen valor para poder aplicar la formula
+                                                 */
+                                                if (ifdt.properties[fieldkey] != undefined &&
+                                                    ifdt.properties[fieldkey] != null &&
+                                                    ifdt.properties[fieldkey] != [] &&
+                                                    ifdt.properties[fieldkey][index] != undefined &&
+                                                    ifdt.properties[fieldkey][index] != "") {
+                                                    sendData[fieldkey] = ifdt.properties[fieldkey][index];
+                                                    // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                                                } else {
+                                                    // console.log(fieldkey + ' : UNDEFINED');
+                                                    sendData[fieldkey] = undefined;
+                                                }
                                             }
                                         }
                                     }
@@ -260,10 +299,13 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         }
                     }
                     // console.log(sendData);
-                    // console.log(fspec);            
+                    // console.log(fspec);                                
                     switch (asset) {
                         case 'Pavements':
-                            formResult[index] = formulasService.criticality('Pavements', fspec, sendData);
+                            formResult[index] = calcularValue ? formulasService.criticality('Pavements', fspec, sendData) : undefined;
+                            break;
+                        case 'Bridges':
+                            formResult[index] = calcularValue ? formulasService.criticality('Bridges', fspec, sendData) : undefined;
                             break;
 
                         default:
@@ -274,6 +316,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                 switch (asset) {
                     case 'Pavements':
                         ifdt.properties.rcriticality = formResult;
+                        break;
+                    case 'Bridges':
+                        ifdt.properties.bcriticality = formResult;
                         break;
 
                     default:
