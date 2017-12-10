@@ -205,6 +205,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
     var formula = Object.keys(postData)[0];
     var sendData = {};
     var formResult = [];
+    var formResultLeft = [];
+    var formResultRight = [];
     var tracks;
     var tracksUpdated = 0;
     console.log('formula: ' + formula + ' asset: ' + asset);
@@ -221,6 +223,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
         });
 
         for (var track of tracks) {
+            // var track = { "_id": "5a0dc03137bb372c9336a66b" };
             await Infodatatrack.findById(track._id).exec(function(err, ifdt) {
                 if (err) {
                     res.send(500, err.message);
@@ -229,6 +232,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                 var index = 0;
                 // console.log(ifdt._id);
                 formResult = new Array(ifdt.geometry.coordinates.length);
+                formResultLeft = new Array(ifdt.geometry.coordinates.length);
+                formResultRight = new Array(ifdt.geometry.coordinates.length);
                 for (index = 0; index < ifdt.geometry.coordinates.length; index++) {
                     // console.log(index);
                     var calcularValue = false;
@@ -256,6 +261,51 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                                 ifdt.properties.bcode != [] &&
                                 ifdt.properties.bcode[index] != undefined &&
                                 ifdt.properties.bcode[index] != "") {
+                                calcularValue = true;
+                                // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                            } else {
+                                // console.log(fieldkey + ' : UNDEFINED');
+                                calcularValue = false;
+                            }
+                            break;
+                        case 'Culverts':
+                            if (ifdt.properties.Ccode != undefined &&
+                                ifdt.properties.Ccode != null &&
+                                ifdt.properties.Ccode != [] &&
+                                ifdt.properties.Ccode[index] != undefined &&
+                                ifdt.properties.Ccode[index] != "") {
+                                calcularValue = true;
+                                // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                            } else {
+                                // console.log(fieldkey + ' : UNDEFINED');
+                                calcularValue = false;
+                            }
+                            break;
+                        case 'Retaining_Walls':
+                            if ((
+                                    ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gtype != undefined &&
+                                    ifdt.properties.gtype != null &&
+                                    ifdt.properties.gtype != [] &&
+                                    ifdt.properties.gtype[index] != undefined &&
+                                    ifdt.properties.gtype[index] != "" &&
+                                    ifdt.properties.gtype[index] === "Retaining_walls") || (
+                                    ifdt.properties.gcode2 != undefined &&
+                                    ifdt.properties.gcode2 != null &&
+                                    ifdt.properties.gcode2 != [] &&
+                                    ifdt.properties.gcode2[index] != undefined &&
+                                    ifdt.properties.gcode2[index] != "" &&
+                                    ifdt.properties.gtype2 != undefined &&
+                                    ifdt.properties.gtype2 != null &&
+                                    ifdt.properties.gtype2 != [] &&
+                                    ifdt.properties.gtype2[index] != undefined &&
+                                    ifdt.properties.gtype2[index] != "" &&
+                                    ifdt.properties.gtype2[index] === "Retaining_walls"
+                                )) {
                                 calcularValue = true;
                                 // console.log(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                             } else {
@@ -299,13 +349,76 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         }
                     }
                     // console.log(sendData);
-                    // console.log(fspec);                                
+                    // console.log(fspec);       
+
                     switch (asset) {
                         case 'Pavements':
                             formResult[index] = calcularValue ? formulasService.criticality('Pavements', fspec, sendData) : undefined;
                             break;
                         case 'Bridges':
                             formResult[index] = calcularValue ? formulasService.criticality('Bridges', fspec, sendData) : undefined;
+                            break;
+                        case 'Culverts':
+                            formResult[index] = calcularValue ? formulasService.criticality('Culverts', fspec, sendData) : undefined;
+                            break;
+                        case 'Retaining_Walls':
+
+                            //console.log('\n\n\n-----------------------------------------------------------------------------------------');
+                            //console.log(fspec);
+                            var fspec1 = extend({}, fspec);
+                            for (var [leftkey, leftfield] of Object.entries(fspec1)) {
+                                if (leftkey.indexOf('2') >= 0) {
+                                    // si el campo tiene un 2, lo quito de la formula por ser el lado dcho
+                                    delete fspec1[leftkey];
+                                }
+                            }
+                            //console.log(fspec1);
+                            var fspec2 = extend({}, fspec);
+                            for (var [rightkey, rightfield] of Object.entries(fspec2)) {
+                                if (rightkey.indexOf('2') >= 0) {
+                                    // si el campo tiene un 2, quito de la formula el que no tiene un 2 por ser el izdo
+                                    delete fspec2[rightkey.replace('2', '')];
+                                }
+                            }
+                            //console.log(fspec2);
+
+                            if (
+                                ifdt.properties.gcode != undefined &&
+                                ifdt.properties.gcode != null &&
+                                ifdt.properties.gcode != [] &&
+                                ifdt.properties.gcode[index] != undefined &&
+                                ifdt.properties.gcode[index] != "" &&
+                                ifdt.properties.gtype != undefined &&
+                                ifdt.properties.gtype != null &&
+                                ifdt.properties.gtype != [] &&
+                                ifdt.properties.gtype[index] != undefined &&
+                                ifdt.properties.gtype[index] != "" &&
+                                ifdt.properties.gtype[index] === "Retaining_walls"
+                            ) {
+                                // en este caso estoy en la izda
+                                formResultLeft[index] = calcularValue ? formulasService.criticality('Retaining_Walls', fspec1, sendData) : undefined;
+                            } else {
+                                formResultLeft[index] = undefined;
+                            }
+                            if (
+                                ifdt.properties.gcode2 != undefined &&
+                                ifdt.properties.gcode2 != null &&
+                                ifdt.properties.gcode2 != [] &&
+                                ifdt.properties.gcode2[index] != undefined &&
+                                ifdt.properties.gcode2[index] != "" &&
+                                ifdt.properties.gtype2 != undefined &&
+                                ifdt.properties.gtype2 != null &&
+                                ifdt.properties.gtype2 != [] &&
+                                ifdt.properties.gtype2[index] != undefined &&
+                                ifdt.properties.gtype2[index] != "" &&
+                                ifdt.properties.gtype2[index] === "Retaining_walls"
+                            ) {
+                                // en este caso estoy en la dcha
+
+                                formResultRight[index] = calcularValue ? formulasService.criticality('Retaining_Walls', fspec2, sendData) : undefined;
+                            } else {
+                                formResultRight[index] = undefined;
+                            }
                             break;
 
                         default:
@@ -319,6 +432,13 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         break;
                     case 'Bridges':
                         ifdt.properties.bcriticality = formResult;
+                        break;
+                    case 'Culverts':
+                        ifdt.properties.Ccriticality = formResult;
+                        break;
+                    case 'Retaining_Walls':
+                        ifdt.properties.gcriticality = formResultLeft;
+                        ifdt.properties.gcriticality2 = formResultRight;
                         break;
 
                     default:
