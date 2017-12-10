@@ -60,7 +60,9 @@
                                 '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                                 '</label></div>');
                             html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
-                            html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update tracks</button>';
+                            html[++h] = '<div id="infoFormula' + fspec.name + '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                            html[++h] = ' Be patient, the process can take several minutes.</div>';
+                            html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' + fspec.name + '</button>';
                             html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
                             html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
