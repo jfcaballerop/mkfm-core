@@ -313,6 +313,41 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                                 calcularValue = false;
                             }
                             break;
+                        case 'Earthworks':
+                            if ((
+                                    ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gtype != undefined &&
+                                    ifdt.properties.gtype != null &&
+                                    ifdt.properties.gtype != [] &&
+                                    ifdt.properties.gtype[index] != undefined &&
+                                    ifdt.properties.gtype[index] != "" && (
+                                        ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                    )
+                                ) || (
+                                    ifdt.properties.gcode2 != undefined &&
+                                    ifdt.properties.gcode2 != null &&
+                                    ifdt.properties.gcode2 != [] &&
+                                    ifdt.properties.gcode2[index] != undefined &&
+                                    ifdt.properties.gcode2[index] != "" &&
+                                    ifdt.properties.gtype2 != undefined &&
+                                    ifdt.properties.gtype2 != null &&
+                                    ifdt.properties.gtype2 != [] &&
+                                    ifdt.properties.gtype2[index] != undefined &&
+                                    ifdt.properties.gtype2[index] != "" && (
+                                        ifdt.properties.gtype2[index] === "Cutting" || ifdt.properties.gtype2[index] === "Embankment"
+                                    )
+                                )) {
+                                calcularValue = true;
+                                // console.log(index + ': ' + ifdt.properties.gtype[index] + ' : ' + ifdt.properties.gtype2[index]);
+                            } else {
+                                // console.log(index + ' : UNDEFINED');
+                                calcularValue = false;
+                            }
+                            break;
 
                         default:
                             break;
@@ -396,9 +431,158 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                                 ifdt.properties.gtype[index] === "Retaining_walls"
                             ) {
                                 // en este caso estoy en la izda
-                                formResultLeft[index] = calcularValue ? formulasService.criticality('Retaining_Walls', fspec1, sendData) : undefined;
+                                if (calcularValue) {
+                                    formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendData);
+                                } else {
+                                    if (ifdt.properties.gcriticality != undefined &&
+                                        ifdt.properties.gcriticality != null &&
+                                        ifdt.properties.gcriticality[index] != undefined &&
+                                        ifdt.properties.gcriticality[index] != null
+                                    ) {
+                                        formResultLeft[index] = ifdt.properties.gcriticality[index];
+
+                                    } else {
+                                        formResultLeft[index] = undefined;
+
+                                    }
+                                }
+
                             } else {
-                                formResultLeft[index] = undefined;
+                                if (ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gcriticality != undefined &&
+                                    ifdt.properties.gcriticality != null &&
+                                    ifdt.properties.gcriticality[index] != undefined &&
+                                    ifdt.properties.gcriticality[index] != null
+                                ) {
+                                    formResultLeft[index] = ifdt.properties.gcriticality[index];
+
+                                } else {
+                                    formResultLeft[index] = undefined;
+
+                                }
+                            }
+                            if (
+                                ifdt.properties.gtype2 != undefined &&
+                                ifdt.properties.gtype2 != null &&
+                                ifdt.properties.gtype2 != [] &&
+                                ifdt.properties.gtype2[index] != undefined &&
+                                ifdt.properties.gtype2[index] != "" &&
+                                ifdt.properties.gtype2[index] === "Retaining_walls"
+                            ) {
+                                // en este caso estoy en la dcha
+                                if (calcularValue) {
+                                    formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendData);
+                                } else {
+                                    if (ifdt.properties.gcriticality2 != undefined &&
+                                        ifdt.properties.gcriticality2 != null &&
+                                        ifdt.properties.gcriticality2[index] != undefined &&
+                                        ifdt.properties.gcriticality2[index] != null
+                                    ) {
+                                        formResultRight[index] = ifdt.properties.gcriticality2[index];
+
+                                    } else {
+                                        formResultRight[index] = undefined;
+
+                                    }
+                                }
+
+                            } else {
+
+                                if (ifdt.properties.gcode2 != undefined &&
+                                    ifdt.properties.gcode2 != null &&
+                                    ifdt.properties.gcode2 != [] &&
+                                    ifdt.properties.gcode2[index] != undefined &&
+                                    ifdt.properties.gcode2[index] != "" &&
+                                    ifdt.properties.gcriticality2 != undefined &&
+                                    ifdt.properties.gcriticality2 != null &&
+                                    ifdt.properties.gcriticality2[index] != undefined &&
+                                    ifdt.properties.gcriticality2[index] != null
+                                ) {
+                                    formResultRight[index] = ifdt.properties.gcriticality2[index];
+
+                                } else {
+                                    formResultRight[index] = undefined;
+
+                                }
+                            }
+                            break;
+                        case 'Earthworks':
+
+                            //console.log('\n\n\n-----------------------------------------------------------------------------------------');
+                            //console.log(fspec);
+                            var fspec1 = extend({}, fspec);
+                            for (var [leftkey, leftfield] of Object.entries(fspec1)) {
+                                if (leftkey.indexOf('2') >= 0) {
+                                    // si el campo tiene un 2, lo quito de la formula por ser el lado dcho
+                                    delete fspec1[leftkey];
+                                }
+                            }
+                            //console.log(fspec1);
+                            var fspec2 = extend({}, fspec);
+                            for (var [rightkey, rightfield] of Object.entries(fspec2)) {
+                                if (rightkey.indexOf('2') >= 0) {
+                                    // si el campo tiene un 2, quito de la formula el que no tiene un 2 por ser el izdo
+                                    delete fspec2[rightkey.replace('2', '')];
+                                }
+                            }
+                            //console.log(fspec2);
+
+                            if (
+                                ifdt.properties.gcode != undefined &&
+                                ifdt.properties.gcode != null &&
+                                ifdt.properties.gcode != [] &&
+                                ifdt.properties.gcode[index] != undefined &&
+                                ifdt.properties.gcode[index] != "" &&
+                                ifdt.properties.gtype != undefined &&
+                                ifdt.properties.gtype != null &&
+                                ifdt.properties.gtype != [] &&
+                                ifdt.properties.gtype[index] != undefined &&
+                                ifdt.properties.gtype[index] != "" && (
+                                    ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                )
+
+                            ) {
+                                // en este caso estoy en la izda
+                                if (calcularValue) {
+                                    formResultLeft[index] = formulasService.criticality('Earthworks', fspec1, sendData);
+                                } else {
+                                    if (
+                                        ifdt.properties.gcriticality != undefined &&
+                                        ifdt.properties.gcriticality != null &&
+                                        ifdt.properties.gcriticality[index] != undefined &&
+                                        ifdt.properties.gcriticality[index] != null
+                                    ) {
+                                        formResultLeft[index] = ifdt.properties.gcriticality[index];
+
+                                    } else {
+                                        formResultLeft[index] = undefined;
+
+                                    }
+                                }
+
+                            } else {
+
+                                if (
+                                    ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gcriticality != undefined &&
+                                    ifdt.properties.gcriticality != null &&
+                                    ifdt.properties.gcriticality[index] != undefined &&
+                                    ifdt.properties.gcriticality[index] != null
+                                ) {
+                                    formResultLeft[index] = ifdt.properties.gcriticality[index];
+
+                                } else {
+                                    formResultLeft[index] = undefined;
+
+                                }
                             }
                             if (
                                 ifdt.properties.gcode2 != undefined &&
@@ -410,17 +594,47 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                                 ifdt.properties.gtype2 != null &&
                                 ifdt.properties.gtype2 != [] &&
                                 ifdt.properties.gtype2[index] != undefined &&
-                                ifdt.properties.gtype2[index] != "" &&
-                                ifdt.properties.gtype2[index] === "Retaining_walls"
+                                ifdt.properties.gtype2[index] != "" && (
+                                    ifdt.properties.gtype2[index] === "Cutting" || ifdt.properties.gtype2[index] === "Embankment"
+                                )
                             ) {
                                 // en este caso estoy en la dcha
+                                if (calcularValue) {
+                                    formResultRight[index] = formulasService.criticality('Earthworks', fspec2, sendData);
+                                } else {
+                                    if (ifdt.properties.gcriticality2 != undefined &&
+                                        ifdt.properties.gcriticality2 != null &&
+                                        ifdt.properties.gcriticality2[index] != undefined &&
+                                        ifdt.properties.gcriticality2[index] != null
+                                    ) {
+                                        formResultRight[index] = ifdt.properties.gcriticality2[index];
 
-                                formResultRight[index] = calcularValue ? formulasService.criticality('Retaining_Walls', fspec2, sendData) : undefined;
+                                    } else {
+                                        formResultRight[index] = undefined;
+
+                                    }
+                                }
+
                             } else {
-                                formResultRight[index] = undefined;
+                                if (
+                                    ifdt.properties.gcode2 != undefined &&
+                                    ifdt.properties.gcode2 != null &&
+                                    ifdt.properties.gcode2 != [] &&
+                                    ifdt.properties.gcode2[index] != undefined &&
+                                    ifdt.properties.gcode2[index] != "" &&
+                                    ifdt.properties.gcriticality2 != undefined &&
+                                    ifdt.properties.gcriticality2 != null &&
+                                    ifdt.properties.gcriticality2[index] != undefined &&
+                                    ifdt.properties.gcriticality2[index] != null
+                                ) {
+                                    formResultRight[index] = ifdt.properties.gcriticality2[index];
+
+                                } else {
+                                    formResultRight[index] = undefined;
+
+                                }
                             }
                             break;
-
                         default:
                             break;
                     }
@@ -437,6 +651,10 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         ifdt.properties.Ccriticality = formResult;
                         break;
                     case 'Retaining_Walls':
+                        ifdt.properties.gcriticality = formResultLeft;
+                        ifdt.properties.gcriticality2 = formResultRight;
+                        break;
+                    case 'Earthworks':
                         ifdt.properties.gcriticality = formResultLeft;
                         ifdt.properties.gcriticality2 = formResultRight;
                         break;
