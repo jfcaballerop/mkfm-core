@@ -83,11 +83,12 @@
                                             if (tr > 0) {
                                                 html[++h] = '<tr>';
                                             }
-                                            html[++h] = '<td class="col-sm-6"><label class="col-sm-6 col-sm-6 control-label">' + data2.name +
+                                            html[++h] = '<td class="col-sm-6"><label class="col-sm-3 control-label">' + data2.name +
                                                 '<br>[Type: ' + data2.type + ']</label>';
-                                            html[++h] = '<div class="col-sm-6">';
-                                            html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight +
-                                                '"></div></td>';
+                                            html[++h] = '<div class="col-sm-2">';
+                                            html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight + '"></div>';
+                                            html[++h] = '<div class="col-sm-7">' + data2.HTML_name + '</div>';
+                                            html[++h] = '</td>';
                                             if (data2.scoring != undefined) {
                                                 html[++h] = '<td class="col-sm-3">';
                                                 $.each(data2.scoring, function(s, scoring) {
