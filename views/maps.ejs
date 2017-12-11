@@ -84,7 +84,7 @@
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-2">
-                        <div class="form-panel">
+                        <div class="form-panel" id="pavements">
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ROAD_NET') %>
                             </h5>
@@ -92,7 +92,7 @@
                                 <label><input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="secondaryr"type="checkbox" value="Secondary">Secondary Roads</label>
+                                <label><input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
                             </div>
                             <div class="checkbox">
                                 <label><input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
@@ -230,6 +230,26 @@
                 <!-- page end-->
             </section>
         </section>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Alert!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Filters empty!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <!-- /MAIN CONTENT -->
 
         <!--main content end-->

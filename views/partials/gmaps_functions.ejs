@@ -597,21 +597,24 @@
         });
 
         // Risk Assessment
-        $('#CriticalityFormVeryHigh').click(function() {
-            alert('CriticalityFormVeryHigh');
+        $('#CriticalityForm input[type=checkbox]').click(function() {
+            var $this = $(this);
+            var filterPav = false;
+            // alert($this.val());
+            if ($this.is(':checked')) {
+                $('#pavements input[type=checkbox]').each(function(index) {
+                    if ($(this).is(':checked')) {
+                        console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                        filterPav = true;
+                    }
+
+                });
+            }
+            if (!filterPav) {
+                $('#myModal').modal();
+            }
         });
-        $('#CriticalityFormHigh').click(function() {
-            alert('CriticalityFormHigh');
-        });
-        $('#CriticalityFormMedium').click(function() {
-            alert('CriticalityFormMedium');
-        });
-        $('#CriticalityFormLow').click(function() {
-            alert('CriticalityFormLow');
-        });
-        $('#CriticalityFormVeryLow').click(function() {
-            alert('CriticalityFormVeryLow');
-        });
+
     });
 </script>
 
