@@ -653,6 +653,8 @@
 
                 await $('#CriticalityForm input[type=checkbox]').each(function(index) {
                     if ($(this).is(':checked')) {
+                        $('#spinnerCriticality').show();
+
                         sendData.form.push($(this).val());
                     } else {
                         var ix = sendData.form.indexOf($(this).val())
@@ -682,10 +684,12 @@
                             featureCrit = map.data.addGeoJson(jsonObject);
 
                         });
-                        //     // TODO: Stop spinner        
-                        //     $('#spinner' + id).hide();
+                        $('#spinnerCriticality').hide();
 
                         //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                    } else {
+                        $('#spinnerCriticality').hide();
 
                     }
                 });
