@@ -600,21 +600,24 @@
         $('#CriticalityForm input[type=checkbox]').click(function() {
             var $this = $(this);
             var filterPav = false;
+            $('#pavements input[type=checkbox]').each(function(index) {
+                if ($(this).is(':checked')) {
+                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterPav = true;
+                }
+            });
             // alert($this.val());
             if ($this.is(':checked')) {
-                $('#pavements input[type=checkbox]').each(function(index) {
-                    if ($(this).is(':checked')) {
-                        console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                        filterPav = true;
-                    }
+                if (!filterPav) {
+                    $('#myModal').modal();
+                    $('#alertModalContent').empty();
+                    $('#alertModalContent').append('<p>Filters not selected!</p>');
+                } else {
+                    console.log('GET AJAX')
+                }
 
-                });
             }
-            if (!filterPav) {
-                $('#myModal').modal();
-                $('#alertModalContent').empty();
-                $('#alertModalContent').append('<p>Filters not selected!</p>');
-            }
+
         });
 
     });
