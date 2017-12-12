@@ -1,6 +1,50 @@
 var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 
+exports.criticalityValue = function(in_val) {
+
+    cscale = {
+        "Very High": {
+            score: {
+                scale: 5,
+                min: 80,
+                max: 100
+            }
+        },
+        "High": {
+            score: {
+                scale: 4,
+                min: 60,
+                max: 80
+            }
+        },
+        "Medium": {
+            score: {
+                scale: 3,
+                min: 40,
+                max: 60
+            }
+        },
+        "Low": {
+            score: {
+                scale: 2,
+                min: 20,
+                max: 40
+            }
+        },
+        "Very Low": {
+            score: {
+                scale: 1,
+                min: 0,
+                max: 20
+            }
+        }
+    };
+    return cscale[in_val];
+
+
+}
+
 exports.criticality = function(type, formula, data) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;

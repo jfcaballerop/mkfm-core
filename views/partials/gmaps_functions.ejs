@@ -3,6 +3,7 @@
     // to create a rectangular polygon with 2 holes in it.
     var map;
     var activeInfoWindow;
+    var featureCrit = [];
 
     function getContent(type, event) {
         var content = '<span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') + '</span><br>';
@@ -597,31 +598,97 @@
         });
 
         // Risk Assessment
-        $('#CriticalityForm input[type=checkbox]').click(function() {
+        $('#CriticalityForm input[type=checkbox]').click(async function() {
             var $this = $(this);
             var filterPav = false;
+            var filterArr = [];
+            var sendData = {
+                filter: [],
+                formname: "Criticality",
+                form: []
+            };
             $('#pavements input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterArr.push($(this).val());
                     filterPav = true;
+
                 }
             });
             $('#assets input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterArr.push($(this).val());
                     filterPav = true;
                 }
             });
             // alert($this.val());
+
+            var optChecked = [];
+            await $('#CriticalityForm input[type=checkbox]').each(function(index) {
+                if ($(this).is(':checked')) {
+                    optChecked.push($(this).val());
+                }
+
+            });
+
+
+            map.data.forEach(function(feature) {
+                // If you want, check here for some constraints.
+                if (feature.getProperty('nameoption') === 'CRITICALITY') {
+                    map.data.remove(feature);
+                }
+
+            });
+
             if ($this.is(':checked')) {
                 if (!filterPav) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
-                } else {
-                    console.log('GET AJAX')
                 }
+            }
 
+            if (optChecked.length > 0) {
+
+                await $('#CriticalityForm input[type=checkbox]').each(function(index) {
+                    if ($(this).is(':checked')) {
+                        sendData.form.push($(this).val());
+                    } else {
+                        var ix = sendData.form.indexOf($(this).val())
+                        ix > -1 ? sendData.form.splice(ix, 1) : false;
+
+                    }
+
+                });
+                sendData.filter = filterArr;
+
+                var p1 = $.ajax({
+                    url: '/auth/WEB/admin/get_formulas_tracks/',
+                    data: JSON.stringify(sendData),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                });
+                Promise.all([p1]).then(function(values) {
+                    console.log(values);
+                    if (values[0].length > 0) {
+
+
+                        $.each(values[0], function(index, value) {
+                            jsonObject = value;
+                            jsonObject.properties.color = "red";
+                            jsonObject.properties.nameoption = "CRITICALITY";
+                            featureCrit = map.data.addGeoJson(jsonObject);
+
+                        });
+                        //     // TODO: Stop spinner        
+                        //     $('#spinner' + id).hide();
+
+                        //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                    }
+                });
             }
 
         });

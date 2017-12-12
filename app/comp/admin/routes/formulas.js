@@ -83,6 +83,48 @@ router.get('/formulas', function(req, resp, next) {
 
 });
 
+/* get_formulas_tracks */
+/**
+ * Proceso AJAX que recibe la peticion de mostrar todos los tracks afectados por la formular seleccionada
+ */
+router.post('/get_formulas_tracks/', function(req, resp) {
+    var postData = extend({}, req.body);
+    console.log('## WEB get_formulas_tracks ' + JSON.stringify(postData));
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/get_formulas_tracks/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+    // resp.status(200).jsonp({});
+
+});
 /* update_formulas_tracks */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
@@ -765,6 +807,50 @@ router.post('/V1/update_field/', function(req, res, next) {
             };
         }
     });
+
+});
+/* POST get_formulas_tracks */
+router.post('/V1/get_formulas_tracks/', function(req, res, next) {
+    // console.log('API /V1/update_field/');
+    var postData = extend({}, req.body);
+    console.log(postData);
+    var ret = {
+        "result": "OK"
+    };
+
+    switch (postData.formname) {
+        case 'Criticality':
+            console.log('Criticality');
+            var orArr = [];
+            for (var f of postData.form) {
+                // console.log(f);
+                // console.log(formulasService.criticalityValue(f).score.min);
+                // console.log(formulasService.criticalityValue(f).score.max);
+                orArr.push({ "properties.rcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+            }
+            Infodatatrack.find({
+                $and: [
+                    { "properties.rcategory": { $in: postData.filter } },
+                    {
+                        $or: orArr
+                    }
+                ]
+            }).exec(function(err, tracks) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                console.log(tracks.length);
+
+                res.status(200).jsonp(tracks);
+            });
+
+            break;
+
+        default:
+            break;
+    }
+
+
 
 });
 
