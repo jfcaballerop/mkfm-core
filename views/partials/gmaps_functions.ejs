@@ -611,6 +611,10 @@
                 formname: "Criticality",
                 form: []
             };
+            var pulsado = $this.is(':checked') | false;
+
+            console.log('pulsado ' + pulsado);
+
             $('#pavements input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
@@ -672,35 +676,40 @@
                 sendData.filterPav = filterPavArr;
                 sendData.filterAsset = filterAssetArr;
                 sendData.filter = filterArr;
+                if (pulsado && filterPav) {
 
-                var p1 = $.ajax({
-                    url: '/auth/WEB/admin/get_formulas_tracks/',
-                    data: JSON.stringify(sendData),
-                    type: 'POST',
-                    contentType: 'application/json'
-                }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                });
-                Promise.all([p1]).then(function(values) {
-                    console.log(values);
-                    if (values[0].length > 0) {
+                    var p1 = $.ajax({
+                        url: '/auth/WEB/admin/get_formulas_tracks/',
+                        data: JSON.stringify(sendData),
+                        type: 'POST',
+                        contentType: 'application/json'
+                    }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    });
+                    Promise.all([p1]).then(function(values) {
+                        console.log(values);
+                        if (values[0].length > 0) {
 
 
-                        $.each(values[0], function(index, value) {
-                            jsonObject = value;
-                            jsonObject.properties.color = "red";
-                            jsonObject.properties.nameoption = "CRITICALITY " + jsonObject.properties.name;
-                            featureCrit = map.data.addGeoJson(jsonObject);
+                            $.each(values[0], function(index, value) {
+                                jsonObject = value;
+                                jsonObject.properties.color = "red";
+                                jsonObject.properties.nameoption = "CRITICALITY: " + jsonObject.properties.name;
+                                featureCrit = map.data.addGeoJson(jsonObject);
 
-                        });
-                        $('#spinnerCriticality').hide();
+                            });
+                            $('#spinnerCriticality').hide();
 
-                        //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
 
-                    } else {
-                        $('#spinnerCriticality').hide();
+                        } else {
+                            $('#spinnerCriticality').hide();
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    $('#spinnerCriticality').hide();
+
+                }
             }
 
         });
