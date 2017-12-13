@@ -7,13 +7,15 @@ exports.criticalityValue = function(in_val) {
         "Very High": {
             score: {
                 scale: 5,
+                color: "#ff0000",
                 min: 80,
-                max: 100
+                max: 101
             }
         },
         "High": {
             score: {
                 scale: 4,
+                color: "#ff0000",
                 min: 60,
                 max: 80
             }
@@ -21,6 +23,7 @@ exports.criticalityValue = function(in_val) {
         "Medium": {
             score: {
                 scale: 3,
+                color: "#ff0000",
                 min: 40,
                 max: 60
             }
@@ -28,6 +31,7 @@ exports.criticalityValue = function(in_val) {
         "Low": {
             score: {
                 scale: 2,
+                color: "#ff0000",
                 min: 20,
                 max: 40
             }
@@ -35,6 +39,7 @@ exports.criticalityValue = function(in_val) {
         "Very Low": {
             score: {
                 scale: 1,
+                color: "#ff0000",
                 min: 0,
                 max: 20
             }

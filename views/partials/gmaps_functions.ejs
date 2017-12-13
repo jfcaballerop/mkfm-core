@@ -601,15 +601,20 @@
         $('#CriticalityForm input[type=checkbox]').click(async function() {
             var $this = $(this);
             var filterPav = false;
+            var filterPavArr = [];
+            var filterAssetArr = [];
             var filterArr = [];
             var sendData = {
                 filter: [],
+                filterPav: [],
+                filterAsset: [],
                 formname: "Criticality",
                 form: []
             };
             $('#pavements input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
 
@@ -618,6 +623,7 @@
             $('#assets input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
                 }
@@ -635,7 +641,7 @@
 
             map.data.forEach(function(feature) {
                 // If you want, check here for some constraints.
-                if (feature.getProperty('nameoption') === 'CRITICALITY') {
+                if (feature.getProperty('nameoption').indexOf('CRITICALITY') >= 0) {
                     map.data.remove(feature);
                 }
 
@@ -663,6 +669,8 @@
                     }
 
                 });
+                sendData.filterPav = filterPavArr;
+                sendData.filterAsset = filterAssetArr;
                 sendData.filter = filterArr;
 
                 var p1 = $.ajax({
@@ -680,7 +688,7 @@
                         $.each(values[0], function(index, value) {
                             jsonObject = value;
                             jsonObject.properties.color = "red";
-                            jsonObject.properties.nameoption = "CRITICALITY";
+                            jsonObject.properties.nameoption = "CRITICALITY " + jsonObject.properties.name;
                             featureCrit = map.data.addGeoJson(jsonObject);
 
                         });

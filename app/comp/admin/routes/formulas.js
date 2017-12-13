@@ -822,26 +822,95 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
         case 'Criticality':
             console.log('Criticality');
             var orArr = [];
-            for (var f of postData.form) {
-                // console.log(f);
-                // console.log(formulasService.criticalityValue(f).score.min);
-                // console.log(formulasService.criticalityValue(f).score.max);
-                orArr.push({ "properties.rcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+            var orAssetArr = [];
+            var andArr = [];
+            var catArr = [];
+            var promises = [];
+
+            for (var f of postData.filter) {
+                switch (f) {
+                    case 'Bridge':
+                        for (var f of postData.form) {
+                            // console.log(f);
+                            // console.log(formulasService.criticalityValue(f).score.min);
+                            // console.log(formulasService.criticalityValue(f).score.max);
+                            orArr.push({ "properties.bcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                        }
+                        orAssetArr.push({ "properties.bcode": { $elemMatch: { $nin: [""] } } });
+                        // console.log(catArr);
+
+
+                        break;
+                    case 'Culvert':
+                        for (var f of postData.form) {
+                            // console.log(f);
+                            // console.log(formulasService.criticalityValue(f).score.min);
+                            // console.log(formulasService.criticalityValue(f).score.max);
+                            orArr.push({ "properties.Ccriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                        }
+                        orAssetArr.push({ "properties.Ccode": { $elemMatch: { $nin: [""] } } });
+                        // console.log(catArr);
+
+                        break;
+                    case 'Geotechnical':
+                        for (var f of postData.form) {
+                            // console.log(f);
+                            // console.log(formulasService.criticalityValue(f).score.min);
+                            // console.log(formulasService.criticalityValue(f).score.max);
+                            orArr.push({ "properties.gcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                            orArr.push({ "properties.gcriticality2": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                        }
+                        orAssetArr.push({ "properties.gcode": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({ "properties.gcode2": { $elemMatch: { $nin: [""] } } });
+                        // console.log(catArr);
+                        break;
+
+                    default:
+                        for (var f of postData.form) {
+                            // console.log(f);
+                            // console.log(formulasService.criticalityValue(f).score.min);
+                            // console.log(formulasService.criticalityValue(f).score.max);
+                            orArr.push({ "properties.rcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                        }
+                        orAssetArr.push({ "properties.rcategory": { $in: postData.filterPav } });
+                        // console.log(catArr);
+
+
+
+                        break;
+                }
+
+
             }
-            Infodatatrack.find({
-                $and: [
-                    { "properties.rcategory": { $in: postData.filter } },
-                    {
-                        $or: orArr
-                    }
-                ]
+            andArr.push({ $or: orAssetArr });
+            andArr.push({ $or: orArr });
+
+            console.log(JSON.stringify(andArr));
+
+            promises.push(Infodatatrack.find({
+                $and: andArr
+
             }).exec(function(err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
                 console.log(tracks.length);
+                return tracks;
+
+            }));
+
+            Promise.all(promises).then(function(values) {
+                var tracks = [];
+                if (values.length > 0) {
+                    values.forEach(function(val, index) {
+                        for (var v of val)
+                            tracks.push(v);
+                    });
+                }
+                console.log(tracks.length);
 
                 res.status(200).jsonp(tracks);
+
             });
 
             break;
