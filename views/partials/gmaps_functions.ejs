@@ -540,7 +540,7 @@
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Secondary')) {
+                    if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
                         map.data.remove(feature);
                     }
 
@@ -564,7 +564,7 @@
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Feeder')) {
+                    if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
                         map.data.remove(feature);
                     }
 
@@ -588,7 +588,7 @@
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Urban')) {
+                    if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
                         map.data.remove(feature);
                     }
 

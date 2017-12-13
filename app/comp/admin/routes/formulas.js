@@ -902,7 +902,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
             Promise.all(promises).then(function(values) {
                 var tracks = [];
                 var resultados = [];
-                var sig = 0;
+                var ant = 0;
                 var geoJson = {
                     type: "Feature",
                     geometry: {
@@ -919,21 +919,51 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                     values.forEach(function(val, index) {
                         for (var v of val) {
                             console.log(v.properties.name);
-                            sig = 0;
+                            ant = 0;
                             for (var [key, cval] of v.geometry.coordinates.entries()) {
                                 for (var f of postData.form) {
                                     if (v.properties.rcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                         v.properties.rcriticality[key] < formulasService.criticalityValue(f).score.max) {
-                                        console.log('--- Add Coord ---' + key + ' : sig ' + sig + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
-
+                                        if (ant == 0) ant = key - 1;
+                                        if (key != (ant + 1)) {
+                                            console.log('-- new geojson --');
+                                            tracks.push(geoJson);
+                                            geoJson = {
+                                                type: "Feature",
+                                                geometry: {
+                                                    type: "LineString",
+                                                    coordinates: []
+                                                },
+                                                properties: {
+                                                    rcriticality: [],
+                                                    name: ""
+                                                }
+                                            };
+                                        }
+                                        console.log('--- Add Coord ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
+                                        geoJson.properties.name = v.properties.name + ' - ' + f;
+                                        geoJson.geometry.coordinates.push(cval);
+                                        ant = key;
                                     }
-
-
-
+                                }
+                                if (key + 1 == v.geometry.coordinates.length) {
+                                    console.log('-- new geojson --')
+                                    tracks.push(geoJson);
+                                    geoJson = {
+                                        type: "Feature",
+                                        geometry: {
+                                            type: "LineString",
+                                            coordinates: []
+                                        },
+                                        properties: {
+                                            rcriticality: [],
+                                            name: ""
+                                        }
+                                    };
                                 }
 
                             }
-                            tracks.push(v);
+                            // tracks.push(v);
                         }
                     });
                 }
