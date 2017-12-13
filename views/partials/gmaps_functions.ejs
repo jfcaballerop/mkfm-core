@@ -510,13 +510,13 @@
                 jsonObject = <%- JSON.stringify(element) %>;
                 // console.log(jsonObject);
                 jsonObject.properties.color = "#5b5e63";
-                jsonObject.properties.nameoption = "Main Road";
+                jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption') === 'Main Road') {
+                    if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
                         map.data.remove(feature);
                     }
 
@@ -534,13 +534,13 @@
                 jsonObject = <%- JSON.stringify(element) %>;
                 // console.log(jsonObject);
                 jsonObject.properties.color = "#f29318";
-                jsonObject.properties.nameoption = "Secondary";
+                jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption') === 'Secondary') {
+                    if (feature.getProperty('nameoption').indexOf('Secondary')) {
                         map.data.remove(feature);
                     }
 
@@ -558,13 +558,13 @@
                 jsonObject = <%- JSON.stringify(element) %>;
                 // console.log(jsonObject);
                 jsonObject.properties.color = "#fc1e3f";
-                jsonObject.properties.nameoption = "Feeder";
+                jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption') === 'Feeder') {
+                    if (feature.getProperty('nameoption').indexOf('Feeder')) {
                         map.data.remove(feature);
                     }
 
@@ -582,13 +582,13 @@
                 jsonObject = <%- JSON.stringify(element) %>;
                 // console.log(jsonObject);
                 jsonObject.properties.color = "#a8b2f7";
-                jsonObject.properties.nameoption = "Urban";
+                jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
                 map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption') === 'Urban') {
+                    if (feature.getProperty('nameoption').indexOf('Urban')) {
                         map.data.remove(feature);
                     }
 
