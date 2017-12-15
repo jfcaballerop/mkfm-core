@@ -927,7 +927,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                 if (values.length > 0) {
                     values.forEach(function(val, index) {
                         for (var v of val) {
-                            console.log(v.properties.name);
+                            // console.log(v.properties.name);
                             ant = 0;
                             antBridge = 0;
                             antCulvert = 0;
@@ -943,11 +943,11 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     v.properties.bcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
                                                     if (key != (antBridge + 1)) {
-                                                        console.log('-- new geojson --');
+                                                        // console.log('-- new geojson --');
                                                         tracks.push(geoJsonBri);
                                                         geoJsonBri = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    console.log('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcriticality[key] + ' - ' + f);
+                                                    // console.log('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcriticality[key] + ' - ' + f);
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     antBridge = key;
@@ -959,11 +959,11 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     v.properties.Ccriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key != (antCulvert + 1)) {
-                                                        console.log('-- new geojson --');
+                                                        // console.log('-- new geojson --');
                                                         tracks.push(geoJsonCul);
                                                         geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    console.log('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
+                                                    // console.log('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
                                                     antCulvert = key;
@@ -975,11 +975,11 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     v.properties.gcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
                                                     if (key != (antGeo + 1)) {
-                                                        console.log('-- new geojson --');
+                                                        // console.log('-- new geojson --');
                                                         tracks.push(geoJsonGeo);
                                                         geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    console.log('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
+                                                    // console.log('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     antGeo = key;
@@ -989,11 +989,11 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     v.properties.gcriticality2[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
                                                     if (key != (antGeo2 + 1)) {
-                                                        console.log('-- new geojson --');
+                                                        // console.log('-- new geojson --');
                                                         tracks.push(geoJsonGeo2);
                                                         geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    console.log('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
+                                                    // console.log('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     antGeo2 = key;
@@ -1005,11 +1005,11 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     v.properties.rcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (ant == 0) ant = key - 1;
                                                     if (key != (ant + 1)) {
-                                                        console.log('-- new geojson --');
+                                                        // console.log('-- new geojson --');
                                                         tracks.push(geoJsonPav);
                                                         geoJsonPav = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    console.log('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
+                                                    // console.log('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     ant = key;
@@ -1020,7 +1020,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
                                 }
                                 if (key + 1 == v.geometry.coordinates.length) {
-                                    console.log('-- new geojson --')
+                                    // console.log('-- new geojson --')
                                     tracks.push(geoJsonPav);
                                     tracks.push(geoJsonBri);
                                     tracks.push(geoJsonCul);
@@ -1038,7 +1038,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                         }
                     });
                 }
-                console.log(tracks.length);
+                // console.log(tracks.length);
 
                 res.status(200).jsonp(tracks);
 
