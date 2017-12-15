@@ -938,7 +938,8 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                     for (var filter of postData.filter) {
                                         switch (filter) {
                                             case 'Bridge':
-                                                if (v.properties.bcriticality[key] >= formulasService.criticalityValue(f).score.min &&
+                                                if (v.properties.bcriticality[key] != null &&
+                                                    v.properties.bcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.bcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
                                                     if (key != (antBridge + 1)) {
@@ -953,7 +954,8 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                 }
                                                 break;
                                             case 'Culvert':
-                                                if (v.properties.Ccriticality[key] >= formulasService.criticalityValue(f).score.min &&
+                                                if (v.properties.Ccriticality[key] != null &&
+                                                    v.properties.Ccriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.Ccriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key != (antCulvert + 1)) {
@@ -968,7 +970,8 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                 }
                                                 break;
                                             case 'Geotechnical':
-                                                if (v.properties.gcriticality[key] >= formulasService.criticalityValue(f).score.min &&
+                                                if (v.properties.gcriticality[key] != null &&
+                                                    v.properties.gcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.gcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
                                                     if (key != (antGeo + 1)) {
@@ -981,7 +984,8 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     antGeo = key;
                                                 }
-                                                if (v.properties.gcriticality2[key] >= formulasService.criticalityValue(f).score.min &&
+                                                if (v.properties.gcriticality2[key] != null &&
+                                                    v.properties.gcriticality2[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.gcriticality2[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
                                                     if (key != (antGeo2 + 1)) {
@@ -996,7 +1000,8 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                                                 }
                                                 break;
                                             default:
-                                                if (v.properties.rcriticality[key] >= formulasService.criticalityValue(f).score.min &&
+                                                if (v.properties.rcriticality[key] != null &&
+                                                    v.properties.rcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.rcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (ant == 0) ant = key - 1;
                                                     if (key != (ant + 1)) {
