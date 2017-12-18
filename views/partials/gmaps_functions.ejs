@@ -216,6 +216,10 @@
                 $('#CriticalityForm').show();
             } else {
                 $('#CriticalityForm').hide();
+                $('#CriticalityForm input[type=checkbox]').each(function(index) {
+                    $(this).prop('checked', false);
+                });
+
 
             }
         });
@@ -225,7 +229,9 @@
                 $('#ConditionForm').show();
             } else {
                 $('#ConditionForm').hide();
-
+                $('#ConditionForm input[type=checkbox]').each(function(index) {
+                    $(this).prop('checked', false);
+                });
             }
         });
         $('#Calculation').click(function() {
@@ -234,7 +240,9 @@
                 $('#CalculationForm').show();
             } else {
                 $('#CalculationForm').hide();
-
+                $('#CalculationForm input[type=checkbox]').each(function(index) {
+                    $(this).prop('checked', false);
+                });
             }
         });
         $('#PhysicalDeterioration').click(function() {
