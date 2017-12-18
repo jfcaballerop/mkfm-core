@@ -265,7 +265,7 @@
             },
             renvironment: {
                 title: "Located within an environmentally protected area",
-                visible: false
+                visible: true
             },
             rwaste: {
                 title: "Distance to a dumping area",
@@ -1734,7 +1734,7 @@
 
             $.each(propertiesCols, function(key1, value1) {
                 if (key1 === 'Trackinfo') var numfalses = 1;
-                if (key1 === 'road') var numfalses = 50;
+                if (key1 === 'road') var numfalses = 49;
                 if (key1 === 'furniture') var numfalses = 3;
                 if (key1 === 'bridges') var numfalses = 73;
                 if (key1 === 'geotechnicals') var numfalses = 62;
@@ -1918,6 +1918,12 @@
                     (typeof data.properties.rtourism[index] !== "undefined" ? data.properties.rtourism[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][rhealth]"><input name="infodatatrack[properties][rhealth]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[index] : '') + '">';
+                html[++h] = '<td id="infodatatrack[properties][renvironment]">' +
+                    '<select style="min-width: 100px;" name="infodatatrack[properties][renvironment]" class="form-control">' +
+                    '<option value="No" selected>No</option>' +
+                    '<option value="Yes">Yes</option>' +
+                    '</select>' +
+                    '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rriskphysical]"><input name="infodatatrack[properties][rriskphysical]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rriskphysical[index] !== "undefined" ? data.properties.rriskphysical[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][rrisknatural]"><input name="infodatatrack[properties][rrisknatural]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
@@ -2714,6 +2720,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarriersexist]"]').val(data.properties.rbarriersexist[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][renvironment]"]').val(data.properties.renvironment[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
@@ -2981,6 +2988,25 @@
                         $inputsRBarriersExist[index].value = $this.val();
                     } else {
                         $inputsRBarriersExist[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsrenvironment = $('#form').find('select[ name="infodatatrack[properties][renvironment]"]');
+        $inputsrenvironment.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsrenvironment[index].value = $this.val();
+                    } else {
+                        $inputsrenvironment[index].value = '';
                     }
                 }
 
