@@ -53,6 +53,11 @@
                 $('#formulaName').append(form.properties.HTML.text);
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
+                    case "AssetCondition":
+                        console.log("AssetCondition");
+                        $('#formulaSpec').empty();
+                        $('#selectFormula').empty();
+                        break;
                     case "AssetCriticality":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
