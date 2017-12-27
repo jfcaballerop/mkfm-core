@@ -66,3 +66,19 @@ exports.calPK = function(element, elemant) {
     return pk;
 
 };
+// invertedPK
+/**
+ * arrayPK
+ * Return arrayinverted
+ * *
+ */
+exports.invertedpk = function(arrpk) {
+    var arrinvertedpk = [];
+
+    for (var i = 0; i < arrpk.length; i++) {
+        arrinvertedpk.push(arrpk[arrpk.length - 1] * 1.0 - arrpk[i] * 1.0);
+    }
+
+    return arrinvertedpk;
+
+};

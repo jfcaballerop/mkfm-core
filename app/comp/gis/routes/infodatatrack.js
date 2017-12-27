@@ -1016,7 +1016,7 @@ router.post('/V1/invertedpk/:id', function(req, res, next) {
         console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack.inverted);
         infodatatrack.updated_at = new Date();
         infodatatrack.inverted = true;
-        var invertedpk = infodatatrack.properties.pk.slice().reverse();
+        var invertedpk = service.invertedpk(infodatatrack.properties.pk);
         infodatatrack.properties.pk = invertedpk;
         infodatatrack.save(function(err, data) {
             if (err) {
