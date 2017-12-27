@@ -538,7 +538,7 @@
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
         var p2 = $.get('/auth/WEB/infodatatrack/list_infodatatrackbyid/' + id, function(data) {
-            // console.log('list_infodatatrack ' + JSON.stringify(data));
+            console.log('list_infodatatrack ' + JSON.stringify(data));
             if (data) {
                 data.returnId = "datatrack";
                 return data;
