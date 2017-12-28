@@ -92,3 +92,9 @@ Cuando se cargan muchos ficheros masivos en disco, para DEV pudiera ser que node
 
 ## NOTAS DEBIAN STRETCH
 * `echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
+
+## GIT FLOW CREADO
+Ramas:
+* develop
+* release
+* master
