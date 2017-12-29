@@ -25,6 +25,7 @@
         "meanio": "^0.9.4",
         "method-override": "^2.3.9",
         "moment": "^2.18.1",
+        "mongodb": "^3.0.1",
         "mongodb-geojson-normalize": "^0.1.2",
         "mongoose": "~4.10.8",
         "morgan": "~1.8.1",
@@ -37,6 +38,6 @@
         "validator": "^8.0.0"
     },
     "devDependencies": {
-        "nodemon": "^1.11.0"
+        "nodemon": "^1.14.3"
     }
 }

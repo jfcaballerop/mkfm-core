@@ -89,3 +89,6 @@ ejecutar en dev:
 ## CARGA IMAGENES MASIVA
 Cuando se cargan muchos ficheros masivos en disco, para DEV pudiera ser que nodemon suelte un error, es por la cantidad de ficheros que permite hacer WATCH sobre ellos. Para solucionarlo:
 * `echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
+
+## NOTAS DEBIAN STRETCH
+* `echo fs.inotify.max_user_watches=582222 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
