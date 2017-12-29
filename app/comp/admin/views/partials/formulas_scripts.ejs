@@ -57,6 +57,21 @@
                         console.log("AssetCondition");
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
+                        featurePaintCondition.paintHTML(form);
+
+                        $('input[type=radio][name=optionsRadios]').on('change', function() {
+                            // alert(this.value);
+                            var arrRadio = $('input[type=radio][name=optionsRadios]');
+                            $.each(arrRadio, function(r, radio) {
+                                console.log(r + ' ' + radio.value);
+                                $('#formulaTable' + radio.value).hide();
+                            });
+                            var capa = '#formulaTable' + this.value;
+                            $(capa).show();
+
+
+
+                        });
                         break;
                     case "AssetCriticality":
                         $('#formulaSpec').empty();
