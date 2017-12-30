@@ -225,7 +225,7 @@ router.get('/V1/formulas/', function(req, res, next) {
             res.send(500, err.message);
         }
         res.status(200).jsonp(files);
-        //console.log(" ### GET Formulas ### \n" + files);
+        //console.log(" ### GET Formulas ### \n" + JSON.stringify(files));
     });
 
 });
