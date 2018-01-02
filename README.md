@@ -29,7 +29,7 @@ ejecutar en dev:
         "start": "node ./bin/www",
         "devstart": "nodemon ./bin/www"
     }
-* `DEBUG=mkfw-corev1:* & npm run devstart`
+* `DEBUG=mkfw-corev1,express* npm run devstart`
 
 ## Database Mongodb
 
@@ -98,3 +98,9 @@ Ramas:
 * develop
 * release
 * master
+
+## DEBUG APP
+La aplicación se debugea con el paquete DEBUG de la misma.
+Para ello, se debe arrancar:
+* `DEBUG=mkfw-corev1,express* npm run devstart`
+Siendo mkfw-corev1,express* el espacio de nombres a controlar.
