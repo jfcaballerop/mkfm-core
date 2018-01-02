@@ -102,5 +102,5 @@ Ramas:
 ## DEBUG APP
 La aplicación se debugea con el paquete DEBUG de la misma.
 Para ello, se debe arrancar:
-* `DEBUG=mkfw-corev1,express* npm run devstart`
-Siendo mkfw-corev1,express* el espacio de nombres a controlar.
+* `DEBUG=debug,i18n,mkfw-corev1,express* npm run devstart`
+Siendo debug,i18n,mkfw-corev1,express* cada uno de los espacios de nombres a controlar.
