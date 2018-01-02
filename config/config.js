@@ -8,12 +8,12 @@ module.exports = {
     PROTO_WEB: 'http://',
     HOST_API: 'localhost',
     HOST_WEB: 'localhost',
-    PORT_API: 3000,
-    PORT_WEB: 3000,
+    PORT_API: process.env.PORT || 3000,
+    PORT_WEB: process.env.PORT || 3000,
     PATH_API: '/auth/API',
     PATH_WEB: '/auth/WEB',
-    URL_BASE_API: 'http://localhost:3000/auth/API',
-    URL_BASE_WEB: 'http://localhost:3000/auth/WEB',
+    URL_BASE_API: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/API',
+    URL_BASE_WEB: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/WEB',
     MAXDISTANCE: 100, // PRECISION in meters
     QUERYMAXDISTANCE: 1 // PRECISION in meters
 
