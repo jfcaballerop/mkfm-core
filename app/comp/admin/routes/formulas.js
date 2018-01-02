@@ -222,12 +222,13 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 /* GET JSON formulas listing. */
 router.get('/V1/formulas/', function(req, res, next) {
-    Formula.find().exec(function(err, files) {
+    Formula.find({}).sort({ "properties.HTML.id": -1 }).exec(function(err, forms) {
         if (err) {
             res.send(500, err.message);
         }
-        res.status(200).jsonp(files);
-        //debug(" ### GET Formulas ### \n" + JSON.stringify(files));
+        debug(" ### GET Formulas ### \n" + JSON.stringify(forms));
+
+        res.status(200).jsonp(forms);
     });
 
 });
