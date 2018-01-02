@@ -1,3 +1,6 @@
+// DEBUG APP
+var debug = require('debug')('mkfw-corev1');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -13,6 +16,7 @@ var flash = require('connect-flash');
 //var cors = require('cors');
 var jwt = require('jwt-simple');
 var bodyParser = require('body-parser');
+
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -80,9 +84,10 @@ app.use(methodOverride());
 // DB Connect
 mongoose.connect(configDB.url, function(err, res) {
     if (err) {
-        console.log('ERROR: connecting to Database. ' + err);
+        debug('ERROR: connecting to Database. ' + err);
     } else {
-        console.log('MONGODB CONNECTED OK');
+        debug('MONGODB CONNECTED OK');
+        // console.log('MONGODB CONNECTED OK');
     }
 });
 
