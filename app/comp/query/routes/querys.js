@@ -59,26 +59,31 @@ router.get('/consultas', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
-        ////// debug('STATUS: ' + res.statusCode);
-        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            ////// debug('BODY: ' + chunk);
-            data += chunk;
+    // var request = http.request(options, function(res) {
+    //     ////// debug('STATUS: ' + res.statusCode);
+    //     ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+    //     res.setEncoding('utf8');
+    //     var data = '';
+    //     res.on('data', function(chunk) {
+    //         ////// debug('BODY: ' + chunk);
+    //         data += chunk;
 
-        });
-        res.on('end', function() {
-            //// debug('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            // debug(JSON.stringify(responseObject));
-            resp.render('querys', { ifdts: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+    //     });
+    //     res.on('end', function() {
+    //         //// debug('DATA ' + data.length + ' ' + data);
+    // var responseObject = JSON.parse(data);
+    var filters = Infodatatrack.schema.tree.properties;
+    var filtersOff = ['time', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
+    debug(filters);
+    for (var foff of filtersOff) {
+        delete filters[foff];
+    };
+    resp.render('querys', { filters: filters, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
-        });
-    });
+    // });
+    // });
 
-    request.end();
+    // request.end();
     // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
