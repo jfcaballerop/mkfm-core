@@ -1,0 +1,17 @@
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log('query_scripts.ejs');
+        $('#ListSwitchOption input[type=checkbox]').each(function(index) {
+            //if ($(this).is(':checked')) {
+            //} 
+            console.log($(this).attr('name').replace('SwitchOption', ''));
+
+        });
+
+        $('#ListSwitchOption input[name^=SwitchOption]').change(function() {
+            console.log($(this));
+        });
+    });
+</script>
