@@ -53,6 +53,9 @@ router.use('/gis', require(path.join(__dirname, '../app/comp/gis/routes/gis')));
 // ADMIN auth
 router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/formulas')));
 
+// QUERYS auth
+router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/querys')));
+
 
 // FILETYPE auth
 router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/filetype')));

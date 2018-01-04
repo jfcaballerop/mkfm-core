@@ -32,7 +32,8 @@ app.set('views', [
     path.join(__dirname, 'views'),
     path.join(__dirname, '/app/comp/user/views'),
     path.join(__dirname, '/app/comp/gis/views'),
-    path.join(__dirname, '/app/comp/admin/views')
+    path.join(__dirname, '/app/comp/admin/views'),
+    path.join(__dirname, '/app/comp/query/views')
 ]);
 
 // uncomment after placing your favicon in /public
