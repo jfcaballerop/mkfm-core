@@ -312,7 +312,7 @@
                 html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                html[++h] = '<table class="table table-bordered table-striped table-condensed" >';
                 html[++h] = '<tr>';
                 $.each(formCondition.formSpecCulverts[0], function(cabeceraCol, val) {
                     html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
@@ -329,6 +329,7 @@
                 // html[++h] = '<th id="SUBFACTOR">SUBFACTOR</th>';
                 // html[++h] = '<th id="SCORING">SCORING</th>';
                 html[++h] = '</tr>';
+                html[++h] = '<tbody id = "formulaTableBody" > ';
                 $.each(fspec, function(key, data) {
                     console.log(key);
                     console.log(data);
@@ -401,9 +402,9 @@
                 html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-
-                //console.log(fs'</tbody></table>'pec.fname);
+                html[++h] = '<table class="table table-bordered table-striped table-condensed" >';
+                html[++h] = '<tbody id="formulaTableBody">';
+                // TODO: Meter código para el excel2json
                 html[++h] = '</tbody></table></div>';
                 $('#formulaSpec').html(html.join(''));
 

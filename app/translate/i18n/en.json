@@ -77,5 +77,6 @@
     "MAPSDATA_BUTTON_EXPORT": "Export excel",
     "GMAPS_DATOS_BUTTON_ROADS": "Roads",
     "DSHEET_SEARCH_TOOL": "Search tool",
-    "DSHEET_DATA_INFO": "Data information"
+    "DSHEET_DATA_INFO": "Data information",
+    "QUERYS_FILTER": "Select filter"
 }
