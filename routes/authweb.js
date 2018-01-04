@@ -91,5 +91,7 @@ router.use('/data_sheet', require(path.join(__dirname, '../app/comp/gis/routes/d
 // ADMIN auth
 router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/formulas')));
 
+// QUERYS auth
+router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/querys')));
 
 module.exports = router;
