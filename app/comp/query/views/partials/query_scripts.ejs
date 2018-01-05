@@ -12,6 +12,31 @@
 
         $('#ListSwitchOption input[name^=SwitchOption]').change(function() {
             console.log($(this));
+            console.log($(this).attr('name').replace('SwitchOption', ''));
+            var dataPost = {};
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/query/get_filter_values/' +$(this).attr('name').replace('SwitchOption', ''),
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function(data) { 
+                console.log('filtros ' + JSON.stringify(data)); 
+                return (data);
+            });
+            Promise.all([p1]).then(function(values) {
+                console.log(values);
+
+                if (values[0].result === "ERROR") {
+                    console.log(values[0].result);
+                }else{
+                    // TODO: Stop spinner        
+                    console.log(values[0].result);
+                    console.log(values[0].filters);
+
+
+                }
+            });
         });
     });
 </script>

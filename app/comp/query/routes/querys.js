@@ -88,7 +88,48 @@ router.get('/consultas', function(req, resp, next) {
 
 });
 
+/* get_filter_values */
+/**
+ * Proceso AJAX que recibe la peticion de mostrar todos los valores de los filtros seleccionados
+ */
+router.post('/get_filter_values/:filter', function(req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB get_filter_values ' + JSON.stringify(postData));
 
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/query/V1/get_filter_values/' + req.params.filter,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+    // resp.status(200).jsonp({});
+
+});
 
 
 
@@ -110,7 +151,30 @@ router.get('/V1/consultas/', function(req, res, next) {
     });
 
 });
+/* POST get_formulas_tracks */
+router.post('/V1/get_filter_values/:filter', function(req, res, next) {
+    // debug('API /V1/update_field/');
+    var postData = extend({}, req.body);
+    debug(postData);
+    var ret = {
+        "result": "OK"
+    };
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
+        if (err) {
+            ret.result = 'ERROR';
+            ret.errormessage = err.message;
+            res.send(500, ret);
+        }
+        //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
+        ret.filters = filters;
+        debug(filters);
+        //res.status(200).jsonp(ifdts);
+        res.status(200).jsonp(ret);
+    });
 
+
+
+});
 
 
 module.exports = router;
