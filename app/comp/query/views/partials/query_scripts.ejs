@@ -3,40 +3,179 @@
 <script>
     $(document).ready(function() {
         console.log('query_scripts.ejs');
+        var numFilters = 0;
+        var arrFilters = [];
+        var arrFiltersValues = [];
+        var filtersDB = <%- JSON.stringify(filters) %>;
+        var arrColumnsChecked = [];
+        console.log(filtersDB);
         $('#ListSwitchOption input[type=checkbox]').each(function(index) {
             //if ($(this).is(':checked')) {
             //} 
-            console.log($(this).attr('name').replace('SwitchOption', ''));
+            //console.log($(this).attr('name').replace('SwitchOption', ''));
 
         });
 
         $('#ListSwitchOption input[name^=SwitchOption]').change(function() {
             console.log($(this));
             console.log($(this).attr('name').replace('SwitchOption', ''));
+            var filter = $(this).attr('name').replace('SwitchOption', '');
             var dataPost = {};
 
-            var p1 = $.ajax({
-                url: '/auth/WEB/query/get_filter_values/' +$(this).attr('name').replace('SwitchOption', ''),
-                data: JSON.stringify(dataPost),
-                type: 'POST',
-                contentType: 'application/json'
-            }, function(data) { 
-                console.log('filtros ' + JSON.stringify(data)); 
-                return (data);
-            });
-            Promise.all([p1]).then(function(values) {
-                console.log(values);
-
-                if (values[0].result === "ERROR") {
-                    console.log(values[0].result);
-                }else{
-                    // TODO: Stop spinner        
-                    console.log(values[0].result);
-                    console.log(values[0].filters);
 
 
+            if ($('#' + filter).length == 0) {
+                // sino existe el campo creo la capa con los valores de la base de datos
+                numFilters++;
+                arrFilters.push(filter);
+                console.log(arrFilters);
+                var p1 = $.ajax({
+                    url: '/auth/WEB/query/get_filter_values/' + filter,
+                    data: JSON.stringify(dataPost),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function(data) {
+                    //console.log('filtros ' + JSON.stringify(data));
+                    return (data);
+                });
+                Promise.all([p1]).then(function(values) {
+                    //console.log(values);
+
+                    if (values[0].result === "ERROR") {
+                        console.log(values[0].result);
+                    } else {
+                        // TODO: Stop spinner        
+                        console.log(values[0].result);
+                        //console.log(values[0].filters);
+                        var filters = values[0].filters;
+                        var filterDiv = "";
+                        if (filters.length > 500) {
+                            filterDiv = 'Mas de 500 resultados disponibles';
+                        } else {
+                            filterDiv += '<select id="select' + filter + '" multiple="" class="form-control">';
+                            $.each(filters, function(i, v) {
+                                filterDiv += '<option>' + v + '</option>';
+
+                            });
+                            filterDiv += '</select>';
+                        }
+                        $('#rowfilter').append('<div id="' + filter + '" class="col-md-3">' + filter + '<div class="form-panel">' + filterDiv + '</div></div>')
+
+
+                    }
+                });
+            } else {
+                // si existe debo borrar la capa
+                numFilters--;
+                $('#' + filter).remove();
+                var index = arrFilters.indexOf(filter);
+                if (index > -1) {
+                    arrFilters.splice(index, 1);
                 }
-            });
+                console.log(arrFilters);
+            }
+            if (numFilters > 0) {
+                $('#filterApply').prop('disabled', false);
+            } else {
+
+                $('#filterApply').prop('disabled', true);
+            }
+
         });
+
+        $('#filterApply').click(function() {
+            console.log(arrFilters);
+            // almaceno los filtros y los valores de los filtros para mandarlos al server
+            $.each(arrFilters, function(i, val) {
+                var optionsVal = $('#select' + val).val();
+                arrFiltersValues[val] = optionsVal;
+                console.log(arrFiltersValues);
+            });
+            // limpio la parte de seleccion
+            $('#filterApply').remove();
+            $('#messageFilter').empty();
+            $('#rowfilter').empty();
+            $('#ListSwitchOption input[type=checkbox]').prop('disabled', true);
+            // relleno con los campos a mostrar
+            var totalFiltersDB = Object.keys(filtersDB).length;
+            $('#messageFilter').append('<i class="fa fa-angle-right"></i>Columns Selection￼<br>' + 'Total Filters: ' + totalFiltersDB);
+            $('#messageFilter').append('￼<br><button id="columnApply" type="button" class="btn btn-success" ><i class="fa fa-table"></i> view results</button>');
+            var numelemcol = Math.round(totalFiltersDB / 4);
+            var filterDiv = '';
+            var count = 0;
+            var colnum = 0;
+            for (var key in filtersDB) {
+                filterDiv += '<div class="checkbox"><label>' +
+                    '<input type="checkbox" id="check' + key + '" name="check' + key + '" value="' + key + '">' + key +
+                    '</label></div>';
+                count++;
+                if (count == numelemcol) {
+                    if (colnum == 0) {
+
+                        $('#rowfilter').append('<div id="filterColumns" class="col-md-3">Columns<div class="form-panel">' + filterDiv + '</div></div>')
+                    } else {
+
+                        $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' + filterDiv + '</div></div>')
+                    }
+                    colnum++;
+                    filterDiv = "";
+                    count = 0;
+                }
+            }
+            $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' + filterDiv + '</div></div>')
+
+
+        });
+        var checkExist = setInterval(function() {
+            if ($('#columnApply').length) {
+                console.log("Exists!");
+                clearInterval(checkExist);
+                $('#columnApply').click(function() {
+                    $('input[name^=check]:checked').each(function() {
+
+                        arrColumnsChecked.push($(this).attr('name').replace('check', ''));
+                    })
+
+                    console.log(arrColumnsChecked);
+                    var dataPost = {
+                        "columns": arrColumnsChecked
+                    };
+                    for (var [kfc, vfc] of Object.keys(arrFiltersValues).entries()) {
+                        dataPost[vfc] = arrFiltersValues[vfc];
+                        // console.length(k + ' ' + v)
+
+                    };
+                    var p1 = $.ajax({
+                        url: '/auth/WEB/query/paint_results',
+                        data: JSON.stringify(dataPost),
+                        type: 'POST',
+                        contentType: 'application/json'
+                    }, function(data) {
+                        //console.log('filtros ' + JSON.stringify(data));
+                        return (data);
+                    });
+                    Promise.all([p1]).then(function(values) {
+                        console.log(values);
+                        if (values[0].result === "ERROR") {
+                            console.log(values[0].data);
+                        } else {
+                            console.log(values[0].data);
+                            $('#bodyQuery').empty();
+                            var table = '';
+                            table += '<div class="col-md-12"><div class="content-panel">';
+                            table += '<table class="table table-bordered table-striped table-condensed"><tbody>';
+                            $.each(values[0].data, function(k, v) {
+                                table += '<tr><td>' + v._id + '</td></tr>';
+                            });
+                            table += '</tbody></table></div></div>';
+                            $('#bodyQuery').append(table);
+
+
+                        }
+                    });
+                });
+            }
+        }, 100);
+
     });
 </script>
