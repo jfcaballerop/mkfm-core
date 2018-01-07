@@ -126,6 +126,23 @@
 
 
         });
+        var dataTableExist = setInterval(function() {
+            if ($('#dataTable').length) {
+                console.log("Exists dataTable!");
+                clearInterval(dataTableExist);
+                $('#exportbutton').click(function(e) {
+                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+                    $("#dataTable").table2excel({
+                        // exclude CSS class
+                        exclude: ".noExl",
+                        name: "Export data",
+                        filename: name //do not include extension
+                    });
+
+
+                });
+            }
+        });
         var checkExist = setInterval(function() {
             if ($('#columnApply').length) {
                 console.log("Exists!");
@@ -163,9 +180,39 @@
                             $('#bodyQuery').empty();
                             var table = '';
                             table += '<div class="col-md-12"><div class="content-panel">';
-                            table += '<table class="table table-bordered table-striped table-condensed"><tbody>';
+                            table += '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
+                            table += '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
+                            var header = true;
+                            var headerColum = [];
                             $.each(values[0].data, function(k, v) {
-                                table += '<tr><td>' + v._id + '</td></tr>';
+                                if (header) {
+                                    header = false;
+                                    table += '<tr>';
+                                    table += '<th>id</th>';
+
+                                    $.each(v.properties, function(k1, v1) {
+                                        if (arrColumnsChecked.indexOf(k1) >= 0) {
+                                            table += '<th>' + k1 + '</th>';
+                                            headerColum.push(k1);
+                                        }
+
+                                    });
+                                    table += '</tr>';
+                                }
+                                for (var row = 0; row < v.properties[headerColum[0]].length; row++) {
+                                    table += '<tr>';
+                                    table += '<td>' + v._id + '</td>';
+                                    $.each(v.properties, function(k1, v1) {
+                                        if (arrColumnsChecked.indexOf(k1) >= 0) {
+                                            if (v1[row] != undefined && v1[row] != '') {
+                                                table += '<td>' + v1[row] + '</td>';
+                                            } else {
+                                                table += '<td>--</td>';
+                                            }
+                                        }
+                                    });
+                                    table += '</tr>';
+                                }
                             });
                             table += '</tbody></table></div></div>';
                             $('#bodyQuery').append(table);
@@ -174,6 +221,7 @@
                         }
                     });
                 });
+
             }
         }, 100);
 
