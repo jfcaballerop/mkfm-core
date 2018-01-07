@@ -238,23 +238,28 @@ router.post('/V1/paint_results/', function(req, res, next) {
         "result": "OK"
     };
     var select = {};
-    var where = {};
+    var whereArr = [];
 
     for (var c of postData.columns) {
         select["properties." + c] = 1;
     };
 
-    // TODO: falta montar el OR
+
+    // WHERE
     for (var [k, v] of Object.keys(postData).entries()) {
         debug(k + ' ' + v);
         if (v !== 'columns') {
+            var where = {};
             var inval = { $in: postData[v] };
             where["properties." + v] = inval;
+            whereArr.push(where);
+
         }
     };
     debug(select);
-    debug(where);
-    Infodatatrack.find(where, select).exec(function(err, data) {
+    debug('#### WHERE ####');
+    debug(whereArr);
+    Infodatatrack.find({ $or: whereArr }, select).exec(function(err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
