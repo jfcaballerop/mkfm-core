@@ -219,6 +219,13 @@
 
 
                         }
+                    }).catch(function(err){
+                            console.log('error catch');
+                            alert(err.responseText);
+                            if(err.status === 401){
+                                $(location).attr('href','/');
+
+                            }
                     });
                 });
 

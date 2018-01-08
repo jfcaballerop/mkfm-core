@@ -171,6 +171,7 @@ router.post('/paint_results', function(req, resp) {
             // debug('\n\nLLEGO AQUI\n\n');
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
+
             // resp.render('querys_results', { results: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 
