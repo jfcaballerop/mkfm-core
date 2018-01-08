@@ -83,7 +83,8 @@ router.get('/consultas', function(req, resp, next) {
         token: req.token,
         moment: moment,
         title: config.CLIENT_NAME + '-' + config.APP_NAME,
-        cname: config.CLIENT_NAME
+        cname: config.CLIENT_NAME,
+        api_key: config.MAPS_API_KEY
     });
 
     // });
@@ -171,6 +172,7 @@ router.post('/paint_results', function(req, resp) {
             // debug('\n\nLLEGO AQUI\n\n');
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
+
             // resp.render('querys_results', { results: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 
@@ -237,7 +239,9 @@ router.post('/V1/paint_results/', function(req, res, next) {
     var ret = {
         "result": "OK"
     };
-    var select = {};
+    var select = {
+        "geometry.coordinates": 1
+    };
     var whereArr = [];
 
     for (var c of postData.columns) {
