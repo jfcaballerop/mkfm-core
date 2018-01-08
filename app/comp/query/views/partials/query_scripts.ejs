@@ -141,6 +141,22 @@
 
 
                 });
+                $('#mapsbutton').click(function(e) {
+                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+                    $("#dataTable").remove();
+                    // cargo el mapa de Google Maps
+                    var v_height = $(window.top).height() - 250;
+                    var v_width = $('#bodyQuery .content-panel').width();
+                   
+                    $('#bodyQuery .content-panel').append('<br><div id="map" style="width:'+ v_width+'px; height:'+ v_height+'px; position: relative; overflow: hidden;">');
+
+                    map = new GMaps({
+                        div: '#map',
+                        lat: 15.41,
+                        lng: -61.32
+                    });
+
+                });
             }
         });
         var checkExist = setInterval(function() {
@@ -181,6 +197,7 @@
                             var table = '';
                             table += '<div class="col-md-12"><div class="content-panel">';
                             table += '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
+                            table += '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
                             table += '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
                             var header = true;
                             var headerColum = [];
@@ -189,6 +206,7 @@
                                     header = false;
                                     table += '<tr>';
                                     table += '<th>id</th>';
+                                    table += '<th>GPS</th>';
 
                                     $.each(v.properties, function(k1, v1) {
                                         if (arrColumnsChecked.indexOf(k1) >= 0) {
@@ -202,6 +220,7 @@
                                 for (var row = 0; row < v.properties[headerColum[0]].length; row++) {
                                     table += '<tr>';
                                     table += '<td>' + v._id + '</td>';
+                                    table += '<td>' + v.geometry.coordinates[row] + '</td>';
                                     $.each(v.properties, function(k1, v1) {
                                         if (arrColumnsChecked.indexOf(k1) >= 0) {
                                             if (v1[row] != undefined && v1[row] != '') {
@@ -217,6 +236,13 @@
                             table += '</tbody></table></div></div>';
                             $('#bodyQuery').append(table);
 
+
+                        }
+                    }).catch(function(err) {
+                        console.log('error catch');
+                        alert(err.responseText);
+                        if (err.status === 401) {
+                            $(location).attr('href', '/');
 
                         }
                     });
