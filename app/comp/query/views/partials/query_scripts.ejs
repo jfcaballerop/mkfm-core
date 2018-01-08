@@ -189,6 +189,7 @@
                                     header = false;
                                     table += '<tr>';
                                     table += '<th>id</th>';
+                                    table += '<th>GPS</th>';
 
                                     $.each(v.properties, function(k1, v1) {
                                         if (arrColumnsChecked.indexOf(k1) >= 0) {
@@ -202,6 +203,7 @@
                                 for (var row = 0; row < v.properties[headerColum[0]].length; row++) {
                                     table += '<tr>';
                                     table += '<td>' + v._id + '</td>';
+                                    table += '<td>' + v.geometry.coordinates[row] + '</td>';
                                     $.each(v.properties, function(k1, v1) {
                                         if (arrColumnsChecked.indexOf(k1) >= 0) {
                                             if (v1[row] != undefined && v1[row] != '') {
@@ -219,13 +221,13 @@
 
 
                         }
-                    }).catch(function(err){
-                            console.log('error catch');
-                            alert(err.responseText);
-                            if(err.status === 401){
-                                $(location).attr('href','/');
+                    }).catch(function(err) {
+                        console.log('error catch');
+                        alert(err.responseText);
+                        if (err.status === 401) {
+                            $(location).attr('href', '/');
 
-                            }
+                        }
                     });
                 });
 

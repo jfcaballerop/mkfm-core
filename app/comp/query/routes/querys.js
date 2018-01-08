@@ -238,7 +238,9 @@ router.post('/V1/paint_results/', function(req, res, next) {
     var ret = {
         "result": "OK"
     };
-    var select = {};
+    var select = {
+        "geometry.coordinates": 1
+    };
     var whereArr = [];
 
     for (var c of postData.columns) {
