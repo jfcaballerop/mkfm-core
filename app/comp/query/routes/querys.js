@@ -83,7 +83,8 @@ router.get('/consultas', function(req, resp, next) {
         token: req.token,
         moment: moment,
         title: config.CLIENT_NAME + '-' + config.APP_NAME,
-        cname: config.CLIENT_NAME
+        cname: config.CLIENT_NAME,
+        api_key: config.MAPS_API_KEY
     });
 
     // });

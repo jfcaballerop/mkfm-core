@@ -141,6 +141,22 @@
 
 
                 });
+                $('#mapsbutton').click(function(e) {
+                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+                    $("#dataTable").remove();
+                    // cargo el mapa de Google Maps
+                    var v_height = $(window.top).height() - 250;
+                    var v_width = $('#bodyQuery .content-panel').width();
+                   
+                    $('#bodyQuery .content-panel').append('<br><div id="map" style="width:'+ v_width+'px; height:'+ v_height+'px; position: relative; overflow: hidden;">');
+
+                    map = new GMaps({
+                        div: '#map',
+                        lat: 15.41,
+                        lng: -61.32
+                    });
+
+                });
             }
         });
         var checkExist = setInterval(function() {
@@ -181,6 +197,7 @@
                             var table = '';
                             table += '<div class="col-md-12"><div class="content-panel">';
                             table += '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
+                            table += '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
                             table += '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
                             var header = true;
                             var headerColum = [];
