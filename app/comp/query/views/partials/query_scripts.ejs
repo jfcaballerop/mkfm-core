@@ -179,6 +179,12 @@
                         map.addMarker({
                             lat: v[1],
                             lng: v[0],
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                strokeColor: 'black',
+                                strokeOpacity: 0.5,
+                                scale: 5
+                            },
                             title: 'Query Result',
                             infoWindow: {
                                 content: arrMarkerContent[k]
