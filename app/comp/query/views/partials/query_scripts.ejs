@@ -205,13 +205,13 @@
                                 if (header) {
                                     header = false;
                                     table += '<tr>';
-                                    // table += '<th>id</th>';
-                                    // table += '<th>GPS</th>';
+                                    table += '<th>id</th>';
+                                    table += '<th>GPS</th>';
 
-                                    $.each(Object.keys(v.properties).reverse(), function(k1,v1) {
-                                        if (arrColumnsChecked.indexOf(v1) >= 0) {
-                                            table += '<th>' + v1 + '</th>';
-                                            headerColum.push(v1);
+                                    $.each(v.properties, function(k1, v1) {
+                                        if (arrColumnsChecked.indexOf(k1) >= 0) {
+                                            table += '<th>' + k1 + '</th>';
+                                            headerColum.push(k1);
                                         }
 
                                     });
@@ -219,16 +219,12 @@
                                 }
                                 for (var row = 0; row < v.properties[headerColum[0]].length; row++) {
                                     table += '<tr>';
-                                    // table += '<td>' + v._id + '</td>';
-                                    // table += '<td>' + v.geometry.coordinates[row] + '</td>';
-                                    $.each(Object.keys(v.properties).reverse(), function(k1, v1) {
-                                        console.log(k1);
-                                        console.log(v1);
-                                        console.log(v.properties[v1]);
-
-                                        if (arrColumnsChecked.indexOf(v1) >= 0) {
-                                            if (v.properties[v1][row] != undefined && v.properties[v1][row] != '') {
-                                                table += '<td>' + v.properties[v1][row] + '</td>';
+                                    table += '<td>' + v._id + '</td>';
+                                    table += '<td>' + v.geometry.coordinates[row] + '</td>';
+                                    $.each(v.properties, function(k1, v1) {
+                                        if (arrColumnsChecked.indexOf(k1) >= 0) {
+                                            if (v1[row] != undefined && v1[row] != '') {
+                                                table += '<td>' + v1[row] + '</td>';
                                             } else {
                                                 table += '<td>--</td>';
                                             }
