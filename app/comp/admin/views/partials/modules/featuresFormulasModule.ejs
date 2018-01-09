@@ -92,6 +92,17 @@
 
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
                 html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                $.each(formCondition.formSpecCulverts[0], function(cabeceraCol, val) {
+                    html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
+                });
+                for (var l in formCondition.formSpecCulverts) {
+                    html[++h] = '<tr>';
+                    $.each(formCondition.formSpecCulverts[l], function(i, val) {
+                        html[++h] = '    <td>' + val + '</td>';
+                    });
+                    html[++h] = '</tr>';
+                }
+
                 $.each(fspec, function(key, data) {
                     console.log(key);
                     console.log(data);
@@ -147,4 +158,219 @@
         }
 
     })();
+
+
+
+    var formCondition = {
+        formSpecCulverts: [{
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Silting',
+            SCORES: '95',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Breaking',
+            SCORES: '40',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Smashing',
+            SCORES: '60',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Displazaments',
+            SCORES: '90',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Open joints',
+            SCORES: '90',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Cracking',
+            SCORES: '80',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Corrosion',
+            SCORES: '85',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Scouring',
+            SCORES: '70',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Loss of drainage mouth',
+            SCORES: '60',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Collapse',
+            SCORES: '1',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': 'end',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'No damages',
+            SCORES: '100',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Other',
+            SCORES: '90',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': 'MIN(rcondition*score)',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: '',
+            string2_SUBFACTORS: 'Existance of several damages ',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1 ': 'IF(SUM(E2: E13) > 2, E14 * 0.9, E14 * ((-0.1 * SUM(E2: E13) / 3) + 1))'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'Yes',
+            SCORES: '0.95',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'No',
+            SCORES: '1.00',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'Unknown',
+            SCORES: '0.98',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }, {
+            '': '',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }]
+    };
 </script>
