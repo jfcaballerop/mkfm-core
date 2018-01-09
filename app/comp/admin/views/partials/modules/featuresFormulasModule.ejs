@@ -1,276 +1,4 @@
 <script>
-    var formCondition = {
-        formSpecCulverts: [{
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Silting',
-            SCORES: '95',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Breaking',
-            SCORES: '40',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Smashing',
-            SCORES: '60',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Displazaments',
-            SCORES: '90',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Open joints',
-            SCORES: '90',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Cracking',
-            SCORES: '80',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Corrosion',
-            SCORES: '85',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Scouring',
-            SCORES: '70',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Loss of drainage mouth',
-            SCORES: '60',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Collapse',
-            SCORES: '1',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': 'end',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'No damages',
-            SCORES: '100',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Other',
-            SCORES: '90',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: '',
-            SUBFACTORS: '',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'MIN(IF($D$2*E2=0,100,$D$2*E2),IF($D$3*E3=0,100,$D$3*E3), IF($D$4*E4=0, 100,$D$4*E4), IF($D$5*E5=0,100,$D$5*E5), IF($D$6*E6=0,100,$D$6*E6),IF($D$7*E7=0,100,$D$7*E7),IF($D$8*E8=0,100,$D$8*E8),IF($D$9*E9=0,100,$D$9*E9),IF($D$10*E10=0,100,$D$10*E10),IF($D$11*E11=0,100,$D$11*E11),IF($D$12*E12=0,100,$D$12*E12),IF($D$13*E13=0,100,$D$13*E13))'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Existance of several damages',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'IF(SUM(E2:E13)>2,E14*0.9,E14*((-0.1*SUM(E2:E13)/3)+1))'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'Yes',
-            SCORES: '0.95',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'No',
-            SCORES: '1.00',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'Unknown',
-            SCORES: '0.98',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': '0.95'
-        }, {
-            '': '',
-            FACTOR: '',
-            SUBFACTORS: '',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'E15*E19'
-        }],
-        formSpecBridges: [{
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Silting',
-            SCORES: '95',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Breaking',
-            SCORES: '40',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Smashing',
-            SCORES: '60',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Displazaments',
-            SCORES: '90',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Open joints',
-            SCORES: '90',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Cracking',
-            SCORES: '80',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Corrosion',
-            SCORES: '85',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Scouring',
-            SCORES: '70',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Loss of drainage mouth',
-            SCORES: '60',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Collapse',
-            SCORES: '1',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': 'end',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'No damages',
-            SCORES: '100',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'MAIN FACTOR',
-            SUBFACTORS: 'Damages',
-            RESPONSES: 'Other',
-            SCORES: '90',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: '',
-            SUBFACTORS: '',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'MIN(IF($D$2*E2=0,100,$D$2*E2),IF($D$3*E3=0,100,$D$3*E3), IF($D$4*E4=0, 100,$D$4*E4), IF($D$5*E5=0,100,$D$5*E5), IF($D$6*E6=0,100,$D$6*E6),IF($D$7*E7=0,100,$D$7*E7),IF($D$8*E8=0,100,$D$8*E8),IF($D$9*E9=0,100,$D$9*E9),IF($D$10*E10=0,100,$D$10*E10),IF($D$11*E11=0,100,$D$11*E11),IF($D$12*E12=0,100,$D$12*E12),IF($D$13*E13=0,100,$D$13*E13))'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Existance of several damages',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'IF(SUM(E2:E13)>2,E14*0.9,E14*((-0.1*SUM(E2:E13)/3)+1))'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'Yes',
-            SCORES: '0.95',
-            'EXAMPLE 1': '1.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'No',
-            SCORES: '1.00',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: 'Unknown',
-            SCORES: '0.98',
-            'EXAMPLE 1': '0.00'
-        }, {
-            '': '',
-            FACTOR: 'CORRECTIVE FACTORS',
-            SUBFACTORS: 'Clearing required',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': '0.95'
-        }, {
-            '': '',
-            FACTOR: '',
-            SUBFACTORS: '',
-            RESPONSES: '',
-            SCORES: '',
-            'EXAMPLE 1': 'E15*E19'
-        }]
-    };
-
-
     const PI = 3.141592;
 
     var featurePaintCriticality = (function() {
@@ -279,8 +7,7 @@
         var paintHTML = function(form) {
             var html = [];
             var h = -1;
- 
-            $.each(form.formulaSpec, function(i, fspec) {
+            $.each(form.formulaSpec.reverse(), function(i, fspec) {
                 $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                     '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
                     '</label></div>');
@@ -291,14 +18,7 @@
                 html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" >';
-                html[++h] = '<tr>';
-
-                // html[++h] = '<th id="FACTOR">FACTOR</th>';
-                // html[++h] = '<th id="SUBFACTOR">SUBFACTOR</th>';
-                // html[++h] = '<th id="SCORING">SCORING</th>';
-                html[++h] = '</tr>';
-                html[++h] = '<tbody id = "formulaTableBody" > ';
+                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
                 $.each(fspec, function(key, data) {
                     console.log(key);
                     console.log(data);
@@ -355,40 +75,7 @@
 
     })();
     var featurePaintCondition = (function() {
-           // console.log('inicio');
 
-            // for (var [kfc, vfc] of Object.keys(formCondition).entries()) {
-            //     console.log(kfc + ' ' + vfc);
-            //     for (var l in vfc.formSpecCulverts) {
-            //         console.log(l, formCondition.formSpecCulverts[l]);
-
-
-            //         Object.keys(formCondition.formSpecCulverts[l]).forEach(function(k, v) {
-            //             console.log(k + ' - ' + v);
-            //         });
-
-            //         $.each(formCondition.formSpecCulverts[l], function(i, val) {
-            //             console.log(i + val);
-            //         });
-
-
-            //     }
-
-            // };
-
-            // console.log('final');
-
-                            $.each(formCondition.formSpecCulverts[0], function (cabeceraCol, val) {
-            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
-        });
-        for (var l in formCondition.formSpecCulverts) {
-            html[++h] = '<tr>';
-            $.each(formCondition.formSpecCulverts[l], function (i, val) {
-                html[++h] = '<td>' + val + '</td>';
-            });
-            html[++h] = '</tr>';
-
-        }
         // variables y funciones privadas
         var paintHTML = function(form) {
             var html = [];
@@ -404,9 +91,48 @@
                 html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" >';
-                html[++h] = '<tbody id="formulaTableBody">';
-                // TODO: Meter código para el excel2json
+                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                $.each(fspec, function(key, data) {
+                    console.log(key);
+                    console.log(data);
+                    if (data.constructor === objectConstructor) {
+                        html[++h] = '<tr>';
+                        html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
+                        html[++h] = '<div class="col-sm-4">';
+                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '" type="text" value="' + data.weight + '">';
+                        html[++h] = '</div></td>';
+                        var tr = 0;
+                        $.each(data, function(j, data2) {
+                            if (data2.constructor === objectConstructor) {
+
+                                if (tr > 0) {
+                                    html[++h] = '<tr>';
+                                }
+                                html[++h] = '<td class="col-sm-6"><label class="col-sm-3 control-label">' + data2.name +
+                                    '<br>[Type: ' + data2.type + ']</label>';
+                                html[++h] = '<div class="col-sm-2">';
+                                html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight + '"></div>';
+                                html[++h] = '<div class="col-sm-7">' + data2.HTML_name + '</div>';
+                                html[++h] = '</td>';
+                                if (data2.scoring != undefined) {
+                                    html[++h] = '<td class="col-sm-3">';
+                                    $.each(data2.scoring, function(s, scoring) {
+                                        html[++h] = '<label class="col-sm-8 control-label">' + s +
+                                            '</label><div class="col-sm-4">';
+                                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '__' + s + '" type="text" value="' + scoring +
+                                            '"></div>';
+
+                                    });
+                                    html[++h] = '</td>';
+                                }
+                                html[++h] = '</tr>';
+                                tr++;
+                                console.log(j + ': ' + data2);
+                            }
+                        });
+                    };
+                });
+                //console.log(fs'</tbody></table>'pec.fname);
                 html[++h] = '</tbody></table></div>';
                 $('#formulaSpec').html(html.join(''));
 
