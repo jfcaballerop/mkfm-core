@@ -279,28 +279,7 @@
         var paintHTML = function(form) {
             var html = [];
             var h = -1;
-            console.log('inicio');
-
-            for (var [kfc, vfc] of Object.keys(formCondition).entries()) {
-                console.log(kfc + ' ' + vfc);
-                for (var l in vfc.formSpecCulverts) {
-                    console.log(l, formCondition.formSpecCulverts[l]);
-
-
-                    Object.keys(formCondition.formSpecCulverts[l]).forEach(function(k, v) {
-                        console.log(k + ' - ' + v);
-                    });
-
-                    $.each(formCondition.formSpecCulverts[l], function(i, val) {
-                        console.log(i + val);
-                    });
-
-
-                }
-
-            };
-
-            console.log('final');
+ 
             $.each(form.formulaSpec, function(i, fspec) {
                 $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                     '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
@@ -314,17 +293,7 @@
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
                 html[++h] = '<table class="table table-bordered table-striped table-condensed" >';
                 html[++h] = '<tr>';
-                $.each(formCondition.formSpecCulverts[0], function(cabeceraCol, val) {
-                    html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
-                });
-                for (var l in formCondition.formSpecCulverts) {
-                    html[++h] = '<tr>';
-                    $.each(formCondition.formSpecCulverts[l], function(i, val) {
-                        html[++h] = '<td>' + val + '</td>';
-                    });
-                    html[++h] = '</tr>';
 
-                }
                 // html[++h] = '<th id="FACTOR">FACTOR</th>';
                 // html[++h] = '<th id="SUBFACTOR">SUBFACTOR</th>';
                 // html[++h] = '<th id="SCORING">SCORING</th>';
@@ -386,7 +355,40 @@
 
     })();
     var featurePaintCondition = (function() {
+           // console.log('inicio');
 
+            // for (var [kfc, vfc] of Object.keys(formCondition).entries()) {
+            //     console.log(kfc + ' ' + vfc);
+            //     for (var l in vfc.formSpecCulverts) {
+            //         console.log(l, formCondition.formSpecCulverts[l]);
+
+
+            //         Object.keys(formCondition.formSpecCulverts[l]).forEach(function(k, v) {
+            //             console.log(k + ' - ' + v);
+            //         });
+
+            //         $.each(formCondition.formSpecCulverts[l], function(i, val) {
+            //             console.log(i + val);
+            //         });
+
+
+            //     }
+
+            // };
+
+            // console.log('final');
+
+                            $.each(formCondition.formSpecCulverts[0], function (cabeceraCol, val) {
+            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
+        });
+        for (var l in formCondition.formSpecCulverts) {
+            html[++h] = '<tr>';
+            $.each(formCondition.formSpecCulverts[l], function (i, val) {
+                html[++h] = '<td>' + val + '</td>';
+            });
+            html[++h] = '</tr>';
+
+        }
         // variables y funciones privadas
         var paintHTML = function(form) {
             var html = [];
