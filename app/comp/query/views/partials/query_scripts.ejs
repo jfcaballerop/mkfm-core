@@ -1,22 +1,24 @@
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         console.log('query_scripts.ejs');
         var numFilters = 0;
         var arrFilters = [];
         var arrFiltersValues = [];
         var filtersDB = <%- JSON.stringify(filters) %>;
         var arrColumnsChecked = [];
+        var arrMarkerPos = [];
+        var arrMarkerContent = [];
         console.log(filtersDB);
-        $('#ListSwitchOption input[type=checkbox]').each(function(index) {
+        $('#ListSwitchOption input[type=checkbox]').each(function (index) {
             //if ($(this).is(':checked')) {
             //} 
             //console.log($(this).attr('name').replace('SwitchOption', ''));
 
         });
 
-        $('#ListSwitchOption input[name^=SwitchOption]').change(function() {
+        $('#ListSwitchOption input[name^=SwitchOption]').change(function () {
             console.log($(this));
             console.log($(this).attr('name').replace('SwitchOption', ''));
             var filter = $(this).attr('name').replace('SwitchOption', '');
@@ -34,11 +36,11 @@
                     data: JSON.stringify(dataPost),
                     type: 'POST',
                     contentType: 'application/json'
-                }, function(data) {
+                }, function (data) {
                     //console.log('filtros ' + JSON.stringify(data));
                     return (data);
                 });
-                Promise.all([p1]).then(function(values) {
+                Promise.all([p1]).then(function (values) {
                     //console.log(values);
 
                     if (values[0].result === "ERROR") {
@@ -52,14 +54,17 @@
                         if (filters.length > 500) {
                             filterDiv = 'Mas de 500 resultados disponibles';
                         } else {
-                            filterDiv += '<select id="select' + filter + '" multiple="" class="form-control">';
-                            $.each(filters, function(i, v) {
+                            filterDiv += '<select id="select' + filter +
+                                '" multiple="" class="form-control">';
+                            $.each(filters, function (i, v) {
                                 filterDiv += '<option>' + v + '</option>';
 
                             });
                             filterDiv += '</select>';
                         }
-                        $('#rowfilter').append('<div id="' + filter + '" class="col-md-3">' + filter + '<div class="form-panel">' + filterDiv + '</div></div>')
+                        $('#rowfilter').append('<div id="' + filter + '" class="col-md-3">' +
+                            filter + '<div class="form-panel">' + filterDiv +
+                            '</div></div>')
 
 
                     }
@@ -83,10 +88,10 @@
 
         });
 
-        $('#filterApply').click(function() {
+        $('#filterApply').click(function () {
             console.log(arrFilters);
             // almaceno los filtros y los valores de los filtros para mandarlos al server
-            $.each(arrFilters, function(i, val) {
+            $.each(arrFilters, function (i, val) {
                 var optionsVal = $('#select' + val).val();
                 arrFiltersValues[val] = optionsVal;
                 console.log(arrFiltersValues);
@@ -98,40 +103,50 @@
             $('#ListSwitchOption input[type=checkbox]').prop('disabled', true);
             // relleno con los campos a mostrar
             var totalFiltersDB = Object.keys(filtersDB).length;
-            $('#messageFilter').append('<i class="fa fa-angle-right"></i>Columns Selection￼<br>' + 'Total Filters: ' + totalFiltersDB);
-            $('#messageFilter').append('￼<br><button id="columnApply" type="button" class="btn btn-success" ><i class="fa fa-table"></i> view results</button>');
+            $('#messageFilter').append('<i class="fa fa-angle-right"></i>Columns Selection￼<br>' +
+                'Total Filters: ' + totalFiltersDB);
+            $('#messageFilter').append(
+                '￼<br><button id="columnApply" type="button" class="btn btn-success" ><i class="fa fa-table"></i> view results</button>'
+            );
             var numelemcol = Math.round(totalFiltersDB / 4);
             var filterDiv = '';
             var count = 0;
             var colnum = 0;
             for (var key in filtersDB) {
                 filterDiv += '<div class="checkbox"><label>' +
-                    '<input type="checkbox" id="check' + key + '" name="check' + key + '" value="' + key + '">' + key +
+                    '<input type="checkbox" id="check' + key + '" name="check' + key + '" value="' +
+                    key + '">' + key +
                     '</label></div>';
                 count++;
                 if (count == numelemcol) {
                     if (colnum == 0) {
 
-                        $('#rowfilter').append('<div id="filterColumns" class="col-md-3">Columns<div class="form-panel">' + filterDiv + '</div></div>')
+                        $('#rowfilter').append(
+                            '<div id="filterColumns" class="col-md-3">Columns<div class="form-panel">' +
+                            filterDiv + '</div></div>')
                     } else {
 
-                        $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' + filterDiv + '</div></div>')
+                        $('#rowfilter').append(
+                            '<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
+                            filterDiv + '</div></div>')
                     }
                     colnum++;
                     filterDiv = "";
                     count = 0;
                 }
             }
-            $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' + filterDiv + '</div></div>')
+            $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
+                filterDiv + '</div></div>')
 
 
         });
-        var dataTableExist = setInterval(function() {
+        var dataTableExist = setInterval(function () {
             if ($('#dataTable').length) {
                 console.log("Exists dataTable!");
                 clearInterval(dataTableExist);
-                $('#exportbutton').click(function(e) {
-                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+                $('#exportbutton').click(function (e) {
+                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) +
+                        1000000) + '.xls';
                     $("#dataTable").table2excel({
                         // exclude CSS class
                         exclude: ".noExl",
@@ -141,30 +156,45 @@
 
 
                 });
-                $('#mapsbutton').click(function(e) {
-                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+                $('#mapsbutton').click(function (e) {
+                    var name = 'query_results_' + Math.floor((Math.random() * 9999999) +
+                        1000000) + '.xls';
                     $("#dataTable").remove();
                     // cargo el mapa de Google Maps
                     var v_height = $(window.top).height() - 250;
                     var v_width = $('#bodyQuery .content-panel').width();
-                   
-                    $('#bodyQuery .content-panel').append('<br><div id="map" style="width:'+ v_width+'px; height:'+ v_height+'px; position: relative; overflow: hidden;">');
+
+                    $('#bodyQuery .content-panel').append('<br><div id="map" style="width:' +
+                        v_width + 'px; height:' + v_height +
+                        'px; position: relative; overflow: hidden;">');
 
                     map = new GMaps({
                         div: '#map',
                         lat: 15.41,
                         lng: -61.32
                     });
+                    map.setZoom(12);
+                    $.each(arrMarkerPos, function (k, v) {
+                        var infoContent = '';
+                        map.addMarker({
+                            lat: v[1],
+                            lng: v[0],
+                            title: 'Query Result',
+                            infoWindow: {
+                                content: arrMarkerContent[k]
+                            }
+                        });
 
+                    })
                 });
             }
         });
-        var checkExist = setInterval(function() {
+        var checkExist = setInterval(function () {
             if ($('#columnApply').length) {
                 console.log("Exists!");
                 clearInterval(checkExist);
-                $('#columnApply').click(function() {
-                    $('input[name^=check]:checked').each(function() {
+                $('#columnApply').click(function () {
+                    $('input[name^=check]:checked').each(function () {
 
                         arrColumnsChecked.push($(this).attr('name').replace('check', ''));
                     })
@@ -183,11 +213,11 @@
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function(data) {
+                    }, function (data) {
                         //console.log('filtros ' + JSON.stringify(data));
                         return (data);
                     });
-                    Promise.all([p1]).then(function(values) {
+                    Promise.all([p1]).then(function (values) {
                         console.log(values);
                         if (values[0].result === "ERROR") {
                             console.log(values[0].data);
@@ -195,45 +225,68 @@
                             console.log(values[0].data);
                             $('#bodyQuery').empty();
                             var table = '';
-                            table += '<div class="col-md-12"><div class="content-panel">';
-                            table += '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
-                            table += '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
-                            table += '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
+                            table +=
+                                '<div class="col-md-12"><div class="content-panel">';
+                            table +=
+                                '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
+                            table +=
+                                '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
+                            table +=
+                                '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
                             var header = true;
                             var headerColum = [];
-                            $.each(values[0].data, function(k, v) {
+                            $.each(values[0].data, function (k, v) {
                                 if (header) {
                                     header = false;
                                     table += '<tr>';
                                     // table += '<th>id</th>';
                                     // table += '<th>GPS</th>';
 
-                                    $.each(Object.keys(v.properties).reverse(), function(k1,v1) {
-                                        if (arrColumnsChecked.indexOf(v1) >= 0) {
-                                            table += '<th>' + v1 + '</th>';
-                                            headerColum.push(v1);
-                                        }
+                                    $.each(Object.keys(v.properties).reverse(),
+                                        function (k1, v1) {
+                                            if (arrColumnsChecked.indexOf(
+                                                    v1) >= 0) {
+                                                table += '<th>' + v1 +
+                                                    '</th>';
+                                                headerColum.push(v1);
+                                            }
 
-                                    });
+                                        });
                                     table += '</tr>';
                                 }
-                                for (var row = 0; row < v.properties[headerColum[0]].length; row++) {
+                                for (var row = 0; row < v.properties[
+                                        headerColum[0]].length; row++) {
                                     table += '<tr>';
                                     // table += '<td>' + v._id + '</td>';
                                     // table += '<td>' + v.geometry.coordinates[row] + '</td>';
-                                    $.each(Object.keys(v.properties).reverse(), function(k1, v1) {
-                                        console.log(k1);
-                                        console.log(v1);
-                                        console.log(v.properties[v1]);
+                                    arrMarkerPos.push(v.geometry.coordinates[
+                                        row]);
+                                    var markerContent = '';
+                                    $.each(Object.keys(v.properties).reverse(),
+                                        function (k1, v1) {
+                                            console.log(k1);
+                                            console.log(v1);
+                                            console.log(v.properties[v1]);
 
-                                        if (arrColumnsChecked.indexOf(v1) >= 0) {
-                                            if (v.properties[v1][row] != undefined && v.properties[v1][row] != '') {
-                                                table += '<td>' + v.properties[v1][row] + '</td>';
-                                            } else {
-                                                table += '<td>--</td>';
+                                            if (arrColumnsChecked.indexOf(
+                                                    v1) >= 0) {
+                                                if (v.properties[v1][row] !=
+                                                    undefined && v.properties[
+                                                        v1][row] != '') {
+                                                    table += '<td>' + v.properties[
+                                                            v1][row] +
+                                                        '</td>';
+                                                    markerContent +=
+                                                        '<p><b>' +
+                                                        v1 + ':</b> ' + v.properties[
+                                                            v1][row] +
+                                                        '</p>';
+                                                } else {
+                                                    table += '<td>--</td>';
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                    arrMarkerContent.push(markerContent);
                                     table += '</tr>';
                                 }
                             });
@@ -242,7 +295,7 @@
 
 
                         }
-                    }).catch(function(err) {
+                    }).catch(function (err) {
                         console.log('error catch');
                         alert(err.responseText);
                         if (err.status === 401) {
