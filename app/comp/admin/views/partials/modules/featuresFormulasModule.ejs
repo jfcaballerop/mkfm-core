@@ -1,52 +1,79 @@
 <script>
     const PI = 3.141592;
 
-    var featurePaintCriticality = (function() {
+    //var featurePaintCriticality = (function() {
+    var featurePaintCondition = (function () {
 
         // variables y funciones privadas
-        var paintHTML = function(form) {
+        var paintHTML = function (form) {
             var html = [];
             var h = -1;
-            $.each(form.formulaSpec.reverse(), function(i, fspec) {
+            $.each(form.formulaSpec.reverse(), function (i, fspec) {
                 $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
-                    '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
+                    '<input type="radio" name="optionsRadios" id="option' + fspec.name +
+                    '" value="' + fspec.name + '" >' + fspec.name +
                     '</label></div>');
                 html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
-                html[++h] = '<div id="infoFormula' + fspec.name + '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                html[++h] = '<div id="infoFormula' + fspec.name +
+                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
                 html[++h] = ' Be patient, the process can take several minutes.</div>';
-                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' + fspec.name + '</button>';
-                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
+                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name +
+                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
+                    fspec.name + '</button>';
+                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name +
+                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
-                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-                $.each(fspec, function(key, data) {
+                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name +
+                    '"></div>';
+                html[++h] =
+                    '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                $.each(fspec, function (key, data) {
                     console.log(key);
                     console.log(data);
                     if (data.constructor === objectConstructor) {
                         html[++h] = '<tr>';
-                        html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
+                        html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
+                                1) + '"><label class="col-sm-8 col-sm-8 control-label">' +
+                            key + '</label>';
                         html[++h] = '<div class="col-sm-4">';
-                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '" type="text" value="' + data.weight + '">';
+                        html[++h] = '<input class="form-control" name="AssetCriticality__' +
+                            fspec.name + '__' + key + '" type="text" value="' + data.weight +
+                            '">';
                         html[++h] = '</div></td>';
                         var tr = 0;
-                        $.each(data, function(j, data2) {
+                        $.each(data, function (j, data2) {
                             if (data2.constructor === objectConstructor) {
 
                                 if (tr > 0) {
                                     html[++h] = '<tr>';
                                 }
-                                html[++h] = '<td class="col-sm-6"><label class="col-sm-3 control-label">' + data2.name +
+                                html[++h] =
+                                    '<td class="col-sm-6"><label class="col-sm-3 control-label">' +
+                                    data2.name +
                                     '<br>[Type: ' + data2.type + ']</label>';
                                 html[++h] = '<div class="col-sm-2">';
-                                html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight + '"></div>';
-                                html[++h] = '<div class="col-sm-7">' + data2.HTML_name + '</div>';
+                                html[++h] =
+                                    '<input class="form-control" name="AssetCriticality__' +
+                                    fspec.name + '__' + key + '__' + j +
+                                    '" type="text" value="' + data2.weight +
+                                    '"></div>';
+                                html[++h] = '<div class="col-sm-7">' + data2.HTML_name +
+                                    '</div>';
                                 html[++h] = '</td>';
                                 if (data2.scoring != undefined) {
                                     html[++h] = '<td class="col-sm-3">';
-                                    $.each(data2.scoring, function(s, scoring) {
-                                        html[++h] = '<label class="col-sm-8 control-label">' + s +
+                                    $.each(data2.scoring, function (s, scoring) {
+                                        html[++h] =
+                                            '<label class="col-sm-8 control-label">' +
+                                            s +
                                             '</label><div class="col-sm-4">';
-                                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '__' + s + '" type="text" value="' + scoring +
+                                        html[++h] =
+                                            '<input class="form-control" name="AssetCriticality__' +
+                                            fspec.name + '__' + key + '__' +
+                                            j + '__' + s +
+                                            '" type="text" value="' +
+                                            scoring +
                                             '"></div>';
 
                                     });
@@ -74,52 +101,90 @@
         }
 
     })();
-    var featurePaintCondition = (function() {
+    //var featurePaintCondition = (function() {
+    var featurePaintCriticality = (function () {
 
         // variables y funciones privadas
-        var paintHTML = function(form) {
+        var paintHTML = function (form) {
             var html = [];
             var h = -1;
-            $.each(form.formulaSpec, function(i, fspec) {
+            $.each(form.formulaSpec, function (i, fspec) {
                 $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
-                    '<input type="radio" name="optionsRadios" id="option' + fspec.name + '" value="' + fspec.name + '" >' + fspec.name +
+                    '<input type="radio" name="optionsRadios" id="option' + fspec.name +
+                    '" value="' + fspec.name + '" >' + fspec.name +
                     '</label></div>');
                 html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
-                html[++h] = '<div id="infoFormula' + fspec.name + '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                html[++h] = '<div id="infoFormula' + fspec.name +
+                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
                 html[++h] = ' Be patient, the process can take several minutes.</div>';
-                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id + '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name + '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' + fspec.name + '</button>';
-                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name + '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
+                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name +
+                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
+                    fspec.name + '</button>';
+                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name +
+                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
-                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name + '"></div>';
-                html[++h] = '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-                $.each(fspec, function(key, data) {
+                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name +
+                    '"></div>';
+                html[++h] =
+                    '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                // $.each(formCondition.formSpecCulverts[0], function(cabeceraCol, val) {
+                //     html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
+                // });
+                // for (var l in formCondition.formSpecCulverts) {
+                //     html[++h] = '<tr>';
+                //     $.each(formCondition.formSpecCulverts[l], function(i, val) {
+                //         html[++h] = '    <td>' + val + '</td>';
+                //     });
+                //     html[++h] = '</tr>';
+                // }
+
+                $.each(fspec, function (key, data) {
                     console.log(key);
                     console.log(data);
                     if (data.constructor === objectConstructor) {
                         html[++h] = '<tr>';
-                        html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length - 1) + '"><label class="col-sm-8 col-sm-8 control-label">' + key + '</label>';
+                        html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
+                                1) + '"><label class="col-sm-8 col-sm-8 control-label">' +
+                            key + '</label>';
                         html[++h] = '<div class="col-sm-4">';
-                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '" type="text" value="' + data.weight + '">';
+                        html[++h] = '<input class="form-control" name="AssetCriticality__' +
+                            fspec.name + '__' + key + '" type="text" value="' + data.weight +
+                            '">';
                         html[++h] = '</div></td>';
                         var tr = 0;
-                        $.each(data, function(j, data2) {
+                        $.each(data, function (j, data2) {
                             if (data2.constructor === objectConstructor) {
 
                                 if (tr > 0) {
                                     html[++h] = '<tr>';
                                 }
-                                html[++h] = '<td class="col-sm-6"><label class="col-sm-3 control-label">' + data2.name +
+                                html[++h] =
+                                    '<td class="col-sm-6"><label class="col-sm-3 control-label">' +
+                                    data2.name +
                                     '<br>[Type: ' + data2.type + ']</label>';
                                 html[++h] = '<div class="col-sm-2">';
-                                html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '" type="text" value="' + data2.weight + '"></div>';
-                                html[++h] = '<div class="col-sm-7">' + data2.HTML_name + '</div>';
+                                html[++h] =
+                                    '<input class="form-control" name="AssetCriticality__' +
+                                    fspec.name + '__' + key + '__' + j +
+                                    '" type="text" value="' + data2.weight +
+                                    '"></div>';
+                                html[++h] = '<div class="col-sm-7">' + data2.HTML_name +
+                                    '</div>';
                                 html[++h] = '</td>';
                                 if (data2.scoring != undefined) {
                                     html[++h] = '<td class="col-sm-3">';
-                                    $.each(data2.scoring, function(s, scoring) {
-                                        html[++h] = '<label class="col-sm-8 control-label">' + s +
+                                    $.each(data2.scoring, function (s, scoring) {
+                                        html[++h] =
+                                            '<label class="col-sm-8 control-label">' +
+                                            s +
                                             '</label><div class="col-sm-4">';
-                                        html[++h] = '<input class="form-control" name="AssetCriticality__' + fspec.name + '__' + key + '__' + j + '__' + s + '" type="text" value="' + scoring +
+                                        html[++h] =
+                                            '<input class="form-control" name="AssetCriticality__' +
+                                            fspec.name + '__' + key + '__' +
+                                            j + '__' + s +
+                                            '" type="text" value="' +
+                                            scoring +
                                             '"></div>';
 
                                     });
@@ -147,4 +212,219 @@
         }
 
     })();
+
+
+
+    var formCondition = {
+        formSpecCulverts: [{
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Silting',
+            SCORES: '95',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Breaking',
+            SCORES: '40',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Smashing',
+            SCORES: '60',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Displazaments',
+            SCORES: '90',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Open joints',
+            SCORES: '90',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Cracking',
+            SCORES: '80',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Corrosion',
+            SCORES: '85',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Scouring',
+            SCORES: '70',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Loss of drainage mouth',
+            SCORES: '60',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Collapse',
+            SCORES: '1',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': 'end',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'No damages',
+            SCORES: '100',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'MAIN FACTOR',
+            DB_name1: 'rcondition',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Damages',
+            DB_name2: 'score',
+            Value2: 'no_idea',
+            RESPONSES: 'Other',
+            SCORES: '90',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': 'MIN(rcondition*score)',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: '',
+            string2_SUBFACTORS: 'Existance of several damages ',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1 ': 'IF(SUM(E2: E13) > 2, E14 * 0.9, E14 * ((-0.1 * SUM(E2: E13) / 3) + 1))'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'Yes',
+            SCORES: '0.95',
+            'EXAMPLE 1': '1.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'No',
+            SCORES: '1.00',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: 'CORRECTIVE FACTORS',
+            DB_name1: 'no_idea',
+            Value1: 'select',
+            string2_SUBFACTORS: 'Clearing required',
+            DB_name2: 'various_damages',
+            Value2: '',
+            RESPONSES: 'Unknown',
+            SCORES: '0.98',
+            'EXAMPLE 1': '0.00'
+        }, {
+            '': '',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }, {
+            '': '',
+            string1_FACTOR: '',
+            DB_name1: '',
+            Value1: '',
+            string2_SUBFACTORS: '',
+            DB_name2: '',
+            Value2: '',
+            RESPONSES: '',
+            SCORES: '',
+            'EXAMPLE 1': ''
+        }]
+    };
 </script>
