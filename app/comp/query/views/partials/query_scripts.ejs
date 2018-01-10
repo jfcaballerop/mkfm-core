@@ -233,14 +233,25 @@
                             var table = '';
                             table +=
                                 '<div class="col-md-12"><div class="content-panel">';
-                            table +=
-                                '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
-                            table +=
-                                '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
+                            if (values[0].data.length > 0) {
+                                table +=
+                                    '<button id="exportbutton" type="button" class="btn btn-success" ><i class="fa fa-file-excel-o" ></i> EXPORT</button>';
+                                table +=
+                                    '<button id="mapsbutton" type="button" class="btn btn-primary" ><i class="fa fa-location-arrow" ></i> LOCATION</button>';
+                            }
                             table +=
                                 '<table id="dataTable" class="table table-bordered table-striped table-condensed"><tbody>';
                             var header = true;
                             var headerColum = [];
+                            if (values[0].data.length == 0) {
+                                table += '<tr>';
+                                table +=
+                                    '<td><div class="alert alert-danger"><b>Error!</b> Not values returned.</div></td>';
+                                table += '</tr>';
+                                $('#exportbutton').hide();
+                                $('#mapsbutton').hide();
+
+                            }
                             $.each(values[0].data, function (k, v) {
                                 if (header) {
                                     header = false;
