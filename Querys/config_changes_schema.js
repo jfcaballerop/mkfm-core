@@ -2,6 +2,11 @@ db.infodatatracks.update({}, {
     $set: {
         "config": {
             "properties": {
+                name: {
+                    desc: "name",
+                    subgroup: "Survey data",
+                    group: "ROADS - PAVEMENTS"
+                },
                 pk: {
                     desc: "",
                     subgroup: "Survey data",
@@ -603,6 +608,11 @@ db.infodatatracks.update({}, {
                     group: "BRIDGES"
                 },
                 bdamagesvaultsarchesmechanicaldurable: {
+                    desc: "Damages on vault / arches (mechanical vs. durable)",
+                    subgroup: "Bridges Group 2: Operation & Maintenance Data",
+                    group: "BRIDGES"
+                },
+                BDamagesVaultArches: {
                     desc: "Damages on vault / arches (mechanical vs. durable)",
                     subgroup: "Bridges Group 2: Operation & Maintenance Data",
                     group: "BRIDGES"
@@ -1980,127 +1990,127 @@ db.infodatatracks.update({}, {
                 dcode2: {
                     desc: "Asset Code",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dyearconstruc2: {
                     desc: "Year of construction",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dtype2: {
                     desc: "Type of drainage",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dsection2: {
                     desc: "Type of section",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dposition2: {
                     desc: "Position",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dslope2: {
                     desc: "Slope (%)",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dphoto2: {
                     desc: "Photographs",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dconslos2: {
                     desc: "Consequences of failure on LOS",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dfailure2: {
                     desc: "Failure history",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dlastinspection2: {
                     desc: "Have there been past interventions performed during the last year?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 ddateinterv2: {
                     desc: "Date of performance of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dscopeinterv2: {
                     desc: "Scope of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dlastyearintervcost2: {
                     desc: "Cost of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dlocdocinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dcurryearinterv2: {
                     desc: "Have there been interventions performed during the current year?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dcurryearintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dcurryearintervdate2: {
                     desc: "Date of performance of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dcurryearintervscope2: {
                     desc: "Scope of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dcurryearintervcost2: {
                     desc: "Accummulated cost of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dlocdoccurryearinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dmaintissues2: {
                     desc: "Maintainability issues",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dinvestment10years2: {
                     desc: "Investment undertaken in the last 10 years",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 dinvestmentrequired2: {
                     desc: "Investment required for replacement",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 },
                 domcomments2: {
                     desc: "Comments to operation and maintainance",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE RIGHT SIDE "
+                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
                 }
             }
         }
