@@ -8,13 +8,59 @@
         var arrFiltersValues = [];
         var filtersDB = <%- JSON.stringify(filters) %>;
         var config = <%- JSON.stringify(config) %>;
-        console.log(config);
+        // console.log(config);
+        // console.log(filtersDB);
         var arrColumnsChecked = [];
         var arrMarkerPos = [];
         var arrMarkerContent = [];
         // console.log(filtersDB);
+        var listHtml = '';
+        var arrList = [];
+        var arrGroups = [];
+        $.each(filtersDB, function (k, v) {
+            // console.log(k + ' ' + v + ' ' + config[k]);
+            listHtml = '';
+            // listHtml += '<li class="list-group-item">';
+            listHtml +=
+                '<p><input type="checkbox" id="SwitchOption' + k + '" name="SwitchOption' + k + '" > ';
+            listHtml += '<label id = "LabelSwitchOption' + k + '" for = "SwitchOption' + k +
+                '" title = "" > ' + k + ' </label></p>';
+            // listHtml += '</li>';
+            // console.log(k);
+            if (arrList[config[k].group] === undefined) {
+                arrList[config[k].group] = [];
+                arrGroups.push(config[k].group);
+            }
+            arrList[config[k].group].push(listHtml);
+
+
+        });
+        // console.log(arrList);
+        for (var g of arrGroups) {
+            // console.log(g);
+            // console.log(arrList[g]);
+            var list = '';
+            for (var l of arrList[g]) {
+                list += l;
+            }
+            var panel =
+                '<div  class="ui-widget-content ui-corner-all">' +
+                '<h4 id="effect' + g.replace(/ /g, '') + '" class="ui-widget-header ui-corner-all">' + g +
+                '</h4><div id="Contenteffect' + g.replace(
+                    / /g, '') + '" style="display: none;">' + list +
+                '</div></div>';
+
+            $('#ListSwitchOption').append(panel);
+        };
+
+        $('[id^=effect]').click(function () {
+
+            $('#Content' + $(this).attr('id')).toggle('blind', {}, 500);
+        });
+
+
         $('#ListSwitchOption label[id^=LabelSwitchOption]').each(function (index) {
-            // console.log(config[$(this).attr('id').replace('LabelSwitchOption', '')].desc);
+            // console.log('deberia ir despues');
             if (config[$(this).attr('id').replace('LabelSwitchOption', '')] !== undefined) {
 
                 $(this).attr('title', config[$(this).attr('id').replace('LabelSwitchOption', '')][
