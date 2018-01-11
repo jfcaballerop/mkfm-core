@@ -43,7 +43,8 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i> Edit Road</h3>
+                <h3>
+                    <i class="fa fa-angle-right"></i> Edit Road</h3>
                 <!-- page start-->
                 <div class="row mt">
                     <div class="col-md-12" style="height:80vh;">
@@ -55,11 +56,14 @@
                                         <input type="hidden" name="infodatatrack[_id]" value="<%- infodatatrack._id %>">
                                         <label class="col-xs-2 control-label">ROAD:</label>
                                         <div class="col-xs-6">
-                                            <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>" required>
-                                            <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>" required>
+                                            <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>"
+                                                required>
+                                            <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>"
+                                                required>
                                         </div>
                                         <div class="col-xs-4">
-                                            <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Modificar</button>
+                                            <button type="submit" class="btn btn-success btn-lg">
+                                                <i class="fa fa-check"></i> Modificar</button>
                                             <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                         </div>
                                         <br>
@@ -68,7 +72,8 @@
                                             <%- moment(infodatatrack.updated_at).format('DD/MM/YYYY HH:mm:ss') %>
                                         </div>
                                         <div class="col-xs-4">
-                                            <button id="showall" type="button" class="btn btn-round btn-success"><i class="fa fa-eye"></i> SHOW ALL COLUMNS</button>
+                                            <button id="showall" type="button" class="btn btn-round btn-success">
+                                                <i class="fa fa-eye"></i> SHOW ALL COLUMNS</button>
 
                                         </div>
                                     </div>
@@ -123,13 +128,10 @@
                                                         <th id="infodatatrack[properties][rinvestmentrequired]" title="Investment required to upgrade to A class" class="road"> IR</th>
                                                         <th id="infodatatrack[properties][romcomments]" title="Comments to Operation and Maintainance" class="road"> OM COM</th>
                                                         <th id="infodatatrack[properties][rinfrint]" title="Acess_airports_ferry_ports" class="road">AAFP</th>
-                                                        <th id="infodatatrack[properties][distance_airports_ferry_ports]" title="Distance_airports_ferry_ports" class="road">DAFP</th>
                                                         <th id="infodatatrack[properties][rtourism]" title="Accessuristic_sites" class="road">AS</th>
-                                                        <th id="infodatatrack[properties][distance_turistic_sites]" title="Distanceuristic_sites" class="road">DS</th>
                                                         <th id="infodatatrack[properties][rindustry]" title="Acess_Industry_Agriculture_Fishing_sites" class="road">AIAF</th>
                                                         <th id="infodatatrack[properties][rindustrydist]" title="Distance_industries_agriculture_fishing_sites" class="road">DIAFS</th>
                                                         <th id="infodatatrack[properties][rhealth]" title="Access_Social_Services" class="road">ASS</th>
-                                                        <th id="infodatatrack[properties][distance_social_services]" title="Distance_social_services" class="road">DSS</th>
                                                         <th id="infodatatrack[properties][renvironment]" title="Located_within_an_environmentally_protected_area" class="road">LOC PA</th>
                                                         <th id="infodatatrack[properties][rwaste]" title="Distance_a_dumping_area" class="road">DDA</th> -->
                                                         <th id="infodatatrack[properties][rvcondition]" title="Current_Visual_condition" class="road">CVC</th>
@@ -144,17 +146,22 @@
                                                         <th id="infodatatrack[properties][rrisknatural]" title="RISK" class="road">RISK</th> -->
 
                                                         <!-- ROAD FURNITURE DATA -->
-                                                        <th id="infodatatrack[properties][existence_barriers_condition]" title="existence_barriers_condition" class="furniture"> EBC</th>
+                                                        <th id="infodatatrack[properties][existence_barriers_condition]" title="existence_barriers_condition" class="furniture">
+                                                            EBC</th>
                                                         <th id="infodatatrack[properties][typology_barriers]" title="typology_barriers" class="furniture"> TB</th>
                                                         <th id="infodatatrack[properties][typology_safety_fence]" title="typology_safety_fence" class="furniture"> TSF</th>
-                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" title="functionality_asset_functioning_expected_barrier" class="furniture"> FAFEB</th>
-                                                        <th id="infodatatrack[properties][existence_signposting_road_signs_condition]" title="existence_signposting_road_signs_condition" class="furniture"> ESR</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" title="functionality_asset_functioning_expected_barrier"
+                                                            class="furniture"> FAFEB</th>
+                                                        <th id="infodatatrack[properties][existence_signposting_road_signs_condition]" title="existence_signposting_road_signs_condition"
+                                                            class="furniture"> ESR</th>
                                                         <th id="infodatatrack[properties][typology_signaling]" title="typology_signaling" class="furniture"> TS</th>
                                                         <th id="infodatatrack[properties][typology_vertical_signaling]" title="typology_vertical_signaling" class="furniture"> TVS</th>
-                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_signal]" title="functionality_asset_functioning_expected_signal" class="furniture"> FAFES</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_signal]" title="functionality_asset_functioning_expected_signal"
+                                                            class="furniture"> FAFES</th>
                                                         <th id="infodatatrack[properties][existence_street_lighting]" title="existence_street_lighting" class="furniture"> ESL </th>
                                                         <th id="infodatatrack[properties][typology_street_lighting]" title="typology_street_lighting" class="furniture"> TSL</th>
-                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_light]" title="functionality_asset_functioning_expected_light" class="furniture"> FAFEL</th>
+                                                        <th id="infodatatrack[properties][functionality_asset_functioning_expected_light]" title="functionality_asset_functioning_expected_light"
+                                                            class="furniture"> FAFEL</th>
                                                         <!-- <th id="infodatatrack[properties][has_there_been_past_interventions]" title="has_there_been_past_interventions" class="furniture"> INTER</th>
                                                         <th id="infodatatrack[properties][year_performance_past_interventions]" title="year_performance_past_interventions" class="furniture"> PAST INT</th>
                                                         <th id="infodatatrack[properties][comments]" title="comments" class="furniture"> COMM</th> -->
@@ -224,7 +231,6 @@
                                                         <!-- <th id="infodatatrack[properties][gdistance]" title="Distance to road (m)" class="geotechnicals">DIST</th>
                                                         <th id="infodatatrack[properties][glength]" title="Length (m)" class="geotechnicals">LENGTH</th>
                                                         <th id="infodatatrack[properties][gblocks]" title="Size of blocks (m)" class="geotechnicals">BLOCKS</th>
-                                                        <th id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures" class="geotechnicals">CORRECT MEAS</th> -->
                                                         <th id="infodatatrack[properties][gvegetation]" title="Existence of Vegetation" class="geotechnicals">VEGETATION</th>
                                                         <!-- <th id="infodatatrack[properties][gtypevegetation]" title="Type of Vegetation" class="geotechnicals">TYPE VEG</th>
                                                         <th id="infodatatrack[properties][gphoto]" title="Photographs" class="geotechnicals">PHOTO</th>
@@ -316,7 +322,8 @@
                                                                 <input id="check<%- index %>" name="check[_id]" type="checkbox" class="input-xs" value="<%- infodatatrack._id %>">
                                                             </td>
                                                             <td>
-                                                                <input id="<%- index %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.inventario[index] %>">
+                                                                <input id="<%- index %>" name="infodatatrack[properties][inventario]" type="text" class="form-control round-form input-sm"
+                                                                    value="<%- infodatatrack.properties.inventario[index] %>">
                                                             </td>
                                                             <td id="infodatatrack[properties][coordTimes]">
                                                                 <%- moment(infodatatrack.properties.coordTimes[index]).format('DD-MM-YYYY HH:mm:ss') %>
@@ -329,12 +336,12 @@
                                                             </td>
                                                             <td id="infodatatrack[properties][rcategory]">
                                                                 <select name="infodatatrack[properties][rcategory]" class="form-control">
-                                                                        <option>Main Road</option>
-                                                                        <option>Secondary</option>
-                                                                        <option>Feeder</option>
-                                                                        <option>Urban</option>
-                                                                        <option>1</option>
-                                                                      </select>
+                                                                    <option>Main Road</option>
+                                                                    <option>Secondary</option>
+                                                                    <option>Feeder</option>
+                                                                    <option>Urban</option>
+                                                                    <option>1</option>
+                                                                </select>
 
                                                             </td>
                                                             <!-- <td id="infodatatrack[properties][iri]">
@@ -364,10 +371,10 @@
                                                             </td>-->
                                                             <td id="infodatatrack[properties][rdendritic]">
                                                                 <select name="infodatatrack[properties][rdendritic]" class="form-control">
-                                                                            <option></option>
-                                                                            <option>Road leading to others</option>
-                                                                            <option>Last road of the dendritic network</option>
-                                                                          </select>
+                                                                    <option></option>
+                                                                    <option>Road leading to others</option>
+                                                                    <option>Last road of the dendritic network</option>
+                                                                </select>
 
                                                             </td>
                                                             <!--<td id="infodatatrack[properties][ropen]">
@@ -414,16 +421,16 @@
                                                                     </option>
                                                                     <option>Cement Stabilized
                                                                     </option>
-                                                                            <option>Gravel surface
-                                                                            </option>
-                                                                            <option>Earth
-                                                                                </option>
-                                                                                <option>Other
-                                                                                </option>
-                                                                            <option>Unknown
-                                                                            </option>
-                                                                            <option>1</option>
-                                                                        </select>
+                                                                    <option>Gravel surface
+                                                                    </option>
+                                                                    <option>Earth
+                                                                    </option>
+                                                                    <option>Other
+                                                                    </option>
+                                                                    <option>Unknown
+                                                                    </option>
+                                                                    <option>1</option>
+                                                                </select>
                                                             </td>
                                                             <!-- <td id="infodatatrack[properties][rbasematerial]">
                                                                 <%#  if(infodatatrack.properties.rbasematerial){ %>
@@ -638,13 +645,6 @@
                                                                     <option>1</option>
                                                                         </select>
                                                             </td>
-                                                            <td id="infodatatrack[properties][distance_airports_ferry_ports]">
-                                                                <%#  if(infodatatrack.properties.distance_airports_ferry_ports) { %>
-                                                                    <input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.distance_airports_ferry_ports[index] %>">
-                                                                    <%# } else {%>
-                                                                        <input name="infodatatrack[properties][distance_airports_ferry_ports]" type="text" class="form-control round-form input-sm" value="">
-                                                                        <%#  } %>
-                                                            </td>
 
                                                             <td id="infodatatrack[properties][rtourism]">
                                                                 <select name="infodatatrack[properties][rtourism]" class="form-control">
@@ -658,13 +658,6 @@
                                                                     </option>
                                                                     <option>1</option>
                                                                         </select>
-                                                            </td>
-                                                            <td id="infodatatrack[properties][distance_turistic_sites]">
-                                                                <%#  if(infodatatrack.properties.distance_turistic_sites) { %>
-                                                                    <input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.distance_turistic_sites[index] %>">
-                                                                    <%# } else {%>
-                                                                        <input name="infodatatrack[properties][distance_turistic_sites]" type="text" class="form-control round-form input-sm" value="">
-                                                                        <%#  } %>
                                                             </td>
 
                                                             <td id="infodatatrack[properties][rindustry]">
@@ -700,13 +693,6 @@
                                                                     </option>
                                                                     <option>1</option>
                                                                         </select>
-                                                            </td>
-                                                            <td id="infodatatrack[properties][distance_social_services]">
-                                                                <%#  if(infodatatrack.properties.distance_social_services) { %>
-                                                                    <input name="infodatatrack[properties][distance_social_services]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.distance_social_services[index] %>">
-                                                                    <%# } else {%>
-                                                                        <input name="infodatatrack[properties][distance_social_services]" type="text" class="form-control round-form input-sm" value="">
-                                                                        <%#  } %>
                                                             </td>
 
                                                             <td id="infodatatrack[properties][renvironment]">
@@ -817,10 +803,12 @@
                                                         -->
                                                             <td id="infodatatrack[properties][existence_barriers_condition]">
                                                                 <% if(infodatatrack.properties.existence_barriers_condition){%>
-                                                                    <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_barriers_condition[index] %>">
+                                                                    <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.existence_barriers_condition[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][existence_barriers_condition]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][typology_barriers]">
@@ -841,18 +829,22 @@
                                                             </td>
                                                             <td id="infodatatrack[properties][functionality_asset_functioning_expected_barrier]">
                                                                 <% if(infodatatrack.properties.functionality_asset_functioning_expected_barrier){%>
-                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_barrier[index] %>">
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.functionality_asset_functioning_expected_barrier[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_barrier]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][existence_signposting_road_signs_condition]">
                                                                 <% if(infodatatrack.properties.existence_signposting_road_signs_condition){%>
-                                                                    <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.existence_signposting_road_signs_condition[index] %>">
+                                                                    <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.existence_signposting_road_signs_condition[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][existence_signposting_road_signs_condition]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][typology_signaling]">
@@ -865,18 +857,22 @@
                                                             </td>
                                                             <td id="infodatatrack[properties][typology_vertical_signaling]">
                                                                 <% if(infodatatrack.properties.typology_vertical_signaling){%>
-                                                                    <input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.typology_vertical_signaling[index] %>">
+                                                                    <input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.typology_vertical_signaling[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][typology_vertical_signaling]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][functionality_asset_functioning_expected_signal]">
                                                                 <% if(infodatatrack.properties.functionality_asset_functioning_expected_signal){%>
-                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_signal[index] %>">
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.functionality_asset_functioning_expected_signal[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_signal]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <td id="infodatatrack[properties][existence_street_lighting]">
@@ -897,10 +893,12 @@
                                                             </td>
                                                             <td id="infodatatrack[properties][functionality_asset_functioning_expected_light]">
                                                                 <% if(infodatatrack.properties.functionality_asset_functioning_expected_light){%>
-                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.functionality_asset_functioning_expected_light[index] %>">
+                                                                    <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm"
+                                                                        value="<%- infodatatrack.properties.functionality_asset_functioning_expected_light[index] %>">
 
                                                                     <% } else { %>
-                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm" value="">
+                                                                        <input name="infodatatrack[properties][functionality_asset_functioning_expected_light]" type="text" class="form-control round-form input-sm"
+                                                                            value="">
                                                                         <% } %>
                                                             </td>
                                                             <!-- 
@@ -1379,13 +1377,6 @@
                                                                         <input name="infodatatrack[properties][gblocks]" type="text" class="form-control round-form input-sm" value="">
                                                                         <%#  } %>
                                                             </td>
-                                                            <td id="infodatatrack[properties][gcorrectmeas]" title="Corrective measures">
-                                                                <%#  if(infodatatrack.properties.gcorrectmeas){%>
-                                                                    <input name="infodatatrack[properties][gcorrectmeas]" type="text" class="form-control round-form input-sm" value="<%# - infodatatrack.properties.gcorrectmeas[index] %>">
-                                                                    <%#  } else { %>
-                                                                        <input name="infodatatrack[properties][gcorrectmeas]" type="text" class="form-control round-form input-sm" value="">
-                                                                        <%#  } %>
-                                                            </td> -->
                                                             <td id="infodatatrack[properties][gvegetation]" title="Existence of Vegetation">
                                                                 <% if(infodatatrack.properties.gvegetation){%>
                                                                     <input name="infodatatrack[properties][gvegetation]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.gvegetation[index] %>">

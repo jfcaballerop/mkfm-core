@@ -7,19 +7,19 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-            
+
             #map {
                 height: 100%;
             }
             /* Optional: Makes the sample page fill the window. */
-            
+
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-            
+
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -78,14 +78,16 @@
                                             <%- trans('QUERYS_FILTER') %>
                                         </h5>
                                         <ul id="ListSwitchOption" class="list-group">
-
                                             <% for (var key in filters) { %>
                                                 <li class="list-group-item">
 
-                                                    <input type="checkbox" id="SwitchOption<%- key %>" name="SwitchOption<%- key %>" data-toggle="toggle" data-onstyle="success" data-size="mini">
-                                                    <label for="SwitchOption<%- key %>">
+                                                    <input type="checkbox" id="SwitchOption<%- key %>" name="SwitchOption<%- key %>" data-toggle="toggle" data-onstyle="success"
+                                                        data-size="mini">
+                                                    <label id="LabelSwitchOption<%- key %>" for="SwitchOption<%- key %>" title="">
                                                         <%- key %>
                                                     </label>
+
+
 
 
                                                 </li>
@@ -98,10 +100,12 @@
                                     <div class="form-panel">
                                         <h6 class="mb">
 
-                                            <div id="messageFilter"><i class="fa fa-angle-right"></i>No se ha aplicado ningún filtro. Se encontraron 1277 registros. ￼
+                                            <div id="messageFilter">
+                                                <i class="fa fa-angle-right"></i>No se ha aplicado ningún filtro. Se encontraron 1277 registros. ￼
                                             </div>
                                             <br>
-                                            <button id="filterApply" type="button" class="btn btn-success" disabled><i class="fa fa-filter"></i> Apply</button>
+                                            <button id="filterApply" type="button" class="btn btn-success" disabled>
+                                                <i class="fa fa-filter"></i> Apply</button>
                                             <div id="rowfilter" class="row mt">
 
                                             </div>
