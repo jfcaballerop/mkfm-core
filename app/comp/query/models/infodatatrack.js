@@ -461,6 +461,9 @@ var infodatatrackSchema = new Schema({
     updated_at: {
         type: Date,
         default: Date.now
+    },
+    config: {
+        properties: {}
     }
 
 });

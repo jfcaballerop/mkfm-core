@@ -49,7 +49,7 @@ router.get('/consultas', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/query/V1/consultas/',
+        path: config.PATH_API + '/query/V1/get_one_config/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -59,38 +59,43 @@ router.get('/consultas', function (req, resp, next) {
     // // Peticiones 
 
 
-    // var request = http.request(options, function(res) {
-    //     ////// debug('STATUS: ' + res.statusCode);
-    //     ////// debug('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function(chunk) {
-    //         ////// debug('BODY: ' + chunk);
-    //         data += chunk;
+    var request = http.request(options, function (res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
 
-    //     });
-    //     res.on('end', function() {
-    //         //// debug('DATA ' + data.length + ' ' + data);
-    // var responseObject = JSON.parse(data);
-    var filters = Infodatatrack.schema.tree.properties;
-    var filtersOff = ['time', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
-    debug(filters);
-    for (var foff of filtersOff) {
-        delete filters[foff];
-    };
-    resp.render('querys', {
-        filters: filters,
-        token: req.token,
-        moment: moment,
-        title: config.CLIENT_NAME + '-' + config.APP_NAME,
-        cname: config.CLIENT_NAME,
-        api_key: config.MAPS_API_KEY
+        });
+        res.on('end', function () {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+
+            var filters = Infodatatrack.schema.tree.properties;
+            var filtersOff = ['time', 'name', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
+            debug(filters);
+            for (var foff of filtersOff) {
+                delete filters[foff];
+            };
+
+            //debug(responseObject.config.properties);
+
+            resp.render('querys', {
+                filters: filters,
+                config: responseObject.config.properties,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME,
+                api_key: config.MAPS_API_KEY
+            });
+
+        });
     });
 
-    // });
-    // });
-
-    // request.end();
+    request.end();
     // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
@@ -194,6 +199,20 @@ router.post('/paint_results', function (req, resp) {
 
 
 
+/* GET JSON ifdts config. */
+router.get('/V1/get_one_config/', function (req, res, next) {
+    Infodatatrack.findOne({}, {
+        config: 1
+    }).exec(function (err, ifdt) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
+
+        res.status(200).jsonp(ifdt);
+    });
+
+});
 /* GET JSON formulas listing. */
 router.get('/V1/consultas/', function (req, res, next) {
     Infodatatrack.find().exec(function (err, ifdts) {
