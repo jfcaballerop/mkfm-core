@@ -33,14 +33,14 @@
     var $inputsIR = $('#form').find("input[name='infodatatrack[properties][rinvestmentrequired]']");
     var $inputsOC = $('#form').find("input[name='infodatatrack[properties][romcomments]']");
     var $inputs_acess_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][rinfrint]']");
-    var $inputs_distance_airports_ferry_ports = $('#form').find("input[name='infodatatrack[properties][distance_airports_ferry_ports]']");
     var $inputs_access_turistic_sites = $('#form').find("input[name='infodatatrack[properties][rtourism]']");
-    var $inputs_distance_turistic_sites = $('#form').find("input[name='infodatatrack[properties][distance_turistic_sites]']");
-    var $inputs_acess_industry_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][rindustry]']");
-    var $inputs_distance_industries_agriculture_fishing_sites = $('#form').find("input[name='infodatatrack[properties][rindustrydist]']");
+    var $inputs_acess_industry_agriculture_fishing_sites = $('#form').find(
+        "input[name='infodatatrack[properties][rindustry]']");
+    var $inputs_distance_industries_agriculture_fishing_sites = $('#form').find(
+        "input[name='infodatatrack[properties][rindustrydist]']");
     var $inputs_access_social_services = $('#form').find("input[name='infodatatrack[properties][rhealth]']");
-    var $inputs_distance_social_services = $('#form').find("input[name='infodatatrack[properties][distance_social_services]']");
-    var $inputs_located_within_an_environmentally_protected_area = $('#form').find("input[name='infodatatrack[properties][renvironment]']");
+    var $inputs_located_within_an_environmentally_protected_area = $('#form').find(
+        "input[name='infodatatrack[properties][renvironment]']");
     var $inputs_distance_a_dumping_area = $('#form').find("input[name='infodatatrack[properties][rwaste]']");
     var $inputs_current_condition = $('#form').find("input[name='infodatatrack[properties][rccondition]']");
     var $inputs_criticality = $('#form').find("input[name='infodatatrack[properties][rcriticality]']");
@@ -52,18 +52,28 @@
     var $inputs_rriskphysical = $('#form').find("input[name='infodatatrack[properties][rriskphysical]']");
     var $inputs_rrisknatural = $('#form').find("input[name='infodatatrack[properties][rrisknatural]']");
     // ROAD FURNITURE DATA
-    var $inputs_existence_barriers_condition = $('#form').find("input[name='infodatatrack[properties][existence_barriers_condition]']");
+    var $inputs_existence_barriers_condition = $('#form').find(
+        "input[name='infodatatrack[properties][existence_barriers_condition]']");
     var $inputs_typology_barriers = $('#form').find("input[name='infodatatrack[properties][typology_barriers]']");
-    var $inputs_typology_safety_fence = $('#form').find("input[name='infodatatrack[properties][typology_safety_fence]']");
-    var $inputs_functionality_asset_functioning_expected_barrier = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_barrier]']");
-    var $inputs_existence_signposting_road_signs_condition = $('#form').find("input[name='infodatatrack[properties][existence_signposting_road_signs_condition]']");
+    var $inputs_typology_safety_fence = $('#form').find(
+        "input[name='infodatatrack[properties][typology_safety_fence]']");
+    var $inputs_functionality_asset_functioning_expected_barrier = $('#form').find(
+        "input[name='infodatatrack[properties][functionality_asset_functioning_expected_barrier]']");
+    var $inputs_existence_signposting_road_signs_condition = $('#form').find(
+        "input[name='infodatatrack[properties][existence_signposting_road_signs_condition]']");
     var $inputs_typology_signaling = $('#form').find("input[name='infodatatrack[properties][typology_signaling]']");
-    var $inputs_functionality_asset_functioning_expected_signal = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_signal]']");
-    var $inputs_existence_street_lighting = $('#form').find("input[name='infodatatrack[properties][existence_street_lighting]']");
-    var $inputs_typology_street_lighting = $('#form').find("input[name='infodatatrack[properties][typology_street_lighting]']");
-    var $inputs_functionality_asset_functioning_expected_light = $('#form').find("input[name='infodatatrack[properties][functionality_asset_functioning_expected_light]']");
-    var $inputs_has_there_been_past_interventions = $('#form').find("input[name='infodatatrack[properties][has_there_been_past_interventions]']");
-    var $inputs_year_performance_past_interventions = $('#form').find("input[name='infodatatrack[properties][year_performance_past_interventions]']");
+    var $inputs_functionality_asset_functioning_expected_signal = $('#form').find(
+        "input[name='infodatatrack[properties][functionality_asset_functioning_expected_signal]']");
+    var $inputs_existence_street_lighting = $('#form').find(
+        "input[name='infodatatrack[properties][existence_street_lighting]']");
+    var $inputs_typology_street_lighting = $('#form').find(
+        "input[name='infodatatrack[properties][typology_street_lighting]']");
+    var $inputs_functionality_asset_functioning_expected_light = $('#form').find(
+        "input[name='infodatatrack[properties][functionality_asset_functioning_expected_light]']");
+    var $inputs_has_there_been_past_interventions = $('#form').find(
+        "input[name='infodatatrack[properties][has_there_been_past_interventions]']");
+    var $inputs_year_performance_past_interventions = $('#form').find(
+        "input[name='infodatatrack[properties][year_performance_past_interventions]']");
     var $inputs_comments = $('#form').find("input[name='infodatatrack[properties][comments]']");
     // BRIDGES
     var $inputs_bcode = $('#form').find("input[name='infodatatrack[properties][bcode]']");
@@ -93,7 +103,8 @@
     var $inputs_bvisualcondition = $('#form').find("input[name='infodatatrack[properties][bvisualcondition]']");
     var $inputs_bdamagesfoundations = $('#form').find("input[name='infodatatrack[properties][bdamagesfoundations]']");
     var $inputs_bdamagesstructural = $('#form').find("input[name='infodatatrack[properties][bdamagesstructural]']");
-    var $inputs_bdamagesnonstructural = $('#form').find("input[name='infodatatrack[properties][bdamagesnonstructural]']");
+    var $inputs_bdamagesnonstructural = $('#form').find(
+        "input[name='infodatatrack[properties][bdamagesnonstructural]']");
     var $inputs_bconslos = $('#form').find("input[name='infodatatrack[properties][bconslos]']");
     var $inputs_bfailure = $('#form').find("input[name='infodatatrack[properties][bfailure]']");
     var $inputs_bsurveyfreq = $('#form').find("input[name='infodatatrack[properties][bsurveyfreq]']");
@@ -130,7 +141,6 @@
     var $inputs_gdistance = $('#form').find("input[name='infodatatrack[properties][gdistance]']");
     var $inputs_glength = $('#form').find("input[name='infodatatrack[properties][glength]']");
     var $inputs_gblocks = $('#form').find("input[name='infodatatrack[properties][gblocks]']");
-    var $inputs_gcorrectmeas = $('#form').find("input[name='infodatatrack[properties][gcorrectmeas]']");
     var $inputs_gvegetation = $('#form').find("input[name='infodatatrack[properties][gvegetation]']");
     var $inputs_gtypevegetation = $('#form').find("input[name='infodatatrack[properties][gtypevegetation]']");
     var $inputs_gphoto = $('#form').find("input[name='infodatatrack[properties][gphoto]']");
@@ -210,7 +220,7 @@
 
     $("input[name='infodatatrack[properties][rdateconstruct]']").datepicker({
         dateFormat: 'dd-mm-yy',
-        onSelect: function(date) {
+        onSelect: function (date) {
             $inputsDC.trigger("blur");
         }
 
@@ -220,7 +230,7 @@
     $('#form').find("input[name='infodatatrack[properties][rdateconstruct]']").css('min-width', '80px');
     $('#form').find("select").css('min-width', '100px');
 
-    $("thead > tr > th", $('#dataTable')).click(function() {
+    $("thead > tr > th", $('#dataTable')).click(function () {
         // alert("Handler for .click() called.");
         // //console.log($(this).attr("id"));
         if ($(this).attr("id")) {
@@ -230,8 +240,8 @@
 
     });
 
-    $("#showall").click(function() {
-        $("thead > tr > th", $('#dataTable')).each(function(index, elem) {
+    $("#showall").click(function () {
+        $("thead > tr > th", $('#dataTable')).each(function (index, elem) {
             if ($(this).attr("id")) {
                 $(this).show();
                 $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).show();
@@ -239,18 +249,18 @@
         });
     });
 
-    $checks.on("change", function() {
+    $checks.on("change", function () {
         if ($(this).is(':checked'))
             $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
         else
             $(this).closest('tr').children('td').css('background-color', '');
     });
 
-    $inputsINV.blur(function() {
+    $inputsINV.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             // ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     // ////console.log('Check: ' + (index));
@@ -261,11 +271,11 @@
             });
         }
     });
-    $inputsRL.blur(function() {
+    $inputsRL.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -276,11 +286,11 @@
             });
         }
     });
-    $inputsDC.blur(function() {
+    $inputsDC.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -291,11 +301,11 @@
             });
         }
     });
-    $inputsADT.blur(function() {
+    $inputsADT.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -306,11 +316,11 @@
             });
         }
     });
-    $inputsTHP.blur(function() {
+    $inputsTHP.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -321,11 +331,11 @@
             });
         }
     });
-    $inputsBM.blur(function() {
+    $inputsBM.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -336,11 +346,11 @@
             });
         }
     });
-    $inputsSBM.blur(function() {
+    $inputsSBM.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -351,11 +361,11 @@
             });
         }
     });
-    $inputsNLI.blur(function() {
+    $inputsNLI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -366,11 +376,11 @@
             });
         }
     });
-    $inputsNLD.blur(function() {
+    $inputsNLD.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -381,11 +391,11 @@
             });
         }
     });
-    $inputsTNL.blur(function() {
+    $inputsTNL.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -396,11 +406,11 @@
             });
         }
     });
-    $inputsTW.blur(function() {
+    $inputsTW.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -411,11 +421,11 @@
             });
         }
     });
-    $inputsLOC.blur(function() {
+    $inputsLOC.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -426,11 +436,11 @@
             });
         }
     });
-    $inputsLI.blur(function() {
+    $inputsLI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -441,11 +451,11 @@
             });
         }
     });
-    $inputsPC.blur(function() {
+    $inputsPC.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -456,11 +466,11 @@
             });
         }
     });
-    $inputsFH.blur(function() {
+    $inputsFH.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -471,11 +481,11 @@
             });
         }
     });
-    $inputsCL.blur(function() {
+    $inputsCL.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -486,11 +496,11 @@
             });
         }
     });
-    $inputsSF.blur(function() {
+    $inputsSF.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -501,11 +511,11 @@
             });
         }
     });
-    $inputsNS.blur(function() {
+    $inputsNS.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -516,11 +526,11 @@
             });
         }
     });
-    $inputsPI.blur(function() {
+    $inputsPI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -531,11 +541,11 @@
             });
         }
     });
-    $inputsIE.blur(function() {
+    $inputsIE.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -546,11 +556,11 @@
             });
         }
     });
-    $inputsYI.blur(function() {
+    $inputsYI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -561,11 +571,11 @@
             });
         }
     });
-    $inputsSI.blur(function() {
+    $inputsSI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -576,11 +586,11 @@
             });
         }
     });
-    $inputsII.blur(function() {
+    $inputsII.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -591,11 +601,11 @@
             });
         }
     });
-    $inputsLDI.blur(function() {
+    $inputsLDI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -606,11 +616,11 @@
             });
         }
     });
-    $inputsMI.blur(function() {
+    $inputsMI.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -621,11 +631,11 @@
             });
         }
     });
-    $inputsI10Y.blur(function() {
+    $inputsI10Y.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -636,11 +646,11 @@
             });
         }
     });
-    $inputsIR.blur(function() {
+    $inputsIR.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -651,11 +661,11 @@
             });
         }
     });
-    $inputsOC.blur(function() {
+    $inputsOC.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -666,11 +676,11 @@
             });
         }
     });
-    $inputs_acess_airports_ferry_ports.blur(function() {
+    $inputs_acess_airports_ferry_ports.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -681,26 +691,11 @@
             });
         }
     });
-    $inputs_distance_airports_ferry_ports.blur(function() {
+    $inputs_access_turistic_sites.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    $inputs_distance_airports_ferry_ports[index].value = $this.val();
-                }
-
-
-            });
-        }
-    });
-    $inputs_access_turistic_sites.blur(function() {
-        var $this = $(this);
-        if ($this.val() != '') {
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -711,26 +706,11 @@
             });
         }
     });
-    $inputs_distance_turistic_sites.blur(function() {
+    $inputs_acess_industry_agriculture_fishing_sites.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    $inputs_distance_turistic_sites[index].value = $this.val();
-                }
-
-
-            });
-        }
-    });
-    $inputs_acess_industry_agriculture_fishing_sites.blur(function() {
-        var $this = $(this);
-        if ($this.val() != '') {
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -741,11 +721,11 @@
             });
         }
     });
-    $inputs_distance_industries_agriculture_fishing_sites.blur(function() {
+    $inputs_distance_industries_agriculture_fishing_sites.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -756,11 +736,11 @@
             });
         }
     });
-    $inputs_access_social_services.blur(function() {
+    $inputs_access_social_services.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -771,26 +751,11 @@
             });
         }
     });
-    $inputs_distance_social_services.blur(function() {
+    $inputs_located_within_an_environmentally_protected_area.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    $inputs_distance_social_services[index].value = $this.val();
-                }
-
-
-            });
-        }
-    });
-    $inputs_located_within_an_environmentally_protected_area.blur(function() {
-        var $this = $(this);
-        if ($this.val() != '') {
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -801,11 +766,11 @@
             });
         }
     });
-    $inputs_distance_a_dumping_area.blur(function() {
+    $inputs_distance_a_dumping_area.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -816,11 +781,11 @@
             });
         }
     });
-    $inputs_current_condition.blur(function() {
+    $inputs_current_condition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -831,11 +796,11 @@
             });
         }
     });
-    $inputs_criticality.blur(function() {
+    $inputs_criticality.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -846,11 +811,11 @@
             });
         }
     });
-    $inputs_exposure_landslide_hazard.blur(function() {
+    $inputs_exposure_landslide_hazard.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -861,11 +826,11 @@
             });
         }
     });
-    $inputs_exposure_flood_hazard.blur(function() {
+    $inputs_exposure_flood_hazard.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -876,11 +841,11 @@
             });
         }
     });
-    $inputs_asset_response_against_hazards.blur(function() {
+    $inputs_asset_response_against_hazards.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -891,11 +856,11 @@
             });
         }
     });
-    $inputs_asset_sensitivity.blur(function() {
+    $inputs_asset_sensitivity.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -906,11 +871,11 @@
             });
         }
     });
-    $inputs_risk.blur(function() {
+    $inputs_risk.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -921,11 +886,11 @@
             });
         }
     });
-    $inputs_existence_barriers_condition.blur(function() {
+    $inputs_existence_barriers_condition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -936,11 +901,11 @@
             });
         }
     });
-    $inputs_typology_barriers.blur(function() {
+    $inputs_typology_barriers.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -951,11 +916,11 @@
             });
         }
     });
-    $inputs_typology_safety_fence.blur(function() {
+    $inputs_typology_safety_fence.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -966,11 +931,11 @@
             });
         }
     });
-    $inputs_functionality_asset_functioning_expected_barrier.blur(function() {
+    $inputs_functionality_asset_functioning_expected_barrier.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -981,11 +946,11 @@
             });
         }
     });
-    $inputs_existence_signposting_road_signs_condition.blur(function() {
+    $inputs_existence_signposting_road_signs_condition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -996,11 +961,11 @@
             });
         }
     });
-    $inputs_typology_signaling.blur(function() {
+    $inputs_typology_signaling.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1011,11 +976,11 @@
             });
         }
     });
-    $inputs_functionality_asset_functioning_expected_signal.blur(function() {
+    $inputs_functionality_asset_functioning_expected_signal.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1026,11 +991,11 @@
             });
         }
     });
-    $inputs_existence_street_lighting.blur(function() {
+    $inputs_existence_street_lighting.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1041,11 +1006,11 @@
             });
         }
     });
-    $inputs_typology_street_lighting.blur(function() {
+    $inputs_typology_street_lighting.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1056,11 +1021,11 @@
             });
         }
     });
-    $inputs_functionality_asset_functioning_expected_light.blur(function() {
+    $inputs_functionality_asset_functioning_expected_light.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1071,11 +1036,11 @@
             });
         }
     });
-    $inputs_has_there_been_past_interventions.blur(function() {
+    $inputs_has_there_been_past_interventions.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1086,11 +1051,11 @@
             });
         }
     });
-    $inputs_year_performance_past_interventions.blur(function() {
+    $inputs_year_performance_past_interventions.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1101,11 +1066,11 @@
             });
         }
     });
-    $inputs_comments.blur(function() {
+    $inputs_comments.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1117,11 +1082,11 @@
         }
     });
 
-    $inputs_bcode.blur(function() {
+    $inputs_bcode.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1132,11 +1097,11 @@
             });
         }
     });
-    $inputs_bname.blur(function() {
+    $inputs_bname.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1147,11 +1112,11 @@
             });
         }
     });
-    $inputs_byearconstruc.blur(function() {
+    $inputs_byearconstruc.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1162,11 +1127,11 @@
             });
         }
     });
-    $inputs_btype.blur(function() {
+    $inputs_btype.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1177,11 +1142,11 @@
             });
         }
     });
-    $inputs_bsurrounding.blur(function() {
+    $inputs_bsurrounding.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1192,11 +1157,11 @@
             });
         }
     });
-    $inputs_balternative.blur(function() {
+    $inputs_balternative.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1207,11 +1172,11 @@
             });
         }
     });
-    $inputs_bobstaclesaved.blur(function() {
+    $inputs_bobstaclesaved.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1222,11 +1187,11 @@
             });
         }
     });
-    $inputs_bfloodscenario.blur(function() {
+    $inputs_bfloodscenario.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1237,11 +1202,11 @@
             });
         }
     });
-    $inputs_bmaterialdeck.blur(function() {
+    $inputs_bmaterialdeck.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1252,11 +1217,11 @@
             });
         }
     });
-    $inputs_bmaterialpiers.blur(function() {
+    $inputs_bmaterialpiers.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1267,11 +1232,11 @@
             });
         }
     });
-    $inputs_bmaterialabutments.blur(function() {
+    $inputs_bmaterialabutments.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1282,11 +1247,11 @@
             });
         }
     });
-    $inputs_balignment.blur(function() {
+    $inputs_balignment.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1297,11 +1262,11 @@
             });
         }
     });
-    $inputs_bspans.blur(function() {
+    $inputs_bspans.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1312,11 +1277,11 @@
             });
         }
     });
-    $inputs_blenght.blur(function() {
+    $inputs_blenght.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1327,11 +1292,11 @@
             });
         }
     });
-    $inputs_bmaxspan.blur(function() {
+    $inputs_bmaxspan.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1342,11 +1307,11 @@
             });
         }
     });
-    $inputs_bwidth.blur(function() {
+    $inputs_bwidth.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1357,11 +1322,11 @@
             });
         }
     });
-    $inputs_bfreeheight.blur(function() {
+    $inputs_bfreeheight.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1372,11 +1337,11 @@
             });
         }
     });
-    $inputs_bfoundation.blur(function() {
+    $inputs_bfoundation.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1387,11 +1352,11 @@
             });
         }
     });
-    $inputs_bpiersriver.blur(function() {
+    $inputs_bpiersriver.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1402,11 +1367,11 @@
             });
         }
     });
-    $inputs_bprotectabut.blur(function() {
+    $inputs_bprotectabut.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1417,11 +1382,11 @@
             });
         }
     });
-    $inputs_bprojectlocation.blur(function() {
+    $inputs_bprojectlocation.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1432,11 +1397,11 @@
             });
         }
     });
-    $inputs_bphoto.blur(function() {
+    $inputs_bphoto.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1447,11 +1412,11 @@
             });
         }
     });
-    $inputs_blastinspection.blur(function() {
+    $inputs_blastinspection.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1462,11 +1427,11 @@
             });
         }
     });
-    $inputs_bprevcondition.blur(function() {
+    $inputs_bprevcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1477,11 +1442,11 @@
             });
         }
     });
-    $inputs_bvisualcondition.blur(function() {
+    $inputs_bvisualcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1492,11 +1457,11 @@
             });
         }
     });
-    $inputs_bdamagesfoundations.blur(function() {
+    $inputs_bdamagesfoundations.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1507,11 +1472,11 @@
             });
         }
     });
-    $inputs_bdamagesstructural.blur(function() {
+    $inputs_bdamagesstructural.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1522,11 +1487,11 @@
             });
         }
     });
-    $inputs_bdamagesnonstructural.blur(function() {
+    $inputs_bdamagesnonstructural.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1537,11 +1502,11 @@
             });
         }
     });
-    $inputs_bconslos.blur(function() {
+    $inputs_bconslos.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1552,11 +1517,11 @@
             });
         }
     });
-    $inputs_bfailure.blur(function() {
+    $inputs_bfailure.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1567,11 +1532,11 @@
             });
         }
     });
-    $inputs_bsurveyfreq.blur(function() {
+    $inputs_bsurveyfreq.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1582,11 +1547,11 @@
             });
         }
     });
-    $inputs_bnextsurvey.blur(function() {
+    $inputs_bnextsurvey.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1597,11 +1562,11 @@
             });
         }
     });
-    $inputs_bpastinterv.blur(function() {
+    $inputs_bpastinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1612,11 +1577,11 @@
             });
         }
     });
-    $inputs_bintervextent.blur(function() {
+    $inputs_bintervextent.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1627,11 +1592,11 @@
             });
         }
     });
-    $inputs_bdateinterv.blur(function() {
+    $inputs_bdateinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1642,11 +1607,11 @@
             });
         }
     });
-    $inputs_bscopeinterv.blur(function() {
+    $inputs_bscopeinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1657,11 +1622,11 @@
             });
         }
     });
-    $inputs_bimpactinterv.blur(function() {
+    $inputs_bimpactinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1672,11 +1637,11 @@
             });
         }
     });
-    $inputs_blocdocinterv.blur(function() {
+    $inputs_blocdocinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1687,11 +1652,11 @@
             });
         }
     });
-    $inputs_bmaintissues.blur(function() {
+    $inputs_bmaintissues.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1702,11 +1667,11 @@
             });
         }
     });
-    $inputs_binvestment10years.blur(function() {
+    $inputs_binvestment10years.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1717,11 +1682,11 @@
             });
         }
     });
-    $inputs_binvestmentrequired.blur(function() {
+    $inputs_binvestmentrequired.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1732,11 +1697,11 @@
             });
         }
     });
-    $inputs_bomcomments.blur(function() {
+    $inputs_bomcomments.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1747,11 +1712,11 @@
             });
         }
     });
-    $inputs_bcondition.blur(function() {
+    $inputs_bcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1762,11 +1727,11 @@
             });
         }
     });
-    $inputs_bcriticality.blur(function() {
+    $inputs_bcriticality.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1777,11 +1742,11 @@
             });
         }
     });
-    $inputs_blandslide.blur(function() {
+    $inputs_blandslide.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1792,11 +1757,11 @@
             });
         }
     });
-    $inputs_bflood.blur(function() {
+    $inputs_bflood.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1807,11 +1772,11 @@
             });
         }
     });
-    $inputs_bresphazard.blur(function() {
+    $inputs_bresphazard.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1822,11 +1787,11 @@
             });
         }
     });
-    $inputs_bsensitivity.blur(function() {
+    $inputs_bsensitivity.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1837,11 +1802,11 @@
             });
         }
     });
-    $inputs_brisk.blur(function() {
+    $inputs_brisk.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1854,11 +1819,11 @@
     });
     // GEOTECHNICAL ASSETS
 
-    $inputs_gcode.blur(function() {
+    $inputs_gcode.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1869,11 +1834,11 @@
             });
         }
     });
-    $inputs_gyearconstruct.blur(function() {
+    $inputs_gyearconstruct.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1884,11 +1849,11 @@
             });
         }
     });
-    $inputs_gtype.blur(function() {
+    $inputs_gtype.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1899,11 +1864,11 @@
             });
         }
     });
-    $inputs_gposition.blur(function() {
+    $inputs_gposition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1914,11 +1879,11 @@
             });
         }
     });
-    $inputs_gmaterial.blur(function() {
+    $inputs_gmaterial.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1929,11 +1894,11 @@
             });
         }
     });
-    $inputs_gnature.blur(function() {
+    $inputs_gnature.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1944,11 +1909,11 @@
             });
         }
     });
-    $inputs_gheight.blur(function() {
+    $inputs_gheight.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1959,11 +1924,11 @@
             });
         }
     });
-    $inputs_gh_h.blur(function() {
+    $inputs_gh_h.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1974,11 +1939,11 @@
             });
         }
     });
-    $inputs_gslope.blur(function() {
+    $inputs_gslope.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -1989,11 +1954,11 @@
             });
         }
     });
-    $inputs_gdistance.blur(function() {
+    $inputs_gdistance.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2004,11 +1969,11 @@
             });
         }
     });
-    $inputs_glength.blur(function() {
+    $inputs_glength.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2019,11 +1984,11 @@
             });
         }
     });
-    $inputs_gblocks.blur(function() {
+    $inputs_gblocks.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2034,26 +1999,11 @@
             });
         }
     });
-    $inputs_gcorrectmeas.blur(function() {
+    $inputs_gvegetation.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
-                $check = $(this);
-                if ($check.prop("checked")) {
-                    ////console.log('Check: ' + (index));
-                    $inputs_gcorrectmeas[index].value = $this.val();
-                }
-
-
-            });
-        }
-    });
-    $inputs_gvegetation.blur(function() {
-        var $this = $(this);
-        if ($this.val() != '') {
-            ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2064,11 +2014,11 @@
             });
         }
     });
-    $inputs_gtypevegetation.blur(function() {
+    $inputs_gtypevegetation.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2079,11 +2029,11 @@
             });
         }
     });
-    $inputs_gphoto.blur(function() {
+    $inputs_gphoto.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2094,11 +2044,11 @@
             });
         }
     });
-    $inputs_glastinspection.blur(function() {
+    $inputs_glastinspection.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2109,11 +2059,11 @@
             });
         }
     });
-    $inputs_gprevcondition.blur(function() {
+    $inputs_gprevcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2124,11 +2074,11 @@
             });
         }
     });
-    $inputs_gvisualcondition.blur(function() {
+    $inputs_gvisualcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2139,11 +2089,11 @@
             });
         }
     });
-    $inputs_gevidrecfailures.blur(function() {
+    $inputs_gevidrecfailures.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2154,11 +2104,11 @@
             });
         }
     });
-    $inputs_gtypefailure.blur(function() {
+    $inputs_gtypefailure.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2169,11 +2119,11 @@
             });
         }
     });
-    $inputs_gextentfailure.blur(function() {
+    $inputs_gextentfailure.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2184,11 +2134,11 @@
             });
         }
     });
-    $inputs_gconslos.blur(function() {
+    $inputs_gconslos.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2199,11 +2149,11 @@
             });
         }
     });
-    $inputs_gfailure.blur(function() {
+    $inputs_gfailure.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2214,11 +2164,11 @@
             });
         }
     });
-    $inputs_gsurveyfreq.blur(function() {
+    $inputs_gsurveyfreq.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2229,11 +2179,11 @@
             });
         }
     });
-    $inputs_gnextsurvey.blur(function() {
+    $inputs_gnextsurvey.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2244,11 +2194,11 @@
             });
         }
     });
-    $inputs_gpastinterv.blur(function() {
+    $inputs_gpastinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2259,11 +2209,11 @@
             });
         }
     });
-    $inputs_gintervextent.blur(function() {
+    $inputs_gintervextent.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2274,11 +2224,11 @@
             });
         }
     });
-    $inputs_gdateinterv.blur(function() {
+    $inputs_gdateinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2289,11 +2239,11 @@
             });
         }
     });
-    $inputs_gscopeinterv.blur(function() {
+    $inputs_gscopeinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2304,11 +2254,11 @@
             });
         }
     });
-    $inputs_gimpactinterv.blur(function() {
+    $inputs_gimpactinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2319,11 +2269,11 @@
             });
         }
     });
-    $inputs_glocdocinterv.blur(function() {
+    $inputs_glocdocinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2334,11 +2284,11 @@
             });
         }
     });
-    $inputs_gmaintissues.blur(function() {
+    $inputs_gmaintissues.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2349,11 +2299,11 @@
             });
         }
     });
-    $inputs_ginvestment10years.blur(function() {
+    $inputs_ginvestment10years.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2364,11 +2314,11 @@
             });
         }
     });
-    $inputs_rgnvestmentrequired.blur(function() {
+    $inputs_rgnvestmentrequired.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2379,11 +2329,11 @@
             });
         }
     });
-    $inputs_gomcomments.blur(function() {
+    $inputs_gomcomments.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2394,11 +2344,11 @@
             });
         }
     });
-    $inputs_gcondition.blur(function() {
+    $inputs_gcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2409,11 +2359,11 @@
             });
         }
     });
-    $inputs_gcriticality.blur(function() {
+    $inputs_gcriticality.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2424,11 +2374,11 @@
             });
         }
     });
-    $inputs_glandslide.blur(function() {
+    $inputs_glandslide.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2439,11 +2389,11 @@
             });
         }
     });
-    $inputs_gflood.blur(function() {
+    $inputs_gflood.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2454,11 +2404,11 @@
             });
         }
     });
-    $inputs_gresphazard.blur(function() {
+    $inputs_gresphazard.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2469,11 +2419,11 @@
             });
         }
     });
-    $inputs_gsensitivity.blur(function() {
+    $inputs_gsensitivity.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2484,11 +2434,11 @@
             });
         }
     });
-    $inputs_grisk.blur(function() {
+    $inputs_grisk.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2502,11 +2452,11 @@
 
     // drainages
 
-    $inputs_dcode.blur(function() {
+    $inputs_dcode.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2517,11 +2467,11 @@
             });
         }
     });
-    $inputs_dyearconstruc.blur(function() {
+    $inputs_dyearconstruc.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2532,11 +2482,11 @@
             });
         }
     });
-    $inputs_dtype.blur(function() {
+    $inputs_dtype.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2547,11 +2497,11 @@
             });
         }
     });
-    $inputs_dcapacity.blur(function() {
+    $inputs_dcapacity.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2562,11 +2512,11 @@
             });
         }
     });
-    $inputs_drainpeak.blur(function() {
+    $inputs_drainpeak.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2577,11 +2527,11 @@
             });
         }
     });
-    $inputs_dmaterial.blur(function() {
+    $inputs_dmaterial.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2592,11 +2542,11 @@
             });
         }
     });
-    $inputs_dslope.blur(function() {
+    $inputs_dslope.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2607,11 +2557,11 @@
             });
         }
     });
-    $inputs_dsection.blur(function() {
+    $inputs_dsection.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2622,11 +2572,11 @@
             });
         }
     });
-    $inputs_ddiameter.blur(function() {
+    $inputs_ddiameter.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2637,11 +2587,11 @@
             });
         }
     });
-    $inputs_dlength.blur(function() {
+    $inputs_dlength.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2652,11 +2602,11 @@
             });
         }
     });
-    $inputs_dprotentrance.blur(function() {
+    $inputs_dprotentrance.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2667,11 +2617,11 @@
             });
         }
     });
-    $inputs_dprotexit.blur(function() {
+    $inputs_dprotexit.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2682,11 +2632,11 @@
             });
         }
     });
-    $inputs_dphoto.blur(function() {
+    $inputs_dphoto.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2697,11 +2647,11 @@
             });
         }
     });
-    $inputs_dlastinspection.blur(function() {
+    $inputs_dlastinspection.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2712,11 +2662,11 @@
             });
         }
     });
-    $inputs_dprevcondition.blur(function() {
+    $inputs_dprevcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2727,11 +2677,11 @@
             });
         }
     });
-    $inputs_dvisualcondition.blur(function() {
+    $inputs_dvisualcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2742,11 +2692,11 @@
             });
         }
     });
-    $inputs_dcrossdamages.blur(function() {
+    $inputs_dcrossdamages.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2757,11 +2707,11 @@
             });
         }
     });
-    $inputs_dlostsection.blur(function() {
+    $inputs_dlostsection.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2772,11 +2722,11 @@
             });
         }
     });
-    $inputs_dconslos.blur(function() {
+    $inputs_dconslos.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2787,11 +2737,11 @@
             });
         }
     });
-    $inputs_dfailure.blur(function() {
+    $inputs_dfailure.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2802,11 +2752,11 @@
             });
         }
     });
-    $inputs_dsurveyfreq.blur(function() {
+    $inputs_dsurveyfreq.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2817,11 +2767,11 @@
             });
         }
     });
-    $inputs_dnextsurvey.blur(function() {
+    $inputs_dnextsurvey.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2832,11 +2782,11 @@
             });
         }
     });
-    $inputs_dpastinterv.blur(function() {
+    $inputs_dpastinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2847,11 +2797,11 @@
             });
         }
     });
-    $inputs_dintervextent.blur(function() {
+    $inputs_dintervextent.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2862,11 +2812,11 @@
             });
         }
     });
-    $inputs_ddateinterv.blur(function() {
+    $inputs_ddateinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2877,11 +2827,11 @@
             });
         }
     });
-    $inputs_dscopeinterv.blur(function() {
+    $inputs_dscopeinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2892,11 +2842,11 @@
             });
         }
     });
-    $inputs_dimpactinterv.blur(function() {
+    $inputs_dimpactinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2907,11 +2857,11 @@
             });
         }
     });
-    $inputs_dlocdocinterv.blur(function() {
+    $inputs_dlocdocinterv.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2922,11 +2872,11 @@
             });
         }
     });
-    $inputs_dmaintissues.blur(function() {
+    $inputs_dmaintissues.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2937,11 +2887,11 @@
             });
         }
     });
-    $inputs_dinvestment10years.blur(function() {
+    $inputs_dinvestment10years.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2952,11 +2902,11 @@
             });
         }
     });
-    $inputs_dinvestmentrequired.blur(function() {
+    $inputs_dinvestmentrequired.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2967,11 +2917,11 @@
             });
         }
     });
-    $inputs_domcomments.blur(function() {
+    $inputs_domcomments.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2982,11 +2932,11 @@
             });
         }
     });
-    $inputs_dcondition.blur(function() {
+    $inputs_dcondition.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2997,11 +2947,11 @@
             });
         }
     });
-    $inputs_dcriticality.blur(function() {
+    $inputs_dcriticality.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3012,11 +2962,11 @@
             });
         }
     });
-    $inputs_dlandslide.blur(function() {
+    $inputs_dlandslide.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3027,11 +2977,11 @@
             });
         }
     });
-    $inputs_dflood.blur(function() {
+    $inputs_dflood.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3042,11 +2992,11 @@
             });
         }
     });
-    $inputs_dresphazard.blur(function() {
+    $inputs_dresphazard.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3057,11 +3007,11 @@
             });
         }
     });
-    $inputs_dsensitivity.blur(function() {
+    $inputs_dsensitivity.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3072,11 +3022,11 @@
             });
         }
     });
-    $inputs_drisk.blur(function() {
+    $inputs_drisk.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));

@@ -3,19 +3,30 @@ var Schema = mongoose.Schema;
 
 // define the schema for our user model
 var infodatatrackSchema = new Schema({
-    type: { type: String },
-    inverted: { type: Boolean, default: false },
+    type: {
+        type: String
+    },
+    inverted: {
+        type: Boolean,
+        default: false
+    },
     properties: {
         name: String,
         time: Date,
-        proccessed: { type: Boolean, default: false },
+        proccessed: {
+            type: Boolean,
+            default: false
+        },
         coordTimes: [],
         kobo: [{
             kobo_id: String,
             kobo_type: String
         }],
         koboedit: [],
-        video_roads: { type: Schema.Types.ObjectId, ref: 'Road' },
+        video_roads: {
+            type: Schema.Types.ObjectId,
+            ref: 'Road'
+        },
         pk: [],
         surveyor: [],
         datesurvey: [],
@@ -68,13 +79,10 @@ var infodatatrackSchema = new Schema({
         rinvestmentrequired: [],
         romcomments: [],
         rinfrint: [], //ROADS Group 4
-        distance_airports_ferry_ports: [],
         rtourism: [],
-        distance_turistic_sites: [],
         rindustry: [],
         rindustrydist: [],
         rhealth: [],
-        distance_social_services: [],
         renvironment: [],
         rwaste: [],
         rvcondition: [],
@@ -110,6 +118,7 @@ var infodatatrackSchema = new Schema({
         balternative: [],
         bobstaclesaved: [],
         bfloodscenario: [],
+        Bloadcapacity: [],
         bmaterialdeck: [],
         bmaterialgirder: [],
         bmaterialpiers: [],
@@ -131,6 +140,7 @@ var infodatatrackSchema = new Schema({
         bvisualcondition: [],
         bdamagesfoundations: [],
         bdamagesstructural: [],
+        bdamagesvaultsarchesmechanicaldurable: [],
         bdamagesnonstructural: [],
         bdamagesstructuralgeneraltype: [],
         BDamagesVaultArches: [],
@@ -161,6 +171,7 @@ var infodatatrackSchema = new Schema({
         BLastYearIntervExtent: [],
         BLastYearIntervDate: [],
         BLastYearIntervScope: [],
+        BLastYearIntervCost: [],
         BLastYearIntervImpactCond: [],
         BLocDocLastYearInterv: [],
         BCurrYearInterv: [],
@@ -218,7 +229,6 @@ var infodatatrackSchema = new Schema({
         gtreatmentsinternaldrainagesextension: [],
         gtreatmentsinternaldrainageseffectiveness: [],
         gtreatmentsinternaldrainagesconservation: [],
-        gcorrectmeas: [],
         gvegetation: [],
         gtypevegetation: [],
         gphoto: [],
@@ -439,14 +449,27 @@ var infodatatrackSchema = new Schema({
         domcomments2: []
     },
     geometry: {
-        type: { type: String },
+        type: {
+            type: String
+        },
         coordinates: []
     },
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now }
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    },
+    config: {
+        properties: {}
+    }
 
 });
-infodatatrackSchema.index({ "geometry": "2dsphere" });
+infodatatrackSchema.index({
+    "geometry": "2dsphere"
+});
 
 // create the model
 var Infodatatrack = mongoose.model('Infodatatrack', infodatatrackSchema);

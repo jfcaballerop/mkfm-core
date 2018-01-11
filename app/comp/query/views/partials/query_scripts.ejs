@@ -7,15 +7,23 @@
         var arrFilters = [];
         var arrFiltersValues = [];
         var filtersDB = <%- JSON.stringify(filters) %>;
+        var config = <%- JSON.stringify(config) %>;
+        console.log(config);
         var arrColumnsChecked = [];
         var arrMarkerPos = [];
         var arrMarkerContent = [];
         // console.log(filtersDB);
-        $('#ListSwitchOption input[type=checkbox]').each(function (index) {
-            //if ($(this).is(':checked')) {
-            //} 
-            //// console.log($(this).attr('name').replace('SwitchOption', ''));
+        $('#ListSwitchOption label[id^=LabelSwitchOption]').each(function (index) {
+            // console.log(config[$(this).attr('id').replace('LabelSwitchOption', '')].desc);
+            if (config[$(this).attr('id').replace('LabelSwitchOption', '')] !== undefined) {
 
+                $(this).attr('title', config[$(this).attr('id').replace('LabelSwitchOption', '')][
+                    'desc'
+                ]);
+            } else {
+                $(this).attr('title', $(this).attr('id').replace('LabelSwitchOption', ''));
+
+            }
         });
 
         $('#ListSwitchOption input[name^=SwitchOption]').change(function () {
@@ -163,6 +171,7 @@
                     // cargo el mapa de Google Maps
                     var v_height = $(window.top).height() - 250;
                     var v_width = $('#bodyQuery .content-panel').width();
+                    $('#exportbutton').hide();
 
                     $('#bodyQuery .content-panel').append('<br><div id="map" style="width:' +
                         v_width + 'px; height:' + v_height +
