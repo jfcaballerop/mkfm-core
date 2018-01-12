@@ -6,6 +6,8 @@ var jwtweb = require('jsonwebtoken');
 var moment = require('moment');
 var config = require(path.join(__dirname, '../config/config'));
 var bodyParser = require('body-parser');
+var debug = require('debug')('debug');
+
 
 router.use(bodyParser.urlencoded({
     limit: '300mb',
@@ -16,24 +18,24 @@ router.use(bodyParser.json({ limit: '300mb' }));
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
 
-    console.log('### COMPROBAR AUTH WEB ### ');
+    debug('### COMPROBAR AUTH WEB ### ');
     var token = req.cookies.jwtToken;
-    console.log('\n\n## WEB Token: ' + token + "\n\n");
+    debug('\n\n## WEB Token: ' + token + "\n\n");
     if (!token || token == undefined) {
-        console.log('## Cookie Token not found');
+        debug('## Cookie Token not found');
         req.flash('message', 'Session expired!');
         res.status(403).redirect('/');
     } else {
-        console.log('Entro: ' + config.TOKEN_SECRET);
+        debug('Entro: ' + config.TOKEN_SECRET);
         jwtweb.verify(token, config.TOKEN_SECRET, function(err, token) {
             if (('' + err).indexOf('TokenExpiredError') !== -1) {
-                console.log('## ERR1: ' + err);
+                debug('## ERR1: ' + err);
                 req.flash('message', 'El token ha expirado!');
 
                 // res.status(403).redirect('/');
                 res.status(401).send('Token expired! Refresh session.');
             } else if (err) {
-                console.log('## ERR2: ' + err);
+                debug('## ERR2: ' + err);
                 req.flash('message', err);
                 res.status(403).redirect('/');
             } else {
@@ -44,7 +46,7 @@ router.use(function timeLog(req, res, next) {
                     req.rol = 'admin';
                 else
                     req.user = 'user';
-                console.log('## Usuario: ' + req.user_id + ' ' + req.user_login + ' ' + req.rol);
+                debug('## Usuario: ' + req.user_id + ' ' + req.user_login + ' ' + req.rol);
                 next();
             }
         });
@@ -89,5 +91,7 @@ router.use('/data_sheet', require(path.join(__dirname, '../app/comp/gis/routes/d
 // ADMIN auth
 router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/formulas')));
 
+// QUERYS auth
+router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/querys')));
 
 module.exports = router;

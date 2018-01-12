@@ -20,6 +20,7 @@
     "MENU_DASHBOARD": "Panel de Control",
     "MENU_DATASHEET": "Data Sheet",
     "MENU_PANEL_FORM": "Panel de Control - Formulas ",
+    "MENU_PANEL_QUERY": "Consultas Control Panel",
     "MENU_MAPS": "Mapas",
     "MENU_MAPS_GMAPS": "W-GIS",
     "MENU_MAPS_TAVEL": "Recorridos",
@@ -27,6 +28,7 @@
     "MENU_CP_USERS": "Usuarios",
     "MENU_CP_UPFILE": "Ficheros",
     "MENU_CP_FORM": "Formulas",
+    "MENU_QUERYS": "Querys",
     "ROAD_TITLE": "Km Totales recorridos por carretera",
     "ROAD_DISTANCE": "DISTANCIA:",
     "ROAD_TIME": "TIEMPO:",
@@ -75,6 +77,6 @@
     "MAPSDATA_BUTTON_EXPORT": "Exportar excel",
     "GMAPS_DATOS_BUTTON_ROADS": "Carreteras",
     "DSHEET_SEARCH_TOOL": "Search tool",
-    "DSHEET_DATA_INFO": "Datos"
-
+    "DSHEET_DATA_INFO": "Datos",
+    "QUERYS_FILTER": "Seleccion de filtros"
 }

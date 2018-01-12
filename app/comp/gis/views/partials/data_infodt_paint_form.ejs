@@ -1885,8 +1885,12 @@
                 html[++h] = '<td id="infodatatrack[properties][rwidth]"><input name="infodatatrack[properties][rwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.rwidth[index] !== "undefined" ? data.properties.rwidth[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][ralternatitinerary]"><input name="infodatatrack[properties][ralternatitinerary]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.ralternatitinerary[index] !== "undefined" ? data.properties.ralternatitinerary[index] : '') + '">' +
+
+                html[++h] = '<td id="infodatatrack[properties][ralternatitinerary]">' +
+                    '<select style="min-width: 100px;" name="infodatatrack[properties][ralternatitinerary]" class="form-control">' +
+                    '<option value="NO" selected>NO</option>' +
+                    '<option value="YES">YES</option>' +
+                    '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rdendritic]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rdendritic]" class="form-control">' +
@@ -1920,8 +1924,8 @@
                     (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][renvironment]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][renvironment]" class="form-control">' +
-                    '<option value="No" selected>No</option>' +
-                    '<option value="Yes">Yes</option>' +
+                    '<option value="NO" selected>NO</option>' +
+                    '<option value="YES">YES</option>' +
                     '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rriskphysical]"><input name="infodatatrack[properties][rriskphysical]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
@@ -1937,8 +1941,8 @@
                 //ROAD Furniture
                 html[++h] = '<td id="infodatatrack[properties][rbarriersexist]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rbarriersexist]" class="form-control">' +
-                    '<option value="No" selected>No</option>' +
-                    '<option value="Yes">Yes</option>' +
+                    '<option value="NO" selected>NO</option>' +
+                    '<option value="YES">YES</option>' +
                     '</select>' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rbarrierstype]">' +
@@ -1959,8 +1963,8 @@
                 html[++h] = '<td id="infodatatrack[properties][rbarrierfunct]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rbarrierfunct]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -1989,8 +1993,8 @@
                 html[++h] = '<td id="infodatatrack[properties][rsignalsfunct]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rsignalsfunct]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2009,8 +2013,8 @@
                 html[++h] = '<td id="infodatatrack[properties][rlightfunct]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rlightfunct]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2160,8 +2164,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtreatments]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2169,8 +2173,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gtreatmentsretaining]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtreatmentsretaining]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2258,8 +2262,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gvegetation]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gvegetation]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2408,8 +2412,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gtreatments2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtreatments2]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2417,8 +2421,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gtreatmentsretaining2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtreatmentsretaining2]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2506,8 +2510,8 @@
                 html[++h] = '<td id="infodatatrack[properties][gvegetation2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gvegetation2]" class="form-control">' +
                     '<option ></option>' +
-                    '<option>Yes</option>' +
-                    '<option>No</option>' +
+                    '<option>YES</option>' +
+                    '<option>NO</option>' +
                     '<option>NA</option>' +
                     '<option>Unknown</option>' +
                     '</select>' +
@@ -2721,6 +2725,7 @@
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarriersexist]"]').val(data.properties.rbarriersexist[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][renvironment]"]').val(data.properties.renvironment[index]);
+                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][ralternatitinerary]"]').val(data.properties.ralternatitinerary[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
                 $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
@@ -3007,6 +3012,25 @@
                         $inputsrenvironment[index].value = $this.val();
                     } else {
                         $inputsrenvironment[index].value = '';
+                    }
+                }
+
+
+            });
+        });
+        var $inputsralternatitinerary = $('#form').find('select[ name="infodatatrack[properties][ralternatitinerary]"]');
+        $inputsralternatitinerary.on('change', function() {
+            var $this = $(this);
+
+            ////console.log('ID: ' + $this.attr("id"));
+            $checks.each(function(index) {
+                $check = $(this);
+                if ($check.prop("checked")) {
+                    ////console.log('Check: ' + (index));
+                    if ($this.val() != '') {
+                        $inputsralternatitinerary[index].value = $this.val();
+                    } else {
+                        $inputsralternatitinerary[index].value = '';
                     }
                 }
 
