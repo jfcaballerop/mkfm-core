@@ -22,10 +22,10 @@
             // console.log(k + ' ' + v + ' ' + config[k]);
             listHtml = '';
             // listHtml += '<li class="list-group-item">';
+            listHtml += '<label class="checkbox-inline" id = "LabelSwitchOption' + k + '" for = "SwitchOption' + k +
+                '" title = "" > ';
             listHtml +=
-                '<p><input type="checkbox" id="SwitchOption' + k + '" name="SwitchOption' + k + '" > ';
-            listHtml += '<label id = "LabelSwitchOption' + k + '" for = "SwitchOption' + k +
-                '" title = "" > ' + k + ' </label></p>';
+                '<input type="checkbox" id="SwitchOption' + k + '" name="SwitchOption' + k + '" >' + k + ' </label>';
             // listHtml += '</li>';
             // console.log(k);
             if (arrList[config[k].group] === undefined) {
@@ -44,8 +44,8 @@
         for (var g of Object.keys(arrGroups)) {
             var panel = '';
             panel += '<div  class="ui-widget-content ui-corner-all">' +
-                '<h4 id="effect' + g.replace(/ /g, '') + '" class="ui-widget-header ui-corner-all primary">' + g +
-                '</h4><div id="Contenteffect' + g.replace(
+                '<h5 id="effect' + g.replace(/ /g, '') + '" class="ui-widget-header ui-corner-all primary">' + g +
+                '</h5><div id="Contenteffect' + g.replace(
                     / /g, '') + '" style="display: none;">';
             for (var sg of arrGroups[g]) {
                 // console.log(g);
@@ -53,11 +53,11 @@
 
                 var list = '';
                 for (var l of arrList[g][sg]) {
-                    list += l;
+                    list += '<p>' + l + '</p>';
                 }
                 panel += '<div  class="ui-widget-content ui-corner-all">' +
-                    '<h5 id="effect' + sg.replace(/ |:|&/g, '') + '" class="ui-widget-header ui-corner-all">' + sg +
-                    '</h5><div id="Contenteffect' + sg.replace(
+                    '<h6 id="effect' + sg.replace(/ |:|&/g, '') + '" class="ui-widget-header ui-corner-all">' + sg +
+                    '</h6><div class="form-panel" id="Contenteffect' + sg.replace(
                         / |:|&/g, '') + '" style="display: none;">' + list +
                     '</div></div>';
 
@@ -181,31 +181,58 @@
             var filterDiv = '';
             var count = 0;
             var colnum = 0;
-            for (var key in filtersDB) {
-                filterDiv += '<div class="checkbox"><label>' +
-                    '<input type="checkbox" id="check' + key + '" name="check' + key + '" value="' +
-                    key + '">' + key +
-                    '</label></div>';
-                count++;
-                if (count == numelemcol) {
-                    if (colnum == 0) {
 
-                        $('#rowfilter').append(
-                            '<div id="filterColumns" class="col-md-3">Columns<div class="form-panel">' +
-                            filterDiv + '</div></div>')
-                    } else {
+            filterDiv += '<select class="form-control">';
+            console.log(arrList);
+            var panel = '';
+            for (var key of Object.keys(arrGroups)) {
+                for (var ksg of arrGroups[key]) {
 
-                        $('#rowfilter').append(
-                            '<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
-                            filterDiv + '</div></div>')
+                    filterDiv += '<option value="column' + ksg.replace(/ |:|&|,/g, '') + '">' + key + '::' + ksg + '</option>';
+                    var list = '';
+                    for (var l of arrList[key][ksg]) {
+                        list += l.replace('<p>', ' ').replace('</p>', ' ');
                     }
-                    colnum++;
-                    filterDiv = "";
-                    count = 0;
+                    panel += '<div class="col-md-12" id="column' + ksg.replace(
+                            / |:|&/g, '') + '" style="display: none;">' + list +
+                        '</div>';
+
+
+
                 }
             }
-            $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
-                filterDiv + '</div></div>')
+
+            filterDiv += '</select>';
+            $('#rowfilter').append(
+                '<div id="filterColumns" class="col-md-12">Groups<div class="form-panel">' +
+                filterDiv + '</div></div>');
+            $('#rowfilter').append(panel);
+
+            // for (var key in filtersDB) {
+            //     filterDiv += '<div class="checkbox"><label>' +
+            //         '<input type="checkbox" id="check' + key + '" name="check' + key + '" value="' +
+            //         key + '">' + key +
+            //         '</label></div>';
+            //     count++;
+            //     if (count == numelemcol) {
+            //         if (colnum == 0) {
+
+            //             $('#rowfilter').append(
+            //                 '<div id="filterColumns" class="col-md-3">Columns<div class="form-panel">' +
+            //                 filterDiv + '</div></div>')
+            //         } else {
+
+            //             $('#rowfilter').append(
+            //                 '<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
+            //                 filterDiv + '</div></div>')
+            //         }
+            //         colnum++;
+            //         filterDiv = "";
+            //         count = 0;
+            //     }
+            // }
+            // $('#rowfilter').append('<div id="filterColumns" class="col-md-3"><div class="form-panel">' +
+            //     filterDiv + '</div></div>')
 
 
         });
