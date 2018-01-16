@@ -306,7 +306,9 @@ router.post('/V1/paint_results/', function (req, res, next) {
         for (var i = 0; i < data[0].geometry.coordinates.length; i++) {
             var recordVal = true;
             var point = {
-                geometry: [],
+                geometry: {
+                    coordinates: []
+                },
                 properties: {}
             };
             for (var ia of Object.keys(inArr)) {
@@ -321,13 +323,13 @@ router.post('/V1/paint_results/', function (req, res, next) {
                     } else {
                         point["properties"][ia] = data[0].properties[ia][i];
                     }
-                    debug(data[0].properties[ia][i]);
-                    debug('point ' + JSON.stringify(point));
+                    // debug(data[0].properties[ia][i]);
                 }
             }
             if (recordVal) {
-                point.geometry.push(data[0].geometry.coordinates[i]);
+                point.geometry["coordinates"].push(data[0].geometry.coordinates[i]);
             }
+            debug('point --> ' + JSON.stringify(point));
         }
 
         debug(data);
