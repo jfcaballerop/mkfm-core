@@ -45,7 +45,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/consultas', function(req, resp, next) {
+router.get('/consultas', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -59,17 +59,17 @@ router.get('/consultas', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -104,7 +104,7 @@ router.get('/consultas', function(req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los valores de los filtros seleccionados
  */
-router.post('/get_filter_values/:filter', function(req, resp) {
+router.post('/get_filter_values/:filter', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_filter_values ' + JSON.stringify(postData));
 
@@ -122,15 +122,15 @@ router.post('/get_filter_values/:filter', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -146,7 +146,7 @@ router.post('/get_filter_values/:filter', function(req, resp) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los resultados
  */
-router.post('/paint_results', function(req, resp) {
+router.post('/paint_results', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB paint_results ' + JSON.stringify(postData));
 
@@ -164,15 +164,15 @@ router.post('/paint_results', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             // debug('\n\nLLEGO AQUI\n\n');
             resp.status(200).jsonp(responseObject);
@@ -183,7 +183,7 @@ router.post('/paint_results', function(req, resp) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         debug('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -200,10 +200,10 @@ router.post('/paint_results', function(req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_one_config/', function(req, res, next) {
+router.get('/V1/get_one_config/', function (req, res, next) {
     Infodatatrack.findOne({}, {
         config: 1
-    }).exec(function(err, ifdt) {
+    }).exec(function (err, ifdt) {
         if (err) {
             res.send(500, err.message);
         }
@@ -214,8 +214,8 @@ router.get('/V1/get_one_config/', function(req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function(req, res, next) {
-    Infodatatrack.find().exec(function(err, ifdts) {
+router.get('/V1/consultas/', function (req, res, next) {
+    Infodatatrack.find().exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -226,14 +226,14 @@ router.get('/V1/consultas/', function(req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function(req, res, next) {
+router.post('/V1/get_filter_values/:filter', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -251,7 +251,7 @@ router.post('/V1/get_filter_values/:filter', function(req, res, next) {
 });
 
 /* POST paint_results */
-router.post('/V1/paint_results/', function(req, res, next) {
+router.post('/V1/paint_results/', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -267,17 +267,20 @@ router.post('/V1/paint_results/', function(req, res, next) {
         select["properties." + c] = 1;
     };
 
-
+    var inval = {};
+    var where = {};
+    var inArr = [];
     // WHERE
     for (var [k, v] of Object.keys(postData).entries()) {
         debug(k + ' ' + v);
         if (v !== 'columns') {
-            var where = {};
-            var inval = {
+
+            inval = {
                 $in: postData[v]
             };
             where["properties." + v] = inval;
             whereArr.push(where);
+            inArr[v] = postData[v];
 
         }
     };
@@ -286,7 +289,7 @@ router.post('/V1/paint_results/', function(req, res, next) {
     debug(JSON.stringify(whereArr));
     Infodatatrack.find({
         $and: whereArr
-    }, select).exec(function(err, data) {
+    }, select).exec(function (err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -294,7 +297,40 @@ router.post('/V1/paint_results/', function(req, res, next) {
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
         ret.data = data;
-        // debug(data);
+        /*
+         Hay que dividir cada resultado del objeto comprobando que el valor devuelto solo es válido en TODAS las columnas, o en todos los arays
+        */
+        debug(data);
+        debug('### in arr ###');
+        debug(inArr);
+        for (var i = 0; i < data[0].geometry.coordinates.length; i++) {
+            var recordVal = true;
+            var point = {
+                geometry: [],
+                properties: {}
+            };
+            for (var ia of Object.keys(inArr)) {
+                debug(ia + ' ' + inArr[ia]);
+                // debug(data[0].properties[ia]);
+                if (!inArr[ia].includes(data[0].properties[ia][i])) {
+                    recordVal = false;
+                } else {
+                    if (point["properties"][ia] === undefined) {
+                        point["properties"][ia] = [];
+                        point["properties"][ia] = data[0].properties[ia][i];
+                    } else {
+                        point["properties"][ia] = data[0].properties[ia][i];
+                    }
+                    debug(data[0].properties[ia][i]);
+                    debug('point ' + JSON.stringify(point));
+                }
+            }
+            if (recordVal) {
+                point.geometry.push(data[0].geometry.coordinates[i]);
+            }
+        }
+
+        debug(data);
         //res.status(200).jsonp(ifdts);
         res.status(200).jsonp(ret);
     });
