@@ -402,80 +402,88 @@
                                 $('#mapsbutton').hide();
 
                             }
+
                             $.each(values[0].data, function (k, v) {
-                                if (header) {
-                                    header = false;
-                                    table += '<tr>';
-                                    // table += '<th>id</th>';
-                                    // table += '<th>GPS</th>';
-
-                                    if (arrColumnsChecked.length > 0) {
-                                        $.each(Object.keys(v.properties).reverse(),
-                                            function (k1, v1) {
-                                                if (arrColumnsChecked.indexOf(
-                                                        v1) >= 0) {
-                                                    table += '<th>' + v1 +
-                                                        '</th>';
-                                                    headerColum.push(v1);
-                                                }
-
-                                            });
-                                    } else {
-                                        table +=
-                                            '<td><div class="alert alert-danger"><b>Error!</b> Not columns checked.</div></td>';
-                                        table += '</tr>';
-                                        $('#exportbutton').hide();
-                                        $('#mapsbutton').hide();
-                                    }
-                                }
-                                if (arrColumnsChecked.length > 0) {
-
-                                    for (var row = 0; row < v.properties[
-                                            headerColum[0]].length; row++) {
+                                if (v.geometry.coordinates.length > 0) {
+                                    if (header) {
+                                        header = false;
                                         table += '<tr>';
-                                        // table += '<td>' + v._id + '</td>';
-                                        // table += '<td>' + v.geometry.coordinates[row] + '</td>';
-                                        arrMarkerPos.push(v.geometry.coordinates[
-                                            row]);
-                                        var markerContent = '';
-                                        $.each(Object.keys(v.properties).reverse(),
-                                            function (k1, v1) {
-                                                // console.log(k1);
-                                                // console.log(v1);
-                                                // console.log(v.properties[v1]);
+                                        // table += '<th>id</th>';
+                                        // table += '<th>GPS</th>';
 
-                                                if (arrColumnsChecked.indexOf(
-                                                        v1) >= 0) {
-                                                    if (v.properties[v1][
-                                                            row
-                                                        ] !=
-                                                        undefined && v.properties[
-                                                            v1][row] != '') {
-                                                        table += '<td>' + v
-                                                            .properties[
-                                                                v1][row] +
-                                                            '</td>';
-                                                        markerContent +=
-                                                            '<p><b>' +
-                                                            v1 + ':</b> ' +
-                                                            v.properties[
-                                                                v1][row] +
-                                                            '</p>';
-                                                    } else {
-                                                        table +=
-                                                            '<td>--</td>';
+                                        if (arrColumnsChecked.length > 0) {
+                                            $.each(Object.keys(v.properties).reverse(),
+                                                function (k1, v1) {
+                                                    if (arrColumnsChecked.indexOf(
+                                                            v1) >= 0) {
+                                                        table += '<th>' +
+                                                            v1 +
+                                                            '</th>';
+                                                        headerColum.push(v1);
                                                     }
-                                                }
-                                            });
-                                        arrMarkerContent.push(markerContent);
-                                        table += '</tr>';
-                                    }
-                                } else {
-                                    for (var row = 0; row < v.geometry.coordinates
-                                        .length; row++) {
 
-                                        arrMarkerPos.push(v.geometry.coordinates[
-                                            row]);
+                                                });
+                                        } else {
+                                            table +=
+                                                '<td><div class="alert alert-danger"><b>Error!</b> Not columns checked.</div></td>';
+                                            table += '</tr>';
+                                            $('#exportbutton').hide();
+                                            $('#mapsbutton').hide();
+                                        }
+                                    }
+                                    if (arrColumnsChecked.length > 0) {
+
+                                        for (var row = 0; row < v.properties[
+                                                headerColum[0]].length; row++) {
+                                            table += '<tr>';
+                                            // table += '<td>' + v._id + '</td>';
+                                            // table += '<td>' + v.geometry.coordinates[row] + '</td>';
+                                            arrMarkerPos.push(v.geometry.coordinates[
+                                                row]);
+                                            var markerContent = '';
+                                            $.each(Object.keys(v.properties).reverse(),
+                                                function (k1, v1) {
+                                                    // console.log(k1);
+                                                    // console.log(v1);
+                                                    // console.log(v.properties[v1]);
+
+                                                    if (arrColumnsChecked.indexOf(
+                                                            v1) >= 0) {
+                                                        if (v.properties[v1]
+                                                            [
+                                                                row
+                                                            ] !=
+                                                            undefined && v.properties[
+                                                                v1][row] !=
+                                                            '') {
+                                                            table += '<td>' +
+                                                                v
+                                                                .properties[
+                                                                    v1][row] +
+                                                                '</td>';
+                                                            markerContent +=
+                                                                '<p><b>' +
+                                                                v1 +
+                                                                ':</b> ' +
+                                                                v.properties[
+                                                                    v1][row] +
+                                                                '</p>';
+                                                        } else {
+                                                            table +=
+                                                                '<td>--</td>';
+                                                        }
+                                                    }
+                                                });
+                                            arrMarkerContent.push(markerContent);
+                                            table += '</tr>';
+                                        }
+                                    } else {
+                                        for (var row = 0; row < v.geometry.coordinates
+                                            .length; row++) {
+
+                                            arrMarkerPos.push(v.geometry.coordinates[
+                                                row]);
+                                        }
                                     }
                                 }
                             });

@@ -316,60 +316,63 @@ router.post('/V1/paint_results/', function (req, res, next) {
             ret.data = [];
             debug('### in arr ###');
             debug(inArr);
-            var point = {
-                geometry: {
-                    coordinates: []
-                },
-                properties: {}
-            };
-            for (var i = 0; i < data[0].geometry.coordinates.length; i++) {
-                var recordVal = true;
-                for (var ia of Object.keys(inArr)) {
-                    // debug(ia + ' ' + inArr[ia]);
-                    // debug(data[0].properties[ia]);
-                    if (!inArr[ia].includes(data[0].properties[ia][i])) {
-                        recordVal = false;
-                    } else {
-                        if (point["properties"][ia] === undefined) {
-                            point["properties"][ia] = [];
-                            point["properties"][ia].push(data[0].properties[ia][i]);
-                        } else {
-                            point["properties"][ia].push(data[0].properties[ia][i]);
-                        }
-                        // debug(data[0].properties[ia][i]);
-                    }
-                }
-                if (recordVal) {
-                    point.geometry["coordinates"].push(data[0].geometry.coordinates[i]);
-                    for (var sv of Object.keys(select)) {
-                        if (sv.indexOf("geometry.coordinates") < 0) {
-                            //me quedo solo con los valores de la select que no tengo, y primero quito coordinates
-                            var isinselect = false;
-                            for (var ia of Object.keys(inArr)) {
-                                // debug('SV -->' + sv);
-                                // debug('IA -->' + ia);
-                                if (sv.indexOf(ia) >= 0) {
-                                    // debug('SV isIN -->' + sv);
-                                    isinselect = true;
-                                }
-                            }
+            for (var coll = 0; coll < data.length; coll++) {
 
-                            if (!isinselect) {
-                                // debug(data[0].properties[sv.replace('properties.', '')]);
-                                if (point["properties"][sv.replace('properties.', '')] === undefined) {
-                                    point["properties"][sv.replace('properties.', '')] = [];
-                                    point["properties"][sv.replace('properties.', '')].push(data[0].properties[sv.replace('properties.', '')][i]);
-                                } else {
-                                    point["properties"][sv.replace('properties.', '')].push(data[0].properties[sv.replace('properties.', '')][i]);
+                var point = {
+                    geometry: {
+                        coordinates: []
+                    },
+                    properties: {}
+                };
+                for (var i = 0; i < data[coll].geometry.coordinates.length; i++) {
+                    var recordVal = true;
+                    for (var ia of Object.keys(inArr)) {
+                        // debug(ia + ' ' + inArr[ia]);
+                        // debug(data[coll].properties[ia]);
+                        if (!inArr[ia].includes(data[coll].properties[ia][i])) {
+                            recordVal = false;
+                        } else {
+                            if (point["properties"][ia] === undefined) {
+                                point["properties"][ia] = [];
+                                point["properties"][ia].push(data[coll].properties[ia][i]);
+                            } else {
+                                point["properties"][ia].push(data[coll].properties[ia][i]);
+                            }
+                            // debug(data[coll].properties[ia][i]);
+                        }
+                    }
+                    if (recordVal) {
+                        point.geometry["coordinates"].push(data[coll].geometry.coordinates[i]);
+                        for (var sv of Object.keys(select)) {
+                            if (sv.indexOf("geometry.coordinates") < 0) {
+                                //me quedo solo con los valores de la select que no tengo, y primero quito coordinates
+                                var isinselect = false;
+                                for (var ia of Object.keys(inArr)) {
+                                    // debug('SV -->' + sv);
+                                    // debug('IA -->' + ia);
+                                    if (sv.indexOf(ia) >= 0) {
+                                        // debug('SV isIN -->' + sv);
+                                        isinselect = true;
+                                    }
+                                }
+
+                                if (!isinselect) {
+                                    // debug(data[coll].properties[sv.replace('properties.', '')]);
+                                    if (point["properties"][sv.replace('properties.', '')] === undefined) {
+                                        point["properties"][sv.replace('properties.', '')] = [];
+                                        point["properties"][sv.replace('properties.', '')].push(data[coll].properties[sv.replace('properties.', '')][i]);
+                                    } else {
+                                        point["properties"][sv.replace('properties.', '')].push(data[coll].properties[sv.replace('properties.', '')][i]);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                ret.data.push(point);
+                debug('point --> ' + JSON.stringify(point));
+                debug('point --> ' + point);
             }
-            ret.data.push(point);
-            debug('point --> ' + JSON.stringify(point));
-            debug('point --> ' + point);
 
             debug(ret.data);
             //res.status(200).jsonp(ifdts);
