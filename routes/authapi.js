@@ -12,7 +12,9 @@ router.use(function timeLog(req, res, next) {
     if (!req.headers.authorization) {
         return res
             .status(403)
-            .send({ message: "Tu petición no tiene cabecera de autorización" });
+            .send({
+                message: "Tu petición no tiene cabecera de autorización"
+            });
     }
     var token = req.headers.authorization.split(" ")[1];
     console.log('\n\n## API Token: ' + token + "\n\n");
@@ -21,7 +23,7 @@ router.use(function timeLog(req, res, next) {
         res.status(403).send('Session expired!');
     } else {
         console.log('Entro: ' + config.TOKEN_SECRET);
-        jwtweb.verify(token, config.TOKEN_SECRET, function(err, token) {
+        jwtweb.verify(token, config.TOKEN_SECRET, function (err, token) {
             if (('' + err).indexOf('TokenExpiredError') !== -1) {
                 console.log('## ERR1: ' + err);
                 res.status(403).send('El token ha expirado!');
@@ -56,6 +58,8 @@ router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/form
 // QUERYS auth
 router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/querys')));
 
+// budgets auth
+router.use('/budget', require(path.join(__dirname, '../app/comp/budget/routes/budgets')));
 
 // FILETYPE auth
 router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/filetype')));
