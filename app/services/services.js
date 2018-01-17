@@ -6,7 +6,7 @@ var config = require(path.join(__dirname, '../../config/config'));
 var moment = require('moment');
 var utm = require('utm');
 
-exports.makeKoboGeoJson = function(arr, index, type) {
+exports.makeKoboGeoJson = function (arr, index, type) {
     // console.log('## Services makeKoboGeoJson ##');
     //console.log(JSON.stringify(arr) + ' ' + index + ' ' + type);
     var retJson = {
@@ -23,7 +23,7 @@ exports.makeKoboGeoJson = function(arr, index, type) {
     return retJson;
 
 }
-exports.createToken = function(user) {
+exports.createToken = function (user) {
     var payload = {
         sub: user._id,
         iat: moment().unix(),
@@ -33,14 +33,16 @@ exports.createToken = function(user) {
 };
 
 // jsonwebtoken
-exports.createWebToken = function(user) {
+exports.createWebToken = function (user) {
     var u = {
         login: user.login,
         id: user._id,
         admin: user.admin
     };
     var pass = config.TOKEN_SECRET;
-    return jwtweb.sign(u, config.TOKEN_SECRET, { expiresIn: config.SESSION_TTL }); // expiresIn: sec
+    return jwtweb.sign(u, config.TOKEN_SECRET, {
+        expiresIn: config.SESSION_TTL
+    }); // expiresIn: sec
 
 };
 
@@ -50,7 +52,7 @@ exports.createWebToken = function(user) {
  * elemant: [long, lat, cot]
  * *
  */
-exports.calPK = function(element, elemant) {
+exports.calPK = function (element, elemant) {
     var pk = 0;
 
     var utmValAct = utm.fromLatLon(element[0], element[1], 20);
@@ -72,7 +74,7 @@ exports.calPK = function(element, elemant) {
  * Return arrayinverted
  * *
  */
-exports.invertedpk = function(arrpk) {
+exports.invertedpk = function (arrpk) {
     var arrinvertedpk = [];
 
     for (var i = 0; i < arrpk.length; i++) {
@@ -81,4 +83,11 @@ exports.invertedpk = function(arrpk) {
 
     return arrinvertedpk;
 
+};
+
+exports.mergeDeep = function (obj1, obj2) {
+    var result = {};
+    Object.keys(obj1).forEach(key => result[key] = obj1[key]);
+    Object.keys(obj2).forEach(key => result[key] = obj2[key]);
+    return result;
 };

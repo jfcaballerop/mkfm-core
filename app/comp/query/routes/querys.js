@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
+var services = require(path.join(__dirname, '../../../services/services'));
 
 var fileuploadModels = require(path.join(__dirname, '../../gis/models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -261,6 +262,7 @@ router.post('/V1/paint_results/', function (req, res, next) {
     var select = {
         "geometry.coordinates": 1
     };
+    var select2 = {};
     var whereArr = [];
 
     for (var c of postData.columns) {
@@ -272,7 +274,7 @@ router.post('/V1/paint_results/', function (req, res, next) {
     var inArr = [];
     // WHERE
     for (var [k, v] of Object.keys(postData).entries()) {
-        debug(k + ' ' + v);
+        // debug(k + ' ' + v);
         if (v !== 'columns') {
 
             inval = {
@@ -281,6 +283,7 @@ router.post('/V1/paint_results/', function (req, res, next) {
             where["properties." + v] = inval;
             whereArr.push(where);
             inArr[v] = postData[v];
+            select2["properties." + v] = 1;
 
         }
     };
@@ -289,52 +292,89 @@ router.post('/V1/paint_results/', function (req, res, next) {
     debug(JSON.stringify(whereArr));
     Infodatatrack.find({
         $and: whereArr
-    }, select).exec(function (err, data) {
+    }, services.mergeDeep(select, select2)).exec(function (err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
             res.send(500, ret);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
-        ret.data = data;
+        //ret.data = data;
         /*
          Hay que dividir cada resultado del objeto comprobando que el valor devuelto solo es válido en TODAS las columnas, o en todos los arays
         */
-        debug(data);
-        debug('### in arr ###');
-        debug(inArr);
-        for (var i = 0; i < data[0].geometry.coordinates.length; i++) {
-            var recordVal = true;
+        // debug(data);
+        // debug(JSON.stringify(data));
+        // Hay que comprobar que existen valores para devolver, en otro caso debo mandar error
+        if (data.length == 0) {
+            ret.result = 'ERROR';
+            ret.errormessage = 'Not results find.\nTry again.';
+            res.send(500, ret);
+
+        } else {
+
+            ret.data = [];
+            debug('### in arr ###');
+            debug(inArr);
             var point = {
                 geometry: {
                     coordinates: []
                 },
                 properties: {}
             };
-            for (var ia of Object.keys(inArr)) {
-                debug(ia + ' ' + inArr[ia]);
-                // debug(data[0].properties[ia]);
-                if (!inArr[ia].includes(data[0].properties[ia][i])) {
-                    recordVal = false;
-                } else {
-                    if (point["properties"][ia] === undefined) {
-                        point["properties"][ia] = [];
-                        point["properties"][ia] = data[0].properties[ia][i];
+            for (var i = 0; i < data[0].geometry.coordinates.length; i++) {
+                var recordVal = true;
+                for (var ia of Object.keys(inArr)) {
+                    // debug(ia + ' ' + inArr[ia]);
+                    // debug(data[0].properties[ia]);
+                    if (!inArr[ia].includes(data[0].properties[ia][i])) {
+                        recordVal = false;
                     } else {
-                        point["properties"][ia] = data[0].properties[ia][i];
+                        if (point["properties"][ia] === undefined) {
+                            point["properties"][ia] = [];
+                            point["properties"][ia].push(data[0].properties[ia][i]);
+                        } else {
+                            point["properties"][ia].push(data[0].properties[ia][i]);
+                        }
+                        // debug(data[0].properties[ia][i]);
                     }
-                    // debug(data[0].properties[ia][i]);
+                }
+                if (recordVal) {
+                    point.geometry["coordinates"].push(data[0].geometry.coordinates[i]);
+                    for (var sv of Object.keys(select)) {
+                        if (sv.indexOf("geometry.coordinates") < 0) {
+                            //me quedo solo con los valores de la select que no tengo, y primero quito coordinates
+                            var isinselect = false;
+                            for (var ia of Object.keys(inArr)) {
+                                // debug('SV -->' + sv);
+                                // debug('IA -->' + ia);
+                                if (sv.indexOf(ia) >= 0) {
+                                    // debug('SV isIN -->' + sv);
+                                    isinselect = true;
+                                }
+                            }
+
+                            if (!isinselect) {
+                                // debug(data[0].properties[sv.replace('properties.', '')]);
+                                if (point["properties"][sv.replace('properties.', '')] === undefined) {
+                                    point["properties"][sv.replace('properties.', '')] = [];
+                                    point["properties"][sv.replace('properties.', '')].push(data[0].properties[sv.replace('properties.', '')][i]);
+                                } else {
+                                    point["properties"][sv.replace('properties.', '')].push(data[0].properties[sv.replace('properties.', '')][i]);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            if (recordVal) {
-                point.geometry["coordinates"].push(data[0].geometry.coordinates[i]);
-            }
+            ret.data.push(point);
             debug('point --> ' + JSON.stringify(point));
-        }
+            debug('point --> ' + point);
 
-        debug(data);
-        //res.status(200).jsonp(ifdts);
-        res.status(200).jsonp(ret);
+            debug(ret.data);
+            //res.status(200).jsonp(ifdts);
+            res.status(200).jsonp(ret);
+        }
     });
 
 

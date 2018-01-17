@@ -45,7 +45,7 @@
 
 
         });
-        console.log(arrList);
+        // console.log(arrList);
         for (var g of Object.keys(arrGroups)) {
             var panel = '';
             panel += '<div  class="ui-widget-content ui-corner-all">' +
@@ -182,7 +182,9 @@
             $('#messageFilter').append('<i class="fa fa-angle-right"></i>Columns Selection￼<br>' +
                 'Total Filters: ' + totalFiltersDB);
             $('#messageFilter').append(
-                '￼<br><button id="columnApply" type="button" class="btn btn-success" ><i class="fa fa-table"></i> view results</button>'
+                '￼<br><button id="columnApply" type="button" class="btn btn-success" ><i class="fa fa-table"></i> view results</button> ' +
+                '<button id="cancel" type="button" class="btn btn-danger" ><i class="fa fa-times"></i> cancel</button>'
+
             );
             var numelemcol = Math.round(totalFiltersDB / 4);
             var filterDiv = '';
@@ -190,7 +192,7 @@
             var colnum = 0;
 
             filterDiv += '<select id="selectFilterColums" class="form-control">';
-            console.log(arrList);
+            // console.log(arrList);
             var panel = '';
             for (var key of Object.keys(arrGroups)) {
                 for (var ksg of arrGroups[key]) {
@@ -240,7 +242,7 @@
             $('#selectFilterColums').on('change', function (e) {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
-                console.log(valueSelected);
+                // console.log(valueSelected);
                 if (valueColumnsSelected !== '') {
                     $('#' + valueColumnsSelected).hide();
                 }
@@ -334,6 +336,15 @@
             }
         });
         var checkExist = setInterval(function () {
+            if ($('#cancel').length) {
+                clearInterval(checkExist);
+                $('#cancel').click(function () {
+                    location.reload();
+
+                });
+
+            }
+
             if ($('#columnApply').length) {
                 // console.log("Exists!");
                 clearInterval(checkExist);
@@ -365,6 +376,7 @@
                         // console.log(values);
                         if (values[0].result === "ERROR") {
                             // console.log(values[0].data);
+                            alert(values[0].errormessage);
                         } else {
                             // console.log(values[0].data);
                             $('#bodyQuery').empty();
@@ -397,56 +409,79 @@
                                     // table += '<th>id</th>';
                                     // table += '<th>GPS</th>';
 
-                                    $.each(Object.keys(v.properties).reverse(),
-                                        function (k1, v1) {
-                                            if (arrColumnsChecked.indexOf(
-                                                    v1) >= 0) {
-                                                table += '<th>' + v1 +
-                                                    '</th>';
-                                                headerColum.push(v1);
-                                            }
-
-                                        });
-                                    table += '</tr>';
-                                }
-                                for (var row = 0; row < v.properties[
-                                        headerColum[0]].length; row++) {
-                                    table += '<tr>';
-                                    // table += '<td>' + v._id + '</td>';
-                                    // table += '<td>' + v.geometry.coordinates[row] + '</td>';
-                                    arrMarkerPos.push(v.geometry.coordinates[
-                                        row]);
-                                    var markerContent = '';
-                                    $.each(Object.keys(v.properties).reverse(),
-                                        function (k1, v1) {
-                                            // console.log(k1);
-                                            // console.log(v1);
-                                            // console.log(v.properties[v1]);
-
-                                            if (arrColumnsChecked.indexOf(
-                                                    v1) >= 0) {
-                                                if (v.properties[v1][row] !=
-                                                    undefined && v.properties[
-                                                        v1][row] != '') {
-                                                    table += '<td>' + v.properties[
-                                                            v1][row] +
-                                                        '</td>';
-                                                    markerContent +=
-                                                        '<p><b>' +
-                                                        v1 + ':</b> ' + v.properties[
-                                                            v1][row] +
-                                                        '</p>';
-                                                } else {
-                                                    table += '<td>--</td>';
+                                    if (arrColumnsChecked.length > 0) {
+                                        $.each(Object.keys(v.properties).reverse(),
+                                            function (k1, v1) {
+                                                if (arrColumnsChecked.indexOf(
+                                                        v1) >= 0) {
+                                                    table += '<th>' + v1 +
+                                                        '</th>';
+                                                    headerColum.push(v1);
                                                 }
-                                            }
-                                        });
-                                    arrMarkerContent.push(markerContent);
-                                    table += '</tr>';
+
+                                            });
+                                    } else {
+                                        table +=
+                                            '<td><div class="alert alert-danger"><b>Error!</b> Not columns checked.</div></td>';
+                                        table += '</tr>';
+                                        $('#exportbutton').hide();
+                                        $('#mapsbutton').hide();
+                                    }
+                                }
+                                if (arrColumnsChecked.length > 0) {
+
+                                    for (var row = 0; row < v.properties[
+                                            headerColum[0]].length; row++) {
+                                        table += '<tr>';
+                                        // table += '<td>' + v._id + '</td>';
+                                        // table += '<td>' + v.geometry.coordinates[row] + '</td>';
+                                        arrMarkerPos.push(v.geometry.coordinates[
+                                            row]);
+                                        var markerContent = '';
+                                        $.each(Object.keys(v.properties).reverse(),
+                                            function (k1, v1) {
+                                                // console.log(k1);
+                                                // console.log(v1);
+                                                // console.log(v.properties[v1]);
+
+                                                if (arrColumnsChecked.indexOf(
+                                                        v1) >= 0) {
+                                                    if (v.properties[v1][
+                                                            row
+                                                        ] !=
+                                                        undefined && v.properties[
+                                                            v1][row] != '') {
+                                                        table += '<td>' + v
+                                                            .properties[
+                                                                v1][row] +
+                                                            '</td>';
+                                                        markerContent +=
+                                                            '<p><b>' +
+                                                            v1 + ':</b> ' +
+                                                            v.properties[
+                                                                v1][row] +
+                                                            '</p>';
+                                                    } else {
+                                                        table +=
+                                                            '<td>--</td>';
+                                                    }
+                                                }
+                                            });
+                                        arrMarkerContent.push(markerContent);
+                                        table += '</tr>';
+                                    }
+                                } else {
+                                    for (var row = 0; row < v.geometry.coordinates
+                                        .length; row++) {
+
+                                        arrMarkerPos.push(v.geometry.coordinates[
+                                            row]);
+                                    }
                                 }
                             });
                             table += '</tbody></table></div></div>';
-                            $('#bodyQuery').append(table);
+                            $(
+                                '#bodyQuery').append(table);
 
 
                         }
