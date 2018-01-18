@@ -3,8 +3,18 @@
 <script>
     $(document).ready(function () {
         console.log('budget_scripts.ejs');
-        var donut = undefined;
-        var ddata = [{
+        var donut1 = undefined;
+        var donut2 = undefined;
+        var ValRoutine = 0;
+        var ValPeriodic = 0;
+        var ValEmergency = 0;
+        var ValAmount = 0;
+        var ValBrushcutting = 0;
+        var ValDrainclearing = 0;
+        var ValPatching = 0;
+        var ValRoadSafetyImprovement = 0;
+
+        var ddata1 = [{
                 label: "Routine",
                 value: 25
             },
@@ -17,39 +27,109 @@
                 value: 5
             }
         ];
+        var ddata2 = [{
+                label: "Brush cutting",
+                value: 45
+            },
+            {
+                label: "Drain clearing",
+                value: 20
+            },
+            {
+                label: "Patching",
+                value: 20
+            },
+            {
+                label: "Road Safety Improvement",
+                value: 15
+            }
+        ];
 
-        function paintDonutChart() {
+        function sanitizeNumberFields(field) {
+            var max = parseInt(field.attr('max'));
+            var min = parseInt(field.attr('min'));
+            if (field.val() > max) {
+                field.val(max);
+            } else if (field.val() < min) {
+                field.val(min);
+            }
+        };
+
+        function paintDonutChart1() {
 
             if ($('#Routine').val().length > 0) {
-                ddata[0].value = $('#Routine').val() * $('#amount').val() / 100;
+                ddata1[0].value = ValRoutine * ValAmount / 100;
             } else {
-                ddata[0].value = 25 * $('#amount').val() / 100;
+                ddata1[0].value = 25 * ValAmount / 100;
 
             }
             if ($('#Periodic').val().length > 0) {
-                ddata[1].value = $('#Periodic').val() * $('#amount').val() / 100;
+                ddata1[1].value = ValPeriodic * ValAmount / 100;
             } else {
-                ddata[1].value = 70 * $('#amount').val() / 100;
+                ddata1[1].value = 70 * ValAmount / 100;
 
             }
             if ($('#Emergency').val().length > 0) {
-                ddata[2].value = $('#Emergency').val() * $('#amount').val() / 100;
+                ddata1[2].value = ValEmergency * ValAmount / 100;
             } else {
-                ddata[2].value = 5 * $('#amount').val() / 100;
+                ddata1[2].value = 5 * ValAmount / 100;
 
             }
 
-            if (donut === undefined) {
+            if (donut1 === undefined) {
 
-                donut = Morris.Donut({
+                donut1 = Morris.Donut({
                     // ID of the element in which to draw the chart.
-                    element: 'myfirstchart',
+                    element: 'donut1',
                     // Chart data records -- each entry in this array corresponds to a point on
                     // the chart.
-                    data: ddata
+                    data: ddata1
                 });
             } else {
-                donut.setData(ddata);
+                donut1.setData(ddata1);
+            }
+
+        }
+
+        function paintDonutChart2() {
+            var total = ValRoutine * ValAmount / 100
+
+            if ($('#Brushcutting').val().length > 0) {
+                ddata2[0].value = ValBrushcutting * total / 100;
+            } else {
+                ddata2[0].value = 25 * total / 100;
+
+            }
+            if ($('#Drainclearing').val().length > 0) {
+                ddata2[1].value = ValDrainclearing * total / 100;
+            } else {
+                ddata2[1].value = 70 * total / 100;
+
+            }
+            if ($('#Patching').val().length > 0) {
+                ddata2[2].value = ValPatching * total / 100;
+            } else {
+                ddata2[2].value = 5 * total / 100;
+
+            }
+            if ($('#RoadSafetyImprovement').val().length > 0) {
+                ddata2[3].value = ValRoadSafetyImprovement * total / 100;
+            } else {
+                ddata2[3].value = 5 * total / 100;
+
+            }
+
+            if (donut2 === undefined) {
+
+                donut2 = Morris.Donut({
+                    // ID of the element in which to draw the chart.
+                    element: 'donut2',
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    data: ddata2
+                });
+            } else {
+                donut2.setData(ddata2);
             }
 
         }
@@ -62,22 +142,60 @@
             $('#amountdiv').toggle('blind', {}, 500);
         });
 
-        $('#amountdiv').keyup(function (event) {
+        $('#amountdiv').change(function (event) {
             $('#InvestmentFY2018').val('EC$ ' + $('#amount').val());
-            paintDonutChart();
+            ValAmount = $('#amount').val();
+            paintDonutChart1();
         });
 
-        $('#Routine').keyup(function (event) {
-            $('#disabledInputRoutine').val('EC$ ' + $('#amount').val() * $('#Routine').val() / 100);
-            paintDonutChart();
+        $('#Routine').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValRoutine = $('#Routine').val();
+            $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
+            paintDonutChart1();
+            paintDonutChart2();
         });
-        $('#Periodic').keyup(function (event) {
-            $('#disabledInputPeriodic').val('EC$ ' + $('#amount').val() * $('#Periodic').val() / 100);
-            paintDonutChart();
+        $('#Periodic').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValPeriodic = $('#Periodic').val();
+            $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
+            paintDonutChart1();
         });
-        $('#Emergency').keyup(function (event) {
-            $('#disabledInputEmergency').val('EC$ ' + $('#amount').val() * $('#Emergency').val() / 100);
-            paintDonutChart();
+        $('#Emergency').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValEmergency = $('#Emergency').val();
+            $('#disabledInputEmergency').val('EC$ ' + ValAmount * ValEmergency / 100);
+            paintDonutChart1();
         });
+
+
+        $('#Brushcutting').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValBrushcutting = $('#Brushcutting').val();
+            $('#disabledInputBrushcutting').val('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
+                10000);
+            paintDonutChart2();
+        });
+        $('#Drainclearing').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValDrainclearing = $('#Drainclearing').val();
+            $('#disabledInputDrainclearing').val('EC$ ' + ValAmount * ValRoutine * ValDrainclearing /
+                10000);
+            paintDonutChart2();
+        });
+        $('#Patching').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValPatching = $('#Patching').val();
+            $('#disabledInputPatching').val('EC$ ' + ValAmount * ValRoutine * ValPatching / 10000);
+            paintDonutChart2();
+        });
+        $('#RoadSafetyImprovement').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValRoadSafetyImprovement = $('#RoadSafetyImprovement').val();
+            $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
+                ValRoadSafetyImprovement / 10000);
+            paintDonutChart2();
+        });
+
     });
 </script>
