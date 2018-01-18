@@ -5,6 +5,7 @@
         console.log('budget_scripts.ejs');
         var donut1 = undefined;
         var donut2 = undefined;
+        var donut3 = undefined;
         var ValRoutine = 0;
         var ValPeriodic = 0;
         var ValEmergency = 0;
@@ -13,6 +14,9 @@
         var ValDrainclearing = 0;
         var ValPatching = 0;
         var ValRoadSafetyImprovement = 0;
+        var ValDesignProjects = 0;
+        var ValWorkInterventions = 0;
+        var ValInspections = 0;
 
         var ddata1 = [{
                 label: "Routine",
@@ -42,6 +46,19 @@
             {
                 label: "Road Safety Improvement",
                 value: 15
+            }
+        ];
+        var ddata3 = [{
+                label: "Design Projects",
+                value: 15
+            },
+            {
+                label: "Work Interventions",
+                value: 75
+            },
+            {
+                label: "Inspections",
+                value: 10
             }
         ];
 
@@ -126,10 +143,50 @@
                     element: 'donut2',
                     // Chart data records -- each entry in this array corresponds to a point on
                     // the chart.
-                    data: ddata2
+                    data: ddata2,
+                    colors: ['#ffee00', '#c1b501', '#ffb600', '#bc8701']
                 });
             } else {
                 donut2.setData(ddata2);
+            }
+
+        }
+
+        function paintDonutChart3() {
+            var total = ValPeriodic * ValAmount / 100
+
+            if ($('#Brushcutting').val().length > 0) {
+                ddata3[0].value = ValDesignProjects * total / 100;
+            } else {
+                ddata3[0].value = 15 * total / 100;
+
+            }
+            if ($('#Drainclearing').val().length > 0) {
+                ddata3[1].value = ValWorkInterventions * total / 100;
+            } else {
+                ddata3[1].value = 75 * total / 100;
+
+            }
+            if ($('#Patching').val().length > 0) {
+                ddata3[2].value = ValInspections * total / 100;
+            } else {
+                ddata3[2].value = 10 * total / 100;
+
+            }
+
+
+            if (donut3 === undefined) {
+
+                donut3 = Morris.Donut({
+                    // ID of the element in which to draw the chart.
+                    element: 'donut3',
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    data: ddata3,
+                    colors: ['#ff0000', '#d6021e', '#bf0062']
+                });
+            } else {
+                donut3.setData(ddata3);
             }
 
         }
@@ -152,6 +209,10 @@
             sanitizeNumberFields($(this));
             ValRoutine = $('#Routine').val();
             $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
+            $('#Brushcutting').trigger('change');
+            $('#Drainclearing').trigger('change');
+            $('#Patching').trigger('change');
+            $('#RoadSafetyImprovement').trigger('change');
             paintDonutChart1();
             paintDonutChart2();
         });
@@ -159,7 +220,11 @@
             sanitizeNumberFields($(this));
             ValPeriodic = $('#Periodic').val();
             $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
+            $('#DesignProjects').trigger('change');
+            $('#WorkInterventions').trigger('change');
+            $('#Inspections').trigger('change');
             paintDonutChart1();
+            paintDonutChart3();
         });
         $('#Emergency').change(function (event) {
             sanitizeNumberFields($(this));
@@ -195,6 +260,31 @@
             $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
                 ValRoadSafetyImprovement / 10000);
             paintDonutChart2();
+        });
+
+
+
+        $('#DesignProjects').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValDesignProjects = $('#DesignProjects').val();
+            $('#disabledInputDesignProjects').val('EC$ ' + ValAmount * ValPeriodic * ValDesignProjects /
+                10000);
+            paintDonutChart3();
+        });
+        $('#WorkInterventions').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValWorkInterventions = $('#WorkInterventions').val();
+            $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
+                ValWorkInterventions /
+                10000);
+            paintDonutChart3();
+        });
+        $('#Inspections').change(function (event) {
+            sanitizeNumberFields($(this));
+            ValInspections = $('#Inspections').val();
+            $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic * ValInspections /
+                10000);
+            paintDonutChart3();
         });
 
     });
