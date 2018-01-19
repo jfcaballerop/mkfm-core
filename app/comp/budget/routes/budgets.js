@@ -20,6 +20,8 @@ var filetypeModels = require(path.join(__dirname, '../../gis/models/filetype'));
 var Filetype = mongoose.model('Filetype');
 var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
+var costModels = require(path.join(__dirname, '../../budget/models/cost'));
+var Cost = mongoose.model('Cost');
 
 
 router.use(function timeLog(req, res, next) {
@@ -46,7 +48,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function (req, resp, next) {
+router.get('/indexes', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -60,17 +62,17 @@ router.get('/indexes', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -100,12 +102,59 @@ router.get('/indexes', function (req, resp, next) {
     // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
+/* GET Costs Library */
+router.get('/costs', function(req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/budget/V1/get_costlibrary/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    // // Peticiones 
+
+
+    var request = http.request(options, function(res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+
+            //debug(responseObject.config.properties);
+
+            resp.render('costs_library', {
+                costlibrary: responseObject,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME,
+                api_key: config.MAPS_API_KEY
+            });
+
+        });
+    });
+
+    request.end();
+    // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+
+});
 
 /* get_filter_values */
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los valores de los filtros seleccionados
  */
-router.post('/get_filter_values/:filter', function (req, resp) {
+router.post('/get_filter_values/:filter', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_filter_values ' + JSON.stringify(postData));
 
@@ -123,15 +172,15 @@ router.post('/get_filter_values/:filter', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -147,7 +196,7 @@ router.post('/get_filter_values/:filter', function (req, resp) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los resultados
  */
-router.post('/paint_results', function (req, resp) {
+router.post('/paint_results', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB paint_results ' + JSON.stringify(postData));
 
@@ -165,15 +214,15 @@ router.post('/paint_results', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             // debug('\n\nLLEGO AQUI\n\n');
             resp.status(200).jsonp(responseObject);
@@ -184,7 +233,7 @@ router.post('/paint_results', function (req, resp) {
 
         });
     });
-    request.on('error', function (err) {
+    request.on('error', function(err) {
         debug('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -201,10 +250,22 @@ router.post('/paint_results', function (req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_one_config/', function (req, res, next) {
+router.get('/V1/get_costlibrary/', function(req, res, next) {
+    Cost.find({}).exec(function(err, cl) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        debug(" ### GET get_costlibrary ### \n" + JSON.stringify(cl));
+
+        res.status(200).jsonp(cl);
+    });
+
+});
+/* GET JSON ifdts config. */
+router.get('/V1/get_one_config/', function(req, res, next) {
     Infodatatrack.findOne({}, {
         config: 1
-    }).exec(function (err, ifdt) {
+    }).exec(function(err, ifdt) {
         if (err) {
             res.send(500, err.message);
         }
@@ -215,8 +276,8 @@ router.get('/V1/get_one_config/', function (req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function (req, res, next) {
-    Infodatatrack.find().exec(function (err, ifdts) {
+router.get('/V1/consultas/', function(req, res, next) {
+    Infodatatrack.find().exec(function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -227,14 +288,14 @@ router.get('/V1/consultas/', function (req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function (req, res, next) {
+router.post('/V1/get_filter_values/:filter', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -252,7 +313,7 @@ router.post('/V1/get_filter_values/:filter', function (req, res, next) {
 });
 
 /* POST paint_results */
-router.post('/V1/paint_results/', function (req, res, next) {
+router.post('/V1/paint_results/', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -292,7 +353,7 @@ router.post('/V1/paint_results/', function (req, res, next) {
     debug(JSON.stringify(whereArr));
     Infodatatrack.find({
         $and: whereArr
-    }, services.mergeDeep(select, select2)).exec(function (err, data) {
+    }, services.mergeDeep(select, select2)).exec(function(err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;

@@ -1,5 +1,7 @@
 {
 	"WELCOME_MSG": "Bienvenido!",
+	"CODE": "Codigo",
+	"VALUE": "Valor",
 	"EXIT_MSG": "Salir",
 	"CONTACT_TEXT": "Ines ingenieros",
 	"LOGIN": "Haz login para acceder",
@@ -21,6 +23,8 @@
 	"MENU_DATASHEET": "Data Sheet",
 	"MENU_PANEL_FORM": "Panel de Control - Formulas ",
 	"MENU_PANEL_QUERY": "Consultas Control Panel",
+	"MENU_PANEL_BUDGET": "Budgeting and Investment Planning",
+	"MENU_PANEL_COST_LIBRARY": "Librería de costes",
 	"MENU_MAPS": "Mapas",
 	"MENU_MAPS_GMAPS": "W-GIS",
 	"MENU_MAPS_TAVEL": "Recorridos",
@@ -29,6 +33,8 @@
 	"MENU_CP_UPFILE": "Ficheros",
 	"MENU_CP_FORM": "Formulas",
 	"MENU_QUERYS": "Querys",
+	"MENU_BUDGET": "Presupuestos",
+	"MENU_COST": "Libreria de costes",
 	"ROAD_TITLE": "Km Totales recorridos por carretera",
 	"ROAD_DISTANCE": "DISTANCIA:",
 	"ROAD_TIME": "TIEMPO:",
@@ -78,5 +84,8 @@
 	"GMAPS_DATOS_BUTTON_ROADS": "Carreteras",
 	"DSHEET_SEARCH_TOOL": "Search tool",
 	"DSHEET_DATA_INFO": "Datos",
-	"QUERYS_FILTER": "Seleccion de filtros"
+	"QUERYS_FILTER": "Seleccion de filtros",
+	"COST_LIBRARY_TITLE": "Librería de Costes de Renovación de Activos por Tipología o Material",
+	"COST_LIBRARY_HEAD_ASSET": "Asset & material / condition",
+	"COST_LIBRARY_HEAD_UNIT_PRICE": "Unit price"
 }
