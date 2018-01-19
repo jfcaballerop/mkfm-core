@@ -1,5 +1,7 @@
 {
     "WELCOME_MSG": "Wellcome!",
+    "CODE": "Code",
+    "VALUE": "Value",
     "EXIT_MSG": "Logout",
     "CONTACT_TEXT": "Ines ingenieros",
     "LOGIN": "Sign in",
@@ -22,6 +24,7 @@
     "MENU_PANEL_FORM": "Formulas Control Panel",
     "MENU_PANEL_QUERY": "Querys Control Panel",
     "MENU_PANEL_BUDGET": "Budgeting and Investment Planning",
+    "MENU_PANEL_COST_LIBRARY": "Cost Library",
     "MENU_MAPS": "Maps",
     "MENU_MAPS_GMAPS": "W-GIS",
     "MENU_MAPS_TAVEL": "Routes",
@@ -81,5 +84,8 @@
     "GMAPS_DATOS_BUTTON_ROADS": "Roads",
     "DSHEET_SEARCH_TOOL": "Search tool",
     "DSHEET_DATA_INFO": "Data information",
-    "QUERYS_FILTER": "Select filter"
+    "QUERYS_FILTER": "Select filter",
+    "COST_LIBRARY_TITLE": "Cost Library of Asset Renewal by Typology or Material",
+    "COST_LIBRARY_HEAD_ASSET": "Asset & material / condition",
+    "COST_LIBRARY_HEAD_UNIT_PRICE": "Unit price"
 }
