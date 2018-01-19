@@ -46,11 +46,11 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/consultas', function (req, resp, next) {
+router.get('/indexes', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/query/V1/get_one_config/',
+        path: config.PATH_API + '/budget/V1/get_one_config/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ router.get('/consultas', function (req, resp, next) {
 
             //debug(responseObject.config.properties);
 
-            resp.render('querys', {
+            resp.render('indexes', {
                 filters: filters,
                 config: responseObject.config.properties,
                 token: req.token,
@@ -112,7 +112,7 @@ router.post('/get_filter_values/:filter', function (req, resp) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/query/V1/get_filter_values/' + req.params.filter,
+        path: config.PATH_API + '/budget/V1/get_filter_values/' + req.params.filter,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ router.post('/paint_results', function (req, resp) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/query/V1/paint_results/',
+        path: config.PATH_API + '/budget/V1/paint_results/',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

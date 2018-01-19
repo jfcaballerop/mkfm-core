@@ -3,7 +3,9 @@
     <ul class="sidebar-menu" id="nav-accordion">
 
         <p class="centered">
-            <a href="profile.html"><i class="fa fa-user fa-5x" aria-hidden="true" style="color: white;"></i></a>
+            <a href="profile.html">
+                <i class="fa fa-user fa-5x" aria-hidden="true" style="color: white;"></i>
+            </a>
         </p>
         <h5 class="centered">
             <%= token.login %>
@@ -12,13 +14,17 @@
         <li class="mt">
             <a class="active" href="/auth/WEB/index">
                 <i class="fa fa-dashboard"></i>
-                <span><%- trans('MENU_DASHBOARD') %></span>
+                <span>
+                    <%- trans('MENU_DASHBOARD') %>
+                </span>
             </a>
         </li>
         <li class="sub-menu dcjq-parent-li">
             <a href="javascript:;" class="dcjq-parent">
                 <i class=" fa fa-map-marker"></i>
-                <span><%- trans('MENU_MAPS') %></span>
+                <span>
+                    <%- trans('MENU_MAPS') %>
+                </span>
             </a>
             <ul class="sub">
                 <li>
@@ -36,14 +42,27 @@
         <li class="sub-menu dcjq-parent-li">
             <a href="/auth/WEB/data_sheet/list_info" class="dcjq-parent">
                 <i class=" fa fa-file-text-o"></i>
-                <span><%- trans('MENU_DATASHEET') %></span>
+                <span>
+                    <%- trans('MENU_DATASHEET') %>
+                </span>
             </a>
 
         </li>
         <li class="sub-menu dcjq-parent-li">
             <a href="/auth/WEB/query/consultas" class="dcjq-parent">
                 <i class=" fa fa-table"></i>
-                <span><%- trans('MENU_QUERYS') %></span>
+                <span>
+                    <%- trans('MENU_QUERYS') %>
+                </span>
+            </a>
+
+        </li>
+        <li class="sub-menu dcjq-parent-li">
+            <a href="/auth/WEB/budget/indexes" class="dcjq-parent">
+                <i class=" fa fa-usd"></i>
+                <span>
+                    <%- trans('MENU_BUDGET') %>
+                </span>
             </a>
 
         </li>
@@ -54,16 +73,54 @@
             <li class="sub-menu dcjq-parent-li">
                 <a href="javascript:;" class="dcjq-parent">
                     <i class=" fa fa-cogs"></i>
-                    <span><%- trans('MENU_CP') %></span>
+                    <span>
+                        <%- trans('MENU_CP') %>
+                    </span>
                 </a>
                 <ul class="sub">
-                    <li><a href="/auth/WEB/users/list_users"><span class=" fa fa-user"> <%- trans('MENU_CP_USERS') %></span></a></li>
+                    <li>
+                        <a href="/auth/WEB/users/list_users">
+                            <span class=" fa fa-user">
+                                <%- trans('MENU_CP_USERS') %>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
                 <ul class="sub">
-                    <li><a href="/auth/WEB/gis/upload"><span class=" fa fa-upload"> <%- trans('MENU_CP_UPFILE') %> </span></a></li>
+                    <li>
+                        <a href="/auth/WEB/gis/upload">
+                            <span class=" fa fa-upload">
+                                <%- trans('MENU_CP_UPFILE') %>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
                 <ul class="sub">
-                    <li><a href="/auth/WEB/admin/formulas"><span class=" fa fa-wrench "> <%- trans('MENU_CP_FORM') %> </span></a></li>
+                    <li>
+                        <a href="/auth/WEB/admin/formulas">
+                            <span class=" fa fa-wrench ">
+                                <%- trans('MENU_CP_FORM') %>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sub">
+                    <li>
+                        <a href="/auth/WEB/maps/view_data">
+                            <span class=" fa fa-road ">
+                                Edit Tracks
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sub">
+                    <li>
+                        <a href="/auth/WEB/budget/costs">
+                            <span class=" fa fa-money ">
+                                <%- trans('MENU_COST') %>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <% } %>
