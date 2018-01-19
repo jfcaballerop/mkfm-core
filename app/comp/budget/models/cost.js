@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // define the schema for our user model
-var costlibrarySchema = new Schema({
+var costSchema = new Schema({
     name: {
         type: String
     },
@@ -12,7 +12,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / sqm"
-        }
+        },
+        value: { type: Number }
     },
     Bridges: {
         code: [],
@@ -20,7 +21,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / sqm of deck"
-        }
+        },
+        value: { type: Number }
     },
     Culverts: {
         code: [],
@@ -28,7 +30,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / lm"
-        }
+        },
+        value: { type: Number }
     },
     LongitudinalDrainage: {
         code: [],
@@ -36,7 +39,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / lm"
-        }
+        },
+        value: { type: Number }
     },
     CuttingsEmbankments: {
         code: [],
@@ -44,7 +48,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / sqm"
-        }
+        },
+        value: { type: Number }
     },
     Retainingwalls: {
         code: [],
@@ -52,7 +57,8 @@ var costlibrarySchema = new Schema({
         unit_price: {
             type: String,
             default: "EC$ / sqm"
-        }
+        },
+        value: { type: Number }
     },
     proccessed: {
         type: Boolean,
@@ -68,10 +74,7 @@ var costlibrarySchema = new Schema({
     }
 
 });
-costlibrarySchema.index({
-    "geometry": "2dsphere"
-});
 
 // create the model
-var Costlibrary = mongoose.model('Costlibrary', costlibrarySchema);
-module.exports = Costlibrary;
+var Cost = mongoose.model('Cost', costSchema);
+module.exports = Cost;
