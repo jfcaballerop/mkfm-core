@@ -13,7 +13,9 @@ router.use(bodyParser.urlencoded({
     limit: '300mb',
     extended: true
 }));
-router.use(bodyParser.json({ limit: '300mb' }));
+router.use(bodyParser.json({
+    limit: '300mb'
+}));
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -27,7 +29,7 @@ router.use(function timeLog(req, res, next) {
         res.status(403).redirect('/');
     } else {
         debug('Entro: ' + config.TOKEN_SECRET);
-        jwtweb.verify(token, config.TOKEN_SECRET, function(err, token) {
+        jwtweb.verify(token, config.TOKEN_SECRET, function (err, token) {
             if (('' + err).indexOf('TokenExpiredError') !== -1) {
                 debug('## ERR1: ' + err);
                 req.flash('message', 'El token ha expirado!');
@@ -57,8 +59,12 @@ router.use(function timeLog(req, res, next) {
 
 
 // LOGIN Page
-router.get('/', function(req, res, next) {
-    res.render('login', { title: 'Login', cname: config.client_name, message: req.flash('message') });
+router.get('/', function (req, res, next) {
+    res.render('login', {
+        title: 'Login',
+        cname: config.client_name,
+        message: req.flash('message')
+    });
 });
 
 // USERS auth
@@ -93,5 +99,8 @@ router.use('/admin', require(path.join(__dirname, '../app/comp/admin/routes/form
 
 // QUERYS auth
 router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/querys')));
+
+// budgets auth
+router.use('/budget', require(path.join(__dirname, '../app/comp/budget/routes/budgets')));
 
 module.exports = router;
