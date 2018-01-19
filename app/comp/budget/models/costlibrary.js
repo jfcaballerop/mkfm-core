@@ -3,15 +3,56 @@ var Schema = mongoose.Schema;
 
 // define the schema for our user model
 var costlibrarySchema = new Schema({
-    type: {
+    name: {
         type: String
     },
-    properties: {},
-    geometry: {
-        type: {
-            type: String
-        },
-        coordinates: []
+    Pavements: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / sqm"
+        }
+    },
+    Bridges: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / sqm of deck"
+        }
+    },
+    Culverts: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / lm"
+        }
+    },
+    LongitudinalDrainage: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / lm"
+        }
+    },
+    CuttingsEmbankments: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / sqm"
+        }
+    },
+    Retainingwalls: {
+        code: [],
+        material: [],
+        unit_price: {
+            type: String,
+            default: "EC$ / sqm"
+        }
     },
     proccessed: {
         type: Boolean,
