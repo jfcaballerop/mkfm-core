@@ -134,7 +134,7 @@ router.get('/costs', function(req, resp, next) {
             //debug(responseObject.config.properties);
 
             resp.render('costs_library', {
-                costlibrary: responseObject,
+                costlibrary: responseObject[0],
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -149,19 +149,18 @@ router.get('/costs', function(req, resp, next) {
     // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
-
-/* get_filter_values */
+/* Update field*/
 /**
- * Proceso AJAX que recibe la peticion de mostrar todos los valores de los filtros seleccionados
+ * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/get_filter_values/:filter', function(req, resp) {
+router.post('/update_field/:field/:value', function(req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB get_filter_values ' + JSON.stringify(postData));
+    debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/budget/V1/get_filter_values/' + req.params.filter,
+        path: config.PATH_API + '/budget/V1/update_field/',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -183,63 +182,14 @@ router.post('/get_filter_values/:filter', function(req, resp) {
         res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
-            // resp.status(200).jsonp({ "result": "OK" });
 
         });
     });
     request.write(JSON.stringify(postData));
     request.end();
-    // resp.status(200).jsonp({});
 
 });
-/* paint_results */
-/**
- * Proceso AJAX que recibe la peticion de mostrar todos los resultados
- */
-router.post('/paint_results', function(req, resp) {
-    var postData = extend({}, req.body);
-    debug('## WEB paint_results ' + JSON.stringify(postData));
 
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/budget/V1/paint_results/',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-
-
-
-    var request = http.request(options, function(res) {
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function(chunk) {
-            //// debug('BODY: ' + chunk);
-            data += chunk;
-
-        });
-        res.on('end', function() {
-            var responseObject = JSON.parse(data);
-            // debug('\n\nLLEGO AQUI\n\n');
-            resp.status(200).jsonp(responseObject);
-            // resp.status(200).jsonp({ "result": "OK" });
-
-            // resp.render('querys_results', { results: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-
-
-        });
-    });
-    request.on('error', function(err) {
-        debug('problem with request: ${err.message}');
-    });
-    request.write(JSON.stringify(postData));
-    request.end();
-
-});
 
 
 
@@ -311,136 +261,44 @@ router.post('/V1/get_filter_values/:filter', function(req, res, next) {
 
 
 });
-
-/* POST paint_results */
-router.post('/V1/paint_results/', function(req, res, next) {
-    // debug('API /V1/update_field/');
+/* POST update_field */
+router.post('/V1/update_field/', function(req, res, next) {
+    debug('API /V1/update_field/');
     var postData = extend({}, req.body);
-    debug(postData);
     var ret = {
         "result": "OK"
     };
-    var select = {
-        "geometry.coordinates": 1
-    };
-    var select2 = {};
-    var whereArr = [];
+    debug(postData);
+    var value = postData[Object.keys(postData)[0]];
+    var field_name = Object.keys(postData)[0];
+    debug(field_name + ": " + value);
+    var sendData = {};
+    var arrField = field_name.split('__');
+    arrField[0] = arrField[0].replace('_', ' ');
+    debug(arrField);
 
-    for (var c of postData.columns) {
-        select["properties." + c] = 1;
-    };
-
-    var inval = {};
-    var where = {};
-    var inArr = [];
-    // WHERE
-    for (var [k, v] of Object.keys(postData).entries()) {
-        // debug(k + ' ' + v);
-        if (v !== 'columns') {
-
-            inval = {
-                $in: postData[v]
-            };
-            where["properties." + v] = inval;
-            whereArr.push(where);
-            inArr[v] = postData[v];
-            select2["properties." + v] = 1;
-
-        }
-    };
-    debug(select);
-    debug('#### WHERE ####');
-    debug(JSON.stringify(whereArr));
-    Infodatatrack.find({
-        $and: whereArr
-    }, services.mergeDeep(select, select2)).exec(function(err, data) {
+    Cost.findOne({}).exec(function(err, c) {
         if (err) {
-            ret.result = 'ERROR';
-            ret.errormessage = err.message;
-            res.send(500, ret);
+            res.send(500, err.message);
         }
-        //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
-        //ret.data = data;
-        /*
-         Hay que dividir cada resultado del objeto comprobando que el valor devuelto solo es válido en TODAS las columnas, o en todos los arays
-        */
-        // debug(data);
-        // debug(JSON.stringify(data));
-        // Hay que comprobar que existen valores para devolver, en otro caso debo mandar error
-        if (data.length == 0) {
-            ret.result = 'ERROR';
-            ret.errormessage = 'Not results find.\nTry again.';
-            res.send(500, ret);
 
-        } else {
+        var csave = new Cost(c);
+        for (var i = 0; i < csave[arrField[0]].code.length; i++) {
+            if (csave[arrField[0]].code[i] === arrField[1]) {
+                csave[arrField[0]].value[i] = value;
 
-            ret.data = [];
-            debug('### in arr ###');
-            debug(inArr);
-            for (var coll = 0; coll < data.length; coll++) {
-
-                var point = {
-                    geometry: {
-                        coordinates: []
-                    },
-                    properties: {}
-                };
-                for (var i = 0; i < data[coll].geometry.coordinates.length; i++) {
-                    var recordVal = true;
-                    for (var ia of Object.keys(inArr)) {
-                        // debug(ia + ' ' + inArr[ia]);
-                        // debug(data[coll].properties[ia]);
-                        if (!inArr[ia].includes(data[coll].properties[ia][i])) {
-                            recordVal = false;
-                        } else {
-                            if (point["properties"][ia] === undefined) {
-                                point["properties"][ia] = [];
-                                point["properties"][ia].push(data[coll].properties[ia][i]);
-                            } else {
-                                point["properties"][ia].push(data[coll].properties[ia][i]);
-                            }
-                            // debug(data[coll].properties[ia][i]);
-                        }
-                    }
-                    if (recordVal) {
-                        point.geometry["coordinates"].push(data[coll].geometry.coordinates[i]);
-                        for (var sv of Object.keys(select)) {
-                            if (sv.indexOf("geometry.coordinates") < 0) {
-                                //me quedo solo con los valores de la select que no tengo, y primero quito coordinates
-                                var isinselect = false;
-                                for (var ia of Object.keys(inArr)) {
-                                    // debug('SV -->' + sv);
-                                    // debug('IA -->' + ia);
-                                    if (sv.indexOf(ia) >= 0) {
-                                        // debug('SV isIN -->' + sv);
-                                        isinselect = true;
-                                    }
-                                }
-
-                                if (!isinselect) {
-                                    // debug(data[coll].properties[sv.replace('properties.', '')]);
-                                    if (point["properties"][sv.replace('properties.', '')] === undefined) {
-                                        point["properties"][sv.replace('properties.', '')] = [];
-                                        point["properties"][sv.replace('properties.', '')].push(data[coll].properties[sv.replace('properties.', '')][i]);
-                                    } else {
-                                        point["properties"][sv.replace('properties.', '')].push(data[coll].properties[sv.replace('properties.', '')][i]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                ret.data.push(point);
-                debug('point --> ' + JSON.stringify(point));
-                debug('point --> ' + point);
             }
-
-            debug(ret.data);
-            //res.status(200).jsonp(ifdts);
-            res.status(200).jsonp(ret);
         }
-    });
+        // debug(c);
+        csave.updated_at = new Date();
+        csave.save(function(err, csaved) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            res.status(200).jsonp(ret);
 
+        });
+    });
 
 
 });
