@@ -77,8 +77,11 @@
                                             <i class="fa fa-angle-right"></i>
                                             <%- trans('COST_LIBRARY_TITLE') %> --
                                                 <%- costlibrary.name %> (
-                                                    <%- moment(costlibrary.updated_at).format('YYYY-MM-DD hh:mm:ss') %>)
+                                                    <%- moment(costlibrary.updated_at).format('YYYY-MM-DD HH:mm:ss') %>)
                                         </h4>
+                                        <button type="button" class="btn btn-round btn-primary">
+                                            <i class="fa fa-refresh"></i>
+                                            Update Budgets</button>
                                         <hr>
                                         <table class="table table-hover">
 

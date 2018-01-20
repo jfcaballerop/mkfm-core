@@ -263,7 +263,7 @@ router.post('/V1/get_filter_values/:filter', function(req, res, next) {
 });
 /* POST update_field */
 router.post('/V1/update_field/', function(req, res, next) {
-    // debug('API /V1/update_field/');
+    debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
         "result": "OK"
@@ -274,6 +274,7 @@ router.post('/V1/update_field/', function(req, res, next) {
     debug(field_name + ": " + value);
     var sendData = {};
     var arrField = field_name.split('__');
+    arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
     Cost.findOne({}).exec(function(err, c) {
@@ -281,9 +282,22 @@ router.post('/V1/update_field/', function(req, res, next) {
             res.send(500, err.message);
         }
 
-        // debug(c);
+        var csave = new Cost(c);
+        for (var i = 0; i < csave[arrField[0]].code.length; i++) {
+            if (csave[arrField[0]].code[i] === arrField[1]) {
+                csave[arrField[0]].value[i] = value;
 
-        res.status(200).jsonp(ret);
+            }
+        }
+        // debug(c);
+        csave.updated_at = new Date();
+        csave.save(function(err, csaved) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            res.status(200).jsonp(ret);
+
+        });
     });
 
 

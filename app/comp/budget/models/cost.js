@@ -33,7 +33,7 @@ var costSchema = new Schema({
         },
         value: []
     },
-    LongitudinalDrainage: {
+    "Longitudinal Drainage": {
         code: [],
         material: [],
         unit_price: {
@@ -42,7 +42,7 @@ var costSchema = new Schema({
         },
         value: []
     },
-    CuttingsEmbankments: {
+    "Cuttings Embankments": {
         code: [],
         material: [],
         unit_price: {
@@ -51,7 +51,7 @@ var costSchema = new Schema({
         },
         value: []
     },
-    Retainingwalls: {
+    "Retaining walls": {
         code: [],
         material: [],
         unit_price: {
