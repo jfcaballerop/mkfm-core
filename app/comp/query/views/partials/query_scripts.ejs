@@ -308,12 +308,14 @@
                         v_width + 'px; height:' + v_height +
                         'px; position: relative; overflow: hidden;">');
 
+                    var mapcenter = <%- JSON.stringify(maps_center) %>;
+                    var configzoom = <%- JSON.stringify(maps_zoom) %>;
                     map = new GMaps({
                         div: '#map',
-                        lat: 15.41,
-                        lng: -61.32
+                        lat: mapcenter.lat,
+                        lng: mapcenter.lng
                     });
-                    map.setZoom(12);
+                    map.setZoom(configzoom * 1);
                     $.each(arrMarkerPos, function (k, v) {
                         var infoContent = '';
                         map.addMarker({

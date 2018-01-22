@@ -29,22 +29,31 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     var list_files = [];
-    fs.readdir(path.join(__dirname, '../public/uploads'), function(err, files) {
+    fs.readdir(path.join(__dirname, '../public/uploads'), function (err, files) {
         if (files)
             list_files = files.concat();
-        list_files.forEach(function(item) {
+        list_files.forEach(function (item) {
             console.log('## Files: ' + item);
         });
-        res.render('maps', { files: list_files, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        res.render('maps', {
+            files: list_files,
+            token: req.token,
+            title: config.CLIENT_NAME + '-' + config.APP_NAME,
+            cname: config.CLIENT_NAME,
+            id: req.user_id,
+            login: req.user_login,
+            rol: req.rol,
+            api_key: config.MAPS_API_KEY
+        });
     });
     console.log('## Files 2: ' + list_files);
 
 });
 
 /* GET List Files */
-router.get('/view_data', function(req, resp, next) {
+router.get('/view_data', function (req, resp, next) {
     var promises = [];
     var optionsRoad = {
         host: config.HOST_API,
@@ -66,16 +75,16 @@ router.get('/view_data', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    promises.push(new Promise(function(resolve, reject) {
+    promises.push(new Promise(function (resolve, reject) {
         var localOptions = optionsRoad;
-        var request = http.request(localOptions, function(res) {
+        var request = http.request(localOptions, function (res) {
             res.setEncoding('utf8');
             var data = '';
-            res.on('data', function(chunk) {
+            res.on('data', function (chunk) {
                 var type = typeof chunk;
                 data += chunk;
             });
-            res.on('end', function() {
+            res.on('end', function () {
                 var responseObject = JSON.parse(data);
                 resolve({
                     hostname: localOptions.hostname,
@@ -88,23 +97,23 @@ router.get('/view_data', function(req, resp, next) {
 
             });
         });
-        request.on('error', function(e) {
+        request.on('error', function (e) {
             console.error(e);
             reject(e);
         });
         request.end();
     }));
 
-    promises.push(new Promise(function(resolve, reject) {
+    promises.push(new Promise(function (resolve, reject) {
         // save options locally because it will be reassigned to a different object
         // before it gets used in the callback below
         var localOptions = optionsInfoData;
-        var req = http.request(localOptions, function(res) {
+        var req = http.request(localOptions, function (res) {
             var data = "";
-            res.on('data', function(chunk) {
+            res.on('data', function (chunk) {
                 data += chunk;
             });
-            res.on('end', function() {
+            res.on('end', function () {
                 var responseObject = JSON.parse(data);
                 resolve({
                     hostname: localOptions.hostname,
@@ -116,7 +125,7 @@ router.get('/view_data', function(req, resp, next) {
                 });
             });
         });
-        req.on('error', function(e) {
+        req.on('error', function (e) {
             console.error(e);
             reject(e);
         });
@@ -125,12 +134,24 @@ router.get('/view_data', function(req, resp, next) {
 
 
     // now wait for all promises to be done
-    Promise.all(promises).then(function(allData) {
+    Promise.all(promises).then(function (allData) {
         console.log('## maps.js ## Promise.all ##');
 
-        resp.render('maps_data', { utm: utm, roadsvals: allData[0].body, infodatasvals: allData[1].body, moment: moment, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+        resp.render('maps_data', {
+            utm: utm,
+            roadsvals: allData[0].body,
+            infodatasvals: allData[1].body,
+            moment: moment,
+            token: req.token,
+            title: config.CLIENT_NAME + '-' + config.APP_NAME,
+            cname: config.CLIENT_NAME,
+            id: req.user_id,
+            login: req.user_login,
+            rol: req.rol,
+            api_key: config.MAPS_API_KEY
+        });
 
-    }, function(reason) {
+    }, function (reason) {
         return res.status(500).send(reason);
     });
 });
@@ -138,7 +159,7 @@ router.get('/view_data', function(req, resp, next) {
 /*
     Write data
 */
-router.get('/stream', sseExpress, function(req, resp, next) {
+router.get('/stream', sseExpress, function (req, resp, next) {
     // var optionsRoadlab = {
     //     host: config.HOST_API,
     //     port: config.PORT_API,
@@ -176,12 +197,14 @@ router.get('/stream', sseExpress, function(req, resp, next) {
     //     });
     // });
     // requestRL.end();
-    resp.sse('message', { prueba: 'prueba mensaje' });
+    resp.sse('message', {
+        prueba: 'prueba mensaje'
+    });
 
 });
 
 /* GET List Files */
-router.get('/list_files', function(req, resp, next) {
+router.get('/list_files', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -202,20 +225,20 @@ router.get('/list_files', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var requestRL = http.request(optionsRoadlab, function(res) {
+    var requestRL = http.request(optionsRoadlab, function (res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //console.log('DATA ' + data.length + ' ' + data);
             roadlabObject = JSON.parse(data);
-            roadlabObject.forEach(function(item) {
+            roadlabObject.forEach(function (item) {
                 delete item["_id"];
                 delete item["updated_at"];
                 delete item["created_at"];
@@ -240,12 +263,12 @@ router.get('/list_files', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(optionsRoad, function(res) {
+    var request = http.request(optionsRoad, function (res) {
         // console.log('STATUS: ' + res.statusCode);
         // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             var type = typeof chunk;
             // console.log('BODY: ' + chunk + 'TYPE: ' + typeof chunk);
             // console.log('TYPE ' + type);
@@ -254,10 +277,10 @@ router.get('/list_files', function(req, resp, next) {
 
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // console.log('DATA2 long ' + data.length);
             var responseObject = JSON.parse(data);
-            responseObject.forEach(function(item) {
+            responseObject.forEach(function (item) {
                 delete item["_id"];
                 delete item["updated_at"];
                 delete item["created_at"];
@@ -270,7 +293,17 @@ router.get('/list_files', function(req, resp, next) {
             // });
             // console.log(JSON.stringify(responseObject));
 
-            resp.render('maps', { roadlabs: roadlabObject, roads: responseObject, token: req.token, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol, api_key: config.MAPS_API_KEY });
+            resp.render('maps', {
+                roadlabs: roadlabObject,
+                roads: responseObject,
+                token: req.token,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME,
+                id: req.user_id,
+                login: req.user_login,
+                rol: req.rol,
+                api_key: config.MAPS_API_KEY
+            });
             //resp.status(200).send(responseObject);
 
         });
@@ -282,7 +315,7 @@ router.get('/list_files', function(req, resp, next) {
 });
 
 /* GET List Info */
-router.get('/list_info', function(req, resp, next) {
+router.get('/list_info', function (req, resp, next) {
     var promises = [];
     var optionsRoad = {
         host: config.HOST_API,
@@ -305,18 +338,18 @@ router.get('/list_info', function(req, resp, next) {
         }
     };
 
-    promises.push(new Promise(function(resolve, reject) {
+    promises.push(new Promise(function (resolve, reject) {
         // save options locally because it will be reassigned to a different object
         // before it gets used in the callback below
         var localOptions = optionsRoad;
-        var req = http.request(localOptions, function(res) {
+        var req = http.request(localOptions, function (res) {
             var data = "";
-            res.on('data', function(chunk) {
+            res.on('data', function (chunk) {
                 data += chunk;
             });
-            res.on('end', function() {
+            res.on('end', function () {
                 var responseObject = JSON.parse(data);
-                responseObject.forEach(function(item) {
+                responseObject.forEach(function (item) {
                     delete item["_id"];
                     delete item["updated_at"];
                     delete item["created_at"];
@@ -335,24 +368,24 @@ router.get('/list_info', function(req, resp, next) {
                 });
             });
         });
-        req.on('error', function(e) {
+        req.on('error', function (e) {
             console.error(e);
             reject(e);
         });
         req.end();
     }));
-    promises.push(new Promise(function(resolve, reject) {
+    promises.push(new Promise(function (resolve, reject) {
         // save options locally because it will be reassigned to a different object
         // before it gets used in the callback below
         var localOptions = optionsKobo;
-        var req = http.request(localOptions, function(res) {
+        var req = http.request(localOptions, function (res) {
             var data = "";
-            res.on('data', function(chunk) {
+            res.on('data', function (chunk) {
                 data += chunk;
             });
-            res.on('end', function() {
+            res.on('end', function () {
                 var responseObject = JSON.parse(data);
-                responseObject.forEach(function(item) {
+                responseObject.forEach(function (item) {
                     delete item["_id"];
                     delete item["updated_at"];
                     delete item["created_at"];
@@ -371,7 +404,7 @@ router.get('/list_info', function(req, resp, next) {
                 });
             });
         });
-        req.on('error', function(e) {
+        req.on('error', function (e) {
             console.error(e);
             reject(e);
         });
@@ -379,7 +412,7 @@ router.get('/list_info', function(req, resp, next) {
     }));
 
     // now wait for all promises to be done
-    Promise.all(promises).then(function(allData) {
+    Promise.all(promises).then(function (allData) {
         // This callback renders the page with all needed data 
         //   when all the https.request() calls are done
         //runISYGetCallback(allData, resInput);
@@ -408,7 +441,7 @@ router.get('/list_info', function(req, resp, next) {
         var otherr = [];
         var urbanr = [];
 
-        Array.prototype.unique = function() {
+        Array.prototype.unique = function () {
             var arr = [];
             for (var i = 0; i < this.length; i++) {
                 if (!arr.includes(this[i])) {
@@ -417,14 +450,14 @@ router.get('/list_info', function(req, resp, next) {
             }
             return arr;
         };
-        Array.prototype.firstindex = function(v) {
+        Array.prototype.firstindex = function (v) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] === v) return i;
             }
             return -1;
         };
 
-        allData[1].body.forEach(function(elem, index) {
+        allData[1].body.forEach(function (elem, index) {
             if (elem.properties.kobo_type === "Culvert") {
                 koboinfos_odt.push(elem);
             } else if (elem.properties.kobo_type === "Bridge") {
@@ -434,7 +467,7 @@ router.get('/list_info', function(req, resp, next) {
                 koboinfos_geo.push(elem);
             }
         });
-        allData[0].body.forEach(function(elem, index) {
+        allData[0].body.forEach(function (elem, index) {
             if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
                 mainr.push(elem);
                 var unique = elem.properties.Ccode.unique();
@@ -598,11 +631,13 @@ router.get('/list_info', function(req, resp, next) {
             id: req.user_id,
             login: req.user_login,
             rol: req.rol,
-            api_key: config.MAPS_API_KEY
+            api_key: config.MAPS_API_KEY,
+            maps_center: config.MAPS_CENTER_POS,
+            maps_zoom: config.MAPS_CENTER_ZOOM
         });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
-    }, function(reason) {
+    }, function (reason) {
         console.log(reason);
         return res.status(500).send(reason);
     });
