@@ -48,7 +48,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function(req, resp, next) {
+router.get('/indexes', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -62,17 +62,17 @@ router.get('/indexes', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -103,7 +103,7 @@ router.get('/indexes', function(req, resp, next) {
 
 });
 /* GET Costs Library */
-router.get('/costs', function(req, resp, next) {
+router.get('/costs', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -117,17 +117,17 @@ router.get('/costs', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -153,7 +153,7 @@ router.get('/costs', function(req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function(req, resp) {
+router.post('/update_field/:field/:value', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -171,15 +171,15 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -200,8 +200,8 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_costlibrary/', function(req, res, next) {
-    Cost.find({}).exec(function(err, cl) {
+router.get('/V1/get_costlibrary/', function (req, res, next) {
+    Cost.find({}).exec(function (err, cl) {
         if (err) {
             res.send(500, err.message);
         }
@@ -212,10 +212,10 @@ router.get('/V1/get_costlibrary/', function(req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_one_config/', function(req, res, next) {
+router.get('/V1/get_one_config/', function (req, res, next) {
     Infodatatrack.findOne({}, {
         config: 1
-    }).exec(function(err, ifdt) {
+    }).exec(function (err, ifdt) {
         if (err) {
             res.send(500, err.message);
         }
@@ -226,8 +226,8 @@ router.get('/V1/get_one_config/', function(req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function(req, res, next) {
-    Infodatatrack.find().exec(function(err, ifdts) {
+router.get('/V1/consultas/', function (req, res, next) {
+    Infodatatrack.find().exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -238,14 +238,14 @@ router.get('/V1/consultas/', function(req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function(req, res, next) {
+router.post('/V1/get_filter_values/:filter', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -262,7 +262,7 @@ router.post('/V1/get_filter_values/:filter', function(req, res, next) {
 
 });
 /* POST update_field */
-router.post('/V1/update_field/', function(req, res, next) {
+router.post('/V1/update_field/', function (req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -277,7 +277,7 @@ router.post('/V1/update_field/', function(req, res, next) {
     arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
-    Cost.findOne({}).exec(function(err, c) {
+    Cost.findOne({}).exec(function (err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -285,13 +285,13 @@ router.post('/V1/update_field/', function(req, res, next) {
         var csave = new Cost(c);
         for (var i = 0; i < csave[arrField[0]].code.length; i++) {
             if (csave[arrField[0]].code[i] === arrField[1]) {
-                csave[arrField[0]].value[i] = value;
+                csave[arrField[0]][arrField[2]][i] = value;
 
             }
         }
         // debug(c);
         csave.updated_at = new Date();
-        csave.save(function(err, csaved) {
+        csave.save(function (err, csaved) {
             if (err) {
                 return res.status(500).send(err.message);
             }
