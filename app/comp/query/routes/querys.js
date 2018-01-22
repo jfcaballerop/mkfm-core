@@ -90,7 +90,9 @@ router.get('/consultas', function (req, resp, next) {
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
                 cname: config.CLIENT_NAME,
-                api_key: config.MAPS_API_KEY
+                api_key: config.MAPS_API_KEY,
+                maps_center: config.MAPS_CENTER_POS,
+                maps_zoom: config.MAPS_CENTER_ZOOM
             });
 
         });
