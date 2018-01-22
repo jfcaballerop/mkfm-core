@@ -13,7 +13,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / sqm"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     Bridges: {
         code: [],
@@ -22,7 +25,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / sqm of deck"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     Culverts: {
         code: [],
@@ -31,7 +37,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / lm"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     "Longitudinal Drainage": {
         code: [],
@@ -40,7 +49,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / lm"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     "Cuttings Embankments": {
         code: [],
@@ -49,7 +61,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / sqm"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     "Retaining walls": {
         code: [],
@@ -58,7 +73,10 @@ var costSchema = new Schema({
             type: String,
             default: "EC$ / sqm"
         },
-        value: []
+        value1: [],
+        value2: [],
+        value3: [],
+        value4: []
     },
     proccessed: {
         type: Boolean,
