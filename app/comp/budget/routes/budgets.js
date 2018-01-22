@@ -189,6 +189,50 @@ router.post('/update_field/:field/:value', function (req, resp) {
     request.end();
 
 });
+/* Update budgets*/
+/**
+ * Proceso para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
+ * calcular el coste según los parámetros dados
+ */
+router.post('/update_budgets', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_budgets PAV_SECTION: ' + req.body.pavSection + '\n\n\n');
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/budget/V1/update_budgets/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            resp.redirect('/auth/WEB/budget/costs');
+
+        });
+        request.on('error', function (err) {
+            console.error('problem with request: ${err.message}');
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 
 
 
@@ -302,6 +346,21 @@ router.post('/V1/update_field/', function (req, res, next) {
 
 
 });
+/* POST update_budgets/ */
+router.post('/V1/update_budgets/', function (req, res, next) {
+    debug('API /V1/update_budgets/');
+    var postData = extend({}, req.body);
+    var ret = {
+        "result": "OK"
+    };
+    debug(postData);
+
+    res.status(200).jsonp(ret);
+
+});
+
+
+
 
 
 module.exports = router;

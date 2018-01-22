@@ -8,11 +8,12 @@
                     <%- trans('MODAL_BUDGET_COST') %>
                 </h4>
             </div>
-            <div class="modal-body">
-                <%- trans('MODAL_BUDGET_INSTRUCTIONS') %>
-                    <%- trans('MODAL_BUDGET_WARN') %>
-                        <hr>
-                        <form class="form-horizontal style-form" method="post" action="/auth/WEB/budget/update_budgets">
+            <form class="form-horizontal style-form" method="post" action="/auth/WEB/budget/update_budgets">
+
+                <div class="modal-body">
+                    <%- trans('MODAL_BUDGET_INSTRUCTIONS') %>
+                        <%- trans('MODAL_BUDGET_WARN') %>
+                            <hr>
                             <div class="form-group">
                                 <label class="col-sm-6 control-label">Pavements (m)</label>
                                 <div class="col-sm-6">
@@ -37,12 +38,13 @@
                                     <input name="user[login]" required type="text" class="form-control">
                                 </div>
                             </div> -->
-                        </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
