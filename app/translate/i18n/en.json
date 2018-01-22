@@ -35,6 +35,9 @@
     "MENU_QUERYS": "Querys",
     "MENU_BUDGET": "Budgeting and Investment",
     "MENU_COST": "Cost Library",
+    "MODAL_BUDGET_COST": "Cost Library - Apply",
+    "MODAL_BUDGET_WARN": "This is a long process. Please, be patient!",
+    "MODAL_BUDGET_INSTRUCTIONS": "Enter the value of the section for the calculation of the budget.",
     "ROAD_TITLE": "Road Total Km Traveled",
     "ROAD_DISTANCE": "DISTANCE:",
     "ROAD_TIME": "TIME:",
@@ -87,5 +90,9 @@
     "QUERYS_FILTER": "Select filter",
     "COST_LIBRARY_TITLE": "Cost Library of Asset Renewal by Typology or Material",
     "COST_LIBRARY_HEAD_ASSET": "Asset & material / condition",
-    "COST_LIBRARY_HEAD_UNIT_PRICE": "Unit price"
+    "COST_LIBRARY_HEAD_UNIT_PRICE": "Unit price",
+    "VERY_POOR": "VERY POOR",
+    "POOR": "POOR",
+    "FAIR": "FAIR",
+    "GOOD": "GOOD"
 }
