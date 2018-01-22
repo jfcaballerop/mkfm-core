@@ -1,0 +1,48 @@
+<div class="modal fade in" id="modalBudget" tabindex="-1" role="dialog" aria-labelledby="modalBudget" aria-hidden="false"
+    style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="modalBudget">
+                    <%- trans('MODAL_BUDGET_COST') %>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <%- trans('MODAL_BUDGET_INSTRUCTIONS') %>
+                    <%- trans('MODAL_BUDGET_WARN') %>
+                        <hr>
+                        <form class="form-horizontal style-form" method="post" action="/auth/WEB/budget/update_budgets">
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Pavements (m)</label>
+                                <div class="col-sm-6">
+                                    <input name="pavSection" required type="number" step=".01" class="form-control">
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">Bridges (m)</label>
+                                <div class="col-sm-10">
+                                    <input name="user[apellido1]" required type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">Geotechnical (m)</label>
+                                <div class="col-sm-10">
+                                    <input name="user[apellido2]" required type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">Culverts (m)</label>
+                                <div class="col-sm-10">
+                                    <input name="user[login]" required type="text" class="form-control">
+                                </div>
+                            </div> -->
+                        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
