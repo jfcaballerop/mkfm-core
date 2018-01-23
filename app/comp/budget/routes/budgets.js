@@ -191,7 +191,7 @@ router.post('/update_field/:field/:value', function (req, resp) {
 });
 /* Update budgets*/
 /**
- * Proceso para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
+ * Proceso ajax para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
  * calcular el coste según los parámetros dados
  */
 router.post('/update_budgets', function (req, resp) {
@@ -222,7 +222,8 @@ router.post('/update_budgets', function (req, resp) {
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
-            resp.redirect('/auth/WEB/budget/costs');
+            // resp.redirect('/auth/WEB/budget/costs');
+            resp.status(200).jsonp(responseObject);
 
         });
         request.on('error', function (err) {
@@ -354,8 +355,67 @@ router.post('/V1/update_budgets/', function (req, res, next) {
         "result": "OK"
     };
     debug(postData);
+    // Caso de Pavements
 
-    res.status(200).jsonp(ret);
+
+    Cost.findOne({}).exec(function (err, c) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        // debug(c);
+        Infodatatrack.find({}, {
+            "properties.rcondition": 1,
+            "properties.rmaterial": 1,
+            "geometry.coordinates": 1
+        }).exec(function (err, ifdts) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            for (var ifdt of ifdts) {
+                //debug(ifdt);
+                // debug(ifdt.properties.rcondition);
+                // debug(ifdt.properties.rcondition.length);
+                // debug(ifdt.properties.rmaterial);
+                // debug(ifdt.properties.rmaterial.length);
+
+                for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
+                    var rcost = 0;
+                    if (ifdt.properties.rcondition !== undefined && ifdt.properties.rcondition.length > 0 &&
+                        ifdt.properties.rmaterial !== undefined && ifdt.properties.rmaterial.length > 0 &&
+                        ifdt.properties.rmaterial[i] !== '') {
+                        // debug('entro');
+                        // if (c.Pavements.material.indexOf(ifdt.properties.rmaterial[i]) < 0)
+                        var indexmat = c.Pavements.material.indexOf(ifdt.properties.rmaterial[i]);
+                        switch (ifdt.properties.rcondition[i]) {
+                            case 'E':
+                                rcost = c.Pavements.value1[indexmat];
+                                break;
+                            case 'D':
+                                rcost = c.Pavements.value2[indexmat];
+                                break;
+                            case 'C':
+                                rcost = c.Pavements.value3[indexmat];
+                                break;
+                            case 'B':
+                                rcost = c.Pavements.value4[indexmat];
+                                break;
+
+                            default:
+                                break;
+                        }
+                        // TODO: Meter el valor en rcost --> Añadir ese campo a la BD
+                        debug('Index of costs: ' + ifdt.properties.rcondition[i] + ' ' + ifdt.properties.rmaterial[i]);
+                        debug(formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost));
+                    }
+                }
+
+            }
+            res.status(200).jsonp(ret);
+
+        });
+
+    });
+
 
 });
 
