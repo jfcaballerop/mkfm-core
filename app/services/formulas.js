@@ -1,7 +1,9 @@
+var debug = require('debug')('debug');
 var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
+var services = require(path.join(__dirname, './services'));
 
-exports.criticalityValue = function(in_val) {
+exports.criticalityValue = function (in_val) {
 
     cscale = {
         "Very High": {
@@ -50,7 +52,7 @@ exports.criticalityValue = function(in_val) {
 
 }
 
-exports.criticality = function(type, formula, data) {
+exports.criticality = function (type, formula, data) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;
 
@@ -107,5 +109,15 @@ exports.criticality = function(type, formula, data) {
 
 
     return retCriticality * 100;
+
+}
+
+exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
+    var ret = 0;
+    var dist = services.calDIST(coord1, coord2);
+    ret = dist * rcondrmatcost;
+
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    return ret;
 
 }

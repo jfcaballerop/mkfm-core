@@ -52,20 +52,20 @@ exports.createWebToken = function (user) {
  * elemant: [long, lat, cot]
  * *
  */
-exports.calPK = function (element, elemant) {
-    var pk = 0;
+exports.calDIST = function (element, elemant) {
+    var dist = 0;
 
-    var utmValAct = utm.fromLatLon(element[0], element[1], 20);
-    var utmValAnt = utm.fromLatLon(elemant[0], elemant[1], 20);
+    var utmValAct = utm.fromLatLon(element[0], element[1], config.ZONE);
+    var utmValAnt = utm.fromLatLon(elemant[0], elemant[1], config.ZONE);
     var easting = utmValAct.easting - utmValAnt.easting;
     if (easting < 0) easting *= -1;
     var northing = utmValAct.northing - utmValAnt.northing;
     if (northing < 0) northing *= -1;
-    pk += Math.sqrt(Math.pow(easting, 2) + Math.pow(northing, 2));
-    pk = Math.round(pk * 100) / 100;
+    dist += Math.sqrt(Math.pow(easting, 2) + Math.pow(northing, 2));
+    dist = Math.round(dist * 100) / 100;
 
     //console.log('ELEMENT ' + JSON.stringify(element));
-    return pk;
+    return dist;
 
 };
 // invertedPK

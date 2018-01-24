@@ -86,6 +86,7 @@ var infodatatrackSchema = new Schema({
         renvironment: [],
         rwaste: [],
         rvcondition: [],
+        rcondition: [],
         rccondition: [],
         rcriticality: [],
         rlandslide: [],

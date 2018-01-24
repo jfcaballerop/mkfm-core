@@ -132,6 +132,27 @@
             }
         });
 
+        $('#updateBudgets').click(function () {
+            $('#spinner').show();
+
+            console.log('updateBudgets');
+            var dataPost = {};
+
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/budget/update_budgets',
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function (data) {
+                return (data);
+            });
+            Promise.all([p1]).then(function (values) {
+                console.log(values);
+                $('#spinner').hide();
+
+            });
+        });
 
     });
 </script>
