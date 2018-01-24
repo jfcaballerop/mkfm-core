@@ -8,6 +8,7 @@ module.exports = {
         lng: -61.32
     },
     MAPS_CENTER_ZOOM: 11,
+    ZONE: 20,
     SESSION_TTL: 7200, //sec
     PROTO_API: 'http://',
     PROTO_WEB: 'http://',

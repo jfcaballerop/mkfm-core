@@ -525,7 +525,7 @@ router.post('/update_videoinfodatatrack', function (req, resp, next) {
                 });
                 arrCoord[index] = arrOneCoord;
                 if (index > 0) {
-                    arrPK[index] = Math.round((arrPK[index - 1] + service.calPK(arrCoord[index], arrCoord[index - 1])) * 100) / 100;
+                    arrPK[index] = Math.round((arrPK[index - 1] + service.calDIST(arrCoord[index], arrCoord[index - 1])) * 100) / 100;
                 } else {
                     arrPK[index] = 0;
                 }
