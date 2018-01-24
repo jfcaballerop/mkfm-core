@@ -366,8 +366,9 @@ router.post('/V1/update_budgets/', function (req, res, next) {
         Infodatatrack.find({}, {
             "properties.rcondition": 1,
             "properties.rmaterial": 1,
+            "properties.rinvestmentrequired": 1,
             "geometry.coordinates": 1
-        }).exec(function (err, ifdts) {
+        }).exec(async function (err, ifdts) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -377,7 +378,8 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 // debug(ifdt.properties.rcondition.length);
                 // debug(ifdt.properties.rmaterial);
                 // debug(ifdt.properties.rmaterial.length);
-
+                var rcosts = [];
+                rcosts[0] = 0;
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     if (ifdt.properties.rcondition !== undefined && ifdt.properties.rcondition.length > 0 &&
@@ -404,11 +406,25 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                                 break;
                         }
                         // TODO: Meter el valor en rcost --> Añadir ese campo a la BD
-                        debug('Index of costs: ' + ifdt.properties.rcondition[i] + ' ' + ifdt.properties.rmaterial[i]);
-                        debug(formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost));
+                        // debug(ifdt._id + ' Index of costs: ' + ifdt.properties.rcondition[i] + ' ' + ifdt.properties.rmaterial[i]);
+                        // debug(formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost));
+                        rcosts[i] = formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost);
                     }
                 }
-
+                var conditions = {
+                    _id: ifdt._id
+                };
+                var query = {
+                    $set: {
+                        "properties.rinvestmentrequired": rcosts
+                    }
+                };
+                await Infodatatrack.update(conditions, query, function (err, iup) {
+                    if (err) {
+                        debug(err.message);
+                    }
+                    // debug(iup);
+                });
             }
             res.status(200).jsonp(ret);
 

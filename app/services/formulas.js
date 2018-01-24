@@ -117,7 +117,7 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
     var dist = services.calDIST(coord1, coord2);
     ret = dist * rcondrmatcost;
 
-    debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
     return ret;
 
 }

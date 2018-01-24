@@ -133,6 +133,8 @@
         });
 
         $('#updateBudgets').click(function () {
+            $('#spinner').show();
+
             console.log('updateBudgets');
             var dataPost = {};
 
@@ -147,6 +149,7 @@
             });
             Promise.all([p1]).then(function (values) {
                 console.log(values);
+                $('#spinner').hide();
 
             });
         });
