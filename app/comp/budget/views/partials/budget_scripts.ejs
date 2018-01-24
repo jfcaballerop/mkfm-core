@@ -202,26 +202,11 @@
                     $('#amountdiv').show();
                     $('#menu_annual').show();
                     $('#content_annual').show();
-                    $('#menu_global').hide();
-                    $('#content_global').hide();
                     break;
                 case "Globalbudget":
                     $('#amountdiv').hide();
                     $('#menu_annual').hide();
                     $('#content_annual').hide();
-                    $('#menu_global').show();
-                    $('#content_global').show();
-
-                    break;
-
-                default:
-                    break;
-            }
-        });
-        $('input[type=radio][name=riskoptionsRadios]').change(function () {
-            switch ($(this).val()) {
-                case "NaturalHazards":
-                    $('#naturalHazardsContent').show();
                     break;
 
                 default:
