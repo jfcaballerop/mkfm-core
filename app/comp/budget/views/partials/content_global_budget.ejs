@@ -19,9 +19,11 @@
                                 <b> Total investment required</b>
                             </td>
                             <td>
-                                <input class="form-control" id="Totalinvestmentrequired" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input class="form-control" id="Totalinvestmentrequired" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(Total_investment*100/1000000)/100 %>">
                             </td>
-                            <td></td>
+                            <td>
+                                <%- Total_interventions %>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -216,11 +218,21 @@
                             <tbody>
                                 <tr>
                                     <td>Road Pavement Interventions</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
+                                    <td>
+                                        <%- Math.round(Total_investment_risknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_risknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_risknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_risknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_risknat1*100/1000000)/100 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Bridges</td>
@@ -418,3 +430,4 @@
 
 
     </div>
+</div>
