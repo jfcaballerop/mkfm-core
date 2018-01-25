@@ -81,6 +81,13 @@ router.get('/indexes', function (req, resp, next) {
             //debug(responseObject.config.properties);
 
             resp.render('indexes', {
+                Total_investment: responseObject.Total_investment,
+                Total_investment_risknat1: responseObject.Total_investment_risknat1,
+                Total_investment_risknat2: responseObject.Total_investment_risknat2,
+                Total_investment_risknat3: responseObject.Total_investment_risknat3,
+                Total_investment_risknat4: responseObject.Total_investment_risknat4,
+                Total_investment_risknat5: responseObject.Total_investment_risknat5,
+                Total_interventions: responseObject.Total_interventions,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -252,19 +259,84 @@ router.get('/V1/get_costlibrary/', function (req, res, next) {
 /* GET JSON ifdts config. */
 router.get('/V1/get_budget_files/', function (req, res, next) {
     var properties = {
+        "geometry.coordinates": 1,
         "properties.rcondition": 1,
         "properties.rinvestmentrequired": 1,
         "properties.rrisk": 1,
         "properties.rriskphysical": 1,
         "properties.rrisknatural": 1
     };
-    Infodatatrack.find({}, properties).exec(function (err, ifdt) {
+    var ret = {};
+    ret['Total_investment'] = 0;
+    ret['Total_investment_risknat1'] = 0;
+    ret['Total_investment_risknat2'] = 0;
+    ret['Total_investment_risknat3'] = 0;
+    ret['Total_investment_risknat4'] = 0;
+    ret['Total_investment_risknat5'] = 0;
+    ret['Total_interventions'] = 0;
+
+
+    Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
+        for (var ifdt of ifdts) {
+            var newinterv = false;
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                // debug(ifdt.properties.rinvestmentrequired);
 
-        res.status(200).jsonp(ifdt);
+                // pavements //
+                if (ifdt.properties.rinvestmentrequired != undefined && ifdt.properties.rinvestmentrequired != [] && ifdt.properties.rinvestmentrequired[i] != null) {
+                    if (!newinterv) {
+                        newinterv = true;
+                        ret['Total_interventions']++;
+                    }
+                    /*
+                    Recojo los valores de RISK y los agrupo
+                    */
+                    // TODO: Revisar los valores totales respecto a los parciales y sumarlos.
+
+                    if (ifdt.properties.rrisknatural != undefined && ifdt.properties.rrisknatural != [] &&
+                        ifdt.properties.rrisknatural[i] != null) {
+
+                        var risknathaz_lof = ifdt.properties.rrisknatural[i].split('__')[0];
+                        var risknathaz_cons = ifdt.properties.rrisknatural[i].split('__')[1];
+                        switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                            case 1:
+                                ret['Total_investment_risknat1'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                break;
+                            case 2:
+                                ret['Total_investment_risknat2'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+
+                                break;
+                            case 3:
+                                ret['Total_investment_risknat3'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+
+                                break;
+                            case 4:
+                                ret['Total_investment_risknat4'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+
+                                break;
+                            case 5:
+                                ret['Total_investment_risknat5'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        debug(ret);
+        res.status(200).jsonp(ret);
     });
 
 });
