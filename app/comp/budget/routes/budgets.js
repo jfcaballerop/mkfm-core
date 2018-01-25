@@ -52,7 +52,7 @@ router.get('/indexes', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/budget/V1/get_one_config/',
+        path: config.PATH_API + '/budget/V1/get_budget_files/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -76,18 +76,11 @@ router.get('/indexes', function (req, resp, next) {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
-            var filters = Infodatatrack.schema.tree.properties;
-            var filtersOff = ['time', 'name', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
-            debug(filters);
-            for (var foff of filtersOff) {
-                delete filters[foff];
-            };
+            // debug(filters);
 
             //debug(responseObject.config.properties);
 
             resp.render('indexes', {
-                filters: filters,
-                config: responseObject.config.properties,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -257,10 +250,15 @@ router.get('/V1/get_costlibrary/', function (req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_one_config/', function (req, res, next) {
-    Infodatatrack.findOne({}, {
-        config: 1
-    }).exec(function (err, ifdt) {
+router.get('/V1/get_budget_files/', function (req, res, next) {
+    var properties = {
+        "properties.rcondition": 1,
+        "properties.rinvestmentrequired": 1,
+        "properties.rrisk": 1,
+        "properties.rriskphysical": 1,
+        "properties.rrisknatural": 1
+    };
+    Infodatatrack.find({}, properties).exec(function (err, ifdt) {
         if (err) {
             res.send(500, err.message);
         }
