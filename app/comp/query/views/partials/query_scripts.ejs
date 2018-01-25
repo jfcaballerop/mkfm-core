@@ -22,7 +22,6 @@
         var valueColumnsSelected = '';
 
         $.each(filtersDB, function (k, v) {
-            // console.log(k + ' ' + v + ' ' + config[k]);
             listHtml = '';
             // listHtml += '<li class="list-group-item">';
             listHtml += '<label class="checkbox-inline" id = "LabelSwitchOption' + k +
@@ -33,6 +32,7 @@
                 ' </label>';
             // listHtml += '</li>';
             // console.log(k);
+            console.log(k + ' ' + v + ' ' + config[k]);
             if (arrList[config[k].group] === undefined) {
                 arrList[config[k].group] = [];
                 arrGroups[config[k].group] = [];
