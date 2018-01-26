@@ -87,7 +87,18 @@ router.get('/indexes', function (req, resp, next) {
                 Total_investment_risknat3: responseObject.Total_investment_risknat3,
                 Total_investment_risknat4: responseObject.Total_investment_risknat4,
                 Total_investment_risknat5: responseObject.Total_investment_risknat5,
+                Total_km_risknat1: responseObject.Total_km_risknat1,
+                Total_km_risknat2: responseObject.Total_km_risknat2,
+                Total_km_risknat3: responseObject.Total_km_risknat3,
+                Total_km_risknat4: responseObject.Total_km_risknat4,
+                Total_km_risknat5: responseObject.Total_km_risknat5,
+                Total_km_riskphy1: responseObject.Total_km_riskphy1,
+                Total_km_riskphy2: responseObject.Total_km_riskphy2,
+                Total_km_riskphy3: responseObject.Total_km_riskphy3,
+                Total_km_riskphy4: responseObject.Total_km_riskphy4,
+                Total_km_riskphy5: responseObject.Total_km_riskphy5,
                 Total_interventions: responseObject.Total_interventions,
+                Total_roads_interventions: responseObject.Total_roads_interventions,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -261,6 +272,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     var properties = {
         "geometry.coordinates": 1,
         "properties.rcondition": 1,
+        "properties.rcategory": 1,
         "properties.rinvestmentrequired": 1,
         "properties.rrisk": 1,
         "properties.rriskphysical": 1,
@@ -273,7 +285,18 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_investment_risknat3'] = 0;
     ret['Total_investment_risknat4'] = 0;
     ret['Total_investment_risknat5'] = 0;
+    ret['Total_km_risknat1'] = 0;
+    ret['Total_km_risknat2'] = 0;
+    ret['Total_km_risknat3'] = 0;
+    ret['Total_km_risknat4'] = 0;
+    ret['Total_km_risknat5'] = 0;
+    ret['Total_km_riskphy1'] = 0;
+    ret['Total_km_riskphy2'] = 0;
+    ret['Total_km_riskphy3'] = 0;
+    ret['Total_km_riskphy4'] = 0;
+    ret['Total_km_riskphy5'] = 0;
     ret['Total_interventions'] = 0;
+    ret['Total_roads_interventions'] = 0;
 
 
     Infodatatrack.find({}, properties).exec(function (err, ifdts) {
@@ -283,14 +306,16 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
         for (var ifdt of ifdts) {
             var newinterv = false;
+            // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                // debug(ifdt.properties.rinvestmentrequired);
 
                 // pavements //
+                //////////////
                 if (ifdt.properties.rinvestmentrequired != undefined && ifdt.properties.rinvestmentrequired != [] && ifdt.properties.rinvestmentrequired[i] != null) {
                     if (!newinterv) {
                         newinterv = true;
                         ret['Total_interventions']++;
+                        ret['Total_roads_interventions']++;
                     }
                     /*
                     Recojo los valores de RISK y los agrupo
@@ -306,26 +331,79 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             case 1:
                                 ret['Total_investment_risknat1'] += ifdt.properties.rinvestmentrequired[i];
                                 ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
                                 break;
                             case 2:
                                 ret['Total_investment_risknat2'] += ifdt.properties.rinvestmentrequired[i];
                                 ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
                                 break;
                             case 3:
                                 ret['Total_investment_risknat3'] += ifdt.properties.rinvestmentrequired[i];
                                 ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
                                 break;
                             case 4:
                                 ret['Total_investment_risknat4'] += ifdt.properties.rinvestmentrequired[i];
                                 ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
                                 break;
                             case 5:
                                 ret['Total_investment_risknat5'] += ifdt.properties.rinvestmentrequired[i];
                                 ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
 
+                            default:
+                                break;
+                        }
+                    }
+                    if (ifdt.properties.rriskphysical != undefined && ifdt.properties.rriskphysical != [] &&
+                        ifdt.properties.rriskphysical[i] != null) {
+
+                        var riskphyhaz_lof = ifdt.properties.rriskphysical[i].split('__')[0];
+                        var riskphyhaz_cons = ifdt.properties.rriskphysical[i].split('__')[1];
+                        switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
+                            case 1:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 3:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 4:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 5:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
                                 break;
 
                             default:
@@ -475,7 +553,6 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                             default:
                                 break;
                         }
-                        // TODO: Meter el valor en rcost --> Añadir ese campo a la BD
                         // debug(ifdt._id + ' Index of costs: ' + ifdt.properties.rcondition[i] + ' ' + ifdt.properties.rmaterial[i]);
                         // debug(formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost));
                         rcosts[i] = formulasService.PavementCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], rcost);
