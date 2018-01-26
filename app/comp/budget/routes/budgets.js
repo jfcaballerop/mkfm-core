@@ -99,6 +99,10 @@ router.get('/indexes', function (req, resp, next) {
                 Total_km_riskphy5: responseObject.Total_km_riskphy5,
                 Total_interventions: responseObject.Total_interventions,
                 Total_roads_interventions: responseObject.Total_roads_interventions,
+                Total_investment_Urban: responseObject.Total_investment_Urban,
+                Total_investment_MainRoad: responseObject.Total_investment_MainRoad,
+                Total_investment_Feeder: responseObject.Total_investment_Feeder,
+                Total_investment_Secondary: responseObject.Total_investment_Secondary,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -297,7 +301,10 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_km_riskphy5'] = 0;
     ret['Total_interventions'] = 0;
     ret['Total_roads_interventions'] = 0;
-
+    ret['Total_investment_Urban'] = 0;
+    ret['Total_investment_MainRoad'] = 0;
+    ret['Total_investment_Feeder'] = 0;
+    ret['Total_investment_Secondary'] = 0;
 
     Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
@@ -405,6 +412,35 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                     ret['Total_km_riskphy5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
                                 }
                                 break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                        ifdt.properties.rcategory[i] != null) {
+
+                        switch (ifdt.properties.rcategory[i]) {
+                            case 'Urban':
+                                ret['Total_investment_Urban'] += ifdt.properties.rinvestmentrequired[i];
+
+                                break;
+                            case 'Main Road':
+                                ret['Total_investment_MainRoad'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                break;
+                            case 'Feeder':
+                                ret['Total_investment_Feeder'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                break;
+                            case 'Secondary':
+                                ret['Total_investment_Secondary'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                break;
+
 
                             default:
                                 break;
