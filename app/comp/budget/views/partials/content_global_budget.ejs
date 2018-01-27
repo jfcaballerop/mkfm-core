@@ -52,9 +52,17 @@
                         <tr>
                             <td>Bridges</td>
                             <td>
-                                <input class="form-control" id="disabledInputRiskBridges" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input class="form-control" id="disabledInputRiskBridges" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                Math.round(Total_investment_brisknat5*100/1000000)/100 +
+                                Math.round(Total_investment_brisknat4*100/1000000)/100 +
+                                Math.round(Total_investment_brisknat3*100/1000000)/100 +
+                                Math.round(Total_investment_brisknat2*100/1000000)/100 +
+                                Math.round(Total_investment_brisknat1*100/1000000)/100 
+                                 %>">
                             </td>
-                            <td></td>
+                            <td>
+                                <%- Total_bridges_interventions %>
+                            </td>
 
                         </tr>
                         <tr>
@@ -244,11 +252,21 @@
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Bridges</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
+                                    <td>
+                                        <%- Math.round(Total_investment_brisknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_brisknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_brisknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_brisknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(Total_investment_brisknat1*100/1000000)/100 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Culverts</td>
