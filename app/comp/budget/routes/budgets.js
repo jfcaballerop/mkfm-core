@@ -48,7 +48,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function (req, resp, next) {
+router.get('/indexes', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -62,17 +62,17 @@ router.get('/indexes', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -87,6 +87,11 @@ router.get('/indexes', function (req, resp, next) {
                 Total_investment_risknat3: responseObject.Total_investment_risknat3,
                 Total_investment_risknat4: responseObject.Total_investment_risknat4,
                 Total_investment_risknat5: responseObject.Total_investment_risknat5,
+                Total_investment_brisknat1: responseObject.Total_investment_brisknat1,
+                Total_investment_brisknat2: responseObject.Total_investment_brisknat2,
+                Total_investment_brisknat3: responseObject.Total_investment_brisknat3,
+                Total_investment_brisknat4: responseObject.Total_investment_brisknat4,
+                Total_investment_brisknat5: responseObject.Total_investment_brisknat5,
                 Total_km_risknat1: responseObject.Total_km_risknat1,
                 Total_km_risknat2: responseObject.Total_km_risknat2,
                 Total_km_risknat3: responseObject.Total_km_risknat3,
@@ -99,6 +104,7 @@ router.get('/indexes', function (req, resp, next) {
                 Total_km_riskphy5: responseObject.Total_km_riskphy5,
                 Total_interventions: responseObject.Total_interventions,
                 Total_roads_interventions: responseObject.Total_roads_interventions,
+                Total_bridges_interventions: responseObject.Total_bridges_interventions,
                 Total_investment_Urban: responseObject.Total_investment_Urban,
                 Total_investment_MainRoad: responseObject.Total_investment_MainRoad,
                 Total_investment_Feeder: responseObject.Total_investment_Feeder,
@@ -118,7 +124,7 @@ router.get('/indexes', function (req, resp, next) {
 
 });
 /* GET Costs Library */
-router.get('/costs', function (req, resp, next) {
+router.get('/costs', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -132,17 +138,17 @@ router.get('/costs', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -168,7 +174,7 @@ router.get('/costs', function (req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function (req, resp) {
+router.post('/update_field/:field/:value', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -186,15 +192,15 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -209,7 +215,7 @@ router.post('/update_field/:field/:value', function (req, resp) {
  * Proceso ajax para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
  * calcular el coste según los parámetros dados
  */
-router.post('/update_budgets', function (req, resp) {
+router.post('/update_budgets', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_budgets PAV_SECTION: ' + req.body.pavSection + '\n\n\n');
 
@@ -227,21 +233,21 @@ router.post('/update_budgets', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             // resp.redirect('/auth/WEB/budget/costs');
             resp.status(200).jsonp(responseObject);
 
         });
-        request.on('error', function (err) {
+        request.on('error', function(err) {
             console.error('problem with request: ${err.message}');
         });
     });
@@ -260,8 +266,8 @@ router.post('/update_budgets', function (req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_costlibrary/', function (req, res, next) {
-    Cost.find({}).exec(function (err, cl) {
+router.get('/V1/get_costlibrary/', function(req, res, next) {
+    Cost.find({}).exec(function(err, cl) {
         if (err) {
             res.send(500, err.message);
         }
@@ -272,7 +278,7 @@ router.get('/V1/get_costlibrary/', function (req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_budget_files/', function (req, res, next) {
+router.get('/V1/get_budget_files/', function(req, res, next) {
     var properties = {
         "geometry.coordinates": 1,
         "properties.rcondition": 1,
@@ -280,7 +286,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         "properties.rinvestmentrequired": 1,
         "properties.rrisk": 1,
         "properties.rriskphysical": 1,
-        "properties.rrisknatural": 1
+        "properties.rrisknatural": 1,
+        "properties.binvestmentrequired": 1,
+        "properties.brisk": 1,
+        "properties.briskphysical": 1,
+        "properties.brisknatural": 1,
+        "properties.bcode": 1
     };
     var ret = {};
     ret['Total_investment'] = 0;
@@ -289,6 +300,11 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_investment_risknat3'] = 0;
     ret['Total_investment_risknat4'] = 0;
     ret['Total_investment_risknat5'] = 0;
+    ret['Total_investment_brisknat1'] = 0;
+    ret['Total_investment_brisknat2'] = 0;
+    ret['Total_investment_brisknat3'] = 0;
+    ret['Total_investment_brisknat4'] = 0;
+    ret['Total_investment_brisknat5'] = 0;
     ret['Total_km_risknat1'] = 0;
     ret['Total_km_risknat2'] = 0;
     ret['Total_km_risknat3'] = 0;
@@ -299,23 +315,94 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_km_riskphy3'] = 0;
     ret['Total_km_riskphy4'] = 0;
     ret['Total_km_riskphy5'] = 0;
+    ret['Total_km_brisknat1'] = 0;
+    ret['Total_km_brisknat2'] = 0;
+    ret['Total_km_brisknat3'] = 0;
+    ret['Total_km_brisknat4'] = 0;
+    ret['Total_km_brisknat5'] = 0;
+    ret['Total_km_briskphy1'] = 0;
+    ret['Total_km_briskphy2'] = 0;
+    ret['Total_km_briskphy3'] = 0;
+    ret['Total_km_briskphy4'] = 0;
+    ret['Total_km_briskphy5'] = 0;
     ret['Total_interventions'] = 0;
     ret['Total_roads_interventions'] = 0;
+    ret['Total_bridges_interventions'] = 0;
     ret['Total_investment_Urban'] = 0;
     ret['Total_investment_MainRoad'] = 0;
     ret['Total_investment_Feeder'] = 0;
     ret['Total_investment_Secondary'] = 0;
 
-    Infodatatrack.find({}, properties).exec(function (err, ifdts) {
+    Infodatatrack.find({}, properties).exec(function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
         for (var ifdt of ifdts) {
             var newinterv = false;
+            var bnewinterv = false;
+            var bcodeant = "";
             // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                // bridges //
+                //////////////
+                if (ifdt.properties.binvestmentrequired != undefined && ifdt.properties.binvestmentrequired != [] && ifdt.properties.binvestmentrequired[i] != null) {
 
+                    if (ifdt.properties.bcode !== bcodeant && ifdt.properties.bcode !== "") {
+                        ret['Total_interventions']++;
+                        ret['Total_bridges_interventions']++;
+                        bcodeant = ifdt.properties.bcode;
+
+                    }
+                    if (ifdt.properties.brisknatural != undefined && ifdt.properties.brisknatural != [] &&
+                        ifdt.properties.brisknatural[i] != null) {
+                        var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
+                        var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
+                        switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                            case 1:
+                                ret['Total_investment_brisknat1'] += ifdt.properties.binvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.binvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_brisknat1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                ret['Total_investment_brisknat2'] += ifdt.properties.binvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.binvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_brisknat2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 3:
+                                ret['Total_investment_brisknat3'] += ifdt.properties.binvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.binvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_brisknat3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 4:
+                                ret['Total_investment_brisknat4'] += ifdt.properties.binvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.binvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_brisknat4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 5:
+                                ret['Total_investment_brisknat5'] += ifdt.properties.binvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.binvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_brisknat5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
                 // pavements //
                 //////////////
                 if (ifdt.properties.rinvestmentrequired != undefined && ifdt.properties.rinvestmentrequired != [] && ifdt.properties.rinvestmentrequired[i] != null) {
@@ -455,8 +542,8 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function (req, res, next) {
-    Infodatatrack.find().exec(function (err, ifdts) {
+router.get('/V1/consultas/', function(req, res, next) {
+    Infodatatrack.find().exec(function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -467,14 +554,14 @@ router.get('/V1/consultas/', function (req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function (req, res, next) {
+router.post('/V1/get_filter_values/:filter', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -491,7 +578,7 @@ router.post('/V1/get_filter_values/:filter', function (req, res, next) {
 
 });
 /* POST update_field */
-router.post('/V1/update_field/', function (req, res, next) {
+router.post('/V1/update_field/', function(req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -506,7 +593,7 @@ router.post('/V1/update_field/', function (req, res, next) {
     arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
-    Cost.findOne({}).exec(function (err, c) {
+    Cost.findOne({}).exec(function(err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -520,7 +607,7 @@ router.post('/V1/update_field/', function (req, res, next) {
         }
         // debug(c);
         csave.updated_at = new Date();
-        csave.save(function (err, csaved) {
+        csave.save(function(err, csaved) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -532,7 +619,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
 });
 /* POST update_budgets/ */
-router.post('/V1/update_budgets/', function (req, res, next) {
+router.post('/V1/update_budgets/', function(req, res, next) {
     debug('API /V1/update_budgets/');
     var postData = extend({}, req.body);
     var ret = {
@@ -542,7 +629,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
     // Caso de Pavements
 
 
-    Cost.findOne({}).exec(function (err, c) {
+    Cost.findOne({}).exec(function(err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -552,7 +639,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.rmaterial": 1,
             "properties.rinvestmentrequired": 1,
             "geometry.coordinates": 1
-        }).exec(async function (err, ifdts) {
+        }).exec(async function(err, ifdts) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -602,7 +689,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                         "properties.rinvestmentrequired": rcosts
                     }
                 };
-                await Infodatatrack.update(conditions, query, function (err, iup) {
+                await Infodatatrack.update(conditions, query, function(err, iup) {
                     if (err) {
                         debug(err.message);
                     }
