@@ -162,7 +162,7 @@
     var $inputs_glocdocinterv = $('#form').find("input[name='infodatatrack[properties][glocdocinterv]']");
     var $inputs_gmaintissues = $('#form').find("input[name='infodatatrack[properties][gmaintissues]']");
     var $inputs_ginvestment10years = $('#form').find("input[name='infodatatrack[properties][ginvestment10years]']");
-    var $inputs_rgnvestmentrequired = $('#form').find("input[name='infodatatrack[properties][rgnvestmentrequired]']");
+    var $inputs_rginvestmentrequired = $('#form').find("input[name='infodatatrack[properties][rginvestmentrequired]']");
     var $inputs_gomcomments = $('#form').find("input[name='infodatatrack[properties][gomcomments]']");
     var $inputs_gcondition = $('#form').find("input[name='infodatatrack[properties][gcondition]']");
     var $inputs_gcriticality = $('#form').find("input[name='infodatatrack[properties][gcriticality]']");
@@ -2314,7 +2314,7 @@
             });
         }
     });
-    $inputs_rgnvestmentrequired.blur(function () {
+    $inputs_rginvestmentrequired.blur(function () {
         var $this = $(this);
         if ($this.val() != '') {
             ////console.log('ID: ' + $this.attr("id"));
@@ -2322,7 +2322,7 @@
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
-                    $inputs_rgnvestmentrequired[index].value = $this.val();
+                    $inputs_rginvestmentrequired[index].value = $this.val();
                 }
 
 
