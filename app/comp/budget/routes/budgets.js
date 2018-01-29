@@ -81,39 +81,7 @@ router.get('/indexes', function (req, resp, next) {
             //debug(responseObject.config.properties);
 
             resp.render('indexes', {
-                Total_investment: responseObject.Total_investment,
-                Total_investment_risknat1: responseObject.Total_investment_risknat1,
-                Total_investment_risknat2: responseObject.Total_investment_risknat2,
-                Total_investment_risknat3: responseObject.Total_investment_risknat3,
-                Total_investment_risknat4: responseObject.Total_investment_risknat4,
-                Total_investment_risknat5: responseObject.Total_investment_risknat5,
-                Total_investment_brisknat1: responseObject.Total_investment_brisknat1,
-                Total_investment_brisknat2: responseObject.Total_investment_brisknat2,
-                Total_investment_brisknat3: responseObject.Total_investment_brisknat3,
-                Total_investment_brisknat4: responseObject.Total_investment_brisknat4,
-                Total_investment_brisknat5: responseObject.Total_investment_brisknat5,
-                Total_km_risknat1: responseObject.Total_km_risknat1,
-                Total_km_risknat2: responseObject.Total_km_risknat2,
-                Total_km_risknat3: responseObject.Total_km_risknat3,
-                Total_km_risknat4: responseObject.Total_km_risknat4,
-                Total_km_risknat5: responseObject.Total_km_risknat5,
-                Total_km_riskphy1: responseObject.Total_km_riskphy1,
-                Total_km_riskphy2: responseObject.Total_km_riskphy2,
-                Total_km_riskphy3: responseObject.Total_km_riskphy3,
-                Total_km_riskphy4: responseObject.Total_km_riskphy4,
-                Total_km_riskphy5: responseObject.Total_km_riskphy5,
-                Total_num_brisknat1: responseObject.Total_num_brisknat1,
-                Total_num_brisknat2: responseObject.Total_num_brisknat2,
-                Total_num_brisknat3: responseObject.Total_num_brisknat3,
-                Total_num_brisknat4: responseObject.Total_num_brisknat4,
-                Total_num_brisknat5: responseObject.Total_num_brisknat5,
-                Total_interventions: responseObject.Total_interventions,
-                Total_roads_interventions: responseObject.Total_roads_interventions,
-                Total_bridges_interventions: responseObject.Total_bridges_interventions,
-                Total_investment_Urban: responseObject.Total_investment_Urban,
-                Total_investment_MainRoad: responseObject.Total_investment_MainRoad,
-                Total_investment_Feeder: responseObject.Total_investment_Feeder,
-                Total_investment_Secondary: responseObject.Total_investment_Secondary,
+                retValues: responseObject,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -296,7 +264,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         "properties.brisk": 1,
         "properties.briskphysical": 1,
         "properties.brisknatural": 1,
-        "properties.bcode": 1
+        "properties.bcode": 1,
+        "properties.Cinvestmentrequired": 1,
+        "properties.CRISK": 1,
+        "properties.CRISKphysical": 1,
+        "properties.CRISKnatural": 1,
+        "properties.Ccode": 1
     };
     var ret = {};
     ret['Total_investment'] = 0;
@@ -310,6 +283,11 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_investment_brisknat3'] = 0;
     ret['Total_investment_brisknat4'] = 0;
     ret['Total_investment_brisknat5'] = 0;
+    ret['Total_investment_crisknat1'] = 0;
+    ret['Total_investment_crisknat2'] = 0;
+    ret['Total_investment_crisknat3'] = 0;
+    ret['Total_investment_crisknat4'] = 0;
+    ret['Total_investment_crisknat5'] = 0;
     ret['Total_km_risknat1'] = 0;
     ret['Total_km_risknat2'] = 0;
     ret['Total_km_risknat3'] = 0;
@@ -325,6 +303,11 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_num_brisknat3'] = 0;
     ret['Total_num_brisknat4'] = 0;
     ret['Total_num_brisknat5'] = 0;
+    ret['Total_num_crisknat1'] = 0;
+    ret['Total_num_crisknat2'] = 0;
+    ret['Total_num_crisknat3'] = 0;
+    ret['Total_num_crisknat4'] = 0;
+    ret['Total_num_crisknat5'] = 0;
     ret['Total_km_briskphy1'] = 0;
     ret['Total_km_briskphy2'] = 0;
     ret['Total_km_briskphy3'] = 0;
@@ -333,6 +316,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_interventions'] = 0;
     ret['Total_roads_interventions'] = 0;
     ret['Total_bridges_interventions'] = 0;
+    ret['Total_culverts_interventions'] = 0;
     ret['Total_investment_Urban'] = 0;
     ret['Total_investment_MainRoad'] = 0;
     ret['Total_investment_Feeder'] = 0;
@@ -346,9 +330,81 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         for (var ifdt of ifdts) {
             var newinterv = false;
             var bnewinterv = false;
+            var Ccodeant = "";
             var bcodeant = "";
             // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                // culverts //
+                //////////////
+                if (ifdt.properties.Cinvestmentrequired != undefined && ifdt.properties.Cinvestmentrequired != [] &&
+                    ifdt.properties.Cinvestmentrequired[i] != null) {
+                    // debug(ifdt.properties.Ccode);
+                    if (ifdt.properties.Ccode != undefined && ifdt.properties.Ccode != [] &&
+                        ifdt.properties.Ccode[i] != null &&
+                        ifdt.properties.Ccode[i] !== Ccodeant && ifdt.properties.Ccode[i] !== "") {
+                        Ccodeant = ifdt.properties.Ccode[i];
+                        if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
+                            ifdt.properties.CRISKnatural[i] != null) {
+                            var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
+                            var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_crisknat1'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat1']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_crisknat2'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat2']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_crisknat3'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat3']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_crisknat4'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat4']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_crisknat5'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat5']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
+                    }
+                }
                 // bridges //
                 //////////////
                 if (ifdt.properties.binvestmentrequired != undefined && ifdt.properties.binvestmentrequired != [] &&
