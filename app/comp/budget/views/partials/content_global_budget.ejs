@@ -69,12 +69,11 @@
                             <td>Culverts</td>
                             <td>
                                 <input class="form-control" id="disabledInputRiskCulverts" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                Math.round(retValues.Total_investment_crisknat5*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_crisknat4*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_crisknat3*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_crisknat2*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_crisknat1*100/1000000)/100 
-                                 %>">
+                                    Math.round((retValues.Total_investment_crisknat5 + 
+                                    retValues.Total_investment_crisknat4 + 
+                                    retValues.Total_investment_crisknat3 +
+                                    retValues.Total_investment_crisknat2 + 
+                                    retValues.Total_investment_crisknat1)*100/1000000)/100 %>">
                             </td>
                             <td>
                                 <%- retValues.Total_culverts_interventions %>
