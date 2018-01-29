@@ -224,7 +224,7 @@ gcurryearintervcost,LGCurrYearIntervCost,db.infodatatracks.update({}, { $set: { 
 glocdoccurryearinterv,LGLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv": [] } }, false, true);
 gmaintissues,LGMaintIssues,
 ginvestment10years,LGinvestment10years,
-rgnvestmentrequired,LGnvestmentrequired,
+rginvestmentrequired,LGnvestmentrequired,
 gomcomments,LGOMComments,
 gcondition,LGcondition,
 gcriticality,LGcriticality,
@@ -298,7 +298,7 @@ gcurryearintervcost2,LGCurrYearIntervCost,db.infodatatracks.update({}, { $set: {
 glocdoccurryearinterv2,LGLocDocCurrYearInterv,db.infodatatracks.update({}, { $set: { "properties.glocdoccurryearinterv2": [] } }, false, true);
 gmaintissues2,LGMaintIssues,
 ginvestment10years2,LGinvestment10years,
-rgnvestmentrequired2,LGnvestmentrequired,
+rginvestmentrequired2,LGnvestmentrequired,
 gomcomments2,LGOMComments,
 gcondition2,LGcondition,
 gcriticality2,LGcriticality,

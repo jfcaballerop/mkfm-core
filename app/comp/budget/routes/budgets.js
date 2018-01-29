@@ -334,6 +334,77 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
             var bcodeant = "";
             // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                // geotechnical //
+                //////////////
+                if (ifdt.properties.Cinvestmentrequired != undefined && ifdt.properties.Cinvestmentrequired != [] &&
+                    ifdt.properties.Cinvestmentrequired[i] != null) {
+                    // debug(ifdt.properties.Ccode);
+                    if (ifdt.properties.Ccode != undefined && ifdt.properties.Ccode != [] &&
+                        ifdt.properties.Ccode[i] != null &&
+                        ifdt.properties.Ccode[i] !== Ccodeant && ifdt.properties.Ccode[i] !== "") {
+                        Ccodeant = ifdt.properties.Ccode[i];
+                        if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
+                            ifdt.properties.CRISKnatural[i] != null) {
+                            var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
+                            var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_crisknat1'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat1']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_crisknat2'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat2']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_crisknat3'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat3']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_crisknat4'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat4']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_crisknat5'] += ifdt.properties.Cinvestmentrequired[i];
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i];
+
+                                    ret['Total_num_crisknat5']++;
+                                    ret['Total_culverts_interventions']++;
+                                    ret['Total_interventions']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
+                    }
+                }
                 // culverts //
                 //////////////
                 if (ifdt.properties.Cinvestmentrequired != undefined && ifdt.properties.Cinvestmentrequired != [] &&
