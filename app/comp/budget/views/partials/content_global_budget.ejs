@@ -84,9 +84,17 @@
                         <tr>
                             <td>Geotechnical assets</td>
                             <td>
-                                <input class="form-control" id="disabledInputRiskGeotechnicalassets" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input class="form-control" id="disabledInputRiskGeotechnicalassets" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                                                    Math.round((retValues.Total_investment_grisknat5 + 
+                                                                    retValues.Total_investment_grisknat4 + 
+                                                                    retValues.Total_investment_grisknat3 +
+                                                                    retValues.Total_investment_grisknat2 + 
+                                                                    retValues.Total_investment_grisknat1)*100/1000000)/100 %>">
                             </td>
-                            <td></td>
+                            <td>
+                                <%- retValues.Total_geot_interventions %>
+
+                            </td>
 
                         </tr>
                         <tr>
@@ -296,11 +304,21 @@
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Geotechnical A.</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
-                                    <td>EC$</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat1*100/1000000)/100 %>
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -379,11 +397,21 @@
                                 </tr>
                                 <tr>
                                     <td>No of Geotechnical Assets per Risk Score</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat5 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat1 %>
+                                    </td>
                                 </tr>
 
                             </tbody>
