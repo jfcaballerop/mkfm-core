@@ -64,7 +64,7 @@ exports.criticality = function (type, formula, data) {
             for (var [l2key, level2] of Object.entries(level1)) {
                 if (typeof level2 === 'object') {
                     //console.log(l2key);
-                    if (data[l2key] != undefined) {
+                    if (data[l2key] != undefined && data[l2key] != null) {
                         if (level2.type === 'select') {
                             val += level2.scoring[data[l2key]] * level2.weight / 100;
                         } else if (level2.type === 'range') {
@@ -75,14 +75,14 @@ exports.criticality = function (type, formula, data) {
                                 // console.log('Rango: ' + rk + ' ' + data[l2key] + ' Scoring ' + level2.scoring[rk]);
                                 if (rk.indexOf('-') == -1) {
                                     //Ultimo valor del rango
-                                    if (rk * 1.0 <= data[l2key]) {
+                                    if (rk * 1.0 <= data[l2key] * 1) {
                                         // console.log('entro1');
                                         val += level2.scoring[rk] * level2.weight / 100;
 
                                     }
                                 } else {
                                     var valRango = rk.split('-');
-                                    if (valRango[0] * 1.0 < data[l2key] && valRango[1] * 1.0 > data[l2key]) {
+                                    if (valRango[0] * 1.0 < data[l2key] * 1.0 && valRango[1] * 1.0 > data[l2key] * 1.0) {
                                         // console.log('entro2');
                                         val += level2.scoring[rk] * level2.weight / 100;
                                         // console.log('Rango: ' + rk + ' ' + data[l2key] + ' Scoring ' + level2.scoring[rk]);
