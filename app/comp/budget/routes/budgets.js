@@ -279,7 +279,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         "properties.CRISK": 1,
         "properties.CRISKphysical": 1,
         "properties.CRISKnatural": 1,
-        "properties.Ccode": 1
+        "properties.Ccode": 1,
+        "properties.rcriticality": 1,
+        "properties.bcriticality": 1,
+        "properties.Ccriticality": 1,
+        "properties.gcriticality": 1,
+        "properties.gcriticality2": 1
     };
     var ret = {};
     ret['Total_investment'] = 0;
@@ -328,11 +333,31 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_num_grisknat3'] = 0;
     ret['Total_num_grisknat4'] = 0;
     ret['Total_num_grisknat5'] = 0;
+    ret['Total_bridges_crit1'] = 0;
+    ret['Total_bridges_crit2'] = 0;
+    ret['Total_bridges_crit3'] = 0;
+    ret['Total_bridges_crit4'] = 0;
+    ret['Total_bridges_crit5'] = 0;
+    ret['Total_culverts_crit1'] = 0;
+    ret['Total_culverts_crit2'] = 0;
+    ret['Total_culverts_crit3'] = 0;
+    ret['Total_culverts_crit4'] = 0;
+    ret['Total_culverts_crit5'] = 0;
+    ret['Total_geot_crit1'] = 0;
+    ret['Total_geot_crit2'] = 0;
+    ret['Total_geot_crit3'] = 0;
+    ret['Total_geot_crit4'] = 0;
+    ret['Total_geot_crit5'] = 0;
     ret['Total_km_briskphy1'] = 0;
     ret['Total_km_briskphy2'] = 0;
     ret['Total_km_briskphy3'] = 0;
     ret['Total_km_briskphy4'] = 0;
     ret['Total_km_briskphy5'] = 0;
+    ret['Total_km_crit1'] = 0;
+    ret['Total_km_crit2'] = 0;
+    ret['Total_km_crit3'] = 0;
+    ret['Total_km_crit4'] = 0;
+    ret['Total_km_crit5'] = 0;
     ret['Total_interventions'] = 0;
     ret['Total_roads_interventions'] = 0;
     ret['Total_bridges_interventions'] = 0;
@@ -366,6 +391,41 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode2[i] != null &&
                         ifdt.properties.gcode2[i] !== gcodeant2 && ifdt.properties.gcode2[i] !== "") {
                         gcodeant2 = ifdt.properties.gcode2[i];
+
+                        if (ifdt.properties.gcriticality2 != undefined && ifdt.properties.gcriticality2 != [] &&
+                            ifdt.properties.gcriticality2[i] != null) {
+                            switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality2[i])) {
+                                case 1:
+
+                                    ret['Total_geot_crit1']++;
+
+                                    break;
+                                case 2:
+
+                                    ret['Total_geot_crit2']++;
+
+                                    break;
+                                case 3:
+
+                                    ret['Total_geot_crit3']++;
+
+                                    break;
+                                case 4:
+
+                                    ret['Total_geot_crit4']++;
+
+                                    break;
+                                case 5:
+
+                                    ret['Total_geot_crit5']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
                         if (ifdt.properties.grisknatural2 != undefined && ifdt.properties.grisknatural2 != [] &&
                             ifdt.properties.grisknatural2[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
@@ -435,6 +495,41 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode[i] != null &&
                         ifdt.properties.gcode[i] !== gcodeant && ifdt.properties.gcode[i] !== "") {
                         gcodeant = ifdt.properties.gcode[i];
+
+                        if (ifdt.properties.gcriticality != undefined && ifdt.properties.gcriticality != [] &&
+                            ifdt.properties.gcriticality[i] != null) {
+                            switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality[i])) {
+                                case 1:
+
+                                    ret['Total_geot_crit1']++;
+
+                                    break;
+                                case 2:
+
+                                    ret['Total_geot_crit2']++;
+
+                                    break;
+                                case 3:
+
+                                    ret['Total_geot_crit3']++;
+
+                                    break;
+                                case 4:
+
+                                    ret['Total_geot_crit4']++;
+
+                                    break;
+                                case 5:
+
+                                    ret['Total_geot_crit5']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
                         if (ifdt.properties.grisknatural != undefined && ifdt.properties.grisknatural != [] &&
                             ifdt.properties.grisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural[i].split('__')[0];
@@ -506,6 +601,41 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.Ccode[i] != null &&
                         ifdt.properties.Ccode[i] !== Ccodeant && ifdt.properties.Ccode[i] !== "") {
                         Ccodeant = ifdt.properties.Ccode[i];
+
+                        if (ifdt.properties.Ccriticality != undefined && ifdt.properties.Ccriticality != [] &&
+                            ifdt.properties.Ccriticality[i] != null) {
+                            switch (formulasService.criticalityRatingScale(ifdt.properties.Ccriticality[i])) {
+                                case 1:
+
+                                    ret['Total_culverts_crit1']++;
+
+                                    break;
+                                case 2:
+
+                                    ret['Total_culverts_crit2']++;
+
+                                    break;
+                                case 3:
+
+                                    ret['Total_culverts_crit3']++;
+
+                                    break;
+                                case 4:
+
+                                    ret['Total_culverts_crit4']++;
+
+                                    break;
+                                case 5:
+
+                                    ret['Total_culverts_crit5']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
                         if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
                             ifdt.properties.CRISKnatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
@@ -577,6 +707,42 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.bcode[i] != null &&
                         ifdt.properties.bcode[i] !== bcodeant && ifdt.properties.bcode[i] !== "") {
                         bcodeant = ifdt.properties.bcode[i];
+
+                        if (ifdt.properties.bcriticality != undefined && ifdt.properties.bcriticality != [] &&
+                            ifdt.properties.bcriticality[i] != null) {
+                            switch (formulasService.criticalityRatingScale(ifdt.properties.bcriticality[i])) {
+                                case 1:
+
+                                    ret['Total_bridges_crit1']++;
+
+                                    break;
+                                case 2:
+
+                                    ret['Total_bridges_crit2']++;
+
+                                    break;
+                                case 3:
+
+                                    ret['Total_bridges_crit3']++;
+
+                                    break;
+                                case 4:
+
+                                    ret['Total_bridges_crit4']++;
+
+                                    break;
+                                case 5:
+
+                                    ret['Total_bridges_crit5']++;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
+
                         if (ifdt.properties.brisknatural != undefined && ifdt.properties.brisknatural != [] &&
                             ifdt.properties.brisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
@@ -650,7 +816,40 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                     /*
                     Recojo los valores de RISK y los agrupo
                     */
-                    // TODO: Revisar los valores totales respecto a los parciales y sumarlos.
+
+                    if (ifdt.properties.rcriticality != undefined && ifdt.properties.rcriticality != [] &&
+                        ifdt.properties.rcriticality[i] != null) {
+                        switch (formulasService.criticalityRatingScale(ifdt.properties.rcriticality[i])) {
+                            case 1:
+                                if (i > 0) {
+                                    ret['Total_km_crit1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                if (i > 0) {
+                                    ret['Total_km_crit2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 3:
+                                if (i > 0) {
+                                    ret['Total_km_crit3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 4:
+                                if (i > 0) {
+                                    ret['Total_km_crit4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 5:
+                                if (i > 0) {
+                                    ret['Total_km_crit5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
 
                     if (ifdt.properties.rrisknatural != undefined && ifdt.properties.rrisknatural != [] &&
                         ifdt.properties.rrisknatural[i] != null) {

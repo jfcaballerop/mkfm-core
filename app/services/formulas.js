@@ -122,6 +122,39 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
 
 }
 
+exports.criticalityRatingScale = function (lof) {
+    var ret = 1;
+    var crit_rating = [];
+    var lofv = "";
+    // debug('lof ' + lof);
+    lof = lof * 1;
+    if (lof >= 0 && lof < 20) {
+        lofv = '0-20';
+    } else if (lof >= 20 && lof < 40) {
+        lofv = '20-40';
+    } else if (lof >= 40 && lof < 60) {
+        lofv = '40-60';
+    } else if (lof >= 60 && lof < 80) {
+        lofv = '60-80';
+    } else if (lof >= 80 && lof <= 100) {
+        lofv = '80-100';
+    }
+
+    crit_rating['0-20'] = [];
+    crit_rating['0-20'] = 1;
+    crit_rating['20-40'] = [];
+    crit_rating['20-40'] = 2;
+    crit_rating['40-60'] = [];
+    crit_rating['40-60'] = 3;
+    crit_rating['60-80'] = [];
+    crit_rating['60-80'] = 4;
+    crit_rating['80-100'] = [];
+    crit_rating['80-100'] = 5;
+
+    ret = crit_rating[lofv];
+
+    return ret;
+}
 exports.riskRatingScale = function (lof, cons) {
     var ret = 1;
     var risk_rating = [];
