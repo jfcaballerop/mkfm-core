@@ -489,35 +489,75 @@
                             <tbody>
                                 <tr>
                                     <td>Road Pavement Interventions</td>
-                                    <td>80 km</td>
-                                    <td>200 km</td>
-                                    <td>150 km</td>
-                                    <td>280 km</td>
-                                    <td>80 km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit1*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit2*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit3*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit4*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit5*100/1000)/100 %> km
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Bridges</td>
-                                    <td>10</td>
-                                    <td>60</td>
-                                    <td>80</td>
-                                    <td>70</td>
-                                    <td>15</td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit5 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Culverts</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit5 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Geotechnical A.</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
-                                    <td>30</td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit5 %>
+                                    </td>
                                 </tr>
 
                             </tbody>
