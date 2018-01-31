@@ -2,98 +2,180 @@
     <script>
         const PI = 3.141592;
 
-        //var featurePaintCriticality = (function() {
+        var url = "";
+
+        function capitalizeFirstLetter(string) {
+            var OutPut = ''
+            var WordList = string.split(' ')
+            WordList.forEach(function(element) {
+                OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
+            });
+            return OutPut;
+        }
+
+
+        ! function(t, n, e, i) {
+            "use strict";
+
+            function a(n, e) {
+                this.element = n, this.settings = t.extend({}, o, e), this._defaults = o, this._name = s, this.init()
+            }
+            var s = "rowspanizer",
+                o = {
+                    vertical_align: "top"
+                };
+            t.extend(a.prototype, {
+                init: function() {
+                    var n = this,
+                        e = t(this.element),
+                        i = [];
+                    e.find("tr").each(function(n, e) {
+                        t(this).find("td").each(function(n, e) {
+                            var a = t(e),
+                                s = a.html();
+                            if ("undefined" != typeof i[n] && "dato" in i[n] && i[n].dato == s) {
+                                var o = i[n].elem.data("rowspan");
+                                ("undefined" == o || isNaN(o)) && (o = 1), i[n].elem.data("rowspan", parseInt(o) + 1).addClass("rowspan-combine"), a.addClass("rowspan-remove")
+                            } else i[n] = {
+                                dato: s,
+                                elem: a
+                            }
+                        })
+                    }), t(".rowspan-combine").each(function(e, i) {
+                        var a = t(this);
+                        a.attr("rowspan", a.data("rowspan")).css({
+                            "vertical-align": n.settings.vertical_align
+                        })
+                    }), t(".rowspan-remove").remove()
+                }
+            }), t.fn[s] = function(n) {
+                return this.each(function() {
+                    t.data(this, "plugin_" + s) || t.data(this, "plugin_" + s, new a(this, n))
+                })
+            }
+        }(jQuery, window, document);
+
         var featurePaintCondition = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function(form) {
+            var paintHTML = function(form) { // ------------------------------------------
+                DBprefix = {
+                    "Retaining_Walls": "formulaSpec[0]",
+                    "Cuttings_Embankments": "formulaSpec[1]",
+                    "Culverts": "formulaSpec[2]",
+                    "Bridges": "formulaSpec[3]",
+                    "Pavements": "formulaSpec[0]"
+                };
+
                 var html = [];
                 var h = -1;
-                $.each(form.formulaSpec.reverse(), function(i, fspec) {
+                var cabeceraPainted = false;
+                var postgressArray = Array();
+
+                $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
+                    // console.log(k + ' ' + v);
                     $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
-                        '<input type="radio" name="optionsRadios" id="option' + fspec.name +
-                        '" value="' + fspec.name + '" >' + fspec.name +
+                        '<input type="radio" name="optionsRadios" id="option' + v + '" value="' + v +
+                        '" >' + v +
                         '</label></div>');
-                    html[++h] = '<div id="formulaTable' + fspec.name + '" style="display:none;">';
-                    html[++h] = '<div id="infoFormula' + fspec.name +
+                    html[++h] = '<div id="formulaTable' + v + '" style="display:none;">' + v;
+                    var tableName = "formulaTableBody";
+
+
+                    html[++h] = '<div id="infoFormula' + v +
                         '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
                     html[++h] = ' Be patient, the process can take several minutes.</div>';
                     html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
-                        '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name +
+                        '__' + v + '\');" id="' + form.properties.HTML.id + '__' + v +
                         '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
-                        fspec.name + '</button>';
-                    html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + fspec.name +
+                        v + '</button>';
+                    html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + v +
                         '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
-                    html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + fspec.name +
+                    html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + v +
                         '"></div>';
+
+
                     html[++h] =
-                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-                    $.each(fspec, function(key, data) {
-                        console.log(key);
-                        console.log(data);
-                        if (data.constructor === objectConstructor) {
-                            html[++h] = '<tr>';
-                            html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
-                                    1) + '"><label class="col-sm-8 col-sm-8 control-label">' +
-                                key + '</label>';
-                            html[++h] = '<div class="col-sm-4">';
-                            html[++h] = '<input class="form-control" name="AssetCriticality__' +
-                                fspec.name + '__' + key + '" type="text" value="' + data.weight +
-                                '">';
-                            html[++h] = '</div></td>';
-                            var tr = 0;
-                            $.each(data, function(j, data2) {
-                                if (data2.constructor === objectConstructor) {
-
-                                    if (tr > 0) {
-                                        html[++h] = '<tr>';
-                                    }
-                                    html[++h] =
-                                        '<td class="col-sm-6"><label class="col-sm-3 control-label">' +
-                                        data2.name +
-                                        '<br>[Type: ' + data2.type + ']</label>';
-                                    html[++h] = '<div class="col-sm-2">';
-                                    html[++h] =
-                                        '<input class="form-control" name="AssetCriticality__' +
-                                        fspec.name + '__' + key + '__' + j +
-                                        '" type="text" value="' + data2.weight +
-                                        '"></div>';
-                                    html[++h] = '<div class="col-sm-7">' + data2.HTML_name +
-                                        '</div>';
-                                    html[++h] = '</td>';
-                                    if (data2.scoring != undefined) {
-                                        html[++h] = '<td class="col-sm-3">';
-                                        $.each(data2.scoring, function(s, scoring) {
-                                            html[++h] =
-                                                '<label class="col-sm-8 control-label">' +
-                                                s +
-                                                '</label><div class="col-sm-4">';
-                                            html[++h] =
-                                                '<input class="form-control" name="AssetCriticality__' +
-                                                fspec.name + '__' + key + '__' +
-                                                j + '__' + s +
-                                                '" type="text" value="' +
-                                                scoring +
-                                                '"></div>';
-
-                                        });
-                                        html[++h] = '</td>';
-                                    }
-                                    html[++h] = '</tr>';
-                                    tr++;
-                                    console.log(j + ': ' + data2);
-                                }
-                            });
-                        };
+                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="' + tableName + '">';
+                    html[++h] = '<tr>';
+                    var counter = 0;
+                    $.each(formCondition[v][0], function(cabeceraCol, val) { // ------------------------------------------
+                        if (counter == 0) {
+                            counter++;
+                        } else {
+                            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol.substring(
+                                cabeceraCol.indexOf("_") + 1) + '</th>';
+                        }
                     });
-                    //console.log(fs'</tbody></table>'pec.fname);
+                    html[++h] = '</tr>'
+                    var urlBase = '';
+                    // Resto de codigo para pintar la formula
+                    for (var l in formCondition[v]) { // ------------------------------------------
+                        html[++h] = '<tr>';
+                        var ScoreName = '';
+                        postgressArray = [];
+                        postgressArray.push(DBprefix[v]);
+                        counter = 0;
+                        $.each(formCondition[v][l], function(i, val) { // ------------------------------------------
+                            if (counter == 0) {
+                                counter++;
+                            } else {
+                                weight = 0;
+                                var j = postgressArray.indexOf("weight");
+                                if (j != -1) {
+                                    weight = 1;
+                                    console.log(postgressArray + "<--------------- 1");
+                                    postgressArray.splice(j, 1);
+                                    console.log(postgressArray + "<--------------- 2");
+
+                                }
+                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (ScoreName.length > 0)) || (i.indexOf('weight') > -1 && ScoreName.length > 0))) {
+                                    console.log(postgressArray.join());
+                                    console.log(counter);
+                                    (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
+                                    urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
+                                    console.log('urlTest ' + urlTest.replace(/__/g, "."));
+                                    // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
+                                    // console.log(postgressArray.join().replace(/,/g, "."));
+                                    console.log('urlTest' + urlTest);
+                                    // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
+                                    console.log(postgressArray);
+                                    console.log(form);
+                                    console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
+                                    // }
+                                    html[++h] =
+                                        '<td> <input class="form-control, col-sm-12" name="' + urlTest + '" type="number" value="' + eval('form.' + postgressArray.join().replace(/,/g, ".")) + '"  step="0.01"></td>';
+                                } else {
+                                    // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
+                                    postgressArray.push(capitalizeFirstLetter(val));
+                                    // postgressArray.push(capitalizeFirstLetter(val)
+                                    html[++h] = '<td>' + val + '</td>';
+                                }
+                                // console.log(eval(postgressArray));
+                                ScoreName = val;
+                            }
+                        });
+                        html[++h] = '</tr>';
+                    }
                     html[++h] = '</tbody></table></div>';
-                    $('#formulaSpec').html(html.join(''));
 
                 });
 
 
+                $('#formulaSpec').html(html.join(''));
+
+
+                $("document").ready(function() {
+                    if (true) {
+                        $("#formulaTableBody").rowspanizer();
+                        $("#formulaTableRetaining_Walls").rowspanizer();
+                        $("#formulaTableCuttings_Embankments").rowspanizer();
+                        $("#formulaTableBridges").rowspanizer();
+                        $("#formulaTablePavements").rowspanizer();
+                    }
+                });
             };
 
             // API publica
@@ -102,7 +184,6 @@
             }
 
         })();
-        //var featurePaintCondition = (function() {
         var featurePaintCriticality = (function() {
 
             // variables y funciones privadas
