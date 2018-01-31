@@ -23,6 +23,8 @@ var Infodatatrack = mongoose.model('Infodatatrack');
 var costModels = require(path.join(__dirname, '../../budget/models/cost'));
 var Cost = mongoose.model('Cost');
 
+// modules
+var budgetModule = require(path.join(__dirname, '../modules/budget_module'));
 
 router.use(function timeLog(req, res, next) {
     ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
@@ -395,6 +397,36 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode2[i] != null && ifdt.properties.gcode2[i] !== "") {
                         if (ifdt.properties.gcode2[i] !== gcodeant2) {
                             gcodeant2 = ifdt.properties.gcode2[i];
+
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_roads_interventions_Urban']++;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_roads_interventions_MainRoad']++;
+
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_roads_interventions_Feeder']++;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_roads_interventions_Secondary']++;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
                             if (ifdt.properties.gcriticality2 != undefined && ifdt.properties.gcriticality2 != [] &&
                                 ifdt.properties.gcriticality2[i] != null) {
                                 switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality2[i])) {
@@ -556,6 +588,36 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode[i] != null && ifdt.properties.gcode[i] !== "") {
                         if (ifdt.properties.gcode[i] !== gcodeant) {
                             gcodeant = ifdt.properties.gcode[i];
+
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_roads_interventions_Urban']++;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_roads_interventions_MainRoad']++;
+
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_roads_interventions_Feeder']++;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_roads_interventions_Secondary']++;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
                             if (ifdt.properties.gcriticality != undefined && ifdt.properties.gcriticality != [] &&
                                 ifdt.properties.gcriticality[i] != null) {
                                 switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality[i])) {
@@ -717,6 +779,37 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.Ccode[i] !== "") {
                         if (ifdt.properties.Ccode[i] !== Ccodeant) {
                             Ccodeant = ifdt.properties.Ccode[i];
+
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_roads_interventions_Urban']++;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_roads_interventions_MainRoad']++;
+
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_roads_interventions_Feeder']++;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_roads_interventions_Secondary']++;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
+
                             if (ifdt.properties.Ccriticality != undefined && ifdt.properties.Ccriticality != [] &&
                                 ifdt.properties.Ccriticality[i] != null) {
                                 switch (formulasService.criticalityRatingScale(ifdt.properties.Ccriticality[i])) {
@@ -881,6 +974,35 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             // pero para el caso del investment debe contabilizar TODOS los puntos
                             bcodeant = ifdt.properties.bcode[i];
 
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_roads_interventions_Urban']++;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_roads_interventions_MainRoad']++;
+
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_roads_interventions_Feeder']++;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_roads_interventions_Secondary']++;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
                             if (ifdt.properties.bcriticality != undefined && ifdt.properties.bcriticality != [] &&
                                 ifdt.properties.bcriticality[i] != null) {
                                 switch (formulasService.criticalityRatingScale(ifdt.properties.bcriticality[i])) {
@@ -1223,6 +1345,10 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                     break;
                             }
                         }
+
+                        // selecciono investment por Parish
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {}
                     }
                 }
             }
