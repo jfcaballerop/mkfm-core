@@ -286,7 +286,8 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         "properties.bcriticality": 1,
         "properties.Ccriticality": 1,
         "properties.gcriticality": 1,
-        "properties.gcriticality2": 1
+        "properties.gcriticality2": 1,
+        "properties.district": 1
     };
     var ret = {};
     ret['Total_investment'] = 0;
@@ -373,7 +374,16 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_roads_interventions_MainRoad'] = 0;
     ret['Total_roads_interventions_Feeder'] = 0;
     ret['Total_roads_interventions_Secondary'] = 0;
-
+    ret['Total_investment_Saint_George'] = 0;
+    ret['Total_investment_Saint_Paul'] = 0;
+    ret['Total_investment_Saint_Joseph'] = 0;
+    ret['Total_investment_Saint_Peter'] = 0;
+    ret['Total_investment_Saint_John'] = 0;
+    ret['Total_investment_Saint_Andrew'] = 0;
+    ret['Total_investment_Saint_David'] = 0;
+    ret['Total_investment_Saint_Patrick'] = 0;
+    ret['Total_investment_Saint_Mark'] = 0;
+    ret['Total_investment_Saint_Luke'] = 0;
     Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -1347,8 +1357,45 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         }
 
                         // selecciono investment por Parish
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {}
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            switch (ifdt.properties.district[i]) {
+                                case "Saint George":
+                                    ret['Total_investment_Saint_George'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Paul":
+                                    ret['Total_investment_Saint_Paul'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Joseph":
+                                    ret['Total_investment_Saint_Joseph'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Peter":
+                                    ret['Total_investment_Saint_Peter'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint John":
+                                    ret['Total_investment_Saint_John'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Andrew":
+                                    ret['Total_investment_Saint_Andrew'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint David":
+                                    ret['Total_investment_Saint_David'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Patrick":
+                                    ret['Total_investment_Saint_Patrick'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Mark":
+                                    ret['Total_investment_Saint_Mark'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+                                case "Saint Luke":
+                                    ret['Total_investment_Saint_Luke'] += ifdt.properties.rinvestmentrequired[i];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                        }
                     }
                 }
             }
