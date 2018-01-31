@@ -417,7 +417,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode2[i] != null && ifdt.properties.gcode2[i] !== "") {
                         if (ifdt.properties.gcode2[i] !== gcodeant2) {
                             gcodeant2 = ifdt.properties.gcode2[i];
+                            // selecciono number of elements por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
 
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
 
@@ -531,7 +536,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             ifdt.properties.grisknatural2[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.grisknatural2[i].split('__')[1];
+                            // selecciono investment por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired2[i]);
 
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null) {
 
@@ -608,7 +618,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         ifdt.properties.gcode[i] != null && ifdt.properties.gcode[i] !== "") {
                         if (ifdt.properties.gcode[i] !== gcodeant) {
                             gcodeant = ifdt.properties.gcode[i];
+                            // selecciono number of elements por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
 
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
 
@@ -725,6 +740,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null) {
 
+                                // selecciono investment por Parish
+                                if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                    ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                    ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired[i]);
+
+                                }
                                 switch (ifdt.properties.rcategory[i]) {
                                     case 'Urban':
                                         ret['Total_investment_Urban'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
@@ -800,6 +821,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         if (ifdt.properties.Ccode[i] !== Ccodeant) {
                             Ccodeant = ifdt.properties.Ccode[i];
 
+                            // selecciono number of elements por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
+
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
 
@@ -916,7 +943,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null) {
+                                // selecciono investment por Parish
+                                if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                    ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                    ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.Cinvestmentrequired[i]);
 
+                                }
                                 switch (ifdt.properties.rcategory[i]) {
                                     case 'Urban':
                                         ret['Total_investment_Urban'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
@@ -993,7 +1025,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             // el CODE solo debe contabilizar 1 activo
                             // pero para el caso del investment debe contabilizar TODOS los puntos
                             bcodeant = ifdt.properties.bcode[i];
+                            // selecciono number of elements por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
 
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
 
@@ -1110,6 +1147,12 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
 
+                            // selecciono investment por Parish
+                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                                ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.binvestmentrequired[i]);
+
+                            }
                             if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                                 ifdt.properties.rcategory[i] != null) {
 
