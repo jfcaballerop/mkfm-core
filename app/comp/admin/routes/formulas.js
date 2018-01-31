@@ -751,7 +751,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
  */
 router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_condition: ' + + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
+    // debug('## WEB update_formulas_tracks_condition: ' + + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
     var options = {
         host: config.HOST_API,
@@ -818,9 +818,9 @@ router.post('/V1/update_field/', function (req, res, next) {
                 //debug(fspec.name);
                 if (fspec.name === arrField[1]) {
                     var formSave = new Formula(f[0]);
-                    // debug('formSave: \n' + JSON.stringify(formSave));
-                    // debug(formSave.formulaSpec[key][arrField[2]].weight);
-                    // debug(key + ' ' + value);
+                    debug('formSave: \n' + JSON.stringify(formSave)+ '--------------------------------------');
+                    debug(formSave.formulaSpec[key][arrField[2]].weight);
+                    debug(key + ' ' + value);
                     formSave.formulaSpec[key][arrField[2]].weight = value;
                     formSave.save(function (err, fsaved) {
                         if (err) {
