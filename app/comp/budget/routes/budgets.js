@@ -384,6 +384,16 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_investment_Saint_Patrick'] = 0;
     ret['Total_investment_Saint_Mark'] = 0;
     ret['Total_investment_Saint_Luke'] = 0;
+    ret['Total_elements_Saint_George'] = 0;
+    ret['Total_elements_Saint_Paul'] = 0;
+    ret['Total_elements_Saint_Joseph'] = 0;
+    ret['Total_elements_Saint_Peter'] = 0;
+    ret['Total_elements_Saint_John'] = 0;
+    ret['Total_elements_Saint_Andrew'] = 0;
+    ret['Total_elements_Saint_David'] = 0;
+    ret['Total_elements_Saint_Patrick'] = 0;
+    ret['Total_elements_Saint_Mark'] = 0;
+    ret['Total_elements_Saint_Luke'] = 0;
     Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -1170,34 +1180,18 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         newinterv = true;
                         ret['Total_interventions']++;
                         ret['Total_roads_interventions']++;
+
+                        // selecciono number of elements por Parish
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
+
+                        }
                         if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                             ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-
-                            switch (ifdt.properties.rcategory[i]) {
-                                case 'Urban':
-                                    ret['Total_roads_interventions_Urban']++;
-
-                                    break;
-                                case 'Main Road':
-                                    ret['Total_roads_interventions_MainRoad']++;
+                            ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
 
 
-                                    break;
-                                case 'Feeder':
-                                    ret['Total_roads_interventions_Feeder']++;
-
-
-                                    break;
-                                case 'Secondary':
-                                    ret['Total_roads_interventions_Secondary']++;
-
-
-                                    break;
-
-
-                                default:
-                                    break;
-                            }
                         }
                     }
                     /*
@@ -1359,41 +1353,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                         // selecciono investment por Parish
                         if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
                             ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            switch (ifdt.properties.district[i]) {
-                                case "Saint George":
-                                    ret['Total_investment_Saint_George'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Paul":
-                                    ret['Total_investment_Saint_Paul'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Joseph":
-                                    ret['Total_investment_Saint_Joseph'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Peter":
-                                    ret['Total_investment_Saint_Peter'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint John":
-                                    ret['Total_investment_Saint_John'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Andrew":
-                                    ret['Total_investment_Saint_Andrew'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint David":
-                                    ret['Total_investment_Saint_David'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Patrick":
-                                    ret['Total_investment_Saint_Patrick'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Mark":
-                                    ret['Total_investment_Saint_Mark'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-                                case "Saint Luke":
-                                    ret['Total_investment_Saint_Luke'] += ifdt.properties.rinvestmentrequired[i];
-                                    break;
-
-                                default:
-                                    break;
-                            }
+                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rinvestmentrequired[i]);
 
                         }
                     }
