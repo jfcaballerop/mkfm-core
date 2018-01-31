@@ -1,0 +1,2466 @@
+<script>
+    var formCondition = {
+        Culverts: [{
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Silting",
+            "scores": "95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Breaking",
+            "scores": "40"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Smashing",
+            "scores": "60"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Displazaments",
+            "scores": "90"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Open joints",
+            "scores": "90"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Cracking",
+            "scores": "80"
+        }, {
+            "exit": "exit",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Corrosion",
+            "scores": "85"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Scouring",
+            "scores": "70"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Loss of drainage mouth",
+            "scores": "60"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Collapse",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "No damages",
+            "scores": "100"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Other",
+            "scores": "90"
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "",
+            "responses": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Existance of several damages",
+            "responses": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Clearing required",
+            "responses": "Yes",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Clearing required",
+            "responses": "No",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Clearing required",
+            "responses": "Unknown",
+            "scores": "0.98"
+        }],
+        Retaining_Walls: [{
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Loss of alignment",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Loss of alignment",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Loss of alignment",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Loss of alignment",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Loss of alignment",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Deformations",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Deformations",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Deformations",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Deformations",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Deformations",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "exit",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Bulging",
+            "weight": "80",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Bulging",
+            "weight": "80",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Bulging",
+            "weight": "80",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Bulging",
+            "weight": "80",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Bulging",
+            "weight": "80",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Tipping",
+            "weight": "60",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Tipping",
+            "weight": "60",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Tipping",
+            "weight": "60",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Tipping",
+            "weight": "60",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Tipping",
+            "weight": "60",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Topple",
+            "weight": "55",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Topple",
+            "weight": "55",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Topple",
+            "weight": "55",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Topple",
+            "weight": "55",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Topple",
+            "weight": "55",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Settlements",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Settlements",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Settlements",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Settlements",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Settlements",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Biological actions roots",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Biological actions roots",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Biological actions roots",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Biological actions roots",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Biological actions roots",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Durable deffects loss of integrity",
+            "weight": "95",
+            "intensity of the failure processes": "High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Durable deffects loss of integrity",
+            "weight": "95",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Durable deffects loss of integrity",
+            "weight": "95",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Durable deffects loss of integrity",
+            "weight": "95",
+            "intensity of the failure processes": "NA",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Durable deffects loss of integrity",
+            "weight": "95",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Other processes",
+            "weight": "60",
+            "intensity of the failure processes": "High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Other processes",
+            "weight": "60",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Other processes",
+            "weight": "60",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Other processes",
+            "weight": "60",
+            "intensity of the failure processes": "NA",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Other processes",
+            "weight": "60",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "High",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Moderate",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "NA",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "Type of failure process",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "",
+            "type of failure process": "",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "Existance of several damages",
+            "type of failure process": "",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Concrete",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Masonry",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Riprap",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Gabion",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Other",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Material",
+            "type of failure process": "Unknown",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Arboreal",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Bush",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Herbaceus",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "No vegetation",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Other",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "NA",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Unknown",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8"
+        }],
+        Cuttings_Embankments: [{
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Block slide",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": "0.95"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Block slide",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": "0.25"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Block slide",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": "0.2"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Block slide",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Block slide",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rock falls",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rock falls",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": "0.6"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rock falls",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rock falls",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rock falls",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Translational slide",
+            "weight": "80",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": "0.25"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Translational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Translational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Translational slide",
+            "weight": "80",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Translational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rotational slide",
+            "weight": "80",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rotational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rotational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rotational slide",
+            "weight": "80",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Rotational slide",
+            "weight": "80",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Topple collapse",
+            "weight": "75",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": "1"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Topple collapse",
+            "weight": "75",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Topple collapse",
+            "weight": "75",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Topple collapse",
+            "weight": "75",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Topple collapse",
+            "weight": "75",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris flow",
+            "weight": "90",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "exit",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris flow",
+            "weight": "90",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris flow",
+            "weight": "90",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris flow",
+            "weight": "90",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris flow",
+            "weight": "90",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris avalanche",
+            "weight": "55",
+            "intensity of the failure processes": "High",
+            "scores": "0.55",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris avalanche",
+            "weight": "55",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.75",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris avalanche",
+            "weight": "55",
+            "intensity of the failure processes": "Low",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris avalanche",
+            "weight": "55",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Debris avalanche",
+            "weight": "55",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Earth flow",
+            "weight": "45",
+            "intensity of the failure processes": "High",
+            "scores": "0.5",
+            "extent of failure (%)": "0.9"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Earth flow",
+            "weight": "45",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Earth flow",
+            "weight": "45",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Earth flow",
+            "weight": "45",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Earth flow",
+            "weight": "45",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Creep",
+            "weight": "60",
+            "intensity of the failure processes": "High",
+            "scores": "0.5",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Creep",
+            "weight": "60",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Creep",
+            "weight": "60",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Creep",
+            "weight": "60",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Creep",
+            "weight": "60",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Lateral spred",
+            "weight": "60",
+            "intensity of the failure processes": "High",
+            "scores": "0.5",
+            "extent of failure (%)": "0.75"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Lateral spred",
+            "weight": "60",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Lateral spred",
+            "weight": "60",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Lateral spred",
+            "weight": "60",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Lateral spred",
+            "weight": "60",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "High",
+            "scores": "0.5",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "No processes",
+            "weight": "100",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "High",
+            "scores": "0.5",
+            "extent of failure (%)": "0.9"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Moderate",
+            "scores": "0.6",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Low",
+            "scores": "0.7",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "NA",
+            "scores": "1",
+            "extent of failure (%)": "0"
+        }, {
+            "exit": "",
+            "factor": "DAMAGES",
+            "subfactors": "TYPE OF FAILURE PROCESS",
+            "type of failure process": "Unknown",
+            "weight": "70",
+            "intensity of the failure processes": "Unknown",
+            "scores": "0.01",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "",
+            "type of failure process": "",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "Existance of several damages",
+            "type of failure process": "",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Arboreal",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Bush",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Herbaceus",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.9",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "No vegetation",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Other",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "NA",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Vegetation",
+            "type of failure process": "Unknown",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": "0 0.2 m",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": "0.2 0.6 m",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": "0.6 1 m",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.9",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": ">1 m",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.8",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": "NA",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "1",
+            "extent of failure (%)": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Size of blocks",
+            "type of failure process": "Unknown",
+            "weight": "",
+            "intensity of the failure processes": "",
+            "scores": "0.95",
+            "extent of failure (%)": ""
+        }],
+        Bridges: [{
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on foundations",
+            "responses2": "From foundation ground decay",
+            "weight": "90",
+            "responses3": "General scouring",
+            "severity of damages": "",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on foundations",
+            "responses2": "From foundation ground decay",
+            "weight": "90",
+            "responses3": "Scouring on piers",
+            "severity of damages": "",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on foundations",
+            "responses2": "From foundation ground decay",
+            "weight": "90",
+            "responses3": "Scouring on abutments",
+            "severity of damages": "",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on foundations",
+            "responses2": "From foundation ground decay",
+            "weight": "90",
+            "responses3": "Other",
+            "severity of damages": "",
+            "scores": "0.85"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on foundations",
+            "responses2": "From foundation decay",
+            "weight": "95",
+            "responses3": "Foundation decay",
+            "severity of damages": "",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on slab",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on piers",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on beams and braces",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "exit",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on bearings",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on abutments",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on side walls",
+            "weight": "98",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on vaults and arches",
+            "weight": "90",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on spandrel wall",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Very High",
+            "scores": "0.5"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "High",
+            "scores": "0.6"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Medium",
+            "scores": "0.7"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Low",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Mechanical Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.01"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Very High",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "High",
+            "scores": "0.96"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Medium",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Low",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on structural elements",
+            "responses2": "Damages on special areas",
+            "weight": "99",
+            "responses3": "Durable Defects",
+            "severity of damages": "Unknown",
+            "scores": "0.9"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "Damages on non structural elements",
+            "responses2": "Damages on non structural element",
+            "weight": "99",
+            "responses3": "Decay of non durable elements",
+            "severity of damages": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "MAIN FACTOR",
+            "subfactors": "Damages",
+            "responses": "No damages",
+            "responses2": "No damage",
+            "weight": "99",
+            "responses3": "No damages",
+            "severity of damages": "NA",
+            "scores": "1"
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "",
+            "responses": "",
+            "responses2": "",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "",
+            "subfactors": "Existance of several damages",
+            "responses": "",
+            "responses2": "",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": ""
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Girder",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Slab",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.95"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Truss",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Bailey",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Arch",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.85"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Composite",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.85"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Cantilever",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Masonry arch",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Cable stayed",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Suspension",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.75"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Submersible",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.98"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Truss arch",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.8"
+        }, {
+            "exit": "",
+            "factor": "CORRECTIVE FACTORS",
+            "subfactors": "Bridge type",
+            "responses": "",
+            "responses2": "Other",
+            "weight": "",
+            "responses3": "",
+            "severity of damages": "",
+            "scores": "0.9"
+        }],
+        Pavements: [{}]
+    };
+</script>
