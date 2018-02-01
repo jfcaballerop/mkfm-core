@@ -9,34 +9,34 @@ exports.investmentDistrict = function (arrInv, district, investment) {
 
     switch (district) {
         case "Saint George":
-            arrInv['Total_investment_Saint_George'] += investment;
+            arrInv['Total_investment_Saint_George'] += investment * 1.0;
             break;
         case "Saint Paul":
-            arrInv['Total_investment_Saint_Paul'] += investment;
+            arrInv['Total_investment_Saint_Paul'] += investment * 1.0;
             break;
         case "Saint Joseph":
-            arrInv['Total_investment_Saint_Joseph'] += investment;
+            arrInv['Total_investment_Saint_Joseph'] += investment * 1.0;
             break;
         case "Saint Peter":
-            arrInv['Total_investment_Saint_Peter'] += investment;
+            arrInv['Total_investment_Saint_Peter'] += investment * 1.0;
             break;
         case "Saint John":
-            arrInv['Total_investment_Saint_John'] += investment;
+            arrInv['Total_investment_Saint_John'] += investment * 1.0;
             break;
         case "Saint Andrew":
-            arrInv['Total_investment_Saint_Andrew'] += investment;
+            arrInv['Total_investment_Saint_Andrew'] += investment * 1.0;
             break;
         case "Saint David":
-            arrInv['Total_investment_Saint_David'] += investment;
+            arrInv['Total_investment_Saint_David'] += investment * 1.0;
             break;
         case "Saint Patrick":
-            arrInv['Total_investment_Saint_Patrick'] += investment;
+            arrInv['Total_investment_Saint_Patrick'] += investment * 1.0;
             break;
         case "Saint Mark":
-            arrInv['Total_investment_Saint_Mark'] += investment;
+            arrInv['Total_investment_Saint_Mark'] += investment * 1.0;
             break;
         case "Saint Luke":
-            arrInv['Total_investment_Saint_Luke'] += investment;
+            arrInv['Total_investment_Saint_Luke'] += investment * 1.0;
             break;
 
         default:
