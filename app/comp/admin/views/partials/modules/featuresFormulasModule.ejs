@@ -74,6 +74,7 @@
                 // $.each(form.formulaSpec, function(i, fspec) {
                 $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
                     // console.log(k + ' ' + v);
+                    fspec = v;
                     $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                         '<input type="radio" name="optionsRadios" id="option' + v + '" value="' + v +
                         '" >' + v +
@@ -210,16 +211,6 @@
                         '"></div>';
                     html[++h] =
                         '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-                    // $.each(formCondition.formSpecCulverts[0], function(cabeceraCol, val) {
-                    //     html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol + '</th>';
-                    // });
-                    // for (var l in formCondition.formSpecCulverts) {
-                    //     html[++h] = '<tr>';
-                    //     $.each(formCondition.formSpecCulverts[l], function(i, val) {
-                    //         html[++h] = '    <td>' + val + '</td>';
-                    //     });
-                    //     html[++h] = '</tr>';
-                    // }
 
                     $.each(fspec, function(key, data) {
                         console.log(key);

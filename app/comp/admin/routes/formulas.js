@@ -790,7 +790,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     };
     debug(postData);
     debug('postData: ' + postData + '****---****----****-----***');
-    console.log('postData: ' + postData + '****---****----****-----***');
+    console.log('postData: ' + Object.keys(postData)[0] + '****---****----****-----***');
     var asset = postData[Object.keys(postData)[0]];
     var formula = 'Condition'; //Object.keys(postData)[0];
     var sendData = {};
@@ -801,8 +801,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var tracksUpdated = 0;
     
     debug('formula: ' + formula + ' asset: ' + asset);
-    debug(conditionFormula);
-    // debug(Formcondition);
+    debug(Formula);
+    // console.log(Formula);
 
     Formula.find({ "name": formula }).exec(async function (err, f) {
         if (err) {
@@ -814,7 +814,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             }
             tracks = rtracks;
         });
-        debug('\n\n\n\n\n\n f: \n\n\n\n\n\n ' + f + '\n\n\n\n\n\n');
+        // console.log('f: ' + f );
         for (var track of tracks) {
             // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
             await Infodatatrack.findById(track._id).exec(function (err, ifdt) {
@@ -945,10 +945,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         default:
                             break;
                     }
-                    f[0] !== undefined ? calcularValue = false : calcularValue = true;
-                    console.log('f[0]: ' + f[0]);
+                    // f[0] !== undefined ? calcularValue = false : calcularValue = true;
+                    // console.log('f[0]: ' + f[0]);
                     if (calcularValue) {
-                        debug(f);
+                        // debug(f);
                         if (f[0] !== undefined) {
                             for (var fspec of f[0].formulaSpec) {
                                 if (fspec.name === asset) {
@@ -967,9 +967,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         ifdt.properties[fieldkey][index] != undefined &&
                                                         ifdt.properties[fieldkey][index] != "") {
                                                         sendData[fieldkey] = ifdt.properties[fieldkey][index];
-                                                        // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                                                        debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                                                     } else {
-                                                        // debug(fieldkey + ' : UNDEFINED');
+                                                        debug(fieldkey + ' : UNDEFINED');
                                                         sendData[fieldkey] = undefined;
                                                     }
                                                 }
@@ -980,12 +980,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             }
                         }
                     }
-                    debug('sendData: ' + sendData);
-                    debug('fspec: ' + fspec);       
+                    // debug('sendData: ' + sendData);
+                    // debug('fspec: ' + fspec);       
 
                     switch (asset) {
-                        case 'Pavements':
-                            formResult[index] = calcularValue ? formulasService.condition('Pavements', fspec, sendData) : undefined;
+                        case 'Retaining_Walls':
+                            formResult[index] = calcularValue ? formulasService.condition('Retaining_Walls', fspec, sendData) : undefined;
                             break;
                         case 'Bridges':
                             formResult[index] = calcularValue ? formulasService.condition('Bridges', fspec, sendData) : undefined;
@@ -993,7 +993,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         case 'Culverts':
                             formResult[index] = calcularValue ? formulasService.condition('Culverts', fspec, sendData) : undefined;
                             break;
-                        case 'Retaining_Walls':
+                        case 'Pavements':
 
                             //debug('\n\n\n-----------------------------------------------------------------------------------------');
                             //debug(fspec);
