@@ -792,7 +792,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     debug('postData: ' + postData + '****---****----****-----***');
     console.log('postData: ' + postData + '****---****----****-----***');
     var asset = postData[Object.keys(postData)[0]];
-    var formula = Object.keys(postData)[0];
+    var formula = 'Condition'; //Object.keys(postData)[0];
     var sendData = {};
     var formResult = [];
     var formResultLeft = [];
@@ -945,10 +945,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         default:
                             break;
                     }
-
+                    f[0] !== undefined ? calcularValue = false : calcularValue = true;
+                    console.log('f[0]: ' + f[0]);
                     if (calcularValue) {
                         debug(f);
-                        if (f[0].formulaSpec !== undefined) {
+                        if (f[0] !== undefined) {
                             for (var fspec of f[0].formulaSpec) {
                                 if (fspec.name === asset) {
                                     // debug(fspec);
@@ -1302,6 +1303,7 @@ router.post('/V1/update_field/', function (req, res, next) {
          * Para Length = 4 estoy en el segundo level
          * Para Length = 5 estoy en scoring
          */
+        console.log(arrField[0]);
         switch (arrField[0]) {
             case 'Condition':
                 var arrFieldShift = arrField.slice(0);
