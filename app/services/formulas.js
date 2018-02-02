@@ -161,7 +161,7 @@ exports.condition = function (type, formula, data) {
                 }
             }
             retCondition += val * level1.weight / 100;
-            // console.log('retCriticality: ' + retCriticality);
+            console.log('retCondition: ' + retCondition);
         }
 
     }
