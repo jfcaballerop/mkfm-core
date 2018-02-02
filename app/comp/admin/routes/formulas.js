@@ -1240,24 +1240,33 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     
 
                 }
-                if (formResult[index] !== undefined) { debug('formResult[index]: ' + formResult[index]); }
+                // if (formResult[index] !== undefined) { 
+                debug('formResult: ' + formResult);
+                debug('asset: ' + asset);
+                // }
                 switch (asset) {
                     // case 'Pavements':
                     //     ifdt.properties.rcondition = formResult;
                     //     break;
                     case 'Bridges':
                         ifdt.properties.bcondition = formResult;
+                        res.status(200).send(ifdt.properties.bcondition);
                         break;
                     case 'Culverts':
-                        ifdt.properties.Ccondition= formResult;
+                        ifdt.properties.Ccondition = formResult;
+                        // res.status(200).send(ifdt.properties.Ccondition);
                         break;
                     case 'Retaining_Walls':
                         ifdt.properties.gcondition = formResultLeft;
+                        res.status(200).send(ifdt.properties.gcondition);
                         ifdt.properties.gcondition2 = formResultRight;
+                        res.status(200).send(ifdt.properties.gcondition2);
                         break;
                     case 'Cuttings_Embankments':
                         ifdt.properties.gcondition = formResultLeft;
+                        res.status(200).send(ifdt.properties.gcondition);
                         ifdt.properties.gcondition2 = formResultRight;
+                        res.status(200).send(ifdt.properties.gcondition2);
                         break;
 
                     default:
