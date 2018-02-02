@@ -193,9 +193,9 @@ exports.condition = function (type, formula, data) {
 
 
 
-    // console.log('retCondition: ' + parseFloat(retCondition)*100);
+    console.log('retCondition: ' + retCondition*100);
     // return retCondition * 100;
-    return retCondition;
+    return retCondition*100;
 
 }
 
