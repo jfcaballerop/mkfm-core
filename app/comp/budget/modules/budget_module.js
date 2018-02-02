@@ -200,7 +200,7 @@ exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_co
             break;
 
         default:
-            debug('##### Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+            debug('##### Value not find: ' + riskphyhaz_lof + ' ' + riskphyhaz_cons);
             break;
     }
 
