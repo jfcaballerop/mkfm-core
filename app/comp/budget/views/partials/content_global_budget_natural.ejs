@@ -1,0 +1,604 @@
+<div id="naturalHazardsContent" class="col-md-12" id="content_global" style="display: none">
+    <div class="form-panel">
+        <h3> Natural Hazards</h3>
+        <div class="row mt">
+
+            <div class="col-md-4">
+                <!-- col izda -->
+                General Summary:
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Millions EC$</th>
+                            <th>Number of Interventions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b> Total investment required</b>
+                            </td>
+                            <td>
+                                <input class="form-control" id="Totalinvestmentrequired" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_interventions %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b> Investment per type of asset</b>
+                            </td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Pavements</td>
+                            <td>
+                                <input class="form-control" id="disabledInputRiskPavements" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                Math.round(retValues.Total_investment_risknat5*100/1000000)/100 +
+                                Math.round(retValues.Total_investment_risknat4*100/1000000)/100 +
+                                Math.round(retValues.Total_investment_risknat3*100/1000000)/100 +
+                                Math.round(retValues.Total_investment_risknat2*100/1000000)/100 +
+                                Math.round(retValues.Total_investment_risknat1*100/1000000)/100 
+                                 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_roads_interventions %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Bridges</td>
+                            <td>
+                                <input class="form-control" id="disabledInputRiskBridges" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                Math.round((retValues.Total_investment_brisknat5 +
+                                retValues.Total_investment_brisknat4 +
+                                retValues.Total_investment_brisknat3 +
+                                retValues.Total_investment_brisknat2 +
+                                retValues.Total_investment_brisknat1)*100/1000000)/100 
+                                 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_bridges_interventions %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Culverts</td>
+                            <td>
+                                <input class="form-control" id="disabledInputRiskCulverts" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                    Math.round((retValues.Total_investment_crisknat5 + 
+                                    retValues.Total_investment_crisknat4 + 
+                                    retValues.Total_investment_crisknat3 +
+                                    retValues.Total_investment_crisknat2 + 
+                                    retValues.Total_investment_crisknat1)*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_culverts_interventions %>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Geotechnical assets</td>
+                            <td>
+                                <input class="form-control" id="disabledInputRiskGeotechnicalassets" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                                                                    Math.round((retValues.Total_investment_grisknat5 + 
+                                                                    retValues.Total_investment_grisknat4 + 
+                                                                    retValues.Total_investment_grisknat3 +
+                                                                    retValues.Total_investment_grisknat2 + 
+                                                                    retValues.Total_investment_grisknat1)*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_geot_interventions %>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <b> Investment per Road Category</b>
+                            </td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Main Roads</td>
+                            <td>
+                                <input class="form-control" id="disabledInputMainRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_MainRoad*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_roads_interventions_MainRoad %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Secondary Roads</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSecondaryRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Secondary*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_roads_interventions_Secondary %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Feeder Roads</td>
+                            <td>
+                                <input class="form-control" id="disabledInputFeederRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Feeder*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_roads_interventions_Feeder %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Urban Roads</td>
+                            <td>
+                                <input class="form-control" id="disabledInputUrbanRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Urban*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_roads_interventions_Urban %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <b> Investment per Parish</b>
+                            </td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Andrew</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintAndrew" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Andrew*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Andrew %>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Saint David</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintDavid" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_David*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_David %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint George</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintGeorge" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_George*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_George %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint John</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintJohn" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_John*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_John %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Joseph</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintJoseph" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Joseph*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Joseph %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Luke</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintLuke" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Luke*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Luke %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Mark</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintMark" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Mark*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Mark %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Paul</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintPaul" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Paul*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Paul %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Patrick</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintPatrick" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Patrick*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Patrick %>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Saint Peter</td>
+                            <td>
+                                <input class="form-control" id="disabledInputSaintPeter" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Peter*100/1000000)/100 %>">
+                            </td>
+                            <td>
+                                <%- retValues.Total_elements_Saint_Peter %>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <!-- col dcha -->
+                Detailed Summary:
+                <div class="content-panel">
+                    <h4>
+                        <i class="fa fa-angle-right"></i> INVESTMENT REQUIRED per type of asset (Millions EC$)</h4>
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Very Poor</th>
+                                    <th>Poor</th>
+                                    <th>Fair</th>
+                                    <th>Good</th>
+                                    <th>Excellent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Road Pavement Interventions</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_risknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_risknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_risknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_risknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_risknat1*100/1000000)/100 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Bridges</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_brisknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_brisknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_brisknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_brisknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_brisknat1*100/1000000)/100 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Culverts</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_crisknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_crisknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_crisknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_crisknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_crisknat1*100/1000000)/100 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Geotechnical A.</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat5*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat4*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat3*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat2*100/1000000)/100 %>
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_investment_grisknat1*100/1000000)/100 %>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <div class="content-panel">
+                    <h4>
+                        <i class="fa fa-angle-right"></i> Number of assets per Risk due to Natural Hazards</h4>
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Very Poor</th>
+                                    <th>Poor</th>
+                                    <th>Fair</th>
+                                    <th>Good</th>
+                                    <th>Excellent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Km of Road per Pavement Risk Score</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_risknat5*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_risknat4*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_risknat3*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_risknat2*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_risknat1*100/1000)/100 %> km
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>No of Bridges per Risk Score</td>
+                                    <td>
+                                        <%- retValues.Total_num_brisknat5 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_brisknat4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_brisknat3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_brisknat2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_brisknat1 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>No of Culverts per Risk Score</td>
+                                    <td>
+                                        <%- retValues.Total_num_crisknat5 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_crisknat4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_crisknat3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_crisknat2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_crisknat1 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>No of Geotechnical Assets per Risk Score</td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat5 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_num_grisknat1 %>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <div class="content-panel">
+                    <h4>
+                        <i class="fa fa-angle-right"></i> Number of assets per Likelihood of Failure </h4>
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Unlikely</th>
+                                    <th>Possible</th>
+                                    <th>Probable</th>
+                                    <th>Very Likely</th>
+                                    <th>Certain</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Km of Road per Pavement Risk Score</td>
+                                    <td>60 km</td>
+                                    <td>260 km</td>
+                                    <td>320 km</td>
+                                    <td>220 km</td>
+                                    <td>40 km</td>
+                                </tr>
+                                <tr>
+                                    <td>No of Bridges per Risk Score</td>
+                                    <td>10</td>
+                                    <td>60</td>
+                                    <td>80</td>
+                                    <td>70</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>No of Culverts per Risk Score</td>
+                                    <td>20</td>
+                                    <td>20</td>
+                                    <td>20</td>
+                                    <td>20</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>No of Geotechnical Assets per Risk Score</td>
+                                    <td>30</td>
+                                    <td>30</td>
+                                    <td>30</td>
+                                    <td>30</td>
+                                    <td>30</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <div class="content-panel">
+                    <h4>
+                        <i class="fa fa-angle-right"></i> Number of assets per Consequences of Failure </h4>
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Catastr.</th>
+                                    <th>Serious</th>
+                                    <th>Moderate</th>
+                                    <th>Minor</th>
+                                    <th>Negligib.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Road Pavement Interventions</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit1*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit2*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit3*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit4*100/1000)/100 %> km
+                                    </td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_crit5*100/1000)/100 %> km
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Bridges</td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_crit5 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Culverts</td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_crit5 %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Repair / Rehabilitation of Geotechnical A.</td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_geot_crit5 %>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
