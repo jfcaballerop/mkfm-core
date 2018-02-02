@@ -291,6 +291,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     };
     var ret = {};
     ret['Total_investment'] = 0;
+    ret['Total_investment_phy'] = 0;
     ret['Total_investment_risknat1'] = 0;
     ret['Total_investment_risknat2'] = 0;
     ret['Total_investment_risknat3'] = 0;
@@ -311,6 +312,26 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_investment_grisknat3'] = 0;
     ret['Total_investment_grisknat4'] = 0;
     ret['Total_investment_grisknat5'] = 0;
+    ret['Total_investment_riskphy1'] = 0;
+    ret['Total_investment_riskphy2'] = 0;
+    ret['Total_investment_riskphy3'] = 0;
+    ret['Total_investment_riskphy4'] = 0;
+    ret['Total_investment_riskphy5'] = 0;
+    ret['Total_investment_briskphy1'] = 0;
+    ret['Total_investment_briskphy2'] = 0;
+    ret['Total_investment_briskphy3'] = 0;
+    ret['Total_investment_briskphy4'] = 0;
+    ret['Total_investment_briskphy5'] = 0;
+    ret['Total_investment_criskphy1'] = 0;
+    ret['Total_investment_criskphy2'] = 0;
+    ret['Total_investment_criskphy3'] = 0;
+    ret['Total_investment_criskphy4'] = 0;
+    ret['Total_investment_criskphy5'] = 0;
+    ret['Total_investment_griskphy1'] = 0;
+    ret['Total_investment_griskphy2'] = 0;
+    ret['Total_investment_griskphy3'] = 0;
+    ret['Total_investment_griskphy4'] = 0;
+    ret['Total_investment_griskphy5'] = 0;
     ret['Total_km_risknat1'] = 0;
     ret['Total_km_risknat2'] = 0;
     ret['Total_km_risknat3'] = 0;
@@ -336,6 +357,21 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_num_grisknat3'] = 0;
     ret['Total_num_grisknat4'] = 0;
     ret['Total_num_grisknat5'] = 0;
+    ret['Total_num_briskphy1'] = 0;
+    ret['Total_num_briskphy2'] = 0;
+    ret['Total_num_briskphy3'] = 0;
+    ret['Total_num_briskphy4'] = 0;
+    ret['Total_num_briskphy5'] = 0;
+    ret['Total_num_criskphy1'] = 0;
+    ret['Total_num_criskphy2'] = 0;
+    ret['Total_num_criskphy3'] = 0;
+    ret['Total_num_criskphy4'] = 0;
+    ret['Total_num_criskphy5'] = 0;
+    ret['Total_num_griskphy1'] = 0;
+    ret['Total_num_griskphy2'] = 0;
+    ret['Total_num_griskphy3'] = 0;
+    ret['Total_num_griskphy4'] = 0;
+    ret['Total_num_griskphy5'] = 0;
     ret['Total_bridges_crit1'] = 0;
     ret['Total_bridges_crit2'] = 0;
     ret['Total_bridges_crit3'] = 0;
@@ -351,17 +387,13 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_geot_crit3'] = 0;
     ret['Total_geot_crit4'] = 0;
     ret['Total_geot_crit5'] = 0;
-    ret['Total_km_briskphy1'] = 0;
-    ret['Total_km_briskphy2'] = 0;
-    ret['Total_km_briskphy3'] = 0;
-    ret['Total_km_briskphy4'] = 0;
-    ret['Total_km_briskphy5'] = 0;
     ret['Total_km_crit1'] = 0;
     ret['Total_km_crit2'] = 0;
     ret['Total_km_crit3'] = 0;
     ret['Total_km_crit4'] = 0;
     ret['Total_km_crit5'] = 0;
     ret['Total_interventions'] = 0;
+    ret['Total_interventions_phy'] = 0;
     ret['Total_roads_interventions'] = 0;
     ret['Total_bridges_interventions'] = 0;
     ret['Total_culverts_interventions'] = 0;
@@ -394,6 +426,14 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_elements_Saint_Patrick'] = 0;
     ret['Total_elements_Saint_Mark'] = 0;
     ret['Total_elements_Saint_Luke'] = 0;
+
+    ret['Total_bridges_interventions_phy'] = 0;
+    ret['Total_culverts_interventions_phy'] = 0;
+    ret['Total_geot_interventions_phy'] = 0;
+
+
+
+
     Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -408,8 +448,9 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
             var gcodeant2 = "";
             // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                //////////////////
                 // geotechnical //
-                //////////////
+                //////////////////
                 if (ifdt.properties.rginvestmentrequired2 != undefined && ifdt.properties.rginvestmentrequired2 != [] &&
                     ifdt.properties.rginvestmentrequired2[i] != null) {
                     // debug(ifdt.properties.gcode2);
@@ -437,28 +478,43 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 ifdt.properties.grisknatural2[i] != null) {
                                 var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.grisknatural2[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot');
+                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot', 'nat');
+
+                            }
+                            if (ifdt.properties.griskphysical2 != undefined && ifdt.properties.griskphysical2 != [] &&
+                                ifdt.properties.griskphysical2[i] != null) {
+                                var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
+                                var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
+                                ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
 
                             }
                         }
+                        // selecciono investment por Parish
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired2[i]);
 
+                        }
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null) {
+                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired2[i]);
+
+                        }
 
                         if (ifdt.properties.grisknatural2 != undefined && ifdt.properties.grisknatural2 != [] &&
                             ifdt.properties.grisknatural2[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.grisknatural2[i].split('__')[1];
-                            // selecciono investment por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired2[i]);
 
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null) {
-                                ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired2[i]);
-
-                            }
                             ret = budgetModule.investmentGeotNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.rginvestmentrequired2[i]);
+
+                        }
+                        if (ifdt.properties.griskphysical2 != undefined && ifdt.properties.griskphysical2 != [] &&
+                            ifdt.properties.griskphysical2[i] != null) {
+                            var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
+                            var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
+
+                            ret = budgetModule.investmentGeotPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.rginvestmentrequired2[i]);
 
                         }
 
@@ -491,30 +547,45 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 ifdt.properties.grisknatural[i] != null) {
                                 var risknathaz_lof = ifdt.properties.grisknatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.grisknatural[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot');
+                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot', 'nat');
+
+                            }
+                            if (ifdt.properties.griskphysical != undefined && ifdt.properties.griskphysical != [] &&
+                                ifdt.properties.griskphysical[i] != null) {
+                                var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
+                                var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
+                                ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
 
                             }
                         }
 
+                        // selecciono investment por Parish
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired[i]);
+
+                        }
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null) {
+
+                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired[i]);
+
+                        }
 
                         if (ifdt.properties.grisknatural != undefined && ifdt.properties.grisknatural != [] &&
                             ifdt.properties.grisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.grisknatural[i].split('__')[1];
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null) {
-
-                                // selecciono investment por Parish
-                                if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                    ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                    ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired[i]);
-
-                                }
-                                ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired[i]);
-
-                            }
 
                             ret = budgetModule.investmentGeotNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.rginvestmentrequired[i]);
+
+                        }
+                        if (ifdt.properties.griskphysical != undefined && ifdt.properties.griskphysical != [] &&
+                            ifdt.properties.griskphysical[i] != null) {
+                            var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
+                            var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
+
+                            ret = budgetModule.investmentGeotPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.rginvestmentrequired[i]);
 
                         }
 
@@ -555,30 +626,46 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
 
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'culverts');
+                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'culverts', 'nat');
+
+                            }
+                            if (ifdt.properties.CRISKphysical != undefined && ifdt.properties.CRISKphysical != [] &&
+                                ifdt.properties.CRISKphysical[i] != null) {
+                                var riskphyz_lof = ifdt.properties.CRISKphysical[i].split('__')[0];
+                                var riskphy_cons = ifdt.properties.CRISKphysical[i].split('__')[1];
+
+                                ret = budgetModule.nInterventions(ret, riskphyz_lof, riskphy_cons, 'culverts', 'phy');
 
                             }
                         }
 
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null) {
 
+                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.Cinvestmentrequired[i]);
+
+                        }
+                        // selecciono investment por Parish
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.Cinvestmentrequired[i]);
+
+                        }
                         if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
                             ifdt.properties.CRISKnatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null) {
-                                // selecciono investment por Parish
-                                if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                    ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                    ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.Cinvestmentrequired[i]);
-
-                                }
-
-                                ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.Cinvestmentrequired[i]);
-
-                            }
 
                             ret = budgetModule.investmentCulvertsNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.Cinvestmentrequired[i]);
+
+
+                        }
+                        if (ifdt.properties.CRISKphysical != undefined && ifdt.properties.CRISKphysical != [] &&
+                            ifdt.properties.CRISKphysical[i] != null) {
+                            var riskphy_lof = ifdt.properties.CRISKphysical[i].split('__')[0];
+                            var riskphy_cons = ifdt.properties.CRISKphysical[i].split('__')[1];
+
+                            ret = budgetModule.investmentCulvertsPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.Cinvestmentrequired[i]);
 
 
                         }
@@ -620,30 +707,49 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
 
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'bridges');
+                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'bridges', 'nat');
                             }
+                            if (ifdt.properties.briskphysical != undefined && ifdt.properties.briskphysical != [] &&
+                                ifdt.properties.briskphysical[i] != null) {
+                                var riskphyhaz_lof = ifdt.properties.briskphysical[i].split('__')[0];
+                                var riskphyhaz_cons = ifdt.properties.briskphysical[i].split('__')[1];
+
+                                ret = budgetModule.nInterventions(ret, riskphyhaz_lof, riskphyhaz_cons, 'bridges', 'phy');
+                            }
+
+                        }
+                        // selecciono investment por Parish
+                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.binvestmentrequired[i]);
+
+                        }
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null) {
+
+                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.binvestmentrequired[i]);
+
                         }
 
-
+                        /*
+                        RISK
+                        */
 
                         if (ifdt.properties.brisknatural != undefined && ifdt.properties.brisknatural != [] &&
                             ifdt.properties.brisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
 
-                            // selecciono investment por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.binvestmentrequired[i]);
 
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null) {
-
-                                ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.binvestmentrequired[i]);
-
-                            }
                             ret = budgetModule.investmentBridgesNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.binvestmentrequired[i]);
+                        }
+                        if (ifdt.properties.briskphysical != undefined && ifdt.properties.briskphysical != [] &&
+                            ifdt.properties.briskphysical[i] != null) {
+                            var riskphyhaz_lof = ifdt.properties.briskphysical[i].split('__')[0];
+                            var riskphyhaz_cons = ifdt.properties.briskphysical[i].split('__')[1];
+
+
+                            ret = budgetModule.investmentBridgesPhysical(ret, riskphyhaz_lof, riskphyhaz_cons, ifdt.properties.binvestmentrequired[i]);
                         }
 
                     }
@@ -657,6 +763,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                     if (!newinterv) {
                         newinterv = true;
                         ret['Total_interventions']++;
+                        ret['Total_interventions_phy']++;
                         ret['Total_roads_interventions']++;
 
                         // selecciono number of elements por Parish
@@ -672,17 +779,29 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
 
                         }
                     }
-                    /*
-                    Recojo los valores de RISK y los agrupo
-                    */
 
                     if (ifdt.properties.rcriticality != undefined && ifdt.properties.rcriticality != [] &&
                         ifdt.properties.rcriticality[i] != null) {
 
-                        ret = budgetModule.investmentKmNatural(ret, ifdt.properties.rcriticality[i], ifdt.geometry.coordinates[i - 1],
+                        ret = budgetModule.investmentKmCriticality(ret, ifdt.properties.rcriticality[i], ifdt.geometry.coordinates[i - 1],
                             ifdt.geometry.coordinates[i], i);
 
                     }
+                    if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                        ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                        ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rinvestmentrequired[i]);
+                    }
+
+                    // selecciono investment por Parish
+                    if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
+                        ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
+                        ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rinvestmentrequired[i]);
+
+                    }
+                    /*
+                    Recojo los valores de RISK y los agrupo
+                    */
 
                     if (ifdt.properties.rrisknatural != undefined && ifdt.properties.rrisknatural != [] &&
                         ifdt.properties.rrisknatural[i] != null) {
@@ -694,18 +813,18 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             ifdt.properties.rinvestmentrequired[i], ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
 
 
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
 
-                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rinvestmentrequired[i]);
-                        }
+                    }
 
-                        // selecciono investment por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rinvestmentrequired[i]);
+                    if (ifdt.properties.rriskphysical != undefined && ifdt.properties.rriskphysical != [] &&
+                        ifdt.properties.rriskphysical[i] != null) {
 
-                        }
+                        var riskphy_lof = ifdt.properties.rriskphysical[i].split('__')[0];
+                        var riskphy_cons = ifdt.properties.rriskphysical[i].split('__')[1];
+
+                        ret = budgetModule.investmentPhysical(ret, riskphy_lof, riskphy_cons,
+                            ifdt.properties.rinvestmentrequired[i], ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
+
                     }
 
                 }

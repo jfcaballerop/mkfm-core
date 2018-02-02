@@ -71,6 +71,55 @@ exports.investmentCategory = function (arrInv, cat, investment) {
 
     return arrInv;
 }
+exports.investmentPhysical = function (ret, riskphy_lof, riskphy_cons, investment, coord1, coord2, index) {
+
+    switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
+        case 1:
+            ret['Total_investment_riskphy1'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+            if (index > 0) {
+                ret['Total_km_riskphy1'] += services.calDIST(coord1, coord2);
+            }
+            break;
+        case 2:
+            ret['Total_investment_riskphy2'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+            if (index > 0) {
+                ret['Total_km_riskphy2'] += services.calDIST(coord1, coord2);
+            }
+
+            break;
+        case 3:
+            ret['Total_investment_riskphy3'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+            if (index > 0) {
+                ret['Total_km_riskphy3'] += services.calDIST(coord1, coord2);
+            }
+
+            break;
+        case 4:
+            ret['Total_investment_riskphy4'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+            if (index > 0) {
+                ret['Total_km_riskphy4'] += services.calDIST(coord1, coord2);
+            }
+
+            break;
+        case 5:
+            ret['Total_investment_riskphy5'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+            if (index > 0) {
+                ret['Total_km_riskphy5'] += services.calDIST(coord1, coord2);
+            }
+            break;
+
+        default:
+            debug('##### Value not find: ' + riskphyhaz_lof + ' ' + riskphyhaz_cons);
+            break;
+    }
+
+    return ret;
+}
 exports.investmentNatural = function (ret, risknathaz_lof, risknathaz_cons, investment, coord1, coord2, index) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
@@ -120,6 +169,42 @@ exports.investmentNatural = function (ret, risknathaz_lof, risknathaz_cons, inve
 
     return ret;
 }
+exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
+
+    switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
+        case 1:
+            ret['Total_investment_briskphy1'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 2:
+            ret['Total_investment_briskphy2'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 3:
+            ret['Total_investment_briskphy3'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 4:
+            ret['Total_investment_briskphy4'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 5:
+            ret['Total_investment_briskphy5'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+
+        default:
+            debug('##### Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+            break;
+    }
+
+    return ret;
+}
 exports.investmentBridgesNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
@@ -156,6 +241,43 @@ exports.investmentBridgesNatural = function (ret, risknathaz_lof, risknathaz_con
 
     return ret;
 }
+exports.investmentCulvertsPhysical = function (ret, riskphy_lof, riskphy_cons, investment) {
+
+    switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
+        case 1:
+            ret['Total_investment_criskphy1'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 2:
+            ret['Total_investment_criskphy2'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 3:
+            ret['Total_investment_criskphy3'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 4:
+            ret['Total_investment_criskphy4'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 5:
+            ret['Total_investment_criskphy5'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+
+        default:
+            break;
+    }
+    return ret;
+}
 exports.investmentCulvertsNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
@@ -185,6 +307,43 @@ exports.investmentCulvertsNatural = function (ret, risknathaz_lof, risknathaz_co
         case 5:
             ret['Total_investment_crisknat5'] += investment * 1.0;
             ret['Total_investment'] += investment * 1.0;
+
+            break;
+
+        default:
+            break;
+    }
+    return ret;
+}
+exports.investmentGeotPhysical = function (ret, riskphy_lof, riskphy_cons, investment) {
+
+    switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
+        case 1:
+            ret['Total_investment_griskphy1'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 2:
+            ret['Total_investment_griskphy2'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 3:
+            ret['Total_investment_griskphy3'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+
+            break;
+        case 4:
+            ret['Total_investment_griskphy4'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
+
+            break;
+        case 5:
+            ret['Total_investment_griskphy5'] += investment * 1.0;
+            ret['Total_investment_phy'] += investment * 1.0;
 
             break;
 
@@ -230,7 +389,7 @@ exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, 
     }
     return ret;
 }
-exports.investmentKmNatural = function (ret, crit, coord1, coord2, index) {
+exports.investmentKmCriticality = function (ret, crit, coord1, coord2, index) {
 
     switch (formulasService.criticalityRatingScale(crit)) {
         case 1:
@@ -339,137 +498,278 @@ exports.nRoadsCategory = function (arrInv, cat) {
     return arrInv;
 }
 
-exports.nInterventions = function (ret, risknathaz_lof, risknathaz_cons, asset) {
+exports.nInterventions = function (ret, risk_lof, risk_cons, asset, typerisk) {
 
-    switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
-        case 1:
-            ret['Total_bridges_interventions']++;
+
+    switch (typerisk) {
+        case 'nat':
             ret['Total_interventions']++;
-            ret['Total_culverts_interventions']++;
-            ret['Total_geot_interventions']++;
+            switch (formulasService.riskRatingScale(risk_lof, risk_cons)) {
+                case 1:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions']++;
+                            ret['Total_num_brisknat1']++;
 
-            switch (asset) {
-                case 'bridges':
-                    ret['Total_num_brisknat1']++;
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions']++;
+                            ret['Total_num_crisknat1']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions']++;
+                            ret['Total_num_grisknat1']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     break;
-                case 'culverts':
-                    ret['Total_num_crisknat1']++;
+                case 2:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions']++;
+                            ret['Total_num_brisknat2']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions']++;
+                            ret['Total_num_crisknat2']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions']++;
+                            ret['Total_num_grisknat2']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     break;
-                case 'geot':
-                    ret['Total_num_grisknat1']++;
+                case 3:
 
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions']++;
+                            ret['Total_num_brisknat3']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions']++;
+                            ret['Total_num_crisknat3']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions']++;
+                            ret['Total_num_grisknat3']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 4:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions']++;
+                            ret['Total_num_brisknat4']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_num_crisknat4']++;
+                            ret['Total_culverts_interventions']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions']++;
+                            ret['Total_num_grisknat4']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 5:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions']++;
+                            ret['Total_num_brisknat5']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions']++;
+                            ret['Total_num_crisknat5']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions']++;
+                            ret['Total_num_grisknat5']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
                     break;
 
                 default:
                     break;
             }
-
             break;
-        case 2:
-            ret['Total_bridges_interventions']++;
-            ret['Total_interventions']++;
-            ret['Total_culverts_interventions']++;
-            ret['Total_geot_interventions']++;
 
-            switch (asset) {
-                case 'bridges':
-                    ret['Total_num_brisknat2']++;
+        case 'phy':
+            ret['Total_interventions_phy']++;
+
+            switch (formulasService.riskRatingScale(risk_lof, risk_cons)) {
+                case 1:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions_phy']++;
+                            ret['Total_num_briskphy1']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions_phy']++;
+                            ret['Total_num_criskphy1']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions_phy']++;
+                            ret['Total_num_griskphy1']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     break;
-                case 'culverts':
-                    ret['Total_num_crisknat2']++;
+                case 2:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions_phy']++;
+                            ret['Total_num_briskphy2']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions_phy']++;
+                            ret['Total_num_criskphy2']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions_phy']++;
+                            ret['Total_num_griskphy2']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     break;
-                case 'geot':
-                    ret['Total_num_grisknat2']++;
+                case 3:
 
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions_phy']++;
+                            ret['Total_num_briskphy3']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions_phy']++;
+                            ret['Total_num_criskphy3']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions_phy']++;
+                            ret['Total_num_griskphy3']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 4:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions_phy']++;
+                            ret['Total_num_briskphy4']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_num_criskphy4']++;
+                            ret['Total_culverts_interventions_phy']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions_phy']++;
+                            ret['Total_num_griskphy4']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+                case 5:
+
+
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_interventions_phy']++;
+                            ret['Total_num_briskphy5']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_interventions_phy']++;
+                            ret['Total_num_criskphy5']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_interventions_phy']++;
+                            ret['Total_num_griskphy5']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
                     break;
 
                 default:
                     break;
             }
-
             break;
-        case 3:
-            ret['Total_bridges_interventions']++;
-            ret['Total_interventions']++;
-            ret['Total_culverts_interventions']++;
-            ret['Total_geot_interventions']++;
-
-            switch (asset) {
-                case 'bridges':
-                    ret['Total_num_brisknat3']++;
-
-                    break;
-                case 'culverts':
-                    ret['Total_num_crisknat3']++;
-
-                    break;
-                case 'geot':
-                    ret['Total_num_grisknat3']++;
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            break;
-        case 4:
-            ret['Total_bridges_interventions']++;
-            ret['Total_interventions']++;
-            ret['Total_culverts_interventions']++;
-            ret['Total_geot_interventions']++;
-
-            switch (asset) {
-                case 'bridges':
-                    ret['Total_num_brisknat4']++;
-
-                    break;
-                case 'culverts':
-                    ret['Total_num_crisknat4']++;
-
-                    break;
-                case 'geot':
-                    ret['Total_num_grisknat4']++;
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            break;
-        case 5:
-            ret['Total_bridges_interventions']++;
-            ret['Total_interventions']++;
-            ret['Total_culverts_interventions']++;
-            ret['Total_geot_interventions']++;
-
-            switch (asset) {
-                case 'bridges':
-                    ret['Total_num_brisknat5']++;
-
-                    break;
-                case 'culverts':
-                    ret['Total_num_crisknat5']++;
-
-                    break;
-                case 'geot':
-                    ret['Total_num_grisknat5']++;
-
-                    break;
-
-                default:
-                    break;
-            }
-            break;
-
         default:
             break;
     }
+
 
     return ret;
 }
