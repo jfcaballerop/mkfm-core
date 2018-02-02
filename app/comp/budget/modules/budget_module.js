@@ -191,6 +191,7 @@ exports.investmentCulvertsNatural = function (ret, risknathaz_lof, risknathaz_co
         default:
             break;
     }
+    return ret;
 }
 exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
 
@@ -227,6 +228,7 @@ exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, 
         default:
             break;
     }
+    return ret;
 }
 exports.investmentKmNatural = function (ret, crit, coord1, coord2, index) {
 
