@@ -475,6 +475,10 @@ exports.nLikelihood = function(ret, cond, asset, type) {
                             ret['Total_culverts_lof1']++;
 
                             break;
+                        case 'geot':
+                            ret['Total_geot_lof1']++;
+
+                            break;
 
                         default:
                             break;
@@ -488,6 +492,10 @@ exports.nLikelihood = function(ret, cond, asset, type) {
                             break;
                         case 'culverts':
                             ret['Total_culverts_lof2']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_lof2']++;
 
                             break;
 
@@ -505,6 +513,10 @@ exports.nLikelihood = function(ret, cond, asset, type) {
                             ret['Total_culverts_lof3']++;
 
                             break;
+                        case 'geot':
+                            ret['Total_geot_lof3']++;
+
+                            break;
 
                         default:
                             break;
@@ -520,6 +532,10 @@ exports.nLikelihood = function(ret, cond, asset, type) {
                             ret['Total_culverts_lof4']++;
 
                             break;
+                        case 'geot':
+                            ret['Total_geot_lof4']++;
+
+                            break;
 
                         default:
                             break;
@@ -533,6 +549,10 @@ exports.nLikelihood = function(ret, cond, asset, type) {
                             break;
                         case 'culverts':
                             ret['Total_culverts_lof5']++;
+
+                            break;
+                        case 'geot':
+                            ret['Total_geot_lof5']++;
 
                             break;
 

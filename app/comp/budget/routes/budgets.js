@@ -450,6 +450,11 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
     ret['Total_culverts_lof3'] = 0;
     ret['Total_culverts_lof4'] = 0;
     ret['Total_culverts_lof5'] = 0;
+    ret['Total_geot_lof1'] = 0;
+    ret['Total_geot_lof2'] = 0;
+    ret['Total_geot_lof3'] = 0;
+    ret['Total_geot_lof4'] = 0;
+    ret['Total_geot_lof5'] = 0;
 
 
     Infodatatrack.find({}, properties).exec(function(err, ifdts) {
@@ -504,6 +509,14 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                                 var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
                                 var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
                                 ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
+
+                            }
+                            if (ifdt.properties.gcondition2 != undefined && ifdt.properties.gcondition2 != [] &&
+                                ifdt.properties.gcondition2[i] != null) {
+
+                                var gcond = ifdt.properties.gcondition2[i];
+                                // debug(gcond);
+                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
                             }
                         }
@@ -573,6 +586,14 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                                 var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
                                 var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
                                 ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
+
+                            }
+                            if (ifdt.properties.gcondition != undefined && ifdt.properties.gcondition != [] &&
+                                ifdt.properties.gcondition[i] != null) {
+
+                                var gcond = ifdt.properties.gcondition[i];
+                                // debug(gcond);
+                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
                             }
                         }
