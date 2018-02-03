@@ -57,7 +57,7 @@ a:focus {
 /* Bootstrap Modifications */
 
 .modal-header {
-    background: red;
+    background: #68dff0;
 }
 
 .modal-title {

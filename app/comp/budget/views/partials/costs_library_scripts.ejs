@@ -3,6 +3,156 @@
 <script>
     $(document).ready(function () {
         console.log('costs_library_scripts.ejs');
+        var costLibrary = <%- JSON.stringify(costlibrary) %>;
+        console.log(costLibrary);
+        var html = [];
+        var h = -1;
+
+        function paintAssetHtml(asset) {
+            var ass = [];
+            var a = -1;
+            ass[++a] += '<tr align="center">';
+            ass[++a] += '<td  colspan="7"><b>' + asset + '</b></td>';
+            ass[++a] += '</tr>';
+            for (var ca = 0; ca < costLibrary[asset].code.length; ca++) {
+                ass[++a] += '<tr>';
+                ass[++a] += ' <td> ' + costLibrary[asset].code[ca] + '</td>';
+                ass[++a] += ' <td> ' + costLibrary[asset].material[ca] + '</td>';
+                ass[++a] += ' <td> ' + costLibrary[asset].unit_price + '</td>';
+                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                        ' ', '_') +
+                    '__' + costLibrary[asset].code[ca] + '__value1' + '" required value="' + costLibrary[asset]
+                    .value1[ca] +
+                    '" step=".01"></td>';
+                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                        ' ', '_') +
+                    '__' + costLibrary[asset].code[ca] + '__value2' + '" required value="' + costLibrary[asset]
+                    .value2[ca] +
+                    '" step=".01"></td>';
+                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                        ' ', '_') +
+                    '__' + costLibrary[asset].code[ca] + '__value3' + '" required value="' + costLibrary[asset]
+                    .value3[ca] +
+                    '" step=".01"></td>';
+                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                        ' ', '_') +
+                    '__' + costLibrary[asset].code[ca] + '__value4' + '" required value="' + costLibrary[asset]
+                    .value4[ca] +
+                    '" step=".01"></td>';
+                ass[++a] += '</tr>';
+            }
+            return ass;
+        }
+
+        var pav = [];
+        var br = [];
+        var cul = [];
+        var dra = [];
+        var cut = [];
+        var rw = [];
+
+        for (var cl of Object.keys(costLibrary)) {
+            switch (cl) {
+                case 'Pavements':
+                    pav = paintAssetHtml('Pavements');
+                    break;
+                case 'Bridges':
+                    br = paintAssetHtml('Bridges');
+                    break;
+                case 'Culverts':
+                    cul = paintAssetHtml('Culverts');
+                    break;
+                case 'Longitudinal Drainage':
+                    dra = paintAssetHtml('Longitudinal Drainage');
+                    break;
+                case 'Cuttings Embankments':
+                    cut = paintAssetHtml('Cuttings Embankments');
+                    break;
+                case 'Retaining walls':
+                    rw = paintAssetHtml('Retaining walls');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        $.merge(html, pav);
+        $.merge(html, br);
+        $.merge(html, cul);
+        $.merge(html, dra);
+        $.merge(html, cut);
+        $.merge(html, rw);
+        $('#costLibraryTable').append(html.join(""));
+
+        var valant = '';
+        var dataTableExist = setInterval(function () {
+            $('input[type=number]').on('focus', function () {
+                // console.log(this.value1);
+                // On first focus, check to see if we have the default text saved
+                // If not, save current value to data()
+                //if (!$(this).data('')) $(this).data('', $(this).val());
+
+                // check to see if the input currently equals the default before clearing it
+                valant = $(this).val();
+            });
+            if ($('#costLibraryTable').length) {
+                console.log("Exists dataTable!");
+                clearInterval(dataTableExist);
+                $('input[type=number]').on('blur', function () {
+                    console.log($(this).val());
+                    if ($(this).val() != valant) {
+                        // $(this).val($(this).data('defaultText'));
+                        var dataPost = {};
+                        dataPost[this.name] = this.value;
+                        var $input = $(this);
+
+                        console.log('New Val: ' + JSON.stringify(dataPost));
+
+                        var p1 = $.ajax({
+                            url: '/auth/WEB/budget/update_field/' + this.name + '/' +
+                                this.value,
+                            data: JSON.stringify(dataPost),
+                            type: 'POST',
+                            contentType: 'application/json'
+                        }, function (data) {
+                            // console.log('koboinfo ' + JSON.stringify(data));
+                            return (data);
+                        });
+                        Promise.all([p1]).then(function (values) {
+                            console.log(values);
+                            if (values[0].result === "OK") {
+                                $input.css("border", "2px solid green");
+                            } else {
+                                $input.css("border", "2px solid red");
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+
+        $('#updateBudgets').click(function () {
+            $('#spinner').show();
+
+            console.log('updateBudgets');
+            var dataPost = {};
+
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/budget/update_budgets',
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function (data) {
+                return (data);
+            });
+            Promise.all([p1]).then(function (values) {
+                console.log(values);
+                $('#spinner').hide();
+
+            });
+        });
 
     });
 </script>

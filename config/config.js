@@ -1,8 +1,14 @@
 module.exports = {
     CLIENT_NAME: "INES",
-    APP_NAME: 'mkfwcorev1',
+    APP_NAME: 'dominica',
     TOKEN_SECRET: process.env.TOKEN_SECRET || "mkfwcorev1_20170815",
     MAPS_API_KEY: 'AIzaSyA9u-Lw4kqLsjaKaZCfFEtxVbeXZJpW67c',
+    MAPS_CENTER_POS: {
+        lat: 15.41,
+        lng: -61.32
+    },
+    MAPS_CENTER_ZOOM: 11,
+    ZONE: 20,
     SESSION_TTL: 7200, //sec
     PROTO_API: 'http://',
     PROTO_WEB: 'http://',

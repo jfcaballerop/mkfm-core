@@ -18,6 +18,39 @@
         var ValWorkInterventions = 0;
         var ValInspections = 0;
 
+        var risk_rating = [];
+        risk_rating['0-20'] = [];
+        risk_rating['0-20']['A'] = 1;
+        risk_rating['0-20']['B'] = 1;
+        risk_rating['0-20']['C'] = 2;
+        risk_rating['0-20']['D'] = 2;
+        risk_rating['0-20']['E'] = 3;
+        risk_rating['20-40'] = [];
+        risk_rating['20-40']['A'] = 1;
+        risk_rating['20-40']['B'] = 2;
+        risk_rating['20-40']['C'] = 2;
+        risk_rating['20-40']['D'] = 3;
+        risk_rating['20-40']['E'] = 3;
+        risk_rating['40-60'] = [];
+        risk_rating['40-60']['A'] = 2;
+        risk_rating['40-60']['B'] = 3;
+        risk_rating['40-60']['C'] = 3;
+        risk_rating['40-60']['D'] = 3;
+        risk_rating['40-60']['E'] = 4;
+        risk_rating['60-80'] = [];
+        risk_rating['60-80']['A'] = 2;
+        risk_rating['60-80']['B'] = 3;
+        risk_rating['60-80']['C'] = 3;
+        risk_rating['60-80']['D'] = 4;
+        risk_rating['60-80']['E'] = 5;
+        risk_rating['80-100'] = [];
+        risk_rating['80-100']['A'] = 3;
+        risk_rating['80-100']['B'] = 3;
+        risk_rating['80-100']['C'] = 4;
+        risk_rating['80-100']['D'] = 5;
+        risk_rating['80-100']['E'] = 5;
+        console.log(risk_rating);
+
         var ddata1 = [{
                 label: "Routine",
                 value: 25
@@ -192,12 +225,52 @@
         }
 
         $('#Summary').click(function () {
-            alert('Summary');
-        });
+            //alert('Summary');
+            $('#SummaryContent').toggle('blind', {}, 500);
 
-        $('#Annualavailablebudget').click(function () {
-            $('#amountdiv').toggle('blind', {}, 500);
         });
+        $('input[type=radio][name=optionsRadios]').change(function () {
+            switch ($(this).val()) {
+                case "Annualavailablebudget":
+                    $('#amountdiv').show();
+                    $('#menu_annual').show();
+                    $('#content_annual').show();
+                    $('#menu_global').hide();
+                    $('#content_global').hide();
+                    break;
+                case "Globalbudget":
+                    $('#amountdiv').hide();
+                    $('#menu_annual').hide();
+                    $('#content_annual').hide();
+                    $('#menu_global').show();
+                    $('#content_global').show();
+
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        $('input[type=radio][name=riskoptionsRadios]').change(function () {
+            switch ($(this).val()) {
+                case "NaturalHazards":
+                    $('#naturalHazardsContent').show();
+                    $('#PhysicalDeteriorationContent').hide();
+                    break;
+                case "PhysicalDeterioration":
+                    $('#PhysicalDeteriorationContent').show();
+                    $('#naturalHazardsContent').hide();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        // $('#Annualavailablebudget').click(function () {
+        //     $('#amountdiv').toggle('blind', {}, 500);
+        //     $('#menu_annual').toggle('blind', {}, 500);
+        //     $('#content_annual').toggle('blind', {}, 500);
+        // });
 
         $('#amountdiv').change(function (event) {
             $('#InvestmentFY2018').val('EC$ ' + $('#amount').val());
@@ -285,6 +358,23 @@
             $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic * ValInspections /
                 10000);
             paintDonutChart3();
+        });
+
+        $('#levelRisk').change(function (event) {
+            console.log($(this).val());
+            var riskrange = $(this).val();
+            var riskfilter = [];
+            for (var row of Object.keys(risk_rating)) {
+                for (var col of Object.keys(risk_rating[row])) {
+                    console.log(row + ': ' + col + ' --> ' + risk_rating[row][col]);
+                    if (risk_rating[row][col] === riskrange * 1) {
+                        riskfilter.push(row + '__' + col);
+                    }
+                }
+            }
+            console.log(riskfilter);
+
+
         });
 
     });

@@ -1167,7 +1167,7 @@ db.infodatatracks.update({}, {
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
                     group: "GEOTECHNICAL ASSETS - LEFT SIDE"
                 },
-                rgnvestmentrequired: {
+                rginvestmentrequired: {
                     desc: "Investment required to upgrade to A class",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
                     group: "GEOTECHNICAL ASSETS - LEFT SIDE"
@@ -1547,7 +1547,7 @@ db.infodatatracks.update({}, {
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
                     group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
                 },
-                rgnvestmentrequired2: {
+                rginvestmentrequired2: {
                     desc: "Investment required to upgrade to A class",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
                     group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
