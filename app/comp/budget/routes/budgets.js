@@ -50,7 +50,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function (req, resp, next) {
+router.get('/indexes', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -64,17 +64,17 @@ router.get('/indexes', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -99,7 +99,7 @@ router.get('/indexes', function (req, resp, next) {
 
 });
 /* GET Costs Library */
-router.get('/costs', function (req, resp, next) {
+router.get('/costs', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -113,17 +113,17 @@ router.get('/costs', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -149,7 +149,7 @@ router.get('/costs', function (req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function (req, resp) {
+router.post('/update_field/:field/:value', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -167,15 +167,15 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -190,7 +190,7 @@ router.post('/update_field/:field/:value', function (req, resp) {
  * Proceso ajax para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
  * calcular el coste según los parámetros dados
  */
-router.post('/update_budgets', function (req, resp) {
+router.post('/update_budgets', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_budgets PAV_SECTION: ' + req.body.pavSection + '\n\n\n');
 
@@ -208,21 +208,21 @@ router.post('/update_budgets', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             // resp.redirect('/auth/WEB/budget/costs');
             resp.status(200).jsonp(responseObject);
 
         });
-        request.on('error', function (err) {
+        request.on('error', function(err) {
             console.error('problem with request: ${err.message}');
         });
     });
@@ -241,8 +241,8 @@ router.post('/update_budgets', function (req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_costlibrary/', function (req, res, next) {
-    Cost.find({}).exec(function (err, cl) {
+router.get('/V1/get_costlibrary/', function(req, res, next) {
+    Cost.find({}).exec(function(err, cl) {
         if (err) {
             res.send(500, err.message);
         }
@@ -253,7 +253,7 @@ router.get('/V1/get_costlibrary/', function (req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_budget_files/', function (req, res, next) {
+router.get('/V1/get_budget_files/', function(req, res, next) {
     var properties = {
         "geometry.coordinates": 1,
         "properties.rcondition": 1,
@@ -286,7 +286,11 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         "properties.bcriticality": 1,
         "properties.Ccriticality": 1,
         "properties.gcriticality": 1,
-        "properties.gcriticality2": 1,
+        "properties.rcondition": 1,
+        "properties.bcondition": 1,
+        "properties.Ccondition": 1,
+        "properties.gcondition": 1,
+        "properties.gcondition2": 1,
         "properties.district": 1
     };
     var ret = {};
@@ -431,10 +435,29 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
     ret['Total_culverts_interventions_phy'] = 0;
     ret['Total_geot_interventions_phy'] = 0;
 
+    ret['Total_km_lof1'] = 0;
+    ret['Total_km_lof2'] = 0;
+    ret['Total_km_lof3'] = 0;
+    ret['Total_km_lof4'] = 0;
+    ret['Total_km_lof5'] = 0;
+    ret['Total_bridges_lof1'] = 0;
+    ret['Total_bridges_lof2'] = 0;
+    ret['Total_bridges_lof3'] = 0;
+    ret['Total_bridges_lof4'] = 0;
+    ret['Total_bridges_lof5'] = 0;
+    ret['Total_culverts_lof1'] = 0;
+    ret['Total_culverts_lof2'] = 0;
+    ret['Total_culverts_lof3'] = 0;
+    ret['Total_culverts_lof4'] = 0;
+    ret['Total_culverts_lof5'] = 0;
+    ret['Total_geot_lof1'] = 0;
+    ret['Total_geot_lof2'] = 0;
+    ret['Total_geot_lof3'] = 0;
+    ret['Total_geot_lof4'] = 0;
+    ret['Total_geot_lof5'] = 0;
 
 
-
-    Infodatatrack.find({}, properties).exec(function (err, ifdts) {
+    Infodatatrack.find({}, properties).exec(function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -486,6 +509,14 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
                                 var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
                                 ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
+
+                            }
+                            if (ifdt.properties.gcondition2 != undefined && ifdt.properties.gcondition2 != [] &&
+                                ifdt.properties.gcondition2[i] != null) {
+
+                                var gcond = ifdt.properties.gcondition2[i];
+                                // debug(gcond);
+                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
                             }
                         }
@@ -555,6 +586,14 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
                                 var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
                                 ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
+
+                            }
+                            if (ifdt.properties.gcondition != undefined && ifdt.properties.gcondition != [] &&
+                                ifdt.properties.gcondition[i] != null) {
+
+                                var gcond = ifdt.properties.gcondition[i];
+                                // debug(gcond);
+                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
                             }
                         }
@@ -637,6 +676,14 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                                 ret = budgetModule.nInterventions(ret, riskphyz_lof, riskphy_cons, 'culverts', 'phy');
 
                             }
+                            if (ifdt.properties.Ccondition != undefined && ifdt.properties.Ccondition != [] &&
+                                ifdt.properties.Ccondition[i] != null) {
+
+                                var Ccond = ifdt.properties.Ccondition[i];
+                                // debug(Ccond);
+                                ret = budgetModule.nLikelihood(ret, Ccond, 'culverts', 'phy');
+
+                            }
                         }
 
                         if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
@@ -716,6 +763,14 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
 
                                 ret = budgetModule.nInterventions(ret, riskphyhaz_lof, riskphyhaz_cons, 'bridges', 'phy');
                             }
+                            if (ifdt.properties.bcondition != undefined && ifdt.properties.bcondition != [] &&
+                                ifdt.properties.bcondition[i] != null) {
+
+                                var bcond = ifdt.properties.bcondition[i];
+                                // debug(bcond);
+                                ret = budgetModule.nLikelihood(ret, bcond, 'bridges', 'phy');
+
+                            }
 
                         }
                         // selecciono investment por Parish
@@ -751,6 +806,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
 
                             ret = budgetModule.investmentBridgesPhysical(ret, riskphyhaz_lof, riskphyhaz_cons, ifdt.properties.binvestmentrequired[i]);
                         }
+
 
                     }
                 }
@@ -826,6 +882,16 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
                             ifdt.properties.rinvestmentrequired[i], ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
 
                     }
+                    // debug(ifdt.properties.rcondition);
+                    if (ifdt.properties.rcondition != undefined && ifdt.properties.rcondition != [] &&
+                        ifdt.properties.rcondition[i] != null) {
+
+                        var rcond = ifdt.properties.rcondition[i];
+                        // debug(rcond);
+                        ret = budgetModule.KmLikelihood(ret, rcond, ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
+
+                    }
+
 
                 }
             }
@@ -836,8 +902,8 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function (req, res, next) {
-    Infodatatrack.find().exec(function (err, ifdts) {
+router.get('/V1/consultas/', function(req, res, next) {
+    Infodatatrack.find().exec(function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -848,14 +914,14 @@ router.get('/V1/consultas/', function (req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function (req, res, next) {
+router.post('/V1/get_filter_values/:filter', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -872,7 +938,7 @@ router.post('/V1/get_filter_values/:filter', function (req, res, next) {
 
 });
 /* POST update_field */
-router.post('/V1/update_field/', function (req, res, next) {
+router.post('/V1/update_field/', function(req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -887,7 +953,7 @@ router.post('/V1/update_field/', function (req, res, next) {
     arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
-    Cost.findOne({}).exec(function (err, c) {
+    Cost.findOne({}).exec(function(err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -901,7 +967,7 @@ router.post('/V1/update_field/', function (req, res, next) {
         }
         // debug(c);
         csave.updated_at = new Date();
-        csave.save(function (err, csaved) {
+        csave.save(function(err, csaved) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -913,7 +979,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
 });
 /* POST update_budgets/ */
-router.post('/V1/update_budgets/', function (req, res, next) {
+router.post('/V1/update_budgets/', function(req, res, next) {
     debug('API /V1/update_budgets/');
     var postData = extend({}, req.body);
     var ret = {
@@ -923,7 +989,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
     // Caso de Pavements
 
 
-    Cost.findOne({}).exec(function (err, c) {
+    Cost.findOne({}).exec(function(err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -933,7 +999,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.rmaterial": 1,
             "properties.rinvestmentrequired": 1,
             "geometry.coordinates": 1
-        }).exec(async function (err, ifdts) {
+        }).exec(async function(err, ifdts) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -983,7 +1049,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                         "properties.rinvestmentrequired": rcosts
                     }
                 };
-                await Infodatatrack.update(conditions, query, function (err, iup) {
+                await Infodatatrack.update(conditions, query, function(err, iup) {
                     if (err) {
                         debug(err.message);
                     }
