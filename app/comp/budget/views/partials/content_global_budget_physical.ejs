@@ -465,27 +465,52 @@
                             <tbody>
                                 <tr>
                                     <td>Km of Road per Pavement Risk Score</td>
-                                    <td>60 km</td>
-                                    <td>260 km</td>
-                                    <td>320 km</td>
-                                    <td>220 km</td>
-                                    <td>40 km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lof1*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lof2*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lof3*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lof4*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lof5*100/1000)/100  %> km</td>
                                 </tr>
                                 <tr>
                                     <td>No of Bridges per Risk Score</td>
-                                    <td>10</td>
-                                    <td>60</td>
-                                    <td>80</td>
-                                    <td>70</td>
-                                    <td>15</td>
+                                    <td>
+                                        <%- retValues.Total_bridges_lof1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_lof2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_lof3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_lof4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_bridges_lof5 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>No of Culverts per Risk Score</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>20</td>
+                                    <td>
+                                        <%- retValues.Total_culverts_lof1 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_lof2 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_lof3 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_lof4 %>
+                                    </td>
+                                    <td>
+                                        <%- retValues.Total_culverts_lof5 %>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>No of Geotechnical Assets per Risk Score</td>

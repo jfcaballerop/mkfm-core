@@ -3,7 +3,7 @@ var formulasService = require(path.join(__dirname, '../../../services/formulas')
 var services = require(path.join(__dirname, '../../../services/services'));
 var debug = require('debug')('debug');
 
-exports.investmentDistrict = function (arrInv, district, investment) {
+exports.investmentDistrict = function(arrInv, district, investment) {
 
     switch (district) {
         case "Saint George":
@@ -43,7 +43,7 @@ exports.investmentDistrict = function (arrInv, district, investment) {
 
     return arrInv;
 }
-exports.investmentCategory = function (arrInv, cat, investment) {
+exports.investmentCategory = function(arrInv, cat, investment) {
 
     switch (cat) {
         case 'Urban':
@@ -72,7 +72,7 @@ exports.investmentCategory = function (arrInv, cat, investment) {
 
     return arrInv;
 }
-exports.investmentPhysical = function (ret, riskphy_lof, riskphy_cons, investment, coord1, coord2, index) {
+exports.investmentPhysical = function(ret, riskphy_lof, riskphy_cons, investment, coord1, coord2, index) {
 
     switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
         case 1:
@@ -121,7 +121,7 @@ exports.investmentPhysical = function (ret, riskphy_lof, riskphy_cons, investmen
 
     return ret;
 }
-exports.investmentNatural = function (ret, risknathaz_lof, risknathaz_cons, investment, coord1, coord2, index) {
+exports.investmentNatural = function(ret, risknathaz_lof, risknathaz_cons, investment, coord1, coord2, index) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
         case 1:
@@ -170,7 +170,7 @@ exports.investmentNatural = function (ret, risknathaz_lof, risknathaz_cons, inve
 
     return ret;
 }
-exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
+exports.investmentBridgesPhysical = function(ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
         case 1:
@@ -206,7 +206,7 @@ exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_co
 
     return ret;
 }
-exports.investmentBridgesNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
+exports.investmentBridgesNatural = function(ret, risknathaz_lof, risknathaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
         case 1:
@@ -242,7 +242,7 @@ exports.investmentBridgesNatural = function (ret, risknathaz_lof, risknathaz_con
 
     return ret;
 }
-exports.investmentCulvertsPhysical = function (ret, riskphy_lof, riskphy_cons, investment) {
+exports.investmentCulvertsPhysical = function(ret, riskphy_lof, riskphy_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
         case 1:
@@ -279,7 +279,7 @@ exports.investmentCulvertsPhysical = function (ret, riskphy_lof, riskphy_cons, i
     }
     return ret;
 }
-exports.investmentCulvertsNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
+exports.investmentCulvertsNatural = function(ret, risknathaz_lof, risknathaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
         case 1:
@@ -316,7 +316,7 @@ exports.investmentCulvertsNatural = function (ret, risknathaz_lof, risknathaz_co
     }
     return ret;
 }
-exports.investmentGeotPhysical = function (ret, riskphy_lof, riskphy_cons, investment) {
+exports.investmentGeotPhysical = function(ret, riskphy_lof, riskphy_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphy_lof, riskphy_cons)) {
         case 1:
@@ -353,7 +353,7 @@ exports.investmentGeotPhysical = function (ret, riskphy_lof, riskphy_cons, inves
     }
     return ret;
 }
-exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, investment) {
+exports.investmentGeotNatural = function(ret, risknathaz_lof, risknathaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
         case 1:
@@ -390,7 +390,7 @@ exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, 
     }
     return ret;
 }
-exports.investmentKmCriticality = function (ret, crit, coord1, coord2, index) {
+exports.investmentKmCriticality = function(ret, crit, coord1, coord2, index) {
 
     switch (formulasService.criticalityRatingScale(crit)) {
         case 1:
@@ -425,9 +425,135 @@ exports.investmentKmCriticality = function (ret, crit, coord1, coord2, index) {
 
     return ret;
 }
+exports.KmLikelihood = function(ret, cond, coord1, coord2, index) {
 
+    switch (formulasService.LikelihoodofFailureRatingScale(cond)) {
+        case 1:
+            if (index > 0) {
+                ret['Total_km_lof1'] += services.calDIST(coord1, coord2);
+            }
+            break;
+        case 2:
+            if (index > 0) {
+                ret['Total_km_lof2'] += services.calDIST(coord1, coord2);
+            }
+            break;
+        case 3:
+            if (index > 0) {
+                ret['Total_km_lof3'] += services.calDIST(coord1, coord2);
+            }
+            break;
+        case 4:
+            if (index > 0) {
+                ret['Total_km_lof4'] += services.calDIST(coord1, coord2);
+            }
+            break;
+        case 5:
+            if (index > 0) {
+                ret['Total_km_lof5'] += services.calDIST(coord1, coord2);
+            }
+            break;
 
-exports.nRoadsDistrict = function (arrInv, district) {
+        default:
+            break;
+    }
+
+    return ret;
+}
+exports.nLikelihood = function(ret, cond, asset, type) {
+
+    switch (type) {
+        case 'phy':
+            switch (formulasService.LikelihoodofFailureRatingScale(cond)) {
+                case 1:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_lof1']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_lof1']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_lof2']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_lof2']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_lof3']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_lof3']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_lof4']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_lof4']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (asset) {
+                        case 'bridges':
+                            ret['Total_bridges_lof5']++;
+
+                            break;
+                        case 'culverts':
+                            ret['Total_culverts_lof5']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            break;
+
+        default:
+            break;
+    }
+
+    return ret;
+}
+exports.nRoadsDistrict = function(arrInv, district) {
 
     switch (district) {
         case "Saint George":
@@ -468,7 +594,7 @@ exports.nRoadsDistrict = function (arrInv, district) {
     return arrInv;
 }
 
-exports.nRoadsCategory = function (arrInv, cat) {
+exports.nRoadsCategory = function(arrInv, cat) {
 
     switch (cat) {
         case 'Urban':
@@ -499,7 +625,7 @@ exports.nRoadsCategory = function (arrInv, cat) {
     return arrInv;
 }
 
-exports.nInterventions = function (ret, risk_lof, risk_cons, asset, typerisk) {
+exports.nInterventions = function(ret, risk_lof, risk_cons, asset, typerisk) {
 
 
     switch (typerisk) {
@@ -775,7 +901,7 @@ exports.nInterventions = function (ret, risk_lof, risk_cons, asset, typerisk) {
     return ret;
 }
 
-exports.nInterventionsCriticality = function (ret, crit, asset) {
+exports.nInterventionsCriticality = function(ret, crit, asset) {
     switch (formulasService.criticalityRatingScale(crit)) {
         case 1:
             switch (asset) {
