@@ -1,4 +1,5 @@
 <% include ./partials/modules/conditionFormula %>
+
     <script>
         const PI = 3.141592;
 
@@ -315,76 +316,53 @@
                 html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + form.name +
                     '"></div>';
                 html[++h] =
-                    '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
+                    '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
+                var header = true;
                 $.each(form.formulaSpec, function(i, fspec) {
                     console.log(fspec);
-                    var fspecarr = $.map(fspec, function(el) {
-                        return el
-                    });
+                    // nombre de los campos
+                    var fieldname = "";
+                    // monto la cabecera
+                    if (header) {
+                        header = false;
+                        html[++h] = '<tr>';
+                        for (var fk of Object.keys(fspec).reverse()) {
+                            html[++h] = '<th>';
+                            html[++h] = fk;
+                            html[++h] = '</th>';
+                        }
 
-                    $.each(fspecarr.reverse(), function(key, data) {
-                        console.log(key);
-                        console.log(data);
-                        if (data.constructor === objectConstructor) {
-                            html[++h] = '<tr>';
-                            html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
-                                    1) + '"><label class="col-sm-8 col-sm-8 control-label">' +
-                                key + '</label>';
-                            html[++h] = '<div class="col-sm-4">';
-                            html[++h] = '<input class="form-control" name="AssetCriticality__' +
-                                fspec.name + '__' + key + '" type="text" value="' + data.weight +
-                                '">';
-                            html[++h] = '</div></td>';
-                            var tr = 0;
-                            $.each(data, function(j, data2) {
-                                if (data2.constructor === objectConstructor) {
+                        html[++h] = '</tr><tbody id="formulaTableBody">';
+                    }
 
-                                    if (tr > 0) {
-                                        html[++h] = '<tr>';
-                                    }
-                                    html[++h] =
-                                        '<td class="col-sm-6"><label class="col-sm-3 control-label">' +
-                                        data2.name +
-                                        '<br>[Type: ' + data2.type + ']</label>';
-                                    html[++h] = '<div class="col-sm-2">';
-                                    html[++h] =
-                                        '<input class="form-control" name="AssetCriticality__' +
-                                        fspec.name + '__' + key + '__' + j +
-                                        '" type="text" value="' + data2.weight +
-                                        '"></div>';
-                                    html[++h] = '<div class="col-sm-7">' + data2.HTML_name +
-                                        '</div>';
-                                    html[++h] = '</td>';
-                                    if (data2.scoring != undefined) {
-                                        html[++h] = '<td class="col-sm-3">';
-                                        $.each(data2.scoring, function(s, scoring) {
-                                            html[++h] =
-                                                '<label class="col-sm-8 control-label">' +
-                                                s +
-                                                '</label><div class="col-sm-4">';
-                                            html[++h] =
-                                                '<input class="form-control" name="AssetCriticality__' +
-                                                fspec.name + '__' + key + '__' +
-                                                j + '__' + s +
-                                                '" type="text" value="' +
-                                                scoring +
-                                                '"></div>';
+                    html[++h] = '<tr>';
+                    for (var fk of Object.keys(fspec).reverse()) {
+                        html[++h] = '<td>';
+                        if (fk === 'WEIGHTS') {
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value +
+                                '" >';
 
-                                        });
-                                        html[++h] = '</td>';
-                                    }
-                                    html[++h] = '</tr>';
-                                    tr++;
-                                    console.log(j + ': ' + data2);
-                                }
-                            });
-                        };
-                    });
-                    //console.log(fs'</tbody></table>'pec.fname);
-                    html[++h] = '</tbody></table></div>';
-                    $('#formulaSpec').html(html.join(''));
+                        } else if (fk === 'score') {
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value + '" >';
+
+                        } else {
+
+                            html[++h] = fspec[fk];
+                        }
+                        html[++h] = '</td>';
+                    }
+                    html[++h] = '</tr>';
+
+
+
+
+
+
 
                 });
+                html[++h] = '</tbody></table></div>';
+                $('#formulaSpec').html(html.join(''));
+                $("#assetResponseTable").rowspanizer();
 
 
             };
