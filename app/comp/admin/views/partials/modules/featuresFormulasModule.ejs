@@ -294,6 +294,7 @@
             }
 
         })();
+
         var featurePaintResponse = (function() {
 
             // variables y funciones privadas
@@ -316,8 +317,12 @@
                 html[++h] =
                     '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
                 $.each(form.formulaSpec, function(i, fspec) {
+                    console.log(fspec);
+                    var fspecarr = $.map(fspec, function(el) {
+                        return el
+                    });
 
-                    $.each(fspec.reverse(), function(key, data) {
+                    $.each(fspecarr.reverse(), function(key, data) {
                         console.log(key);
                         console.log(data);
                         if (data.constructor === objectConstructor) {

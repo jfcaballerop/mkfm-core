@@ -62,6 +62,10 @@
                 $('#formulaName').append(form.properties.HTML.text);
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
+
+                    // AssetCondition
+                    //////////////////
+
                     case "AssetCondition":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
@@ -125,6 +129,9 @@
                         this.name = '';
                         break;
 
+                        // AssetCriticality
+                        ////////////////////
+
                     case "AssetCriticality":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
@@ -186,6 +193,9 @@
                             }
                         });
                         break;
+
+                        // AssetResponse
+                        /////////////////
 
                     case "AssetResponse":
                         $('#formulaSpec').empty();
