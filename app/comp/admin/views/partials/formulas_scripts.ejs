@@ -53,7 +53,7 @@
         // alert(featurePaintCriticality.publicThing);
 
         $.each(formulasDB, function(index, form) {
-            console.log(form.properties.HTML);
+            //console.log(form.properties.HTML);
             $('#' + form.properties.HTML.id).on('click', function(event) {
                 $this = $(this);
                 //alert('AssetCriticality');
@@ -205,20 +205,9 @@
                         */
                         featurePaintResponse.paintHTML(form);
 
-                        $('input[type=radio][name=optionsRadios]').on('change', function() {
-                            // alert(this.value);
-                            var arrRadio = $('input[type=radio][name=optionsRadios]');
-                            $.each(arrRadio, function(r, radio) {
-                                console.log(r + ' ' + radio.value);
-                                $('#formulaTable' + radio.value).hide();
-                            });
-                            var capa = '#formulaTable' + this.value;
-                            $(capa).show();
 
-
-                        });
                         var valant = '';
-                        $('input[type=text]').on('focus', function() {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -227,18 +216,18 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=text]').on('blur', function() {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
                                 var dataPost = {};
-                                dataPost[this.name] = this.value;
+                                dataPost['AssetResponse__' + this.name] = this.value;
                                 var $input = $(this);
 
                                 console.log('New Val: ' + JSON.stringify(dataPost));
 
                                 var p1 = $.ajax({
-                                    url: '/auth/WEB/admin/update_field/' + this.name + '/' + this.value,
+                                    url: '/auth/WEB/admin/update_field/AssetResponse__' + this.name + '/' + this.value,
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
