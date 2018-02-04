@@ -74,7 +74,7 @@
                 var postgressArray = Array();
 
                 $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
-                    // console.log(k + ' ' + v);
+                    // // console.log(k + ' ' + v);
                     $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
                         '<input type="radio" name="optionsRadios" id="option' + v + '" value="' + v +
                         '" >' + v +
@@ -126,25 +126,25 @@
                                 var j = postgressArray.indexOf("weight");
                                 if (j != -1) {
                                     weight = 1;
-                                    console.log(postgressArray + "<--------------- 1");
+                                    // console.log(postgressArray + "<--------------- 1");
                                     postgressArray.splice(j, 1);
-                                    console.log(postgressArray + "<--------------- 2");
+                                    // // console.log(postgressArray + "<--------------- 2");
 
                                 }
                                 if (val.length > 0 && ((i.indexOf('scores') > -1 && (ScoreName.length > 0)) || (i.indexOf('weight') > -1 && ScoreName.length > 0))) {
-                                    console.log(postgressArray.join());
-                                    console.log(counter);
+                                    // // console.log(postgressArray.join());
+                                    // // console.log(counter);
                                     (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
-                                    console.log('urlTest ' + urlTest.replace(/__/g, "."));
+                                    // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
-                                    // console.log(postgressArray.join().replace(/,/g, "."));
-                                    console.log('urlTest' + urlTest);
-                                    // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
-                                    console.log(postgressArray);
-                                    console.log(form);
-                                    console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
+                                    // // // console.log(postgressArray.join().replace(/,/g, "."));
+                                    // // console.log('urlTest' + urlTest);
+                                    // // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
+                                    // console.log(postgressArray);
+                                    // console.log(form);
+                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     // }
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' + urlTest + '" type="number" value="' + eval('form.' + postgressArray.join().replace(/,/g, ".")) + '"  step="0.01"></td>';
@@ -154,7 +154,7 @@
                                     // postgressArray.push(capitalizeFirstLetter(val)
                                     html[++h] = '<td>' + val + '</td>';
                                 }
-                                // console.log(eval(postgressArray));
+                                // // console.log(eval(postgressArray));
                                 ScoreName = val;
                             }
                         });
@@ -223,8 +223,8 @@
                     // }
 
                     $.each(fspec, function(key, data) {
-                        console.log(key);
-                        console.log(data);
+                        // console.log(key);
+                        // console.log(data);
                         if (data.constructor === objectConstructor) {
                             html[++h] = '<tr>';
                             html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
@@ -275,12 +275,12 @@
                                     }
                                     html[++h] = '</tr>';
                                     tr++;
-                                    console.log(j + ': ' + data2);
+                                    // console.log(j + ': ' + data2);
                                 }
                             });
                         };
                     });
-                    //console.log(fs'</tbody></table>'pec.fname);
+                    //// console.log(fs'</tbody></table>'pec.fname);
                     html[++h] = '</tbody></table></div>';
                     $('#formulaSpec').html(html.join(''));
 
@@ -319,7 +319,7 @@
                     '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
                 var header = true;
                 $.each(form.formulaSpec, function(i, fspec) {
-                    console.log(fspec);
+                    // console.log(fspec);
                     // nombre de los campos
                     var fieldname = "";
                     // monto la cabecera
