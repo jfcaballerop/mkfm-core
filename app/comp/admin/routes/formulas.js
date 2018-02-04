@@ -129,6 +129,49 @@ router.post('/get_formulas_tracks/', function(req, resp) {
     // resp.status(200).jsonp({});
 
 });
+/* update_formulas_tracks_response */
+/**
+ * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
+ * @param formula
+ * @param asset
+ */
+router.post('/update_formulas_tracks_response/:formula/:asset', function(req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/update_formulas_tracks_response/' + req.params.formula + '/' + req.params.asset + '/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /* update_formulas_tracks */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
@@ -282,7 +325,76 @@ router.get('/V1/formulas/', function(req, res, next) {
     });
 
 });
+/* POST update_formulas_tracks_response */
+/**
+ * Metodo para modificar los valores devueltos por las formulas
+ */
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function(req, res, next) {
+    debug('API /V1/update_formulas_tracks_response/');
+    var postData = extend({}, req.body);
+    var ret = {
+        "result": "OK",
+        "tracksUpdated": 0
+    };
+    debug(postData);
+    var form;
+    var formula = Object.keys(postData)[0];
+    debug(formula);
+    await Formula.find({ "name": formula }).exec(async function(err, f) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        form = f[0];
+    });
+    // debug(form);
+    var wherearr = [];
+    for (var fv of form.formulaSpec) {
+        if (wherearr.indexOf(fv.WEIGHTS.dbfield) < 0 && fv.WEIGHTS.dbfield !== '--')
+            wherearr.push(fv.WEIGHTS.dbfield);
+    }
+    var selectjson = {
+        "geometry.coordinates": 1,
+        properties: []
+    };
+    for (var w of wherearr) {
+        selectjson.properties[w] = 1;
+    }
+    debug(selectjson);
+    // debug(form);
+    Infodatatrack.find({}, selectjson).exec(function(err, ifdts) {
+        if (err) {
+            res.send(500, err.message);
+        }
 
+        for (var ifdt of ifdts) {
+            //debug(ifdt._id);
+            // debug(ifdt.geometry.coordinates);
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                //debug(form.formulaSpec.length);
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+                    switch (form.formulaSpec[f]["ASSET TYPE"]) {
+                        case 'Pavement':
+                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
+                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                debug(form.formulaSpec[f].score.fieldname + ' ' +
+                                    form.formulaSpec[f].score.value);
+                            }
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        res.status(200).jsonp(ret);
+    });
+
+
+});
 
 /* POST update_formulas_tracks */
 /**
@@ -1659,7 +1771,5 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
 
 });
-
-
 
 module.exports = router;
