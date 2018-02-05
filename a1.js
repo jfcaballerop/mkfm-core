@@ -1,0 +1,1 @@
+db.infodatatracks.find({"properties.Ccondition":{$eq:0.9200000000000007}},{"properties.Ccondition":1,"properties.Ccode":1})

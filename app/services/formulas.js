@@ -112,7 +112,128 @@ exports.criticality = function(type, formula, data) {
 
 }
 
-exports.PavementCost = function(coord1, coord2, rcondrmatcost) {
+exports.condition = function (type, formula, data) {
+    // console.log('## formulas condition ##');
+    var retCondition = 1.0*1.0-1.0;
+    console.log('\n\n------------------------------------------');
+    debug(formula)
+    console.log('\n\n------------------------------------------');
+
+    weight = 1.0 * 1;
+    scoring = 0.0*1;
+    for (var [l1key, level1] of Object.entries(formula)) {
+        if (typeof level1 === 'object') {
+            //console.log(l1key);
+            var val = 0;
+            for (var [l2key, level2] of Object.entries(level1)) {
+
+                for (var [l3key, level3] of Object.entries(level2)) {
+
+                    for (var [l4key, level4] of Object.entries(level3)) {
+
+                        for (var [l5key, level5] of Object.entries(level4)) {
+
+                            for (var [l6key, level6] of Object.entries(level5)) {
+                                // console.log('level1.weight: ' + level1.weight);
+                                if (level1.weight !== undefined) { weight = level1.weight * 1;}
+                                // console.log('level1.scoring: ' + level1.scoring);
+                                if (level1.scoring !== undefined) { scoring = level1.scoring; lkey = l2key;}
+
+                                // console.log('level2.weight: ' + level2.weight);
+                                if (level2.weight !== undefined) { weight = level2.weight * 1; }
+                                // console.log('level2.scoring: ' + level2.scoring);
+                                if (level2.scoring !== undefined) { scoring = level2.scoring; lkey = l3key;}
+
+                                // console.log('level3.weight: ' + level3.weight);
+                                if (level3.weight !== undefined) { weight = level3.weight * 1; }
+                                // console.log('level3.scoring: ' + level3.scoring);
+                                if (level3.scoring !== undefined) { scoring = level3.scoring; lkey = l4key;}
+
+                                // console.log('level4.weight: ' + level4.weight);
+                                if (level4.weight !== undefined) { weight = level4.weight * 1; }
+                                // console.log('level4.scoring: ' + level4.scoring);
+                                if (level4.scoring !== undefined) { scoring = level4.scoring; lkey = l5key;}
+
+                                // console.log('level5.weight: ' + level5.weight);
+                                if (level5.weight !== undefined) { weight = level5.weight * 1; }
+                                // console.log('level5.scoring: ' + level5.scoring);
+                                if (level5.scoring !== undefined) { scoring = level5.scoring; lkey = l6key;}
+
+                                // console.log('level6.weight: ' + level6.weight);
+                                if (level6.weight !== undefined) { weight = level6.weight * 1; }
+                                // console.log('level6.scoring: ' + level6.scoring);
+                                if (level6.scoring !== undefined) { scoring = level6.scoring; lkey = l7key;}
+                                
+
+          // for (var [l2key, level2] of Object.entries(level1)) {
+            //     if (typeof level2 === 'object') {
+            //         //console.log(l2key);
+            //         if (data[l2key] != undefined && data[l2key] != null) {
+            //             if (level2.type === 'select') {
+            //                 val += level2.scoring[data[l2key]] * level2.weight / 100;
+            //             } else if (level2.type === 'range') {
+            //                 for (var [rk, rango] of Object.entries(level2.scoring)) {
+
+                                if (scoring !== undefined && weight !== undefined){
+                                    for (var [rk, rango] of Object.entries(scoring)) {
+                                        // console.log('weight: ' + weight);
+                                        // console.log('scoring: ' + scoring[rk]);
+
+
+                                        if (rk.indexOf('-') == -1) {
+                                            //Ultimo valor del rango
+                                            if (rk * 1.0 <= data[lkey] * 1) {
+                                                console.log('entro1');
+                                                val += scoring[rk] * weight / 100;
+
+                                            }
+                                        } else {
+                                            var valRango = rk.split('-');
+                                            if (valRango[0] * 1.0 < data[lkey] * 1.0 && valRango[1] * 1.0 > data[lkey] * 1.0) {
+                                                console.log('entro2');
+                                                val += scoring[rk] * weight / 100;
+                                                // console.log('Rango: ' + rk + ' ' + data[lkey] + ' Scoring ' + scoring[rk]);
+                                            }
+                                        }
+
+
+                                        // if (Number(scoring[rk]) == scoring[rk] && Number(weight) == weight) {
+                                        //      val += scoring[rk] * weight / 100.0; 
+                                        //     }
+
+
+
+                                        console.log('data[lkey]: ' + data[lkey]);
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+        if (Number(val) == val && Number(weight) == weight) { 
+            retCondition += val * weight / 100;
+            // console.log('retCondition: ' + parseFloat(retCondition));
+        }
+
+        // }
+
+    }
+
+
+
+    console.log('retCondition: ' + retCondition*100);
+    // return retCondition * 100;
+    return retCondition*100;
+
+}
+
+exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
     var ret = 0;
     var dist = services.calDIST(coord1, coord2);
     ret = dist * rcondrmatcost;
