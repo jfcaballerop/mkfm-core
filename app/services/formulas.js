@@ -3,7 +3,7 @@ var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 var services = require(path.join(__dirname, './services'));
 
-exports.criticalityValue = function (in_val) {
+exports.criticalityValue = function(in_val) {
 
     cscale = {
         "Very High": {
@@ -52,7 +52,7 @@ exports.criticalityValue = function (in_val) {
 
 }
 
-exports.criticality = function (type, formula, data) {
+exports.criticality = function(type, formula, data) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;
 
@@ -243,7 +243,7 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
 
 }
 
-exports.criticalityRatingScale = function (lof) {
+exports.criticalityRatingScale = function(lof) {
     var ret = 1;
     var crit_rating = [];
     var lofv = "";
@@ -276,7 +276,69 @@ exports.criticalityRatingScale = function (lof) {
 
     return ret;
 }
-exports.riskRatingScale = function (lof, cons) {
+exports.LikelihoodofFailureRatingScale = function(cond_letter) {
+    var ret = 1;
+    var lof_rating = [];
+    // debug('cond_letter ' + cond_letter);
+    if (cond_letter === "E") {
+        lofv = 10;
+    } else if (cond_letter === "D") {
+        lofv = 30;
+    } else if (cond_letter === "C") {
+        lofv = 50;
+    } else if (cond_letter === "B") {
+        lofv = 70;
+    } else if (cond_letter === "A") {
+        lofv = 90;
+    }
+    lof = 100 - lofv;
+    if (lof >= 0 && lof < 20) {
+        lofv = '0-20';
+    } else if (lof >= 20 && lof < 40) {
+        lofv = '20-40';
+    } else if (lof >= 40 && lof < 60) {
+        lofv = '40-60';
+    } else if (lof >= 60 && lof < 80) {
+        lofv = '60-80';
+    } else if (lof >= 80 && lof <= 100) {
+        lofv = '80-100';
+    }
+    lof_rating['0-20'] = [];
+    lof_rating['0-20'] = 1;
+    lof_rating['20-40'] = [];
+    lof_rating['20-40'] = 2;
+    lof_rating['40-60'] = [];
+    lof_rating['40-60'] = 3;
+    lof_rating['60-80'] = [];
+    lof_rating['60-80'] = 4;
+    lof_rating['80-100'] = [];
+    lof_rating['80-100'] = 5;
+
+    ret = lof_rating[lofv];
+
+    return ret;
+}
+exports.conditionValueScale = function(condv) {
+    var ret = 1;
+    var cond_rating = [];
+    // debug('cond ' + cond);
+
+    cond_rating['A'] = [];
+    cond_rating['A'] = 1;
+    cond_rating['B'] = [];
+    cond_rating['B'] = 2;
+    cond_rating['C'] = [];
+    cond_rating['C'] = 3;
+    cond_rating['D'] = [];
+    cond_rating['D'] = 4;
+    cond_rating['E'] = [];
+    cond_rating['E'] = 5;
+
+    ret = cond_rating[condv];
+
+    return ret;
+}
+exports.riskRatingScale = function(lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
