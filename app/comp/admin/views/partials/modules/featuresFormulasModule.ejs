@@ -1,4 +1,5 @@
 <% include ./partials/modules/conditionFormula %>
+
     <script>
         const PI = 3.141592;
 
@@ -126,25 +127,25 @@
                                 var j = postgressArray.indexOf("weight");
                                 if (j != -1) {
                                     weight = 1;
-                                    console.log(postgressArray + "<--------------- 1");
+                                    // console.log(postgressArray + "<--------------- 1");
                                     postgressArray.splice(j, 1);
-                                    console.log(postgressArray + "<--------------- 2");
+                                    // // console.log(postgressArray + "<--------------- 2");
 
                                 }
                                 if (val.length > 0 && ((i.indexOf('scores') > -1 && (ScoreName.length > 0)) || (i.indexOf('weight') > -1 && ScoreName.length > 0))) {
-                                    console.log(postgressArray.join());
-                                    console.log(counter);
+                                    // // console.log(postgressArray.join());
+                                    // // console.log(counter);
                                     (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
-                                    console.log('urlTest ' + urlTest.replace(/__/g, "."));
+                                    // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
-                                    // console.log(postgressArray.join().replace(/,/g, "."));
-                                    console.log('urlTest' + urlTest);
-                                    // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
-                                    console.log(postgressArray);
-                                    console.log(form);
-                                    console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
+                                    // // // console.log(postgressArray.join().replace(/,/g, "."));
+                                    // // console.log('urlTest' + urlTest);
+                                    // // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
+                                    // console.log(postgressArray);
+                                    // console.log(form);
+                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     // }
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' + urlTest + '" type="number" value="' + eval('form.' + postgressArray.join().replace(/,/g, ".")) + '"  step="0.01"></td>';
@@ -154,7 +155,7 @@
                                     // postgressArray.push(capitalizeFirstLetter(val)
                                     html[++h] = '<td>' + val + '</td>';
                                 }
-                                // console.log(eval(postgressArray));
+                                // // console.log(eval(postgressArray));
                                 ScoreName = val;
                             }
                         });
@@ -213,8 +214,8 @@
                         '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
 
                     $.each(fspec, function(key, data) {
-                        console.log(key);
-                        console.log(data);
+                        // console.log(key);
+                        // console.log(data);
                         if (data.constructor === objectConstructor) {
                             html[++h] = '<tr>';
                             html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
@@ -265,12 +266,12 @@
                                     }
                                     html[++h] = '</tr>';
                                     tr++;
-                                    console.log(j + ': ' + data2);
+                                    // console.log(j + ': ' + data2);
                                 }
                             });
                         };
                     });
-                    //console.log(fs'</tbody></table>'pec.fname);
+                    //// console.log(fs'</tbody></table>'pec.fname);
                     html[++h] = '</tbody></table></div>';
                     $('#formulaSpec').html(html.join(''));
 
@@ -286,57 +287,81 @@
 
         })();
 
+        var featurePaintResponse = (function() {
 
-        var url = "";
+            // variables y funciones privadas
+            var paintHTML = function(form) {
+                var html = [];
+                var h = -1;
+                html[++h] = '<div id="formulaTable' + form.name + '" ">';
+                html[++h] = '<div id="infoFormula' + form.name +
+                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                html[++h] = ' Be patient, the process can take several minutes.</div>';
+                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    '__' + form.name + '\');" id="' + form.properties.HTML.id + '__' + form.name +
+                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
+                    form.name + '</button>';
+                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + form.name +
+                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
 
-        function capitalizeFirstLetter(string) {
-            var OutPut = ''
-            var WordList = string.split(' ')
-            WordList.forEach(function(element) {
-                OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
-            });
-            return OutPut;
-        }
+                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + form.name +
+                    '"></div>';
+                html[++h] =
+                    '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
+                var header = true;
+                $.each(form.formulaSpec, function(i, fspec) {
+                    // console.log(fspec);
+                    // nombre de los campos
+                    var fieldname = "";
+                    // monto la cabecera
+                    if (header) {
+                        header = false;
+                        html[++h] = '<tr>';
+                        for (var fk of Object.keys(fspec).reverse()) {
+                            html[++h] = '<th>';
+                            html[++h] = fk;
+                            html[++h] = '</th>';
+                        }
+
+                        html[++h] = '</tr><tbody id="formulaTableBody">';
+                    }
+
+                    html[++h] = '<tr>';
+                    for (var fk of Object.keys(fspec).reverse()) {
+                        html[++h] = '<td>';
+                        if (fk === 'WEIGHTS') {
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value +
+                                '" >';
+
+                        } else if (fk === 'score') {
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value + '" >';
+
+                        } else {
+
+                            html[++h] = fspec[fk];
+                        }
+                        html[++h] = '</td>';
+                    }
+                    html[++h] = '</tr>';
 
 
-        ! function(t, n, e, i) {
-            "use strict";
 
-            function a(n, e) {
-                this.element = n, this.settings = t.extend({}, o, e), this._defaults = o, this._name = s, this.init()
+
+
+
+
+                });
+                html[++h] = '</tbody></table></div>';
+                $('#formulaSpec').html(html.join(''));
+                $("#assetResponseTable").rowspanizer();
+
+
+            };
+
+            // API publica
+            return {
+                paintHTML: paintHTML
             }
-            var s = "rowspanizer",
-                o = {
-                    vertical_align: "top"
-                };
-            t.extend(a.prototype, {
-                init: function() {
-                    var n = this,
-                        e = t(this.element),
-                        i = [];
-                    e.find("tr").each(function(n, e) {
-                        t(this).find("td").each(function(n, e) {
-                            var a = t(e),
-                                s = a.html();
-                            if ("undefined" != typeof i[n] && "dato" in i[n] && i[n].dato == s) {
-                                var o = i[n].elem.data("rowspan");
-                                ("undefined" == o || isNaN(o)) && (o = 1), i[n].elem.data("rowspan", parseInt(o) + 1).addClass("rowspan-combine"), a.addClass("rowspan-remove")
-                            } else i[n] = {
-                                dato: s,
-                                elem: a
-                            }
-                        })
-                    }), t(".rowspan-combine").each(function(e, i) {
-                        var a = t(this);
-                        a.attr("rowspan", a.data("rowspan")).css({
-                            "vertical-align": n.settings.vertical_align
-                        })
-                    }), t(".rowspan-remove").remove()
-                }
-            }), t.fn[s] = function(n) {
-                return this.each(function() {
-                    t.data(this, "plugin_" + s) || t.data(this, "plugin_" + s, new a(this, n))
-                })
-            }
-        }(jQuery, window, document);
+
+        })();
     </script>
