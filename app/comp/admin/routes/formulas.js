@@ -51,7 +51,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/formulas', function(req, resp, next) {
+router.get('/formulas', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -65,21 +65,27 @@ router.get('/formulas', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
-            resp.render('admin_panel_formulas', { formula: responseObject, token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.render('admin_panel_formulas', {
+                formula: responseObject,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME
+            });
 
         });
     });
@@ -93,7 +99,7 @@ router.get('/formulas', function(req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los tracks afectados por la formular seleccionada
  */
-router.post('/get_formulas_tracks/', function(req, resp) {
+router.post('/get_formulas_tracks/', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
 
@@ -111,15 +117,15 @@ router.post('/get_formulas_tracks/', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -137,7 +143,7 @@ router.post('/get_formulas_tracks/', function(req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_response/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_response/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -155,15 +161,15 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function(req, re
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -180,7 +186,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function(req, re
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -198,15 +204,15 @@ router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -223,7 +229,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_condition: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -241,15 +247,15 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, r
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -264,7 +270,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, r
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function(req, resp) {
+router.post('/update_field/:field/:value', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -282,15 +288,15 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -311,12 +317,14 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 /* GET JSON formulas listing. */
-router.get('/V1/formulas/', function(req, res, next) {
-    conditionFormula.find({}).exec(function(err, formcs) {
+router.get('/V1/formulas/', function (req, res, next) {
+    conditionFormula.find({}).exec(function (err, formcs) {
         if (err) {
             res.send(500, err.message);
         }
-        Formula.find({}).sort({ "properties.HTML.id": -1 }).exec(function(err, forms) {
+        Formula.find({}).sort({
+            "properties.HTML.id": -1
+        }).exec(function (err, forms) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -331,9 +339,10 @@ router.get('/V1/formulas/', function(req, res, next) {
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
+    var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
@@ -342,7 +351,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     var form;
     var formula = Object.keys(postData)[0];
     debug(formula);
-    await Formula.find({ "name": formula }).exec(async function(err, f) {
+    await Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -363,24 +374,28 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     }
     debug(selectjson);
     // debug(form);
-    Infodatatrack.find({}, selectjson).exec(function(err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
-
+        var valuerresphazardarr = [];
         for (var ifdt of ifdts) {
             //debug(ifdt._id);
             // debug(ifdt.geometry.coordinates);
+            tracksUpdated++;
+
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                 //debug(form.formulaSpec.length);
+                var valuerresphazard = 0;
                 for (var f = 0; f < form.formulaSpec.length; f++) {
                     switch (form.formulaSpec[f]["ASSET TYPE"]) {
                         case 'Pavement':
                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
-                                debug(form.formulaSpec[f].score.fieldname + ' ' +
-                                    form.formulaSpec[f].score.value);
+                                valuerresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value;
+                                // debug(form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                //     form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
                             }
 
                             break;
@@ -389,12 +404,29 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             break;
                     }
                 }
+                valuerresphazardarr[i] = valuerresphazard;
             }
+            var conditions = {
+                _id: ifdt._id
+            };
+            var query = {
+                $set: {
+                    "properties.rresphazard": valuerresphazardarr
+                }
+            };
+            await Infodatatrack.update(conditions, query, function (err, iup) {
+                if (err) {
+                    debug(err.message);
+                }
+                // debug(iup);
+
+            });
         }
 
-        res.status(200).jsonp(ret);
     });
-
+    ret.tracksUpdated = tracksUpdated;
+    debug(tracksUpdated);
+    res.status(200).jsonp(ret);
 
 });
 
@@ -402,7 +434,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks/');
     var postData = extend({}, req.body);
     var ret = {
@@ -420,11 +452,13 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
     var tracksUpdated = 0;
     debug('formula: ' + formula + ' asset: ' + asset);
 
-    Formula.find({ "name": formula }).exec(async function(err, f) {
+    Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
-        await Infodatatrack.find().exec(function(err, rtracks) {
+        await Infodatatrack.find().exec(function (err, rtracks) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -433,7 +467,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
 
         for (var track of tracks) {
             // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
-            await Infodatatrack.findById(track._id).exec(function(err, ifdt) {
+            await Infodatatrack.findById(track._id).exec(function (err, ifdt) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -874,7 +908,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         break;
                 }
                 ifdt.updated_at = new Date();
-                ifdt.save(function(err, isaved) {
+                ifdt.save(function (err, isaved) {
                     if (err) {
                         res.send(500, err.message);
                     }
@@ -893,7 +927,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_condition/');
     var postData = extend({}, req.body);
     var ret = {
@@ -916,11 +950,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     // debug(Formula);
     // console.log(Formula);
 
-    Formula.find({ "name": formula }).exec(async function(err, f) {
+    Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
-        await Infodatatrack.find().exec(function(err, rtracks) {
+        await Infodatatrack.find().exec(function (err, rtracks) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -929,7 +965,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         // console.log('f: ' + f );
         for (var track of tracks) {
             // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
-            await Infodatatrack.findById(track._id).exec(function(err, ifdt) {
+            await Infodatatrack.findById(track._id).exec(function (err, ifdt) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -1385,7 +1421,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         break;
                 }
                 ifdt.updated_at = new Date();
-                ifdt.save(function(err, isaved) {
+                ifdt.save(function (err, isaved) {
                     if (err) {
                         res.send(500, err.message);
                     }
@@ -1401,7 +1437,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 });
 /* POST update_field */
-router.post('/V1/update_field/', function(req, res, next) {
+router.post('/V1/update_field/', function (req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -1416,7 +1452,9 @@ router.post('/V1/update_field/', function(req, res, next) {
 
     debug(arrField);
 
-    Formula.find({ "name": arrField[0] }).exec(function(err, f) {
+    Formula.find({
+        "name": arrField[0]
+    }).exec(function (err, f) {
         debug('Formula.find ' + arrField[0]);
         if (err) {
             res.send(500, err.message);
@@ -1441,7 +1479,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                 eval(comando);
 
                 // res.send(f);
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -1463,7 +1501,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]].weight = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -1483,7 +1521,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -1503,7 +1541,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -1534,7 +1572,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
                     }
                 }
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -1551,7 +1589,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_formulas_tracks/', function(req, res, next) {
+router.post('/V1/get_formulas_tracks/', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -1575,9 +1613,20 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                             // debug(f);
                             // debug(formulasService.criticalityValue(f).score.min);
                             // debug(formulasService.criticalityValue(f).score.max);
-                            orArr.push({ "properties.bcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                            orArr.push({
+                                "properties.bcriticality": {
+                                    $gte: formulasService.criticalityValue(f).score.min,
+                                    $lt: formulasService.criticalityValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.bcode": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.bcode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
 
 
@@ -1587,9 +1636,20 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                             // debug(f);
                             // debug(formulasService.criticalityValue(f).score.min);
                             // debug(formulasService.criticalityValue(f).score.max);
-                            orArr.push({ "properties.Ccriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                            orArr.push({
+                                "properties.Ccriticality": {
+                                    $gte: formulasService.criticalityValue(f).score.min,
+                                    $lt: formulasService.criticalityValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.Ccode": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.Ccode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
 
                         break;
@@ -1598,11 +1658,33 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                             // debug(f);
                             // debug(formulasService.criticalityValue(f).score.min);
                             // debug(formulasService.criticalityValue(f).score.max);
-                            orArr.push({ "properties.gcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
-                            orArr.push({ "properties.gcriticality2": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                            orArr.push({
+                                "properties.gcriticality": {
+                                    $gte: formulasService.criticalityValue(f).score.min,
+                                    $lt: formulasService.criticalityValue(f).score.max
+                                }
+                            });
+                            orArr.push({
+                                "properties.gcriticality2": {
+                                    $gte: formulasService.criticalityValue(f).score.min,
+                                    $lt: formulasService.criticalityValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.gcode": { $elemMatch: { $nin: [""] } } });
-                        orAssetArr.push({ "properties.gcode2": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.gcode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
+                        orAssetArr.push({
+                            "properties.gcode2": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
                         break;
 
@@ -1611,9 +1693,18 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                             // debug(f);
                             // debug(formulasService.criticalityValue(f).score.min);
                             // debug(formulasService.criticalityValue(f).score.max);
-                            orArr.push({ "properties.rcriticality": { $gte: formulasService.criticalityValue(f).score.min, $lt: formulasService.criticalityValue(f).score.max } });
+                            orArr.push({
+                                "properties.rcriticality": {
+                                    $gte: formulasService.criticalityValue(f).score.min,
+                                    $lt: formulasService.criticalityValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.rcategory": { $in: postData.filterPav } });
+                        orAssetArr.push({
+                            "properties.rcategory": {
+                                $in: postData.filterPav
+                            }
+                        });
                         // debug(catArr);
 
 
@@ -1623,15 +1714,19 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
 
             }
-            andArr.push({ $or: orAssetArr });
-            andArr.push({ $or: orArr });
+            andArr.push({
+                $or: orAssetArr
+            });
+            andArr.push({
+                $or: orArr
+            });
 
             debug(JSON.stringify(andArr));
 
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function(err, tracks) {
+            }).exec(function (err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -1640,7 +1735,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function(values) {
+            Promise.all(promises).then(function (values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -1666,7 +1761,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function(val, index) {
+                    values.forEach(function (val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
