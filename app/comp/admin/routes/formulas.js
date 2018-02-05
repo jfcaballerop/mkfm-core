@@ -1,5 +1,3 @@
-
-
 //DEBUG
 var debug = require('debug')('debug');
 var ObjectId = require('mongoose').Types.ObjectId;
@@ -409,7 +407,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuebresphazardarr += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value;
                                         debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
-                                            form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
+                                            form.formulaSpec[f].score.value + ' valuebresphazardarr ' + valuerresphazard);
                                     }
                                 } else {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] != undefined) {
@@ -971,7 +969,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var formResultRight = [];
     var tracks;
     var tracksUpdated = 0;
-    
+
     debug('formula: ' + formula + ' asset: ' + asset);
     // debug(Formula);
     // console.log(Formula);
@@ -1167,7 +1165,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         case 'Culverts':
                             formResult[index] = calcularValue ? formulasService.condition('Culverts', fspec, sendData) : undefined;
                             break;
-                        // case 'Pavements':
+                            // case 'Pavements':
 
                             // //debug('\n\n\n-----------------------------------------------------------------------------------------');
                             // //debug(fspec);
@@ -1324,10 +1322,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (
                                         ifdt.properties.gcondition != undefined &&
                                         ifdt.properties.gcondition != null &&
-                                        ifdt.properties.gcondition [index] != undefined &&
+                                        ifdt.properties.gcondition[index] != undefined &&
                                         ifdt.properties.gcondition[index] != null
                                     ) {
-                                        formResultLeft[index] = ifdt.properties.gcondition [index];
+                                        formResultLeft[index] = ifdt.properties.gcondition[index];
 
                                     } else {
                                         formResultLeft[index] = undefined;
@@ -1411,7 +1409,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         default:
                             break;
                     }
-                    
+
 
                 }
                 // if (formResult[index] !== undefined) { 
@@ -1923,9 +1921,20 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             // debug(f);
                             // debug(formulasService.conditionValue(f).score.min);
                             // debug(formulasService.conditionValue(f).score.max);
-                            orArr.push({ "properties.bcondition": { $gte: formulasService.conditionValue(f).score.min, $lt: formulasService.conditionValue(f).score.max } });
+                            orArr.push({
+                                "properties.bcondition": {
+                                    $gte: formulasService.conditionValue(f).score.min,
+                                    $lt: formulasService.conditionValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.bcode": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.bcode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
 
 
@@ -1935,9 +1944,20 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             // debug(f);
                             // debug(formulasService.conditionValue(f).score.min);
                             // debug(formulasService.conditionValue(f).score.max);
-                            orArr.push({ "properties.Ccondition": { $gte: formulasService.conditionValue(f).score.min, $lt: formulasService.conditionValue(f).score.max } });
+                            orArr.push({
+                                "properties.Ccondition": {
+                                    $gte: formulasService.conditionValue(f).score.min,
+                                    $lt: formulasService.conditionValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.Ccode": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.Ccode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
 
                         break;
@@ -1946,11 +1966,33 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             // debug(f);
                             // debug(formulasService.conditionValue(f).score.min);
                             // debug(formulasService.conditionValue(f).score.max);
-                            orArr.push({ "properties.gcondition": { $gte: formulasService.conditionValue(f).score.min, $lt: formulasService.conditionValue(f).score.max } });
-                            orArr.push({ "properties.gcondition2": { $gte: formulasService.conditionValue(f).score.min, $lt: formulasService.conditionValue(f).score.max } });
+                            orArr.push({
+                                "properties.gcondition": {
+                                    $gte: formulasService.conditionValue(f).score.min,
+                                    $lt: formulasService.conditionValue(f).score.max
+                                }
+                            });
+                            orArr.push({
+                                "properties.gcondition2": {
+                                    $gte: formulasService.conditionValue(f).score.min,
+                                    $lt: formulasService.conditionValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.gcode": { $elemMatch: { $nin: [""] } } });
-                        orAssetArr.push({ "properties.gcode2": { $elemMatch: { $nin: [""] } } });
+                        orAssetArr.push({
+                            "properties.gcode": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
+                        orAssetArr.push({
+                            "properties.gcode2": {
+                                $elemMatch: {
+                                    $nin: [""]
+                                }
+                            }
+                        });
                         // debug(catArr);
                         break;
 
@@ -1959,9 +2001,18 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             // debug(f);
                             // debug(formulasService.conditionValue(f).score.min);
                             // debug(formulasService.conditionValue(f).score.max);
-                            orArr.push({ "properties.rcondition": { $gte: formulasService.conditionValue(f).score.min, $lt: formulasService.conditionValue(f).score.max } });
+                            orArr.push({
+                                "properties.rcondition": {
+                                    $gte: formulasService.conditionValue(f).score.min,
+                                    $lt: formulasService.conditionValue(f).score.max
+                                }
+                            });
                         }
-                        orAssetArr.push({ "properties.rcategory": { $in: postData.filterPav } });
+                        orAssetArr.push({
+                            "properties.rcategory": {
+                                $in: postData.filterPav
+                            }
+                        });
                         // debug(catArr);
 
 
@@ -1971,8 +2022,12 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
 
             }
-            andArr.push({ $or: orAssetArr });
-            andArr.push({ $or: orArr });
+            andArr.push({
+                $or: orAssetArr
+            });
+            andArr.push({
+                $or: orArr
+            });
 
             debug(JSON.stringify(andArr));
 
