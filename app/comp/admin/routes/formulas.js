@@ -376,7 +376,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
         if (err) {
             res.send(500, err.message);
         }
+        // Arr de valores a updatear
         var valuerresphazardarr = [];
+        var valuebresphazardarr = [];
+
         for (var ifdt of ifdts) {
             //debug(ifdt._id);
             // debug(ifdt.geometry.coordinates);
@@ -388,12 +391,34 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                 for (var f = 0; f < form.formulaSpec.length; f++) {
                     switch (form.formulaSpec[f]["ASSET TYPE"]) {
                         case 'Pavement':
-                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                             // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                 valuerresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value;
                                 // debug(form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                 //     form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
+                            }
+
+                            break;
+                        case 'Bridges':
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties.bcode != undefined && ifdt.properties.bcode != [] &&
+                                ifdt.properties.bcode[i] != undefined && ifdt.properties.bcode[i] != null && ifdt.properties.bcode[i] !== "") {
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuebresphazardarr += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value;
+                                        debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                            form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] != undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        // TODO: sacar operador para el tipo NUM-OPERADOR-NUM y crear switch con los operadores.
+
+                                        debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+
+                                    }
+                                }
                             }
 
                             break;
@@ -409,7 +434,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
             };
             var query = {
                 $set: {
-                    "properties.rresphazard": valuerresphazardarr
+                    "properties.rresphazard": valuerresphazardarr,
+                    "properties.bresphazard": valuebresphazardarr
                 }
             };
             await Infodatatrack.update(conditions, query, function (err, iup) {
