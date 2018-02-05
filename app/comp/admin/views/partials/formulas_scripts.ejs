@@ -17,14 +17,11 @@
         var arrCallProm = $this.attr('id').split('__');
         var dataPost = {};
         dataPost[arrCallProm[0]] = arrCallProm[1];
-        console.log('Call update formula: ' + JSON.stringify(dataPost));
+        console.log('Call update critically: ' + JSON.stringify(dataPost));
 
         var tipoDeFormula = '';
         if (arrCallProm[0].indexOf('onditio') > -1) {
             tipoDeFormula = 'update_formulas_tracks_condition';
-        } else if (arrCallProm[0].indexOf('AssetResponse') >= 0) {
-            tipoDeFormula = 'update_formulas_tracks_response';
-
         } else {
             tipoDeFormula = 'update_formulas_tracks';
         }
@@ -56,7 +53,7 @@
         // alert(featurePaintCriticality.publicThing);
 
         $.each(formulasDB, function(index, form) {
-            //console.log(form.properties.HTML);
+            console.log(form.properties.HTML);
             $('#' + form.properties.HTML.id).on('click', function(event) {
                 $this = $(this);
                 //alert('AssetCriticality');
@@ -65,10 +62,6 @@
                 $('#formulaName').append(form.properties.HTML.text);
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
-
-                    // AssetCondition
-                    //////////////////
-
                     case "AssetCondition":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
@@ -132,9 +125,6 @@
                         this.name = '';
                         break;
 
-                        // AssetCriticality
-                        ////////////////////
-
                     case "AssetCriticality":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
@@ -177,60 +167,6 @@
 
                                 var p1 = $.ajax({
                                     url: '/auth/WEB/admin/update_field/' + this.name + '/' + this.value,
-                                    data: JSON.stringify(dataPost),
-                                    type: 'POST',
-                                    contentType: 'application/json'
-                                }, function(data) {
-                                    // console.log('koboinfo ' + JSON.stringify(data));
-                                    return (data);
-                                });
-                                Promise.all([p1]).then(function(values) {
-                                    console.log(values);
-                                    if (values[0].result === "OK") {
-                                        $input.css("border", "2px solid green");
-                                    } else {
-                                        $input.css("border", "2px solid red");
-                                    }
-                                });
-
-                            }
-                        });
-                        break;
-
-                        // AssetResponse
-                        /////////////////
-
-                    case "AssetResponse":
-                        $('#formulaSpec').empty();
-                        $('#selectFormula').empty();
-                        /*
-                            Feature paint formula
-                        */
-                        featurePaintResponse.paintHTML(form);
-
-
-                        var valant = '';
-                        $('input[type=number]').on('focus', function() {
-                            console.log(this.value);
-                            // On first focus, check to see if we have the default text saved
-                            // If not, save current value to data()
-                            //if (!$(this).data('')) $(this).data('', $(this).val());
-
-                            // check to see if the input currently equals the default before clearing it
-                            valant = $(this).val();
-                        });
-                        $('input[type=number]').on('blur', function() {
-                            // on blur, if there is no value, set the defaultText
-                            if ($(this).val() != valant) {
-                                // $(this).val($(this).data('defaultText'));
-                                var dataPost = {};
-                                dataPost['AssetResponse__' + this.name] = this.value;
-                                var $input = $(this);
-
-                                console.log('New Val: ' + JSON.stringify(dataPost));
-
-                                var p1 = $.ajax({
-                                    url: '/auth/WEB/admin/update_field/AssetResponse__' + this.name + '/' + this.value,
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'

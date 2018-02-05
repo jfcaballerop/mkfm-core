@@ -23,8 +23,6 @@ var Infodatatrack = mongoose.model('Infodatatrack');
 var costModels = require(path.join(__dirname, '../../budget/models/cost'));
 var Cost = mongoose.model('Cost');
 
-// modules
-var budgetModule = require(path.join(__dirname, '../modules/budget_module'));
 
 router.use(function timeLog(req, res, next) {
     ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
@@ -50,7 +48,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function(req, resp, next) {
+router.get('/indexes', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -64,17 +62,17 @@ router.get('/indexes', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -99,7 +97,7 @@ router.get('/indexes', function(req, resp, next) {
 
 });
 /* GET Costs Library */
-router.get('/costs', function(req, resp, next) {
+router.get('/costs', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -113,17 +111,17 @@ router.get('/costs', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
@@ -149,7 +147,7 @@ router.get('/costs', function(req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function(req, resp) {
+router.post('/update_field/:field/:value', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -167,15 +165,15 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -190,7 +188,7 @@ router.post('/update_field/:field/:value', function(req, resp) {
  * Proceso ajax para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
  * calcular el coste según los parámetros dados
  */
-router.post('/update_budgets', function(req, resp) {
+router.post('/update_budgets', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_budgets PAV_SECTION: ' + req.body.pavSection + '\n\n\n');
 
@@ -208,21 +206,21 @@ router.post('/update_budgets', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             // resp.redirect('/auth/WEB/budget/costs');
             resp.status(200).jsonp(responseObject);
 
         });
-        request.on('error', function(err) {
+        request.on('error', function (err) {
             console.error('problem with request: ${err.message}');
         });
     });
@@ -241,8 +239,8 @@ router.post('/update_budgets', function(req, resp) {
 
 
 /* GET JSON ifdts config. */
-router.get('/V1/get_costlibrary/', function(req, res, next) {
-    Cost.find({}).exec(function(err, cl) {
+router.get('/V1/get_costlibrary/', function (req, res, next) {
+    Cost.find({}).exec(function (err, cl) {
         if (err) {
             res.send(500, err.message);
         }
@@ -253,7 +251,7 @@ router.get('/V1/get_costlibrary/', function(req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_budget_files/', function(req, res, next) {
+router.get('/V1/get_budget_files/', function (req, res, next) {
     var properties = {
         "geometry.coordinates": 1,
         "properties.rcondition": 1,
@@ -286,16 +284,10 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
         "properties.bcriticality": 1,
         "properties.Ccriticality": 1,
         "properties.gcriticality": 1,
-        "properties.rcondition": 1,
-        "properties.bcondition": 1,
-        "properties.Ccondition": 1,
-        "properties.gcondition": 1,
-        "properties.gcondition2": 1,
-        "properties.district": 1
+        "properties.gcriticality2": 1
     };
     var ret = {};
     ret['Total_investment'] = 0;
-    ret['Total_investment_phy'] = 0;
     ret['Total_investment_risknat1'] = 0;
     ret['Total_investment_risknat2'] = 0;
     ret['Total_investment_risknat3'] = 0;
@@ -316,26 +308,6 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
     ret['Total_investment_grisknat3'] = 0;
     ret['Total_investment_grisknat4'] = 0;
     ret['Total_investment_grisknat5'] = 0;
-    ret['Total_investment_riskphy1'] = 0;
-    ret['Total_investment_riskphy2'] = 0;
-    ret['Total_investment_riskphy3'] = 0;
-    ret['Total_investment_riskphy4'] = 0;
-    ret['Total_investment_riskphy5'] = 0;
-    ret['Total_investment_briskphy1'] = 0;
-    ret['Total_investment_briskphy2'] = 0;
-    ret['Total_investment_briskphy3'] = 0;
-    ret['Total_investment_briskphy4'] = 0;
-    ret['Total_investment_briskphy5'] = 0;
-    ret['Total_investment_criskphy1'] = 0;
-    ret['Total_investment_criskphy2'] = 0;
-    ret['Total_investment_criskphy3'] = 0;
-    ret['Total_investment_criskphy4'] = 0;
-    ret['Total_investment_criskphy5'] = 0;
-    ret['Total_investment_griskphy1'] = 0;
-    ret['Total_investment_griskphy2'] = 0;
-    ret['Total_investment_griskphy3'] = 0;
-    ret['Total_investment_griskphy4'] = 0;
-    ret['Total_investment_griskphy5'] = 0;
     ret['Total_km_risknat1'] = 0;
     ret['Total_km_risknat2'] = 0;
     ret['Total_km_risknat3'] = 0;
@@ -361,21 +333,6 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
     ret['Total_num_grisknat3'] = 0;
     ret['Total_num_grisknat4'] = 0;
     ret['Total_num_grisknat5'] = 0;
-    ret['Total_num_briskphy1'] = 0;
-    ret['Total_num_briskphy2'] = 0;
-    ret['Total_num_briskphy3'] = 0;
-    ret['Total_num_briskphy4'] = 0;
-    ret['Total_num_briskphy5'] = 0;
-    ret['Total_num_criskphy1'] = 0;
-    ret['Total_num_criskphy2'] = 0;
-    ret['Total_num_criskphy3'] = 0;
-    ret['Total_num_criskphy4'] = 0;
-    ret['Total_num_criskphy5'] = 0;
-    ret['Total_num_griskphy1'] = 0;
-    ret['Total_num_griskphy2'] = 0;
-    ret['Total_num_griskphy3'] = 0;
-    ret['Total_num_griskphy4'] = 0;
-    ret['Total_num_griskphy5'] = 0;
     ret['Total_bridges_crit1'] = 0;
     ret['Total_bridges_crit2'] = 0;
     ret['Total_bridges_crit3'] = 0;
@@ -391,13 +348,17 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
     ret['Total_geot_crit3'] = 0;
     ret['Total_geot_crit4'] = 0;
     ret['Total_geot_crit5'] = 0;
+    ret['Total_km_briskphy1'] = 0;
+    ret['Total_km_briskphy2'] = 0;
+    ret['Total_km_briskphy3'] = 0;
+    ret['Total_km_briskphy4'] = 0;
+    ret['Total_km_briskphy5'] = 0;
     ret['Total_km_crit1'] = 0;
     ret['Total_km_crit2'] = 0;
     ret['Total_km_crit3'] = 0;
     ret['Total_km_crit4'] = 0;
     ret['Total_km_crit5'] = 0;
     ret['Total_interventions'] = 0;
-    ret['Total_interventions_phy'] = 0;
     ret['Total_roads_interventions'] = 0;
     ret['Total_bridges_interventions'] = 0;
     ret['Total_culverts_interventions'] = 0;
@@ -410,54 +371,8 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
     ret['Total_roads_interventions_MainRoad'] = 0;
     ret['Total_roads_interventions_Feeder'] = 0;
     ret['Total_roads_interventions_Secondary'] = 0;
-    ret['Total_investment_Saint_George'] = 0;
-    ret['Total_investment_Saint_Paul'] = 0;
-    ret['Total_investment_Saint_Joseph'] = 0;
-    ret['Total_investment_Saint_Peter'] = 0;
-    ret['Total_investment_Saint_John'] = 0;
-    ret['Total_investment_Saint_Andrew'] = 0;
-    ret['Total_investment_Saint_David'] = 0;
-    ret['Total_investment_Saint_Patrick'] = 0;
-    ret['Total_investment_Saint_Mark'] = 0;
-    ret['Total_investment_Saint_Luke'] = 0;
-    ret['Total_elements_Saint_George'] = 0;
-    ret['Total_elements_Saint_Paul'] = 0;
-    ret['Total_elements_Saint_Joseph'] = 0;
-    ret['Total_elements_Saint_Peter'] = 0;
-    ret['Total_elements_Saint_John'] = 0;
-    ret['Total_elements_Saint_Andrew'] = 0;
-    ret['Total_elements_Saint_David'] = 0;
-    ret['Total_elements_Saint_Patrick'] = 0;
-    ret['Total_elements_Saint_Mark'] = 0;
-    ret['Total_elements_Saint_Luke'] = 0;
 
-    ret['Total_bridges_interventions_phy'] = 0;
-    ret['Total_culverts_interventions_phy'] = 0;
-    ret['Total_geot_interventions_phy'] = 0;
-
-    ret['Total_km_lof1'] = 0;
-    ret['Total_km_lof2'] = 0;
-    ret['Total_km_lof3'] = 0;
-    ret['Total_km_lof4'] = 0;
-    ret['Total_km_lof5'] = 0;
-    ret['Total_bridges_lof1'] = 0;
-    ret['Total_bridges_lof2'] = 0;
-    ret['Total_bridges_lof3'] = 0;
-    ret['Total_bridges_lof4'] = 0;
-    ret['Total_bridges_lof5'] = 0;
-    ret['Total_culverts_lof1'] = 0;
-    ret['Total_culverts_lof2'] = 0;
-    ret['Total_culverts_lof3'] = 0;
-    ret['Total_culverts_lof4'] = 0;
-    ret['Total_culverts_lof5'] = 0;
-    ret['Total_geot_lof1'] = 0;
-    ret['Total_geot_lof2'] = 0;
-    ret['Total_geot_lof3'] = 0;
-    ret['Total_geot_lof4'] = 0;
-    ret['Total_geot_lof5'] = 0;
-
-
-    Infodatatrack.find({}, properties).exec(function(err, ifdts) {
+    Infodatatrack.find({}, properties).exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -471,9 +386,8 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
             var gcodeant2 = "";
             // debug(ifdt._id + ':' + ifdt.properties.rinvestmentrequired);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                //////////////////
                 // geotechnical //
-                //////////////////
+                //////////////
                 if (ifdt.properties.rginvestmentrequired2 != undefined && ifdt.properties.rginvestmentrequired2 != [] &&
                     ifdt.properties.rginvestmentrequired2[i] != null) {
                     // debug(ifdt.properties.gcode2);
@@ -481,72 +395,156 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                         ifdt.properties.gcode2[i] != null && ifdt.properties.gcode2[i] !== "") {
                         if (ifdt.properties.gcode2[i] !== gcodeant2) {
                             gcodeant2 = ifdt.properties.gcode2[i];
-                            // selecciono number of elements por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
-
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-                                ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
-
-                            }
                             if (ifdt.properties.gcriticality2 != undefined && ifdt.properties.gcriticality2 != [] &&
                                 ifdt.properties.gcriticality2[i] != null) {
-                                ret = budgetModule.nInterventionsCriticality(ret, ifdt.properties.gcriticality2[i], 'geot');
+                                switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality2[i])) {
+                                    case 1:
 
+                                        ret['Total_geot_crit1']++;
+
+                                        break;
+                                    case 2:
+
+                                        ret['Total_geot_crit2']++;
+
+                                        break;
+                                    case 3:
+
+                                        ret['Total_geot_crit3']++;
+
+                                        break;
+                                    case 4:
+
+                                        ret['Total_geot_crit4']++;
+
+                                        break;
+                                    case 5:
+
+                                        ret['Total_geot_crit5']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                             if (ifdt.properties.grisknatural2 != undefined && ifdt.properties.grisknatural2 != [] &&
                                 ifdt.properties.grisknatural2[i] != null) {
                                 var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.grisknatural2[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot', 'nat');
+                                switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                    case 1:
+                                        ret['Total_num_grisknat1']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
 
-                            }
-                            if (ifdt.properties.griskphysical2 != undefined && ifdt.properties.griskphysical2 != [] &&
-                                ifdt.properties.griskphysical2[i] != null) {
-                                var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
-                                var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
 
-                            }
-                            if (ifdt.properties.gcondition2 != undefined && ifdt.properties.gcondition2 != [] &&
-                                ifdt.properties.gcondition2[i] != null) {
+                                        break;
+                                    case 2:
+                                        ret['Total_num_grisknat2']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                var gcond = ifdt.properties.gcondition2[i];
-                                // debug(gcond);
-                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
+                                        break;
+                                    case 3:
+                                        ret['Total_num_grisknat3']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 4:
+                                        ret['Total_num_grisknat4']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 5:
+                                        ret['Total_num_grisknat5']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                        // selecciono investment por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired2[i]);
 
-                        }
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null) {
-                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired2[i]);
-
-                        }
 
                         if (ifdt.properties.grisknatural2 != undefined && ifdt.properties.grisknatural2 != [] &&
                             ifdt.properties.grisknatural2[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural2[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.grisknatural2[i].split('__')[1];
 
-                            ret = budgetModule.investmentGeotNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.rginvestmentrequired2[i]);
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null) {
 
-                        }
-                        if (ifdt.properties.griskphysical2 != undefined && ifdt.properties.griskphysical2 != [] &&
-                            ifdt.properties.griskphysical2[i] != null) {
-                            var riskphy_lof = ifdt.properties.griskphysical2[i].split('__')[0];
-                            var riskphy_cons = ifdt.properties.griskphysical2[i].split('__')[1];
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_investment_Urban'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
 
-                            ret = budgetModule.investmentGeotPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.rginvestmentrequired2[i]);
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_investment_MainRoad'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
 
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_investment_Feeder'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_investment_Secondary'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
+
+
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_grisknat1'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_grisknat2'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_grisknat3'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_grisknat4'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_grisknat5'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired2[i] * 1.0;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
 
                     }
@@ -558,79 +556,157 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                         ifdt.properties.gcode[i] != null && ifdt.properties.gcode[i] !== "") {
                         if (ifdt.properties.gcode[i] !== gcodeant) {
                             gcodeant = ifdt.properties.gcode[i];
-                            // selecciono number of elements por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
-
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-                                ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
-
-                            }
                             if (ifdt.properties.gcriticality != undefined && ifdt.properties.gcriticality != [] &&
                                 ifdt.properties.gcriticality[i] != null) {
-                                ret = budgetModule.nInterventionsCriticality(ret, ifdt.properties.gcriticality[i], 'geot');
+                                switch (formulasService.criticalityRatingScale(ifdt.properties.gcriticality[i])) {
+                                    case 1:
 
+                                        ret['Total_geot_crit1']++;
+
+                                        break;
+                                    case 2:
+
+                                        ret['Total_geot_crit2']++;
+
+                                        break;
+                                    case 3:
+
+                                        ret['Total_geot_crit3']++;
+
+                                        break;
+                                    case 4:
+
+                                        ret['Total_geot_crit4']++;
+
+                                        break;
+                                    case 5:
+
+                                        ret['Total_geot_crit5']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                             if (ifdt.properties.grisknatural != undefined && ifdt.properties.grisknatural != [] &&
                                 ifdt.properties.grisknatural[i] != null) {
                                 var risknathaz_lof = ifdt.properties.grisknatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.grisknatural[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'geot', 'nat');
+                                switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                    case 1:
+                                        ret['Total_num_grisknat1']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
 
-                            }
-                            if (ifdt.properties.griskphysical != undefined && ifdt.properties.griskphysical != [] &&
-                                ifdt.properties.griskphysical[i] != null) {
-                                var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
-                                var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
-                                ret = budgetModule.nInterventions(ret, riskphy_lof, riskphy_cons, 'geot', 'phy');
 
-                            }
-                            if (ifdt.properties.gcondition != undefined && ifdt.properties.gcondition != [] &&
-                                ifdt.properties.gcondition[i] != null) {
+                                        break;
+                                    case 2:
+                                        ret['Total_num_grisknat2']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                var gcond = ifdt.properties.gcondition[i];
-                                // debug(gcond);
-                                ret = budgetModule.nLikelihood(ret, gcond, 'geot', 'phy');
 
+                                        break;
+                                    case 3:
+                                        ret['Total_num_grisknat3']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 4:
+                                        ret['Total_num_grisknat4']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 5:
+                                        ret['Total_num_grisknat5']++;
+                                        ret['Total_geot_interventions']++;
+                                        ret['Total_interventions']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                         }
 
-                        // selecciono investment por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rginvestmentrequired[i]);
-
-                        }
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null) {
-
-                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rginvestmentrequired[i]);
-
-                        }
 
                         if (ifdt.properties.grisknatural != undefined && ifdt.properties.grisknatural != [] &&
                             ifdt.properties.grisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.grisknatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.grisknatural[i].split('__')[1];
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null) {
 
-                            ret = budgetModule.investmentGeotNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.rginvestmentrequired[i]);
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_investment_Urban'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
 
-                        }
-                        if (ifdt.properties.griskphysical != undefined && ifdt.properties.griskphysical != [] &&
-                            ifdt.properties.griskphysical[i] != null) {
-                            var riskphy_lof = ifdt.properties.griskphysical[i].split('__')[0];
-                            var riskphy_cons = ifdt.properties.griskphysical[i].split('__')[1];
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_investment_MainRoad'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
 
-                            ret = budgetModule.investmentGeotPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.rginvestmentrequired[i]);
 
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_investment_Feeder'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_investment_Secondary'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_grisknat1'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_grisknat2'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_grisknat3'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_grisknat4'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_grisknat5'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.rginvestmentrequired[i] * 1.0;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
 
                     }
                 }
-                //////////////
                 // culverts //
                 //////////////
                 if (ifdt.properties.Cinvestmentrequired != undefined && ifdt.properties.Cinvestmentrequired != [] &&
@@ -641,86 +717,157 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                         ifdt.properties.Ccode[i] !== "") {
                         if (ifdt.properties.Ccode[i] !== Ccodeant) {
                             Ccodeant = ifdt.properties.Ccode[i];
-
-                            // selecciono number of elements por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
-
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-                                ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
-
-
-                            }
-
                             if (ifdt.properties.Ccriticality != undefined && ifdt.properties.Ccriticality != [] &&
                                 ifdt.properties.Ccriticality[i] != null) {
-                                ret = budgetModule.nInterventionsCriticality(ret, ifdt.properties.Ccriticality[i], 'culverts');
+                                switch (formulasService.criticalityRatingScale(ifdt.properties.Ccriticality[i])) {
+                                    case 1:
 
+                                        ret['Total_culverts_crit1']++;
+
+                                        break;
+                                    case 2:
+
+                                        ret['Total_culverts_crit2']++;
+
+                                        break;
+                                    case 3:
+
+                                        ret['Total_culverts_crit3']++;
+
+                                        break;
+                                    case 4:
+
+                                        ret['Total_culverts_crit4']++;
+
+                                        break;
+                                    case 5:
+
+                                        ret['Total_culverts_crit5']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                             if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
                                 ifdt.properties.CRISKnatural[i] != null) {
                                 var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
+                                switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                    case 1:
+                                        ret['Total_num_crisknat1']++;
+                                        ret['Total_culverts_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'culverts', 'nat');
 
-                            }
-                            if (ifdt.properties.CRISKphysical != undefined && ifdt.properties.CRISKphysical != [] &&
-                                ifdt.properties.CRISKphysical[i] != null) {
-                                var riskphyz_lof = ifdt.properties.CRISKphysical[i].split('__')[0];
-                                var riskphy_cons = ifdt.properties.CRISKphysical[i].split('__')[1];
+                                        break;
+                                    case 2:
+                                        ret['Total_num_crisknat2']++;
+                                        ret['Total_culverts_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                ret = budgetModule.nInterventions(ret, riskphyz_lof, riskphy_cons, 'culverts', 'phy');
 
-                            }
-                            if (ifdt.properties.Ccondition != undefined && ifdt.properties.Ccondition != [] &&
-                                ifdt.properties.Ccondition[i] != null) {
+                                        break;
+                                    case 3:
+                                        ret['Total_num_crisknat3']++;
+                                        ret['Total_culverts_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                var Ccond = ifdt.properties.Ccondition[i];
-                                // debug(Ccond);
-                                ret = budgetModule.nLikelihood(ret, Ccond, 'culverts', 'phy');
 
+                                        break;
+                                    case 4:
+                                        ret['Total_num_crisknat4']++;
+                                        ret['Total_culverts_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 5:
+                                        ret['Total_num_crisknat5']++;
+                                        ret['Total_culverts_interventions']++;
+                                        ret['Total_interventions']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                         }
 
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null) {
 
-                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.Cinvestmentrequired[i]);
-
-                        }
-                        // selecciono investment por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.Cinvestmentrequired[i]);
-
-                        }
                         if (ifdt.properties.CRISKnatural != undefined && ifdt.properties.CRISKnatural != [] &&
                             ifdt.properties.CRISKnatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.CRISKnatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.CRISKnatural[i].split('__')[1];
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null) {
 
-                            ret = budgetModule.investmentCulvertsNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.Cinvestmentrequired[i]);
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_investment_Urban'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_investment_MainRoad'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
 
 
-                        }
-                        if (ifdt.properties.CRISKphysical != undefined && ifdt.properties.CRISKphysical != [] &&
-                            ifdt.properties.CRISKphysical[i] != null) {
-                            var riskphy_lof = ifdt.properties.CRISKphysical[i].split('__')[0];
-                            var riskphy_cons = ifdt.properties.CRISKphysical[i].split('__')[1];
-
-                            ret = budgetModule.investmentCulvertsPhysical(ret, riskphy_lof, riskphy_cons, ifdt.properties.Cinvestmentrequired[i]);
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_investment_Feeder'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
 
 
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_investment_Secondary'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_crisknat1'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_crisknat2'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_crisknat3'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_crisknat4'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_crisknat5'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.Cinvestmentrequired[i] * 1.0;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
 
 
                     }
                 }
-                /////////////
                 // bridges //
                 //////////////
                 if (ifdt.properties.binvestmentrequired != undefined && ifdt.properties.binvestmentrequired != [] &&
@@ -733,166 +880,350 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
                             // el CODE solo debe contabilizar 1 activo
                             // pero para el caso del investment debe contabilizar TODOS los puntos
                             bcodeant = ifdt.properties.bcode[i];
-                            // selecciono number of elements por Parish
-                            if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                                ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                                ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
 
-                            }
-                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                                ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-                                ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
-
-                            }
                             if (ifdt.properties.bcriticality != undefined && ifdt.properties.bcriticality != [] &&
                                 ifdt.properties.bcriticality[i] != null) {
-                                ret = budgetModule.nInterventionsCriticality(ret, ifdt.properties.bcriticality[i], 'bridges');
+                                switch (formulasService.criticalityRatingScale(ifdt.properties.bcriticality[i])) {
+                                    case 1:
+
+                                        ret['Total_bridges_crit1']++;
+
+                                        break;
+                                    case 2:
+
+                                        ret['Total_bridges_crit2']++;
+
+                                        break;
+                                    case 3:
+
+                                        ret['Total_bridges_crit3']++;
+
+                                        break;
+                                    case 4:
+
+                                        ret['Total_bridges_crit4']++;
+
+                                        break;
+                                    case 5:
+
+                                        ret['Total_bridges_crit5']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
 
                             if (ifdt.properties.brisknatural != undefined && ifdt.properties.brisknatural != [] &&
                                 ifdt.properties.brisknatural[i] != null) {
                                 var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
                                 var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
+                                switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                    case 1:
+                                        ret['Total_num_brisknat1']++;
+                                        ret['Total_bridges_interventions']++;
+                                        ret['Total_interventions']++;
 
-                                ret = budgetModule.nInterventions(ret, risknathaz_lof, risknathaz_cons, 'bridges', 'nat');
+
+                                        break;
+                                    case 2:
+                                        ret['Total_num_brisknat2']++;
+                                        ret['Total_bridges_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 3:
+                                        ret['Total_num_brisknat3']++;
+                                        ret['Total_bridges_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 4:
+                                        ret['Total_num_brisknat4']++;
+                                        ret['Total_bridges_interventions']++;
+                                        ret['Total_interventions']++;
+
+
+                                        break;
+                                    case 5:
+                                        ret['Total_num_brisknat5']++;
+                                        ret['Total_bridges_interventions']++;
+                                        ret['Total_interventions']++;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
-                            if (ifdt.properties.briskphysical != undefined && ifdt.properties.briskphysical != [] &&
-                                ifdt.properties.briskphysical[i] != null) {
-                                var riskphyhaz_lof = ifdt.properties.briskphysical[i].split('__')[0];
-                                var riskphyhaz_cons = ifdt.properties.briskphysical[i].split('__')[1];
-
-                                ret = budgetModule.nInterventions(ret, riskphyhaz_lof, riskphyhaz_cons, 'bridges', 'phy');
-                            }
-                            if (ifdt.properties.bcondition != undefined && ifdt.properties.bcondition != [] &&
-                                ifdt.properties.bcondition[i] != null) {
-
-                                var bcond = ifdt.properties.bcondition[i];
-                                // debug(bcond);
-                                ret = budgetModule.nLikelihood(ret, bcond, 'bridges', 'phy');
-
-                            }
-
-                        }
-                        // selecciono investment por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.binvestmentrequired[i]);
-
-                        }
-                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                            ifdt.properties.rcategory[i] != null) {
-
-                            ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.binvestmentrequired[i]);
-
                         }
 
-                        /*
-                        RISK
-                        */
+
 
                         if (ifdt.properties.brisknatural != undefined && ifdt.properties.brisknatural != [] &&
                             ifdt.properties.brisknatural[i] != null) {
                             var risknathaz_lof = ifdt.properties.brisknatural[i].split('__')[0];
                             var risknathaz_cons = ifdt.properties.brisknatural[i].split('__')[1];
 
+                            if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                                ifdt.properties.rcategory[i] != null) {
 
-                            ret = budgetModule.investmentBridgesNatural(ret, risknathaz_lof, risknathaz_cons, ifdt.properties.binvestmentrequired[i]);
+                                switch (ifdt.properties.rcategory[i]) {
+                                    case 'Urban':
+                                        ret['Total_investment_Urban'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                        break;
+                                    case 'Main Road':
+                                        ret['Total_investment_MainRoad'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+
+                                        break;
+                                    case 'Feeder':
+                                        ret['Total_investment_Feeder'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+
+                                        break;
+                                    case 'Secondary':
+                                        ret['Total_investment_Secondary'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+
+                                        break;
+
+
+                                    default:
+                                        break;
+                                }
+                            }
+                            switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                                case 1:
+                                    ret['Total_investment_brisknat1'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                    break;
+                                case 2:
+                                    ret['Total_investment_brisknat2'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                    break;
+                                case 3:
+                                    ret['Total_investment_brisknat3'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                    break;
+                                case 4:
+                                    ret['Total_investment_brisknat4'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                    break;
+                                case 5:
+                                    ret['Total_investment_brisknat5'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+                                    ret['Total_investment'] += ifdt.properties.binvestmentrequired[i] * 1.0;
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
-                        if (ifdt.properties.briskphysical != undefined && ifdt.properties.briskphysical != [] &&
-                            ifdt.properties.briskphysical[i] != null) {
-                            var riskphyhaz_lof = ifdt.properties.briskphysical[i].split('__')[0];
-                            var riskphyhaz_cons = ifdt.properties.briskphysical[i].split('__')[1];
-
-
-                            ret = budgetModule.investmentBridgesPhysical(ret, riskphyhaz_lof, riskphyhaz_cons, ifdt.properties.binvestmentrequired[i]);
-                        }
-
 
                     }
                 }
-
-                ////////////////
                 // pavements //
-                ///////////////
-                if (ifdt.properties.rinvestmentrequired != undefined && ifdt.properties.rinvestmentrequired != [] &&
-                    ifdt.properties.rinvestmentrequired[i] != null) {
+                //////////////
+                if (ifdt.properties.rinvestmentrequired != undefined && ifdt.properties.rinvestmentrequired != [] && ifdt.properties.rinvestmentrequired[i] != null) {
                     if (!newinterv) {
                         newinterv = true;
                         ret['Total_interventions']++;
-                        ret['Total_interventions_phy']++;
                         ret['Total_roads_interventions']++;
-
-                        // selecciono number of elements por Parish
-                        if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                            ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                            ret = budgetModule.nRoadsDistrict(ret, ifdt.properties.district[i]);
-
-                        }
                         if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
                             ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-                            ret = budgetModule.nRoadsCategory(ret, ifdt.properties.rcategory[i]);
+
+                            switch (ifdt.properties.rcategory[i]) {
+                                case 'Urban':
+                                    ret['Total_roads_interventions_Urban']++;
+
+                                    break;
+                                case 'Main Road':
+                                    ret['Total_roads_interventions_MainRoad']++;
 
 
+                                    break;
+                                case 'Feeder':
+                                    ret['Total_roads_interventions_Feeder']++;
+
+
+                                    break;
+                                case 'Secondary':
+                                    ret['Total_roads_interventions_Secondary']++;
+
+
+                                    break;
+
+
+                                default:
+                                    break;
+                            }
                         }
-                    }
-
-                    if (ifdt.properties.rcriticality != undefined && ifdt.properties.rcriticality != [] &&
-                        ifdt.properties.rcriticality[i] != null) {
-
-                        ret = budgetModule.investmentKmCriticality(ret, ifdt.properties.rcriticality[i], ifdt.geometry.coordinates[i - 1],
-                            ifdt.geometry.coordinates[i], i);
-
-                    }
-                    if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
-                        ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
-
-                        ret = budgetModule.investmentCategory(ret, ifdt.properties.rcategory[i], ifdt.properties.rinvestmentrequired[i]);
-                    }
-
-                    // selecciono investment por Parish
-                    if (ifdt.properties.district != undefined && ifdt.properties.district != [] &&
-                        ifdt.properties.district[i] != null && ifdt.properties.district[i] !== "") {
-                        ret = budgetModule.investmentDistrict(ret, ifdt.properties.district[i], ifdt.properties.rinvestmentrequired[i]);
-
                     }
                     /*
                     Recojo los valores de RISK y los agrupo
                     */
+
+                    if (ifdt.properties.rcriticality != undefined && ifdt.properties.rcriticality != [] &&
+                        ifdt.properties.rcriticality[i] != null) {
+                        switch (formulasService.criticalityRatingScale(ifdt.properties.rcriticality[i])) {
+                            case 1:
+                                if (i > 0) {
+                                    ret['Total_km_crit1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                if (i > 0) {
+                                    ret['Total_km_crit2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 3:
+                                if (i > 0) {
+                                    ret['Total_km_crit3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 4:
+                                if (i > 0) {
+                                    ret['Total_km_crit4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 5:
+                                if (i > 0) {
+                                    ret['Total_km_crit5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
 
                     if (ifdt.properties.rrisknatural != undefined && ifdt.properties.rrisknatural != [] &&
                         ifdt.properties.rrisknatural[i] != null) {
 
                         var risknathaz_lof = ifdt.properties.rrisknatural[i].split('__')[0];
                         var risknathaz_cons = ifdt.properties.rrisknatural[i].split('__')[1];
+                        switch (formulasService.riskRatingScale(risknathaz_lof, risknathaz_cons)) {
+                            case 1:
+                                ret['Total_investment_risknat1'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                ret['Total_investment_risknat2'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
-                        ret = budgetModule.investmentNatural(ret, risknathaz_lof, risknathaz_cons,
-                            ifdt.properties.rinvestmentrequired[i], ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
+                                break;
+                            case 3:
+                                ret['Total_investment_risknat3'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
+                                break;
+                            case 4:
+                                ret['Total_investment_risknat4'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
+                                break;
+                            case 5:
+                                ret['Total_investment_risknat5'] += ifdt.properties.rinvestmentrequired[i];
+                                ret['Total_investment'] += ifdt.properties.rinvestmentrequired[i];
+                                if (i > 0) {
+                                    ret['Total_km_risknat5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
 
+                            default:
+                                debug('##### Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                                break;
+                        }
                     }
-
                     if (ifdt.properties.rriskphysical != undefined && ifdt.properties.rriskphysical != [] &&
                         ifdt.properties.rriskphysical[i] != null) {
 
-                        var riskphy_lof = ifdt.properties.rriskphysical[i].split('__')[0];
-                        var riskphy_cons = ifdt.properties.rriskphysical[i].split('__')[1];
+                        var riskphyhaz_lof = ifdt.properties.rriskphysical[i].split('__')[0];
+                        var riskphyhaz_cons = ifdt.properties.rriskphysical[i].split('__')[1];
+                        switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
+                            case 1:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy1'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+                            case 2:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy2'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
-                        ret = budgetModule.investmentPhysical(ret, riskphy_lof, riskphy_cons,
-                            ifdt.properties.rinvestmentrequired[i], ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
+                                break;
+                            case 3:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy3'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
 
+                                break;
+                            case 4:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy4'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+
+                                break;
+                            case 5:
+                                if (i > 0) {
+                                    ret['Total_km_riskphy5'] += services.calDIST(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i]);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                        if (ifdt.properties.rcategory != undefined && ifdt.properties.rcategory != [] &&
+                            ifdt.properties.rcategory[i] != null && ifdt.properties.rcategory[i] !== "") {
+
+                            switch (ifdt.properties.rcategory[i]) {
+                                case 'Urban':
+                                    ret['Total_investment_Urban'] += ifdt.properties.rinvestmentrequired[i];
+
+                                    break;
+                                case 'Main Road':
+                                    ret['Total_investment_MainRoad'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                    break;
+                                case 'Feeder':
+                                    ret['Total_investment_Feeder'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                    break;
+                                case 'Secondary':
+                                    ret['Total_investment_Secondary'] += ifdt.properties.rinvestmentrequired[i];
+
+
+                                    break;
+
+
+                                default:
+                                    break;
+                            }
+                        }
                     }
-                    // debug(ifdt.properties.rcondition);
-                    if (ifdt.properties.rcondition != undefined && ifdt.properties.rcondition != [] &&
-                        ifdt.properties.rcondition[i] != null) {
-
-                        var rcond = ifdt.properties.rcondition[i];
-                        // debug(rcond);
-                        ret = budgetModule.KmLikelihood(ret, rcond, ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], i);
-
-                    }
-
-
                 }
             }
         }
@@ -902,8 +1233,8 @@ router.get('/V1/get_budget_files/', function(req, res, next) {
 
 });
 /* GET JSON formulas listing. */
-router.get('/V1/consultas/', function(req, res, next) {
-    Infodatatrack.find().exec(function(err, ifdts) {
+router.get('/V1/consultas/', function (req, res, next) {
+    Infodatatrack.find().exec(function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -914,14 +1245,14 @@ router.get('/V1/consultas/', function(req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_filter_values/:filter', function(req, res, next) {
+router.post('/V1/get_filter_values/:filter', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
     var ret = {
         "result": "OK"
     };
-    Infodatatrack.distinct("properties." + req.params.filter).exec(function(err, filters) {
+    Infodatatrack.distinct("properties." + req.params.filter).exec(function (err, filters) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
@@ -938,7 +1269,7 @@ router.post('/V1/get_filter_values/:filter', function(req, res, next) {
 
 });
 /* POST update_field */
-router.post('/V1/update_field/', function(req, res, next) {
+router.post('/V1/update_field/', function (req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -953,7 +1284,7 @@ router.post('/V1/update_field/', function(req, res, next) {
     arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
-    Cost.findOne({}).exec(function(err, c) {
+    Cost.findOne({}).exec(function (err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -967,7 +1298,7 @@ router.post('/V1/update_field/', function(req, res, next) {
         }
         // debug(c);
         csave.updated_at = new Date();
-        csave.save(function(err, csaved) {
+        csave.save(function (err, csaved) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -979,7 +1310,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
 });
 /* POST update_budgets/ */
-router.post('/V1/update_budgets/', function(req, res, next) {
+router.post('/V1/update_budgets/', function (req, res, next) {
     debug('API /V1/update_budgets/');
     var postData = extend({}, req.body);
     var ret = {
@@ -989,7 +1320,7 @@ router.post('/V1/update_budgets/', function(req, res, next) {
     // Caso de Pavements
 
 
-    Cost.findOne({}).exec(function(err, c) {
+    Cost.findOne({}).exec(function (err, c) {
         if (err) {
             res.send(500, err.message);
         }
@@ -999,7 +1330,7 @@ router.post('/V1/update_budgets/', function(req, res, next) {
             "properties.rmaterial": 1,
             "properties.rinvestmentrequired": 1,
             "geometry.coordinates": 1
-        }).exec(async function(err, ifdts) {
+        }).exec(async function (err, ifdts) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -1049,7 +1380,7 @@ router.post('/V1/update_budgets/', function(req, res, next) {
                         "properties.rinvestmentrequired": rcosts
                     }
                 };
-                await Infodatatrack.update(conditions, query, function(err, iup) {
+                await Infodatatrack.update(conditions, query, function (err, iup) {
                     if (err) {
                         debug(err.message);
                     }
