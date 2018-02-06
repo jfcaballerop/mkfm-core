@@ -991,7 +991,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                 if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] &&
                                     ifdt.properties.Ccode[i] !== null &&
                                     ifdt.properties.Ccode[i] !== "") {
-                                    debug(ifdt.properties.Ccode);
+                                    // debug(ifdt.properties.Ccode);
                                     // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                     // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                     var numberOfScores = 0;
@@ -1024,6 +1024,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     }
 
                                     //  clearing required
+                                    if (ifdt.properties.Cclearing.length > 0) {
                                     for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
                                         // debug(score.toString.toUpperCase)
                                         if (score !== undefined && score !== null) {
@@ -1032,9 +1033,16 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.Cclearing.toString().toUpperCase().indexOf(score.toString().toUpperCase()) >= 0) {
                                                 totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
                                                 // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                            } else {
+
+                                                totalScoring *= 1;
                                             }
                                         }
                                     }
+                                } else {
+
+                                        totalScoring *= 0.98;
+                                }
                                     totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                     valueconditionsr.push(totalScoring);
                                     //debug(totalScoring + '\n');
@@ -1063,22 +1071,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                 _id: ifdt._id
             };
 
-            switch (form.formulaSpec[f].name) {
-                case 'Culverts':
                     var query = {
                     $set: {
                         "properties.Ccondition": valueconditionsr
                     }
                 }
-                    break;
-                
-                case 'Retaining_Walls':
-
-                    break;
-
-                default:
-                    break;
-            }
+                   
             await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
                     debug(err.message);
