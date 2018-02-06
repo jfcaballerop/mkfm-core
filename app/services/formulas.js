@@ -3,6 +3,34 @@ var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 var services = require(path.join(__dirname, './services'));
 
+
+exports.getRangeValues = function (scorerangeval) {
+    var operador = "";
+    var minval = 0;
+    var maxval = 0;
+    scorerangeval.indexOf('MIN') >= 0 ? operador = "MIN" : false;
+    scorerangeval.indexOf('MAY') >= 0 ? operador = "MAY" : false;
+    scorerangeval.indexOf('EQ') >= 0 ? operador = "EQ" : false;
+    switch (operador) {
+        case 'MIN':
+            minval = Number.MIN_VALUE;
+            maxval = scorerangeval.substr(scorerangeval.indexOf('MIN') + 3, scorerangeval.length - 1) * 1.0;
+            break;
+        case 'MAY':
+            maxval = Number.MAX_VALUE;
+            minval = scorerangeval.substr(scorerangeval.indexOf('MAY') + 3, scorerangeval.length - 1) * 1.0;
+            break;
+        case 'EQ':
+            maxval = scorerangeval.substr(scorerangeval.indexOf('EQ') + 2, scorerangeval.length - 1) * 1.0;
+            minval = scorerangeval.substr(0, scorerangeval.indexOf('EQ')) * 1.0;
+            break;
+
+        default:
+            break;
+    }
+
+    return [minval, maxval, operador]
+}
 exports.criticalityValue = function (in_val) {
 
     cscale = {
@@ -114,13 +142,13 @@ exports.criticality = function (type, formula, data) {
 
 exports.condition = function (type, formula, data) {
     // console.log('## formulas condition ##');
-    var retCondition = 1.0*1.0-1.0;
+    var retCondition = 1.0 * 1.0 - 1.0;
     console.log('\n\n------------------------------------------');
     debug(formula)
     console.log('\n\n------------------------------------------');
 
     weight = 1.0 * 1;
-    scoring = 0.0*1;
+    scoring = 0.0 * 1;
     for (var [l1key, level1] of Object.entries(formula)) {
         if (typeof level1 === 'object') {
             //console.log(l1key);
@@ -135,46 +163,76 @@ exports.condition = function (type, formula, data) {
 
                             for (var [l6key, level6] of Object.entries(level5)) {
                                 // console.log('level1.weight: ' + level1.weight);
-                                if (level1.weight !== undefined) { weight = level1.weight * 1;}
+                                if (level1.weight !== undefined) {
+                                    weight = level1.weight * 1;
+                                }
                                 // console.log('level1.scoring: ' + level1.scoring);
-                                if (level1.scoring !== undefined) { scoring = level1.scoring; lkey = l2key;}
+                                if (level1.scoring !== undefined) {
+                                    scoring = level1.scoring;
+                                    lkey = l2key;
+                                }
 
                                 // console.log('level2.weight: ' + level2.weight);
-                                if (level2.weight !== undefined) { weight = level2.weight * 1; }
+                                if (level2.weight !== undefined) {
+                                    weight = level2.weight * 1;
+                                }
                                 // console.log('level2.scoring: ' + level2.scoring);
-                                if (level2.scoring !== undefined) { scoring = level2.scoring; lkey = l3key;}
+                                if (level2.scoring !== undefined) {
+                                    scoring = level2.scoring;
+                                    lkey = l3key;
+                                }
 
                                 // console.log('level3.weight: ' + level3.weight);
-                                if (level3.weight !== undefined) { weight = level3.weight * 1; }
+                                if (level3.weight !== undefined) {
+                                    weight = level3.weight * 1;
+                                }
                                 // console.log('level3.scoring: ' + level3.scoring);
-                                if (level3.scoring !== undefined) { scoring = level3.scoring; lkey = l4key;}
+                                if (level3.scoring !== undefined) {
+                                    scoring = level3.scoring;
+                                    lkey = l4key;
+                                }
 
                                 // console.log('level4.weight: ' + level4.weight);
-                                if (level4.weight !== undefined) { weight = level4.weight * 1; }
+                                if (level4.weight !== undefined) {
+                                    weight = level4.weight * 1;
+                                }
                                 // console.log('level4.scoring: ' + level4.scoring);
-                                if (level4.scoring !== undefined) { scoring = level4.scoring; lkey = l5key;}
+                                if (level4.scoring !== undefined) {
+                                    scoring = level4.scoring;
+                                    lkey = l5key;
+                                }
 
                                 // console.log('level5.weight: ' + level5.weight);
-                                if (level5.weight !== undefined) { weight = level5.weight * 1; }
+                                if (level5.weight !== undefined) {
+                                    weight = level5.weight * 1;
+                                }
                                 // console.log('level5.scoring: ' + level5.scoring);
-                                if (level5.scoring !== undefined) { scoring = level5.scoring; lkey = l6key;}
+                                if (level5.scoring !== undefined) {
+                                    scoring = level5.scoring;
+                                    lkey = l6key;
+                                }
 
                                 // console.log('level6.weight: ' + level6.weight);
-                                if (level6.weight !== undefined) { weight = level6.weight * 1; }
+                                if (level6.weight !== undefined) {
+                                    weight = level6.weight * 1;
+                                }
                                 // console.log('level6.scoring: ' + level6.scoring);
-                                if (level6.scoring !== undefined) { scoring = level6.scoring; lkey = l7key;}
-                                
+                                if (level6.scoring !== undefined) {
+                                    scoring = level6.scoring;
+                                    lkey = l7key;
+                                }
 
-          // for (var [l2key, level2] of Object.entries(level1)) {
-            //     if (typeof level2 === 'object') {
-            //         //console.log(l2key);
-            //         if (data[l2key] != undefined && data[l2key] != null) {
-            //             if (level2.type === 'select') {
-            //                 val += level2.scoring[data[l2key]] * level2.weight / 100;
-            //             } else if (level2.type === 'range') {
-            //                 for (var [rk, rango] of Object.entries(level2.scoring)) {
 
-                                if (scoring !== undefined && weight !== undefined){
+                                // for (var [l2key, level2] of Object.entries(level1)) {
+                                //     if (typeof level2 === 'object') {
+                                //         //console.log(l2key);
+                                //         if (data[l2key] != undefined && data[l2key] != null) {
+                                //             if (level2.type === 'select') {
+                                //                 val += level2.scoring[data[l2key]] * level2.weight / 100;
+                                //             } else if (level2.type === 'range') {
+                                //                 for (var [rk, rango] of Object.entries(level2.scoring)) {
+
+                                if (scoring !== undefined && weight !== undefined) {
                                     for (var [rk, rango] of Object.entries(scoring)) {
                                         // console.log('weight: ' + weight);
                                         // console.log('scoring: ' + scoring[rk]);
@@ -216,7 +274,7 @@ exports.condition = function (type, formula, data) {
 
             }
         }
-        if (Number(val) == val && Number(weight) == weight) { 
+        if (Number(val) == val && Number(weight) == weight) {
             retCondition += val * weight / 100;
             // console.log('retCondition: ' + parseFloat(retCondition));
         }
@@ -227,9 +285,9 @@ exports.condition = function (type, formula, data) {
 
 
 
-    console.log('retCondition: ' + retCondition*100);
+    console.log('retCondition: ' + retCondition * 100);
     // return retCondition * 100;
-    return retCondition*100;
+    return retCondition * 100;
 
 }
 
@@ -273,6 +331,68 @@ exports.criticalityRatingScale = function (lof) {
     crit_rating['80-100'] = 5;
 
     ret = crit_rating[lofv];
+
+    return ret;
+}
+exports.LikelihoodofFailureRatingScale = function (cond_letter) {
+    var ret = 1;
+    var lof_rating = [];
+    // debug('cond_letter ' + cond_letter);
+    if (cond_letter === "E") {
+        lofv = 10;
+    } else if (cond_letter === "D") {
+        lofv = 30;
+    } else if (cond_letter === "C") {
+        lofv = 50;
+    } else if (cond_letter === "B") {
+        lofv = 70;
+    } else if (cond_letter === "A") {
+        lofv = 90;
+    }
+    lof = 100 - lofv;
+    if (lof >= 0 && lof < 20) {
+        lofv = '0-20';
+    } else if (lof >= 20 && lof < 40) {
+        lofv = '20-40';
+    } else if (lof >= 40 && lof < 60) {
+        lofv = '40-60';
+    } else if (lof >= 60 && lof < 80) {
+        lofv = '60-80';
+    } else if (lof >= 80 && lof <= 100) {
+        lofv = '80-100';
+    }
+    lof_rating['0-20'] = [];
+    lof_rating['0-20'] = 1;
+    lof_rating['20-40'] = [];
+    lof_rating['20-40'] = 2;
+    lof_rating['40-60'] = [];
+    lof_rating['40-60'] = 3;
+    lof_rating['60-80'] = [];
+    lof_rating['60-80'] = 4;
+    lof_rating['80-100'] = [];
+    lof_rating['80-100'] = 5;
+
+    ret = lof_rating[lofv];
+
+    return ret;
+}
+exports.conditionValueScale = function (condv) {
+    var ret = 1;
+    var cond_rating = [];
+    // debug('cond ' + cond);
+
+    cond_rating['A'] = [];
+    cond_rating['A'] = 1;
+    cond_rating['B'] = [];
+    cond_rating['B'] = 2;
+    cond_rating['C'] = [];
+    cond_rating['C'] = 3;
+    cond_rating['D'] = [];
+    cond_rating['D'] = 4;
+    cond_rating['E'] = [];
+    cond_rating['E'] = 5;
+
+    ret = cond_rating[condv];
 
     return ret;
 }

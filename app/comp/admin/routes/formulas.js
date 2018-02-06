@@ -284,7 +284,143 @@ router.get('/V1/formulas/', function (req, res, next) {
     });
 
 });
+/* POST update_formulas_tracks_response */
+/**
+ * Metodo para modificar los valores devueltos por las formulas
+ */
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
+    debug('API /V1/update_formulas_tracks_response/');
+    var postData = extend({}, req.body);
+    var tracksUpdated = 0;
+    var ret = {
+        "result": "OK",
+        "tracksUpdated": 0
+    };
+    debug(postData);
+    var form;
+    var formula = Object.keys(postData)[0];
+    debug(formula);
+    await Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        form = f[0];
+    });
+    // debug(form);
+    var wherearr = [];
+    for (var fv of form.formulaSpec) {
+        if (wherearr.indexOf(fv.WEIGHTS.dbfield) < 0 && fv.WEIGHTS.dbfield !== '--')
+            wherearr.push(fv.WEIGHTS.dbfield);
+    }
+    var selectjson = {
+        "geometry.coordinates": 1,
+        properties: []
+    };
+    for (var w of wherearr) {
+        selectjson.properties[w] = 1;
+    }
+    debug(selectjson);
+    // debug(form);
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        // Arr de valores a updatear
+        var valuerresphazardarr = [];
+        var valuebresphazardarr = [];
 
+        for (var ifdt of ifdts) {
+            //debug(ifdt._id);
+            // debug(ifdt.geometry.coordinates);
+            tracksUpdated++;
+            var bcodeant = "";
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                //debug(form.formulaSpec.length);
+                var valuerresphazard = 0;
+                var valuebresphazard = 0;
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+                    switch (form.formulaSpec[f]["ASSET TYPE"]) {
+                        case 'Pavement':
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                valuerresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                // debug(form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                //     form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
+                            }
+
+                            break;
+                        case 'Bridges':
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties.bcode != undefined && ifdt.properties.bcode != [] &&
+                                ifdt.properties.bcode[i] != undefined && ifdt.properties.bcode[i] != null && ifdt.properties.bcode[i] !== "") {
+
+
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                            form.formulaSpec[f].score.value + ' valuebresphazard ' + valuebresphazard);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] != undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        var operador = "";
+
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
+                                        if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
+                                            ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
+                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            debug(minval + ' ' + operador + ' ' + maxval);
+                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                                form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        }
+
+                                    }
+                                }
+
+                            }
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                valuerresphazardarr[i] = valuerresphazard;
+                valuebresphazardarr[i] = valuebresphazard;
+            }
+            var conditions = {
+                _id: ifdt._id
+            };
+            var query = {
+                $set: {
+                    "properties.rresphazard": valuerresphazardarr,
+                    "properties.bresphazard": valuebresphazardarr
+                }
+            };
+            await Infodatatrack.update(conditions, query, function (err, iup) {
+                if (err) {
+                    debug(err.message);
+                }
+                // debug(iup);
+
+            });
+        }
+
+    });
+    ret.tracksUpdated = tracksUpdated;
+    debug(tracksUpdated);
+    res.status(200).jsonp(ret);
+
+});
 
 /* POST update_formulas_tracks */
 /**
