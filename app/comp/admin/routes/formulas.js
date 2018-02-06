@@ -995,6 +995,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                     // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                     var numberOfScores = 1;
+                                    if (ifdt.properties.CDamages.length>0){
                                     for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                         // debug(score.toString.toUpperCase)
                                         if (score !== undefined && score !== null) {
@@ -1009,7 +1010,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
                                         }
                                     }
-
+                                    } else {
+                                        totalScoring = 100;
+                                    }
                                     totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
                                     // debug(totalScoring);
 
