@@ -1071,6 +1071,18 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                 // debug(iup);  
 
             });
+            j=0;
+            if (false) {
+                j = 0;
+                console.log(valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], );
+                debug(numberOfScores + ', ' + totalScoring);
+                debug(ifdt._id);
+                // while (true) { ; }
+            }
+            if (ifdt._id.toString() === "59d1e9f55e8fcf0dac2a4c11"){
+                console.log(valueconditionsr.toString());
+            }
+
 
 
 
