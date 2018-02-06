@@ -384,7 +384,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
             //debug(ifdt._id);
             // debug(ifdt.geometry.coordinates);
             tracksUpdated++;
-
+            var bcodeant = "";
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                 //debug(form.formulaSpec.length);
                 var valuerresphazard = 0;
@@ -404,7 +404,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.bcode != undefined && ifdt.properties.bcode != [] &&
                                 ifdt.properties.bcode[i] != undefined && ifdt.properties.bcode[i] != null && ifdt.properties.bcode[i] !== "") {
-                                // TODO: Añadir bcodeant para revisar varios assets into same track
+
+
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
@@ -415,31 +416,13 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] != undefined) {
                                         var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
                                         var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
-                                        // TODO: sacar operador para el tipo NUM-OPERADOR-NUM y crear switch con los operadores.
-
                                         var operador = "";
-                                        var minval = 0;
-                                        var maxval = 0;
-                                        scorerangeval.indexOf('MIN') >= 0 ? operador = "MIN" : false;
-                                        scorerangeval.indexOf('MAY') >= 0 ? operador = "MAY" : false;
-                                        scorerangeval.indexOf('EQ') >= 0 ? operador = "EQ" : false;
-                                        switch (operador) {
-                                            case 'MIN':
-                                                minval = Number.MIN_VALUE;
-                                                maxval = scorerangeval.substr(scorerangeval.indexOf('MIN') + 3, scorerangeval.length - 1) * 1.0;
-                                                break;
-                                            case 'MAY':
-                                                maxval = Number.MAX_VALUE;
-                                                minval = scorerangeval.substr(scorerangeval.indexOf('MAY') + 3, scorerangeval.length - 1) * 1.0;
-                                                break;
-                                            case 'EQ':
-                                                maxval = scorerangeval.substr(scorerangeval.indexOf('EQ') + 2, scorerangeval.length - 1) * 1.0;
-                                                minval = scorerangeval.substr(0, scorerangeval.indexOf('EQ')) * 1.0;
-                                                break;
 
-                                            default:
-                                                break;
-                                        }
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
                                             debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
@@ -451,6 +434,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                     }
                                 }
+
                             }
 
                             break;
