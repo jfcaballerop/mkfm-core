@@ -492,7 +492,89 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                         case 'Earthworks':
                             // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode.length > 0 &&
-                                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "" &&
+                                ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 &&
+                                ifdt.properties.gtype[i] !== undefined && ifdt.properties.gtype[i] !== null && ifdt.properties.gtype[i] !== "" &&
+                                ifdt.properties.gtype[i] !== "Cutting" && ifdt.properties.gtype[i] !== "Embankment") {
+
+
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        // debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        var operador = "";
+
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
+                                        if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
+                                            ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // debug(minval + ' ' + operador + ' ' + maxval);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        }
+
+                                    }
+                                }
+
+                            }
+                            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2.length > 0 &&
+                                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "" &&
+                                ifdt.properties.gtype2 !== undefined && ifdt.properties.gtype2.length > 0 &&
+                                ifdt.properties.gtype2[i] !== undefined && ifdt.properties.gtype2[i] !== null && ifdt.properties.gtype2[i] !== "" &&
+                                ifdt.properties.gtype2[i] !== "Cutting" && ifdt.properties.gtype2[i] !== "Embankment") {
+
+
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        // debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        //     form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        var operador = "";
+
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
+                                        if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
+                                            ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // debug(minval + ' ' + operador + ' ' + maxval);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            //     form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        }
+
+                                    }
+                                }
+
+                            }
+
+                            break;
+
+                        case 'Retaining walls':
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode.length > 0 &&
+                                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "" &&
+                                ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 &&
+                                ifdt.properties.gtype[i] !== undefined && ifdt.properties.gtype[i] !== null && ifdt.properties.gtype[i] !== "" &&
+                                ifdt.properties.gtype[i] !== "Retaining_walls") {
 
 
                                 if (form.formulaSpec[f].score.type === "select") {
@@ -526,7 +608,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                             }
                             if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2.length > 0 &&
-                                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "" &&
+                                ifdt.properties.gtype2 !== undefined && ifdt.properties.gtype2.length > 0 &&
+                                ifdt.properties.gtype2[i] !== undefined && ifdt.properties.gtype2[i] !== null && ifdt.properties.gtype2[i] !== "" &&
+                                ifdt.properties.gtype2[i] !== "Retaining_walls") {
 
 
                                 if (form.formulaSpec[f].score.type === "select") {
@@ -561,8 +646,6 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             }
 
                             break;
-
-
 
                         default:
                             break;
