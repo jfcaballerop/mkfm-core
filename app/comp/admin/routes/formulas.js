@@ -855,8 +855,20 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                 totalScoring *= (-0.1 * numberOfScores)/3+1;
                             }
 
+                            //  clearing required
+                            for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
+                                // debug(score.toString.toUpperCase)
+                                if (score !== undefined) {
+                                    // debug('score ' + score.toString().toUpperCase());
+                                    // debug('ifdt.Cclearing ' + score.toString().toUpperCase());
+                                    if (ifdt.properties.Cclearing.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
+                                        totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score] 
+                                        // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                    }
+                                }
+                            }
 
-
+                            debug(totalScoring + '\n');
 
                             break;
 
