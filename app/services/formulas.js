@@ -220,7 +220,7 @@ exports.condition = function (type, formula, data) {
             retCondition += val * weight / 100;
             // console.log('retCondition: ' + parseFloat(retCondition));
         }
-           
+
         // }
 
     }
