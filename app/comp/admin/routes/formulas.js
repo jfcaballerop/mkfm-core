@@ -366,6 +366,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     //add codes asset
     wherearr.push('bcode');
     wherearr.push('Ccode');
+    wherearr.push('gcode');
+    wherearr.push('gcode2');
 
     var selectjson = {
         "geometry.coordinates": 1,
@@ -384,6 +386,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
         var valuerresphazardarr = [];
         var valuebresphazardarr = [];
         var valueCresphazardarr = [];
+        var valuegresphazardarr = [];
+        var valuegresphazardarr2 = [];
 
         for (var ifdt of ifdts) {
             //debug(ifdt._id);
@@ -395,6 +399,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                 var valuerresphazard = 0;
                 var valuebresphazard = 0;
                 var valueCresphazard = 0;
+                var valuegresphazard = 0;
+                var valuegresphazard2 = 0;
 
                 for (var f = 0; f < form.formulaSpec.length; f++) {
                     switch (form.formulaSpec[f]["ASSET TYPE"]) {
@@ -416,8 +422,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
-                                            form.formulaSpec[f].score.value + ' valuebresphazard ' + valuebresphazard);
+                                        // debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        //form.formulaSpec[f].score.value + ' valuebresphazard ' + valuebresphazard);
                                     }
                                 } else {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
@@ -432,10 +438,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            debug(minval + ' ' + operador + ' ' + maxval);
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
-                                                form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // debug(minval + ' ' + operador + ' ' + maxval);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            //form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
 
@@ -447,15 +453,53 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             break;
                         case 'Cross drainage':
                             // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
-                            if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] &&
+                            if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode.length > 0 &&
                                 ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
 
 
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
-                                        valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        debug(ifdt.properties.Ccode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
-                                            form.formulaSpec[f].score.value + ' valuebresphazard ' + valuebresphazard);
+                                        valueCresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        //debug(ifdt.properties.Ccode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        //  form.formulaSpec[f].score.value + ' valueCresphazard ' + valueCresphazard);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        var operador = "";
+
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
+                                        if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
+                                            ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
+                                            //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            //debug(minval + ' ' + operador + ' ' + maxval);
+                                            //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            valueCresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        }
+
+                                    }
+                                }
+
+                            }
+
+                            break;
+                        case 'Earthworks':
+                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode.length > 0 &&
+                                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+
+
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                            form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
                                     }
                                 } else {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
@@ -474,7 +518,41 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                             debug(minval + ' ' + operador + ' ' + maxval);
                                             debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                                 form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
-                                            valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                            valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        }
+
+                                    }
+                                }
+
+                            }
+                            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2.length > 0 &&
+                                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+
+
+                                if (form.formulaSpec[f].score.type === "select") {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
+                                        valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
+                                        debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                            form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
+                                    }
+                                } else {
+                                    if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
+                                        var indexscorerangeval = form.formulaSpec[f].score.fieldname.lastIndexOf('__');
+                                        var scorerangeval = form.formulaSpec[f].score.fieldname.substr(indexscorerangeval + 2, form.formulaSpec[f].score.fieldname.length);
+                                        var operador = "";
+
+
+                                        minval = formulasService.getRangeValues(scorerangeval)[0];
+                                        maxval = formulasService.getRangeValues(scorerangeval)[1];
+                                        operador = formulasService.getRangeValues(scorerangeval)[2];
+
+                                        if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
+                                            ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
+                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            debug(minval + ' ' + operador + ' ' + maxval);
+                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                                form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
 
                                     }
@@ -492,6 +570,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                 }
                 valuerresphazardarr[i] = valuerresphazard;
                 valuebresphazardarr[i] = valuebresphazard;
+                valueCresphazardarr[i] = valueCresphazard;
+                valuegresphazardarr[i] = valuegresphazard;
+                valuegresphazardarr2[i] = valuegresphazard2;
             }
             var conditions = {
                 _id: ifdt._id
@@ -499,7 +580,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
             var query = {
                 $set: {
                     "properties.rresphazard": valuerresphazardarr,
-                    "properties.bresphazard": valuebresphazardarr
+                    "properties.bresphazard": valuebresphazardarr,
+                    "properties.gresphazard": valuegresphazardarr,
+                    "properties.gresphazard2": valuegresphazardarr2,
+                    "properties.CRespHazard": valueCresphazardarr
                 }
             };
             await Infodatatrack.update(conditions, query, function (err, iup) {
