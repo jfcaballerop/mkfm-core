@@ -972,23 +972,28 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         case 'Culverts':
                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                             // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
-                            var numberOfScores = 1;
+                            var numberOfScores = 0;
                             for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                 // debug(score.toString.toUpperCase)
                                 if (score !== undefined && score !== null) {
                                     // debug('score ' + score.toString().toUpperCase());
                                     // debug('ifdt.CDamages ' + score.toString().toUpperCase());
-                                    if (ifdt.properties.CDamages.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
+                                    if (ifdt.properties.CDamages[i] !== undefined && ifdt.properties.CDamages[i].length>0){
+                                        // debug(ifdt.properties.CDamages[i] + ' / ' + ifdt.properties.CDamages[i].toString().toUpperCase() + ' / ' + score.toString().toUpperCase());
+                                        // debug(ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(score.toString().toUpperCase()));
+                                    
+                                        if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(score.toString().toUpperCase()) > -1) {
                                         totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                         totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
                                         esnull=true;
                                         numberOfScores++;
+                                        // debug(totalScoring);
                                         // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                    }
                                     }
                                 }
                             }
 
-                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
                             // debug(totalScoring);
 
                             if ( numberOfScores > 2 ) {
@@ -1011,8 +1016,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                 }
                             }
 
-                            debug(totalScoring + '\n');
+                            // debug(totalScoring + '\n');
 
+                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                            valueconditionsr.push(totalScoring);
                             break;
 
                         case 'Retaining_Walls':
@@ -1024,16 +1031,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     }
                 }
 
-                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                valueconditionsr.push(totalScoring);
-                if (totalScoring !== null){
-                    debug
-                }
+                // valueconditionsr.push(Math.random());
+                // debug(valueconditionsr);
             }
 
-            if (esnull) {
-                debug(valueconditionsr);
-            }
 
 
             var conditions = {
@@ -1051,6 +1052,18 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                 // debug(iup);  
 
             });
+            j=0;
+            if (false) {
+                j = 0;
+                console.log(valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], );
+                debug(numberOfScores + ', ' + totalScoring);
+                debug(ifdt._id);
+                // while (true) { ; }
+            }
+            if (ifdt._id.toString() === "59d1e9f55e8fcf0dac2a4c11"){
+                console.log(valueconditionsr.toString());
+            }
+
 
 
 
