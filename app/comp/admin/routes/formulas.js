@@ -828,16 +828,20 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     switch (form.formulaSpec[f].name) {
                         case 'Culverts':
                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                            debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
 
-                            for (score in form.formulaSpec[f].MainFactor.Damages.scoring){
-                                if (score =='hola'){}
+                            for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
+                                // debug(score.toString.toUpperCase)
+                                if (score !== undefined) {
+                                    // debug('score ' + score.toString().toUpperCase());
+                                    // debug('ifdt.CDamages ' + score.toString().toUpperCase());
+                                    if (ifdt.properties.CDamages.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
+                                    debug('score ' + score);
+                                    }
+                                }
+                                }
 
-                            }
-
-
-
-
+                            
 
                             break;
 
