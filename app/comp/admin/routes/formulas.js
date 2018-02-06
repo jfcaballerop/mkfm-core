@@ -920,6 +920,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
+    var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
@@ -950,7 +951,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     }
     debug(selectjson);
     // debug(form);
-    Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+    // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+        tracksUpdated++;
         if (err) {
             res.send(500, err.message);
         }
@@ -958,14 +961,17 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         for (var ifdt of ifdts) {
             //debug(ifdt._id);
             // debug(ifdt.geometry.coordinates);
+            valueconditionsr=[];
+            esnull=false;
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+
                 //debug(form.formulaSpec.length);
                 for (var f = 0; f < form.formulaSpec.length; f++) {
+                    var totalScoring = Number.MAX_VALUE;
                     switch (form.formulaSpec[f].name) {
                         case 'Culverts':
                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                             // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
-                            var totalScoring = Number.MAX_VALUE;
                             var numberOfScores = 1;
                             for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                 // debug(score.toString.toUpperCase)
@@ -975,6 +981,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (ifdt.properties.CDamages.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
                                         totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                         totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
+                                        esnull=true;
                                         numberOfScores++;
                                         // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                     }
@@ -982,7 +989,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             }
 
                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                            debug(totalScoring);
+                            // debug(totalScoring);
 
                             if ( numberOfScores > 2 ) {
                                 totalScoring *= 0.9;
@@ -1008,18 +1015,53 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                             break;
 
-                        case 'Culverts':
+                        case 'Retaining_Walls':
 
+                            break;
 
                         default:
                             break;
                     }
                 }
+
+                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                valueconditionsr.push(totalScoring);
+                if (totalScoring !== null){
+                    debug
+                }
             }
+
+            if (esnull) {
+                debug(valueconditionsr);
+            }
+
+
+            var conditions = {
+                _id: ifdt._id
+            };
+            var query = {
+                $set: {
+                    "properties.Ccondition": valueconditionsr
+                }
+            }
+            await Infodatatrack.update(conditions, query, function (err, iup) {
+                if (err) {
+                    debug(err.message);
+                }
+                // debug(iup);  
+
+            });
+
+
+
+
         }
 
+        // res.status(200).jsonp(ret);
+        });
+        ret.tracksUpdated = tracksUpdated;
+        debug(tracksUpdated);
         res.status(200).jsonp(ret);
-    });
 
 
 });
