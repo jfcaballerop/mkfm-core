@@ -994,7 +994,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     debug(ifdt.properties.Ccode);
                                     // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                     // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
-                                    var numberOfScores = 1;
+                                    var numberOfScores = 0;
                                     if (ifdt.properties.CDamages.length>0){
                                     for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                         // debug(score.toString.toUpperCase)
@@ -1062,10 +1062,22 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             var conditions = {
                 _id: ifdt._id
             };
-            var query = {
-                $set: {
-                    "properties.Ccondition": valueconditionsr
+
+            switch (form.formulaSpec[f].name) {
+                case 'Culverts':
+                    var query = {
+                    $set: {
+                        "properties.Ccondition": valueconditionsr
+                    }
                 }
+                    break;
+                
+                case 'Retaining_Walls':
+
+                    break;
+
+                default:
+                    break;
             }
             await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
@@ -1074,17 +1086,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                 // debug(iup);  
 
             });
-            j=0;
-            if (false) {
-                j = 0;
-                console.log(valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], valueconditionsr[j++], );
-                debug(numberOfScores + ', ' + totalScoring);
-                debug(ifdt._id);
-                // while (true) { ; }
-            }
-            if (ifdt._id.toString() === "59d1e9f55e8fcf0dac2a4c11"){
-                console.log(valueconditionsr.toString());
-            }
 
 
 
