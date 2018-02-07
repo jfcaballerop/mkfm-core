@@ -932,10 +932,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
-    };
+    }; 
     debug(postData);
     var form;
     // var formula = Object.keys(postData)[0];
+    var asset = req.params.asset;
     var formula = 'Condition';
     debug(formula);
     await Formula.find({
@@ -966,20 +967,24 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         selectjson.properties[w] = 1;
     }
 
+
+    var tracksUpdated2=0;
     debug(selectjson);
+    switch (asset) {
+        case 'Culverts':
     // debug(form);
     // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
     await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-        tracksUpdated++;
         if (err) {
             res.send(500, err.message);
         }
 
         for (var ifdt of ifdts) {
+            tracksUpdated2++;
             //debug(ifdt._id);
             // debug(ifdt.geometry.coordinates);
             var valueconditionsr = [];
-            esnull = false;
+            debug(tracksUpdated2);
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
 
                 //debug(form.formulaSpec.length);
@@ -1004,7 +1009,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.CDamages.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
                                                 totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                     totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
-                                                esnull = true;
                                                 numberOfScores++;
                                                 // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                             }
@@ -1051,11 +1055,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                 }
                             }
                             break;
-
-                        case 'Retaining_Walls':
-
-                            break;
-
                         default:
                             break;
                     }
@@ -1064,8 +1063,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
             }
+            tracksUpdated++;
             debug(ifdt._id);
             debug(valueconditionsr.toString());
+            debug(tracksUpdated);
 
             var conditions = {
                 _id: ifdt._id
@@ -1093,12 +1094,171 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
         // res.status(200).jsonp(ret);
     });
+
+    tracksUpdated2 = tracksUpdated;
     ret.tracksUpdated = tracksUpdated;
     debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+            res.status(200).jsonp(ret);
+            break;
+        case 'Retaining_Walls':
+            // debug(form);
+            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
 
+                for (var ifdt of ifdts) {
+                    tracksUpdated2++;
+                    //debug(ifdt._id);
+                    // debug(ifdt.geometry.coordinates);
+                    var valueconditionsr = [];
+                    debug('tracksUpdated2 ' + tracksUpdated2);
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+
+                        //debug(form.formulaSpec.length);
+                        for (var f = 0; f < form.formulaSpec.length; f++) {
+                            var totalScoring = Number.MAX_VALUE;
+                            switch (form.formulaSpec[f].name) {
+                                case 'Retaining_Walls':
+                            //////////////////////INICIO///////////////////////////////
+                            // debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
+                            if (ifdt.properties.gcode.length > 0) {
+                                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
+                                    ifdt.properties.gcode[i] !== null &&
+                                    ifdt.properties.gcode[i] !== "" &&
+                                ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
+                                    ifdt.properties.gcode2[i] !== null &&
+                                    ifdt.properties.gcode2[i] !== "") {
+                                    // debug(ifdt.properties.gcode);
+                                    // TODO: calculo de la formula para Pavements -- Sacarlo a un service
+                                    // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                    var numberOfTypeOfFailureProcess = 0;
+                                    debug(ifdt.properties.gtypefailure.length);
+                                    if (ifdt.properties.gtypefailure.length > 0) {
+                                        for (TypeOfFailureProcess in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                            // debug(score.toString.toUpperCase)
+                                            if (score !== undefined && score !== null) {
+                                                // debug('score ' + score.toString().toUpperCase());
+                                                // debug('ifdt.CDamages ' + score.toString().toUpperCase());
+                                                for (score in TypeOfFailureProcess.scoring) {
+
+
+                                                    if (ifdt.properties.gtypefailure.toString().toUpperCase().indexOf(TypeOfFailureProcess.toString().toUpperCase()) > 0) {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess] * TypeOfFailureProcess.weight ?
+                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess] * TypeOfFailureProcess.weight;
+                                                        esnull = true;
+                                                        numberOfTypeOfFailureProcess++;
+                                                        // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                                    }
+
+
+                                                }
+
+
+                                            }
+                                        }
+                                    } else {
+                                        totalScoring = 100;
+                                    }
+                                    totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                    // debug(totalScoring);
+
+                                    // if (numberOfScores > 2) {
+                                    //     totalScoring *= 0.9;
+                                    // } else {
+                                    //     // existance of several damages
+                                    //     totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                    // }
+
+                                    //  clearing required
+                                    // if (ifdt.properties.Cclearing.length > 0) {
+                                    //     for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
+                                    //         // debug(score.toString.toUpperCase)
+                                    //         if (score !== undefined && score !== null) {
+                                    //             // debug('score ' + score.toString().toUpperCase());
+                                    //             // debug('ifdt.Cclearing ' + score.toString().toUpperCase());
+                                    //             if (ifdt.properties.Cclearing.toString().toUpperCase().indexOf(score.toString().toUpperCase()) >= 0) {
+                                    //                 totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
+                                    //                 // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                    //             } else {
+
+                                    //                 totalScoring *= 1;
+                                    //             }
+                                    //         }
+                                    //     }
+                                    // } else {
+
+                                    //     totalScoring *= 0.98;
+                                    // }
+                                    totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                    valueconditionsr.push(totalScoring);
+                                    //debug(totalScoring + '\n');
+                                } else {
+                                    valueconditionsr.push("");
+                                }
+                            }
+                            // debug(valueconditionsr);
+                            ///////////////////////FINAL//////////////////////////////////////////////
+
+                            break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+
+                    }
+                    tracksUpdated++;
+                    debug(ifdt._id);
+                    debug(valueconditionsr.toString());
+                    debug(tracksUpdated);
+
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.Ccondition": valueconditionsr
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+
+
+
+
+
+                }
+
+                // res.status(200).jsonp(ret);
+            });
+
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug(tracksUpdated);
+            res.status(200).jsonp(ret);
+            break;
+        default:
+            break;
+    }
 
 });
+
+
+
+
+
+
+
 /* POST update_field */
 router.post('/V1/update_field/', function (req, res, next) {
     debug('API /V1/update_field/');
