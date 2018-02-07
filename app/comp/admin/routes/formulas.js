@@ -1137,19 +1137,24 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     debug(ifdt.properties.gtypefailure.length);
                                     if (ifdt.properties.gtypefailure.length > 0) {
                                         for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                            debug('1  ' + TypeOfFailureProcess1);
+                                            debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                            debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                            debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                            debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                            debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
                                             debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                            debug('3  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase());
-                                            debug('4  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().indexOf(TypeOfFailureProcess.toString().toUpperCase()));
+                                            debug('3  ' + ifdt.properties.gtypefailure[i]);
                                             if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                 debug('5  ' + TypeOfFailureProcess1.scoring);
-                                                while (true) { ; }
-                                                for (score in TypeOfFailureProcess1.scoring) {
-                                                    if (ifdt.properties.gtypefailure.toString().toUpperCase().indexOf(TypeOfFailureProcess1.toString().toUpperCase()) > 0) {
-                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess1] * TypeOfFailureProcess1.weight ?
-                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess1] * TypeOfFailureProcess1.weight;
+                                                for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                    debug('6  ' + score);
+                                                    // while (true) { ; }
+                                                    if (ifdt.properties.gtypefailure.toString().toUpperCase().indexOf(score.toString().toUpperCase()) > 0) {
+                                                        debug('7  ' + score);
+                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                         esnull = true;
-                                                        numberOfTypeOfFailureProcess1++;
+                                                        numberOfTypeOfFailureProcess++;
                                                         // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                     }
 
