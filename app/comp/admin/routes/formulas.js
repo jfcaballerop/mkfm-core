@@ -449,6 +449,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
 
                     if (ifdt.properties.rcondition[i] !== undefined) {
                         if (typeof ifdt.properties.rcondition[i] === "string") {
+                            // TODO: Cambiar valores a 0 en caso de cadena Vacia
                             valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
                             debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
                         } else if (typeof ifdt.properties.rcondition[i] === "number") {
