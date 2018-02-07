@@ -1048,7 +1048,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         totalScoring *= 0.98;
                                 }
                                     totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                    valueconditionsr.push(totalScoring);
+                                    valueconditionsr.push(totalScoring/100);
                                     //debug(totalScoring + '\n');
                                 } else {
                                     valueconditionsr.push("");
@@ -1113,7 +1113,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     //debug(ifdt._id);
                     // debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2 ' + tracksUpdated2);
+                    debug('tracksUpdated2: ' + tracksUpdated2);
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
 
                         //debug(form.formulaSpec.length);
@@ -1136,19 +1136,20 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     var numberOfTypeOfFailureProcess = 0;
                                     debug(ifdt.properties.gtypefailure.length);
                                     if (ifdt.properties.gtypefailure.length > 0) {
-                                        for (TypeOfFailureProcess in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                            // debug(score.toString.toUpperCase)
-                                            if (score !== undefined && score !== null) {
-                                                // debug('score ' + score.toString().toUpperCase());
-                                                // debug('ifdt.CDamages ' + score.toString().toUpperCase());
-                                                for (score in TypeOfFailureProcess.scoring) {
-
-
-                                                    if (ifdt.properties.gtypefailure.toString().toUpperCase().indexOf(TypeOfFailureProcess.toString().toUpperCase()) > 0) {
-                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess] * TypeOfFailureProcess.weight ?
-                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess] * TypeOfFailureProcess.weight;
+                                        for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                            debug('1  ' + TypeOfFailureProcess1);
+                                            debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                            debug('3  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase());
+                                            debug('4  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().indexOf(TypeOfFailureProcess.toString().toUpperCase()));
+                                            if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                while (true) { ; }
+                                                for (score in TypeOfFailureProcess1.scoring) {
+                                                    if (ifdt.properties.gtypefailure.toString().toUpperCase().indexOf(TypeOfFailureProcess1.toString().toUpperCase()) > 0) {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess1] * TypeOfFailureProcess1.weight ?
+                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess.scoring[TypeOfFailureProcess1] * TypeOfFailureProcess1.weight;
                                                         esnull = true;
-                                                        numberOfTypeOfFailureProcess++;
+                                                        numberOfTypeOfFailureProcess1++;
                                                         // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                     }
 
@@ -1158,6 +1159,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                             }
                                         }
+                                        debug('totalScoring: ' + totalScoring);
                                     } else {
                                         totalScoring = 100;
                                     }
