@@ -25,11 +25,14 @@
         } else if (arrCallProm[0].indexOf('AssetResponse') >= 0) {
             tipoDeFormula = 'update_formulas_tracks_response';
 
+        } else if (arrCallProm[0].indexOf('AssetSensitivity') >= 0) {
+            tipoDeFormula = 'update_formulas_tracks_sensitivity';
+
         } else {
             tipoDeFormula = 'update_formulas_tracks';
         }
 
-        console.log(tipoDeFormula + '---------------------------------------------');
+        //console.log(tipoDeFormula + '---------------------------------------------');
         var p1 = $.ajax({
             url: '/auth/WEB/admin/' + tipoDeFormula + '/' + arrCallProm[0] + '/' + arrCallProm[1],
             data: JSON.stringify(dataPost),
@@ -42,7 +45,8 @@
             if (values[0].result === "OK") {
                 // TODO: Stop spinner        
                 $('#spinner' + id).hide();
-                if (tipoDeFormula !== 'update_formulas_tracks_response') {
+                if (tipoDeFormula !== 'update_formulas_tracks_response' && tipoDeFormula !==
+                    'update_formulas_tracks_sensitivity') {
 
                     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
                 } else {

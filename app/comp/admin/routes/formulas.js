@@ -135,6 +135,49 @@ router.post('/get_formulas_tracks/', function (req, resp) {
     // resp.status(200).jsonp({});
 
 });
+/* update_formulas_tracks_sensitivity */
+/**
+ * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
+ * @param formula
+ * @param asset
+ */
+router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/update_formulas_tracks_sensitivity/' + req.params.formula + '/' + req.params.asset + '/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /* update_formulas_tracks_response */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
@@ -333,6 +376,139 @@ router.get('/V1/formulas/', function (req, res, next) {
     });
 
 });
+
+/* POST update_formulas_tracks_sensitivity */
+/**
+ * Metodo para modificar los valores devueltos por las formulas
+ */
+router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function (req, res, next) {
+    debug('API /V1/update_formulas_tracks_sensitivity/');
+    var postData = extend({}, req.body);
+    var tracksUpdated = 0;
+    var ret = {
+        "result": "OK",
+        "tracksUpdated": 0
+    };
+    debug(postData);
+    var form;
+    var formula = Object.keys(postData)[0];
+    debug(formula);
+    await Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        form = f[0];
+    });
+    // debug(form);
+    var wherearr = [];
+
+    //add codes asset
+    wherearr.push('rcondition');
+    wherearr.push('rresphazard');
+    wherearr.push('bcode');
+    wherearr.push('Ccode');
+    wherearr.push('gcode');
+    wherearr.push('gcode2');
+
+    var selectjson = {
+        "geometry.coordinates": 1,
+        properties: []
+    };
+    for (var w of wherearr) {
+        selectjson.properties[w] = 1;
+    }
+    debug(selectjson);
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        // Arr de valores a updatear
+        var valuersensitivityarr = [];
+        var valuebsensitivityarr = [];
+        var valueCsensitivityarr = [];
+        var valuegsensitivityarr = [];
+        var valuegsensitivityarr2 = [];
+
+        for (var ifdt of ifdts) {
+            //debug(ifdt._id);
+            // debug(ifdt.geometry.coordinates);
+            tracksUpdated++;
+            var bcodeant = "";
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                var valuersensitivity = 0;
+                var valuebsensitivity = 0;
+                var valueCsensitivity = 0;
+                var valuegsensitivity = 0;
+                var valuegsensitivity2 = 0;
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+                    var valrcond = 0;
+                    var valweigths = 0;
+                    var valrresphazard = 0;
+
+                    if (ifdt.properties.rcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.rcondition[i] === "string") {
+                            valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                            debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                        } else if (typeof ifdt.properties.rcondition[i] === "number") {
+                            valrcond = ifdt.properties.rcondition[i];
+                        } else {
+                            valrcond = 0;
+                        }
+                    }
+
+                    if (typeof ifdt.properties.rresphazard[i] === "string") {
+                        valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rresphazard[i] === "number") {
+                        valrresphazard = ifdt.properties.rresphazard[i];
+                    } else {
+                        valrresphazard = 0;
+                    }
+                    switch (form.formulaSpec[f]["FORM_COEF"]) {
+
+                        case 'firstcoef':
+                            debug("MIN(" + valrcond + "; Asset response)" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                            // if (parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) <= parseFloat(ifdt.properties.rresphazard[i].replace(",", "."))) {
+                            //     valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value.replace(",", ".")) * parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                            //     debug(parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) + ' MIN1 ' + parseFloat(ifdt.properties.rresphazard[i].replace(",", ".")) +
+                            //         ' valuersensitivity ' + parseFloat(valuersensitivity));
+                            // } else {
+                            //     valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value.replace(",", ".")) * parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                            //     debug(parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) + ' MIN2 ' + parseFloat(ifdt.properties.rresphazard[i].replace(",", ".")) + ' valuersensitivity ' + parseFloat(valuersensitivity));
+
+                            // }
+
+                            break;
+                        case 'secondcoef':
+                            debug("MAX(" + valrcond + "; Asset response)" + parseFloat(form.formulaSpec[f].WEIGHTS.value.replace(",", ".")));
+                            // if (parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) >= parseFloat(ifdt.properties.rresphazard[i].replace(",", "."))) {
+                            //     valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value.replace(",", ".")) * parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                            //     debug(parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) + ' MAX1 ' + parseFloat(ifdt.properties.rresphazard[i].replace(",", ".")) + ' valuersensitivity ' + parseFloat(valuersensitivity));
+                            // } else {
+                            //     valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value.replace(",", ".")) * parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                            //     debug(parseFloat(ifdt.properties.rcondition[i].replace(",", ".")) + ' MAX2 ' + parseFloat(ifdt.properties.rresphazard[i].replace(",", ".")) + ' valuersensitivity ' + parseFloat(valuersensitivity));
+
+                            // }
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+            }
+        }
+    });
+
+    ret.tracksUpdated = tracksUpdated;
+    debug(tracksUpdated);
+    res.status(200).jsonp(ret);
+
+
+});
+
 /* POST update_formulas_tracks_response */
 /**
  * Metodo para modificar los valores devueltos por las formulas
@@ -1809,6 +1985,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                     };
                 }
                 break;
+
             case 'AssetResponse':
                 var field = field_name.replace(arrField[0] + '__', '');
                 debug(field);
@@ -1835,6 +2012,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
                 });
                 break;
+
             case 'AssetSensitivity':
                 var field = field_name.replace(arrField[0] + '__', '');
                 debug(field);
