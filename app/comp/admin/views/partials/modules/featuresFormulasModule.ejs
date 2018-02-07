@@ -1,5 +1,4 @@
 <% include ./partials/modules/conditionFormula %>
-
     <script>
         const PI = 3.141592;
 
@@ -134,9 +133,9 @@
                                 var j = postgressArray.indexOf("weight");
                                 if (j != -1) {
                                     weight = 1;
-                                    // console.log(postgressArray + "<--------------- 1");
+                                    console.log(postgressArray + "<--------------- 1");
                                     postgressArray.splice(j, 1);
-                                    // // console.log(postgressArray + "<--------------- 2");
+                                    console.log(postgressArray + "<--------------- 2");
 
                                 }
                                 if (val.length > 0 && ((i.indexOf('scores') > -1 && (
@@ -151,13 +150,13 @@
                                         /,/g, "__"));
                                     // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
-                                    // // // console.log(postgressArray.join().replace(/,/g, "."));
-                                    // // console.log('urlTest' + urlTest);
-                                    // // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
-                                    // console.log(postgressArray);
-                                    // console.log(form);
-                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
+                                    // console.log(postgressArray.join().replace(/,/g, "."));
+                                    console.log('urlTest' + urlTest);
+                                    // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
+                                    console.log(postgressArray);
+                                    console.log(form);
+                                    console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     // }
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' +
@@ -170,7 +169,7 @@
                                     // postgressArray.push(capitalizeFirstLetter(val)
                                     html[++h] = '<td>' + val + '</td>';
                                 }
-                                // // console.log(eval(postgressArray));
+                                // console.log(eval(postgressArray));
                                 ScoreName = val;
                             }
                         });
@@ -287,12 +286,12 @@
                                     }
                                     html[++h] = '</tr>';
                                     tr++;
-                                    // console.log(j + ': ' + data2);
+                                    console.log(j + ': ' + data2);
                                 }
                             });
                         };
                     });
-                    //// console.log(fs'</tbody></table>'pec.fname);
+                    //console.log(fs'</tbody></table>'pec.fname);
                     html[++h] = '</tbody></table></div>';
                     $('#formulaSpec').html(html.join(''));
 
@@ -365,15 +364,25 @@
                         }
                         html[++h] = '</td>';
                     }
-                    html[++h] = '</tr>';
+
+        var url = "";
+
+        function capitalizeFirstLetter(string) {
+            var OutPut = ''
+            var WordList = string.split(' ')
+            WordList.forEach(function(element) {
+                OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
+            });
+            return OutPut;
+        }
 
 
+        ! function(t, n, e, i) {
+            "use strict";
 
-
-
-
-
-                });
+            function a(n, e) {
+                this.element = n, this.settings = t.extend({}, o, e), this._defaults = o, this._name = s, this.init()
+            }
                 html[++h] = '</tbody></table></div>';
                 $('#formulaSpec').html(html.join(''));
                 $("#assetResponseTable").rowspanizer();
