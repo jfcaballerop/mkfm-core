@@ -580,8 +580,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
-                                            form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
+                                        // debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
                                     }
                                 } else {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
@@ -596,10 +596,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            debug(minval + ' ' + operador + ' ' + maxval);
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
-                                                form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // debug(minval + ' ' + operador + ' ' + maxval);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
 
@@ -617,8 +617,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
-                                            form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
+                                        // debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
                                     }
                                 } else {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] !== undefined) {
@@ -633,10 +633,10 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            debug(minval + ' ' + operador + ' ' + maxval);
-                                            debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
-                                                form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // debug(minval + ' ' + operador + ' ' + maxval);
+                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
 
@@ -1825,6 +1825,28 @@ router.post('/V1/update_field/', function (req, res, next) {
                         formSave.formulaSpec[k].score.value = value;
                         debug(k);
 
+                    }
+                }
+                formSave.save(function (err, fsaved) {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+                    res.status(200).jsonp(ret);
+
+                });
+                break;
+            case 'AssetSensitivity':
+                var field = field_name.replace(arrField[0] + '__', '');
+                debug(field);
+                var formSave = new Formula(f[0]);
+                // debug(formSave);
+                // Busco el campo @field en la Formula
+                for (var [k, fspec] of f[0].formulaSpec.entries()) {
+                    // debug(fspec.WEIGHTS);
+                    // debug(fspec.score);
+                    if (field === fspec.WEIGHTS.fieldname) {
+                        formSave.formulaSpec[k].WEIGHTS.value = value;
+                        debug(k);
                     }
                 }
                 formSave.save(function (err, fsaved) {
