@@ -17,7 +17,7 @@
         var arrCallProm = $this.attr('id').split('__');
         var dataPost = {};
         dataPost[arrCallProm[0]] = arrCallProm[1];
-        console.log('Call update formula: ' + JSON.stringify(dataPost));
+        console.log('Call update critically: ' + JSON.stringify(dataPost));
 
         var tipoDeFormula = '';
         if (arrCallProm[0].indexOf('onditio') > -1) {
@@ -74,10 +74,6 @@
                 $('#formulaName').append(form.properties.HTML.text);
                 // console.log(form.properties.HTML.id);
                 switch ($this[0].id) {
-
-                    // AssetCondition
-                    //////////////////
-
                     case "AssetCondition":
                         $('#formulaSpec').empty();
                         $('#selectFormula').empty();
@@ -142,9 +138,6 @@
                         });
                         this.name = '';
                         break;
-
-                        // AssetCriticality
-                        ////////////////////
 
                     case "AssetCriticality":
                         $('#formulaSpec').empty();
