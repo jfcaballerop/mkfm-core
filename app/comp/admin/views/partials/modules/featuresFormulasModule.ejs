@@ -8,14 +8,14 @@
         function capitalizeFirstLetter(string) {
             var OutPut = ''
             var WordList = string.split(' ')
-            WordList.forEach(function(element) {
+            WordList.forEach(function (element) {
                 OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
             });
             return OutPut;
         }
 
 
-        ! function(t, n, e, i) {
+        ! function (t, n, e, i) {
             "use strict";
 
             function a(n, e) {
@@ -26,40 +26,43 @@
                     vertical_align: "top"
                 };
             t.extend(a.prototype, {
-                init: function() {
+                init: function () {
                     var n = this,
                         e = t(this.element),
                         i = [];
-                    e.find("tr").each(function(n, e) {
-                        t(this).find("td").each(function(n, e) {
+                    e.find("tr").each(function (n, e) {
+                        t(this).find("td").each(function (n, e) {
                             var a = t(e),
                                 s = a.html();
-                            if ("undefined" != typeof i[n] && "dato" in i[n] && i[n].dato == s) {
+                            if ("undefined" != typeof i[n] && "dato" in i[n] && i[n].dato ==
+                                s) {
                                 var o = i[n].elem.data("rowspan");
-                                ("undefined" == o || isNaN(o)) && (o = 1), i[n].elem.data("rowspan", parseInt(o) + 1).addClass("rowspan-combine"), a.addClass("rowspan-remove")
+                                ("undefined" == o || isNaN(o)) && (o = 1), i[n].elem.data(
+                                    "rowspan", parseInt(o) + 1).addClass(
+                                    "rowspan-combine"), a.addClass("rowspan-remove")
                             } else i[n] = {
                                 dato: s,
                                 elem: a
                             }
                         })
-                    }), t(".rowspan-combine").each(function(e, i) {
+                    }), t(".rowspan-combine").each(function (e, i) {
                         var a = t(this);
                         a.attr("rowspan", a.data("rowspan")).css({
                             "vertical-align": n.settings.vertical_align
                         })
                     }), t(".rowspan-remove").remove()
                 }
-            }), t.fn[s] = function(n) {
-                return this.each(function() {
+            }), t.fn[s] = function (n) {
+                return this.each(function () {
                     t.data(this, "plugin_" + s) || t.data(this, "plugin_" + s, new a(this, n))
                 })
             }
         }(jQuery, window, document);
 
-        var featurePaintCondition = (function() {
+        var featurePaintCondition = (function () {
 
             // variables y funciones privadas
-            var paintHTML = function(form) { // ------------------------------------------
+            var paintHTML = function (form) { // ------------------------------------------
                 DBprefix = {
                     "Retaining_Walls": "formulaSpec[0]",
                     "Cuttings_Embankments": "formulaSpec[1]",
@@ -73,11 +76,13 @@
                 var cabeceraPainted = false;
                 var postgressArray = Array();
                 // $.each(form.formulaSpec, function(i, fspec) {
-                $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
+                $.each(Object.keys(formCondition), function (k, v) { // ------------------------------------------
                     // console.log(k + ' ' + v);
                     fspec = v;
-                    $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
-                        '<input type="radio" name="optionsRadios" id="option' + v + '" value="' + v +
+                    $('#selectFormula').append(
+                        '<div class="radio-inline"><label class="radio-inline">' +
+                        '<input type="radio" name="optionsRadios" id="option' + v + '" value="' +
+                        v +
                         '" >' + v +
                         '</label></div>');
                     html[++h] = '<div id="formulaTable' + v + '" style="display:none;">' + v;
@@ -87,7 +92,8 @@
                     html[++h] = '<div id="infoFormula' + v +
                         '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
                     html[++h] = ' Be patient, the process can take several minutes.</div>';
-                    html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML
+                        .id +
                         '__' + v + '\');" id="' + form.properties.HTML.id + '__' + v +
                         '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
                         v + '</button>';
@@ -99,10 +105,11 @@
 
 
                     html[++h] =
-                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="' + tableName + '">';
+                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="' +
+                        tableName + '">';
                     html[++h] = '<tr>';
                     var counter = 0;
-                    $.each(formCondition[v][0], function(cabeceraCol, val) { // ------------------------------------------
+                    $.each(formCondition[v][0], function (cabeceraCol, val) { // ------------------------------------------
                         if (counter == 0) {
                             counter++;
                         } else {
@@ -119,7 +126,7 @@
                         postgressArray = [];
                         postgressArray.push(DBprefix[v]);
                         counter = 0;
-                        $.each(formCondition[v][l], function(i, val) { // ------------------------------------------
+                        $.each(formCondition[v][l], function (i, val) { // ------------------------------------------
                             if (counter == 0) {
                                 counter++;
                             } else {
@@ -132,11 +139,16 @@
                                     // // console.log(postgressArray + "<--------------- 2");
 
                                 }
-                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (ScoreName.length > 0)) || (i.indexOf('weight') > -1 && ScoreName.length > 0))) {
+                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (
+                                        ScoreName.length > 0)) || (i.indexOf('weight') >
+                                        -1 && ScoreName.length > 0))) {
                                     // // console.log(postgressArray.join());
                                     // // console.log(counter);
-                                    (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
-                                    urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
+                                    (i.indexOf('weight') > -1) ? postgressArray.push(
+                                        'weight'): postgressArray.splice(-1, 0,
+                                        'scoring');
+                                    urlTest = ('Condition__' + postgressArray.join().replace(
+                                        /,/g, "__"));
                                     // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
                                     // // // console.log(postgressArray.join().replace(/,/g, "."));
@@ -148,7 +160,10 @@
                                     // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     // }
                                     html[++h] =
-                                        '<td> <input class="form-control, col-sm-12" name="' + urlTest + '" type="number" value="' + eval('form.' + postgressArray.join().replace(/,/g, ".")) + '"  step="0.01"></td>';
+                                        '<td> <input class="form-control, col-sm-12" name="' +
+                                        urlTest + '" type="number" value="' + eval('form.' +
+                                            postgressArray.join().replace(/,/g, ".")) +
+                                        '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
                                     postgressArray.push(capitalizeFirstLetter(val));
@@ -169,7 +184,7 @@
                 $('#formulaSpec').html(html.join(''));
 
 
-                $("document").ready(function() {
+                $("document").ready(function () {
                     if (true) {
                         $("#formulaTableBody").rowspanizer();
                         $("#formulaTableRetaining_Walls").rowspanizer();
@@ -186,14 +201,15 @@
             }
 
         })();
-        var featurePaintCriticality = (function() {
+        var featurePaintCriticality = (function () {
 
             // variables y funciones privadas
-            var paintHTML = function(form) {
+            var paintHTML = function (form) {
                 var html = [];
                 var h = -1;
-                $.each(form.formulaSpec, function(i, fspec) {
-                    $('#selectFormula').append('<div class="radio-inline"><label class="radio-inline">' +
+                $.each(form.formulaSpec, function (i, fspec) {
+                    $('#selectFormula').append(
+                        '<div class="radio-inline"><label class="radio-inline">' +
                         '<input type="radio" name="optionsRadios" id="option' + fspec.name +
                         '" value="' + fspec.name + '" >' + fspec.name +
                         '</label></div>');
@@ -201,7 +217,8 @@
                     html[++h] = '<div id="infoFormula' + fspec.name +
                         '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
                     html[++h] = ' Be patient, the process can take several minutes.</div>';
-                    html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML
+                        .id +
                         '__' + fspec.name + '\');" id="' + form.properties.HTML.id + '__' + fspec.name +
                         '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
                         fspec.name + '</button>';
@@ -213,21 +230,24 @@
                     html[++h] =
                         '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
 
-                    $.each(fspec, function(key, data) {
+                    $.each(fspec, function (key, data) {
                         // console.log(key);
                         // console.log(data);
                         if (data.constructor === objectConstructor) {
                             html[++h] = '<tr>';
-                            html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(data).length -
-                                    1) + '"><label class="col-sm-8 col-sm-8 control-label">' +
+                            html[++h] = '<td  class="col-sm-3" rowspan="' + (Object.keys(
+                                        data).length -
+                                    1) +
+                                '"><label class="col-sm-8 col-sm-8 control-label">' +
                                 key + '</label>';
                             html[++h] = '<div class="col-sm-4">';
-                            html[++h] = '<input class="form-control" name="AssetCriticality__' +
+                            html[++h] =
+                                '<input class="form-control" name="AssetCriticality__' +
                                 fspec.name + '__' + key + '" type="text" value="' + data.weight +
                                 '">';
                             html[++h] = '</div></td>';
                             var tr = 0;
-                            $.each(data, function(j, data2) {
+                            $.each(data, function (j, data2) {
                                 if (data2.constructor === objectConstructor) {
 
                                     if (tr > 0) {
@@ -248,14 +268,15 @@
                                     html[++h] = '</td>';
                                     if (data2.scoring != undefined) {
                                         html[++h] = '<td class="col-sm-3">';
-                                        $.each(data2.scoring, function(s, scoring) {
+                                        $.each(data2.scoring, function (s, scoring) {
                                             html[++h] =
                                                 '<label class="col-sm-8 control-label">' +
                                                 s +
                                                 '</label><div class="col-sm-4">';
                                             html[++h] =
                                                 '<input class="form-control" name="AssetCriticality__' +
-                                                fspec.name + '__' + key + '__' +
+                                                fspec.name + '__' + key +
+                                                '__' +
                                                 j + '__' + s +
                                                 '" type="text" value="' +
                                                 scoring +
@@ -287,10 +308,10 @@
 
         })();
 
-        var featurePaintResponse = (function() {
+        var featurePaintResponse = (function () {
 
             // variables y funciones privadas
-            var paintHTML = function(form) {
+            var paintHTML = function (form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -309,7 +330,7 @@
                 html[++h] =
                     '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
                 var header = true;
-                $.each(form.formulaSpec, function(i, fspec) {
+                $.each(form.formulaSpec, function (i, fspec) {
                     // console.log(fspec);
                     // nombre de los campos
                     var fieldname = "";
@@ -330,11 +351,13 @@
                     for (var fk of Object.keys(fspec).reverse()) {
                         html[++h] = '<td>';
                         if (fk === 'WEIGHTS') {
-                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value +
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname +
+                                '" value="' + fspec[fk].value +
                                 '" >';
 
                         } else if (fk === 'score') {
-                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname + '" value="' + fspec[fk].value + '" >';
+                            html[++h] = '<input type="number" step="0.1" name="' + fspec[fk].fieldname +
+                                '" value="' + fspec[fk].value + '" >';
 
                         } else {
 
@@ -354,6 +377,38 @@
                 html[++h] = '</tbody></table></div>';
                 $('#formulaSpec').html(html.join(''));
                 $("#assetResponseTable").rowspanizer();
+
+
+            };
+
+            // API publica
+            return {
+                paintHTML: paintHTML
+            }
+
+        })();
+        var featurePaintSensitivity = (function () {
+
+            // variables y funciones privadas
+            var paintHTML = function (form) {
+                var html = [];
+                var h = -1;
+                html[++h] = '<div id="formulaTable' + form.name + '" ">';
+                html[++h] = '<div id="infoFormula' + form.name +
+                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                html[++h] = ' Be patient, the process can take several minutes.</div>';
+                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    '__' + form.name + '\');" id="' + form.properties.HTML.id + '__' + form.name +
+                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
+                    form.name + '</button>';
+                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + form.name +
+                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
+
+                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + form.name +
+                    '"></div>';
+
+                html[++h] = '</div>';
+                $('#formulaSpec').html(html.join(''));
 
 
             };
