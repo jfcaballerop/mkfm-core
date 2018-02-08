@@ -91,15 +91,25 @@ app.use(methodOverride());
 //app.use(cors());
 
 // DB Connect
-mongoose.connect(configDB.url, function (err, res) {
-    if (err) {
-        debug('ERROR: connecting to Database. ' + err);
-    } else {
-        debug('MONGODB CONNECTED OK');
-        // console.log('MONGODB CONNECTED OK');
+//Set up default mongoose connection
+mongoose.connect(configDB.url, {
+    server: {
+        "socketOptions": {
+            "socketTimeoutMS": 240000,
+            "keepAlive": 10000,
+            "connectTimeoutMS": 30000
+        }
     }
 });
 
+// Get Mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('connect', console.debug.bind(console, 'MongoDB CONNECTION OK!'));
 
 /*********************************
  *  URL - Routes 
