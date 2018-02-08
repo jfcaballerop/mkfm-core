@@ -2635,17 +2635,52 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                 case 'Bridges':
                                     //////////////////////INICIO///////////////////////////////
                                     // debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
-                                    if (ifdt.properties.bcode.length > 0) {
+                                    if (true) {
                                         if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] &&
                                             ifdt.properties.bcode[i] !== null &&
-                                            ifdt.properties.bcode[i] !== "") {
-                                            // debug(ifdt.properties.bcode);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            ifdt.properties.bcode[i] !== ""&&
+                                            ifdt.properties.bcode.length > 0) {
+                                                
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            // debug(ifdt.properties.gtypefailure2.length);
-                                            if (ifdt.properties.gtypefailure2.length > 0) {
+                                            if (ifdt.properties.bdamagesfoundationsgeneraltype.length > 0) {
+                                                for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
+                                                    if (ifdt.properties.bdamagesfoundations[i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
+                                                        ifdt.properties.bdamagesfoundations[i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
+                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                    }
+                                                }
+                                            }
+                                            if (ifdt.properties.BDamagesslabSeverity.length > 0) {
+                                                for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
+                                                    if (ifdt.properties.BDamagesslabSeverity[i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
+                                                        ifdt.properties.BDamagesslabSeverity[i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+                                                    }
+                                                }
+                                            }
+
+                                            z = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBeamsSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity"]
+                                            var k=0;
+                                            for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
+                                                if (ifdt.properties.z[k].length > 0) {
+                                                    for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring) {
+                                                        if (ifdt.properties.z[k][i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
+                                                            ifdt.properties.z[k][i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight ?
+                                                                totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight;
+                                                        }
+                                                    }  
+                                                }
+                                                k++;
+                                            }
+
+
+
+
+
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
@@ -2667,9 +2702,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         }
                                                     }
                                                 }
-                                            } else {
-                                                totalScoring = 100;
-                                            }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
                                             // debug(totalScoring);
 /////////////////////////////////////////////////////////////////
