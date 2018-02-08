@@ -2009,8 +2009,680 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
             debug('tracksUpdated: ' + tracksUpdated);
+            // avoiding  "Unhandled promise rejection(rejection id: 1): Error: Can't set headers after they are sent."
+            // res.status(200).jsonp(ret);
+
+            // debug(form);
+            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                for (var ifdt of ifdts) {
+                    tracksUpdated2++;
+                    //debug(ifdt._id);
+                    // debug(ifdt.geometry.coordinates);
+                    var valueconditionsr = [];
+                    debug('tracksUpdated2: ' + tracksUpdated2);
+                    debug(ifdt._id);
+
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        var coincidencias = 0;
+                        //debug(form.formulaSpec.length);
+                        for (var f = 0; f < form.formulaSpec.length; f++) {
+                            var totalScoring = Number.MAX_VALUE;
+                            switch (form.formulaSpec[f].name) {
+                                case 'Retaining_Walls':
+                                    //////////////////////INICIO///////////////////////////////
+                                    // debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
+                                    if (ifdt.properties.gcode2.length > 0) {
+                                        if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
+                                            ifdt.properties.gcode2[i] !== null &&
+                                            ifdt.properties.gcode2[i] !== "") {
+                                            // debug(ifdt.properties.gcode2);
+                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
+                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            var numberOfScores = 0;
+                                            var numberOfTypeOfFailureProcess = 0;
+                                            // debug(ifdt.properties.gtypefailure2.length);
+                                            if (ifdt.properties.gtypefailure2.length > 0) {
+                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                            // while (true) { ; }
+                                                            // debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                // debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    // while (true) { ; };
+                                                                    debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                                    coincidencias++;
+                                                                    debug(coincidencias);
+                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+
+                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                    esnull = true;
+                                                                    debug('totalScoring1:  ' + totalScoring);
+
+                                                                    numberOfScores++;
+                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
+                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4) ? 9 : (
+                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8) ? 0.7 : (0.5)))));
+                                                                    debug('totalScoring2:  ' + totalScoring);
+
+                                                                    debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
+
+
+                                                                }
+
+                                                            }
+
+
+
+
+
+
+
+                                                        }
+
+
+                                                    }
+                                                }
+                                                debug('totalScoring: ' + totalScoring);
+                                            } else {
+                                                totalScoring = 100;
+                                            }
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                            // debug(totalScoring);
+
+                                            // Existance of several damages
+                                            if (numberOfScores > 2) {
+                                                totalScoring *= 0.9;
+                                            } else {
+                                                // existance of several damages
+                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                            }
+
+                                            // debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
+                                            // debug('ifdt.properties.gmaterial2:    ' + ifdt.properties.gmaterial2);
+                                            //  CORRECTIVE FACTORS - MATERIAL
+                                            if (ifdt.properties.gmaterial2 !== undefined &&
+                                                ifdt.properties.gmaterial2.length > 0 &&
+                                                ifdt.properties.gmaterial2[i] !== null &&
+                                                ifdt.properties.gmaterial2[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.Material.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gmaterial2 ' + ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                totalScoring *= 0.98;
+                                            }
+                                            //  CORRECTIVE FACTORS - VEGETATION
+                                            if (ifdt.properties.gnature2 !== undefined && ifdt.properties.gnature2.length > 0 &&
+                                                ifdt.properties.gnature2[i] !== null &&
+                                                ifdt.properties.gnature2[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+
+                                                totalScoring *= 0.8;
+                                            }
+
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                            valueconditionsr.push(totalScoring);
+                                            //debug(totalScoring + '\n');
+                                        } else {
+                                            valueconditionsr.push("");
+                                        }
+                                    }
+                                    // debug(valueconditionsr);
+                                    ///////////////////////FINAL//////////////////////////////////////////////
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+
+                    }
+                    // debug('coincidencias: ' + coincidencias);
+                    tracksUpdated++;
+                    // debug(valueconditionsr.toString());
+                    // debug(tracksUpdated);
+
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.gcondition2": valueconditionsr
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+
+
+
+
+
+                }
+
+                // res.status(200).jsonp(ret);
+            });
+
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug('tracksUpdated: ' + tracksUpdated);
             res.status(200).jsonp(ret);
             break;
+        case 'Cuttings_Embankments':
+            // debug(form);
+            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                for (var ifdt of ifdts) {
+                    tracksUpdated2++;
+                    //debug(ifdt._id);
+                    // debug(ifdt.geometry.coordinates);
+                    var valueconditionsr = [];
+                    debug('tracksUpdated2: ' + tracksUpdated2);
+                    debug(ifdt._id);
+
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        var coincidencias = 0;
+                        //debug(form.formulaSpec.length);
+                        for (var f = 0; f < form.formulaSpec.length; f++) {
+                            var totalScoring = Number.MAX_VALUE;
+                            switch (form.formulaSpec[f].name) {
+                                case 'Cuttings_Embankments':
+                                    //////////////////////INICIO///////////////////////////////
+                                    // debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
+                                    if (ifdt.properties.gcode.length > 0) {
+                                        if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
+                                            ifdt.properties.gcode[i] !== null &&
+                                            ifdt.properties.gcode[i] !== "") {
+                                            // debug(ifdt.properties.gcode);
+                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
+                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            var numberOfScores = 0;
+                                            var numberOfTypeOfFailureProcess = 0;
+                                            // debug(ifdt.properties.gtypefailure.length);
+                                            if (ifdt.properties.gtypefailure.length > 0) {
+                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                            // while (true) { ; }
+                                                            // debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                // debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    // while (true) { ; };
+                                                                    debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                                    coincidencias++;
+                                                                    debug(coincidencias);
+                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+
+                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                    esnull = true;
+                                                                    debug('totalScoring1:  ' + totalScoring);
+
+                                                                    numberOfScores++;
+                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure[i]) !== ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
+                                                                        (ifdt.properties.gextentfailure[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4) ? 9 : (
+                                                                            (ifdt.properties.gextentfailure[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8) ? 0.7 : (0.5)))));
+                                                                    debug('totalScoring2:  ' + totalScoring);
+
+                                                                    debug('gextentfailure: ' + ifdt.properties.gextentfailure[i]);
+
+
+                                                                }
+
+                                                            }
+
+
+
+
+
+
+
+                                                        }
+
+
+                                                    }
+                                                }
+                                                debug('totalScoring: ' + totalScoring);
+                                            } else {
+                                                totalScoring = 100;
+                                            }
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                            // debug(totalScoring);
+
+                                            // Existance of several damages
+                                            if (numberOfScores > 2) {
+                                                totalScoring *= 0.9;
+                                            } else {
+                                                // existance of several damages
+                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                            }
+
+                                            // debug('ifdt.properties.gnature:    ' + ifdt.properties.gnature);
+                                            // debug('ifdt.properties.gblocks:    ' + ifdt.properties.gblocks);
+                                            //  CORRECTIVE FACTORS - SizeOfBlocks
+                                            if (ifdt.properties.gblocks !== undefined &&
+                                                ifdt.properties.gblocks.length > 0 &&
+                                                ifdt.properties.gblocks[i] !== null &&
+                                                ifdt.properties.gblocks[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gblocks ' + ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                totalScoring *= 0.98;
+                                            }
+                                            //  CORRECTIVE FACTORS - VEGETATION
+                                            if (ifdt.properties.gnature !== undefined && ifdt.properties.gnature.length > 0 &&
+                                                ifdt.properties.gnature[i] !== null &&
+                                                ifdt.properties.gnature[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gnature ' + ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+
+                                                totalScoring *= 0.8;
+                                            }
+
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                            valueconditionsr.push(totalScoring);
+                                            //debug(totalScoring + '\n');
+                                        } else {
+                                            valueconditionsr.push("");
+                                        }
+                                    }
+                                    // debug(valueconditionsr);
+                                    ///////////////////////FINAL//////////////////////////////////////////////
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+
+                    }
+                    // debug('coincidencias: ' + coincidencias);
+                    tracksUpdated++;
+                    // debug(valueconditionsr.toString());
+                    // debug(tracksUpdated);
+
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.gcondition": valueconditionsr
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+
+
+
+
+
+                }
+
+                // res.status(200).jsonp(ret);
+            });
+
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug('tracksUpdated: ' + tracksUpdated);
+            // avoiding  "Unhandled promise rejection(rejection id: 1): Error: Can't set headers after they are sent."
+            // res.status(200).jsonp(ret);
+
+            // debug(form);
+            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                for (var ifdt of ifdts) {
+                    tracksUpdated2++;
+                    //debug(ifdt._id);
+                    // debug(ifdt.geometry.coordinates);
+                    var valueconditionsr = [];
+                    debug('tracksUpdated2: ' + tracksUpdated2);
+                    debug(ifdt._id);
+
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        var coincidencias = 0;
+                        //debug(form.formulaSpec.length);
+                        for (var f = 0; f < form.formulaSpec.length; f++) {
+                            var totalScoring = Number.MAX_VALUE;
+                            switch (form.formulaSpec[f].name) {
+                                case 'Cuttings_Embankments':
+                                    //////////////////////INICIO///////////////////////////////
+                                    // debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
+                                    if (ifdt.properties.gcode2.length > 0) {
+                                        if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
+                                            ifdt.properties.gcode2[i] !== null &&
+                                            ifdt.properties.gcode2[i] !== "") {
+                                            // debug(ifdt.properties.gcode2);
+                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
+                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            var numberOfScores = 0;
+                                            var numberOfTypeOfFailureProcess = 0;
+                                            // debug(ifdt.properties.gtypefailure2.length);
+                                            if (ifdt.properties.gtypefailure2.length > 0) {
+                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                            // while (true) { ; }
+                                                            // debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                // debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    // while (true) { ; };
+                                                                    debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+
+                                                                    coincidencias++;
+                                                                    debug(coincidencias);
+                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+
+                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                    esnull = true;
+                                                                    debug('totalScoring1:  ' + totalScoring);
+
+                                                                    numberOfScores++;
+                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
+                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4) ? 9 : (
+                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8) ? 0.7 : (0.5)))));
+                                                                    debug('totalScoring2:  ' + totalScoring);
+
+                                                                    debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
+
+
+                                                                }
+
+                                                            }
+
+
+
+
+
+
+
+                                                        }
+
+
+                                                    }
+                                                }
+                                                debug('totalScoring: ' + totalScoring);
+                                            } else {
+                                                totalScoring = 100;
+                                            }
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                            // debug(totalScoring);
+
+                                            // Existance of several damages
+                                            if (numberOfScores > 2) {
+                                                totalScoring *= 0.9;
+                                            } else {
+                                                // existance of several damages
+                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                            }
+
+                                            // debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
+                                            // debug('ifdt.properties.gblocks2:    ' + ifdt.properties.gblocks2);
+                                            //  CORRECTIVE FACTORS - SizeOfBlocks
+                                            if (ifdt.properties.gblocks2 !== undefined &&
+                                                ifdt.properties.gblocks2.length > 0 &&
+                                                ifdt.properties.gblocks2[i] !== null &&
+                                                ifdt.properties.gblocks2[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gblocks2 ' + ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                totalScoring *= 0.98;
+                                            }
+                                            //  CORRECTIVE FACTORS - VEGETATION
+                                            if (ifdt.properties.gnature2 !== undefined && ifdt.properties.gnature2.length > 0 &&
+                                                ifdt.properties.gnature2[i] !== null &&
+                                                ifdt.properties.gnature2[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+
+                                                totalScoring *= 0.8;
+                                            }
+
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                            valueconditionsr.push(totalScoring);
+                                            //debug(totalScoring + '\n');
+                                        } else {
+                                            valueconditionsr.push("");
+                                        }
+                                    }
+                                    // debug(valueconditionsr);
+                                    ///////////////////////FINAL//////////////////////////////////////////////
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+
+                    }
+                    // debug('coincidencias: ' + coincidencias);
+                    tracksUpdated++;
+                    // debug(valueconditionsr.toString());
+                    // debug(tracksUpdated);
+
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.gcondition2": valueconditionsr
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+
+
+
+
+
+                }
+
+                // res.status(200).jsonp(ret);
+            });
+
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug('tracksUpdated: ' + tracksUpdated);
+            res.status(200).jsonp(ret);
+            break;
+
+
+
+
+
+
+
+
+
+
+
+            break;
+
+
+
         default:
             break;
     }
