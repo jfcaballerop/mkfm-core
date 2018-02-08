@@ -1095,9 +1095,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         // res.status(200).jsonp(ret);
     });
 
-    tracksUpdated2 = tracksUpdated;
-    ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug(tracksUpdated);
             res.status(200).jsonp(ret);
             break;
         case 'Retaining_Walls':
@@ -1139,22 +1139,8 @@ var coincidencias=0;
                                     if (ifdt.properties.gtypefailure.length > 0) {
                                         for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                             form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                            // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                            // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                            // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                            // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                            // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                            // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                            // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                             if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                 for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                    // while (true) { ; }
-                                                    // debug('6.0.0  ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                    // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                    // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                    // debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-
                                                     if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                         // debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
                                                         // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
@@ -1168,11 +1154,11 @@ var coincidencias=0;
 
                                                             coincidencias++;
                                                             debug(coincidencias);
-                                                            debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                            debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score]);
                                                             debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
-                                                            totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
-                                                                    totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                            totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                    totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                 esnull = true;
                                                             debug('totalScoring1:  ' + totalScoring);
 
@@ -1226,9 +1212,8 @@ var coincidencias=0;
                                             if (score !== undefined && score !== null) {
                                                 debug('score ' + score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                 debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i]);
-                                                if (ifdt.properties.gmaterial[i].toString().toUpperCase().indexOf(score.toString().toUpperCase()) >= 0) {
-                                                    totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.NA.scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]
-                                                    // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                if (ifdt.properties.gmaterial[i].toString().toUpperCase().indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                    totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.NA.scoring[score];
                                                 } else {
 
                                                     totalScoring *= 1;
@@ -1239,11 +1224,6 @@ var coincidencias=0;
 
                                         totalScoring *= 0.98;
                                     }
-
-
-                                    k = 1E9;
-                                    while (k > 0) { k--; };
-
                                     totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                     valueconditionsr.push(totalScoring);
                                     //debug(totalScoring + '\n');
@@ -1251,9 +1231,7 @@ var coincidencias=0;
                                     valueconditionsr.push("");
                                 }
                             }
-                            // debug(valueconditionsr);
                             ///////////////////////FINAL//////////////////////////////////////////////
-
                             break;
                                 default:
                                     break;
@@ -1283,8 +1261,6 @@ var coincidencias=0;
                         if (err) {
                             debug(err.message);
                         }
-                        // debug(iup);  
-
                     });
 
 
@@ -1292,8 +1268,6 @@ var coincidencias=0;
 
 
                 }
-
-                // res.status(200).jsonp(ret);
             });
 
             tracksUpdated2 = tracksUpdated;
