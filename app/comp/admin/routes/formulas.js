@@ -408,6 +408,15 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     wherearr.push('rcondition');
     wherearr.push('rresphazard');
     wherearr.push('bcode');
+    wherearr.push('bcondition');
+    wherearr.push('bresphazard');
+    wherearr.push('Ccondition');
+    wherearr.push('CRespHazard');
+    wherearr.push('gcondition');
+    wherearr.push('gresphazard');
+    wherearr.push('gcondition2');
+    wherearr.push('gresphazard2');
+    wherearr.push('bcode');
     wherearr.push('Ccode');
     wherearr.push('gcode');
     wherearr.push('gcode2');
@@ -443,34 +452,132 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                 var valueCsensitivity = 0;
                 var valuegsensitivity = 0;
                 var valuegsensitivity2 = 0;
-                for (var f = 0; f < form.formulaSpec.length; f++) {
-                    var valrcond = 0;
-                    var valweigths = 0;
-                    var valrresphazard = 0;
+                var existsbcode = false;
+                var existsCcode = false;
+                var existsgcode = false;
+                var existsgcode2 = false;
 
-                    if (ifdt.properties.rcondition[i] !== undefined) {
-                        if (typeof ifdt.properties.rcondition[i] === "string") {
-                            ifdt.properties.rcondition[i] === "" ? valrcond = 0 : valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
-                        } else if (typeof ifdt.properties.rcondition[i] === "number") {
-                            valrcond = ifdt.properties.rcondition[i];
+                // Revisamos que exista el código del asset
+                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                    existsbcode = true;
+                }
+                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                    existsCcode = true;
+                }
+                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                    existsgcode = true;
+                }
+                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                    existsgcode2 = true;
+                }
+                var valweigths = 0;
+                var valrcond = 0;
+                var valrresphazard = 0;
+                var valbcond = 0;
+                var valbresphazard = 0;
+                var valCcond = 0;
+                var valCRespHazard = 0;
+                var valgcond = 0;
+                var valgresphazard = 0;
+                var valgcond2 = 0;
+                var valgresphazard2 = 0;
+
+                if (ifdt.properties.rcondition[i] !== undefined) {
+                    if (typeof ifdt.properties.rcondition[i] === "string") {
+                        ifdt.properties.rcondition[i] === "" ? valrcond = 0 : valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                        // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                    } else if (typeof ifdt.properties.rcondition[i] === "number") {
+                        valrcond = ifdt.properties.rcondition[i];
+                    } else {
+                        valrcond = 0;
+                    }
+                }
+                if (ifdt.properties.rresphazard[i] !== undefined) {
+                    if (typeof ifdt.properties.rresphazard[i] === "string") {
+                        ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rresphazard[i] === "number") {
+                        valrresphazard = ifdt.properties.rresphazard[i];
+                    } else {
+                        valrresphazard = 0;
+                    }
+                }
+                if (existsbcode) {
+
+                    if (ifdt.properties.bcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.bcondition[i] === "string") {
+                            ifdt.properties.bcondition[i] === "" ? valbcond = 0 : valbcond = parseFloat(ifdt.properties.bcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
+                        } else if (typeof ifdt.properties.bcondition[i] === "number") {
+                            valbcond = ifdt.properties.bcondition[i];
                         } else {
-                            valrcond = 0;
+                            valbcond = 0;
                         }
                     }
-                    if (ifdt.properties.rresphazard[i] !== undefined) {
-                        if (typeof ifdt.properties.rresphazard[i] === "string") {
-                            ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.rresphazard[i] === "number") {
-                            valrresphazard = ifdt.properties.rresphazard[i];
+                    if (ifdt.properties.bresphazard[i] !== undefined) {
+                        if (typeof ifdt.properties.bresphazard[i] === "string") {
+                            ifdt.properties.bresphazard[i] === "" ? valbresphazard = 0 : valbresphazard = parseFloat(ifdt.properties.bresphazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bresphazard[i] === "number") {
+                            valbresphazard = ifdt.properties.bresphazard[i];
                         } else {
-                            valrresphazard = 0;
+                            valbresphazard = 0;
                         }
                     }
+                }
+                if (existsCcode) {
+
+                    if (ifdt.properties.Ccondition[i] !== undefined) {
+                        if (typeof ifdt.properties.Ccondition[i] === "string") {
+                            ifdt.properties.Ccondition[i] === "" ? valCcond = 0 : valCcond = parseFloat(ifdt.properties.Ccondition[i].replace(",", "."));
+                            // debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
+                        } else if (typeof ifdt.properties.Ccondition[i] === "number") {
+                            valCcond = ifdt.properties.Ccondition[i];
+                        } else {
+                            valCcond = 0;
+                        }
+                    }
+                    if (ifdt.properties.CRespHazard[i] !== undefined) {
+                        if (typeof ifdt.properties.CRespHazard[i] === "string") {
+                            ifdt.properties.CRespHazard[i] === "" ? valCRespHazard = 0 : valCRespHazard = parseFloat(ifdt.properties.CRespHazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.CRespHazard[i] === "number") {
+                            valCRespHazard = ifdt.properties.CRespHazard[i];
+                        } else {
+                            valCRespHazard = 0;
+                        }
+                    }
+                }
+                if (existsgcode) {
+
+                    if (ifdt.properties.gcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.gcondition[i] === "string") {
+                            ifdt.properties.gcondition[i] === "" ? valgcond = 0 : valgcond = parseFloat(ifdt.properties.gcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
+                        } else if (typeof ifdt.properties.gcondition[i] === "number") {
+                            valgcond = ifdt.properties.gcondition[i];
+                        } else {
+                            valgcond = 0;
+                        }
+                    }
+                    if (ifdt.properties.gresphazard[i] !== undefined) {
+                        if (typeof ifdt.properties.gresphazard[i] === "string") {
+                            ifdt.properties.gresphazard[i] === "" ? valgresphazard = 0 : valgresphazard = parseFloat(ifdt.properties.gresphazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gresphazard[i] === "number") {
+                            valgresphazard = ifdt.properties.gresphazard[i];
+                        } else {
+                            valgresphazard = 0;
+                        }
+                    }
+                }
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+
                     switch (form.formulaSpec[f]["FORM_COEF"]) {
 
                         case 'firstcoef':
-                            // debug("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                            // PAVEMENTS //
+                            // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond <= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
                                 // debug(valrcond + ' MIN1 ' + valrresphazard +
@@ -480,9 +587,64 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                                 // debug(valrcond + ' MIN2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
+                            if (existsbcode) {
 
+                                // BRIDGES //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valbcond <= valbresphazard) {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
+                                    // debug(valbcond + ' MIN1 ' + valbresphazard +
+                                    // ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                } else {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
+                                    // debug(valbcond + ' MIN2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+
+                                }
+                            }
+                            if (existsCcode) {
+                                // CULVERTS //
+                                // debug ("MIN(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valCcond <= valCRespHazard) {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
+                                    // debug(valCcond + ' MIN1 ' + valCRespHazard +
+                                    // ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                } else {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
+                                    // debug(valCcond + ' MIN2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+
+                                }
+                            }
+                            if (existsgcode) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond <= valgresphazard) {
+                                    valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
+                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // ' valuegsensitivity ' + parseFloat(valuegsensitivity));
+                                } else {
+                                    valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
+                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity ' + parseFloat(valuebsensitivity));
+
+                                }
+                            }
+                            if (existsgcode2) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond2 <= valgresphazard2) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
+                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
+                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
                             break;
                         case 'secondcoef':
+                            // PAVEMENTS //
                             // debug("MAX(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond >= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
@@ -492,18 +654,87 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                                 // debug(valrcond + ' MAX2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
+                            if (existsbcode) {
+                                // BRIDGES //
+                                // debug("MAX(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valbcond >= valbresphazard) {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
+                                    // debug(valbcond + ' MAX1 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                } else {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
+                                    // debug(valbcond + ' MAX2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
 
+                                }
+                            }
+                            if (existsCcode) {
+                                // CULVERTS //
+                                // debug("MAX(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valCcond >= valCRespHazard) {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
+                                    // debug(valCcond + ' MAX1 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                } else {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
+                                    // debug(valCcond + ' MAX2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+
+                                }
+                            }
+                            if (existsgcode) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond >= valgresphazard) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
+                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
+                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
+                            if (existsgcode2) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond2 >= valgresphazard2) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
+                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
+                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
                             break;
 
                         default:
                             break;
                     }
                 }
-                valuersensitivityarr[i] = valuersensitivity;
-                valuebsensitivityarr[i] = valuebsensitivity;
-                valueCsensitivityarr[i] = valueCsensitivity;
-                valuegsensitivityarr[i] = valuegsensitivity;
-                valuegsensitivityarr2[i] = valuegsensitivity2;
+                valuersensitivityarr[i] = 1 - valuersensitivity;
+                if (existsbcode) {
+                    valuebsensitivityarr[i] = 1 - valuebsensitivity;
+                } else {
+                    valuebsensitivityarr[i] = "";
+                }
+                if (existsCcode) {
+                    valueCsensitivityarr[i] = 1 - valueCsensitivity;
+                } else {
+                    valueCsensitivityarr[i] = "";
+
+                }
+                if (existsgcode) {
+                    valuegsensitivityarr[i] = 1 - valuegsensitivity;
+                } else {
+                    valuegsensitivityarr[i] = "";
+                }
+                if (existsgcode2) {
+                    valuegsensitivityarr2[i] = 1 - valuegsensitivity2;
+                } else {
+                    valuegsensitivityarr2[i] = "";
+
+                }
             }
 
             var conditions = {
