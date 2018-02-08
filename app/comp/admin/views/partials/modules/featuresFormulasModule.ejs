@@ -7,14 +7,14 @@
         function capitalizeFirstLetter(string) {
             var OutPut = ''
             var WordList = string.split(' ')
-            WordList.forEach(function (element) {
+            WordList.forEach(function(element) {
                 OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
             });
             return OutPut;
         }
 
 
-        ! function (t, n, e, i) {
+        ! function(t, n, e, i) {
             "use strict";
 
             function a(n, e) {
@@ -25,12 +25,12 @@
                     vertical_align: "top"
                 };
             t.extend(a.prototype, {
-                init: function () {
+                init: function() {
                     var n = this,
                         e = t(this.element),
                         i = [];
-                    e.find("tr").each(function (n, e) {
-                        t(this).find("td").each(function (n, e) {
+                    e.find("tr").each(function(n, e) {
+                        t(this).find("td").each(function(n, e) {
                             var a = t(e),
                                 s = a.html();
                             if ("undefined" != typeof i[n] && "dato" in i[n] && i[n].dato ==
@@ -44,24 +44,24 @@
                                 elem: a
                             }
                         })
-                    }), t(".rowspan-combine").each(function (e, i) {
+                    }), t(".rowspan-combine").each(function(e, i) {
                         var a = t(this);
                         a.attr("rowspan", a.data("rowspan")).css({
                             "vertical-align": n.settings.vertical_align
                         })
                     }), t(".rowspan-remove").remove()
                 }
-            }), t.fn[s] = function (n) {
-                return this.each(function () {
+            }), t.fn[s] = function(n) {
+                return this.each(function() {
                     t.data(this, "plugin_" + s) || t.data(this, "plugin_" + s, new a(this, n))
                 })
             }
         }(jQuery, window, document);
 
-        var featurePaintCondition = (function () {
+        var featurePaintCondition = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) { // ------------------------------------------
+            var paintHTML = function(form) { // ------------------------------------------
                 DBprefix = {
                     "Retaining_Walls": "formulaSpec[0]",
                     "Cuttings_Embankments": "formulaSpec[1]",
@@ -75,7 +75,7 @@
                 var cabeceraPainted = false;
                 var postgressArray = Array();
                 // $.each(form.formulaSpec, function(i, fspec) {
-                $.each(Object.keys(formCondition), function (k, v) { // ------------------------------------------
+                $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
                     // console.log(k + ' ' + v);
                     fspec = v;
                     $('#selectFormula').append(
@@ -108,7 +108,7 @@
                         tableName + '">';
                     html[++h] = '<tr>';
                     var counter = 0;
-                    $.each(formCondition[v][0], function (cabeceraCol, val) { // ------------------------------------------
+                    $.each(formCondition[v][0], function(cabeceraCol, val) { // ------------------------------------------
                         if (counter == 0) {
                             counter++;
                         } else {
@@ -125,7 +125,7 @@
                         postgressArray = [];
                         postgressArray.push(DBprefix[v]);
                         counter = 0;
-                        $.each(formCondition[v][l], function (i, val) { // ------------------------------------------
+                        $.each(formCondition[v][l], function(i, val) { // ------------------------------------------
                             if (counter == 0) {
                                 counter++;
                             } else {
@@ -183,7 +183,7 @@
                 $('#formulaSpec').html(html.join(''));
 
 
-                $("document").ready(function () {
+                $("document").ready(function() {
                     if (true) {
                         $("#formulaTableBody").rowspanizer();
                         $("#formulaTableRetaining_Walls").rowspanizer();
@@ -200,13 +200,13 @@
             }
 
         })();
-        var featurePaintCriticality = (function () {
+        var featurePaintCriticality = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     $('#selectFormula').append(
                         '<div class="radio-inline"><label class="radio-inline">' +
                         '<input type="radio" name="optionsRadios" id="option' + fspec.name +
@@ -229,7 +229,7 @@
                     html[++h] =
                         '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
 
-                    $.each(fspec, function (key, data) {
+                    $.each(fspec, function(key, data) {
                         // console.log(key);
                         // console.log(data);
                         if (data.constructor === objectConstructor) {
@@ -246,7 +246,7 @@
                                 '">';
                             html[++h] = '</div></td>';
                             var tr = 0;
-                            $.each(data, function (j, data2) {
+                            $.each(data, function(j, data2) {
                                 if (data2.constructor === objectConstructor) {
 
                                     if (tr > 0) {
@@ -267,7 +267,7 @@
                                     html[++h] = '</td>';
                                     if (data2.scoring != undefined) {
                                         html[++h] = '<td class="col-sm-3">';
-                                        $.each(data2.scoring, function (s, scoring) {
+                                        $.each(data2.scoring, function(s, scoring) {
                                             html[++h] =
                                                 '<label class="col-sm-8 control-label">' +
                                                 s +
@@ -307,10 +307,10 @@
 
         })();
 
-        var featurePaintResponse = (function () {
+        var featurePaintResponse = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -329,7 +329,7 @@
                 html[++h] =
                     '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
                 var header = true;
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     // console.log(fspec);
                     // nombre de los campos
                     var fieldname = "";
@@ -365,41 +365,14 @@
                         html[++h] = '</td>';
                     }
 
-        var url = "";
 
-        function capitalizeFirstLetter(string) {
-            var OutPut = ''
-            var WordList = string.split(' ')
-            WordList.forEach(function(element) {
-                OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
-            });
-            return OutPut;
-        }
-
-
-        ! function(t, n, e, i) {
-            "use strict";
-
-            function a(n, e) {
-                this.element = n, this.settings = t.extend({}, o, e), this._defaults = o, this._name = s, this.init()
+                });
             }
-                html[++h] = '</tbody></table></div>';
-                $('#formulaSpec').html(html.join(''));
-                $("#assetResponseTable").rowspanizer();
-
-
-            };
-
-            // API publica
-            return {
-                paintHTML: paintHTML
-            }
-
         })();
-        var featurePaintSensitivity = (function () {
+        var featurePaintSensitivity = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -419,7 +392,7 @@
                     '">';
 
                 html[++h] = '<br><br><h4>Asset Sensitivity = 100 – [(';
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     html[++h] = '<input type="number" step="0.01" name="' + fspec['WEIGHTS'].fieldname +
                         '" value="' + fspec['WEIGHTS'].value +
                         '" >';
