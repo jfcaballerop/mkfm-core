@@ -1124,12 +1124,10 @@ var coincidencias=0;
                             //////////////////////INICIO///////////////////////////////
                             // debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
                             if (ifdt.properties.gcode.length > 0) {
-                                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
+                                if (ifdt.properties.gcode[i] !== undefined && 
+                                    ifdt.properties.gcode !== [] &&
                                     ifdt.properties.gcode[i] !== null &&
-                                    ifdt.properties.gcode[i] !== "" &&
-                                ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
-                                    ifdt.properties.gcode2[i] !== null &&
-                                    ifdt.properties.gcode2[i] !== "") {
+                                    ifdt.properties.gcode[i] !== "") {
                                     // debug(ifdt.properties.gcode);
                                     // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                     // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
@@ -1174,16 +1172,7 @@ var coincidencias=0;
                                                         }
 
                                                     }
-
-
-
-
-                                                    
-
-
                                                 }
-
-
                                             }
                                         }
                                         debug('totalScoring: ' + totalScoring);
