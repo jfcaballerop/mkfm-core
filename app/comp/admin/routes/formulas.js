@@ -25,6 +25,276 @@ var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
 
+diccKoboToDominica = {
+    "si": "Yes",
+    "no": "No",
+    "NA": "NA",
+    "Unknown": "Unknown",
+    "Girder": "Girder",
+    "Slab": "Slab",
+    "Truss": "Truss",
+    "Arch": "Arch",
+    "Composite": "Composite",
+    "Cantilever": "Cantilever",
+    "Masonry_arch": "Masonry arch",
+    "Cable_stayed": "Cable stayed",
+    "Suspension": "Suspension",
+    "Submersible": "Submersible",
+    "Truss_arch": "Truss arch",
+    "Bailey": "Bailey",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Straight": "Straight",
+    "Skewed": "Skewed",
+    "Curved": "Curved",
+    "Other": "Other",
+    "NA": "NA",
+    "Bridge": "Bridge",
+    "ODT": "Culvert",
+    "ford": "Ford",
+    "Concrete": "Concrete",
+    "Steel": "Steel",
+    "Composite": "Composite",
+    "Timber": "Timber",
+    "Masonry": "Masonry",
+    "Pre_concrete": "Pre-stressed concrete",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Concrete": "Concrete",
+    "Steel": "Steel",
+    "Masonry": "Masonry",
+    "mplate": "Metal plate",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Concrete": "Concrete",
+    "Steel": "Steel",
+    "Timber": "Timber",
+    "Pre_concrete": "Pre-stressed concrete",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Concrete": "Concrete",
+    "Masonry": "Masonry",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Concrete": "Concrete",
+    "Steel": "Steel",
+    "Masonry": "Masonry",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "Deep": "Deep",
+    "Shallow": "Shallow",
+    "NA": "NA",
+    "Unknown": "Unknown",
+    "Box": "Box",
+    "Pipe": "Pipe",
+    "Ford": "Ford",
+    "NA": "NA",
+    "Unknown": "Unknown",
+    "urbano": "Urban",
+    "rural": "Rural",
+    "industrial": "Industrial",
+    "maritimo": "Maritime",
+    "otros": "Other",
+    "Unknown": "Unknown",
+    "Arroyo": "River/Water stream",
+    "Barranco": "Rugged Topography",
+    "Calle": "Road",
+    "Camino": "Railway",
+    "Canal": "Pedestrian way",
+    "Carretera": "Other",
+    "Cauce": "Unknown",
+    "fabrica_de_ladrillo": "Girder",
+    "fabrica_de_mamposteria": "Slab",
+    "fabrica_de_silleria": "Truss",
+    "hormigon_en_masa": "Arch",
+    "hormigon_a": "Composite",
+    "hormigon_con_a": "Cantilever",
+    "hormigon_post": "Masonry arch",
+    "hormigon_pret": "Cable stayed",
+    "hormigon_c_g_c": "Suspension",
+    "metalico_soldado": "Submersible",
+    "metalico_atornillado": "Truss arch",
+    "metalico_roblonado": "Bailey",
+    "otro": "Other",
+    "Unknown": "Unknown",
+    "High": "High",
+    "Moderate": "Moderate",
+    "Low": "Low",
+    "NA": "NA",
+    "Unknown": "Unknown",
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "NA": "N/A",
+    "Unknown": "Unknown",
+    "danotipo_cimentacion": "Damages on foundations",
+    "danotipo_estructura": "Damages on structural elements",
+    "danotipo_funcionales": "Damages on non structural elements",
+    "no_danos": "No damages",
+    "dcimentacion1": "Damages from foundation-ground decay",
+    "dcimentacion2": "Damages from foundation decay",
+    "C1G": "General scouring",
+    "C1LP": "Scouring on piers",
+    "C1lE": "Scouring on abutments",
+    "otros": "Others",
+    "d_losas": "Damage on slab",
+    "d_pila": "Damage on piers",
+    "d_vigas": "Damage on beams and braces",
+    "d_apoyos": "Damage on bearings",
+    "d_estrib": "Damage on abutments",
+    "d_aletas": "Damage on side walls",
+    "d_bov": "Damage on vaults and arches",
+    "d_timp": "Damage on spandrel wall",
+    "d_zonas": "Damage on special areas",
+    "bovd_resistentes": "Mechanical defects",
+    "bovd_durables": "Durability defects",
+    "importcrit": "Very high",
+    "importhight": "High",
+    "importmedium": "Medium",
+    "importlow": "Low",
+    "importunknwn": "Unknown",
+    "importcrit": "Very high",
+    "importhight": "High",
+    "importmedium": "Medium",
+    "importlow": "Low",
+    "importunknwn": "Unknown",
+    "bovh_resistentes": "Mechanical defects",
+    "bovh_durables": "Durability defects",
+    "pild_resistentes": "Mechanical defects",
+    "pild_durables": "Durability defects",
+    "timd_resistentes": "Mechanical defects",
+    "timd_durables": "Durability defects",
+    "estd_resistentes": "Mechanical defects",
+    "estd_durables": "Durability defects",
+    "aled_resistentes": "Mechanical defects",
+    "aled_durables": "Durability defects",
+    "losa_resistentes": "Mechanical defects",
+    "losa_durables": "Durability defects",
+    "vigas_resistentes": "Mechanical defects",
+    "vigas_durables": "Durability defects",
+    "AP2INX": "No bearings",
+    "AP2DES": "Bearings displaced ",
+    "Bdecay": "Bearings decay",
+    "otros": "Other damages",
+    "ES2CTE": "Cracking by stress concentration",
+    "otros": "Other damages",
+    "silting": "Silting",
+    "breaking": "Breaking",
+    "smashing": "Smashing",
+    "displazaments": "Displazaments",
+    "open_joints": "Open joints",
+    "scouring": "Scouring",
+    "loss": "Loss of drainage mouth",
+    "collapse": "Collapse",
+    "No_damages": "No damages",
+    "Other": "Other",
+    "Unknown": "Unknown",
+    "single": "Single",
+    "multiple": "Multiple"
+};
+
+diccDominicaToKobo = {
+    "Yes": "si",
+    "No": "no",
+    "Na": "NA",
+    "Unknown": "Unknown",
+    "Girder": "fabrica_de_ladrillo",
+    "Slab": "fabrica_de_mamposteria",
+    "Truss": "fabrica_de_silleria",
+    "Arch": "hormigon_en_masa",
+    "Composite": "hormigon_a",
+    "Cantilever": "hormigon_con_a",
+    "MasonryArch": "hormigon_post",
+    "CableStayed": "hormigon_pret",
+    "Suspension": "hormigon_c_g_c",
+    "Submersible": "metalico_soldado",
+    "TrussArch": "metalico_atornillado",
+    "Bailey": "metalico_roblonado",
+    "Other": "Other",
+    "Straight": "Straight",
+    "Skewed": "Skewed",
+    "Curved": "Curved",
+    "Bridge": "Bridge",
+    "Culvert": "ODT",
+    "Ford": "Ford",
+    "Concrete": "Concrete",
+    "Steel": "Steel",
+    "Timber": "Timber",
+    "Masonry": "Masonry",
+    "PreStressedConcrete": "Pre_concrete",
+    "MetalPlate": "mplate",
+    "Pre_concrete": "Pre-stressed concrete",
+    "Deep": "Deep",
+    "Shallow": "Shallow",
+    "Box": "Box",
+    "Pipe": "Pipe",
+    "Urban": "urbano",
+    "Rural": "rural",
+    "Industrial": "industrial",
+    "Maritime": "maritimo",
+    "River/waterStream": "Arroyo",
+    "RuggedTopography": "Barranco",
+    "Road": "Calle",
+    "Railway": "Camino",
+    "PedestrianWay": "Canal",
+    "High": "importhight",
+    "Moderate": "Moderate",
+    "Low": "importlow",
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "DamagesOnFoundations": "danotipo_cimentacion",
+    "DamagesOnStructuralElements": "danotipo_estructura",
+    "DamagesOnNonStructuralElements": "danotipo_funcionales",
+    "NoDamages": "No_damages",
+    "DamagesFromFoundationGroundDecay": "dcimentacion1",
+    "DamagesFromFoundationDecay": "dcimentacion2",
+    "GeneralScouring": "C1G",
+    "ScouringOnPiers": "C1LP",
+    "ScouringOnAbutments": "C1lE",
+    "Others": "otros",
+    "DamageOnSlab": "d_losas",
+    "DamageOnPiers": "d_pila",
+    "DamageOnBeamsAndBraces": "d_vigas",
+    "DamageOnBearings": "d_apoyos",
+    "DamageOnAbutments": "d_estrib",
+    "DamageOnSideWalls": "d_aletas",
+    "DamageOnVaultsAndArches": "d_bov",
+    "DamageOnSpandrelWall": "d_timp",
+    "DamageOnSpecialAreas": "d_zonas",
+    "MechanicalDefects": "vigas_resistentes",
+    "DurabilityDefects": "vigas_durables",
+    "VeryHigh": "importcrit",
+    "Medium": "importmedium",
+    "NoBearings": "AP2INX",
+    "BearingsDisplaced": "AP2DES",
+    "BearingsDecay": "Bdecay",
+    "OtherDamages": "otros",
+    "CrackingByStressConcentration": "ES2CTE",
+    "Silting": "silting",
+    "Breaking": "breaking",
+    "Smashing": "smashing",
+    "Displazaments": "displazaments",
+    "OpenJoints": "open_joints",
+    "Scouring": "scouring",
+    "LossOfDrainageMouth": "loss",
+    "Collapse": "collapse",
+    "Single": "single",
+    "Multiple": "multiple"
+};
+function capitalizeFirstLetter(string) {
+    var OutPut = ''
+    var WordList = string.split(' ')
+    WordList.forEach(function (element) {
+        OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
+    });
+    return OutPut;
+}
+
 router.use(function timeLog(req, res, next) {
     ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
@@ -3102,6 +3372,202 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 
+        case 'Bridges':
+            // debug(form);
+            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                for (var ifdt of ifdts) {
+                    tracksUpdated2++;
+                    //debug(ifdt._id);
+                    // debug(ifdt.geometry.coordinates);
+                    var valueconditionsr = [];
+                    debug('tracksUpdated2: ' + tracksUpdated2);
+                    debug(ifdt._id);
+
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        var coincidencias = 0;
+                        //debug(form.formulaSpec.length);
+                        for (var f = 0; f < form.formulaSpec.length; f++) {
+                            var totalScoring = Number.MAX_VALUE;
+                            switch (form.formulaSpec[f].name) {
+                                case 'Bridges':
+                                    //////////////////////INICIO///////////////////////////////
+                                    // debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
+                                    // if (true) {
+                                    if ((ifdt.properties.bcode !== undefined && ifdt.properties.bcode.length > 0 &&
+                                            ifdt.properties.bcode[i] !== null &&
+                                            ifdt.properties.bcode[i] !== "" &&
+                                            ifdt.properties.bcode.length > 0)|| true) {
+                                            if (true) {
+                                            debug('totalScoring1:  ' + totalScoring);
+                                            var numberOfScores = 0;
+                                            var numberOfTypeOfFailureProcess = 0;
+                                            if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0) {
+                                                debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
+                                                for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
+                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                        totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ;
+                                                    } else {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
+                                                                       totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                    }
+                                                }
+                                            }
+                                            debug('totalScoring2:  ' + totalScoring);
+                                            debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
+                                            if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0) {
+
+                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                        ;
+                                                    } else {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+                                                    }
+                                            }
+                                            debug('totalScoring3:  ' + totalScoring);
+                                            // Mechanical Defects, Durable Defects
+                                            z1 = ["BDamagesSlab","BDamagesPiers","BDamagesBeams","BdamagesBearings","BDamagesAbutments","BDamagesSidewalls","bdamagesvaultsarchesmechanicaldurable","BDamagesSpandrel","BDamagesSpecialareas"];
+                                            //  Very High, High, Medium, Low, Unknown 
+                                            z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBeamsSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity"];
+                                            var k = 0;
+                                            debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]]);
+                                            debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]]);
+                                            if (ifdt.properties[z1[k]][i] !== undefined && ifdt.properties[z1[k]] !== [] &&
+                                                ifdt.properties[z1[k]][i] !== null &&
+                                                ifdt.properties[z1[k]][i] !== "" &&
+                                                ifdt.properties[z1[k]][i] > 0 &&
+                                                ifdt.properties[z2[k]][i] !== undefined && ifdt.properties[z2[k]] !== [] &&
+                                                ifdt.properties[z2[k]][i] !== null &&
+                                                ifdt.properties[z2[k]][i] !== "" &&
+                                                ifdt.properties[z2[k]][i] > 0) {
+                                            debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z1[k]][i])))
+                                            debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
+                                            for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
+                                                // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
+                                                debug('ifdt.properties.z1[k].length, z1[k]: ' + ifdt.properties.z1[k].length) + '    ' + z1[k];
+                                                if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.z1[k].length > 0) {
+// ATTENTION!!
+                                                    for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].scoring) {
+                                                        if (ifdt.properties.z[k][i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
+                                                            ifdt.properties.z[k][i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight ?
+                                                                totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight;
+                                                        }
+                                                    }  
+                                                }
+                                                k++;
+                                            }
+                                            debug('totalScoring4:  ' + totalScoring);
+
+                                        }
+
+
+
+                                                
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                            // debug(totalScoring);
+/////////////////////////////////////////////////////////////////
+// =(0.0018 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 3) - 0.0305 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 2) + 0.0302 * (SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) + 0.9862) * L101
+                                            // Existance of several damages
+                                            // if (numberOfScores > 2) {
+                                            //     totalScoring *= 0.9;
+                                            // } else {
+                                            //     // existance of several damages
+                                            //     totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                            // }
+/////////////////////////////////////////////////////////////////
+                                            //  CORRECTIVE FACTORS - Bridge type
+                                            if (ifdt.properties.btype !== undefined &&
+                                                ifdt.properties.btype.length > 0 &&
+                                                ifdt.properties.btype[i] !== null &&
+                                                ifdt.properties.btype[i] !== "") {
+                                                for (score in form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring) {
+                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    if (score !== undefined && score !== null) {
+                                                        // debug('score ' + score);
+                                                        // debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
+                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
+                                                        } else {
+
+                                                            totalScoring *= 1;
+                                                        }
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                totalScoring *= 0.90;
+                                            }
+
+                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                            valueconditionsr.push(totalScoring);
+                                            //debug(totalScoring + '\n');
+                                        } else {
+                                            valueconditionsr.push("");
+                                        }
+                                    }
+                                    // debug(valueconditionsr);
+                                    ///////////////////////FINAL//////////////////////////////////////////////
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+
+                    }
+                    // debug('coincidencias: ' + coincidencias);
+                    tracksUpdated++;
+                    // debug(valueconditionsr.toString());
+                    // debug(tracksUpdated);
+
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.gcondition2": valueconditionsr
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+
+
+
+
+
+                }
+
+                // res.status(200).jsonp(ret);
+            });
+
+            tracksUpdated2 = tracksUpdated;
+            ret.tracksUpdated = tracksUpdated;
+            debug('tracksUpdated: ' + tracksUpdated);
+            res.status(200).jsonp(ret);
+            break;
+
+
+
+
+
+
+
 
 
 
@@ -3111,9 +3577,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
             break;
-
-
-
         default:
             break;
     }
