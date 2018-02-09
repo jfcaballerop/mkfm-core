@@ -96,6 +96,9 @@ var infodatatrackSchema = new Schema({
         rrisk: [],
         rriskphysical: [],
         rrisknatural: [],
+        rlofnatural: [],
+        rlofphysical: [],
+
         rbarriersexist: [], //Road Furniture Data        
         rbarrierstype: [],
         rsafetyfence: [],
@@ -194,6 +197,8 @@ var infodatatrackSchema = new Schema({
         brisk: [],
         briskphysical: [],
         brisknatural: [],
+        blofnatural: [],
+        blofphysical: [],
         gcode: [], // GEOTECHNICAL ASSETS        
         gyearconstruct: [],
         gtype: [],
@@ -270,6 +275,8 @@ var infodatatrackSchema = new Schema({
         grisk: [],
         griskphysical: [],
         grisknatural: [],
+        glofnatural: [],
+        glofphysical: [],
         gcode2: [], // GEOTECHNICAL ASSETS  2      
         gyearconstruct2: [],
         gtype2: [],
@@ -346,7 +353,9 @@ var infodatatrackSchema = new Schema({
         grisk2: [],
         griskphysical2: [],
         grisknatural2: [],
-        Ccode: [],
+        glofnatural2: [],
+        glofphysical2: [],
+        Ccode: [], //CULVERTS
         Cyearconstruc: [],
         Ctype: [],
         Clocation: [],
@@ -398,7 +407,9 @@ var infodatatrackSchema = new Schema({
         CRISK: [],
         CRISKphysical: [],
         CRISKnatural: [],
-        dcode: [],
+        Clofnatural: [],
+        Clofphysical: [],
+        dcode: [], //DRAINAGES
         dyearconstruc: [],
         dtype: [],
         dsection: [],
