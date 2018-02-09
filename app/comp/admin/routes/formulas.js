@@ -744,6 +744,11 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
     wherearr.push('gflood2');
     wherearr.push('CLandslide');
     wherearr.push('CFlood');
+    wherearr.push('rsensitivity');
+    wherearr.push('bsensitivity');
+    wherearr.push('Csensitivity');
+    wherearr.push('gsensitivity');
+    wherearr.push('gsensitivity2');
 
     var selectjson = {
         "geometry.coordinates": 1,
@@ -829,15 +834,29 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                         valrlofphy = 0;
                     }
                 }
-                //         if (ifdt.properties.rresphazard[i] !== undefined) {
-                //             if (typeof ifdt.properties.rresphazard[i] === "string") {
-                //                 ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
-                //             } else if (typeof ifdt.properties.rresphazard[i] === "number") {
-                //                 valrresphazard = ifdt.properties.rresphazard[i];
-                //             } else {
-                //                 valrresphazard = 0;
-                //             }
-                //         }
+                var rsens;
+                var rlands;
+
+                if (ifdt.properties.rsensitivity[i] !== undefined) {
+                    if (typeof ifdt.properties.rsensitivity[i] === "string") {
+                        ifdt.properties.rsensitivity[i] === "" ? rsens = 0 : rsens = parseFloat(ifdt.properties.rsensitivity[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rsensitivity[i] === "number") {
+                        rsens = ifdt.properties.rsensitivity[i];
+                    } else {
+                        rsens = 0;
+                    }
+                }
+                if (ifdt.properties.rlandslide[i] !== undefined) {
+                    if (typeof ifdt.properties.rlandslide[i] === "string") {
+                        ifdt.properties.rlandslide[i] === "" ? rlands = 0 : rlands = parseFloat(ifdt.properties.rlandslide[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rlandslide[i] === "number") {
+                        rlands = ifdt.properties.rlandslide[i];
+                    } else {
+                        rlands = 0;
+                    }
+                }
+
+
                 if (existsbcode) {
 
                     if (ifdt.properties.bcondition[i] !== undefined) {
@@ -850,15 +869,27 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             valblofphy = 0;
                         }
                     }
-                    //             if (ifdt.properties.bresphazard[i] !== undefined) {
-                    //                 if (typeof ifdt.properties.bresphazard[i] === "string") {
-                    //                     ifdt.properties.bresphazard[i] === "" ? valbresphazard = 0 : valbresphazard = parseFloat(ifdt.properties.bresphazard[i].replace(",", "."));
-                    //                 } else if (typeof ifdt.properties.bresphazard[i] === "number") {
-                    //                     valbresphazard = ifdt.properties.bresphazard[i];
-                    //                 } else {
-                    //                     valbresphazard = 0;
-                    //                 }
-                    //             }
+                    var bsens;
+                    var bfl;
+
+                    if (ifdt.properties.bsensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.bsensitivity[i] === "string") {
+                            ifdt.properties.bsensitivity[i] === "" ? bsens = 0 : bsens = parseFloat(ifdt.properties.bsensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bsensitivity[i] === "number") {
+                            bsens = ifdt.properties.bsensitivity[i];
+                        } else {
+                            bsens = 0;
+                        }
+                    }
+                    if (ifdt.properties.bflood[i] !== undefined) {
+                        if (typeof ifdt.properties.bflood[i] === "string") {
+                            ifdt.properties.bflood[i] === "" ? bfl = 0 : bfl = parseFloat(ifdt.properties.bflood[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bflood[i] === "number") {
+                            bfl = ifdt.properties.bflood[i];
+                        } else {
+                            bfl = 0;
+                        }
+                    }
                 }
                 if (existsCcode) {
 
@@ -872,15 +903,28 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             valClofphy = 0;
                         }
                     }
-                    //             if (ifdt.properties.CRespHazard[i] !== undefined) {
-                    //                 if (typeof ifdt.properties.CRespHazard[i] === "string") {
-                    //                     ifdt.properties.CRespHazard[i] === "" ? valCRespHazard = 0 : valCRespHazard = parseFloat(ifdt.properties.CRespHazard[i].replace(",", "."));
-                    //                 } else if (typeof ifdt.properties.CRespHazard[i] === "number") {
-                    //                     valCRespHazard = ifdt.properties.CRespHazard[i];
-                    //                 } else {
-                    //                     valCRespHazard = 0;
-                    //                 }
-                    //             }
+                    var Csens;
+                    var CFl;
+
+                    if (ifdt.properties.Csensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.Csensitivity[i] === "string") {
+                            ifdt.properties.Csensitivity[i] === "" ? Csens = 0 : Csens = parseFloat(ifdt.properties.Csensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.Csensitivity[i] === "number") {
+                            Csens = ifdt.properties.Csensitivity[i];
+                        } else {
+                            Csens = 0;
+                        }
+                    }
+                    if (ifdt.properties.CFlood[i] !== undefined) {
+                        if (typeof ifdt.properties.CFlood[i] === "string") {
+                            ifdt.properties.CFlood[i] === "" ? CFl = 0 : CFl = parseFloat(ifdt.properties.CFlood[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.CFlood[i] === "number") {
+                            CFl = ifdt.properties.CFlood[i];
+                        } else {
+                            CFl = 0;
+                        }
+                    }
+
                 }
                 if (existsgcode) {
 
@@ -894,15 +938,27 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             valglofphy = 0;
                         }
                     }
-                    //             if (ifdt.properties.gresphazard[i] !== undefined) {
-                    //                 if (typeof ifdt.properties.gresphazard[i] === "string") {
-                    //                     ifdt.properties.gresphazard[i] === "" ? valgresphazard = 0 : valgresphazard = parseFloat(ifdt.properties.gresphazard[i].replace(",", "."));
-                    //                 } else if (typeof ifdt.properties.gresphazard[i] === "number") {
-                    //                     valgresphazard = ifdt.properties.gresphazard[i];
-                    //                 } else {
-                    //                     valgresphazard = 0;
-                    //                 }
-                    //             }
+                    var gsens;
+                    var glands;
+
+                    if (ifdt.properties.gsensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.gsensitivity[i] === "string") {
+                            ifdt.properties.gsensitivity[i] === "" ? gsens = 0 : gsens = parseFloat(ifdt.properties.gsensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gsensitivity[i] === "number") {
+                            gsens = ifdt.properties.gsensitivity[i];
+                        } else {
+                            gsens = 0;
+                        }
+                    }
+                    if (ifdt.properties.glandslide[i] !== undefined) {
+                        if (typeof ifdt.properties.glandslide[i] === "string") {
+                            ifdt.properties.glandslide[i] === "" ? glands = 0 : glands = parseFloat(ifdt.properties.glandslide[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glandslide[i] === "number") {
+                            glands = ifdt.properties.glandslide[i];
+                        } else {
+                            glands = 0;
+                        }
+                    }
                 }
                 if (existsgcode2) {
 
@@ -916,15 +972,27 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             valglofphy2 = 0;
                         }
                     }
-                    //             if (ifdt.properties.gresphazard[i] !== undefined) {
-                    //                 if (typeof ifdt.properties.gresphazard[i] === "string") {
-                    //                     ifdt.properties.gresphazard[i] === "" ? valgresphazard = 0 : valgresphazard = parseFloat(ifdt.properties.gresphazard[i].replace(",", "."));
-                    //                 } else if (typeof ifdt.properties.gresphazard[i] === "number") {
-                    //                     valgresphazard = ifdt.properties.gresphazard[i];
-                    //                 } else {
-                    //                     valgresphazard = 0;
-                    //                 }
-                    //             }
+                    var gsens2;
+                    var glands2;
+
+                    if (ifdt.properties.gsensitivity2[i] !== undefined) {
+                        if (typeof ifdt.properties.gsensitivity2[i] === "string") {
+                            ifdt.properties.gsensitivity2[i] === "" ? gsens2 = 0 : gsens2 = parseFloat(ifdt.properties.gsensitivity2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gsensitivity2[i] === "number") {
+                            gsens2 = ifdt.properties.gsensitivity2[i];
+                        } else {
+                            gsens2 = 0;
+                        }
+                    }
+                    if (ifdt.properties.glandslide2[i] !== undefined) {
+                        if (typeof ifdt.properties.glandslide2[i] === "string") {
+                            ifdt.properties.glandslide2[i] === "" ? glands2 = 0 : glands2 = parseFloat(ifdt.properties.glandslide2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glandslide2[i] === "number") {
+                            glands2 = ifdt.properties.glandslide2[i];
+                        } else {
+                            glands2 = 0;
+                        }
+                    }
                 }
 
                 // En el caso de ser LOFPhysical se iguala a condition
@@ -938,153 +1006,145 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 
                 // En el caso de ser LOFNatural se aplica la formula
 
-                // for (var f = 0; f < form.formulaSpec.length; f++) {
+                for (var f = 0; f < form.formulaSpec.length; f++) {
 
-                //     switch (form.formulaSpec[f]["FORM_COEF"]) {
+                    switch (form.formulaSpec[f]["FORM_COEF"]) {
 
-                //         case 'firstcoef':
-                //             // PAVEMENTS //
-                //             // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //             valuerlofphysical = parseFloat(valrlofphy);
-                //                     if (existsbcode) {
+                        case 'firstcoef':
+                            // PAVEMENTS //
+                            if (rlands === 3) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
 
-                //                         // BRIDGES //
-                //                         // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valbcond <= valbresphazard) {
-                //                             valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
-                //                             // debug(valbcond + ' MIN1 ' + valbresphazard +
-                //                             // ' valuebsensitivity ' + parseFloat(valuebsensitivity));
-                //                         } else {
-                //                             valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
-                //                             // debug(valbcond + ' MIN2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                            // BRIDGES //
+                            if (existsbcode) {
 
-                //                         }
-                //                     }
-                //                     if (existsCcode) {
-                //                         // CULVERTS //
-                //                         // debug ("MIN(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valCcond <= valCRespHazard) {
-                //                             valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
-                //                             // debug(valCcond + ' MIN1 ' + valCRespHazard +
-                //                             // ' valueCsensitivity ' + parseFloat(valueCsensitivity));
-                //                         } else {
-                //                             valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
-                //                             // debug(valCcond + ' MIN2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                if (bfl === 3) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
 
-                //                         }
-                //                     }
-                //                     if (existsgcode) {
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 3) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 3) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
 
-                //                         // GEOT //
-                //                         // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valgcond <= valgresphazard) {
-                //                             valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
-                //                             // debug(valgcond + ' MIN1 ' + valgresphazard +
-                //                             // ' valuegsensitivity ' + parseFloat(valuegsensitivity));
-                //                         } else {
-                //                             valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
-                //                             // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity ' + parseFloat(valuebsensitivity));
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 3) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
 
-                //                         }
-                //                     }
-                //                     if (existsgcode2) {
+                            }
 
-                //                         // GEOT //
-                //                         // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valgcond2 <= valgresphazard2) {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
-                //                             // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
-                //                             // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
-                //                         } else {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
-                //                             // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                            break;
+                            // PAVEMENTS //
+                        case 'secondcoef':
+                            if (rlands === 2) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
+                            // BRIDGES //
+                            if (existsbcode) {
+                                if (bfl === 2) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 2) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 2) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
 
-                //                         }
-                //                     }
-                //     break;
-                //     // PAVEMENTS //
-                // case 'secondcoef':
-                //     // debug("MAX(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //     valuerlofphysical = parseFloat(valrlofphy);
-                //                     if (existsbcode) {
-                //                         // BRIDGES //
-                //                         // debug("MAX(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valbcond >= valbresphazard) {
-                //                             valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
-                //                             // debug(valbcond + ' MAX1 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
-                //                         } else {
-                //                             valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
-                //                             // debug(valbcond + ' MAX2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 2) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
 
-                //                         }
-                //                     }
-                //                     if (existsCcode) {
-                //                         // CULVERTS //
-                //                         // debug("MAX(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valCcond >= valCRespHazard) {
-                //                             valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
-                //                             // debug(valCcond + ' MAX1 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
-                //                         } else {
-                //                             valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
-                //                             // debug(valCcond + ' MAX2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                            }
+                            break;
+                        case 'thirdcoef':
+                            if (rlands === 1) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
+                            // BRIDGES //
+                            if (existsbcode) {
+                                if (bfl === 1) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 1) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 1) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
 
-                //                         }
-                //                     }
-                //                     if (existsgcode) {
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 1) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
 
-                //                         // GEOT //
-                //                         // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valgcond >= valgresphazard) {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
-                //                             // debug(valgcond + ' MIN1 ' + valgresphazard +
-                //                             // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
-                //                         } else {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
-                //                             // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                            }
+                            break;
 
-                //                         }
-                //                     }
-                //                     if (existsgcode2) {
+                        default:
+                            break;
+                    }
+                }
+                // debug("valuerlofnatural " + valuerlofnatural);
 
-                //                         // GEOT //
-                //                         // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
-                //                         if (valgcond2 >= valgresphazard2) {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
-                //                             // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
-                //                             // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
-                //                         } else {
-                //                             valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
-                //                             // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
-
-                //                         }
-                //                     }
-                //         break;
-
-                //     default:
-                //         break;
-                // }
-                // }
                 valuerlofphysicalarr[i] = 1 - valuerlofphysical;
+                valuerlofnaturalarr[i] = valuerlofnatural;
+
                 if (existsbcode) {
                     valueblofphysicalarr[i] = 1 - valueblofphysical;
+                    valueblofnaturalarr[i] = 1 - valueblofnatural;
                 } else {
                     valueblofphysicalarr[i] = "";
+                    valueblofnaturalarr[i] = "";
                 }
                 if (existsCcode) {
                     valueClofphysicalarr[i] = 1 - valueClofphysical;
+                    valueClofnaturalarr[i] = 1 - valueClofnatural;
                 } else {
                     valueClofphysicalarr[i] = "";
+                    valueClofnaturalarr[i] = "";
 
                 }
                 if (existsgcode) {
                     valueglofphysicalarr[i] = 1 - valueglofphysical;
+                    valueglofnaturalarr[i] = 1 - valueglofnatural;
                 } else {
                     valueglofphysicalarr[i] = "";
+                    valueglofnaturalarr[i] = "";
                 }
                 if (existsgcode2) {
                     valueglofphysicalarr2[i] = 1 - valueglofphysical2;
+                    valueglofnaturalarr2[i] = 1 - valueglofnatural2;
+
                 } else {
                     valueglofphysicalarr2[i] = "";
+                    valueglofnaturalarr2[i] = "";
 
                 }
             }
@@ -1095,10 +1155,15 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
             var query = {
                 $set: {
                     "properties.rlofphysical": valuerlofphysicalarr,
+                    "properties.rlofnatural": valuerlofnaturalarr,
                     "properties.blofphysical": valueblofphysicalarr,
+                    "properties.blofnatural": valueblofnaturalarr,
                     "properties.Clofphysical": valueClofphysicalarr,
+                    "properties.Clofnatural": valueClofnaturalarr,
                     "properties.glofphysical": valueglofphysicalarr,
-                    "properties.glofphysical2": valueglofphysicalarr2
+                    "properties.glofphysical2": valueglofphysicalarr2,
+                    "properties.glofnatural": valueglofnaturalarr,
+                    "properties.glofnatural2": valueglofnaturalarr2
                 }
             };
             await Infodatatrack.update(conditions, query, function(err, iup) {
@@ -1117,6 +1182,8 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 
 
 });
+
+
 /* POST update_formulas_tracks_sensitivity */
 /**
  * Metodo para modificar los valores devueltos por las formulas
@@ -1160,6 +1227,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     wherearr.push('Ccode');
     wherearr.push('gcode');
     wherearr.push('gcode2');
+
 
     var selectjson = {
         "geometry.coordinates": 1,
