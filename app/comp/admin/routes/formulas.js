@@ -2744,44 +2744,27 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             debug('totalScoring1:  ' + totalScoring);
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            debug('ifdt.properties.bdamagesfoundationsgeneraltype.length: ' + ifdt.properties.bdamagesfoundationsgeneraltype.length);
                                             if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0) {
                                                 debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
                                                 for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
-                                                    debug('x.toString() ' + x.toString());
-                                                    debug('diccDominicaToKobo(x) ' + diccDominicaToKobo[x.toString()]);
-                                                    debug('form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight);
-                                                    debug(ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]]);
-                                                    debug(diccKoboToDominica(ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]]));
-                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
-                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] !== undefined) {
+                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
                                                         totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ;
                                                     } else {
-                                                        // totalScoring = totalScoring < * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight 
-                                                        debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
-                                                        while (true) { ; }
-                                                    }
-                                                    // while (true) {;}
-                                                    debug(ifdt.properties.bdamagesfoundationsgeneraltype[i].toString());
-                                                    debug(ifdt.properties.bdamagesfoundationsgeneraltype[i].toString().indexOf(x.toString()));
-                                                    debug(x.toString());
-                                                    if (ifdt.properties.bdamagesfoundations[i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
-                                                        ifdt.properties.bdamagesfoundations[i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
-                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
+                                                                       totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                     }
                                                 }
                                             }
                                             debug('totalScoring2:  ' + totalScoring);
                                             debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
                                             if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0) {
-                                                for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
-                                                    if (ifdt.properties.BDamagesslabSeverity[i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
-                                                        ifdt.properties.BDamagesslabSeverity[i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
-                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+
+                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                        ;
+                                                    } else {
+                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
                                                     }
-                                                }
                                             }
                                             debug('totalScoring3:  ' + totalScoring);
                                             // Mechanical Defects, Durable Defects
@@ -2791,6 +2774,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             var k = 0;
                                             debug(ifdt.properties[z1[k]]);
                                             debug(ifdt.properties[z2[k]]);
+                                            while (true) { ; }
                                             if (ifdt.properties[z1[k]] !== undefined && ifdt.properties[z1[k]] !== [] &&
                                                 ifdt.properties[z1[k]] !== null &&
                                                 ifdt.properties[z1[k]] !== "" &&
