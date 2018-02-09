@@ -28,6 +28,9 @@
         } else if (arrCallProm[0].indexOf('AssetSensitivity') >= 0) {
             tipoDeFormula = 'update_formulas_tracks_sensitivity';
 
+        } else if (arrCallProm[0].indexOf('Likelihood') >= 0) {
+            tipoDeFormula = 'update_formulas_tracks_likelihood';
+
         } else {
             tipoDeFormula = 'update_formulas_tracks';
         }
