@@ -113,8 +113,8 @@
                         if (counter == 0) {
                             counter++;
                         } else {
-                            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol.substring(
-                                cabeceraCol.indexOf("_") + 1) + '</th>';
+                            html[++h] = '<th id="' + cabeceraCol + '">' + capitalizeFirstLetter(cabeceraCol.substring(
+                                cabeceraCol.indexOf("_") + 1)) + '</th>';
                         }
                     });
                     html[++h] = '</tr>'
@@ -131,7 +131,7 @@
                                 counter++;
                             } else {
                                 weight = 0;
-                                var j = postgressArray.indexOf("weight");
+                                var j = postgressArray.indexOf("WEIGHT");
                                 if (j != -1) {
                                     weight = 1;
                                     // console.log(postgressArray + "<--------------- 1");
@@ -139,13 +139,16 @@
                                     // // console.log(postgressArray + "<--------------- 2");
 
                                 }
-                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (
-                                        ScoreName.length > 0)) || (i.indexOf('weight') >
+                                console.log(i);
+                                console.log(i.indexOf('scoring'));
+                                if (val.length > 0 && ((i.indexOf('scoring') > -1 && (
+                                        ScoreName.length > 0)) || (i.indexOf('WEIGHT') >
                                         -1 && ScoreName.length > 0))) {
+                                    // if (i.indexOf('scores') > -1) {
                                     // // console.log(postgressArray.join());
                                     // // console.log(counter);
-                                    (i.indexOf('weight') > -1) ? postgressArray.push(
-                                        'weight'): postgressArray.splice(-1, 0,
+                                    (i.indexOf('WEIGHT') > -1) ? postgressArray.push(
+                                        'WEIGHT'): postgressArray.splice(-1, 0,
                                         'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(
                                         /,/g, "__"));
@@ -171,7 +174,7 @@
                                         html[++h] = '<td>' + '' + '</td>';
                                     } else {
                                         postgressArray.push(capitalizeFirstLetter(val));
-                                        html[++h] = '<td>' + val + '</td>';
+                                        html[++h] = '<td>' + capitalizeFirstLetter(val) + '</td>';
                                     }
 
                                     // postgressArray.push(capitalizeFirstLetter(val)
