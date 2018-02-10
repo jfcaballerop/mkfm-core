@@ -29,7 +29,7 @@ router.use(function timeLog(req, res, next) {
         res.status(403).redirect('/');
     } else {
         debug('Entro: ' + config.TOKEN_SECRET);
-        jwtweb.verify(token, config.TOKEN_SECRET, function (err, token) {
+        jwtweb.verify(token, config.TOKEN_SECRET, function(err, token) {
             if (('' + err).indexOf('TokenExpiredError') !== -1) {
                 debug('## ERR1: ' + err);
                 req.flash('message', 'El token ha expirado!');
@@ -59,7 +59,7 @@ router.use(function timeLog(req, res, next) {
 
 
 // LOGIN Page
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     res.render('login', {
         title: 'Login',
         cname: config.client_name,
@@ -102,5 +102,8 @@ router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/quer
 
 // budgets auth
 router.use('/budget', require(path.join(__dirname, '../app/comp/budget/routes/budgets')));
+
+// pdf auth
+router.use('/pdf', require(path.join(__dirname, '../app/comp/report/routes/reports')));
 
 module.exports = router;
