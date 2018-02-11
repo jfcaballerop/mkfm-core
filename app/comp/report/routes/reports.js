@@ -164,7 +164,8 @@ router.post('/V1/generatePDF/:reportName', function(req, res, next) {
         if (err) {
             res.send(500, err.message);
         }
-        debug(" ### GET generatePDF ### \n" + temps);
+        // debug(" ### GET generatePDF ### \n" + temps);
+        // TODO: Montaje del documento con las variables definidas.
         ret.docDefinition = temps.docDefinition;
 
         res.status(200).jsonp(ret);

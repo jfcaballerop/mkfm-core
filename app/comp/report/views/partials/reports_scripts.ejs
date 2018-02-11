@@ -126,6 +126,8 @@
 
         });
 
+
+
         $('#generateReport').click(function() {
             var dataPost = {};
 
@@ -148,13 +150,23 @@
 
                 } else {
                     $('#response').empty();
+                    $('#iframeContainer').empty();
                     $('#response').show();
                     $('#response').append("Generating...");
                     $(":radio").prop('disabled', false);
                     $("#generateReport").prop('disabled', true);
                     $('#spinner').hide();
                     docDefinition = ret.docDefinition;
-                    pdfMake.createPdf(docDefinition).open();
+                    var pdfDocGenerator = pdfMake.createPdf(docDefinition);
+                    pdfDocGenerator.getDataUrl((dataUrl) => {
+                        const targetElement = document.querySelector('#iframeContainer');
+                        const iframe = document.createElement('iframe');
+                        iframe.src = dataUrl;
+                        iframe.style.width = "100%";
+                        iframe.style.height = ($(window).height() - 200) + 'px';
+                        targetElement.appendChild(iframe);
+                    });
+                    // pdfMake.createPdf(docDefinition).open();
 
                 }
 
