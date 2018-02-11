@@ -103,30 +103,39 @@
                                             <div class="col-md-12">
                                                 <div class="search">
                                                     <span class="fa fa-search"></span>
-                                                    <input placeholder="Search term">
+                                                    <input id="searchtool" type="text" placeholder="Search term">
+                                                    <div id="spinner" class="spinner" style="display:none;">
+                                                        <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
+                                                    </div>
+                                                    <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                                    <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mt">
                                             <div class="col-md-12">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        Road General Report						                           
+                                                <% templates.forEach(function(temp){ %>
+
+                                                    <div class="radio">
+                                                        <label>
+                                                        <input type="radio" name="optionsRadios" value="<%- temp.config.HTML.id %>">
+                                                        <%- temp.name %>
                                                      </label>
-                                                    <br>
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        Asset Inventory Report                                                     
-                                                    </label>
-                                                </div>
+                                                        <br>
+                                                    </div>
+                                                    <% }); %>
+                                            </div>
+                                        </div>
+                                        <div class="row mt">
+                                            <div class="col-md-12">
+                                                <button id="generateReport" type="button" class="btn btn-success"><i class="fa fa-file-alt"></i> Report</button>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="form-panel">
-
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +174,7 @@
         <script src='/assets/js/pdfmake.min.js'></script>
         <script src='/assets/js/vfs_fonts.js'></script>
 
-        <%- include('partials/query_scripts'); %>
+        <%- include('partials/reports_scripts'); %>
 
 
 

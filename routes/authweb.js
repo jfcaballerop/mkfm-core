@@ -104,6 +104,6 @@ router.use('/query', require(path.join(__dirname, '../app/comp/query/routes/quer
 router.use('/budget', require(path.join(__dirname, '../app/comp/budget/routes/budgets')));
 
 // pdf auth
-router.use('/pdf', require(path.join(__dirname, '../app/comp/report/routes/reports')));
+router.use('/report', require(path.join(__dirname, '../app/comp/report/routes/reports')));
 
 module.exports = router;
