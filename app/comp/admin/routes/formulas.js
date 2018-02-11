@@ -25,7 +25,7 @@ var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
 
-diccKoboToDominica = {
+var diccKoboToDominica = {
     "si": "Yes",
     "no": "No",
     "NA": "NA",
@@ -195,7 +195,7 @@ diccKoboToDominica = {
     "multiple": "Multiple"
 };
 
-diccDominicaToKobo = {
+var diccDominicaToKobo = {
     "Yes": "si",
     "No": "no",
     "Na": "NA",
@@ -288,8 +288,8 @@ diccDominicaToKobo = {
 };
 
 function capitalizeFirstLetter(string) {
-    var OutPut = ''
-    var WordList = string.split(' ')
+    var OutPut = '';
+    var WordList = string.split(' ');
     WordList.forEach(function(element) {
         OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
     });
