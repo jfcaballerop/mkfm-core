@@ -8,7 +8,7 @@ db.infodatatracks.update({}, {
                     group: "ROADS - PAVEMENTS"
                 },
                 pk: {
-                    desc: "",
+                    desc: "Kilometer Point",
                     subgroup: "Survey data",
                     group: "ROADS - PAVEMENTS"
                 },
@@ -2111,6 +2111,61 @@ db.infodatatracks.update({}, {
                     desc: "Comments to operation and maintainance",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
                     group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                },
+                rlofnatural: {
+                    desc: "rlofnatural",
+                    subgroup: "Pavement Group 3: Indexes and Risk Analysis",
+                    group: "ROADS - PAVEMENTS"
+                },
+                rlofphysical: {
+                    desc: "rlofphysical",
+                    subgroup: "Pavement Group 3: Indexes and Risk Analysis",
+                    group: "ROADS - PAVEMENTS"
+                },
+                blofnatural: {
+                    desc: "blofnatural",
+                    subgroup: "Bridge Group 3: Indexes and Risk Analysis",
+                    group: "BRIDGES"
+                },
+                blofphysical: {
+                    desc: "blofphysical",
+                    subgroup: "Bridge Group 3: Indexes and Risk Analysis",
+                    group: "BRIDGES"
+                },
+                Clofnatural: {
+                    desc: "Clofnatural",
+                    subgroup: "Culverts Group 3: Indexes and Risk Analysis",
+                    group: "CULVERTS"
+                },
+                Clofphysical: {
+                    desc: "Clofphysical",
+                    subgroup: "Culverts Group 3: Indexes and Risk Analysis",
+                    group: "CULVERTS"
+                },
+                glofnatural: {
+                    desc: "glofnatural",
+                    subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
+                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                },
+                glofphysical: {
+                    desc: "glofphysical",
+                    subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
+                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                },
+                glofnatural2: {
+                    desc: "glofnatural2",
+                    subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
+                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                },
+                glofphysical2: {
+                    desc: "glofphysical2",
+                    subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
+                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                },
+                rcondition: {
+                    desc: "rcondition",
+                    subgroup: "Pavement Group 2: Operations and Maintenance Data",
+                    group: "ROADS - PAVEMENTS"
                 }
             }
         }
