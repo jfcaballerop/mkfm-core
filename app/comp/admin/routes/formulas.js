@@ -292,9 +292,10 @@ function capitalizeFirstLetter(string) {
     var OutPut = ''
     if (string.indexOf(' ') > -1) {
         var WordList = string.split(' ');}
-    WordList.forEach(function (element) {
-        OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
-    });
+        if (WordList !== undefined && WordList.length>0){
+        WordList.forEach(function (element) {
+            OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
+        });}
         return OutPut; } else {
             return "";
 
@@ -2720,7 +2721,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({
-                _id: ObjectId("59ca119c100b7d4adb8ecb9a")
+                // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
             }, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
@@ -2735,6 +2736,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        console.log('i:     ' + i);
                         var coincidencias = 0;
                         //debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
@@ -2749,7 +2751,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties.bcode[i] !== null &&
                                             ifdt.properties.bcode[i] !== "" &&
                                             ifdt.properties.bcode.length > 0) || true) {
-                                            debug('totalScoring1:  ' + totalScoring);
+                                            debug('totalScoring1 -- :  ' + totalScoring);
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
                                             if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0 &&
@@ -2757,11 +2759,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
                                                 for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
                                                     if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
-                                                        totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                        // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                     } else {
                                                         coincidencias++;
                                                         totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
                                                             totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                        debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
+                                                        debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight);
                                                     }
                                                 }
                                             }
@@ -2785,7 +2789,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             //  Very High, High, Medium, Low, Unknown 
                                             z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBeamsSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity"];
                                             var k = 0;
-                                            if (ifdt.properties[z1[k]][i] !== undefined && ifdt.properties[z1[k]] !== [] &&
+                                            if (ifdt.properties[z1[k]] !== undefined && ifdt.properties[z2[k]] !== undefined &&
+                                                ifdt.properties[z1[k]][i] !== undefined && ifdt.properties[z1[k]] !== [] &&
                                                 ifdt.properties[z1[k]][i] !== null &&
                                                 ifdt.properties[z1[k]][i] !== "" &&
                                                 // ifdt.properties[z1[k]][i] > 0 &&
@@ -2794,61 +2799,48 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties[z2[k]][i] !== "" 
                                                 //&& ifdt.properties[z2[k]][i] > 0
                                             ) {
-                                                debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]][i]);
-                                                debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]][i]);
-                                                debug('ifdt.properties[' + z1[k] + ']: ' + diccKoboToDominica[ifdt.properties[z1[k]][i]]);
-                                                debug('ifdt.properties[' + z2[k] + ']: ' + diccKoboToDominica[ifdt.properties[z2[k]][i]]);
-                                                debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
-                                                debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]));
+                                                // debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]][i]);
+                                                // debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]][i]);
+                                                // debug('ifdt.properties[' + z1[k] + ']: ' + diccKoboToDominica[ifdt.properties[z1[k]][i]]);
+                                                // debug('ifdt.properties[' + z2[k] + ']: ' + diccKoboToDominica[ifdt.properties[z2[k]][i]]);
+                                                // debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                                // debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]));
                                                 debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])); // weight
                                                 debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]])); // scoring
-                                                console.log('i:  ' + i);
+                                                // console.log('i:  ' + i);
                                                 // debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
+                                                debug('coincidencias antes: ' + coincidencias)
                                                 for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
+                                                    if (form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])] !== undefined){
+                                                    debug('k: ' + k);
+                                                    debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                                    debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
                                                     // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
-                                                    console.log(y);
-                                                    console.log('weight: ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight);
-                                                    console.log('scoring: ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])].scoring);
-                                                    // console.log(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i].toString()]));
-                                                    debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]));
-
-                                                    for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])].scoring) {
-                                                            // form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight *
-                                                            if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(x)>0){
-                                                                
-                                                                var temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])].scoring[x];
-
-                                                                totalScoring = totalScoring < temporary ? totalScoring : temporary;
-
-                                                                if (true) {
-                                                                    // ATTENTION!!
-                                                                    if (i === 125) {
-                                                                        while (true) { ; }
-                                                                    }
-
+                                                    // console.log(y);
+                                                    // console.log('weight: ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight);
+                                                    for (a in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]) {
+                                                        debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
+                                                        for (b in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a]) {
+                                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
+                                                            var temporary = Number.MAX_VALUE;
+                                                            if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b) === 0){
+                                                                temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b];
                                                                 coincidencias++;
-
-
-                                                                // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight ?
-                                                                //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight;
-
-
-                                                                // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight ?
-                                                                //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight;
-                                                                    // if(i===125){
-                                                                    // while(true){;}}
+                                                                debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
                                                             }
-
-
-
-
-
+                                                            debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
+                                                            totalScoring = totalScoring < temporary ? totalScoring : temporary;
+                                                            debug(temporary);
+                                                            debug('totalScoring ->: ' + totalScoring);
                                                         }
                                                     }
+                                                    debug('temporary: ' + temporary);
                                                     k++;
                                                 }
-
+                                                }
+                                                debug('coincidencias despues: ' + coincidencias)
                                             }
+                                            // **************************
                                             debug('totalScoring3.1:  ' + totalScoring);
                                             debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
                                             if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
@@ -2856,7 +2848,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
                                                 for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
                                                     if (ifdt.properties.bdamagesnonstructural[diccDominicaToKobo[x.toString()]] === undefined) {
-                                                        totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                        debug(diccDominicaToKobo[x.toString()]);
+                                                        debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
+                                                        debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
+                                                        // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
                                                     } else {
 
                                                         coincidencias++;
@@ -2866,14 +2861,15 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 }
                                             }
                                             debug('totalScoring4:  ' + totalScoring);
-                                            debug('coincidencias: ' + coincidencias)
+                                        debug('coincidencias: ' + coincidencias)
+                                        debug('coincidencias despues2: ' + coincidencias)
 
-                                            /////////////////////////////////////////////////////////////////
-                                            // =(0.0018 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 3) - 0.0305 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 2) + 0.0302 * (SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) + 0.9862) * L101
-                                            //
-                                            totalScoring =Math.pow(0.0018 * (coincidencias), 3) + Math.pow(0.0305 * (coincidencias), 2) + Math.pow(0.0302 * (coincidencias), 1) + Math.pow(0.9862 * (coincidencias), 0);
-                                            // 
-                                            /////////////////////////////////////////////////////////////////
+                                        /////////////////////////////////////////////////////////////////
+                                        // =(0.0018 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 3) - 0.0305 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 2) + 0.0302 * (SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) + 0.9862) * L101
+                                        //
+                                        totalScoring *= Math.pow(0.00180000000001  * (coincidencias), 3) + Math.pow(0.03050000000001  * (coincidencias), 2) + Math.pow(0.03020000000001  * (coincidencias), 1) + 0.98620000000001  * (coincidencias);
+                                        // 
+                                        /////////////////////////////////////////////////////////////////
 
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
                                             debug('totalScoring5:  ' + totalScoring);
@@ -2890,6 +2886,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         // debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
+                                                            debug(form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score]);
                                                             // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
                                                         } else {
 
@@ -2908,7 +2905,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring);
                                             debug('totalScoring7:  ' + totalScoring);
-                                            //debug(totalScoring + '\n');
+                                        //debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
@@ -2923,6 +2920,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 
+                        // if (i === 123) { while (true) { ; } }
                     }
                     // debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
