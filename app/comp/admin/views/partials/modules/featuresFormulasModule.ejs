@@ -144,9 +144,7 @@
                                         -1 && ScoreName.length > 0))) {
                                     // // console.log(postgressArray.join());
                                     // // console.log(counter);
-                                    (i.indexOf('weight') > -1) ? postgressArray.push(
-                                        'weight'): postgressArray.splice(-1, 0,
-                                        'scoring');
+                                    (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
                                     // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
@@ -170,9 +168,46 @@
                                         '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
-                                    postgressArray.push(capitalizeFirstLetter(val));
+                                    val.length > 0 ? postgressArray.push(capitalizeFirstLetter(val)) : '';
+                                    // postgressArray.push(capitalizeFirstLetter(val))
                                     // postgressArray.push(capitalizeFirstLetter(val)
-                                    html[++h] = '<td>' + val + '</td>';
+                                    if (Number(val).toString() === val) {
+                                        postgressArray.splice(-1, 1);
+                                        html[++h] =
+                                            '<td> <input class="form-control, col-sm-12" name="' +
+                                            ('Condition__' + postgressArray.join().replace(/,/g, "__")
+                                                // .replace('Arboreal', 'Na__scoring__Arboreal')
+                                                .replace('Bush', 'Na__scoring__Bush')
+                                                .replace('Herbaceus', 'Na__scoring__Herbaceus')
+                                                //.replace('Other', 'Na__scoring__Other')
+                                                .replace('NoVegetation', 'Na__scoring__NoVegetation')
+                                                .replace('Na', 'Na__scoring__Na')
+                                                .replace('>1m', 'Na__scoring__>1m')
+                                                .replace('Unknown', 'Na__scoring__Unknown')
+                                                .replace('002M', 'Na__scoring__002M')
+                                                .replace('0206M', 'Na__scoring__0206M')
+                                                .replace('061M', 'Na__scoring__061M')
+                                                .replace('Concrete', 'Na__scoring__Concrete')
+                                                .replace('Masonry', 'Na__scoring__Masonry')
+                                                .replace('Riprap', 'Na__scoring__Riprap')
+                                                .replace('Gabion', 'Na__scoring__Gabion')
+                                                .replace('Girder', 'Na__scoring__Girder')
+                                                .replace('Slab', 'Na__scoring__Slab')
+                                                .replace('Truss', 'Na__scoring__Truss')
+                                                .replace('Bailey', 'Na__scoring__Bailey')
+                                                .replace('Arch', 'Na__scoring__Arch')
+                                                .replace('Composite', 'Na__scoring__Composite')
+                                                .replace('Cantilever', 'Na__scoring__Cantilever')
+                                                .replace('MasonryArch', 'Na__scoring__MasonryArch')
+                                                .replace('CableStayed', 'Na__scoring__CableStayed')
+                                                .replace('Suspension', 'Na__scoring__Suspension')
+                                                .replace('Submersible', 'Na__scoring__Submersible')
+                                                .replace('TrussArch', 'Na__scoring__TrussArch')
+                                            ) + '" type="number" value="' + val + '"  step="0.01"></td>';
+                                    } else {
+                                        html[++h] = '<td>' + val + '</td>';
+                                    }
+
                                     // console.log('form.' + postgressArray.join().replace(/,/g, "."));
                                     // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                 }
