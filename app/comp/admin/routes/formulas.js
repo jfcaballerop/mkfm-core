@@ -25,7 +25,7 @@ var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
 
-diccKoboToDominica = {
+var diccKoboToDominica = {
     "si": "Yes",
     "no": "No",
     "NA": "NA",
@@ -195,7 +195,7 @@ diccKoboToDominica = {
     "multiple": "Multiple"
 };
 
-diccDominicaToKobo = {
+var diccDominicaToKobo = {
     "Yes": "si",
     "No": "no",
     "Na": "NA",
@@ -326,7 +326,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/formulas', function (req, resp, next) {
+router.get('/formulas', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -340,17 +340,17 @@ router.get('/formulas', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
@@ -374,7 +374,7 @@ router.get('/formulas', function (req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los tracks afectados por la formular seleccionada
  */
-router.post('/get_formulas_tracks/', function (req, resp) {
+router.post('/get_formulas_tracks/', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
 
@@ -392,15 +392,15 @@ router.post('/get_formulas_tracks/', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -412,13 +412,56 @@ router.post('/get_formulas_tracks/', function (req, resp) {
     // resp.status(200).jsonp({});
 
 });
+/* update_formulas_tracks_likelihood */
+/**
+ * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
+ * @param formula
+ * @param asset
+ */
+router.post('/update_formulas_tracks_likelihood/:formula/:asset', function(req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_formulas_tracks_likelihood: ' + req.params.formula + ' - ' + req.params.asset);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/update_formulas_tracks_likelihood/' + req.params.formula + '/' + req.params.asset + '/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function() {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /* update_formulas_tracks_sensitivity */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -436,15 +479,15 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -461,7 +504,7 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_response/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_response/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -479,15 +522,15 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -504,7 +547,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -522,15 +565,15 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -547,7 +590,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_condition: ' + '' + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -565,15 +608,15 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -588,7 +631,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function (req, resp) {
+router.post('/update_field/:field/:value', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -606,15 +649,15 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -635,14 +678,14 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 /* GET JSON formulas listing. */
-router.get('/V1/formulas/', function (req, res, next) {
-    conditionFormula.find({}).exec(function (err, formcs) {
+router.get('/V1/formulas/', function(req, res, next) {
+    conditionFormula.find({}).exec(function(err, formcs) {
         if (err) {
             res.send(500, err.message);
         }
         Formula.find({}).sort({
             "properties.HTML.id": -1
-        }).exec(function (err, forms) {
+        }).exec(function(err, forms) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -654,11 +697,504 @@ router.get('/V1/formulas/', function (req, res, next) {
 
 });
 
+/* POST update_formulas_tracks_likelihood */
+/**
+ * Metodo para modificar los valores devueltos por las formulas
+ */
+router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function(req, res, next) {
+    debug('API /V1/update_formulas_tracks_likelihood/');
+    var postData = extend({}, req.body);
+    var tracksUpdated = 0;
+    var ret = {
+        "result": "OK",
+        "tracksUpdated": 0
+    };
+    debug(postData);
+    var form;
+    var formula = Object.keys(postData)[0];
+    debug(formula);
+    await Formula.find({
+        "name": formula
+    }).exec(async function(err, f) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        form = f[0];
+    });
+    // debug(form);
+    var wherearr = [];
+
+    //add codes asset
+    wherearr.push('rcondition');
+    wherearr.push('rresphazard');
+    wherearr.push('bcode');
+    wherearr.push('bcondition');
+    wherearr.push('bresphazard');
+    wherearr.push('Ccondition');
+    wherearr.push('CRespHazard');
+    wherearr.push('gcondition');
+    wherearr.push('gresphazard');
+    wherearr.push('gcondition2');
+    wherearr.push('gresphazard2');
+    wherearr.push('bcode');
+    wherearr.push('Ccode');
+    wherearr.push('gcode');
+    wherearr.push('gcode2');
+    wherearr.push('rlandslide');
+    wherearr.push('rflood');
+    wherearr.push('blandslide');
+    wherearr.push('bflood');
+    wherearr.push('glandslide');
+    wherearr.push('gflood');
+    wherearr.push('glandslide2');
+    wherearr.push('gflood2');
+    wherearr.push('CLandslide');
+    wherearr.push('CFlood');
+    wherearr.push('rsensitivity');
+    wherearr.push('bsensitivity');
+    wherearr.push('Csensitivity');
+    wherearr.push('gsensitivity');
+    wherearr.push('gsensitivity2');
+
+    var selectjson = {
+        "geometry.coordinates": 1,
+        properties: []
+    };
+    for (var w of wherearr) {
+        selectjson.properties[w] = 1;
+    }
+    debug(selectjson);
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        // Arr de valores a updatear
+
+
+        for (var ifdt of ifdts) {
+            var valuerlofnaturalarr = [];
+            var valuerlofphysicalarr = [];
+            var valueblofnaturalarr = [];
+            var valueblofphysicalarr = [];
+            var valueClofnaturalarr = [];
+            var valueClofphysicalarr = [];
+            var valueglofnaturalarr = [];
+            var valueglofphysicalarr = [];
+            var valueglofnaturalarr2 = [];
+            var valueglofphysicalarr2 = [];
+            //     //debug(ifdt._id);
+            //     // debug(ifdt.geometry.coordinates);
+            tracksUpdated++;
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                var valuerlofnatural = 0;
+                var valuerlofphysical = 0;
+                var valueblofnatural = 0;
+                var valueblofphysical = 0;
+                var valueClofnatural = 0;
+                var valueClofphysical = 0;
+                var valueglofnatural = 0;
+                var valueglofphysical = 0;
+                var valueglofnatural2 = 0;
+                var valueglofphysical2 = 0;
+                var existsbcode = false;
+                var existsCcode = false;
+                var existsgcode = false;
+                var existsgcode2 = false;
+
+                //         // Revisamos que exista el código del asset
+                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                    existsbcode = true;
+                }
+                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                    existsCcode = true;
+                }
+                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                    existsgcode = true;
+                }
+                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                    existsgcode2 = true;
+                }
+                //         var valweigths = 0;
+                var valrlofphy = 0;
+                var valblofphy = 0;
+                var valClofphy = 0;
+                var valglofphy = 0;
+                var valglofphy2 = 0;
+                var valrlofnat = 0;
+                var valblofnat = 0;
+                var valClofnat = 0;
+                var valglofnat = 0;
+                var valglofnat2 = 0;
+
+                if (ifdt.properties.rcondition[i] !== undefined) {
+                    if (typeof ifdt.properties.rcondition[i] === "string") {
+                        ifdt.properties.rcondition[i] === "" ? valrlofphy = 0 : valrlofphy = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                        // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                    } else if (typeof ifdt.properties.rcondition[i] === "number") {
+                        valrlofphy = ifdt.properties.rcondition[i];
+                    } else {
+                        valrlofphy = 0;
+                    }
+                }
+                var rsens;
+                var rlands;
+
+                if (ifdt.properties.rsensitivity[i] !== undefined) {
+                    if (typeof ifdt.properties.rsensitivity[i] === "string") {
+                        ifdt.properties.rsensitivity[i] === "" ? rsens = 0 : rsens = parseFloat(ifdt.properties.rsensitivity[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rsensitivity[i] === "number") {
+                        rsens = ifdt.properties.rsensitivity[i];
+                    } else {
+                        rsens = 0;
+                    }
+                }
+                if (ifdt.properties.rlandslide[i] !== undefined) {
+                    if (typeof ifdt.properties.rlandslide[i] === "string") {
+                        ifdt.properties.rlandslide[i] === "" ? rlands = 0 : rlands = parseFloat(ifdt.properties.rlandslide[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rlandslide[i] === "number") {
+                        rlands = ifdt.properties.rlandslide[i];
+                    } else {
+                        rlands = 0;
+                    }
+                }
+
+
+                if (existsbcode) {
+
+                    if (ifdt.properties.bcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.bcondition[i] === "string") {
+                            ifdt.properties.bcondition[i] === "" ? valblofphy = 0 : valblofphy = parseFloat(ifdt.properties.bcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
+                        } else if (typeof ifdt.properties.bcondition[i] === "number") {
+                            valblofphy = ifdt.properties.bcondition[i];
+                        } else {
+                            valblofphy = 0;
+                        }
+                    }
+                    var bsens;
+                    var bfl;
+
+                    if (ifdt.properties.bsensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.bsensitivity[i] === "string") {
+                            ifdt.properties.bsensitivity[i] === "" ? bsens = 0 : bsens = parseFloat(ifdt.properties.bsensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bsensitivity[i] === "number") {
+                            bsens = ifdt.properties.bsensitivity[i];
+                        } else {
+                            bsens = 0;
+                        }
+                    }
+                    if (ifdt.properties.bflood[i] !== undefined) {
+                        if (typeof ifdt.properties.bflood[i] === "string") {
+                            ifdt.properties.bflood[i] === "" ? bfl = 0 : bfl = parseFloat(ifdt.properties.bflood[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bflood[i] === "number") {
+                            bfl = ifdt.properties.bflood[i];
+                        } else {
+                            bfl = 0;
+                        }
+                    }
+                }
+                if (existsCcode) {
+
+                    if (ifdt.properties.Ccondition[i] !== undefined) {
+                        if (typeof ifdt.properties.Ccondition[i] === "string") {
+                            ifdt.properties.Ccondition[i] === "" ? valClofphy = 0 : valClofphy = parseFloat(ifdt.properties.Ccondition[i].replace(",", "."));
+                            // debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
+                        } else if (typeof ifdt.properties.Ccondition[i] === "number") {
+                            valClofphy = ifdt.properties.Ccondition[i];
+                        } else {
+                            valClofphy = 0;
+                        }
+                    }
+                    var Csens;
+                    var CFl;
+
+                    if (ifdt.properties.Csensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.Csensitivity[i] === "string") {
+                            ifdt.properties.Csensitivity[i] === "" ? Csens = 0 : Csens = parseFloat(ifdt.properties.Csensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.Csensitivity[i] === "number") {
+                            Csens = ifdt.properties.Csensitivity[i];
+                        } else {
+                            Csens = 0;
+                        }
+                    }
+                    if (ifdt.properties.CFlood[i] !== undefined) {
+                        if (typeof ifdt.properties.CFlood[i] === "string") {
+                            ifdt.properties.CFlood[i] === "" ? CFl = 0 : CFl = parseFloat(ifdt.properties.CFlood[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.CFlood[i] === "number") {
+                            CFl = ifdt.properties.CFlood[i];
+                        } else {
+                            CFl = 0;
+                        }
+                    }
+
+                }
+                if (existsgcode) {
+
+                    if (ifdt.properties.gcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.gcondition[i] === "string") {
+                            ifdt.properties.gcondition[i] === "" ? valglofphy = 0 : valglofphy = parseFloat(ifdt.properties.gcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
+                        } else if (typeof ifdt.properties.gcondition[i] === "number") {
+                            valglofphy = ifdt.properties.gcondition[i];
+                        } else {
+                            valglofphy = 0;
+                        }
+                    }
+                    var gsens;
+                    var glands;
+
+                    if (ifdt.properties.gsensitivity[i] !== undefined) {
+                        if (typeof ifdt.properties.gsensitivity[i] === "string") {
+                            ifdt.properties.gsensitivity[i] === "" ? gsens = 0 : gsens = parseFloat(ifdt.properties.gsensitivity[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gsensitivity[i] === "number") {
+                            gsens = ifdt.properties.gsensitivity[i];
+                        } else {
+                            gsens = 0;
+                        }
+                    }
+                    if (ifdt.properties.glandslide[i] !== undefined) {
+                        if (typeof ifdt.properties.glandslide[i] === "string") {
+                            ifdt.properties.glandslide[i] === "" ? glands = 0 : glands = parseFloat(ifdt.properties.glandslide[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glandslide[i] === "number") {
+                            glands = ifdt.properties.glandslide[i];
+                        } else {
+                            glands = 0;
+                        }
+                    }
+                }
+                if (existsgcode2) {
+
+                    if (ifdt.properties.gcondition2[i] !== undefined) {
+                        if (typeof ifdt.properties.gcondition2[i] === "string") {
+                            ifdt.properties.gcondition2[i] === "" ? valglofphy2 = 0 : valglofphy2 = parseFloat(ifdt.properties.gcondition2[i].replace(",", "."));
+                            // debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
+                        } else if (typeof ifdt.properties.gcondition2[i] === "number") {
+                            valglofphy2 = ifdt.properties.gcondition2[i];
+                        } else {
+                            valglofphy2 = 0;
+                        }
+                    }
+                    var gsens2;
+                    var glands2;
+
+                    if (ifdt.properties.gsensitivity2[i] !== undefined) {
+                        if (typeof ifdt.properties.gsensitivity2[i] === "string") {
+                            ifdt.properties.gsensitivity2[i] === "" ? gsens2 = 0 : gsens2 = parseFloat(ifdt.properties.gsensitivity2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gsensitivity2[i] === "number") {
+                            gsens2 = ifdt.properties.gsensitivity2[i];
+                        } else {
+                            gsens2 = 0;
+                        }
+                    }
+                    if (ifdt.properties.glandslide2[i] !== undefined) {
+                        if (typeof ifdt.properties.glandslide2[i] === "string") {
+                            ifdt.properties.glandslide2[i] === "" ? glands2 = 0 : glands2 = parseFloat(ifdt.properties.glandslide2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glandslide2[i] === "number") {
+                            glands2 = ifdt.properties.glandslide2[i];
+                        } else {
+                            glands2 = 0;
+                        }
+                    }
+                }
+
+                // En el caso de ser LOFPhysical se iguala a condition
+                // PAVEMENTS //
+                // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                valuerlofphysical = parseFloat(valrlofphy);
+                valueblofphysical = parseFloat(valblofphy);
+                valueClofphysical = parseFloat(valClofphy);
+                valueglofphysical = parseFloat(valglofphy);
+                valueglofphysical2 = parseFloat(valglofphy2);
+
+                // En el caso de ser LOFNatural se aplica la formula
+
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+
+                    switch (form.formulaSpec[f]["FORM_COEF"]) {
+
+                        case 'firstcoef':
+                            // PAVEMENTS //
+                            if (rlands === 3) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
+
+                            // BRIDGES //
+                            if (existsbcode) {
+
+                                if (bfl === 3) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
+
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 3) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 3) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
+
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 3) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
+
+                            }
+
+                            break;
+                            // PAVEMENTS //
+                        case 'secondcoef':
+                            if (rlands === 2) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
+                            // BRIDGES //
+                            if (existsbcode) {
+                                if (bfl === 2) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 2) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 2) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
+
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 2) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
+
+                            }
+                            break;
+                        case 'thirdcoef':
+                            if (rlands === 1) {
+                                valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
+                            }
+                            // BRIDGES //
+                            if (existsbcode) {
+                                if (bfl === 1) {
+                                    valueblofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * bsens;
+                                }
+                            }
+                            // CULVERTS //
+                            if (existsCcode) {
+                                if (CFl === 1) {
+                                    valueClofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * Csens;
+                                }
+                            }
+                            // GEOT //
+                            if (existsgcode) {
+                                if (glands === 1) {
+                                    valueglofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens;
+                                }
+
+                            }
+                            if (existsgcode2) {
+                                if (glands2 === 1) {
+                                    valueglofnatural2 = parseFloat(form.formulaSpec[f].WEIGHTS.value) * gsens2;
+                                }
+
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                // debug("valuerlofnatural " + valuerlofnatural);
+
+                valuerlofphysicalarr[i] = 1 - valuerlofphysical;
+                valuerlofnaturalarr[i] = valuerlofnatural;
+
+                if (existsbcode) {
+                    valueblofphysicalarr[i] = 1 - valueblofphysical;
+                    valueblofnaturalarr[i] = 1 - valueblofnatural;
+                } else {
+                    valueblofphysicalarr[i] = "";
+                    valueblofnaturalarr[i] = "";
+                }
+                if (existsCcode) {
+                    valueClofphysicalarr[i] = 1 - valueClofphysical;
+                    valueClofnaturalarr[i] = 1 - valueClofnatural;
+                } else {
+                    valueClofphysicalarr[i] = "";
+                    valueClofnaturalarr[i] = "";
+
+                }
+                if (existsgcode) {
+                    valueglofphysicalarr[i] = 1 - valueglofphysical;
+                    valueglofnaturalarr[i] = 1 - valueglofnatural;
+                } else {
+                    valueglofphysicalarr[i] = "";
+                    valueglofnaturalarr[i] = "";
+                }
+                if (existsgcode2) {
+                    valueglofphysicalarr2[i] = 1 - valueglofphysical2;
+                    valueglofnaturalarr2[i] = 1 - valueglofnatural2;
+
+                } else {
+                    valueglofphysicalarr2[i] = "";
+                    valueglofnaturalarr2[i] = "";
+
+                }
+            }
+
+            var conditions = {
+                _id: ifdt._id
+            };
+            var query = {
+                $set: {
+                    "properties.rlofphysical": valuerlofphysicalarr,
+                    "properties.rlofnatural": valuerlofnaturalarr,
+                    "properties.blofphysical": valueblofphysicalarr,
+                    "properties.blofnatural": valueblofnaturalarr,
+                    "properties.Clofphysical": valueClofphysicalarr,
+                    "properties.Clofnatural": valueClofnaturalarr,
+                    "properties.glofphysical": valueglofphysicalarr,
+                    "properties.glofphysical2": valueglofphysicalarr2,
+                    "properties.glofnatural": valueglofnaturalarr,
+                    "properties.glofnatural2": valueglofnaturalarr2
+                }
+            };
+            await Infodatatrack.update(conditions, query, function(err, iup) {
+                if (err) {
+                    debug(err.message);
+                }
+                // debug(iup);
+
+            });
+        }
+    });
+
+    ret.tracksUpdated = tracksUpdated;
+    debug(tracksUpdated);
+    res.status(200).jsonp(ret);
+
+
+});
+
+
 /* POST update_formulas_tracks_sensitivity */
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_sensitivity/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -672,7 +1208,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -685,9 +1221,19 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     wherearr.push('rcondition');
     wherearr.push('rresphazard');
     wherearr.push('bcode');
+    wherearr.push('bcondition');
+    wherearr.push('bresphazard');
+    wherearr.push('Ccondition');
+    wherearr.push('CRespHazard');
+    wherearr.push('gcondition');
+    wherearr.push('gresphazard');
+    wherearr.push('gcondition2');
+    wherearr.push('gresphazard2');
+    wherearr.push('bcode');
     wherearr.push('Ccode');
     wherearr.push('gcode');
     wherearr.push('gcode2');
+
 
     var selectjson = {
         "geometry.coordinates": 1,
@@ -697,7 +1243,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -720,34 +1266,154 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                 var valueCsensitivity = 0;
                 var valuegsensitivity = 0;
                 var valuegsensitivity2 = 0;
-                for (var f = 0; f < form.formulaSpec.length; f++) {
-                    var valrcond = 0;
-                    var valweigths = 0;
-                    var valrresphazard = 0;
+                var existsbcode = false;
+                var existsCcode = false;
+                var existsgcode = false;
+                var existsgcode2 = false;
 
-                    if (ifdt.properties.rcondition[i] !== undefined) {
-                        if (typeof ifdt.properties.rcondition[i] === "string") {
-                            ifdt.properties.rcondition[i] === "" ? valrcond = 0 : valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
-                        } else if (typeof ifdt.properties.rcondition[i] === "number") {
-                            valrcond = ifdt.properties.rcondition[i];
+                // Revisamos que exista el código del asset
+                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                    existsbcode = true;
+                }
+                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                    existsCcode = true;
+                }
+                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                    existsgcode = true;
+                }
+                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                    existsgcode2 = true;
+                }
+                var valweigths = 0;
+                var valrcond = 0;
+                var valrresphazard = 0;
+                var valbcond = 0;
+                var valbresphazard = 0;
+                var valCcond = 0;
+                var valCRespHazard = 0;
+                var valgcond = 0;
+                var valgresphazard = 0;
+                var valgcond2 = 0;
+                var valgresphazard2 = 0;
+
+                if (ifdt.properties.rcondition[i] !== undefined) {
+                    if (typeof ifdt.properties.rcondition[i] === "string") {
+                        ifdt.properties.rcondition[i] === "" ? valrcond = 0 : valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
+                        // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                    } else if (typeof ifdt.properties.rcondition[i] === "number") {
+                        valrcond = ifdt.properties.rcondition[i];
+                    } else {
+                        valrcond = 0;
+                    }
+                }
+                if (ifdt.properties.rresphazard[i] !== undefined) {
+                    if (typeof ifdt.properties.rresphazard[i] === "string") {
+                        ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rresphazard[i] === "number") {
+                        valrresphazard = ifdt.properties.rresphazard[i];
+                    } else {
+                        valrresphazard = 0;
+                    }
+                }
+                if (existsbcode) {
+
+                    if (ifdt.properties.bcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.bcondition[i] === "string") {
+                            ifdt.properties.bcondition[i] === "" ? valbcond = 0 : valbcond = parseFloat(ifdt.properties.bcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
+                        } else if (typeof ifdt.properties.bcondition[i] === "number") {
+                            valbcond = ifdt.properties.bcondition[i];
                         } else {
-                            valrcond = 0;
+                            valbcond = 0;
                         }
                     }
-                    if (ifdt.properties.rresphazard[i] !== undefined) {
-                        if (typeof ifdt.properties.rresphazard[i] === "string") {
-                            ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.rresphazard[i] === "number") {
-                            valrresphazard = ifdt.properties.rresphazard[i];
+                    if (ifdt.properties.bresphazard[i] !== undefined) {
+                        if (typeof ifdt.properties.bresphazard[i] === "string") {
+                            ifdt.properties.bresphazard[i] === "" ? valbresphazard = 0 : valbresphazard = parseFloat(ifdt.properties.bresphazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bresphazard[i] === "number") {
+                            valbresphazard = ifdt.properties.bresphazard[i];
                         } else {
-                            valrresphazard = 0;
+                            valbresphazard = 0;
                         }
                     }
+                }
+                if (existsCcode) {
+
+                    if (ifdt.properties.Ccondition[i] !== undefined) {
+                        if (typeof ifdt.properties.Ccondition[i] === "string") {
+                            ifdt.properties.Ccondition[i] === "" ? valCcond = 0 : valCcond = parseFloat(ifdt.properties.Ccondition[i].replace(",", "."));
+                            // debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
+                        } else if (typeof ifdt.properties.Ccondition[i] === "number") {
+                            valCcond = ifdt.properties.Ccondition[i];
+                        } else {
+                            valCcond = 0;
+                        }
+                    }
+                    if (ifdt.properties.CRespHazard[i] !== undefined) {
+                        if (typeof ifdt.properties.CRespHazard[i] === "string") {
+                            ifdt.properties.CRespHazard[i] === "" ? valCRespHazard = 0 : valCRespHazard = parseFloat(ifdt.properties.CRespHazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.CRespHazard[i] === "number") {
+                            valCRespHazard = ifdt.properties.CRespHazard[i];
+                        } else {
+                            valCRespHazard = 0;
+                        }
+                    }
+                }
+                if (existsgcode) {
+
+                    if (ifdt.properties.gcondition[i] !== undefined) {
+                        if (typeof ifdt.properties.gcondition[i] === "string") {
+                            ifdt.properties.gcondition[i] === "" ? valgcond = 0 : valgcond = parseFloat(ifdt.properties.gcondition[i].replace(",", "."));
+                            // debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
+                        } else if (typeof ifdt.properties.gcondition[i] === "number") {
+                            valgcond = ifdt.properties.gcondition[i];
+                        } else {
+                            valgcond = 0;
+                        }
+                    }
+                    if (ifdt.properties.gresphazard[i] !== undefined) {
+                        if (typeof ifdt.properties.gresphazard[i] === "string") {
+                            ifdt.properties.gresphazard[i] === "" ? valgresphazard = 0 : valgresphazard = parseFloat(ifdt.properties.gresphazard[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gresphazard[i] === "number") {
+                            valgresphazard = ifdt.properties.gresphazard[i];
+                        } else {
+                            valgresphazard = 0;
+                        }
+                    }
+                }
+                if (existsgcode2) {
+
+                    if (ifdt.properties.gcondition2[i] !== undefined) {
+                        if (typeof ifdt.properties.gcondition2[i] === "string") {
+                            ifdt.properties.gcondition2[i] === "" ? valgcond2 = 0 : valgcond2 = parseFloat(ifdt.properties.gcondition2[i].replace(",", "."));
+                            // debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
+                        } else if (typeof ifdt.properties.gcondition2[i] === "number") {
+                            valgcond2 = ifdt.properties.gcondition2[i];
+                        } else {
+                            valgcond2 = 0;
+                        }
+                    }
+                    if (ifdt.properties.gresphazard2[i] !== undefined) {
+                        if (typeof ifdt.properties.gresphazard2[i] === "string") {
+                            ifdt.properties.gresphazard2[i] === "" ? valgresphazard2 = 0 : valgresphazard2 = parseFloat(ifdt.properties.gresphazard2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gresphazard2[i] === "number") {
+                            valgresphazard2 = ifdt.properties.gresphazard2[i];
+                        } else {
+                            valgresphazard2 = 0;
+                        }
+                    }
+                }
+                for (var f = 0; f < form.formulaSpec.length; f++) {
+
                     switch (form.formulaSpec[f]["FORM_COEF"]) {
 
                         case 'firstcoef':
-                            // debug("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                            // PAVEMENTS //
+                            // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond <= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
                                 // debug(valrcond + ' MIN1 ' + valrresphazard +
@@ -757,9 +1423,64 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                                 // debug(valrcond + ' MIN2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
+                            if (existsbcode) {
 
+                                // BRIDGES //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valbcond <= valbresphazard) {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
+                                    // debug(valbcond + ' MIN1 ' + valbresphazard +
+                                    // ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                } else {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
+                                    // debug(valbcond + ' MIN2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+
+                                }
+                            }
+                            if (existsCcode) {
+                                // CULVERTS //
+                                // debug ("MIN(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valCcond <= valCRespHazard) {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
+                                    // debug(valCcond + ' MIN1 ' + valCRespHazard +
+                                    // ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                } else {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
+                                    // debug(valCcond + ' MIN2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+
+                                }
+                            }
+                            if (existsgcode) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond <= valgresphazard) {
+                                    valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
+                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // ' valuegsensitivity ' + parseFloat(valuegsensitivity));
+                                } else {
+                                    valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
+                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity ' + parseFloat(valuebsensitivity));
+
+                                }
+                            }
+                            if (existsgcode2) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond2 <= valgresphazard2) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
+                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
+                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
                             break;
                         case 'secondcoef':
+                            // PAVEMENTS //
                             // debug("MAX(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond >= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
@@ -769,18 +1490,87 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                                 // debug(valrcond + ' MAX2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
+                            if (existsbcode) {
+                                // BRIDGES //
+                                // debug("MAX(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valbcond >= valbresphazard) {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
+                                    // debug(valbcond + ' MAX1 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                } else {
+                                    valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
+                                    // debug(valbcond + ' MAX2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
 
+                                }
+                            }
+                            if (existsCcode) {
+                                // CULVERTS //
+                                // debug("MAX(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valCcond >= valCRespHazard) {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
+                                    // debug(valCcond + ' MAX1 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                } else {
+                                    valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
+                                    // debug(valCcond + ' MAX2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+
+                                }
+                            }
+                            if (existsgcode) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond >= valgresphazard) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
+                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
+                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
+                            if (existsgcode2) {
+
+                                // GEOT //
+                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                if (valgcond2 >= valgresphazard2) {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
+                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                } else {
+                                    valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
+                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+
+                                }
+                            }
                             break;
 
                         default:
                             break;
                     }
                 }
-                valuersensitivityarr[i] = valuersensitivity;
-                valuebsensitivityarr[i] = valuebsensitivity;
-                valueCsensitivityarr[i] = valueCsensitivity;
-                valuegsensitivityarr[i] = valuegsensitivity;
-                valuegsensitivityarr2[i] = valuegsensitivity2;
+                valuersensitivityarr[i] = 1 - valuersensitivity;
+                if (existsbcode) {
+                    valuebsensitivityarr[i] = 1 - valuebsensitivity;
+                } else {
+                    valuebsensitivityarr[i] = "";
+                }
+                if (existsCcode) {
+                    valueCsensitivityarr[i] = 1 - valueCsensitivity;
+                } else {
+                    valueCsensitivityarr[i] = "";
+
+                }
+                if (existsgcode) {
+                    valuegsensitivityarr[i] = 1 - valuegsensitivity;
+                } else {
+                    valuegsensitivityarr[i] = "";
+                }
+                if (existsgcode2) {
+                    valuegsensitivityarr2[i] = 1 - valuegsensitivity2;
+                } else {
+                    valuegsensitivityarr2[i] = "";
+
+                }
             }
 
             var conditions = {
@@ -795,7 +1585,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     "properties.gsensitivity2": valuegsensitivityarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.update(conditions, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -816,7 +1606,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -830,7 +1620,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -858,7 +1648,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     }
     debug(selectjson);
     // debug(form);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1150,7 +1940,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                     "properties.CRespHazard": valueCresphazardarr
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.update(conditions, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1170,7 +1960,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks/');
     var postData = extend({}, req.body);
     var ret = {
@@ -1190,11 +1980,11 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 
     Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
-        await Infodatatrack.find().exec(function (err, rtracks) {
+        await Infodatatrack.find().exec(function(err, rtracks) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -1203,7 +1993,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 
         for (var track of tracks) {
             // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
-            await Infodatatrack.findById(track._id).exec(function (err, ifdt) {
+            await Infodatatrack.findById(track._id).exec(function(err, ifdt) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -1644,7 +2434,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         break;
                 }
                 ifdt.updated_at = new Date();
-                ifdt.save(function (err, isaved) {
+                ifdt.save(function(err, isaved) {
                     if (err) {
                         res.send(500, err.message);
                     }
@@ -1663,7 +2453,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_condition/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -1679,7 +2469,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1712,7 +2502,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Culverts':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -1774,7 +2564,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         // debug('ifdt.Cclearing ' + score.toString().toUpperCase());
                                                         if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toString().toUpperCase()) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
-                                                            // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                                                // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -1816,7 +2606,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -1841,7 +2631,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Retaining_Walls':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -1876,13 +2666,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -2035,7 +2825,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2060,7 +2850,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2095,13 +2885,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -2254,7 +3044,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2279,7 +3069,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Cuttings_Embankments':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2314,13 +3104,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -2473,7 +3263,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2498,7 +3288,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2533,13 +3323,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -2692,7 +3482,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2918,7 +3708,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             }
                         }
 
-
+ 
 
                         // if (i === 123) { while (true) { ; } }
                     }
@@ -2937,7 +3727,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2988,7 +3778,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 /* POST update_field */
-router.post('/V1/update_field/', function (req, res, next) {
+router.post('/V1/update_field/', function(req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -3005,7 +3795,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
     Formula.find({
         "name": arrField[0]
-    }).exec(function (err, f) {
+    }).exec(function(err, f) {
         debug('Formula.find ' + arrField[0]);
         if (err) {
             res.send(500, err.message);
@@ -3030,7 +3820,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                 eval(comando);
 
                 // res.send(f);
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3052,7 +3842,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]].weight = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3072,7 +3862,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3092,7 +3882,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3124,7 +3914,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3147,7 +3937,29 @@ router.post('/V1/update_field/', function (req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+                    res.status(200).jsonp(ret);
+
+                });
+                break;
+            case 'Likelihood':
+                var field = field_name.replace(arrField[0] + '__', '');
+                debug(field);
+                var formSave = new Formula(f[0]);
+                // debug(formSave);
+                // Busco el campo @field en la Formula
+                for (var [k, fspec] of f[0].formulaSpec.entries()) {
+                    // debug(fspec.WEIGHTS);
+                    // debug(fspec.score);
+                    if (field === fspec.WEIGHTS.fieldname) {
+                        formSave.formulaSpec[k].WEIGHTS.value = value;
+                        debug(k);
+                    }
+                }
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3164,7 +3976,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_formulas_tracks/', function (req, res, next) {
+router.post('/V1/get_formulas_tracks/', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -3301,7 +4113,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }).exec(function(err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3310,7 +4122,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function (values) {
+            Promise.all(promises).then(function(values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -3336,7 +4148,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function (val, index) {
+                    values.forEach(function(val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
@@ -3585,7 +4397,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }).exec(function(err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3594,7 +4406,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function (values) {
+            Promise.all(promises).then(function(values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -3620,7 +4432,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function (val, index) {
+                    values.forEach(function(val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
