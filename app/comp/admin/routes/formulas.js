@@ -2788,7 +2788,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
                                                 debug('ifdt.properties.z1[k].length, z1[k]: ' + ifdt.properties.z1[k].length) + '    ' + z1[k];
                                                 if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.z1[k].length > 0) {
-// ATTENTION!!
+                                                // ATTENTION!!
                                                     for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].scoring) {
                                                         if (ifdt.properties.z[k][i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
                                                             ifdt.properties.z[k][i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
@@ -2799,7 +2799,19 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 }
                                                 k++;
                                             }
-                                            debug('totalScoring4:  ' + totalScoring);
+                                                debug('totalScoring5:  ' + totalScoring);
+                                                debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
+                                                if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0) {
+                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
+                                                    for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
+                                                        if (ifdt.properties.bdamagesnonstructural[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                            totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                        } else {
+                                                            totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
+                                                                totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                        }
+                                                    }
+                                                }
 
                                         }
 

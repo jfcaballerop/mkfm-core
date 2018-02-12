@@ -147,8 +147,7 @@
                                     (i.indexOf('weight') > -1) ? postgressArray.push(
                                         'weight'): postgressArray.splice(-1, 0,
                                         'scoring');
-                                    urlTest = ('Condition__' + postgressArray.join().replace(
-                                        /,/g, "__"));
+                                    urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
                                     // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
                                     // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
                                     // // // console.log(postgressArray.join().replace(/,/g, "."));
@@ -159,16 +158,23 @@
                                     // console.log('form.' + postgressArray.join().replace(/,/g, "."));
                                     // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     // }
+                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
+                                    console.log(postgressArray.join().replace(/,/g, ".").replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring"));
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' +
                                         urlTest + '" type="number" value="' + eval('form.' +
-                                            postgressArray.join().replace(/,/g, ".")) +
+                                            postgressArray.join().replace(/,/g, ".")
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) +
                                         '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
                                     postgressArray.push(capitalizeFirstLetter(val));
                                     // postgressArray.push(capitalizeFirstLetter(val)
                                     html[++h] = '<td>' + val + '</td>';
+                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                 }
                                 // // console.log(eval(postgressArray));
                                 ScoreName = val;
