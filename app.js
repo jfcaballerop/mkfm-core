@@ -34,7 +34,8 @@ app.set('views', [
     path.join(__dirname, '/app/comp/gis/views'),
     path.join(__dirname, '/app/comp/admin/views'),
     path.join(__dirname, '/app/comp/query/views'),
-    path.join(__dirname, '/app/comp/budget/views')
+    path.join(__dirname, '/app/comp/budget/views'),
+    path.join(__dirname, '/app/comp/report/views')
 ]);
 
 // uncomment after placing your favicon in /public
@@ -133,14 +134,14 @@ app.use('/install', install);
 // END URL - Routes
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

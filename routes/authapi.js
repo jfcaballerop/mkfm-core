@@ -23,7 +23,7 @@ router.use(function timeLog(req, res, next) {
         res.status(403).send('Session expired!');
     } else {
         console.log('Entro: ' + config.TOKEN_SECRET);
-        jwtweb.verify(token, config.TOKEN_SECRET, function (err, token) {
+        jwtweb.verify(token, config.TOKEN_SECRET, function(err, token) {
             if (('' + err).indexOf('TokenExpiredError') !== -1) {
                 console.log('## ERR1: ' + err);
                 res.status(403).send('El token ha expirado!');
@@ -79,5 +79,7 @@ router.use('/infodatatrack', require(path.join(__dirname, '../app/comp/gis/route
 // INDEX auth
 router.use('/index', require(path.join(__dirname, './index')));
 
+// pdf auth
+router.use('/report', require(path.join(__dirname, '../app/comp/report/routes/reports')));
 
 module.exports = router;
