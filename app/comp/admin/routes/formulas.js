@@ -3645,8 +3645,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     } else {
 
                                                         coincidencias++;
-                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
-                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                        if (form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] === 'NoDamages') {
+                                                            totalScoring = totalScoring < 100? totalScoring : 100;
+                                                        } else {
+                                                            totalScoring = totalScoring < 95 ? totalScoring : 95;
+                                                        }
+                                                        // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
+                                                        //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
                                                     }
                                                 }
                                             }
@@ -3710,7 +3715,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
  
 
-                        // if (i === 123) { while (true) { ; } }
+                        if (i === 123) { while (true) { ; } }
                     }
                     // debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
