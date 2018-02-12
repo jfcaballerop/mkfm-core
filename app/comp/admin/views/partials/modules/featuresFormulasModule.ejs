@@ -113,8 +113,8 @@
                         if (counter == 0) {
                             counter++;
                         } else {
-                            html[++h] = '<th id="' + cabeceraCol + '">' + capitalizeFirstLetter(cabeceraCol.substring(
-                                cabeceraCol.indexOf("_") + 1)) + '</th>';
+                            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol.substring(
+                                cabeceraCol.indexOf("_") + 1) + '</th>';
                         }
                     });
                     html[++h] = '</tr>'
@@ -131,7 +131,7 @@
                                 counter++;
                             } else {
                                 weight = 0;
-                                var j = postgressArray.indexOf("WEIGHT");
+                                var j = postgressArray.indexOf("weight");
                                 if (j != -1) {
                                     weight = 1;
                                     // console.log(postgressArray + "<--------------- 1");
@@ -139,16 +139,13 @@
                                     // // console.log(postgressArray + "<--------------- 2");
 
                                 }
-                                console.log(i);
-                                console.log(i.indexOf('scoring'));
-                                if (val.length > 0 && ((i.indexOf('scoring') > -1 && (
-                                        ScoreName.length > 0)) || (i.indexOf('WEIGHT') >
+                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (
+                                        ScoreName.length > 0)) || (i.indexOf('weight') >
                                         -1 && ScoreName.length > 0))) {
-                                    // if (i.indexOf('scores') > -1) {
                                     // // console.log(postgressArray.join());
                                     // // console.log(counter);
-                                    (i.indexOf('WEIGHT') > -1) ? postgressArray.push(
-                                        'WEIGHT'): postgressArray.splice(-1, 0,
+                                    (i.indexOf('weight') > -1) ? postgressArray.push(
+                                        'weight'): postgressArray.splice(-1, 0,
                                         'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
                                     // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
@@ -168,19 +165,12 @@
                                         '<td> <input class="form-control, col-sm-12" name="' +
                                         urlTest + '" type="number" value="' + eval('form.' +
                                             postgressArray.join().replace(/,/g, ".")
-                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring") // ñapa
-                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) + // ñapa
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) +
                                         '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
-                                    // (val.indexOf('nichts') === 0) ? '' : postgressArray.push(capitalizeFirstLetter(val));
-                                    if (val.indexOf('nichts') === 0) {;
-                                        html[++h] = '<td>' + '' + '</td>';
-                                    } else {
-                                        postgressArray.push(capitalizeFirstLetter(val));
-                                        html[++h] = '<td>' + capitalizeFirstLetter(val) + '</td>';
-                                    }
-
+                                    postgressArray.push(capitalizeFirstLetter(val));
                                     // postgressArray.push(capitalizeFirstLetter(val)
                                     html[++h] = '<td>' + val + '</td>';
                                     // console.log('form.' + postgressArray.join().replace(/,/g, "."));
@@ -435,65 +425,6 @@
 
                 });
                 html[h] = ')]';
-                html[++h] = '</div>';
-
-
-                html[++h] = '</div>';
-                $('#formulaSpec').html(html.join(''));
-
-
-            };
-
-            // API publica
-            return {
-                paintHTML: paintHTML
-            }
-
-        })();
-        var featurePaintLikelihood = (function() {
-
-            // variables y funciones privadas
-            var paintHTML = function(form) {
-                var html = [];
-                var h = -1;
-                html[++h] = '<div id="formulaTable' + form.name + '" ">';
-                html[++h] = '<div id="infoFormula' + form.name +
-                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
-                html[++h] = ' Be patient, the process can take several minutes.</div>';
-                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
-                    '__' + form.name + '\');" id="' + form.properties.HTML.id + '__' + form.name +
-                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
-                    form.name + '</button>';
-                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + form.name +
-                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
-
-                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + form.name +
-                    '"></div>';
-                html[++h] = ' <div id="Formula' + form.properties.HTML.id + '__' + form.name +
-                    '">';
-
-                html[++h] = '<br><br><h4>Likelihood </h4><br>';
-                html[++h] =
-                    '<table id="LikelihoodTable" class="table table-bordered table-striped table-condensed" >';
-                html[++h] = '<tbody id="formulaTableBody">';
-
-
-
-                $.each(form.formulaSpec, function(i, fspec) {
-                    html[++h] = '<tr>';
-
-                    html[++h] = '<td>';
-                    html[++h] = fspec.LITERAL;
-                    html[++h] = ' </td> ';
-                    html[++h] = '<td>';
-                    html[++h] = '<input type="number" step="0.01" name="' + fspec['WEIGHTS'].fieldname +
-                        '" value="' + fspec['WEIGHTS'].value +
-                        '" >';
-                    html[++h] = ' </td> ';
-                    html[++h] = ' </tr> ';
-
-                });
-                html[++h] = '</tbody></table>';
                 html[++h] = '</div>';
 
 
