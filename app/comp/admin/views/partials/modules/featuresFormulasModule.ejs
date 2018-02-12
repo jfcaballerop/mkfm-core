@@ -165,8 +165,8 @@
                                         '<td> <input class="form-control, col-sm-12" name="' +
                                         urlTest + '" type="number" value="' + eval('form.' +
                                             postgressArray.join().replace(/,/g, ".")
-                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
-                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) +
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring") // ñapa
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) + // ñapa
                                         '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
