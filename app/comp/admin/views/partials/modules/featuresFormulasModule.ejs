@@ -160,6 +160,12 @@
                                     // postgressArray.push(capitalizeFirstLetter(val))
                                     // postgressArray.push(capitalizeFirstLetter(val)
 
+                                    console.log('  form.' +
+                                        postgressArray.join().replace(/,/g, ".")
+                                        .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                        .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                        .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                        .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring"));
 
                                     if (Number(val).toString() === val) {
 
