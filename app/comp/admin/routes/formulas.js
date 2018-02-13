@@ -3531,6 +3531,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         console.log('i:     ' + i);
                         var coincidencias = 0;
+                        var coincidenciasMechanical = 0;
+                        var coincidenciasDurable = 0;
                         //debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
@@ -3554,6 +3556,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
                                                     // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                 } else {
+
+                                                    if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                                        coincidenciasMechanical++;
+                                                    } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) { coincidenciasDurable++; }
                                                     coincidencias++;
                                                     totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
                                                         totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
@@ -3571,6 +3577,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ;
                                             } else {
 
+                                                if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                                    coincidenciasMechanical++;
+                                                } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) { coincidenciasDurable++; }
                                                 coincidencias++;
                                                 totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
                                                     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
@@ -3620,6 +3629,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                             if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b) === 0) {
                                                                 temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b];
                                                                 coincidencias++;
+                                                                if (diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()].indexOf(echanical) > -1) {
+                                                                    coincidenciasMechanical++;
+                                                                } else if (diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()].indexOf(urable) > -1) { coincidenciasDurable++; }
                                                                 debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
                                                             }
                                                             debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
@@ -3663,10 +3675,17 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         debug('coincidencias: ' + coincidencias)
                                         debug('coincidencias despues2: ' + coincidencias)
 
+                                        if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                            coincidenciasMechanical++;
+                                        } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) { coincidenciasDurable++; }
+
                                         /////////////////////////////////////////////////////////////////
                                         // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
                                         //
-                                        totalScoring *= 0.00180000000001 * Math.pow(coincidencias, 3) - 0.03050000000001 * Math.pow(coincidencias, 2) + 0.03020000000001 * Math.pow(coincidencias, 1) + 0.98620000000001;
+                                        totalScoring *= 0.00180000000001 * Math.pow(coincidenciasMechanical, 3) - 0.03050000000001 * Math.pow(coincidenciasMechanical, 2) + 0.03020000000001 * Math.pow(coincidenciasMechanical, 1) + 0.98620000000001;
+                                        if (coincidenciasDurable > 2) {
+                                            totalScoring *= -0.0214 * coincidenciasDurable + 1.0643;
+                                        }
                                         // 
                                         /////////////////////////////////////////////////////////////////
 
