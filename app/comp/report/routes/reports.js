@@ -99,14 +99,14 @@ router.get('/pdfmake', function (req, resp, next) {
 /*******************************************************
         AJAX CALLS
 **********************************************************/
-router.post('/generatePDF/:report', function (req, resp) {
+router.post('/generatePDF/:report/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB generatePDF: ' + req.params.report);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/report/V1/generatePDF/' + req.params.report,
+        path: config.PATH_API + '/report/V1/generatePDF/' + req.params.report + '/' + req.params.asset,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -155,25 +155,35 @@ router.get('/V1/getTemplates/', function (req, res, next) {
 
 });
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName', function (req, res, next) {
+router.post('/V1/generatePDF/:reportName/:assetCode', function (req, res, next) {
     var ret = {
         "result": "OK",
         "docDefinition": {}
     };
     Template.findOne({
         "config.HTML.id": req.params.reportName
-    }).exec(function (err, temps) {
+    }).exec(function (err, temp) {
         if (err) {
             res.send(500, err.message);
         }
-        // debug(" ### GET generatePDF ### \n" + temps);
+        // debug(" ### GET generatePDF ### \n" + temp);
+        var asscode = req.params.assetCode;
+        debug('Asset Code: ' + asscode);
+        //TODO: find de Infodatatracks db.infodatatracks.find({"properties.bcode":"F6-SD-06-B-3585"}
+        // db.getCollection('koboinfos').find("59d74668be879f40d8eac16d")
+
         // TODO: Montaje del documento con las variables definidas.
+        // for (var f of config.fields) {
+        //     if (f.type === 'dbfield') {
+
+        //     }
+        // }
         var dbfields = {
             properties: {
                 rcode: "HOLA PEPE"
             }
         };
-        ret.docDefinition = services.docPdf(temps.docDefinition, temps.config, dbfields);
+        ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
         //debug(encodeImageFileAsURL(''));
 
         res.status(200).jsonp(ret);
