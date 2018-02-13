@@ -1,6 +1,3 @@
-
-
-
 // services.js
 var jwt = require('jwt-simple');
 var jwtweb = require('jsonwebtoken');
@@ -8,6 +5,8 @@ var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 var moment = require('moment');
 var utm = require('utm');
+var FileReader = require('filereader');
+var base64Img = require('base64-img');
 
 exports.makeKoboGeoJson = function (arr, index, type) {
     // console.log('## Services makeKoboGeoJson ##');
@@ -93,4 +92,46 @@ exports.mergeDeep = function (obj1, obj2) {
     Object.keys(obj1).forEach(key => result[key] = obj1[key]);
     Object.keys(obj2).forEach(key => result[key] = obj2[key]);
     return result;
+};
+
+function encodeImageFileAsURL(file_path) {
+
+    var file = file_path;
+    var data = base64Img.base64Sync(file);
+    // console.log(data);
+    return data;
+}
+
+function getPaths(folder) {
+    var paths = {
+        logos: "../../public/media/logos",
+
+    };
+    return paths[folder];
+
+
+}
+exports.docPdf = function (docDefinition, config, dbfields) {
+    // var logo_img = ret.docDefinition.header.columns[0].image.replace('##Logo1##', encodeImageFileAsURL(''));
+    var doc_translate = JSON.stringify(docDefinition);
+    // console.log(dbfields);
+    // TODO: Hacer un control de errores para que cuando el campo venga vacío no pete.
+
+    for (var f of config.fields) {
+        // console.log(f);
+        if (f.type === 'img') {
+            doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+
+        } else if (f.type === 'dbfield') {
+            doc_translate = doc_translate.replace(f.name, eval('dbfields.' + f.value));
+
+        } else {
+
+            doc_translate = doc_translate.replace(f.name, f.value);
+        }
+    }
+
+    // console.log(doc_translate);
+
+    return JSON.parse(doc_translate);
 };
