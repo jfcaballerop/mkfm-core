@@ -37,7 +37,7 @@ router.use(bodyParser.json());
         WEB CALLS
 **********************************************************/
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     var doc = new PDFDocument()
     var filename = 'report1';
     // Stripping special characters
@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET PDF Maker */
-router.get('/pdfmake', function(req, resp, next) {
+router.get('/pdfmake', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -67,17 +67,17 @@ router.get('/pdfmake', function(req, resp, next) {
         }
     };
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
@@ -99,7 +99,7 @@ router.get('/pdfmake', function(req, resp, next) {
 /*******************************************************
         AJAX CALLS
 **********************************************************/
-router.post('/generatePDF/:report', function(req, resp) {
+router.post('/generatePDF/:report', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB generatePDF: ' + req.params.report);
 
@@ -117,15 +117,15 @@ router.post('/generatePDF/:report', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -142,8 +142,8 @@ router.post('/generatePDF/:report', function(req, resp) {
         API CALLS
 **********************************************************/
 /* GET JSON Templates listing. */
-router.get('/V1/getTemplates/', function(req, res, next) {
-    Template.find().exec(function(err, temps) {
+router.get('/V1/getTemplates/', function (req, res, next) {
+    Template.find().exec(function (err, temps) {
         if (err) {
             res.send(500, err.message);
         }
@@ -155,18 +155,26 @@ router.get('/V1/getTemplates/', function(req, res, next) {
 
 });
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName', function(req, res, next) {
+router.post('/V1/generatePDF/:reportName', function (req, res, next) {
     var ret = {
         "result": "OK",
         "docDefinition": {}
     };
-    Template.findOne({ "config.HTML.id": req.params.reportName }).exec(function(err, temps) {
+    Template.findOne({
+        "config.HTML.id": req.params.reportName
+    }).exec(function (err, temps) {
         if (err) {
             res.send(500, err.message);
         }
         // debug(" ### GET generatePDF ### \n" + temps);
         // TODO: Montaje del documento con las variables definidas.
-        ret.docDefinition = temps.docDefinition;
+        var dbfields = {
+            properties: {
+                rcode: "HOLA PEPE"
+            }
+        };
+        ret.docDefinition = services.docPdf(temps.docDefinition, temps.config, dbfields);
+        //debug(encodeImageFileAsURL(''));
 
         res.status(200).jsonp(ret);
 

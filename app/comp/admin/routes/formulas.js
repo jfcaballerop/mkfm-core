@@ -288,12 +288,21 @@ var diccDominicaToKobo = {
 };
 
 function capitalizeFirstLetter(string) {
-    var OutPut = '';
-    var WordList = string.split(' ');
-    WordList.forEach(function(element) {
-        OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
-    });
-    return OutPut;
+    if (string !== undefined) {
+        var OutPut = ''
+        if (string.indexOf(' ') > -1) {
+            var WordList = string.split(' ');
+        }
+        if (WordList !== undefined && WordList.length > 0) {
+            WordList.forEach(function (element) {
+                OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
+            });
+        }
+        return OutPut;
+    } else {
+        return "";
+
+    }
 }
 
 router.use(function timeLog(req, res, next) {
@@ -320,7 +329,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/formulas', function(req, resp, next) {
+router.get('/formulas', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -334,17 +343,17 @@ router.get('/formulas', function(req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
@@ -368,7 +377,7 @@ router.get('/formulas', function(req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los tracks afectados por la formular seleccionada
  */
-router.post('/get_formulas_tracks/', function(req, resp) {
+router.post('/get_formulas_tracks/', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
 
@@ -386,15 +395,15 @@ router.post('/get_formulas_tracks/', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -412,7 +421,7 @@ router.post('/get_formulas_tracks/', function(req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_likelihood/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_likelihood: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -430,15 +439,15 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function(req, 
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -455,7 +464,7 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function(req, 
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -473,15 +482,15 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function(req,
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -498,7 +507,7 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function(req,
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_response/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_response/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -516,15 +525,15 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function(req, re
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -541,7 +550,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function(req, re
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -559,15 +568,15 @@ router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -584,7 +593,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, resp) {
+router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_condition: ' + '' + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -602,15 +611,15 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, r
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -625,7 +634,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, r
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function(req, resp) {
+router.post('/update_field/:field/:value', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -643,15 +652,15 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -672,14 +681,14 @@ router.post('/update_field/:field/:value', function(req, resp) {
 
 
 /* GET JSON formulas listing. */
-router.get('/V1/formulas/', function(req, res, next) {
-    conditionFormula.find({}).exec(function(err, formcs) {
+router.get('/V1/formulas/', function (req, res, next) {
+    conditionFormula.find({}).exec(function (err, formcs) {
         if (err) {
             res.send(500, err.message);
         }
         Formula.find({}).sort({
             "properties.HTML.id": -1
-        }).exec(function(err, forms) {
+        }).exec(function (err, forms) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -695,7 +704,7 @@ router.get('/V1/formulas/', function(req, res, next) {
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_likelihood/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -709,7 +718,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function(err, f) {
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -758,7 +767,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1045,7 +1054,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             }
 
                             break;
-                            // PAVEMENTS //
+                        // PAVEMENTS //
                         case 'secondcoef':
                             if (rlands === 2) {
                                 valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
@@ -1166,7 +1175,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     "properties.glofnatural2": valueglofnaturalarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function(err, iup) {
+            await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1188,7 +1197,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_sensitivity/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -1202,7 +1211,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function(err, f) {
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1237,7 +1246,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1579,7 +1588,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     "properties.gsensitivity2": valuegsensitivityarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function(err, iup) {
+            await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1600,7 +1609,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -1614,7 +1623,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function(err, f) {
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1642,7 +1651,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     }
     debug(selectjson);
     // debug(form);
-    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1934,7 +1943,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                     "properties.CRespHazard": valueCresphazardarr
                 }
             };
-            await Infodatatrack.update(conditions, query, function(err, iup) {
+            await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1954,7 +1963,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks/');
     var postData = extend({}, req.body);
     var ret = {
@@ -1974,11 +1983,11 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
 
     Formula.find({
         "name": formula
-    }).exec(async function(err, f) {
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
-        await Infodatatrack.find().exec(function(err, rtracks) {
+        await Infodatatrack.find().exec(function (err, rtracks) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -1987,7 +1996,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
 
         for (var track of tracks) {
             // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
-            await Infodatatrack.findById(track._id).exec(function(err, ifdt) {
+            await Infodatatrack.findById(track._id).exec(function (err, ifdt) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2046,17 +2055,17 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                             break;
                         case 'Retaining_Walls':
                             if ((
-                                    ifdt.properties.gcode != undefined &&
-                                    ifdt.properties.gcode != null &&
-                                    ifdt.properties.gcode != [] &&
-                                    ifdt.properties.gcode[index] != undefined &&
-                                    ifdt.properties.gcode[index] != "" &&
-                                    ifdt.properties.gtype != undefined &&
-                                    ifdt.properties.gtype != null &&
-                                    ifdt.properties.gtype != [] &&
-                                    ifdt.properties.gtype[index] != undefined &&
-                                    ifdt.properties.gtype[index] != "" &&
-                                    ifdt.properties.gtype[index] === "Retaining_walls") || (
+                                ifdt.properties.gcode != undefined &&
+                                ifdt.properties.gcode != null &&
+                                ifdt.properties.gcode != [] &&
+                                ifdt.properties.gcode[index] != undefined &&
+                                ifdt.properties.gcode[index] != "" &&
+                                ifdt.properties.gtype != undefined &&
+                                ifdt.properties.gtype != null &&
+                                ifdt.properties.gtype != [] &&
+                                ifdt.properties.gtype[index] != undefined &&
+                                ifdt.properties.gtype[index] != "" &&
+                                ifdt.properties.gtype[index] === "Retaining_walls") || (
                                     ifdt.properties.gcode2 != undefined &&
                                     ifdt.properties.gcode2 != null &&
                                     ifdt.properties.gcode2 != [] &&
@@ -2078,19 +2087,19 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                             break;
                         case 'Earthworks':
                             if ((
-                                    ifdt.properties.gcode != undefined &&
-                                    ifdt.properties.gcode != null &&
-                                    ifdt.properties.gcode != [] &&
-                                    ifdt.properties.gcode[index] != undefined &&
-                                    ifdt.properties.gcode[index] != "" &&
-                                    ifdt.properties.gtype != undefined &&
-                                    ifdt.properties.gtype != null &&
-                                    ifdt.properties.gtype != [] &&
-                                    ifdt.properties.gtype[index] != undefined &&
-                                    ifdt.properties.gtype[index] != "" && (
-                                        ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
-                                    )
-                                ) || (
+                                ifdt.properties.gcode != undefined &&
+                                ifdt.properties.gcode != null &&
+                                ifdt.properties.gcode != [] &&
+                                ifdt.properties.gcode[index] != undefined &&
+                                ifdt.properties.gcode[index] != "" &&
+                                ifdt.properties.gtype != undefined &&
+                                ifdt.properties.gtype != null &&
+                                ifdt.properties.gtype != [] &&
+                                ifdt.properties.gtype[index] != undefined &&
+                                ifdt.properties.gtype[index] != "" && (
+                                    ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                )
+                            ) || (
                                     ifdt.properties.gcode2 != undefined &&
                                     ifdt.properties.gcode2 != null &&
                                     ifdt.properties.gcode2 != [] &&
@@ -2428,7 +2437,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
                         break;
                 }
                 ifdt.updated_at = new Date();
-                ifdt.save(function(err, isaved) {
+                ifdt.save(function (err, isaved) {
                     if (err) {
                         res.send(500, err.message);
                     }
@@ -2447,7 +2456,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, re
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function(req, res, next) {
+router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
     debug('API /V1/update_formulas_tracks_condition/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -2463,7 +2472,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function(err, f) {
+    }).exec(async function (err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -2491,12 +2500,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
     var tracksUpdated2 = 0;
-    debug(selectjson);
+    //debug(selectjson);
     switch (asset) {
         case 'Culverts':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2506,7 +2515,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     //debug(ifdt._id);
                     // debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug(tracksUpdated2);
+                    //debug(tracksUpdated2);
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
 
                         //debug(form.formulaSpec.length);
@@ -2558,7 +2567,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         // debug('ifdt.Cclearing ' + score.toString().toUpperCase());
                                                         if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toString().toUpperCase()) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
-                                                                // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                                            // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -2600,7 +2609,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2625,7 +2634,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Retaining_Walls':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2660,13 +2669,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -2819,7 +2828,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -2844,7 +2853,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -2879,13 +2888,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3038,7 +3047,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3063,7 +3072,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Cuttings_Embankments':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3098,13 +3107,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3257,7 +3266,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3282,7 +3291,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3317,13 +3326,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3476,7 +3485,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3504,7 +3513,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Bridges':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+            await Infodatatrack.find({
+                // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
+            }, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3514,10 +3525,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     //debug(ifdt._id);
                     // debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug('tracksUpdated2: ' + tracksUpdated2);
                     debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        console.log('i:     ' + i);
                         var coincidencias = 0;
                         //debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
@@ -3527,118 +3539,174 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     //////////////////////INICIO///////////////////////////////
                                     // debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
                                     // if (true) {
+
                                     if ((ifdt.properties.bcode !== undefined && ifdt.properties.bcode.length > 0 &&
-                                            ifdt.properties.bcode[i] !== null &&
-                                            ifdt.properties.bcode[i] !== "" &&
-                                            ifdt.properties.bcode.length > 0) || true) {
-                                        if (true) {
-                                            debug('totalScoring1:  ' + totalScoring);
-                                            var numberOfScores = 0;
-                                            var numberOfTypeOfFailureProcess = 0;
-                                            if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0) {
-                                                debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
-                                                for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
-                                                    if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
-                                                        totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
-                                                    } else {
-                                                        totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
-                                                            totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
-                                                    }
-                                                }
-                                            }
-                                            debug('totalScoring2:  ' + totalScoring);
-                                            debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
-                                            if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0) {
-
-                                                if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
+                                        ifdt.properties.bcode[i] !== null &&
+                                        ifdt.properties.bcode[i] !== "" &&
+                                        ifdt.properties.bcode.length > 0) || true) {
+                                        debug('totalScoring1 -- :  ' + totalScoring);
+                                        var numberOfScores = 0;
+                                        var numberOfTypeOfFailureProcess = 0;
+                                        if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0 &&
+                                            ifdt.properties.bdamagesfoundationsgeneraltype[i] !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype[i].length > 0) {
+                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
+                                            for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
+                                                if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                    // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                 } else {
-                                                    totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
-                                                        totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+                                                    coincidencias++;
+                                                    totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
+                                                        totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
+                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight);
                                                 }
                                             }
-                                            debug('totalScoring3:  ' + totalScoring);
-                                            // Mechanical Defects, Durable Defects
-                                            z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBeams", "BdamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas"];
-                                            //  Very High, High, Medium, Low, Unknown 
-                                            z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBeamsSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity"];
-                                            var k = 0;
-                                            debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]]);
-                                            debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]]);
-                                            if (ifdt.properties[z1[k]][i] !== undefined && ifdt.properties[z1[k]] !== [] &&
-                                                ifdt.properties[z1[k]][i] !== null &&
-                                                ifdt.properties[z1[k]][i] !== "" &&
-                                                ifdt.properties[z1[k]][i] > 0 &&
-                                                ifdt.properties[z2[k]][i] !== undefined && ifdt.properties[z2[k]] !== [] &&
-                                                ifdt.properties[z2[k]][i] !== null &&
-                                                ifdt.properties[z2[k]][i] !== "" &&
-                                                ifdt.properties[z2[k]][i] > 0) {
-                                                debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z1[k]][i])))
-                                                debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
-                                                for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
-                                                    // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
-                                                    debug('ifdt.properties.z1[k].length, z1[k]: ' + ifdt.properties.z1[k].length) + '    ' + z1[k];
-                                                    if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.z1[k].length > 0) {
-                                                        // ATTENTION!!
-                                                        for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].scoring) {
-                                                            if (ifdt.properties.z[k][i].toString().toUpperCase().indexOf(x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0 ||
-                                                                ifdt.properties.z[k][i].toString().toUpperCase().indexOf(diccKoboToDominica(x).toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight ?
-                                                                    totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].scoring[x.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations[y].weight;
-                                                            }
-                                                        }
-                                                    }
-                                                    k++;
-                                                }
-                                                debug('totalScoring4:  ' + totalScoring);
+                                        }
+                                        debug('totalScoring2:  ' + totalScoring);
+                                        debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
+                                        if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
+                                            ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length > 0) {
 
-                                            }
-
-
-
-
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            // debug(totalScoring);
-                                            /////////////////////////////////////////////////////////////////
-                                            // =(0.0018 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 3) - 0.0305 * ((SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) ^ 2) + 0.0302 * (SUM(L4: L6) + SUM(L9: L13) + SUM(L19: L23) + SUM(L29: L33) + SUM(L39: L43) + SUM(L49: L53) + SUM(L59: L63) + SUM(L69: L73) + SUM(L79: L83) + SUM(L89: L93)) + 0.9862) * L101
-                                            // Existance of several damages
-                                            // if (numberOfScores > 2) {
-                                            //     totalScoring *= 0.9;
-                                            // } else {
-                                            //     // existance of several damages
-                                            //     totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            // }
-                                            /////////////////////////////////////////////////////////////////
-                                            //  CORRECTIVE FACTORS - Bridge type
-                                            if (ifdt.properties.btype !== undefined &&
-                                                ifdt.properties.btype.length > 0 &&
-                                                ifdt.properties.btype[i] !== null &&
-                                                ifdt.properties.btype[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring) {
-                                                    // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
-                                                    if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                        if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-
+                                            if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                ;
                                             } else {
 
-                                                totalScoring *= 0.90;
+                                                coincidencias++;
+                                                totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                    totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+                                            }
+                                        }
+                                        debug('totalScoring3:  ' + totalScoring);
+                                        // Mechanical Defects, Durable Defects
+                                        z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBeams", "BdamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas"];
+
+                                        //  Very High, High, Medium, Low, Unknown 
+                                        z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBeamsSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity"];
+                                        var k = 0;
+                                        if (ifdt.properties[z1[k]] !== undefined && ifdt.properties[z2[k]] !== undefined &&
+                                            ifdt.properties[z1[k]][i] !== undefined && ifdt.properties[z1[k]] !== [] &&
+                                            ifdt.properties[z1[k]][i] !== null &&
+                                            ifdt.properties[z1[k]][i] !== "" &&
+                                            // ifdt.properties[z1[k]][i] > 0 &&
+                                            ifdt.properties[z2[k]][i] !== undefined && ifdt.properties[z2[k]] !== [] &&
+                                            ifdt.properties[z2[k]][i] !== null &&
+                                            ifdt.properties[z2[k]][i] !== ""
+                                            //&& ifdt.properties[z2[k]][i] > 0
+                                        ) {
+                                            // debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]][i]);
+                                            // debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]][i]);
+                                            // debug('ifdt.properties[' + z1[k] + ']: ' + diccKoboToDominica[ifdt.properties[z1[k]][i]]);
+                                            // debug('ifdt.properties[' + z2[k] + ']: ' + diccKoboToDominica[ifdt.properties[z2[k]][i]]);
+                                            // debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                            // debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]));
+                                            debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])); // weight
+                                            debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]])); // scoring
+                                            // console.log('i:  ' + i);
+                                            // debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
+                                            debug('coincidencias antes: ' + coincidencias)
+                                            for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
+                                                if (form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])] !== undefined) {
+                                                    debug('k: ' + k);
+                                                    debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                                    debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
+                                                    // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
+                                                    // console.log(y);
+                                                    // console.log('weight: ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight);
+                                                    for (a in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]) {
+                                                        debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
+                                                        for (b in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a]) {
+                                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
+                                                            var temporary = Number.MAX_VALUE;
+                                                            if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b) === 0) {
+                                                                temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b];
+                                                                coincidencias++;
+                                                                debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
+                                                            }
+                                                            debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
+                                                            totalScoring = totalScoring < temporary ? totalScoring : temporary;
+                                                            debug(temporary);
+                                                            debug('totalScoring ->: ' + totalScoring);
+                                                        }
+                                                    }
+                                                    debug('temporary: ' + temporary);
+                                                    k++;
+                                                }
+                                            }
+                                        }
+                                        debug('coincidencias despues: ' + coincidencias)
+                                        // **************************
+                                        debug('totalScoring3.1:  ' + totalScoring);
+                                        debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
+                                        // if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
+                                        //     ifdt.properties.bdamagesnonstructural[i] !== undefined && ifdt.properties.bdamagesnonstructural[i].length > 0) {
+                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
+                                            // for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
+                                                if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
+                                                    // debug(diccDominicaToKobo[x.toString()]);
+                                                    // debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
+                                                    // debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
+                                                    // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                } else {
+
+                                                    coincidencias++;
+                                                    if (ifdt.properties.bdamagesnonstructural[i]=== 'NoDamages') {
+                                                        totalScoring = totalScoring < 100 ? totalScoring : 100;
+                                                    } else {
+                                                        totalScoring = totalScoring < 95 ? totalScoring : 95;
+                                                    }
+                                                    // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
+                                                    //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                }
+                                            // }
+                                        // }
+                                        debug('totalScoring4:  ' + totalScoring);
+                                        debug('coincidencias: ' + coincidencias)
+                                        debug('coincidencias despues2: ' + coincidencias)
+
+                                        /////////////////////////////////////////////////////////////////
+                                        // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
+                                        //
+                                        totalScoring *= 0.00180000000001 * Math.pow(coincidencias, 3) - 0.03050000000001 * Math.pow(coincidencias, 2) + 0.03020000000001 * Math.pow(coincidencias, 1) + 0.98620000000001;
+                                        // 
+                                        /////////////////////////////////////////////////////////////////
+
+                                        totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                        debug('totalScoring5:  ' + totalScoring);
+                                        // debug(totalScoring);
+                                        //  CORRECTIVE FACTORS - Bridge type
+                                        if (ifdt.properties.btype !== undefined &&
+                                            ifdt.properties.btype.length > 0 &&
+                                            ifdt.properties.btype[i] !== null &&
+                                            ifdt.properties.btype[i] !== "") {
+                                            for (score in form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring) {
+                                                // debug(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                if (score !== undefined && score !== null) {
+                                                    // debug('score ' + score);
+                                                    // debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                    if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
+                                                        debug(form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score]);
+                                                        // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.NA.scoring[score]);
+                                                    } else {
+
+                                                        totalScoring *= 1;
+                                                    }
+                                                }
                                             }
 
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring);
-                                            //debug(totalScoring + '\n');
                                         } else {
-                                            valueconditionsr.push("");
+
+                                            totalScoring *= 0.0;
+                                            totalScoring = null;
                                         }
+                                        debug('totalScoring6:  ' + totalScoring);
+
+                                        totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                        valueconditionsr.push(totalScoring);
+                                        debug('totalScoring7:  ' + totalScoring);
+                                        //debug(totalScoring + '\n');
+                                    } else {
+                                        valueconditionsr.push("");
                                     }
                                     // debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
@@ -3651,10 +3719,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 
+                        // if (i === 123) { while (true) { ; } }
                     }
                     // debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    // debug(valueconditionsr.toString());
+                    debug(valueconditionsr.toString());
                     // debug(tracksUpdated);
 
                     var conditions = {
@@ -3663,11 +3732,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     var query = {
                         $set: {
-                            "properties.gcondition2": valueconditionsr
+                            "properties.bcondition": valueconditionsr
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function(err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3718,7 +3787,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 /* POST update_field */
-router.post('/V1/update_field/', function(req, res, next) {
+router.post('/V1/update_field/', function (req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -3735,7 +3804,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
     Formula.find({
         "name": arrField[0]
-    }).exec(function(err, f) {
+    }).exec(function (err, f) {
         debug('Formula.find ' + arrField[0]);
         if (err) {
             res.send(500, err.message);
@@ -3760,7 +3829,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                 eval(comando);
 
                 // res.send(f);
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3782,7 +3851,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]].weight = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3802,7 +3871,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3822,7 +3891,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
-                            formSave.save(function(err, fsaved) {
+                            formSave.save(function (err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -3854,7 +3923,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
                     }
                 }
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3877,7 +3946,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3899,7 +3968,7 @@ router.post('/V1/update_field/', function(req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function(err, fsaved) {
+                formSave.save(function (err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -3916,7 +3985,7 @@ router.post('/V1/update_field/', function(req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_formulas_tracks/', function(req, res, next) {
+router.post('/V1/get_formulas_tracks/', function (req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -4053,7 +4122,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function(err, tracks) {
+            }).exec(function (err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4062,7 +4131,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function(values) {
+            Promise.all(promises).then(function (values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -4088,7 +4157,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function(val, index) {
+                    values.forEach(function (val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
@@ -4337,7 +4406,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function(err, tracks) {
+            }).exec(function (err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4346,7 +4415,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function(values) {
+            Promise.all(promises).then(function (values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -4372,7 +4441,7 @@ router.post('/V1/get_formulas_tracks/', function(req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function(val, index) {
+                    values.forEach(function (val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
