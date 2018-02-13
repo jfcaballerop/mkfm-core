@@ -111,13 +111,27 @@ function getPaths(folder) {
 
 
 }
-exports.docPdf = function (docDefinition) {
+exports.docPdf = function (docDefinition, config, dbfields) {
     // var logo_img = ret.docDefinition.header.columns[0].image.replace('##Logo1##', encodeImageFileAsURL(''));
     var doc_translate = JSON.stringify(docDefinition);
-    doc_translate = doc_translate.replace('##Logo_world_bank##', encodeImageFileAsURL(path.join(__dirname, getPaths('logos'), 'world_bank_logo.jpg')));
-    doc_translate = doc_translate.replace('##Logo_dominica##', encodeImageFileAsURL(path.join(__dirname, getPaths('logos'), 'Dominica_logo.png')));
-    doc_translate = doc_translate.replace('##rcode##', 'HOLA pepe');
-    console.log(doc_translate);
+    // console.log(dbfields);
+    // TODO: Hacer un control de errores para que cuando el campo venga vacío no pete.
+
+    for (var f of config.fields) {
+        // console.log(f);
+        if (f.type === 'img') {
+            doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+
+        } else if (f.type === 'dbfield') {
+            doc_translate = doc_translate.replace(f.name, eval('dbfields.' + f.value));
+
+        } else {
+
+            doc_translate = doc_translate.replace(f.name, f.value);
+        }
+    }
+
+    // console.log(doc_translate);
 
     return JSON.parse(doc_translate);
 };

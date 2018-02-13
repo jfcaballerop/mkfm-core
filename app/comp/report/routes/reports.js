@@ -168,8 +168,12 @@ router.post('/V1/generatePDF/:reportName', function (req, res, next) {
         }
         // debug(" ### GET generatePDF ### \n" + temps);
         // TODO: Montaje del documento con las variables definidas.
-
-        ret.docDefinition = services.docPdf(temps.docDefinition);
+        var dbfields = {
+            properties: {
+                rcode: "HOLA PEPE"
+            }
+        };
+        ret.docDefinition = services.docPdf(temps.docDefinition, temps.config, dbfields);
         //debug(encodeImageFileAsURL(''));
 
         res.status(200).jsonp(ret);
