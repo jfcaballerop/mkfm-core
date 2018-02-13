@@ -146,18 +146,6 @@
                                     // // console.log(counter);
                                     (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
-                                    // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
-                                    // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
-                                    // // // console.log(postgressArray.join().replace(/,/g, "."));
-                                    // // console.log('urlTest' + urlTest);
-                                    // // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
-                                    // console.log(postgressArray);
-                                    // console.log(form);
-                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
-                                    // }
-                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                     console.log(postgressArray.join().replace(/,/g, ".").replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring"));
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' +
@@ -171,55 +159,35 @@
                                     val.length > 0 ? postgressArray.push(capitalizeFirstLetter(val)) : '';
                                     // postgressArray.push(capitalizeFirstLetter(val))
                                     // postgressArray.push(capitalizeFirstLetter(val)
-                                    reemplaza = 1;
+
+
                                     if (Number(val).toString() === val) {
+
                                         postgressArray.splice(-1, 1);
-                                        if (postgressArray.join().indexOf('scor') < 0 &&
-                                            postgressArray.join().indexOf('ther') < 0 &&
-                                            postgressArray.join().indexOf('borea') < 0 &&
-                                            postgressArray.join().indexOf('Bush') < 0 &&
-                                            postgressArray.join().indexOf('Herbaceus') < 0 &&
-                                            postgressArray.join().indexOf('NoVegetation') < 0 &&
-                                            postgressArray.join().indexOf('02') < 0 &&
-                                            postgressArray.join().indexOf('06') < 0) {
-                                            var texto = ('Condition__' + postgressArray.join().replace(/,/g, "__")
-                                                .replace('Arboreal', 'Na__scoring__Arboreal')
-                                                .replace('Bush', 'Na__scoring__Bush')
-                                                .replace('Herbaceus', 'Na__scoring__Herbaceus')
-                                                .replace('Other', 'Na__scoring__Other')
-                                                .replace('NoVegetation', 'Na__scoring__NoVegetation')
-                                                .replace('Na', 'Na__scoring__Na')
-                                                .replace('>1m', 'Na__scoring__>1m')
-                                                .replace('Unknown', 'Na__scoring__Unknown')
-                                                .replace('002M', 'Na__scoring__002M')
-                                                .replace('0206M', 'Na__scoring__0206M')
-                                                .replace('061M', 'Na__scoring__061M')
-                                                .replace('Concrete', 'Na__scoring__Concrete')
-                                                .replace('Masonry', 'Na__scoring__Masonry')
-                                                .replace('Riprap', 'Na__scoring__Riprap')
-                                                .replace('Gabion', 'Na__scoring__Gabion')
-                                                .replace('Girder', 'scoring__Girder')
-                                                .replace('Slab', 'scoring__Slab')
-                                                .replace('Truss', 'scoring__Truss')
-                                                .replace('Bailey', 'scoring__Bailey')
-                                                .replace('Composite', 'scoring__Composite')
-                                                .replace('Cantilever', 'scoring__Cantilever')
-                                                .replace('MasonryArch', 'scoring__MasonryArch')
-                                                .replace('CableStayed', 'scoring__CableStayed')
-                                                .replace('Suspension', 'scoring__Suspension')
-                                                .replace('Submersible', 'scoring__Submersible')
-                                                .replace('TrussArch', 'scoring__TrussArch')
-                                                .replace('Arch', 'scoring__Arch')
-                                            );
-                                            html[++h] =
-                                                '<td> <input class="form-control, col-sm-12" name="' + texto +
-                                                '" type="number" value="' + texto + '"  step="0.01"></td>';
-                                        } else {
-                                            html[++h] =
-                                                '<td> <input class="form-control, col-sm-12" name="' +
-                                                ('Condition__' + postgressArray.join().replace(/,/g, "__")) + '" type="number" value="' + val + '"  step="0.01"></td>';
-                                        }
-                                        reemplaza++;
+                                        html[++h] =
+                                            '<td> <input class="form-control, col-sm-12" name="' +
+                                            ('Condition__' + postgressArray.join().replace(/,/g, "__"))
+                                            .replace("CorrectiveFactors__Material", "CorrectiveFactors__Material__Na__scoring")
+                                            .replace("CorrectiveFactors__Vegetation", "CorrectiveFactors__Vegetation__Na__scoring")
+                                            .replace("CorrectiveFactors__SizeOfBlocks", "CorrectiveFactors__SizeOfBlocks__Na__scoring")
+                                            .replace("CorrectiveFactors__BridgeType", "CorrectiveFactors__BridgeType__scoring") + '" type="number" value="' +
+                                            eval('form.' +
+                                                postgressArray.join().replace(/,/g, ".")
+                                                .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                                .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                                .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                                .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring")) + '"  step="0.01"></td>';
+                                        console.log(eval('form.' +
+                                                postgressArray.join().replace(/,/g, ".")
+                                                .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                                .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                                .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                                .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring")) + '  form.' +
+                                            postgressArray.join().replace(/,/g, ".")
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                            .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                            .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring"));
                                     } else {
                                         html[++h] = '<td>' + val + '</td>';
                                     }
