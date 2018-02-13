@@ -113,8 +113,8 @@
                         if (counter == 0) {
                             counter++;
                         } else {
-                            html[++h] = '<th id="' + cabeceraCol + '">' + capitalizeFirstLetter(cabeceraCol.substring(
-                                cabeceraCol.indexOf("_") + 1)) + '</th>';
+                            html[++h] = '<th id="' + cabeceraCol + '">' + cabeceraCol.substring(
+                                cabeceraCol.indexOf("_") + 1) + '</th>';
                         }
                     });
                     html[++h] = '</tr>'
@@ -131,7 +131,7 @@
                                 counter++;
                             } else {
                                 weight = 0;
-                                var j = postgressArray.indexOf("WEIGHT");
+                                var j = postgressArray.indexOf("weight");
                                 if (j != -1) {
                                     weight = 1;
                                     // console.log(postgressArray + "<--------------- 1");
@@ -139,45 +139,67 @@
                                     // // console.log(postgressArray + "<--------------- 2");
 
                                 }
-                                console.log(i);
-                                console.log(i.indexOf('scoring'));
-                                if (val.length > 0 && ((i.indexOf('scoring') > -1 && (
-                                        ScoreName.length > 0)) || (i.indexOf('WEIGHT') >
+                                if (val.length > 0 && ((i.indexOf('scores') > -1 && (
+                                        ScoreName.length > 0)) || (i.indexOf('weight') >
                                         -1 && ScoreName.length > 0))) {
-                                    // if (i.indexOf('scores') > -1) {
                                     // // console.log(postgressArray.join());
                                     // // console.log(counter);
-                                    (i.indexOf('WEIGHT') > -1) ? postgressArray.push(
-                                        'WEIGHT'): postgressArray.splice(-1, 0,
-                                        'scoring');
-                                    urlTest = ('Condition__' + postgressArray.join().replace(
-                                        /,/g, "__"));
-                                    // // console.log('urlTest ' + urlTest.replace(/__/g, "."));
-                                    // if (counter < 4 && eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")) !== undefined) {
-                                    // // // console.log(postgressArray.join().replace(/,/g, "."));
-                                    // // console.log('urlTest' + urlTest);
-                                    // // console.log(eval('formulasDB[4].' + postgressArray.join().replace(/,/g, ".")));
-                                    // console.log(postgressArray);
-                                    // console.log(form);
-                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
-                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
-                                    // }
+                                    (i.indexOf('weight') > -1) ? postgressArray.push('weight'): postgressArray.splice(-1, 0, 'scoring');
+                                    urlTest = ('Condition__' + postgressArray.join().replace(/,/g, "__"));
+                                    console.log(postgressArray.join().replace(/,/g, ".").replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring"));
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' +
                                         urlTest + '" type="number" value="' + eval('form.' +
-                                            postgressArray.join().replace(/,/g, ".")) +
+                                            postgressArray.join().replace(/,/g, ".")
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")) +
                                         '"  step="0.01"></td>';
                                 } else {
                                     // (capitalizeFirstLetter(val) == 'Na' || capitalizeFirstLetter(val) == '') ? '' : postgressArray.push(capitalizeFirstLetter(val));
-                                    // (val.indexOf('nichts') === 0) ? '' : postgressArray.push(capitalizeFirstLetter(val));
-                                    if (val.indexOf('nichts') === 0) {;
-                                        html[++h] = '<td>' + '' + '</td>';
+                                    val.length > 0 ? postgressArray.push(capitalizeFirstLetter(val)) : '';
+                                    // postgressArray.push(capitalizeFirstLetter(val))
+                                    // postgressArray.push(capitalizeFirstLetter(val)
+
+                                    console.log('  form.' +
+                                        postgressArray.join().replace(/,/g, ".")
+                                        .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                        .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                        .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                        .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring"));
+
+                                    if (Number(val).toString() === val) {
+
+                                        postgressArray.splice(-1, 1);
+                                        html[++h] =
+                                            '<td> <input class="form-control, col-sm-12" name="' +
+                                            ('Condition__' + postgressArray.join().replace(/,/g, "__"))
+                                            .replace("CorrectiveFactors__Material", "CorrectiveFactors__Material__Na__scoring")
+                                            .replace("CorrectiveFactors__Vegetation", "CorrectiveFactors__Vegetation__Na__scoring")
+                                            .replace("CorrectiveFactors__SizeOfBlocks", "CorrectiveFactors__SizeOfBlocks__Na__scoring")
+                                            .replace("CorrectiveFactors__BridgeType", "CorrectiveFactors__BridgeType__scoring") + '" type="number" value="' +
+                                            eval('form.' +
+                                                postgressArray.join().replace(/,/g, ".")
+                                                .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                                .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                                .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                                .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring")) + '"  step="0.01"></td>';
+                                        console.log(eval('form.' +
+                                                postgressArray.join().replace(/,/g, ".")
+                                                .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                                .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                                .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                                .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring")) + '  form.' +
+                                            postgressArray.join().replace(/,/g, ".")
+                                            .replace("CorrectiveFactors.Material", "CorrectiveFactors.Material.Na.scoring")
+                                            .replace("CorrectiveFactors.Vegetation", "CorrectiveFactors.Vegetation.Na.scoring")
+                                            .replace("CorrectiveFactors.SizeOfBlocks", "CorrectiveFactors.SizeOfBlocks.Na.scoring")
+                                            .replace("CorrectiveFactors.BridgeType", "CorrectiveFactors.BridgeType.scoring"));
                                     } else {
-                                        postgressArray.push(capitalizeFirstLetter(val));
-                                        html[++h] = '<td>' + capitalizeFirstLetter(val) + '</td>';
+                                        html[++h] = '<td>' + val + '</td>';
                                     }
 
-                                    // postgressArray.push(capitalizeFirstLetter(val)
+                                    // console.log('form.' + postgressArray.join().replace(/,/g, "."));
+                                    // console.log(eval('form.' + postgressArray.join().replace(/,/g, ".")));
                                 }
                                 // // console.log(eval(postgressArray));
                                 ScoreName = val;
