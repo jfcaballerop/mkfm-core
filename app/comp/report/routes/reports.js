@@ -193,7 +193,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                 }
             }
             debug(variables);
-
+            assetCode = "bcode";
         }
         // Infodatatrack.findOne({ $or: [{ "properties.bcode": /F6-SD-06-B-3585/ }, { "properties.gcode": /F6-SD-06-B-3585/ }] }, function (err, ifdts) {
         Infodatatrack.findOne({
@@ -231,37 +231,15 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
             }
 
                 // debug(ifdt);
-        debug('IF    ++++++++++++++++++++ ')
                 if (ifdt !== null) {
-                     debug('IF 2   ++++++++++++++++++++ ')
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        debug('IF 3   ++++++++++++++++++++ ')
-                            // dbfields[property] = ifdt.properties[property];
-                        for (variable in variables) {
-                            debug('ifdt.properties[variable][i]    ' + ifdt.properties[variable.replace(/#/g, '')]);
-                            if (ifdt.properties[variable.replace(/#/g, '')][i] === req.params.assetCode.toString()){
-                                dbfields.properties[variable.replace(/#/g, '')] = ifdt.properties[variable.replace(/#/g, '')][i];
-                                debug('dbfields   ' + dbfields);
+                        for (v in variables) {
+                            if (ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                                dbfields.properties[variables[v].replace(/#/g, '')] = ifdt.properties[variables[v].replace(/#/g, '')][i];
                             }
                         } 
                     }
-                    
-                    
                 }        
-                // debug(dbfields);
-            // console.log('1');
-            // console.log(dbfields.bcode);
-            // // console.log(dbfields.gcode);
-            // // console.log(dbfields.ccode);
-            // // debug(dbfields);
-
-            // console.log('3');
-            // console.log(dbfields.bcode);
-            // console.log(dbfields.gcode);
-            // console.log(dbfields.ccode);
-
-            // ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-            //debug(encodeImageFileAsURL(''));
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
 
             res.status(200).jsonp(ret);
