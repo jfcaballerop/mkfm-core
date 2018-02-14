@@ -18,6 +18,8 @@ var PDFDocument = require('pdfkit');
 
 var templateModels = require(path.join(__dirname, '../models/template'));
 var Template = mongoose.model('Template');
+var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
+var Infodatatrack = mongoose.model('Infodatatrack');
 
 
 router.use(function timeLog(req, res, next) {
