@@ -120,14 +120,14 @@ exports.docPdf = function (docDefinition, config, dbfields) {
     for (var f of config.fields) {
         // console.log(f);
         if (f.type === 'img') {
-            doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
 
         } else if (f.type === 'dbfield') {
-            doc_translate = doc_translate.replace(f.name, eval('dbfields.' + f.value));
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), eval('dbfields.' + f.value));
 
         } else {
 
-            doc_translate = doc_translate.replace(f.name, f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value);
         }
     }
 
