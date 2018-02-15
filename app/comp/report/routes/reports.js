@@ -18,6 +18,8 @@ var PDFDocument = require('pdfkit');
 
 var templateModels = require(path.join(__dirname, '../models/template'));
 var Template = mongoose.model('Template');
+var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
+var Infodatatrack = mongoose.model('Infodatatrack');
 
 
 router.use(function timeLog(req, res, next) {
@@ -99,14 +101,14 @@ router.get('/pdfmake', function (req, resp, next) {
 /*******************************************************
         AJAX CALLS
 **********************************************************/
-router.post('/generatePDF/:report/:asset', function (req, resp) {
+router.post('/generatePDF/:report/:asset/:assetType', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB generatePDF: ' + req.params.report);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/report/V1/generatePDF/' + req.params.report + '/' + req.params.asset,
+        path: config.PATH_API + '/report/V1/generatePDF/' + req.params.report + '/' + req.params.asset + '/' + req.params.assetType,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -127,6 +129,7 @@ router.post('/generatePDF/:report/:asset', function (req, resp) {
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
 
@@ -154,11 +157,16 @@ router.get('/V1/getTemplates/', function (req, res, next) {
     });
 
 });
+
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName/:assetCode', function (req, res, next) {
+router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, res, next) {
     var ret = {
         "result": "OK",
         "docDefinition": {}
+    };
+    var dbfields = {
+        properties: {
+        }
     };
     Template.findOne({
         "config.HTML.id": req.params.reportName
@@ -168,27 +176,85 @@ router.post('/V1/generatePDF/:reportName/:assetCode', function (req, res, next) 
         }
         // debug(" ### GET generatePDF ### \n" + temp);
         var asscode = req.params.assetCode;
-        debug('Asset Code: ' + asscode);
-        //TODO: find de Infodatatracks db.infodatatracks.find({"properties.bcode":"F6-SD-06-B-3585"}
-        // db.getCollection('koboinfos').find("59d74668be879f40d8eac16d")
+        var assetType = req.params.assetType;
+        // asscode = "F6-SD-06-B-35385";
+        // debug('Asset Code: ' + asscode);////////////////////////////////////////////
+        // debug('Asset assetType: ' + assetType);////////////////////////////////////////////
 
-        // TODO: Montaje del documento con las variables definidas.
-        // for (var f of config.fields) {
-        //     if (f.type === 'dbfield') {
-
-        //     }
-        // }
-        var dbfields = {
-            properties: {
-                rcode: "HOLA PEPE"
+        code='/' + asscode + '/';
+        
+        // while(true){;}
+        var variables = [];
+        if (assetType==='BRIDGE'){
+            for (tem in temp.config.fields) {
+                if (temp.config.fields[tem].type === 'dbfield') {
+                    // console.log(temp.config.fields[tem]);
+                    variables.push(temp.config.fields[tem].name);
+                }
             }
-        };
-        ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-        //debug(encodeImageFileAsURL(''));
+            debug(variables);
+            assetCode = "bcode";
+        }
+        // Infodatatrack.findOne({ $or: [{ "properties.bcode": /F6-SD-06-B-3585/ }, { "properties.gcode": /F6-SD-06-B-3585/ }] }, function (err, ifdts) {
+        Infodatatrack.findOne({
+        $or: [{
+            "properties.rcode": req.params.assetCode
+            },
+            {
+                "properties.rname": req.params.assetCode
+            },
+            {
+                "properties.bcode": req.params.assetCode
+            },
+            {
+                "properties.bname": req.params.assetCode
+            },
+            {
+                "properties.gcode": req.params.assetCode
+            },
+            {
+                "properties.gcode2": req.params.assetCode
+            },
+            {
+                "properties.dcode": req.params.assetCode
+            },
+            {
+                "properties.dcode2": req.params.assetCode
+            },
+            {
+                "properties.Ccode": req.params.assetCode
+            }
+        ]
+    }).exec( function (err, ifdt) { // literal
+            if (err) {
+                res.send(500, err.message);            
+            }
 
-        res.status(200).jsonp(ret);
+                // debug(ifdt);
+                if (ifdt !== null) {
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        for (v in variables) {
+                            if (ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                                dbfields.properties[variables[v].replace(/#/g, '')] = ifdt.properties[variables[v].replace(/#/g, '')][i];
+                            }
+                        } 
+                    }
+                }        
+            ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
+
+            res.status(200).jsonp(ret);
+           
+        });
+
+       
 
     });
+
+
+
+
+
+
 
 });
 
