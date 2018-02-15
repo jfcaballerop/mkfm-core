@@ -1054,7 +1054,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             }
 
                             break;
-                        // PAVEMENTS //
+                            // PAVEMENTS //
                         case 'secondcoef':
                             if (rlands === 2) {
                                 valuerlofnatural = parseFloat(form.formulaSpec[f].WEIGHTS.value) * rsens;
@@ -2055,17 +2055,17 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             break;
                         case 'Retaining_Walls':
                             if ((
-                                ifdt.properties.gcode != undefined &&
-                                ifdt.properties.gcode != null &&
-                                ifdt.properties.gcode != [] &&
-                                ifdt.properties.gcode[index] != undefined &&
-                                ifdt.properties.gcode[index] != "" &&
-                                ifdt.properties.gtype != undefined &&
-                                ifdt.properties.gtype != null &&
-                                ifdt.properties.gtype != [] &&
-                                ifdt.properties.gtype[index] != undefined &&
-                                ifdt.properties.gtype[index] != "" &&
-                                ifdt.properties.gtype[index] === "Retaining_walls") || (
+                                    ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gtype != undefined &&
+                                    ifdt.properties.gtype != null &&
+                                    ifdt.properties.gtype != [] &&
+                                    ifdt.properties.gtype[index] != undefined &&
+                                    ifdt.properties.gtype[index] != "" &&
+                                    ifdt.properties.gtype[index] === "Retaining_walls") || (
                                     ifdt.properties.gcode2 != undefined &&
                                     ifdt.properties.gcode2 != null &&
                                     ifdt.properties.gcode2 != [] &&
@@ -2087,19 +2087,19 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             break;
                         case 'Earthworks':
                             if ((
-                                ifdt.properties.gcode != undefined &&
-                                ifdt.properties.gcode != null &&
-                                ifdt.properties.gcode != [] &&
-                                ifdt.properties.gcode[index] != undefined &&
-                                ifdt.properties.gcode[index] != "" &&
-                                ifdt.properties.gtype != undefined &&
-                                ifdt.properties.gtype != null &&
-                                ifdt.properties.gtype != [] &&
-                                ifdt.properties.gtype[index] != undefined &&
-                                ifdt.properties.gtype[index] != "" && (
-                                    ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
-                                )
-                            ) || (
+                                    ifdt.properties.gcode != undefined &&
+                                    ifdt.properties.gcode != null &&
+                                    ifdt.properties.gcode != [] &&
+                                    ifdt.properties.gcode[index] != undefined &&
+                                    ifdt.properties.gcode[index] != "" &&
+                                    ifdt.properties.gtype != undefined &&
+                                    ifdt.properties.gtype != null &&
+                                    ifdt.properties.gtype != [] &&
+                                    ifdt.properties.gtype[index] != undefined &&
+                                    ifdt.properties.gtype[index] != "" && (
+                                        ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                    )
+                                ) || (
                                     ifdt.properties.gcode2 != undefined &&
                                     ifdt.properties.gcode2 != null &&
                                     ifdt.properties.gcode2 != [] &&
@@ -2502,6 +2502,55 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var tracksUpdated2 = 0;
     //debug(selectjson);
     switch (asset) {
+        case 'Pavements':
+            debug('### Pavements ###');
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+
+                for (var ifdt of ifdts) {
+                    var rcond = [];
+                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+
+                        if (ifdt.properties.iri !== undefined &&
+                            ifdt.properties.iri !== [] &&
+                            ifdt.properties.iri[i] !== undefined && ifdt.properties.iri[i] !== null &&
+                            ifdt.properties.iri[i] !== "") {
+                            rcond[i] = formulasService.pavCondScaleNumIri(ifdt.properties.iri[i]);
+                        } else if (ifdt.properties.rvcondition !== undefined &&
+                            ifdt.properties.rvcondition !== [] &&
+                            ifdt.properties.rvcondition[i] !== undefined && ifdt.properties.rvcondition[i] !== null &&
+                            ifdt.properties.rvcondition[i] !== "") {
+
+                            rcond[i] = formulasService.pavCondScaleLetter(ifdt.properties.rvcondition[i]);
+                        } else {
+                            rcond[i] = "";
+                        }
+                    }
+                    var conditions = {
+                        _id: ifdt._id
+                    };
+
+                    var query = {
+                        $set: {
+                            "properties.rcondition": rcond
+                        }
+                    }
+
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) {
+                            debug(err.message);
+                        }
+                        // debug(iup);  
+
+                    });
+                }
+            });
+
+            res.status(200).jsonp(ret);
+            break;
+
         case 'Culverts':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
@@ -3531,6 +3580,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         console.log('i:     ' + i);
                         var coincidencias = 0;
+                        var coincidenciasMechanical = 0;
+                        var coincidenciasDurable = 0;
                         //debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
@@ -3541,9 +3592,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     // if (true) {
 
                                     if ((ifdt.properties.bcode !== undefined && ifdt.properties.bcode.length > 0 &&
-                                        ifdt.properties.bcode[i] !== null &&
-                                        ifdt.properties.bcode[i] !== "" &&
-                                        ifdt.properties.bcode.length > 0) || true) {
+                                            ifdt.properties.bcode[i] !== null &&
+                                            ifdt.properties.bcode[i] !== "" &&
+                                            ifdt.properties.bcode.length > 0) || true) {
                                         debug('totalScoring1 -- :  ' + totalScoring);
                                         var numberOfScores = 0;
                                         var numberOfTypeOfFailureProcess = 0;
@@ -3554,6 +3605,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
                                                     // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                 } else {
+
+                                                    if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                                        coincidenciasMechanical++;
+                                                    } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) {
+                                                        coincidenciasDurable++;
+                                                    }
                                                     coincidencias++;
                                                     totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
                                                         totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
@@ -3567,10 +3624,14 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
                                             ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length > 0) {
 
-                                            if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
-                                                ;
+                                            if (ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
                                             } else {
 
+                                                if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                                    coincidenciasMechanical++;
+                                                } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) {
+                                                    coincidenciasDurable++;
+                                                }
                                                 coincidencias++;
                                                 totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
                                                     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
@@ -3620,6 +3681,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                             if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b) === 0) {
                                                                 temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b];
                                                                 coincidencias++;
+                                                                if (diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()].indexOf(echanical) > -1) {
+                                                                    coincidenciasMechanical++;
+                                                                } else if (diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()].indexOf(urable) > -1) {
+                                                                    coincidenciasDurable++;
+                                                                }
                                                                 debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
                                                             }
                                                             debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
@@ -3639,34 +3705,43 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
                                         // if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
                                         //     ifdt.properties.bdamagesnonstructural[i] !== undefined && ifdt.properties.bdamagesnonstructural[i].length > 0) {
-                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
-                                            // for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
-                                                if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
-                                                    // debug(diccDominicaToKobo[x.toString()]);
-                                                    // debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
-                                                    // debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
-                                                    // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
-                                                } else {
+                                        debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
+                                        // for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
+                                        if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
+                                            // debug(diccDominicaToKobo[x.toString()]);
+                                            // debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
+                                            // debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
+                                            // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                        } else {
 
-                                                    coincidencias++;
-                                                    if (ifdt.properties.bdamagesnonstructural[i]=== 'NoDamages') {
-                                                        totalScoring = totalScoring < 100 ? totalScoring : 100;
-                                                    } else {
-                                                        totalScoring = totalScoring < 95 ? totalScoring : 95;
-                                                    }
-                                                    // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
-                                                    //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
-                                                }
-                                            // }
+                                            coincidencias++;
+                                            if (ifdt.properties.bdamagesnonstructural[i] === 'NoDamages') {
+                                                totalScoring = totalScoring < 100 ? totalScoring : 100;
+                                            } else {
+                                                totalScoring = totalScoring < 95 ? totalScoring : 95;
+                                            }
+                                            // totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight ?
+                                            //     totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                        }
+                                        // }
                                         // }
                                         debug('totalScoring4:  ' + totalScoring);
                                         debug('coincidencias: ' + coincidencias)
                                         debug('coincidencias despues2: ' + coincidencias)
 
+                                        if (diccDominicaToKobo[x.toString()].indexOf(echanical) > -1) {
+                                            coincidenciasMechanical++;
+                                        } else if (diccDominicaToKobo[x.toString()].indexOf(urable) > -1) {
+                                            coincidenciasDurable++;
+                                        }
+
                                         /////////////////////////////////////////////////////////////////
                                         // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
                                         //
-                                        totalScoring *= 0.00180000000001 * Math.pow(coincidencias, 3) - 0.03050000000001 * Math.pow(coincidencias, 2) + 0.03020000000001 * Math.pow(coincidencias, 1) + 0.98620000000001;
+                                        totalScoring *= 0.00180000000001 * Math.pow(coincidenciasMechanical, 3) - 0.03050000000001 * Math.pow(coincidenciasMechanical, 2) + 0.03020000000001 * Math.pow(coincidenciasMechanical, 1) + 0.98620000000001;
+                                        if (coincidenciasDurable > 2) {
+                                            totalScoring *= -0.0214 * coincidenciasDurable + 1.0643;
+                                        }
                                         // 
                                         /////////////////////////////////////////////////////////////////
 
