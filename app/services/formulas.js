@@ -3,34 +3,6 @@ var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 var services = require(path.join(__dirname, './services'));
 
-
-exports.getRangeValues = function (scorerangeval) {
-    var operador = "";
-    var minval = 0;
-    var maxval = 0;
-    scorerangeval.indexOf('MIN') >= 0 ? operador = "MIN" : false;
-    scorerangeval.indexOf('MAY') >= 0 ? operador = "MAY" : false;
-    scorerangeval.indexOf('EQ') >= 0 ? operador = "EQ" : false;
-    switch (operador) {
-        case 'MIN':
-            minval = Number.MIN_VALUE;
-            maxval = scorerangeval.substr(scorerangeval.indexOf('MIN') + 3, scorerangeval.length - 1) * 1.0;
-            break;
-        case 'MAY':
-            maxval = Number.MAX_VALUE;
-            minval = scorerangeval.substr(scorerangeval.indexOf('MAY') + 3, scorerangeval.length - 1) * 1.0;
-            break;
-        case 'EQ':
-            maxval = scorerangeval.substr(scorerangeval.indexOf('EQ') + 2, scorerangeval.length - 1) * 1.0;
-            minval = scorerangeval.substr(0, scorerangeval.indexOf('EQ')) * 1.0;
-            break;
-
-        default:
-            break;
-    }
-
-    return [minval, maxval, operador]
-}
 exports.criticalityValue = function (in_val) {
 
     cscale = {
@@ -334,9 +306,44 @@ exports.criticalityRatingScale = function (lof) {
 
     return ret;
 }
+
+exports.criticalityRatingLetterScale = function (critNumVal) {
+    var ret = 1;
+    var crit_rating = [];
+    var critNumValv = "";
+    // debug('critNumVal ' + critNumVal);
+    critNumVal = critNumVal * 1;
+    if (critNumVal >= 0 && critNumVal < 20) {
+        critNumValv = '0-20';
+    } else if (critNumVal >= 20 && critNumVal < 40) {
+        critNumValv = '20-40';
+    } else if (critNumVal >= 40 && critNumVal < 60) {
+        critNumValv = '40-60';
+    } else if (critNumVal >= 60 && critNumVal < 80) {
+        critNumValv = '60-80';
+    } else if (critNumVal >= 80 && critNumVal <= 100) {
+        critNumValv = '80-100';
+    }
+
+    crit_rating['0-20'] = [];
+    crit_rating['0-20'] = "A";
+    crit_rating['20-40'] = [];
+    crit_rating['20-40'] = "B";
+    crit_rating['40-60'] = [];
+    crit_rating['40-60'] = "C";
+    crit_rating['60-80'] = [];
+    crit_rating['60-80'] = "D";
+    crit_rating['80-100'] = [];
+    crit_rating['80-100'] = "E";
+
+    ret = crit_rating[critNumValv];
+
+    return ret;
+}
 exports.LikelihoodofFailureRatingScale = function (cond_letter) {
     var ret = 1;
     var lof_rating = [];
+    var lofv = 0;
     // debug('cond_letter ' + cond_letter);
     if (cond_letter === "E") {
         lofv = 10;
@@ -448,72 +455,4 @@ exports.riskRatingScale = function (lof, cons) {
     ret = risk_rating[lofv][cons];
 
     return ret;
-}
-
-exports.pavCondScale = function (value) {
-    var ret = "";
-
-    if (value < 2.5)
-        return "A";
-    else if (value >= 2.5 && value < 5)
-        return "B";
-    else if (value >= 5 && value < 8)
-        return "C";
-    else if (value >= 8 && value < 11)
-        return "D";
-    else
-        return "E";
-
-
-}
-
-exports.pavCondScaleNum = function (value) {
-    var ret = "";
-
-    if (value < 2.5)
-        return "A";
-    else if (value >= 2.5 && value < 5)
-        return "B";
-    else if (value >= 5 && value < 8)
-        return "C";
-    else if (value >= 8 && value < 11)
-        return "D";
-    else
-        return "E";
-
-
-}
-
-exports.pavCondScaleNumIri = function (value) {
-    var ret = "";
-
-    if (value < 2.5)
-        return 0.9;
-    else if (value >= 2.5 && value < 5)
-        return 0.7;
-    else if (value >= 5 && value < 8)
-        return 0.5;
-    else if (value >= 8 && value < 11)
-        return 0.3;
-    else
-        return 0.1;
-
-
-}
-
-exports.pavCondScaleLetter = function (letter) {
-    var ret = "";
-
-    if (letter === "A")
-        return 0.9;
-    else if (letter === "B")
-        return 0.7;
-    else if (letter === "C")
-        return 0.5;
-    else if (letter === "D")
-        return 0.3;
-    else
-        return 0.1;
-
-
 }
