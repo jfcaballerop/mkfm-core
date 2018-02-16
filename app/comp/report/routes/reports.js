@@ -267,35 +267,44 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
     }).exec( function (err, ifdt) { // literal
             if (err) {
                 res.send(500, err.message);            
-            }
-
+        }
                 // debug(ifdt);
                 if (ifdt !== null) {
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         // dbfields.properties.name=ifdt.properties[name];
                         for (v in variables) {
-                            console.log(variables[v]);
+                            // console.log(variables[v]);
 
-                            debug('variables[v] ' + variables[v]);
-                            debug('1 ' + ifdt.properties[assetCode]);
-                            debug('2 ' + i + ifdt.properties[assetCode][i] === null);
-                            debug('2.1 ' + i + ifdt.properties[assetCode][i] === undefined);
-                            debug('3 ' + ifdt.properties[variables[v].replace(/#/g, '')][i] === undefined);
-                            debug('4 ' + req.params.assetCode.toString());
-                            if (ifdt.properties[assetCode] !== undefined && ifdt.properties[assetCode][i] !== undefined && 
-                                ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                            // debug('variables[v] ' + variables[v]);
+                            // debug('assetCode ' + assetCode);
+                            // debug('1 ----------------- ' + ifdt.properties[assetCode]);
+                            // debug('2 ----------------- '   + i + ifdt.properties[assetCode][i] === null);
+                            // debug('2.1 ----------------- ' + i + ifdt.properties[assetCode][i] === undefined);
+                            // debug('3 ----------------- ' + ifdt.properties[variables[v]]);
+                            // debug('3 ----------------- ' + ifdt.properties[variables[v]][i] === undefined);
+                            // debug('4 ----------------- ' + req.params.assetCode.toString());
+                            if (ifdt.properties[variables[v]] !== undefined && 
+                                ifdt.properties[assetCode][i] !== undefined && 
+                                ifdt.properties[variables[v]][i] !== undefined &&
+                                ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
 
-                                var textToRender = ifdt.properties[variables[v].replace(/#/g, '')][i].toString();
+                                var textToRender = ifdt.properties[variables[v]][i].toString();
                                 debug(textToRender);
-                                if (textToRender !== undefined ){
+                                if (textToRender.split(".")[1] !== undefined &&
+                                    textToRender.split(".")[0] !== undefined){
                                     // debug(textToRender);
                                     // debug((textToRender.split(".")[1]).substring(0, 3));
-                                    if (textToRender !== undefined && Number(textToRender).toString() === textToRender){
+                                    if (Number(textToRender).toString() === textToRender){
                                         var afterDot = (textToRender.split(".")[1]).substring(0, 3);
                                         var beforeDot = (textToRender.split(".")[0]);
                                         textToRender = beforeDot + '.' + afterDot;
                                     }
-                                    dbfields.properties[variables[v].replace(/#/g, '')] = textToRender.toString();
+                                    dbfields.properties[variables[v]] = textToRender.toString();
+                                } else {
+
+
+                                    
+                                    dbfields.properties[variables[v]] = textToRender.toString();
                                 }
                             }
                         } 
