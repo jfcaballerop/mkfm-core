@@ -21,6 +21,22 @@ var Template = mongoose.model('Template');
 var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
 
+function simpleStringify(object) {
+    var simpleObject = {};
+    for (var prop in object) {
+        if (!object.hasOwnProperty(prop)) {
+            continue;
+        }
+        if (typeof (object[prop]) == 'object') {
+            continue;
+        }
+        if (typeof (object[prop]) == 'function') {
+            continue;
+        }
+        simpleObject[prop] = object[prop];
+    }
+    return JSON.stringify(simpleObject); // returns cleaned up JSON
+};
 
 router.use(function timeLog(req, res, next) {
     ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
@@ -168,12 +184,35 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         properties: {
         }
     };
+
     Template.findOne({
         "config.HTML.id": req.params.reportName
     }).exec(function (err, temp) {
         if (err) {
             res.send(500, err.message);
         }
+        var chorizo = JSON.stringify(temp);
+
+        // console.log("Result: ", JSON.stringify(chorizo));
+
+
+        // var re = new RegExp('/(.*)/');
+        // var r = JSON.stringify(chorizo).match(re);
+        // if (r)
+        //     console.log('r      +++++++++++++++     ' + r);
+
+        var find = "##\\w{3,30}##";
+        var regex = new RegExp(find, "g");
+        var chorizoParseado = JSON.stringify(chorizo).match(regex);
+        console.log("Result: +++++++++++++++ ", chorizoParseado);
+
+        var variables=[];
+        for (choricillo in chorizoParseado){
+            debug(choricillo.replace(/#/g, ''));
+            variables.push[choricillo.replace(/#/g, '')];
+
+        }
+        debug(variables);
         // debug(" ### GET generatePDF ### \n" + temp);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
@@ -181,20 +220,20 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         // debug('Asset Code: ' + asscode);////////////////////////////////////////////
         // debug('Asset assetType: ' + assetType);////////////////////////////////////////////
 
-        code='/' + asscode + '/';
+        code = '/' + asscode + '/';
+        assetCode = "bcode";
         
         // while(true){;}
-        var variables = [];
-        if (assetType==='BRIDGE'){
-            for (tem in temp.config.fields) {
-                if (temp.config.fields[tem].type === 'dbfield') {
-                    // console.log(temp.config.fields[tem]);
-                    variables.push(temp.config.fields[tem].name);
-                }
-            }
-            debug(variables);
-            assetCode = "bcode";
-        }
+        // if (assetType==='BRIDGE'){
+        //     for (tem in temp.config.fields) {
+        //         if (temp.config.fields[tem].type === 'dbfield') {
+        //             // console.log(temp.config.fields[tem]);
+        //             variables.push(temp.config.fields[tem].name);
+        //         }
+        //     }
+        //     // debug(variables);
+        //     assetCode = "bcode";
+        // }
         // Infodatatrack.findOne({ $or: [{ "properties.bcode": /F6-SD-06-B-3585/ }, { "properties.gcode": /F6-SD-06-B-3585/ }] }, function (err, ifdts) {
         Infodatatrack.findOne({
         $or: [{
@@ -233,21 +272,34 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                 // debug(ifdt);
                 if (ifdt !== null) {
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                        // dbfields.properties.name=ifdt.properties[name];
+                        variables = chorizoParseado;
                         for (v in variables) {
-                            if (ifdt.properties[assetCode][i] !== undefined && ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                            console.log(variables[v]);
+
+                            debug('1 ' + ifdt.properties[assetCode]);
+                            debug('2 ' + i + ifdt.properties[assetCode][i] === null);
+                            debug('3 ' + ifdt.properties[variables[v].replace(/#/g, '')][i]);
+                            debug('4 ' + req.params.assetCode.toString());
+                            if (ifdt.properties[assetCode] !== undefined && ifdt.properties[assetCode][i] !== undefined && ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+
                                 var textToRender = ifdt.properties[variables[v].replace(/#/g, '')][i].toString();
                                 debug(textToRender);
-                                // debug((textToRender.split(".")[1]).substring(0, 3));
-                                if (textToRender !== undefined && Number(textToRender).toString() === textToRender){
-                                    var afterDot = (textToRender.split(".")[1]).substring(0, 3);
-                                    var beforeDot = (textToRender.split(".")[0]);
-                                    textToRender = beforeDot + '.' + afterDot;
+                                if (textToRender !== undefined ){
+                                    debug(textToRender);
+                                    // debug((textToRender.split(".")[1]).substring(0, 3));
+                                    if (textToRender !== undefined && Number(textToRender).toString() === textToRender){
+                                        var afterDot = (textToRender.split(".")[1]).substring(0, 3);
+                                        var beforeDot = (textToRender.split(".")[0]);
+                                        textToRender = beforeDot + '.' + afterDot;
+                                    }
+                                    dbfields.properties[variables[v].replace(/#/g, '')] = textToRender.toString();
                                 }
-                                dbfields.properties[variables[v].replace(/#/g, '')] = textToRender.toString();
                             }
                         } 
                     }
-                }        
+                }    
+        console.log(dbfields);    
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
 
             res.status(200).jsonp(ret);
