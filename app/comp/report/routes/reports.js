@@ -204,12 +204,12 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         var find = "##\\w{3,30}##";
         var regex = new RegExp(find, "g");
         var chorizoParseado = JSON.stringify(chorizo).match(regex);
-        console.log("Result: +++++++++++++++ ", chorizoParseado);
 
         var variables=[];
         for (choricillo in chorizoParseado){
-            debug(choricillo.replace(/#/g, ''));
-            variables.push[choricillo.replace(/#/g, '')];
+            // debug(chorizoParseado[choricillo].replace(/#/g, ''));
+            variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
+            debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
         debug(variables);
@@ -273,20 +273,22 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                 if (ifdt !== null) {
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         // dbfields.properties.name=ifdt.properties[name];
-                        variables = chorizoParseado;
                         for (v in variables) {
                             console.log(variables[v]);
 
+                            debug('variables[v] ' + variables[v]);
                             debug('1 ' + ifdt.properties[assetCode]);
                             debug('2 ' + i + ifdt.properties[assetCode][i] === null);
-                            debug('3 ' + ifdt.properties[variables[v].replace(/#/g, '')][i]);
+                            debug('2.1 ' + i + ifdt.properties[assetCode][i] === undefined);
+                            debug('3 ' + ifdt.properties[variables[v].replace(/#/g, '')][i] === undefined);
                             debug('4 ' + req.params.assetCode.toString());
-                            if (ifdt.properties[assetCode] !== undefined && ifdt.properties[assetCode][i] !== undefined && ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                            if (ifdt.properties[assetCode] !== undefined && ifdt.properties[assetCode][i] !== undefined && 
+                                ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
 
                                 var textToRender = ifdt.properties[variables[v].replace(/#/g, '')][i].toString();
                                 debug(textToRender);
                                 if (textToRender !== undefined ){
-                                    debug(textToRender);
+                                    // debug(textToRender);
                                     // debug((textToRender.split(".")[1]).substring(0, 3));
                                     if (textToRender !== undefined && Number(textToRender).toString() === textToRender){
                                         var afterDot = (textToRender.split(".")[1]).substring(0, 3);
