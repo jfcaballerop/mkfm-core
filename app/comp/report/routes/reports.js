@@ -234,8 +234,16 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                 if (ifdt !== null) {
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         for (v in variables) {
-                            if (ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
-                                dbfields.properties[variables[v].replace(/#/g, '')] = ifdt.properties[variables[v].replace(/#/g, '')][i];
+                            if (ifdt.properties[assetCode][i] !== undefined && ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                                var textToRender = ifdt.properties[variables[v].replace(/#/g, '')][i].toString();
+                                debug(textToRender);
+                                // debug((textToRender.split(".")[1]).substring(0, 3));
+                                if (textToRender !== undefined && Number(textToRender).toString() === textToRender){
+                                    var afterDot = (textToRender.split(".")[1]).substring(0, 3);
+                                    var beforeDot = (textToRender.split(".")[0]);
+                                    textToRender = beforeDot + '.' + afterDot;
+                                }
+                                dbfields.properties[variables[v].replace(/#/g, '')] = textToRender.toString();
                             }
                         } 
                     }
