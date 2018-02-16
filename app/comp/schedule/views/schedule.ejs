@@ -7,20 +7,19 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-
+            
             #map {
                 height: 100%;
             }
-
             /* Optional: Makes the sample page fill the window. */
-
+            
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-
+            
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -30,13 +29,13 @@
                 position: absolute;
                 left: 30px;
             }
-
+            
             .search {
                 position: relative;
                 color: #aaa;
                 font-size: 16px;
             }
-
+            
             .search input {
                 width: 250px;
                 height: 32px;
@@ -45,11 +44,11 @@
                 border-radius: 5px;
                 box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
             }
-
+            
             .search input {
                 text-indent: 32px;
             }
-
+            
             .search .fa-search {
                 position: absolute;
                 top: 10px;
@@ -97,9 +96,59 @@
                                 </div>
                             </div>
                             <!-- page start-->
-                            <div class="row mt" id="bodyQuery">
-                                <div class="col-md-12" id="calendar">
-                                </div>
+                            <div class="content-panel">
+                                <section id="unseen">
+                                    <div class="row mt">
+
+                                        <div class="col-md-4">
+                                            <table class="table table-bordered table-striped table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>Asset</th>
+                                                        <th>Date start</th>
+                                                        <th>Date end</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>SD-PAJ-01</td>
+                                                        <td>BR-AS-45</td>
+                                                        <td>20180101</td>
+                                                        <td>20180115</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SD-PAJ-01</td>
+                                                        <td>BR-AS-45</td>
+                                                        <td>20180101</td>
+                                                        <td>20180115</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SD-PAJ-01</td>
+                                                        <td>BR-AS-45</td>
+                                                        <td>20180101</td>
+                                                        <td>20180115</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SD-PAJ-01</td>
+                                                        <td>BR-AS-45</td>
+                                                        <td>20180101</td>
+                                                        <td>20180115</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SD-PAJ-01</td>
+                                                        <td>BR-AS-45</td>
+                                                        <td>20180101</td>
+                                                        <td>20180115</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-8" data-provide="calendar"></div>
+
+                                    </div>
+                                </section>
                             </div>
 
                             <!-- page end-->
@@ -118,7 +167,10 @@
     <% include partials/footer_scripts %>
         <!-- js placed at the end of the document so the pages load faster -->
         <!-- <script src="/assets/js/jquery.js"></script> -->
-        <script src="/assets/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- <script src="/assets/js/bootstrap.min.js"></script> -->
         <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
         <script src="/assets/js/jquery.scrollTo.min.js"></script>
         <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
@@ -130,9 +182,11 @@
 
 
         <!--script for this page-->
-        <script src="/assets/fullcalendar-3.8.2/fullcalendar.min.js"></script>
-        <script src="/assets/fullcalendar-3.8.2/fullcalendar.min.css"></script>
-        <script src="/assets/fullcalendar-3.8.2/fullcalendar.print.css"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link href='/assets/bootstrap-year-calendar/css/bootstrap-year-calendar.css' rel='stylesheet' />
+        <!-- <link href='/assets/fullcalendar-3.8.2/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+        <!-- <script src="/assets/fullcalendar-3.8.2/lib/moment.min.js"></script> -->
+        <script src="/assets/bootstrap-year-calendar/js/bootstrap-year-calendar.js"></script>
         <%- include('partials/schedule_scripts'); %>
 
 
