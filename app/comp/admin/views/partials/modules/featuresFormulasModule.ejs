@@ -517,4 +517,66 @@
             }
 
         })();
+        var featureRisk = (function () {
+
+            // variables y funciones privadas
+            var paintHTML = function (form) {
+                var html = [];
+                var h = -1;
+                html[++h] = '<div id="formulaTable' + form.name + '" ">';
+                html[++h] = '<div id="infoFormula' + form.name +
+                    '" >Note: To apply the values ​​of the formula, it is necessary to update the Tracks.';
+                html[++h] = ' Be patient, the process can take several minutes.</div>';
+                html[++h] = '<button type="button" onClick="clickButton(\'' + form.properties.HTML.id +
+                    '__' + form.name + '\');" id="' + form.properties.HTML.id + '__' + form.name +
+                    '" class="btn btn-success"><i class="fa fa-clock-o" aria-hidden="true"></i> Update ' +
+                    form.name + '</button>';
+                html[++h] = '<i id="spinner' + form.properties.HTML.id + '__' + form.name +
+                    '" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>';
+
+                html[++h] = ' <div id="resultUpdate' + form.properties.HTML.id + '__' + form.name +
+                    '"></div>';
+                html[++h] = ' <div id="Formula' + form.properties.HTML.id + '__' + form.name +
+                    '">';
+
+                html[++h] = '<br><br><h4>Risk physical & natural </h4><br>';
+                html[++h] =
+                    '<table id="RiskTable" class="table table-bordered table-striped table-condensed" >';
+                html[++h] = '<tbody id="formulaTableBody">';
+
+
+
+                $.each(form.formulaSpec, function (i, fspec) {
+                    html[++h] = '<tr>';
+
+                    html[++h] = '<td>';
+                    html[++h] = fspec.LITERAL;
+                    html[++h] = ' </td> ';
+                    if (fspec['WEIGHTS'] !== undefined) {
+                        html[++h] = '<td>';
+                        html[++h] = '<input type="number" step="0.01" name="' + fspec['WEIGHTS'].fieldname +
+                            '" value="' + fspec['WEIGHTS'].value +
+                            '" >';
+
+                        html[++h] = ' </td> ';
+                    }
+                    html[++h] = ' </tr> ';
+
+                });
+                html[++h] = '</tbody></table>';
+                html[++h] = '</div>';
+
+
+                html[++h] = '</div>';
+                $('#formulaSpec').html(html.join(''));
+
+
+            };
+
+            // API publica
+            return {
+                paintHTML: paintHTML
+            }
+
+        })();
     </script>
