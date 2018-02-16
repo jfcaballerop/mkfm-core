@@ -13,6 +13,7 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
+var serviceService = require(path.join(__dirname, '../../../services/services'));
 
 var fileuploadModels = require(path.join(__dirname, '../../gis/models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -415,6 +416,49 @@ router.post('/get_formulas_tracks/', function (req, resp) {
     // resp.status(200).jsonp({});
 
 });
+/* update_formulas_tracks_risk */
+/**
+ * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
+ * @param formula
+ * @param asset
+ */
+router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/admin/V1/update_formulas_tracks_risk/' + req.params.formula + '/' + req.params.asset + '/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /* update_formulas_tracks_likelihood */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
@@ -699,6 +743,324 @@ router.get('/V1/formulas/', function (req, res, next) {
     });
 
 });
+/* POST update_formulas_tracks_risk */
+/**
+ * Metodo para modificar los valores devueltos por las formulas
+ */
+router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (req, res, next) {
+    debug('API /V1/update_formulas_tracks_risk/');
+    var postData = extend({}, req.body);
+    var tracksUpdated = 0;
+    var ret = {
+        "result": "OK",
+        "tracksUpdated": 0
+    };
+    debug(postData);
+    var form;
+    var formula = Object.keys(postData)[0];
+    debug(formula);
+    await Formula.find({
+        "name": formula
+    }).exec(async function (err, f) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        form = f[0];
+    });
+    // debug(form);
+    var wherearr = [];
+
+    //add codes asset
+    wherearr.push('rcriticality');
+    wherearr.push('bcriticality');
+    wherearr.push('Ccriticality');
+    wherearr.push('gcriticality');
+    wherearr.push('gcriticality2');
+    wherearr.push('rlofnatural');
+    wherearr.push('rlofphysical');
+    wherearr.push('blofnatural');
+    wherearr.push('blofphysical');
+    wherearr.push('Clofnatural');
+    wherearr.push('Clofphysical');
+    wherearr.push('glofnatural');
+    wherearr.push('glofphysical');
+    wherearr.push('glofnatural2');
+    wherearr.push('glofphysical2');
+
+    var selectjson = {
+        "geometry.coordinates": 1,
+        properties: []
+    };
+    for (var w of wherearr) {
+        selectjson.properties[w] = 1;
+    }
+    debug(selectjson);
+    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        // Arr de valores a updatear
+
+
+        for (var ifdt of ifdts) {
+            var valuerrisknaturalarr = [];
+            var valuerriskphysicalarr = [];
+            var valuebrisknaturalarr = [];
+            var valuebriskphysicalarr = [];
+            var valueCrisknaturalarr = [];
+            var valueCriskphysicalarr = [];
+            var valuegrisknaturalarr = [];
+            var valuegriskphysicalarr = [];
+            var valuegrisknaturalarr2 = [];
+            var valuegriskphysicalarr2 = [];
+
+            tracksUpdated++;
+            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                var rlofphy;
+                var rlofnat;
+                var rcrit;
+                var blofphy;
+                var blofnat;
+                var bcrit;
+                var Clofphy;
+                var Clofnat;
+                var Ccrit;
+                var glofphy;
+                var glofnat;
+                var gcrit;
+                var glofphy2;
+                var glofnat2;
+                var gcrit2;
+                var existsbcode = false;
+                var existsCcode = false;
+                var existsgcode = false;
+                var existsgcode2 = false;
+
+                if (ifdt.properties.rlofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.rlofphysical[i] === "string") {
+                        ifdt.properties.rlofphysical[i] === "" ? rlofphy = 0 : rlofphy = parseFloat(ifdt.properties.rlofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rlofphysical[i] === "number") {
+                        rlofphy = ifdt.properties.rlofphysical[i];
+                    } else {
+                        rlofphy = 0;
+                    }
+                }
+                if (ifdt.properties.rlofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.rlofnatural[i] === "string") {
+                        ifdt.properties.rlofnatural[i] === "" ? rlofnat = 0 : rlofnat = parseFloat(ifdt.properties.rlofnatural[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rlofnatural[i] === "number") {
+                        rlofnat = ifdt.properties.rlofnatural[i];
+                    } else {
+                        rlofnat = 0;
+                    }
+                }
+                if (ifdt.properties.rcriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.rcriticality[i] === "string") {
+                        ifdt.properties.rcriticality[i] === "" ? rcrit = 0 : rcrit = parseFloat(ifdt.properties.rcriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.rcriticality[i] === "number") {
+                        rcrit = ifdt.properties.rcriticality[i];
+                    } else {
+                        rcrit = 0;
+                    }
+                }
+
+                //         // Revisamos que exista el código del asset
+                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                    existsbcode = true;
+                }
+                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                    existsCcode = true;
+                }
+                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                    existsgcode = true;
+                }
+                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                    existsgcode2 = true;
+                }
+
+                if (existsbcode) {
+
+                    if (ifdt.properties.blofnatural[i] !== undefined) {
+                        if (typeof ifdt.properties.blofnatural[i] === "string") {
+                            ifdt.properties.blofnatural[i] === "" ? blofnat = 0 : blofnat = parseFloat(ifdt.properties.blofnatural[i].replace(",", "."));
+                            // debug('ifdt.properties.blofnatural[i] ' + ifdt.properties.blofnatural[i]);
+                        } else if (typeof ifdt.properties.blofnatural[i] === "number") {
+                            blofnat = ifdt.properties.blofnatural[i];
+                        } else {
+                            blofnat = 0;
+                        }
+                    }
+
+
+                    if (ifdt.properties.blofphysical[i] !== undefined) {
+                        if (typeof ifdt.properties.blofphysical[i] === "string") {
+                            ifdt.properties.blofphysical[i] === "" ? blofphy = 0 : blofphy = parseFloat(ifdt.properties.blofphysical[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.blofphysical[i] === "number") {
+                            blofphy = ifdt.properties.blofphysical[i];
+                        } else {
+                            blofphy = 0;
+                        }
+                    }
+                    if (ifdt.properties.bcriticality[i] !== undefined) {
+                        if (typeof ifdt.properties.bcriticality[i] === "string") {
+                            ifdt.properties.bcriticality[i] === "" ? bcrit = 0 : bcrit = parseFloat(ifdt.properties.bcriticality[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.bcriticality[i] === "number") {
+                            bcrit = ifdt.properties.bcriticality[i];
+                        } else {
+                            bcrit = 0;
+                        }
+                    }
+                }
+                if (existsCcode) {
+
+                    if (ifdt.properties.Clofnatural[i] !== undefined) {
+                        if (typeof ifdt.properties.Clofnatural[i] === "string") {
+                            ifdt.properties.Clofnatural[i] === "" ? Clofnat = 0 : Clofnat = parseFloat(ifdt.properties.Clofnatural[i].replace(",", "."));
+                            // debug('ifdt.properties.Clofnatural[i] ' + ifdt.properties.Clofnatural[i]);
+                        } else if (typeof ifdt.properties.Clofnatural[i] === "number") {
+                            Clofnat = ifdt.properties.Clofnatural[i];
+                        } else {
+                            Clofnat = 0;
+                        }
+                    }
+
+
+                    if (ifdt.properties.Clofphysical[i] !== undefined) {
+                        if (typeof ifdt.properties.Clofphysical[i] === "string") {
+                            ifdt.properties.Clofphysical[i] === "" ? Clofphy = 0 : Clofphy = parseFloat(ifdt.properties.Clofphysical[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.Clofphysical[i] === "number") {
+                            Clofphy = ifdt.properties.Clofphysical[i];
+                        } else {
+                            Clofphy = 0;
+                        }
+                    }
+                    if (ifdt.properties.Ccriticality[i] !== undefined) {
+                        if (typeof ifdt.properties.Ccriticality[i] === "string") {
+                            ifdt.properties.Ccriticality[i] === "" ? Ccrit = 0 : Ccrit = parseFloat(ifdt.properties.Ccriticality[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.Ccriticality[i] === "number") {
+                            Ccrit = ifdt.properties.Ccriticality[i];
+                        } else {
+                            Ccrit = 0;
+                        }
+                    }
+                }
+                if (existsgcode) {
+
+                    if (ifdt.properties.glofnatural[i] !== undefined) {
+                        if (typeof ifdt.properties.glofnatural[i] === "string") {
+                            ifdt.properties.glofnatural[i] === "" ? glofnat = 0 : glofnat = parseFloat(ifdt.properties.glofnatural[i].replace(",", "."));
+                            // debug('ifdt.properties.glofnatural[i] ' + ifdt.properties.glofnatural[i]);
+                        } else if (typeof ifdt.properties.glofnatural[i] === "number") {
+                            glofnat = ifdt.properties.glofnatural[i];
+                        } else {
+                            glofnat = 0;
+                        }
+                    }
+
+                    if (ifdt.properties.glofphysical[i] !== undefined) {
+                        if (typeof ifdt.properties.glofphysical[i] === "string") {
+                            ifdt.properties.glofphysical[i] === "" ? glofphy = 0 : glofphy = parseFloat(ifdt.properties.glofphysical[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glofphysical[i] === "number") {
+                            glofphy = ifdt.properties.glofphysical[i];
+                        } else {
+                            glofphy = 0;
+                        }
+                    }
+                    if (ifdt.properties.gcriticality[i] !== undefined) {
+                        if (typeof ifdt.properties.gcriticality[i] === "string") {
+                            ifdt.properties.gcriticality[i] === "" ? gcrit = 0 : gcrit = parseFloat(ifdt.properties.gcriticality[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gcriticality[i] === "number") {
+                            gcrit = ifdt.properties.gcriticality[i];
+                        } else {
+                            gcrit = 0;
+                        }
+                    }
+                }
+                if (existsgcode2) {
+
+                    if (ifdt.properties.glofnatural2[i] !== undefined) {
+                        if (typeof ifdt.properties.glofnatural2[i] === "string") {
+                            ifdt.properties.glofnatural2[i] === "" ? glofnat2 = 0 : glofnat2 = parseFloat(ifdt.properties.glofnatural2[i].replace(",", "."));
+                            // debug('ifdt.properties.glofnatural2[i] ' + ifdt.properties.glofnatural2[i]);
+                        } else if (typeof ifdt.properties.glofnatural2[i] === "number") {
+                            glofnat2 = ifdt.properties.glofnatural2[i];
+                        } else {
+                            glofnat2 = 0;
+                        }
+                    }
+
+                    if (ifdt.properties.glofphysical2[i] !== undefined) {
+                        if (typeof ifdt.properties.glofphysical2[i] === "string") {
+                            ifdt.properties.glofphysical2[i] === "" ? glofphy2 = 0 : glofphy2 = parseFloat(ifdt.properties.glofphysical2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.glofphysical2[i] === "number") {
+                            glofphy2 = ifdt.properties.glofphysical2[i];
+                        } else {
+                            glofphy2 = 0;
+                        }
+                    }
+                    if (ifdt.properties.gcriticality2[i] !== undefined) {
+                        if (typeof ifdt.properties.gcriticality2[i] === "string") {
+                            ifdt.properties.gcriticality2[i] === "" ? gcrit2 = 0 : gcrit2 = parseFloat(ifdt.properties.gcriticality2[i].replace(",", "."));
+                        } else if (typeof ifdt.properties.gcriticality2[i] === "number") {
+                            gcrit2 = ifdt.properties.gcriticality2[i];
+                        } else {
+                            gcrit2 = 0;
+                        }
+                    }
+                }
+
+                valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+                valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+                valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+                valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+                valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+                valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+                valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+                valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+                valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+                valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+
+
+            }
+
+
+
+            // Update DB
+            var conditions = {
+                _id: ifdt._id
+            };
+            var query = {
+                $set: {
+                    "properties.rriskphysical": valuerriskphysicalarr,
+                    "properties.rrisknatural": valuerrisknaturalarr,
+                    "properties.briskphysical": valuebriskphysicalarr,
+                    "properties.brisknatural": valuebrisknaturalarr,
+                    "properties.CRISKphysical": valueCriskphysicalarr,
+                    "properties.CRISKnatural": valueCrisknaturalarr,
+                    "properties.griskphysical": valuegriskphysicalarr,
+                    "properties.grisknatural": valuegrisknaturalarr,
+                    "properties.griskphysical2": valuegriskphysicalarr2,
+                    "properties.grisknatural2": valuegrisknaturalarr2
+                }
+            };
+            await Infodatatrack.update(conditions, query, function (err, iup) {
+                if (err) {
+                    debug(err.message);
+                }
+                // debug(iup);
+
+            });
+        }
+    });
+    ret.tracksUpdated = tracksUpdated;
+    debug(tracksUpdated);
+    res.status(200).jsonp(ret);
+});
+
 
 /* POST update_formulas_tracks_likelihood */
 /**
