@@ -35,7 +35,8 @@ app.set('views', [
     path.join(__dirname, '/app/comp/admin/views'),
     path.join(__dirname, '/app/comp/query/views'),
     path.join(__dirname, '/app/comp/budget/views'),
-    path.join(__dirname, '/app/comp/report/views')
+    path.join(__dirname, '/app/comp/report/views'),
+    path.join(__dirname, '/app/comp/schedule/views')
 ]);
 
 // uncomment after placing your favicon in /public
