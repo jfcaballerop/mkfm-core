@@ -1531,7 +1531,7 @@ PANELS CONFIGURATIONS
 }
 
 
-/* Calendar Configuration */
+/* Calendar Configuration 
 
 #calendar {
     color: white;
@@ -1541,6 +1541,7 @@ PANELS CONFIGURATIONS
 .calendar-month-header {
     background: #43b1a9;
 }
+*/
 
 
 /* TODO PANEL */
