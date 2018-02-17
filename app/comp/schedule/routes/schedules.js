@@ -15,8 +15,8 @@ var formulasService = require(path.join(__dirname, '../../../services/formulas')
 var services = require(path.join(__dirname, '../../../services/services'));
 
 
-var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
-var Infodatatrack = mongoose.model('Infodatatrack');
+var scheduleModels = require(path.join(__dirname, '../models/schedule'));
+var Schedule = mongoose.model('Schedule');
 
 
 router.use(function timeLog(req, res, next) {
@@ -36,12 +36,12 @@ router.use(bodyParser.json());
         WEB CALLS
 **********************************************************/
 
-/* GET PDF Maker */
-router.get('/index', function (req, resp, next) {
+/* GET Schedule */
+router.get('/index', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/report/V1/getTemplates/',
+        path: config.PATH_API + '/schedule/V1/getSchedule/',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -49,43 +49,39 @@ router.get('/index', function (req, resp, next) {
         }
     };
 
-    // var request = http.request(options, function (res) {
-    //     ////// debug('STATUS: ' + res.statusCode);
-    //     ////// debug('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function (chunk) {
-    //         ////// debug('BODY: ' + chunk);
-    //         data += chunk;
+    var request = http.request(options, function(res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function(chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
 
-    //     });
-    //     res.on('end', function () {
-    //         //// debug('DATA ' + data.length + ' ' + data);
-    //         var responseObject = JSON.parse(data);
-    //         // debug(JSON.stringify(responseObject));
-    //         resp.render('schedule', {
-    //             token: req.token,
-    //             moment: moment,
-    //             title: config.CLIENT_NAME + '-' + config.APP_NAME,
-    //             cname: config.CLIENT_NAME
-    //         });
+        });
+        res.on('end', function() {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // debug(JSON.stringify(responseObject));
+            resp.render('schedule', {
+                schedules: responseObject,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME
+            });
 
-    //     });
-    // });
-
-    // request.end();
-    resp.render('schedule', {
-        token: req.token,
-        moment: moment,
-        title: config.CLIENT_NAME + '-' + config.APP_NAME,
-        cname: config.CLIENT_NAME
+        });
     });
+
+    request.end();
+
 
 });
 /*******************************************************
         AJAX CALLS
 **********************************************************/
-router.post('/generatePDF/:report/:asset/:assetType', function (req, resp) {
+router.post('/generatePDF/:report/:asset/:assetType', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB generatePDF: ' + req.params.report);
 
@@ -103,15 +99,15 @@ router.post('/generatePDF/:report/:asset/:assetType', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             // console.log('responseObject:     ' + responseObject);
             resp.status(200).jsonp(responseObject);
@@ -129,21 +125,21 @@ router.post('/generatePDF/:report/:asset/:assetType', function (req, resp) {
         API CALLS
 **********************************************************/
 /* GET JSON Templates listing. */
-router.get('/V1/getTemplates/', function (req, res, next) {
-    Template.find().exec(function (err, temps) {
+router.get('/V1/getSchedule/', function(req, res, next) {
+    Schedule.find().exec(function(err, scheds) {
         if (err) {
             res.send(500, err.message);
         }
-        // debug(" ### GET getTemplates ### \n");
+        // debug(" ### GET getSchedules ### \n");
 
-        res.status(200).jsonp(temps);
+        res.status(200).jsonp(scheds);
 
     });
 
 });
 
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, res, next) {
+router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function(req, res, next) {
     var ret = {
         "result": "OK",
         "docDefinition": {}
@@ -153,7 +149,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
     };
     Template.findOne({
         "config.HTML.id": req.params.reportName
-    }).exec(function (err, temp) {
+    }).exec(function(err, temp) {
         if (err) {
             res.send(500, err.message);
         }
@@ -208,7 +204,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                     "properties.Ccode": req.params.assetCode
                 }
             ]
-        }).exec(function (err, ifdt) { // literal
+        }).exec(function(err, ifdt) { // literal
             if (err) {
                 res.send(500, err.message);
             }
