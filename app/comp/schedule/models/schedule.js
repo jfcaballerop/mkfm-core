@@ -13,8 +13,11 @@ var scheduleSchema = new Schema({
     },
     endDate: {
         type: Date
+    },
+    completed: {
+        type: Boolean,
+        default: false
     }
-
 });
 
 // create the model

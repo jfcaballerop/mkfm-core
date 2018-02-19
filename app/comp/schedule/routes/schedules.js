@@ -119,6 +119,44 @@ router.post('/saveEvent/:name/:startDate/:endDate', function (req, resp) {
     request.end();
 
 });
+router.post('/completeEvent/:name', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB saveEvent: ' + req.params.name);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/completeEvent/' + req.params.name,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 
 
 /*******************************************************
@@ -152,6 +190,31 @@ router.post('/V1/saveEvent/:name/:startDate/:endDate', function (req, res, next)
         $set: {
             startDate: req.params.startDate,
             endDate: req.params.endDate
+        }
+    }).exec(function (err, doc) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        debug(doc);
+        res.status(200).jsonp(ret);
+
+    });
+
+
+});
+/* GET JSON Report */
+router.post('/V1/completeEvent/:name', function (req, res, next) {
+    var ret = {
+        "result": "OK"
+    };
+    var dbfields = {
+        properties: {}
+    };
+    Schedule.findOneAndUpdate({
+        "properties.code": req.params.name
+    }, {
+        $set: {
+            completed: true
         }
     }).exec(function (err, doc) {
         if (err) {

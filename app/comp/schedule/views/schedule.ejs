@@ -108,6 +108,7 @@
                                             <th>Asset</th>
                                             <th>Starting Date</th>
                                             <th>End Date</th>
+                                            <th>Completed</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -128,6 +129,12 @@
                                                                 </td>
                                                                 <td>
                                                                     <%- moment(s.endDate).format('YYYY-MM-DD') %>
+                                                                </td>
+                                                                <td>
+                                                                    <% if(s.completed) {%>
+                                                                        <i class="fas fa-check text-success"></i>
+                                                                        <% } %>
+
                                                                 </td>
                                                         </tr>
 
@@ -199,6 +206,7 @@
                 </div>
             </div>
         </div>
+
         <!-- /MODAL -->
         <!--main content end-->
         <!--footer start-->
