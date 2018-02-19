@@ -3,20 +3,43 @@
 
         var dataSchedule = <%- JSON.stringify(schedules) %>;
 
-        function updateModalDataSource(data) {
+        function updateModalDataSource(data, option) {
             $('#event-modal select[name="event-name"]').html('');
             $('#event-modal select[name="event-type"]').html('');
-            for (var d in data) {
-                if (!data[d].planned) {
-                    $('#event-modal select[name="event-name"]').append($("<option></option>")
-                        .attr("value", data[d].name)
-                        .text(data[d].name));
-                    $('#event-modal select[name="event-type"]').append($("<option></option>")
-                        .attr("value", data[d].type)
-                        .text(data[d].type));
-                }
+            switch (option) {
+                case 'save':
+                    for (var d in data) {
+                        if (!data[d].planned) {
+                            $('#event-modal select[name="event-name"]').append($("<option></option>")
+                                .attr("value", data[d].name)
+                                .text(data[d].name));
+                            $('#event-modal select[name="event-type"]').append($("<option></option>")
+                                .attr("value", data[d].type)
+                                .text(data[d].type));
+                        }
+                    }
+
+                    break;
+                case 'update':
+                    for (var d in data) {
+                        if (data[d].planned) {
+                            $('#event-modal select[name="event-name"]').append($("<option></option>")
+                                .attr("value", data[d].name)
+                                .text(data[d].name));
+                            $('#event-modal select[name="event-type"]').append($("<option></option>")
+                                .attr("value", data[d].type)
+                                .text(data[d].type));
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
             }
         }
+
+
 
 
         function formatDate(date) {
@@ -34,12 +57,68 @@
             return day + ' ' + monthNames[monthIndex] + ' ' + year;
         }
 
+        function completeEvent(event) {
+            for (var i in dataSource) {
+                if (dataSource[i].id == event.id) {
+
+
+                    var dataPost = {};
+
+                    var p1 = $.ajax({
+                        url: '/auth/WEB/schedule/completeEvent/' + event.name,
+                        data: JSON.stringify(dataPost),
+                        type: 'POST',
+                        contentType: 'application/json'
+                    }, function (data) {
+                        // console.log('koboinfo ' + JSON.stringify(data));
+                        return (data);
+                    });
+                    Promise.all([p1]).then(function (values) {
+                        ret = values[0];
+                        console.log(ret);
+                        // if (ret.result !== 'OK') {
+                        //     $('#error').show();
+                        //     $('#error').append("No updated dates.<br>Try again.");
+
+                        // } else {
+                        //     $('#response').empty();
+                        //     $('#iframeContainer').empty();
+                        //     $('#response').show();
+                        //     $('#response').append("Saved ok.");
+                        //     $('#spinner').hide();
+
+                        // }
+                        var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+                        $selectTR.find("td:eq(4)").fadeOut(function () {
+                            $(this).html('<i class="fas fa-check text-success"></i>').fadeIn();
+                        });
+
+                    });
+
+                    break;
+                }
+            }
+        }
+
         function editEvent(event) {
+            var dataSource = $('#calendar').data('calendar').getDataSource();
+            updateModalDataSource(dataSource, 'update');
+
+
             $('#event-modal input[name="event-index"]').val(event ? event.id : '');
             $('#event-modal select[name="event-name"]').val(event ? event.name : '');
             $('#event-modal select[name="event-type"]').val(event ? event.type : '');
             $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
             $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+            var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+            $selectTR.css('color', event.color).css(
+                'font-weight', 'normal');
+            $selectTR.find("td:eq(2)").fadeOut(function () {
+                $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn();
+            });
+            $selectTR.find("td:eq(3)").fadeOut(function () {
+                $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn();
+            });
             $('#event-modal').modal();
         }
 
@@ -124,19 +203,17 @@
                 }
 
                 dataSource.push(event);
-                var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
-                $selectTR.css('color', event.color).css(
-                    'font-weight', 'normal');
-                $selectTR.find("td:eq(2)").fadeOut(function () {
-                    $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn();
-                });
-                $selectTR.find("td:eq(3)").fadeOut(function () {
-                    $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn();
-                });
-
-
             }
-            updateModalDataSource(dataSource);
+            var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+            $selectTR.css('color', event.color).css(
+                'font-weight', 'normal');
+            $selectTR.find("td:eq(2)").fadeOut(function () {
+                $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn();
+            });
+            $selectTR.find("td:eq(3)").fadeOut(function () {
+                $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn();
+            });
+            updateModalDataSource(dataSource, 'save');
             $('#calendar').data('calendar').setDataSource(dataSource);
             $('#event-modal').modal('hide');
 
@@ -198,7 +275,7 @@
 
             i++;
         }
-        updateModalDataSource(dataSource);
+        updateModalDataSource(dataSource, 'save');
 
         // page is now ready, initialize the calendar...
 
@@ -209,8 +286,8 @@
                 text: 'Update',
                 click: editEvent
             }, {
-                text: 'Delete',
-                click: deleteEvent
+                text: 'Complete',
+                click: completeEvent
             }],
             selectRange: function (e) {
                 editEvent({
