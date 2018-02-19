@@ -181,8 +181,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         "docDefinition": {}
     };
     var dbfields = {
-        properties: {
-        }
+        properties: {}
     };
 
     Template.findOne({
@@ -193,151 +192,115 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         }
         var chorizo = JSON.stringify(temp);
 
-        // console.log("Result: ", JSON.stringify(chorizo));
-
-
-        // var re = new RegExp('/(.*)/');
-        // var r = JSON.stringify(chorizo).match(re);
-        // if (r)
-        //     console.log('r      +++++++++++++++     ' + r);
-
         var find = "##\\w{3,30}##";
         var regex = new RegExp(find, "g");
         var chorizoParseado = JSON.stringify(chorizo).match(regex);
 
-        var variables=[];
-        for (choricillo in chorizoParseado){
-            // debug(chorizoParseado[choricillo].replace(/#/g, ''));
+        var variables = [];
+        for (choricillo in chorizoParseado) {
             variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
             debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
-        debug(variables);
-        // debug(" ### GET generatePDF ### \n" + temp);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
         // asscode = "F6-SD-06-B-35385";
-        // debug('Asset Code: ' + asscode);////////////////////////////////////////////
-        // debug('Asset assetType: ' + assetType);////////////////////////////////////////////
 
         code = '/' + asscode + '/';
         assetCode = "bcode";
-        
-        // while(true){;}
-        // if (assetType==='BRIDGE'){
-        //     for (tem in temp.config.fields) {
-        //         if (temp.config.fields[tem].type === 'dbfield') {
-        //             // console.log(temp.config.fields[tem]);
-        //             variables.push(temp.config.fields[tem].name);
-        //         }
-        //     }
-        //     // debug(variables);
-        //     assetCode = "bcode";
-        // }
-        // Infodatatrack.findOne({ $or: [{ "properties.bcode": /F6-SD-06-B-3585/ }, { "properties.gcode": /F6-SD-06-B-3585/ }] }, function (err, ifdts) {
         Infodatatrack.findOne({
-        $or: [{
-            "properties.rcode": req.params.assetCode
-            },
-            {
-                "properties.rname": req.params.assetCode
-            },
-            {
-                "properties.bcode": req.params.assetCode
-            },
-            {
-                "properties.bname": req.params.assetCode
-            },
-            {
-                "properties.gcode": req.params.assetCode
-            },
-            {
-                "properties.gcode2": req.params.assetCode
-            },
-            {
-                "properties.dcode": req.params.assetCode
-            },
-            {
-                "properties.dcode2": req.params.assetCode
-            },
-            {
-                "properties.Ccode": req.params.assetCode
-            }
-        ]
-    }).exec( function (err, ifdt) { // literal
+            $or: [{
+                    "properties.rcode": req.params.assetCode
+                },
+                {
+                    "properties.rname": req.params.assetCode
+                },
+                {
+                    "properties.bcode": req.params.assetCode
+                },
+                {
+                    "properties.bname": req.params.assetCode
+                },
+                {
+                    "properties.gcode": req.params.assetCode
+                },
+                {
+                    "properties.gcode2": req.params.assetCode
+                },
+                {
+                    "properties.dcode": req.params.assetCode
+                },
+                {
+                    "properties.dcode2": req.params.assetCode
+                },
+                {
+                    "properties.Ccode": req.params.assetCode
+                }
+            ]
+        }).exec(function (err, ifdt) { // literal
+            var arrayJsonProp = [];
+            var hasNotFound = 1;
             if (err) {
-                res.send(500, err.message);            
-        }
-                // debug(ifdt);
-                if (ifdt !== null) {
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                res.send(500, err.message);
+            }
+            // debug(ifdt);
+            if (ifdt !== null) {
+                for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                    if ((ifdt.properties.rcode[i] == req.params.assetCode ||
+                        ifdt.properties.rname[i] == req.params.assetCode ||
+                        ifdt.properties.bcode[i] == req.params.assetCode ||
+                        ifdt.properties.bname[i] == req.params.assetCode ||
+                        ifdt.properties.gcode[i] == req.params.assetCode ||
+                        ifdt.properties.gcode2[i] == req.params.assetCode ||
+                        ifdt.properties.dcode[i] == req.params.assetCode ||
+                        ifdt.properties.dcode2[i] == req.params.assetCode ||
+                        ifdt.properties.Ccode[i] == req.params.assetCode) && hasNotFound === 1 ) {
+                        hasNotFound = 0;
+                        console.log('hasNotFound           hasNotFound              hasNotFound: ' + hasNotFound);
+                        arrayJsonProp = [];
                         // dbfields.properties.name=ifdt.properties[name];
                         for (v in variables) {
-                            // console.log(variables[v]);
-
-                            // debug('variables[v] ' + variables[v]);
-                            // debug('assetCode ' + assetCode);
-                            // debug('1 ----------------- ' + ifdt.properties[assetCode]);
-                            // debug('2 ----------------- '   + i + ifdt.properties[assetCode][i] === null);
-                            // debug('2.1 ----------------- ' + i + ifdt.properties[assetCode][i] === undefined);
-                            // debug('3 ----------------- ' + ifdt.properties[variables[v]]);
-                            // debug('3 ----------------- ' + ifdt.properties[variables[v]][i] === undefined);
-                            // debug('4 ----------------- ' + req.params.assetCode.toString());
-                            if (ifdt.properties[variables[v]] !== undefined && 
-                                ifdt.properties[assetCode][i] !== undefined && 
+                            if (ifdt.properties[variables[v]] !== undefined &&
+                                ifdt.properties[assetCode][i] !== undefined &&
                                 ifdt.properties[variables[v]][i] !== undefined &&
                                 ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
 
                                 var textToRender = ifdt.properties[variables[v]][i].toString();
-                                // debug('textToRender: ******************** ' + textToRender);
-                                var jsontoput = temp.config.fields[0];
+                                var jsontoput = JSON.parse(JSON.stringify(temp.config.fields[0]));
                                 if (textToRender.split(".")[1] !== undefined &&
-                                    textToRender.split(".")[0] !== undefined){
-                                    // debug(textToRender);
-                                    // debug((textToRender.split(".")[1]).substring(0, 3));
-                                    if (Number(textToRender).toString() === textToRender){
+                                    textToRender.split(".")[0] !== undefined) {
+                                    if (Number(textToRender).toString() === textToRender) {
                                         var afterDot = (textToRender.split(".")[1]).substring(0, 3);
                                         var beforeDot = (textToRender.split(".")[0]);
                                         textToRender = beforeDot + '.' + afterDot;
                                     }
-                                    dbfields.properties[variables[v]] = textToRender.toString();
-                                    jsontoput = temp.config.fields[0];
-                                    jsontoput['name'] = '##' + variables[v] + '##';
-                                    jsontoput['type'] = 'dbfield';
-                                    jsontoput['value'] = 'properties.' + variables[v];
-                                    // debug("jsontoput['value']:  ------1------------>   " + jsontoput['value']);
-                                    temp.config.fields.push(jsontoput);
-                                } else {
-
-
-                                    jsontoput = temp.config.fields[0];
-                                    // debug(jsontoput);
-                                    // jsontoput[name] = '##' + variables[v] + '##';
-                                    jsontoput['name'] = '##' + variables[v] + '##';
-                                    jsontoput['type'] = 'dbfield';
-                                    jsontoput['value'] = 'properties.' + variables[v];
-                                    temp.config.fields.push(jsontoput);
-                                    // debug("jsontoput['value']:  --------2---------->   " + jsontoput['value']);
-
-
-                                    dbfields.properties[variables[v]] = textToRender.toString();
                                 }
+                                dbfields.properties[variables[v]] = textToRender.toString();
+                                jsontoput['name'] = '##' + variables[v] + '##';
+                                jsontoput['type'] = 'dbfield';
+                                jsontoput['value'] = 'properties.' + variables[v];
+                                temp.config.fields.push(jsontoput);
+                                // debug('jsontoput:    ' + JSON.stringify(jsontoput))
+                                arrayJsonProp.push(jsontoput);
+                                // debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp))
                             }
-                        } 
+                        }
                     }
-                }    
+                }
+            }
 
-        debug('temp.docDefinition:    ' + temp.docDefinition.toString())
-        debug('temp.config:    ' + temp.config.toString())
-        debug('dbfields:    ' + dbfields.toString())
+            debug('temp.docDefinition:    ' + JSON.stringify(temp.docDefinition));
+            debug('temp.config.fields:    ' + JSON.stringify(temp.config.fields))
+            debug('dbfields:    ' + JSON.stringify(dbfields.properties));
+            debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp));
 
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
 
             res.status(200).jsonp(ret);
-           
+
         });
 
-       
+
 
     });
 
