@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
+var templateGeneration = require(path.join(__dirname, '../../../services/templates'));
 var services = require(path.join(__dirname, '../../../services/services'));
 
 var PDFDocument = require('pdfkit');
@@ -190,6 +191,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
         if (err) {
             res.send(500, err.message);
         }
+
+        templateGeneration(tokenString, temp, req, ifdt);
         var chorizo = JSON.stringify(temp);
 
         var find = "##\\w{3,30}##";
