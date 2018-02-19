@@ -7,19 +7,20 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-            
+
             #map {
                 height: 100%;
             }
+
             /* Optional: Makes the sample page fill the window. */
-            
+
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-            
+
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -29,13 +30,13 @@
                 position: absolute;
                 left: 30px;
             }
-            
+
             .search {
                 position: relative;
                 color: #aaa;
                 font-size: 16px;
             }
-            
+
             .search input {
                 width: 250px;
                 height: 32px;
@@ -44,11 +45,11 @@
                 border-radius: 5px;
                 box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
             }
-            
+
             .search input {
                 text-indent: 32px;
             }
-            
+
             .search .fa-search {
                 position: absolute;
                 top: 10px;
@@ -78,131 +79,143 @@
 
         </aside>
         <!--sidebar end-->
-        <!-- main content Permission denied -->
-        <% if(!token.admin) {%>
-            <% include partials/error_permissions %>
-                <!-- End permission denied -->
-                <%} else {%>
-                    <!--main content start-->
-                    <section id="main-content">
-                        <section class="wrapper site-min-height">
-                            <div class="row mt">
-                                <div class="col-md-12">
-                                    <h3>
-                                        <i class="fa fa-angle-right"></i>
-                                        <%- trans('MENU_PANEL_SCHEDULE') %>
-                                    </h3>
 
-                                </div>
-                            </div>
-                            <!-- page start-->
-                            <div class="content-panel">
-                                <section id="unseen">
-                                    <div class="row mt">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                <div class="row mt">
+                    <div class="col-md-12">
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
+                            <%- trans('MENU_PANEL_SCHEDULE') %>
+                        </h3>
 
-                                        <div class="col-md-4">
-                                            <table class="table table-bordered table-striped table-condensed">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Asset</th>
-                                                        <th>Starting Date</th>
-                                                        <th>End Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <% var i=0; for (var s of schedules) { i++;%>
-                                                        <tr>
-                                                            <td>
-                                                                <%- i %>
-                                                            </td>
-                                                            <td>
-                                                                <%- s.properties.code %>
-                                                            </td>
-                                                            <td>
-                                                                <%- moment(s.startDate).format('YYYY-MM-DD') %>
-                                                            </td>
-                                                            <td>
-                                                                <%- moment(s.endDate).format('YYYY-MM-DD') %>
-                                                            </td>
-                                                        </tr>
-                                                        <% } %>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div class="col-md-8" id="calendar" data-provide="calendar"></div>
-
-                                    </div>
-                                </section>
-                            </div>
-
-                            <!-- page end-->
-                        </section>
-                    </section>
-                    <!-- /MAIN CONTENT -->
-                    <!-- MODAL -->
-                    <div class="modal modal-fade" id="event-modal" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">
-                                        Event
-                                    </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="event-index" value="">
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label for="min-date" class="col-sm-4 control-label">Name</label>
-                                            <div class="col-sm-7">
-                                                <input name="event-name" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="min-date" class="col-sm-4 control-label">Location</label>
-                                            <div class="col-sm-7">
-                                                <input name="event-type" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="min-date" class="col-sm-4 control-label">Dates</label>
-                                            <div class="col-sm-7">
-                                                <div class="input-group input-daterange" data-provide="datepicker" data-date-format="yyyy/mm/dd">
-                                                    <input name="event-start-date" type="text" class="form-control" data-date-format="yyyy/mm/dd" value="2018-04-05">
-                                                    <span class="input-group-addon">to</span>
-                                                    <input name="event-end-date" type="text" class="form-control" data-date-format="yyyy/mm/dd" value="2018-04-19">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" id="save-event">
-					Save
-				</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <!-- /MODAL -->
-                    <% } %>
-                        <!--main content end-->
-                        <!--footer start-->
-                        <footer class="site-footer">
-                            <% include partials/footer %>
-                        </footer>
-                        <!--footer end-->
+                </div>
+                <!-- page start-->
+                <div class="content-panel">
+                    <section id="unseen">
+                        <div class="row mt">
+
+                            <div class="col-md-4">
+                                <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
+
+                                <table id="tableSchedule" class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Asset</th>
+                                            <th>Starting Date</th>
+                                            <th>End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i=0; for (var s of schedules) { i++;%>
+                                            <% if( typeof s.startDate ===  'undefined' || typeof s.endDate === 'undefined') {%>
+                                                <tr style="color: red;font-weight:bold">
+                                                    <% } else{ %>
+                                                        <tr style="color:<%- s.config.color %>;">
+                                                            <% } %>
+                                                                <td>
+                                                                    <%- i %>
+                                                                </td>
+                                                                <td>
+                                                                    <%- s.properties.code %>
+                                                                </td>
+                                                                <td>
+                                                                    <%- moment(s.startDate).format('YYYY-MM-DD') %>
+                                                                </td>
+                                                                <td>
+                                                                    <%- moment(s.endDate).format('YYYY-MM-DD') %>
+                                                                </td>
+                                                        </tr>
+
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-8" id="calendar" data-provide="calendar"></div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <!-- page end-->
+            </section>
+        </section>
+        <!-- /MAIN CONTENT -->
+        <!-- MODAL -->
+        <div class="modal modal-fade" id="event-modal" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">
+                            Event
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="event-index" value="">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="min-date" class="col-sm-4 control-label">Name</label>
+                                <div class="col-sm-7">
+                                    <select name="event-name" class="form-control">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="min-date" class="col-sm-4 control-label">Type</label>
+                                <div class="col-sm-7">
+                                    <select name="event-type" class="form-control">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="min-date" class="col-sm-4 control-label">Dates</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group input-daterange" data-provide="datepicker" data-date-format="yyyy/mm/dd">
+                                        <input name="event-start-date" type="text" class="form-control" data-date-format="yyyy/mm/dd" value="2018-04-05">
+                                        <span class="input-group-addon">to</span>
+                                        <input name="event-end-date" type="text" class="form-control" data-date-format="yyyy/mm/dd" value="2018-04-19">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-event">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /MODAL -->
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <% include partials/footer %>
+        </footer>
+        <!--footer end-->
     </section>
 
     <% include partials/footer_scripts %>
         <!-- js placed at the end of the document so the pages load faster -->
         <!-- <script src="/assets/js/jquery.js"></script> -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
         <!-- <script src="/assets/js/bootstrap.min.js"></script> -->
         <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
         <script src="/assets/js/jquery.scrollTo.min.js"></script>

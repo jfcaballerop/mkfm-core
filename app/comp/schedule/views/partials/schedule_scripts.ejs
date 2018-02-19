@@ -1,7 +1,23 @@
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var dataSchedule = <%- JSON.stringify(schedules) %>;
+
+        function updateModalDataSource(data) {
+            $('#event-modal select[name="event-name"]').html('');
+            $('#event-modal select[name="event-type"]').html('');
+            for (var d in data) {
+                if (!data[d].planned) {
+                    $('#event-modal select[name="event-name"]').append($("<option></option>")
+                        .attr("value", data[d].name)
+                        .text(data[d].name));
+                    $('#event-modal select[name="event-type"]').append($("<option></option>")
+                        .attr("value", data[d].type)
+                        .text(data[d].type));
+                }
+            }
+        }
+
 
         function formatDate(date) {
             var monthNames = [
@@ -20,8 +36,8 @@
 
         function editEvent(event) {
             $('#event-modal input[name="event-index"]').val(event ? event.id : '');
-            $('#event-modal input[name="event-name"]').val(event ? event.name : '');
-            $('#event-modal input[name="event-type"]').val(event ? event.type : '');
+            $('#event-modal select[name="event-name"]').val(event ? event.name : '');
+            $('#event-modal select[name="event-type"]').val(event ? event.type : '');
             $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
             $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
             $('#event-modal').modal();
@@ -40,13 +56,39 @@
             $('#calendar').data('calendar').setDataSource(dataSource);
         }
 
+        function getColor(param) {
+            var color = 'black';
+            switch (param) {
+                case 'PAVEMENTS':
+                    color = 'grey';
+                    break;
+                case 'BRIDGES':
+                    color = 'pink';
+                    break;
+                case 'CULVERTS':
+                    color = 'blue';
+                    break;
+                case 'GEOT':
+                    color = 'green';
+                    break;
+
+                default:
+                    break;
+            }
+
+            return color;
+
+        }
+
         function saveEvent() {
             var event = {
                 id: $('#event-modal input[name="event-index"]').val(),
-                name: $('#event-modal input[name="event-name"]').val(),
-                type: $('#event-modal input[name="event-type"]').val(),
+                name: $('#event-modal select[name="event-name"] option:selected').text(),
+                type: $('#event-modal select[name="event-type"] option:selected').text(),
                 startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
-                endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+                endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate'),
+                color: getColor($('#event-modal select[name="event-type"] option:selected').text()),
+                planned: true
             }
 
             var dataSource = $('#calendar').data('calendar').getDataSource();
@@ -58,6 +100,7 @@
                         dataSource[i].type = event.type;
                         dataSource[i].startDate = event.startDate;
                         dataSource[i].endDate = event.endDate;
+                        dataSource[i].color = event.color;
                     }
                 }
             } else {
@@ -70,14 +113,64 @@
 
                 newId++;
                 event.id = newId;
+                //elimino el anterior
+
+                for (var d in dataSource) {
+                    var index = dataSource[d].name.indexOf(event.name.trim());
+                    if (index > -1) {
+                        dataSource.splice(d, 1);
+                    }
+
+                }
 
                 dataSource.push(event);
-            }
+                var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+                $selectTR.css('color', event.color).css(
+                    'font-weight', 'normal');
+                $selectTR.find("td:eq(2)").fadeOut(function () {
+                    $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn();
+                });
+                $selectTR.find("td:eq(3)").fadeOut(function () {
+                    $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn();
+                });
 
+
+            }
+            updateModalDataSource(dataSource);
             $('#calendar').data('calendar').setDataSource(dataSource);
             $('#event-modal').modal('hide');
 
-            //TODO: AJAX Call to update DB
+            var dataPost = {};
+
+            var p1 = $.ajax({
+                url: '/auth/WEB/schedule/saveEvent/' + event.name + '/' + moment(event.startDate).format(
+                    'YYYY-MM-DD') + '/' + moment(event.endDate).format('YYYY-MM-DD'),
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function (data) {
+                // console.log('koboinfo ' + JSON.stringify(data));
+                return (data);
+            });
+            Promise.all([p1]).then(function (values) {
+                ret = values[0];
+                console.log(ret);
+                if (ret.result !== 'OK') {
+                    $('#error').show();
+                    $('#error').append("No updated dates.<br>Try again.");
+
+                } else {
+                    $('#response').empty();
+                    $('#iframeContainer').empty();
+                    $('#response').show();
+                    $('#response').append("Saved ok.");
+                    $('#spinner').hide();
+
+                }
+
+
+            });
+
 
 
         }
@@ -86,13 +179,18 @@
         var dataSource = [];
         var i = 0;
         for (var s of dataSchedule) {
+            console.log(s.startDate);
+
             var val = {
                 id: i,
                 name: s.properties.code,
                 type: s.type,
-                startDate: new Date(moment(s.startDate).format('YYYY'), moment(s.startDate).format('MM') - 1, moment(s.startDate).format('DD')),
-                endDate: new Date(moment(s.endDate).format('YYYY'), moment(s.endDate).format('MM') - 1, moment(s.endDate).format('DD')),
-                color: s.config.color
+                startDate: new Date(moment(s.startDate).format('YYYY'), moment(s.startDate).format('MM') -
+                    1, moment(s.startDate).format('DD')),
+                endDate: new Date(moment(s.endDate).format('YYYY'), moment(s.endDate).format('MM') - 1,
+                    moment(s.endDate).format('DD')),
+                color: s.startDate !== undefined && s.endDate !== undefined ? s.config.color : 'red',
+                planned: s.startDate !== undefined && s.endDate !== undefined ? true : false
 
             }
 
@@ -100,6 +198,8 @@
 
             i++;
         }
+        updateModalDataSource(dataSource);
+
         // page is now ready, initialize the calendar...
 
         $('#calendar').calendar({
@@ -112,21 +212,24 @@
                 text: 'Delete',
                 click: deleteEvent
             }],
-            selectRange: function(e) {
+            selectRange: function (e) {
                 editEvent({
                     startDate: e.startDate,
                     endDate: e.endDate
                 });
             },
-            mouseOnDay: function(e) {
+            mouseOnDay: function (e) {
                 if (e.events.length > 0) {
                     var content = '';
                     for (var i in e.events) {
                         console.log(e.events[i].startDate);
                         content += '<div class="event-tooltip-content">' +
-                            '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>' +
+                            '<div class="event-name" style="color:' + e.events[i].color +
+                            ';font-weight:bold" >' + e.events[
+                                i].name + '</div>' +
                             '<div class="event-type">' + e.events[i].type + '</div>' +
-                            '<div class="event-start-date">' + formatDate(e.events[i].startDate) + ' - ' + formatDate(e.events[i].endDate) + '</div>' +
+                            '<div class="event-start-date">' + formatDate(e.events[i].startDate) +
+                            ' - ' + formatDate(e.events[i].endDate) + '</div>' +
                             '</div>';
                         formatDate
                     }
@@ -141,18 +244,18 @@
                     $(e.element).popover('show');
                 }
             },
-            mouseOutDay: function(e) {
+            mouseOutDay: function (e) {
                 if (e.events.length > 0) {
                     $(e.element).popover('hide');
                 }
             },
-            dayContextMenu: function(e) {
+            dayContextMenu: function (e) {
                 $(e.element).popover('hide');
             },
             dataSource: dataSource
         });
 
-        $('#save-event').click(function() {
+        $('#save-event').click(function () {
             saveEvent();
         });
     });
