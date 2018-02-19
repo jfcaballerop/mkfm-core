@@ -306,6 +306,40 @@ exports.criticalityRatingScale = function (lof) {
 
     return ret;
 }
+
+exports.criticalityRatingLetterScale = function (critNumVal) {
+    var ret = 1;
+    var crit_rating = [];
+    var critNumValv = "";
+    // debug('critNumVal ' + critNumVal);
+    critNumVal = critNumVal * 1;
+    if (critNumVal >= 0 && critNumVal < 20) {
+        critNumValv = '0-20';
+    } else if (critNumVal >= 20 && critNumVal < 40) {
+        critNumValv = '20-40';
+    } else if (critNumVal >= 40 && critNumVal < 60) {
+        critNumValv = '40-60';
+    } else if (critNumVal >= 60 && critNumVal < 80) {
+        critNumValv = '60-80';
+    } else if (critNumVal >= 80 && critNumVal <= 100) {
+        critNumValv = '80-100';
+    }
+
+    crit_rating['0-20'] = [];
+    crit_rating['0-20'] = "A";
+    crit_rating['20-40'] = [];
+    crit_rating['20-40'] = "B";
+    crit_rating['40-60'] = [];
+    crit_rating['40-60'] = "C";
+    crit_rating['60-80'] = [];
+    crit_rating['60-80'] = "D";
+    crit_rating['80-100'] = [];
+    crit_rating['80-100'] = "E";
+
+    ret = crit_rating[critNumValv];
+
+    return ret;
+}
 exports.LikelihoodofFailureRatingScale = function (cond_letter) {
     var ret = 1;
     var lof_rating = [];

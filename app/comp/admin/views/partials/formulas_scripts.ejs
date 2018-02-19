@@ -31,6 +31,9 @@
         } else if (arrCallProm[0].indexOf('Likelihood') >= 0) {
             tipoDeFormula = 'update_formulas_tracks_likelihood';
 
+        } else if (arrCallProm[0].indexOf('Risk') >= 0) {
+            tipoDeFormula = 'update_formulas_tracks_risk';
+
         } else {
             tipoDeFormula = 'update_formulas_tracks';
         }
@@ -370,7 +373,20 @@
                         });
                         break;
 
+                        // Risk
+                        /////////////////
 
+                    case "Risk":
+                        $('#formulaSpec').empty();
+                        $('#selectFormula').empty();
+                        /*
+                            Feature paint formula
+                        */
+                        featureRisk.paintHTML(form);
+
+
+
+                        break;
                     default:
                         $('#formulaSpec').empty();
                         break;

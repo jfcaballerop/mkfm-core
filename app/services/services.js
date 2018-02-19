@@ -137,3 +137,18 @@ exports.docPdf = function (docDefinition, config, dbfields) {
 
     return JSON.parse(doc_translate);
 };
+
+exports.roundValue = function (value, decimals) {
+    if (typeof value === 'number' && !isNaN(value)) {
+        return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+    } else {
+        return 0;
+    }
+};
+exports.roundValuePerCent = function (value, decimals) {
+    if (typeof value === 'number' && !isNaN(value)) {
+        return Number(Math.round(value * 100 + 'e' + decimals) + 'e-' + decimals);
+    } else {
+        return 0;
+    }
+};
