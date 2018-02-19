@@ -188,7 +188,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
     };
     
 
-
+    // var temp = { docDefinition: {}, config: {}};
+    var temporal = { };
+    // var dbfields = "";
     var valkoboid = "";
     await Template.findOne({
         "config.HTML.id": req.params.reportName
@@ -206,7 +208,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var variables = [];
         for (choricillo in chorizoParseado) {
             variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
-            debug(chorizoParseado[choricillo].replace(/#/g, ''));
+            // debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
         // debug(variables);
@@ -252,6 +254,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             ]
         }).exec(function (err, ifdt) { // literal
             var arrayJsonProp = [];
+            var assetIndex = -1;
             var hasNotFound = 1;
             if (err) {
                 res.send(500, err.message);
@@ -278,7 +281,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 ifdt.properties[assetCode][i] !== undefined &&
                                 ifdt.properties[variables[v]][i] !== undefined &&
                                 ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
-
+                                assetIndex = i;
                                 var textToRender = ifdt.properties[variables[v]][i].toString();
                                 var jsontoput = JSON.parse(JSON.stringify(temp.config.fields[0]));
                                 if (textToRender.split(".")[1] !== undefined &&
@@ -298,17 +301,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 arrayJsonProp.push(jsontoput);
                                 // debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp))
                                 valkoboid = ifdt.properties['koboedit'][i]['kobo_id'];
-                            }
-                                // esto es una imagen
-
-                                // Koboinfos.findOne({});
-                                // debug('Koboinfos[ifdt.properties[]: \n \n \n \n' + Koboinfos[ifdt.properties['koboedit'][i]['kobo_id']]);
-                                // debug((Koboinfos[ifdt.properties['koboedit'][i]['kobo_id']][type]));
-                                // for (x in Koboinfos[0]){
-                                //     debug(x);
-                                //     while (true) { ; }
-                                // }
-                            
+                            }                            
                         }
                     }
                 }
@@ -321,10 +314,42 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // JSON.parse(JSON.stringify(temp.config.fields[0]));
             // console.log(JSON.stringify(services.docPdf(temp.docDefinition, temp.config, dbfields).content));
 
-            ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-            debug(valkoboid);
-            res.status(200).jsonp(ret);
-            updateFromKobo();
+            // ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
+            debug('temp.docDefinition   ' +  temp.docDefinition);
+            // res.status(200).jsonp(ret);
+            temporal=temp;
+            // debug('4444444444444444444' + temporal);
+            Koboinfo.findById(valkoboid).exec(function (err, kobo) {
+
+                for (v in variables) {
+                    if (v.toString().indexOf('Logo') === -1 &&
+                        ifdt.properties[variables[v]] !== undefined &&
+                        ifdt.properties[assetCode][i] !== undefined &&
+                        ifdt.properties[variables[v]][i] !== undefined &&
+                        ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
+                            
+                    } else {
+                        // esto es una imagen
+                        dbfields.properties[variables[v]] = textToRender.toString();
+                        jsontoput['name'] = '##' + variables[v] + '##';
+                        jsontoput['type'] = 'dbfield';
+                        jsontoput['value'] = 'properties.' + variables[v];
+                        
+                        temp.config.fields.push(jsontoput);
+                        arrayJsonProp.push(jsontoput);
+                    }
+
+                }
+                kobo.properties._attachments
+
+
+
+                ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
+                debug(valkoboid);
+                res.status(200).jsonp(ret);
+                updateFromKobo();
+
+            });
 
         });
 
@@ -333,11 +358,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
     });
 
 
-    var updateFromKobo = await function () {
-        Koboinfo.findById(valkoboid ).exec(function (err, kobo) {
-            debug('debug 2 debug 2 debug 2 debug 2 debug 2 debug 2 ' + valkoboid);
-            debug('debug 2 debug 2 debug 2 debug 2 debug 2 debug 2 ' + kobo);
-        });
+    var updateFromKobo = await function (temp, dbfields) {
+       
+
     }
 
 

@@ -119,7 +119,7 @@ exports.docPdf = function (docDefinition, config, dbfields) {
 
     for (var f of config.fields) {
         // console.log(f);
-        console.log(f.path);
+        // console.log(f.path);
         if (f.type === 'img') {
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
 
