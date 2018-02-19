@@ -276,7 +276,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         arrayJsonProp = [];
                         // dbfields.properties.name=ifdt.properties[name];
                         for (v in variables) {
-                            if (v.toString().indexOf('Logo') === -1 &&
+                            if (variables[v].toString().indexOf('Logo') === -1 &&
                                 ifdt.properties[variables[v]] !== undefined &&
                                 ifdt.properties[assetCode][i] !== undefined &&
                                 ifdt.properties[variables[v]][i] !== undefined &&
@@ -320,35 +320,28 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             temporal=temp;
             // debug('4444444444444444444' + temporal);
             Koboinfo.findById(valkoboid).exec(function (err, kobo) {
-
+                // debug(variables);
                 for (v in variables) {
-                    if (v.toString().indexOf('Logo') === -1 &&
-                        ifdt.properties[variables[v]] !== undefined &&
-                        ifdt.properties[assetCode][i] !== undefined &&
-                        ifdt.properties[variables[v]][i] !== undefined &&
-                        ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
-                            
-                    } else {
-                        // esto es una imagen
+                    if (variables[v].indexOf('ogo') > -1 ) {
+                        var j=0;
+                        file = kobo.properties._attachments[j].split("/")[kobo.properties._attachments[j].split("/").length-1];
+                        address = kobo.properties._attachments[j].split('/').slice(1, kobo.properties._attachments[j].split('/').length - 1)
+ 
                         dbfields.properties[variables[v]] = textToRender.toString();
                         jsontoput['name'] = '##' + variables[v] + '##';
-                        jsontoput['type'] = 'dbfield';
-                        jsontoput['value'] = 'properties.' + variables[v];
+                        jsontoput['type'] = 'img';
+                        jsontoput['value'] = file;
+                        jsontoput['style'] = '';
+                        jsontoput['path'] = address.join('/');
                         
                         temp.config.fields.push(jsontoput);
                         arrayJsonProp.push(jsontoput);
                     }
 
                 }
-                kobo.properties._attachments
-
-
-
                 ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-                debug(valkoboid);
                 res.status(200).jsonp(ret);
                 updateFromKobo();
-
             });
 
         });

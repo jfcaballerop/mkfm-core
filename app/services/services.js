@@ -105,6 +105,7 @@ function encodeImageFileAsURL(file_path) {
 function getPaths(folder) {
     var paths = {
         logos: "../../public/media/logos",
+        att: "../../public/media/ingenierosinf/attachments",
 
     };
     return paths[folder];
@@ -121,7 +122,11 @@ exports.docPdf = function (docDefinition, config, dbfields) {
         // console.log(f);
         // console.log(f.path);
         if (f.type === 'img') {
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+            if (path.join(__dirname, '../../public', f.path, f.value).length < 65){
+                doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+            } else {
+                doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, '../../public', f.path, f.value)));
+            }
 
         } else if (f.type === 'dbfield') {
             evaluation = eval('dbfields.' + f.value);
