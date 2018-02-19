@@ -3,12 +3,21 @@ var Schema = mongoose.Schema;
 
 // define the schema for our user model
 var scheduleSchema = new Schema({
-    type: { type: String },
+    type: {
+        type: String
+    },
     config: {},
     properties: {},
-    startDate: { type: Date, default: Date.now },
-    endDate: { type: Date, default: Date.now }
-
+    startDate: {
+        type: Date
+    },
+    endDate: {
+        type: Date
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
 });
 
 // create the model

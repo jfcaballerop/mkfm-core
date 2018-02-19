@@ -37,7 +37,7 @@ router.use(bodyParser.json());
 **********************************************************/
 
 /* GET Schedule */
-router.get('/index', function(req, resp, next) {
+router.get('/index', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -49,17 +49,17 @@ router.get('/index', function(req, resp, next) {
         }
     };
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
@@ -81,14 +81,14 @@ router.get('/index', function(req, resp, next) {
 /*******************************************************
         AJAX CALLS
 **********************************************************/
-router.post('/generatePDF/:report/:asset/:assetType', function(req, resp) {
+router.post('/saveEvent/:name/:startDate/:endDate', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB generatePDF: ' + req.params.report);
+    debug('## WEB saveEvent: ' + req.params.name);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/report/V1/generatePDF/' + req.params.report + '/' + req.params.asset + '/' + req.params.assetType,
+        path: config.PATH_API + '/schedule/V1/saveEvent/' + req.params.name + '/' + req.params.startDate + '/' + req.params.endDate,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -99,15 +99,53 @@ router.post('/generatePDF/:report/:asset/:assetType', function(req, resp) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
+router.post('/completeEvent/:name', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB saveEvent: ' + req.params.name);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/completeEvent/' + req.params.name,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
             var responseObject = JSON.parse(data);
             // console.log('responseObject:     ' + responseObject);
             resp.status(200).jsonp(responseObject);
@@ -125,12 +163,12 @@ router.post('/generatePDF/:report/:asset/:assetType', function(req, resp) {
         API CALLS
 **********************************************************/
 /* GET JSON Templates listing. */
-router.get('/V1/getSchedule/', function(req, res, next) {
-    Schedule.find().exec(function(err, scheds) {
+router.get('/V1/getSchedule/', function (req, res, next) {
+    Schedule.find().exec(function (err, scheds) {
         if (err) {
             res.send(500, err.message);
         }
-        // debug(" ### GET getSchedules ### \n");
+        // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
 
         res.status(200).jsonp(scheds);
 
@@ -139,108 +177,53 @@ router.get('/V1/getSchedule/', function(req, res, next) {
 });
 
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function(req, res, next) {
+router.post('/V1/saveEvent/:name/:startDate/:endDate', function (req, res, next) {
     var ret = {
-        "result": "OK",
-        "docDefinition": {}
+        "result": "OK"
     };
     var dbfields = {
         properties: {}
     };
-    Template.findOne({
-        "config.HTML.id": req.params.reportName
-    }).exec(function(err, temp) {
+    Schedule.findOneAndUpdate({
+        "properties.code": req.params.name
+    }, {
+        $set: {
+            startDate: req.params.startDate,
+            endDate: req.params.endDate
+        }
+    }).exec(function (err, doc) {
         if (err) {
             res.send(500, err.message);
         }
-        // debug(" ### GET generatePDF ### \n" + temp);
-        var asscode = req.params.assetCode;
-        var assetType = req.params.assetType;
-        // asscode = "F6-SD-06-B-35385";
-        // debug('Asset Code: ' + asscode);////////////////////////////////////////////
-        // debug('Asset assetType: ' + assetType);////////////////////////////////////////////
-
-        code = '/' + asscode + '/';
-
-        // while(true){;}
-        var variables = [];
-        if (assetType === 'BRIDGE') {
-            for (tem in temp.config.fields) {
-                if (temp.config.fields[tem].type === 'dbfield') {
-                    // console.log(temp.config.fields[tem]);
-                    variables.push(temp.config.fields[tem].name);
-                }
-            }
-            debug(variables);
-            assetCode = "bcode";
-        }
-        // Infodatatrack.findOne({ $or: [{ "properties.bcode": /F6-SD-06-B-3585/ }, { "properties.gcode": /F6-SD-06-B-3585/ }] }, function (err, ifdts) {
-        Infodatatrack.findOne({
-            $or: [{
-                    "properties.rcode": req.params.assetCode
-                },
-                {
-                    "properties.rname": req.params.assetCode
-                },
-                {
-                    "properties.bcode": req.params.assetCode
-                },
-                {
-                    "properties.bname": req.params.assetCode
-                },
-                {
-                    "properties.gcode": req.params.assetCode
-                },
-                {
-                    "properties.gcode2": req.params.assetCode
-                },
-                {
-                    "properties.dcode": req.params.assetCode
-                },
-                {
-                    "properties.dcode2": req.params.assetCode
-                },
-                {
-                    "properties.Ccode": req.params.assetCode
-                }
-            ]
-        }).exec(function(err, ifdt) { // literal
-            if (err) {
-                res.send(500, err.message);
-            }
-
-            // debug(ifdt);
-            if (ifdt !== null) {
-                for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                    for (v in variables) {
-                        if (ifdt.properties[assetCode][i] !== undefined && ifdt.properties[variables[v].replace(/#/g, '')][i] !== undefined && ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
-                            var textToRender = ifdt.properties[variables[v].replace(/#/g, '')][i].toString();
-                            debug(textToRender);
-                            // debug((textToRender.split(".")[1]).substring(0, 3));
-                            if (textToRender !== undefined && Number(textToRender).toString() === textToRender) {
-                                var afterDot = (textToRender.split(".")[1]).substring(0, 3);
-                                var beforeDot = (textToRender.split(".")[0]);
-                                textToRender = beforeDot + '.' + afterDot;
-                            }
-                            dbfields.properties[variables[v].replace(/#/g, '')] = textToRender.toString();
-                        }
-                    }
-                }
-            }
-            ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-
-            res.status(200).jsonp(ret);
-
-        });
-
-
+        debug(doc);
+        res.status(200).jsonp(ret);
 
     });
 
 
+});
+/* GET JSON Report */
+router.post('/V1/completeEvent/:name', function (req, res, next) {
+    var ret = {
+        "result": "OK"
+    };
+    var dbfields = {
+        properties: {}
+    };
+    Schedule.findOneAndUpdate({
+        "properties.code": req.params.name
+    }, {
+        $set: {
+            completed: true
+        }
+    }).exec(function (err, doc) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        debug(doc);
+        res.status(200).jsonp(ret);
 
-
-
+    });
 
 
 });
