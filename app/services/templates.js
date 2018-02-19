@@ -1,4 +1,8 @@
-// jsonwebtoken
+var debug = require('debug')('debug');
+var path = require('path');
+var config = require(path.join(__dirname, '../../config/config'));
+var services = require(path.join(__dirname, './services'));
+
 exports.templateGeneration = function (tokenString, temp, req, ifdt) {
     var tempParsed = JSON.stringify(temp);
 

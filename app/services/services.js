@@ -123,7 +123,8 @@ exports.docPdf = function (docDefinition, config, dbfields) {
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
 
         } else if (f.type === 'dbfield') {
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), eval('dbfields.' + f.value));
+            evaluation = eval('dbfields.' + f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null ) ? evaluation : '' );
 
         } else {
 
@@ -131,6 +132,7 @@ exports.docPdf = function (docDefinition, config, dbfields) {
         }
     }
 
+    doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '');
     // console.log(doc_translate);
 
     return JSON.parse(doc_translate);

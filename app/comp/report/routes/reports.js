@@ -192,7 +192,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
             res.send(500, err.message);
         }
 
-        templateGeneration(tokenString, temp, req, ifdt);
         var chorizo = JSON.stringify(temp);
 
         var find = "##\\w{3,30}##";
@@ -248,6 +247,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
             }
             // debug(ifdt);
             if (ifdt !== null) {
+                // templateGeneration('', temp, req, ifdt);
                 for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                     if ((ifdt.properties.rcode[i] == req.params.assetCode ||
                         ifdt.properties.rname[i] == req.params.assetCode ||
@@ -292,10 +292,10 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                 }
             }
 
-            debug('temp.docDefinition:    ' + JSON.stringify(temp.docDefinition));
-            debug('temp.config.fields:    ' + JSON.stringify(temp.config.fields))
-            debug('dbfields:    ' + JSON.stringify(dbfields.properties));
-            debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp));
+            // debug('temp.docDefinition:    ' + JSON.stringify(temp.docDefinition));
+            // debug('temp.config.fields:    ' + JSON.stringify(temp.config.fields))
+            // debug('dbfields:    ' + JSON.stringify(dbfields.properties));
+            // debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp));
 
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
 
