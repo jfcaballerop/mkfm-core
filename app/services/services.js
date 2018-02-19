@@ -119,20 +119,21 @@ exports.docPdf = function (docDefinition, config, dbfields) {
 
     for (var f of config.fields) {
         // console.log(f);
+        console.log(f.path);
         if (f.type === 'img') {
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
 
         } else if (f.type === 'dbfield') {
             evaluation = eval('dbfields.' + f.value);
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null ) ? evaluation : '' );
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null ) ? evaluation : '--' );
 
         } else {
 
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '--' : f.value);
         }
     }
 
-    doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '');
+    doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '--');
     // console.log(doc_translate);
 
     return JSON.parse(doc_translate);

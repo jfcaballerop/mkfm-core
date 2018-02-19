@@ -21,6 +21,8 @@ var templateModels = require(path.join(__dirname, '../models/template'));
 var Template = mongoose.model('Template');
 var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
+var koboinfoModels = require(path.join(__dirname, '../../gis/models/koboinfo'));
+var Koboinfo = mongoose.model('Koboinfo');
 
 function simpleStringify(object) {
     var simpleObject = {};
@@ -176,7 +178,7 @@ router.get('/V1/getTemplates/', function (req, res, next) {
 });
 
 /* GET JSON Report */
-router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, res, next) {
+router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function (req, res, next) {
     var ret = {
         "result": "OK",
         "docDefinition": {}
@@ -184,8 +186,11 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
     var dbfields = {
         properties: {}
     };
+    
 
-    Template.findOne({
+
+    var valkoboid = "";
+    await Template.findOne({
         "config.HTML.id": req.params.reportName
     }).exec(function (err, temp) {
         if (err) {
@@ -204,13 +209,19 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
             debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
+        // debug(variables);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
-        // asscode = "F6-SD-06-B-35385";
+        // asscode = "F6-SD-06-B-3585";
 
         code = '/' + asscode + '/';
         assetCode = "bcode";
-        Infodatatrack.findOne({
+        // for (x in Koboinfo.find({})){
+        //     debug('----------------------- \n' + x);
+        // }
+        // while(true){;}
+        // Koboinfo.find({}).exec(function (err, Koboinfos) { 
+            Infodatatrack.findOne({
             $or: [{
                     "properties.rcode": req.params.assetCode
                 },
@@ -259,11 +270,11 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                         ifdt.properties.dcode2[i] == req.params.assetCode ||
                         ifdt.properties.Ccode[i] == req.params.assetCode) && hasNotFound === 1 ) {
                         hasNotFound = 0;
-                        console.log('hasNotFound           hasNotFound              hasNotFound: ' + hasNotFound);
                         arrayJsonProp = [];
                         // dbfields.properties.name=ifdt.properties[name];
                         for (v in variables) {
-                            if (ifdt.properties[variables[v]] !== undefined &&
+                            if (v.toString().indexOf('Logo') === -1 &&
+                                ifdt.properties[variables[v]] !== undefined &&
                                 ifdt.properties[assetCode][i] !== undefined &&
                                 ifdt.properties[variables[v]][i] !== undefined &&
                                 ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
@@ -286,7 +297,18 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                                 // debug('jsontoput:    ' + JSON.stringify(jsontoput))
                                 arrayJsonProp.push(jsontoput);
                                 // debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp))
+                                valkoboid = ifdt.properties['koboedit'][i]['kobo_id'];
                             }
+                                // esto es una imagen
+
+                                // Koboinfos.findOne({});
+                                // debug('Koboinfos[ifdt.properties[]: \n \n \n \n' + Koboinfos[ifdt.properties['koboedit'][i]['kobo_id']]);
+                                // debug((Koboinfos[ifdt.properties['koboedit'][i]['kobo_id']][type]));
+                                // for (x in Koboinfos[0]){
+                                //     debug(x);
+                                //     while (true) { ; }
+                                // }
+                            
                         }
                     }
                 }
@@ -296,10 +318,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
             // debug('temp.config.fields:    ' + JSON.stringify(temp.config.fields))
             // debug('dbfields:    ' + JSON.stringify(dbfields.properties));
             // debug('arrayJsonProp:    ' + JSON.stringify(arrayJsonProp));
+            // JSON.parse(JSON.stringify(temp.config.fields[0]));
+            // console.log(JSON.stringify(services.docPdf(temp.docDefinition, temp.config, dbfields).content));
 
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-
+            debug(valkoboid);
             res.status(200).jsonp(ret);
+            updateFromKobo();
 
         });
 
@@ -308,7 +333,12 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
     });
 
 
-
+    var updateFromKobo = await function () {
+        Koboinfo.findById(valkoboid ).exec(function (err, kobo) {
+            debug('debug 2 debug 2 debug 2 debug 2 debug 2 debug 2 ' + valkoboid);
+            debug('debug 2 debug 2 debug 2 debug 2 debug 2 debug 2 ' + kobo);
+        });
+    }
 
 
 
