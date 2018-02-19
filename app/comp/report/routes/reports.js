@@ -275,7 +275,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                         for (v in variables) {
                             // console.log(variables[v]);
 
-                            debug('variables[v] ' + variables[v]);
+                            // debug('variables[v] ' + variables[v]);
                             // debug('assetCode ' + assetCode);
                             // debug('1 ----------------- ' + ifdt.properties[assetCode]);
                             // debug('2 ----------------- '   + i + ifdt.properties[assetCode][i] === null);
@@ -289,7 +289,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                                 ifdt.properties[assetCode][i] === req.params.assetCode.toString()) {
 
                                 var textToRender = ifdt.properties[variables[v]][i].toString();
-                                debug(textToRender);
+                                // debug('textToRender: ******************** ' + textToRender);
                                 var jsontoput = temp.config.fields[0];
                                 if (textToRender.split(".")[1] !== undefined &&
                                     textToRender.split(".")[0] !== undefined){
@@ -305,18 +305,19 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                                     jsontoput['name'] = '##' + variables[v] + '##';
                                     jsontoput['type'] = 'dbfield';
                                     jsontoput['value'] = 'properties.' + variables[v];
+                                    // debug("jsontoput['value']:  ------1------------>   " + jsontoput['value']);
                                     temp.config.fields.push(jsontoput);
                                 } else {
 
 
                                     jsontoput = temp.config.fields[0];
-                                    debug(jsontoput);
+                                    // debug(jsontoput);
                                     // jsontoput[name] = '##' + variables[v] + '##';
                                     jsontoput['name'] = '##' + variables[v] + '##';
-                                jsontoput['type'] = 'dbfield';
-                                jsontoput['value'] = 'properties.' + variables[v];
+                                    jsontoput['type'] = 'dbfield';
+                                    jsontoput['value'] = 'properties.' + variables[v];
                                     temp.config.fields.push(jsontoput);
-                                    debug(jsontoput);
+                                    // debug("jsontoput['value']:  --------2---------->   " + jsontoput['value']);
 
 
                                     dbfields.properties[variables[v]] = textToRender.toString();
@@ -325,8 +326,11 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', function (req, 
                         } 
                     }
                 }    
-        console.log(dbfields);    
-        debug(temp.config.fields);
+
+        debug('temp.docDefinition:    ' + temp.docDefinition.toString())
+        debug('temp.config:    ' + temp.config.toString())
+        debug('dbfields:    ' + dbfields.toString())
+
             ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
 
             res.status(200).jsonp(ret);
