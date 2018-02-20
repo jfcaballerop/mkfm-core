@@ -369,13 +369,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                 // debug(JSON.stringify(ret.docDefinition));
                 await updateFromKobo();
 
-                arrayJsonProp2={};
-                await Template.findByIdAndRemove({ "config.HTML.id": req.params.reportName }, function (err) {
-                    if (err) {
-                        console.log("Something wrong when updating data!");
-                    }
-                    console.log("data to database!");
-                });
                 await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { $set: { "config.fields": arrayJsonProp } }, { 'new': true }, function (err, doc) {
                     if (err) {
                         console.log("Something wrong when updating data!");
