@@ -329,7 +329,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     if (variables[v].indexOf('ogo') > -1) {
                         k++ % logotypesArray.length;
                         k %= logotypesArray.length;
-                        nfotos++;
+                        // nfotos++;
                         var j = 0;
                         var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
 
@@ -370,7 +370,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                 await updateFromKobo();
 
                 // arrayJsonProp={};
-                await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { $set: { "doc.config.fields": arrayJsonProp } }, {'new' : true}, function (err, doc) {
+                await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { $set: { "config.fields": arrayJsonProp } }, {'new' : true}, function (err, doc) {
                     if (err) {
                         console.log("Something wrong when updating data!");
                     }
