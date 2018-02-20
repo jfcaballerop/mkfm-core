@@ -147,14 +147,17 @@ exports.docPdf = function (docDefinition, config, dbfields) {
         }
     }
     
-    var find = "##\\w{2,30}##";
+    var find1 = "##im\\w{2,30}##";
+    var find2 = "##\\w{2,30}##";
     pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
-    doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
+    // doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
     
-    doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '--');
+    // doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '--');
+    doc_translate = doc_translate.replace(new RegExp(find1, "g"), pixel);
+    doc_translate = doc_translate.replace(new RegExp(find2, "g"), '--');
 
-    var find = '"image": "--"';
-    doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
+    // var find = '"image": "--"';
+    // doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
 
 
     var fs = require('fs');
