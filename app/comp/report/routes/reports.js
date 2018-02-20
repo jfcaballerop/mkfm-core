@@ -345,13 +345,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         arrayJsonProp.push(jsontoput2);
                     }
                     if (variables[v].indexOf('img') > -1) {
-                        nfotos++;
-                        var j = 0;
+                        if (nfotos < kobo.properties._attachments.length) {
                         var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                        file = kobo.properties._attachments[j].split("/")[kobo.properties._attachments[j].split("/").length - 1];
+                        file = kobo.properties._attachments[nfotos].split("/")[kobo.properties._attachments[nfotos].split("/").length - 1];
                         file = file.split('.')[0] + '-small.' + file.split('.')[1];
                         // debug(file);
-                        address = kobo.properties._attachments[j].split('/').slice(2, kobo.properties._attachments[j].split('/').length - 1);
+                        address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
+                        nfotos++;
                         debug(address);
                         dbfields.properties[variables[v]] = textToRender.toString();
                         jsontoput2['name'] = '##' + variables[v] + '##';
@@ -363,6 +363,25 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
                         temp.config.fields.push(jsontoput2);
                         arrayJsonProp.push(jsontoput2);
+                        } else {
+                            // var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                            // file = '';
+                            // // debug(file);
+                            // address = '';
+                            // nfotos++;
+                            // dbfields.properties[variables[v]] = textToRender.toString();
+                            // jsontoput2['name'] = '##' + variables[v] + '##';
+                            // debug(variables[v]);
+                            // // jsontoput2['name'] = '##img' + nfotos + '##';
+                            // jsontoput2['type'] = 'img';
+                            // jsontoput2['value'] = file;
+                            // jsontoput2['style'] = '';
+                            // jsontoput2['path'] = address;
+
+                            // temp.config.fields.push(jsontoput2);
+                            // arrayJsonProp.push(jsontoput2);
+
+                        }
                     }
 
                 }

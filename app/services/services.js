@@ -119,26 +119,18 @@ exports.docPdf = function (docDefinition, config, dbfields) {
     // TODO: Hacer un control de errores para que cuando el campo venga vacío no pete.
 
     for (var f of config.fields) {
-        if (f.type === 'img' || f.type.indexOf('ogo')>-1) {
+        if ((f.type === 'img' || f.type.indexOf('ogo')>-1) && f.value !== '') {
             if (path.join(__dirname, '../../public', f.path, f.value).length < 65){
                 doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
                 // console.log('path.join(__dirname, getPaths(f.path), f.value):  ' + path.join(__dirname, getPaths(f.path), f.value));
                 // console.log('_dirname:  ' + path.join(__dirname));
             } else {
-                console.log("path.join(__dirname, '../../ public', f.value):  " + f.value);
-                console.log("path.join(__dirname, '../../ public', f.path):  " + f.path);
-                console.log(__dirname, '../../public/media', f.path, f.value);
+                // console.log("path.join(__dirname, '../../ public', f.value):  " + f.value);
+                // console.log("path.join(__dirname, '../../ public', f.path):  " + f.path);
+                // console.log(__dirname, '../../public/media', f.path, f.value);
                 doc_translate = doc_translate.replace(f.name ,encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
-                console.log(encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
+                // console.log(encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
                 
-                var fs = require('fs');
-                fs.writeFile("/tmp/test", doc_translate, function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-
-                    console.log("The file was saved!");
-                }); 
                 //console.log(doc_translate);
                 // doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/', f.path, f.value)));
                 // console.log(doc_translate);
@@ -149,14 +141,32 @@ exports.docPdf = function (docDefinition, config, dbfields) {
         } else if (f.type === 'dbfield') {
             evaluation = eval('dbfields.' + f.value);
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null ) ? evaluation : '--' );
-
         } else {
 
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '--' : f.value);
         }
     }
-
+    
+    var find = "##\\w{2,30}##";
+    pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
+    doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
+    
     doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '--');
+
+    var find = '"image": "--"';
+    doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
+
+
+    var fs = require('fs');
+    fs.writeFile("/tmp/test", doc_translate, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+
+        console.log("The file was saved!");
+    }); 
+
+
     // console.log(doc_translate);
 
     return JSON.parse(doc_translate);
