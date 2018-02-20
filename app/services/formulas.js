@@ -456,3 +456,72 @@ exports.riskRatingScale = function (lof, cons) {
 
     return ret;
 }
+
+
+exports.pavCondScale = function (value) {
+    var ret = "";
+
+    if (value < 2.5)
+        return "A";
+    else if (value >= 2.5 && value < 5)
+        return "B";
+    else if (value >= 5 && value < 8)
+        return "C";
+    else if (value >= 8 && value < 11)
+        return "D";
+    else
+        return "E";
+
+
+}
+
+exports.pavCondScaleNum = function (value) {
+    var ret = "";
+
+    if (value < 2.5)
+        return "A";
+    else if (value >= 2.5 && value < 5)
+        return "B";
+    else if (value >= 5 && value < 8)
+        return "C";
+    else if (value >= 8 && value < 11)
+        return "D";
+    else
+        return "E";
+
+
+}
+
+exports.pavCondScaleNumIri = function (value) {
+    var ret = "";
+
+    if (value < 2.5)
+        return 0.9;
+    else if (value >= 2.5 && value < 5)
+        return 0.7;
+    else if (value >= 5 && value < 8)
+        return 0.5;
+    else if (value >= 8 && value < 11)
+        return 0.3;
+    else
+        return 0.1;
+
+
+}
+
+exports.pavCondScaleLetter = function (letter) {
+    var ret = "";
+
+    if (letter === "A")
+        return 0.9;
+    else if (letter === "B")
+        return 0.7;
+    else if (letter === "C")
+        return 0.5;
+    else if (letter === "D")
+        return 0.3;
+    else
+        return 0.1;
+
+
+}
