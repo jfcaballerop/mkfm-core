@@ -128,7 +128,20 @@ exports.docPdf = function (docDefinition, config, dbfields) {
                 console.log("path.join(__dirname, '../../ public', f.value):  " + f.value);
                 console.log("path.join(__dirname, '../../ public', f.path):  " + f.path);
                 console.log(__dirname, '../../public/media', f.path, f.value);
-                doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
+                doc_translate = doc_translate.replace(f.name ,encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
+                console.log(encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
+                
+                var fs = require('fs');
+                fs.writeFile("/tmp/test", doc_translate, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+
+                    console.log("The file was saved!");
+                }); 
+                //console.log(doc_translate);
+                // doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/', f.path, f.value)));
+                // console.log(doc_translate);
                 // doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, '../../public/', f.path, f.value)));
                 // console.log("path.join(__dirname, '../../ public', f.path, f.value):  " + path.join(__dirname, '../../public/' + getPaths(f.path), f.value));
             }

@@ -321,7 +321,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // debug('4444444444444444444' + temporal);
             Koboinfo.findById(valkoboid).exec(async function (err, kobo) {
                 // debug(variables);
-                var nfotos = -1;
+                var nfotos = 0;
                 logotypes = { "##Logo_world_bank##": "world_bank_logo.jpg", "##Logo_dominica##": "Dominica_logo.png" };
                 logotypesArray = ["world_bank_logo.jpg", "Dominica_logo.png"];
                 k = 0;
@@ -334,7 +334,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
 
                         dbfields.properties[variables[v]] = textToRender.toString();
-                        jsontoput2['name'] = '##Logo' + k + '##';
+                        jsontoput2['name'] = '##' + variables[v] + '##';
+                        // jsontoput2['name'] = '##Logo' + k + '##';
                         jsontoput2['type'] = 'img';
                         jsontoput2['value'] = logotypesArray[k];
                         jsontoput2['style'] = '';
@@ -353,7 +354,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         address = kobo.properties._attachments[j].split('/').slice(2, kobo.properties._attachments[j].split('/').length - 1);
                         debug(address);
                         dbfields.properties[variables[v]] = textToRender.toString();
-                        jsontoput2['name'] = '##img' + nfotos + '##';
+                        jsontoput2['name'] = '##' + variables[v] + '##';
+                        // jsontoput2['name'] = '##img' + nfotos + '##';
                         jsontoput2['type'] = 'img';
                         jsontoput2['value'] = file;
                         jsontoput2['style'] = '';
