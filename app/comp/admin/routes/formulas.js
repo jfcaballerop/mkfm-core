@@ -756,6 +756,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
         "result": "OK",
         "tracksUpdated": 0
     };
+
+    var sectionlength = 50; //val min por defecto
+
     debug(postData);
     var form;
     var formula = Object.keys(postData)[0];
@@ -767,8 +770,13 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             res.send(500, err.message);
         }
         form = f[0];
+        for (var fv of form.formulaSpec) {
+            if (fv.WEIGHTS !== undefined) {
+                sectionlength = fv.WEIGHTS.value;
+            }
+        }
     });
-    // debug(form);
+    debug('sectionlength ' + sectionlength);
     var wherearr = [];
 
     //add codes asset
@@ -790,6 +798,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
     var selectjson = {
         "geometry.coordinates": 1,
+        "inverted": 1,
         properties: []
     };
     for (var w of wherearr) {
@@ -836,6 +845,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var existsCcode = false;
                 var existsgcode = false;
                 var existsgcode2 = false;
+
 
                 if (ifdt.properties.rlofphysical[i] !== undefined) {
                     if (typeof ifdt.properties.rlofphysical[i] === "string") {
@@ -1048,13 +1058,73 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     "properties.grisknatural2": valuegrisknaturalarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.findByIdAndUpdate(ifdt._id, query, function (err, iup) {
                 if (err) {
                     debug(err.message);
                 }
-                // debug(iup);
+                // debug("SAVE " + iup._id);
+                // debug("Start section track - inverted: " + iup.inverted);
+                //"5a1d981d9fe31575548c495d" -- not inv
+                //"5a0dc03137bb372c9336a66b" -- inverted
 
+                if (iup._id.toString() === "5a0dc03137bb372c9336a66b") {
+                    debug('track length ' + iup.geometry.coordinates.length);
+
+
+                    var trackSections = [];
+                    var sections = [];
+                    var nsections = 1;
+                    var valini = iup.properties.pk[0]; //cojo el primer valo del PK
+                    if (iup.inverted) {
+                        sectionlength *= -1;
+                        var ns = 0;
+                        var pkini = iup.properties.pk[0];
+
+                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                            sections[ns] = iup.properties.rriskphysical[i];
+                            if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                                // debug(nsections);
+                                trackSections.push(sections);
+                                sections = [];
+                                nsections++;
+                                ns = 0;
+                            } else {
+                                ns++;
+                            }
+                        }
+                        var l = 0;
+                        for (var ts of trackSections) {
+                            l += ts.length;
+                        }
+                        debug('inverted trackSections ' + trackSections.length + ' points ' + l);
+                        debug(trackSections);
+
+                    } else {
+                        var ns = 0;
+                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                            sections[ns] = iup.properties.rriskphysical[i];
+                            if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                                // debug(nsections);
+                                trackSections.push(sections);
+                                sections = [];
+                                nsections++;
+                                ns = 0;
+                            } else {
+                                ns++;
+                            }
+                        }
+                        var l = 0;
+                        for (var ts of trackSections) {
+                            l += ts.length;
+                        }
+                        debug('trackSections ' + trackSections.length + ' points ' + l);
+                        debug(trackSections);
+                    }
+
+                }
             });
+
+
         }
     });
     ret.tracksUpdated = tracksUpdated;
@@ -4410,6 +4480,30 @@ router.post('/V1/update_field/', function (req, res, next) {
                     // debug(fspec.WEIGHTS);
                     // debug(fspec.score);
                     if (field === fspec.WEIGHTS.fieldname) {
+                        formSave.formulaSpec[k].WEIGHTS.value = value;
+                        debug(k);
+                    }
+                }
+                formSave.save(function (err, fsaved) {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+                    res.status(200).jsonp(ret);
+
+                });
+                break;
+            case 'Risk':
+                var field = field_name.replace(arrField[0] + '__', '');
+                debug(field);
+                var formSave = new Formula(f[0]);
+                // debug(formSave);
+                // Busco el campo @field en la Formula
+                for (var [k, fspec] of f[0].formulaSpec.entries()) {
+                    // debug(fspec.WEIGHTS);
+                    // debug(fspec.score);
+                    if (fspec.WEIGHTS !== undefined &&
+                        fspec.WEIGHTS.fieldname !== undefined &&
+                        field === fspec.WEIGHTS.fieldname) {
                         formSave.formulaSpec[k].WEIGHTS.value = value;
                         debug(k);
                     }

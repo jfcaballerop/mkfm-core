@@ -546,7 +546,7 @@
 
 
 
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec.reverse(), function (i, fspec) {
                     html[++h] = '<tr>';
 
                     html[++h] = '<td>';
@@ -554,9 +554,10 @@
                     html[++h] = ' </td> ';
                     if (fspec['WEIGHTS'] !== undefined) {
                         html[++h] = '<td>';
-                        html[++h] = '<input type="number" step="0.01" name="' + fspec['WEIGHTS'].fieldname +
+                        html[++h] = '<input type="number" min="50" step="25" name="' + fspec[
+                                'WEIGHTS'].fieldname +
                             '" value="' + fspec['WEIGHTS'].value +
-                            '" >';
+                            '" > meters';
 
                         html[++h] = ' </td> ';
                     }
