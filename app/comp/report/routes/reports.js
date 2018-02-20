@@ -323,7 +323,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                 // debug(variables);
                 var nfotos = 0;
                 logotypes = { "##Logo_world_bank##": "world_bank_logo.jpg", "##Logo_dominica##": "Dominica_logo.png" };
-                logotypesArray = ["world_bank_logo.jpg", "Dominica_logo.png"];
+                logotypesArray = ["Dominica_logo.png" , "world_bank_logo.jpg"];
                 k = 0;
                 for (v in variables) {
                     if (variables[v].indexOf('ogo') > -1) {
@@ -364,29 +364,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         temp.config.fields.push(jsontoput2);
                         arrayJsonProp.push(jsontoput2);
                         } else {
-                            // var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                            // file = '';
-                            // // debug(file);
-                            // address = '';
-                            // nfotos++;
-                            // dbfields.properties[variables[v]] = textToRender.toString();
-                            // jsontoput2['name'] = '##' + variables[v] + '##';
-                            // debug(variables[v]);
-                            // // jsontoput2['name'] = '##img' + nfotos + '##';
-                            // jsontoput2['type'] = 'img';
-                            // jsontoput2['value'] = file;
-                            // jsontoput2['style'] = '';
-                            // jsontoput2['path'] = address;
-
-                            // temp.config.fields.push(jsontoput2);
-                            // arrayJsonProp.push(jsontoput2);
 
                         }
                     }
 
                 }
                 debug(arrayJsonProp);
-                ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields);
+                ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields,temp);
                 // debug(JSON.stringify(ret.docDefinition));
                 await updateFromKobo();
 
