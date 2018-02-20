@@ -119,13 +119,18 @@ exports.docPdf = function (docDefinition, config, dbfields) {
     // TODO: Hacer un control de errores para que cuando el campo venga vacío no pete.
 
     for (var f of config.fields) {
-        // console.log(f);
-        // console.log(f.path);
-        if (f.type === 'img') {
+        if (f.type === 'img' || f.type.indexOf('ogo')>-1) {
             if (path.join(__dirname, '../../public', f.path, f.value).length < 65){
                 doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+                // console.log('path.join(__dirname, getPaths(f.path), f.value):  ' + path.join(__dirname, getPaths(f.path), f.value));
+                // console.log('_dirname:  ' + path.join(__dirname));
             } else {
-                doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, '../../public', f.path, f.value)));
+                console.log("path.join(__dirname, '../../ public', f.value):  " + f.value);
+                console.log("path.join(__dirname, '../../ public', f.path):  " + f.path);
+                console.log(__dirname, '../../public/media', f.path, f.value);
+                doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/media', f.path, f.value)));
+                // doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, '../../public/', f.path, f.value)));
+                // console.log("path.join(__dirname, '../../ public', f.path, f.value):  " + path.join(__dirname, '../../public/' + getPaths(f.path), f.value));
             }
 
         } else if (f.type === 'dbfield') {
