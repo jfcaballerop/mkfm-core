@@ -199,7 +199,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             res.send(500, err.message);
         }
 
-        var chorizo = JSON.stringify(temp);
+        var chorizo = JSON.stringify(temp.docDefinition);
 
         var find = "##\\w{3,30}##";
         var regex = new RegExp(find, "g");
@@ -211,7 +211,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
-        // debug(variables);
+        debug(variables);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
         // asscode = "F6-SD-06-B-3585";
@@ -321,7 +321,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // debug('4444444444444444444' + temporal);
             Koboinfo.findById(valkoboid).exec(async function (err, kobo) {
                 // debug(variables);
-                var nfotos = 0;
+                var nfotos = -1;
                 logotypes = { "##Logo_world_bank##": "world_bank_logo.jpg", "##Logo_dominica##": "Dominica_logo.png" };
                 logotypesArray = ["world_bank_logo.jpg", "Dominica_logo.png"];
                 k = 0;
@@ -369,8 +369,14 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                 // debug(JSON.stringify(ret.docDefinition));
                 await updateFromKobo();
 
-                // arrayJsonProp={};
-                await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { $set: { "config.fields": arrayJsonProp } }, {'new' : true}, function (err, doc) {
+                arrayJsonProp2={};
+                await Template.findByIdAndRemove({ "config.HTML.id": req.params.reportName }, function (err) {
+                    if (err) {
+                        console.log("Something wrong when updating data!");
+                    }
+                    console.log("data to database!");
+                });
+                await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { $set: { "config.fields": arrayJsonProp } }, { 'new': true }, function (err, doc) {
                     if (err) {
                         console.log("Something wrong when updating data!");
                     }

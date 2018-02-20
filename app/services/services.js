@@ -128,7 +128,7 @@ exports.docPdf = function (docDefinition, config, dbfields) {
                 console.log("path.join(__dirname, '../../ public', f.value):  " + f.value);
                 console.log("path.join(__dirname, '../../ public', f.path):  " + f.path);
                 console.log(__dirname, '../../public/media', f.path, f.value);
-                doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/media', f.path, f.value)));
+                doc_translate = doc_translate.replace(encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
                 // doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, '../../public/', f.path, f.value)));
                 // console.log("path.join(__dirname, '../../ public', f.path, f.value):  " + path.join(__dirname, '../../public/' + getPaths(f.path), f.value));
             }
