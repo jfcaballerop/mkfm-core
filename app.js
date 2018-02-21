@@ -98,9 +98,9 @@ app.use(methodOverride());
 mongoose.connect(configDB.url, {
     server: {
         "socketOptions": {
-            "socketTimeoutMS": 300000,
-            "keepAlive": 10000,
-            "connectTimeoutMS": 30000
+            "socketTimeoutMS": configAPP.SOCKETTIMEOUTMS,
+            "keepAlive": configAPP.KEEPALIVE,
+            "connectTimeoutMS": configAPP.CONNECTTIMEOUTMS
         }
     }
 });
