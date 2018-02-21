@@ -25,6 +25,7 @@ var formulaModels = require(path.join(__dirname, '../models/formula'));
 var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
+var mathjs = require('mathjs');
 
 var diccKoboToDominica = {
     "si": "Yes",
@@ -1147,6 +1148,18 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
                         debug(trackSectionscond);
 
+                    }
+                    // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
+                    // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
+
+                    for (var ts of trackSectionsphy) {
+                        // debug('Moda trackSectionsphy ' + mathjs.mode(ts));
+                    }
+                    for (var ts of trackSectionsnat) {
+                        //debug('Moda trackSectionsnat ' + mathjs.mode(ts));
+                    }
+                    for (var ts of trackSectionscond) {
+                        debug('Moda trackSectionscond ' + formulasService.ConditionRating(mathjs.mode(ts)));
                     }
 
                 }
