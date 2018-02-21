@@ -211,11 +211,11 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // debug(chorizoParseado[choricillo].replace(/#/g, ''));
 
         }
-        debug(variables);
+        // debug(variables);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
         // asscode = "F6-SD-06-B-3585";
-
+// debug('1');
         code = '/' + asscode + '/';
         assetCode = "bcode";
         // for (x in Koboinfo.find({})){
@@ -292,6 +292,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                         textToRender = beforeDot + '.' + afterDot;
                                     }
                                 }
+                                // debug('1');
                                 dbfields.properties[variables[v]] = textToRender.toString();
                                 jsontoput['name'] = '##' + variables[v] + '##';
                                 jsontoput['type'] = 'dbfield';
@@ -314,9 +315,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             // JSON.parse(JSON.stringify(temp.config.fields[0]));
             // console.log(JSON.stringify(services.docPdf(temp.docDefinition, temp.config, dbfields).content));
 
-            // ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields);
-            // debug('temp.docDefinition   ' +  temp.docDefinition);
-            // res.status(200).jsonp(ret);
+            ret.docDefinition = services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
+            debug('temp.docDefinition   ' +  temp.docDefinition);
+            res.status(200).jsonp(ret);
             temporal = temp;
             // debug('4444444444444444444' + temporal);
             Koboinfo.findById(valkoboid).exec(async function (err, kobo) {
@@ -350,6 +351,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         file = kobo.properties._attachments[nfotos].split("/")[kobo.properties._attachments[nfotos].split("/").length - 1];
                         file = file.split('.')[0] + '-small.' + file.split('.')[1];
                         // debug(file);
+                            debug(kobo.properties._attachments[nfotos]);
                         address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
                         nfotos++;
                         debug(address);
@@ -369,8 +371,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     }
 
                 }
-                debug(arrayJsonProp);
-                ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields,temp);
+                // debug(arrayJsonProp);
+                ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
                 // debug(JSON.stringify(ret.docDefinition));
                 await updateFromKobo();
 

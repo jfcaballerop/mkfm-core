@@ -64,6 +64,21 @@
                                     });
 
                                     break;
+                                case 'ROAD':
+                                    $(":radio[value^='ROAD']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+
+                                    break;
+                                case 'GEOT':
+                                    $(":radio*").each(function(index) {
+                                        // $(":radio[value^='GEOT']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+
+                                    break;
 
                                 default:
                                     break;
