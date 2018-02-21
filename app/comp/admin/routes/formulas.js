@@ -1067,6 +1067,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 //"5a1d981d9fe31575548c495d" -- not inv
                 //"5a0dc03137bb372c9336a66b" -- inverted
 
+                // TODO: añadir sections por cada tipo de Risk physical y natural, además añadir como filtrado por condition
+
                 if (iup._id.toString() === "5a0dc03137bb372c9336a66b") {
                     debug('track length ' + iup.geometry.coordinates.length);
 
