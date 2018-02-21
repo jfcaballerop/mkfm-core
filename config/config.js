@@ -21,6 +21,9 @@ module.exports = {
     URL_BASE_API: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/API',
     URL_BASE_WEB: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/WEB',
     MAXDISTANCE: 100, // PRECISION in meters
-    QUERYMAXDISTANCE: 1 // PRECISION in meters
+    QUERYMAXDISTANCE: 1, // PRECISION in meters
+    SOCKETTIMEOUTMS: 600000, // server socketOptions for connections
+    KEEPALIVE: 200000,
+    CONNECTTIMEOUTMS: 60000
 
 };
