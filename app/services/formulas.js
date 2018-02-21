@@ -412,7 +412,7 @@ exports.LikelihoodofFailureRatingScale = function (cond_letter) {
     return ret;
 }
 exports.ConditionRating = function (vcond) {
-    var lof = vcond * 1;
+    var lof = vcond * 100;
     var condition = [];
     if (lof >= 0 && lof < 20) {
         cv = '0-20';
