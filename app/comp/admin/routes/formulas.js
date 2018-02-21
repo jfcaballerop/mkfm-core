@@ -1080,6 +1080,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     var trackSectionscond = [];
                     var sectionscond = [];
                     var nsections = 1;
+                    var pkreg = [];
+                    var trackpkreg = [];
+
                     var valini = iup.properties.pk[0]; //cojo el primer valo del PK
                     if (iup.inverted) {
                         sectionlength *= -1;
@@ -1090,14 +1093,18 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             sectionsphy[ns] = iup.properties.rriskphysical[i];
                             sectionsnat[ns] = iup.properties.rrisknatural[i];
                             sectionscond[ns] = iup.properties.rcondition[i];
+                            pkreg[ns] = iup.properties.pk[i];
+
                             if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                                 // debug(nsections);
                                 trackSectionsphy.push(sectionsphy);
                                 trackSectionsnat.push(sectionsnat);
                                 trackSectionscond.push(sectionscond);
+                                trackpkreg.push(pkreg);
                                 sectionsphy = [];
                                 sectionsnat = [];
                                 sectionscond = [];
+                                pkreg = [];
                                 nsections++;
                                 ns = 0;
                             } else {
@@ -1114,6 +1121,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         debug(trackSectionsnat);
                         debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
                         debug(trackSectionscond);
+                        debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
+                        debug(trackpkreg);
 
                     } else {
                         var ns = 0;
@@ -1121,12 +1130,15 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             sectionsphy[ns] = iup.properties.rriskphysical[i];
                             sectionsnat[ns] = iup.properties.rrisknatural[i];
                             sectionscond[ns] = iup.properties.rcondition[i];
+                            pkreg[ns] = iup.properties.pk[i];
 
                             if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                                 // debug(nsections);
                                 trackSectionsphy.push(sectionsphy);
                                 trackSectionsnat.push(sectionsnat);
                                 trackSectionscond.push(sectionscond);
+                                trackpkreg.push(pkreg);
+                                pkreg = [];
                                 sectionsphy = [];
                                 sectionsnat = [];
                                 sectionscond = [];
@@ -1145,22 +1157,61 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         debug(trackSectionsphy);
                         debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
                         debug(trackSectionsnat);
-                        debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                        debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
                         debug(trackSectionscond);
+                        debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
+                        debug(trackpkreg);
 
                     }
                     // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
                     // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
 
-                    for (var ts of trackSectionsphy) {
-                        // debug('Moda trackSectionsphy ' + mathjs.mode(ts));
+                    var antsect = mathjs.mode(trackSectionsphy[0])[0];
+                    var antcond = "";
+                    var pkiniant = trackpkreg[0][0];
+                    var pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
+                    var pkini;
+                    var pkfin;
+                    var trackgroup = iup.properties.rcode;
+                    //TODO: terminar de rellenar el nombre
+                    for (var ts in trackSectionsphy) {
+                        //TODO: cuidado que la moda puede devolver 2 valores si son iguales
+                        if (ts === 0) {
+                            antsect = mathjs.mode(trackSectionsphy[0])[0];
+                            pkiniant = trackpkreg[0][0];
+                            pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
+                            pkini = pkfinant;
+                            pkfin = pkfinant;
+                            debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
+                                ' pkini: ' + pkini);
+                        } else {
+                            if (mathjs.mode(trackSectionsphy[ts])[0] !== antsect) {
+                                debug(' pkfin: ' + pkfin);
+                                pkini = trackpkreg[ts][0];
+                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1];
+                                debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
+                                    ' pkini: ' + pkini);
+                            } else {
+                                debug('++ADD ' + mathjs.mode(trackSectionsphy[ts]) +
+                                    ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])));
+                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1];
+                            }
+                            antsect = mathjs.mode(trackSectionsphy[ts - 1])[0];
+                            // pkfin = trackpkreg[ts - 1][trackpkreg[ts - 1].length - 1];
+
+                        }
+
                     }
-                    for (var ts of trackSectionsnat) {
-                        //debug('Moda trackSectionsnat ' + mathjs.mode(ts));
+                    debug(' pkfin: ' + pkfin);
+
+                    for (var ts in trackSectionsnat) {
+                        // debug('Moda trackSectionsnat ' + mathjs.mode(trackSectionsnat[ts]) +
+                        //     ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])) +
+                        //     ' pkini: ' + trackpkreg[ts][0] + ' pkfin: ' + trackpkreg[ts][trackpkreg[ts].length - 1]);
                     }
-                    for (var ts of trackSectionscond) {
-                        debug('Moda trackSectionscond ' + formulasService.ConditionRating(mathjs.mode(ts)));
-                    }
+                    // for (var ts of trackSectionscond) {
+                    //     debug('Moda trackSectionscond ' + formulasService.ConditionRating(mathjs.mode(ts)));
+                    // }
 
                 }
             });
