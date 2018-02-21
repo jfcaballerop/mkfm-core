@@ -55,17 +55,24 @@
                             $('#response').empty();
                             $('#response').show();
                             $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
+                            console.log(ifdt.properties.asset_type);
                             switch (ifdt.properties.asset_type) {
                                 case 'BRIDGE':
-                                    $(":radio[value^='BRIDGE']").each(function(index) {
+                                    $(":radio[value*='RIDG']").each(function(index) {
                                         $this = $(this);
                                         $this.prop('disabled', false);
                                     });
 
                                     break;
                                 case 'ROAD':
-                                    $(":radio[value^='ROAD']").each(function(index) {
+                                    $(":radio[value*='OAD']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+
+                                    break;
+                                case 'CULVERT':
+                                    $(":radio[value*='LVERT']").each(function(index) {
                                         $this = $(this);
                                         $this.prop('disabled', false);
                                     });
@@ -73,9 +80,14 @@
                                     break;
                                 case 'GEOT':
                                     $(":radio*").each(function(index) {
-                                        // $(":radio[value^='GEOT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
+                                        $(":radio[value*='RETA']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='EAR']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
                                     });
 
                                     break;
@@ -134,7 +146,7 @@
                     $('#iframeContainer').empty();
                     $('#response').show();
                     $('#response').append("Generating...");
-                    $(":radio").prop('disabled', false);
+                    //$(":radio").prop('disabled', false);
                     $("#generateReport").prop('disabled', true);
                     $('#spinner').hide();
                     docDefinition = ret.docDefinition;
