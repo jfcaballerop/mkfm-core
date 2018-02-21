@@ -1072,8 +1072,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     debug('track length ' + iup.geometry.coordinates.length);
 
 
-                    var trackSections = [];
-                    var sections = [];
+                    var trackSectionsphy = [];
+                    var sectionsphy = [];
+                    var trackSectionsnat = [];
+                    var sectionsnat = [];
+                    var trackSectionscond = [];
+                    var sectionscond = [];
                     var nsections = 1;
                     var valini = iup.properties.pk[0]; //cojo el primer valo del PK
                     if (iup.inverted) {
@@ -1082,11 +1086,17 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         var pkini = iup.properties.pk[0];
 
                         for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sections[ns] = iup.properties.rriskphysical[i];
+                            sectionsphy[ns] = iup.properties.rriskphysical[i];
+                            sectionsnat[ns] = iup.properties.rrisknatural[i];
+                            sectionscond[ns] = iup.properties.rcondition[i];
                             if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                                 // debug(nsections);
-                                trackSections.push(sections);
-                                sections = [];
+                                trackSectionsphy.push(sectionsphy);
+                                trackSectionsnat.push(sectionsnat);
+                                trackSectionscond.push(sectionscond);
+                                sectionsphy = [];
+                                sectionsnat = [];
+                                sectionscond = [];
                                 nsections++;
                                 ns = 0;
                             } else {
@@ -1094,20 +1104,32 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             }
                         }
                         var l = 0;
-                        for (var ts of trackSections) {
+                        for (var ts of trackSectionsphy) {
                             l += ts.length;
                         }
-                        debug('inverted trackSections ' + trackSections.length + ' points ' + l);
-                        debug(trackSections);
+                        debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                        debug(trackSectionsphy);
+                        debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                        debug(trackSectionsnat);
+                        debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                        debug(trackSectionscond);
 
                     } else {
                         var ns = 0;
                         for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sections[ns] = iup.properties.rriskphysical[i];
+                            sectionsphy[ns] = iup.properties.rriskphysical[i];
+                            sectionsnat[ns] = iup.properties.rrisknatural[i];
+                            sectionscond[ns] = iup.properties.rcondition[i];
+
                             if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                                 // debug(nsections);
-                                trackSections.push(sections);
-                                sections = [];
+                                trackSectionsphy.push(sectionsphy);
+                                trackSectionsnat.push(sectionsnat);
+                                trackSectionscond.push(sectionscond);
+                                sectionsphy = [];
+                                sectionsnat = [];
+                                sectionscond = [];
+
                                 nsections++;
                                 ns = 0;
                             } else {
@@ -1115,11 +1137,16 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             }
                         }
                         var l = 0;
-                        for (var ts of trackSections) {
+                        for (var ts of trackSectionsphy) {
                             l += ts.length;
                         }
-                        debug('trackSections ' + trackSections.length + ' points ' + l);
-                        debug(trackSections);
+                        debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                        debug(trackSectionsphy);
+                        debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                        debug(trackSectionsnat);
+                        debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                        debug(trackSectionscond);
+
                     }
 
                 }
