@@ -3,6 +3,34 @@ var path = require('path');
 var config = require(path.join(__dirname, '../../config/config'));
 var services = require(path.join(__dirname, './services'));
 
+
+exports.getRangeValues = function (scorerangeval) {
+    var operador = "";
+    var minval = 0;
+    var maxval = 0;
+    scorerangeval.indexOf('MIN') >= 0 ? operador = "MIN" : false;
+    scorerangeval.indexOf('MAY') >= 0 ? operador = "MAY" : false;
+    scorerangeval.indexOf('EQ') >= 0 ? operador = "EQ" : false;
+    switch (operador) {
+        case 'MIN':
+            minval = Number.MIN_VALUE;
+            maxval = scorerangeval.substr(scorerangeval.indexOf('MIN') + 3, scorerangeval.length - 1) * 1.0;
+            break;
+        case 'MAY':
+            maxval = Number.MAX_VALUE;
+            minval = scorerangeval.substr(scorerangeval.indexOf('MAY') + 3, scorerangeval.length - 1) * 1.0;
+            break;
+        case 'EQ':
+            maxval = scorerangeval.substr(scorerangeval.indexOf('EQ') + 2, scorerangeval.length - 1) * 1.0;
+            minval = scorerangeval.substr(0, scorerangeval.indexOf('EQ')) * 1.0;
+            break;
+
+        default:
+            break;
+    }
+
+    return [minval, maxval, operador]
+}
 exports.criticalityValue = function (in_val) {
 
     cscale = {
