@@ -199,7 +199,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             res.send(500, err.message);
         }
         temp.config.fields = [temp.config.fields[0]];
-        debug('############');
         var chorizo = JSON.stringify(temp.docDefinition);
 
         var find = "##\\w{3,30}##";
@@ -209,22 +208,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var variables = [];
         for (choricillo in chorizoParseado) {
             variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
-            // debug(chorizoParseado[choricillo].replace(/#/g, ''));
-
         }
-        // debug(variables);
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType;
         var textToRender = '';
         // asscode = "F6-SD-06-B-3585";
-// debug('1');
         code = '/' + asscode + '/';
         assetCode = "bcode";
-        // for (x in Koboinfo.find({})){
-        //     debug('----------------------- \n' + x);
-        // }
-        // while(true){;}
-        // Koboinfo.find({}).exec(function (err, Koboinfos) { 
         Infodatatrack.findOne({
             $or: [{
                 "properties.rcode": req.params.assetCode
@@ -261,9 +251,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(ifdt);
             if (ifdt !== null) {
-                // templateGeneration('', temp, req, ifdt);
                 for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                     if ((ifdt.properties.rcode[i] === req.params.assetCode ||
                         ifdt.properties.rname[i] === req.params.assetCode ||
@@ -276,19 +264,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         ifdt.properties.Ccode[i] === req.params.assetCode) && hasNotFound === 1) {
                         hasNotFound = 0;
                         arrayJsonProp = [];
-                        // dbfields.properties.name=ifdt.properties[name];
                         for (v in variables) {
-                            // debug(req.params.assetCode.toString());
-                            // debug(ifdt.properties['Ccode'][i]);
-                            debug((ifdt.properties.rcode[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.rname[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.bcode[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.bname[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.gcode[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.gcode2[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.dcode[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.dcode2[i] === req.params.assetCode.toString() ||
-                                ifdt.properties.Ccode[i] === req.params.assetCode.toString()) );
                             if (variables[v].toString().indexOf('ogo') === -1 &&
                                 variables[v].toString().indexOf('img') === -1 &&
                                 ifdt.properties[variables[v]] !== undefined &&
@@ -325,13 +301,10 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     }
                 }
             temporal = temp;
-            debug('valkoboid' + valkoboid);
-                    debug('valkoboid' + valkoboid);
 
 
                     
             Koboinfo.findById(valkoboid).exec(async function (err, kobo) {
-                // debug(variables);
                 var nfotos = 0;
                 logotypes = { "##Logo_world_bank##": "world_bank_logo.jpg", "##Logo_dominica##": "Dominica_logo.png" };
                 logotypesArray = ["Dominica_logo.png" , "world_bank_logo.jpg"];
@@ -415,48 +388,20 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
 
                 ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
-
-                // debug(ret.docDefinition.content[0].columns[1]);
-                // var rkk = 9888452;
-                // while (rkk > 0) { rkk--; }
-                // debug('6');
-                
                 await Template.findOneAndUpdate({ "config.HTML.id": req.params.reportName }, { 
                     $set: { "config.fields": arrayJsonProp } }, { 'new': true }, async function (err, doc) {
                     if (err) {
                         console.log("Something wrong when updating data!");
                     }
-                    console.log("data to database!");
-                    // console.log(doc);
                 });
-
-                // var kk=988853;
-                // while (kk>0) {
-                //     if (kk < 2){
-                //         res.status(200).jsonp(ret);
-                //         debug('9');
-                //     }
-                //     console.log(kk);
-                //     kk--}
-
-                debug('7');
                 await res.status(200).jsonp(ret);
 
                     });
-                
-                debug('8');
                 } else {
 
                     console.log('ifdt is null');
                 }
             });
-
-
-
-
-        debug('9');
-
-
     });
 });
 

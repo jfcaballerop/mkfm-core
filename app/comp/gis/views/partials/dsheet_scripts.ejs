@@ -5,6 +5,46 @@
 
     $(document).ready(function() {
 
+        $('#generaldataupload').click(function() {
+            var $this = $(this);
+            $('#divmap1').show();
+            if ($this.prop('checked')) {
+                nchar = $this.val().length;
+                $('#divmap1').prepend(gen_data.join(''));
+                if (ifdtobject.properties.asset_type === 'ROAD') {
+                    console.log(ifdtobject);
+                    $.each(ROADS.general_data, function(key, value) {
+                        if (Array.isArray(ifdtobject.properties[key])) {
+                            console.log('Is Array');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        } else {
+                            console.log('Is NOT Array');
+                            if (ifdtobject.properties[key] != undefined) {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+
+                            } else {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+
+                            }
+                        }
+
+
+                    });
+
+                }
+                $('#generaldatadiv').show();
+
+            } else {
+                $('#generaldatadiv').hide();
+
+            }
+        });
         $('#generaldata').click(function() {
             var $this = $(this);
             $('#divmap1').show();
@@ -605,6 +645,8 @@
                 $("#inventorydata").prop("checked", false);
                 $("#operation").prop("checked", false);
                 $("#risk").prop("checked", false);
+                $('#datainfo').show();
+                $('#dataupload').show();
 
                 var dataPost = {};
 
@@ -764,12 +806,12 @@
                 }
             }
         });
-
-
         $('#searchtool').on('input', function() {
 
             var $this = $(this);
 
+            $('#datainfo').show();
+            $('#dataupload').show();
             if (nchar == 0 && !resized) {
                 nchar = $this.val().length;
                 $("#divmap2").animate({
@@ -789,6 +831,7 @@
                         // console.log(map.getCenter());
                     }
                     $('#datainfo').show();
+                    $('#dataupload').show();
 
                 });
             } else {
@@ -799,7 +842,5 @@
 
 
         });
-
-
     });
 </script>

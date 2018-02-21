@@ -133,34 +133,13 @@ exports.docPdf = function (docDefinition, config, dbfields,temp) {
     }
 
     doc_translate = doc_translate.replace('##TITLE_HEADER##', temp.name);
-    // console.log(doc_translate);
     var find1 = "##im\\w{2,30}##";
     var find2 = "##\\w{2,70}##";
     var find3 = "##--##";
     pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
-    // doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
-    
-    // doc_translate = doc_translate.replace(new RegExp("##\\w{3,30}##", "g"), '--');
     doc_translate = doc_translate.replace(new RegExp(find1, "g"), pixel );
     doc_translate = doc_translate.replace(new RegExp(find2, "g"), '--');
-    // doc_translate.replace(find3, '"image": "' + pixel + '"')
     doc_translate = doc_translate.replace(new RegExp(find3, "g"), pixel );
-
-    // var find = '"image": "--"';
-    // doc_translate = doc_translate.replace(new RegExp(find, "g"), pixel);
-
-
-    // var fs = require('fs');
-    // fs.writeFile("/tmp/test", doc_translate, function (err) {
-    //     if (err) {
-    //         return console.log(err);
-    //     }
-
-    //     console.log("The file was saved!");
-    // }); 
-
-
-    // console.log(doc_translate);
 
     return JSON.parse(doc_translate);
 };
