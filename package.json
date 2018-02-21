@@ -24,6 +24,7 @@
         "jshint": "^2.9.5",
         "jsonwebtoken": "^7.4.2",
         "jwt-simple": "^0.5.1",
+        "mathjs": "^3.20.2",
         "meanio": "^0.9.4",
         "method-override": "^2.3.9",
         "moment": "^2.18.1",
