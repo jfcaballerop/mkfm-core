@@ -1167,71 +1167,10 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
                     // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
 
-                    var antsect = mathjs.mode(trackSectionsphy[0])[0];
-                    var antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
-                    var pkiniant = trackpkreg[0][0];
-                    var pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
-                    var pkini;
-                    var pkfin;
-                    var tracknamesche = iup.properties.rcode[0];
 
-                    //TODO: terminar de rellenar el nombre
-                    for (var ts in trackSectionsphy) {
-                        //TODO: cuidado que la moda puede devolver 2 valores si son iguales
-                        //debug(typeof (ts));
-                        ts = Number(ts);
-                        if (ts === 0) {
-                            antsect = mathjs.mode(trackSectionsphy[0])[0];
-                            antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
-                            pkiniant = trackpkreg[0][0];
-                            pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
-                            pkini = pkiniant / 1000;
-                            pkfin = pkfinant / 1000;
-                            debug('pkini ' + pkini);
-                            debug('pkfin ' + pkfin);
-                            tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
-                                '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
-                            // debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                            //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
-                        } else {
-                            if (mathjs.mode(trackSectionsphy[ts])[0] !== antsect || formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond) {
-                                tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
-                                    '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__RPHY-' + antsect + '__COND-' + antcond;
-                                debug(tracknamesche);
-                                // debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__RPHY-' + antsect + '__COND-' + antcond;
-                                pkini = trackpkreg[ts][0] / 1000;
-                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
-                                tracknamesche = iup.properties.rcode[0];
-                                tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
-                                    '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
-                                // debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                                //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
-                            } else {
-                                // debug('++ADD ' + mathjs.mode(trackSectionsphy[ts]) +
-                                //     ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])));
-                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
-                            }
-                            antsect = mathjs.mode(trackSectionsphy[ts - 1])[0];
-                            antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts - 1])[0]);
-                            // pkfin = trackpkreg[ts - 1][trackpkreg[ts - 1].length - 1];
+                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY'));
+                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
 
-                        }
-
-                    }
-                    // debug(' FIN pkfin: ' + pkfin);
-                    // debug(tracknamesche + '-');
-                    tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
-                        '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__RPHY-' + antsect + '__COND-' + antcond;
-                    debug(tracknamesche);
-
-                    for (var ts in trackSectionsnat) {
-                        // debug('Moda trackSectionsnat ' + mathjs.mode(trackSectionsnat[ts]) +
-                        //     ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])) +
-                        //     ' pkini: ' + trackpkreg[ts][0] + ' pkfin: ' + trackpkreg[ts][trackpkreg[ts].length - 1]);
-                    }
-                    // for (var ts of trackSectionscond) {
-                    //     debug('Moda trackSectionscond ' + formulasService.ConditionRating(mathjs.mode(ts)));
-                    // }
 
                 }
             });
