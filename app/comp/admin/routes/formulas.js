@@ -3148,7 +3148,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                             // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
-                                            if (ifdt.properties.CDamages[i].length > 0) {
+                                            if (ifdt.properties.CDamages.length > 0) {
                                                 for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                                     // debug(score.toString.toUpperCase)
                                                     if (score !== undefined && score !== null) {
@@ -3157,15 +3157,23 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
                                                             totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                                 totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
+                                                            debug(ifdt.properties.CDamages[i].toString());
+                                                            debug(score.toUpperCase());
+                                                            debug(totalScoring);
                                                             numberOfScores++;
+                                                            k = 333333333;
+                                                            // while (k > 0) { k--; }
                                                             // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         }
                                                     }
+                                                    debug('totalScoring1: ' + totalScoring);
                                                 }
                                             } else {
                                                 totalScoring = 100;
                                             }
+                                            debug('totalScoring2: ' + totalScoring);
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
+                                            debug('totalScoring3: ' + totalScoring);
                                             // debug(totalScoring);
 
                                             if (numberOfScores > 2) {
@@ -3175,6 +3183,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
+                                            debug('totalScoring4: ' + totalScoring);
                                             //  clearing required
                                             if (ifdt.properties.Cclearing[i].length > 0) {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
@@ -3184,7 +3193,14 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         // debug('ifdt.Cclearing ' + score.toUpperCase());
                                                         if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
                                                             debug(score.toUpperCase())
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
+                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score];
+                                                            debug('form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]: ' + form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]);
+                                                            debug(ifdt.properties.Cclearing[i].toString());
+                                                            debug(score.toUpperCase());
+                                                            debug(totalScoring);
+                                                            numberOfScores++;
+                                                            k = 333333333;
+                                                            // while (k > 0) { k--; }
                                                             // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         } else {
 
@@ -3198,6 +3214,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
+                                            debug('totalScoring5: ' + totalScoring);
                                             //debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");

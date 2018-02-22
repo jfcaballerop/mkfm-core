@@ -106,6 +106,22 @@
                                     });
                                     // });
                                     break;
+                                case 'GEOT2':
+                                    $(":radio[value*='LVERT']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', true);
+                                    });
+                                    // $(":radio*").each(function(index) {
+                                    $(":radio[value*='RETA']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+                                    $(":radio[value*='EAR']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+                                    // });
+                                    break;
 
                                 default:
                                     break;
