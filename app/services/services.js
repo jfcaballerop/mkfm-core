@@ -105,35 +105,52 @@ function encodeImageFileAsURL(file_path) {
 function getPaths(folder) {
     var paths = {
         logos: "../../public/media/logos",
+        att: "../../public/media/ingenierosinf/attachments",
 
     };
     return paths[folder];
 
 
 }
-exports.docPdf = function (docDefinition, config, dbfields) {
-    // var logo_img = ret.docDefinition.header.columns[0].image.replace('##Logo1##', encodeImageFileAsURL(''));
+exports.docPdf = function (docDefinition, config, dbfields,temp) {
     var doc_translate = JSON.stringify(docDefinition);
-    // console.log(dbfields);
-    // TODO: Hacer un control de errores para que cuando el campo venga vacío no pete.
-
     for (var f of config.fields) {
-        // console.log(f);
-        if (f.type === 'img') {
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+        if ((f.type === 'img' || f.type.indexOf('ogo')>-1) && f.value !== '') {
+            if (path.join(__dirname, '../../public', f.path, f.value).length < 65){
+                doc_translate = doc_translate.replace(new RegExp(f.name, "g"), encodeImageFileAsURL(path.join(__dirname, getPaths(f.path), f.value)));
+            } else {
+                console.log(__dirname, '../../public/media', f.path, f.value);
+                doc_translate = doc_translate.replace(f.name ,encodeImageFileAsURL(path.join(__dirname, '../../public/media/', f.path, f.value)));
+            }
 
         } else if (f.type === 'dbfield') {
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), eval('dbfields.' + f.value));
-
+            evaluation = eval('dbfields.' + f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null ) ? evaluation : '--' );
         } else {
 
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '##--##' : f.value);
         }
+        }
+    doc_translate = doc_translate.replace('##TITLE_HEADER##', temp.name);
+
+    pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
+
+    var find = ["##im\\w{2,30}##", "##dr\\w{2,30}##", "##\\w{2,70}##", "##--##"];
+    var toreplace = [pixel, pixel, '', pixel];
+    var j=0;
+    for (var rep of find) {
+        doc_translate = doc_translate.replace(new RegExp(rep, "g"), toreplace[j++] );
+        // j++;
     }
+    var fs = require('fs');
+    fs.writeFile("/tmp/test", doc_translate, function (err) {
+        if (err) {
+            return console.log(err);
+        }
 
-    // console.log(doc_translate);
-
+    }); 
     return JSON.parse(doc_translate);
+
 };
 
 exports.roundValue = function (value, decimals) {
