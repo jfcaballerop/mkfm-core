@@ -3148,13 +3148,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             // TODO: calculo de la formula para Pavements -- Sacarlo a un service
                                             // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
-                                            if (ifdt.properties.CDamages.length > 0) {
+                                            if (ifdt.properties.CDamages[i].length > 0) {
                                                 for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                                     // debug(score.toString.toUpperCase)
                                                     if (score !== undefined && score !== null) {
                                                         // debug('score ' + score.toUpperCase());
                                                         // debug('ifdt.CDamages ' + score.toUpperCase());
-                                                        if (ifdt.properties.CDamages.toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
+                                                        if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
                                                             totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                                 totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
                                                             numberOfScores++;
@@ -3183,6 +3183,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         // debug('score ' + score.toUpperCase());
                                                         // debug('ifdt.Cclearing ' + score.toUpperCase());
                                                         if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
+                                                            debug(score.toUpperCase())
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]
                                                             // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         } else {
@@ -4166,7 +4167,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         debug('totalScoring1 -- :  ' + totalScoring);
                                         var numberOfScores = 0;
                                         var numberOfTypeOfFailureProcess = 0;
-                                        if (ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0 &&
+                                        if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay !== undefined &&
+                                            form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[0] !== undefined &&
+                                            ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0 &&
                                             ifdt.properties.bdamagesfoundationsgeneraltype[i] !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype[i].length > 0) {
                                             debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
@@ -4190,7 +4193,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         }
                                         debug('totalScoring2:  ' + totalScoring);
                                         debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
-                                        if (ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
+                                        if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay !== undefined &&
+                                            form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[0] !== undefined &&
+                                            ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
                                             ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length > 0) {
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
                                                 debug(' x: ' + x);

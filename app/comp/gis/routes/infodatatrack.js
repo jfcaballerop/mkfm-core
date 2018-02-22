@@ -49,6 +49,8 @@ router.use(bodyParser.json());
 **********************************************************/
 /* GET List infodatatracks */
 router.post('/list_ifdt/:info', function (req, resp, next) {
+    // req.params.info = req.params.info.replace(/%20/g, " ");
+    // debug("LLego aqui");
     var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
     var options = {
         host: config.HOST_API,
@@ -1177,36 +1179,38 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function (req, res, next) 
 });
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/list_ifdt/:info', function (req, res, next) {
+    req.params.info = req.params.info;
     var returnObject = {};
     var index = 0;
     var lastindex = 0;
+    console.log(req.params.info.replace('%20', ' '));
     Infodatatrack.find({
         $or: [{
-                "properties.rcode": req.params.info
+            "properties.rcode": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.rname": req.params.info
+                "properties.rname": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.bcode": req.params.info
+                "properties.bcode": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.bname": req.params.info
+                "properties.bname": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.gcode": req.params.info
+                "properties.gcode": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.gcode2": req.params.info
+                "properties.gcode2": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.dcode": req.params.info
+                "properties.dcode": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.dcode2": req.params.info
+                "properties.dcode2": req.params.info.replace('%20', ' ')
             },
             {
-                "properties.Ccode": req.params.info
+                "properties.Ccode": req.params.info.replace('%20', ' ')
             }
         ]
     }).exec(function (err, infodatatrack) {

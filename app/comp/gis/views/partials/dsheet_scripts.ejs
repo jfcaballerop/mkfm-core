@@ -1,7 +1,11 @@
+<script src="js/jquery-ui-1.10.4.js"></script>
+<script src="js/jquery.fileupload.js">
+</script>
 <script>
     var ifdtobject;
     var nchar = 0;
     var resized = false;
+
 
     $(document).ready(function() {
 
@@ -11,33 +15,22 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
                 $('#divmap1').prepend(gen_data.join(''));
-                if (ifdtobject.properties.asset_type === 'ROAD') {
-                    console.log(ifdtobject);
-                    $.each(ROADS.general_data, function(key, value) {
-                        if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
-                            } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                $('#generaldatatbody').append('<tr><td>' + 'mnjoisfmoṕasd,fl' + '</td><td>' + 'mnjoisfmoṕasd,fl' + '</td></tr>');
+                $('#generaldatatbody').append('<tr><td>' + 'mnjoisfmoṕasd,fl' + '</td><td>' + 'mnjoisfmoṕasd,fl' + '</td></tr>');
 
-                            }
-                        } else {
-                            console.log('Is NOT Array');
-                            if (ifdtobject.properties[key] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
-
-                            } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
-
-                            }
+                $(function() {
+                    $('#fileupload').fileupload({
+                        dataType: 'json',
+                        done: function(e, data) {
+                            $.each(data.result.files, function(index, file) {
+                                $('<p/>').text(file.name).appendTo(document.body);
+                            });
                         }
-
-
                     });
+                });
 
-                }
+
                 $('#generaldatadiv').show();
 
             } else {

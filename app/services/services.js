@@ -130,18 +130,27 @@ exports.docPdf = function (docDefinition, config, dbfields,temp) {
 
             doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '##--##' : f.value);
         }
-    }
-
+        }
     doc_translate = doc_translate.replace('##TITLE_HEADER##', temp.name);
-    var find1 = "##im\\w{2,30}##";
-    var find2 = "##\\w{2,70}##";
-    var find3 = "##--##";
-    pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
-    doc_translate = doc_translate.replace(new RegExp(find1, "g"), pixel );
-    doc_translate = doc_translate.replace(new RegExp(find2, "g"), '--');
-    doc_translate = doc_translate.replace(new RegExp(find3, "g"), pixel );
 
+    pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
+
+    var find = ["##im\\w{2,30}##", "##dr\\w{2,30}##", "##\\w{2,70}##", "##--##"];
+    var toreplace = [pixel, pixel, '', pixel];
+    var j=0;
+    for (var rep of find) {
+        doc_translate = doc_translate.replace(new RegExp(rep, "g"), toreplace[j++] );
+        // j++;
+    }
+    var fs = require('fs');
+    fs.writeFile("/tmp/test", doc_translate, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+
+    }); 
     return JSON.parse(doc_translate);
+
 };
 
 exports.roundValue = function (value, decimals) {
