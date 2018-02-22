@@ -7,6 +7,7 @@ var http = require('http');
 var moment = require('moment');
 var sseExpress = require('sse-express');
 var bodyParser = require('body-parser');
+var fileUpload = require('../models/fileupload');
 var utm = require('utm');
 var assert = require('assert');
 var req2 = require('request');
@@ -19,8 +20,8 @@ var roadlabObject = {};
 router.use(bodyParser.urlencoded({
     extended: true
 }));
-//router.use(fileUpload());
-//router.use(uploading.single('foofield'));
+// router.use(fileUpload());
+// router.use(uploading.single('foofield'));
 
 /**bodyParser.json(options)
  * Parses the text as JSON and exposes the resulting object on req.body.
