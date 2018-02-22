@@ -37,13 +37,13 @@
                         type: 'POST',
                         contentType: 'application/json'
                     }, function(data) {
-                        // console.log('koboinfo ' + JSON.stringify(data));
+                        //// console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
                     Promise.all([p1]).then(function(values) {
                         $('#spinner').show();
                         ifdt = values[0];
-                        console.log(ifdt);
+                        // console.log(ifdt);
                         if (ifdt.properties.asset_type === 'ERROR') {
                             $('#error').show();
                             $('#error').append("Search not found.<br>Try again.");
@@ -55,7 +55,7 @@
                             $('#response').empty();
                             $('#response').show();
                             $('#response').append("Asset type: " + ifdt.properties.asset_type);
-                            console.log(ifdt.properties.asset_type);
+                            // console.log(ifdt.properties.asset_type);
                             switch (ifdt.properties.asset_type) {
                                 case 'BRIDGE':
                                     $(":radio[value*='RIDG']").each(function(index) {
@@ -143,7 +143,7 @@
         var selected;
         $(":radio").change(function() {
             $this = $(this);
-            console.log($this[0].value);
+            // console.log($this[0].value);
             selected = $this[0].value;
             $("#generateReport").prop('disabled', false);
 
@@ -161,13 +161,13 @@
                 type: 'POST',
                 contentType: 'application/json'
             }, function(data) {
-                // console.log('koboinfo ' + JSON.stringify(data));
+                //// console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
             Promise.all([p1]).then(function(values) {
                 $('#spinner').show();
                 ret = values[0];
-                console.log(ret);
+                // console.log(ret);
                 if (ret.result !== 'OK') {
                     $('#error').show();
                     $('#error').append("No report available<br>Try again.");

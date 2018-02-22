@@ -45,10 +45,10 @@
                 nchar = $this.val().length;
                 $('#divmap1').prepend(gen_data.join(''));
                 if (ifdtobject.properties.asset_type === 'ROAD') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(ROADS.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -57,7 +57,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -72,10 +72,10 @@
 
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(BRIDGES.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -84,7 +84,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -99,10 +99,10 @@
 
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(CULVERTS.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -111,7 +111,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -126,10 +126,10 @@
 
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -138,7 +138,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -153,10 +153,10 @@
 
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.general_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -165,7 +165,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
@@ -195,10 +195,10 @@
                 $('#inventorydatabody').empty();
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(ROADS.inventory_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -207,7 +207,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -221,10 +221,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(BRIDGES.inventory_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -233,7 +233,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -247,10 +247,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(CULVERTS.inventory_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -259,7 +259,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -273,10 +273,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.inventory_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -285,7 +285,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -299,10 +299,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.inventory_data, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -311,7 +311,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
@@ -340,10 +340,10 @@
                 $('#operationdatabody').empty();
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(ROADS.operations, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -352,7 +352,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -366,10 +366,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(BRIDGES.operations, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -378,7 +378,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -392,10 +392,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(CULVERTS.operations, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -404,7 +404,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -418,10 +418,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.operations, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -430,7 +430,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -444,10 +444,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.operations, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -456,7 +456,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
@@ -485,10 +485,10 @@
                 $('#riskdatabody').empty();
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(ROADS.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -497,7 +497,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -511,10 +511,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(BRIDGES.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -523,7 +523,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -537,10 +537,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(CULVERTS.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -549,7 +549,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -563,10 +563,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -575,7 +575,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
 
@@ -589,10 +589,10 @@
                     });
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
-                    console.log(ifdtobject);
+                    // console.log(ifdtobject);
                     $.each(GEOTS.risk, function(key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
-                            console.log('Is Array');
+                            // console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -601,7 +601,7 @@
 
                             }
                         } else {
-                            console.log('Is NOT Array');
+                            // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
 
@@ -658,7 +658,7 @@
                         type: 'POST',
                         contentType: 'application/json'
                     }, function(data) {
-                        // console.log('koboinfo ' + JSON.stringify(data));
+                        //// console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
                     Promise.all([p1]).then(function(values) {
@@ -686,7 +686,7 @@
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
 
                                 jsonObject = ifdt;
-                                // console.log(jsonObject);
+                                //// console.log(jsonObject);
                                 jsonObject.properties.color = "#5b5e63";
                                 jsonObject.properties.nameoption = "Main Road";
                                 map.data.addGeoJson(jsonObject);
@@ -718,7 +718,7 @@
                                         type: 'POST',
                                         contentType: 'application/json'
                                     }, function(data) {
-                                        // console.log('koboinfo ' + JSON.stringify(data));
+                                        //// console.log('koboinfo ' + JSON.stringify(data));
                                         return (data);
                                     });
                                     Promise.all([pphoto]).then(function(values) {
@@ -745,7 +745,7 @@
                                     });
                                 }
                                 jsonObject = ifdt;
-                                // console.log(jsonObject);
+                                //// console.log(jsonObject);
                                 jsonObject.properties.color = "#F47983";
                                 jsonObject.properties.nameoption = "Bridge";
                                 map.data.addGeoJson(jsonObject);
@@ -758,7 +758,7 @@
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
 
                                 jsonObject = ifdt;
-                                // console.log(jsonObject);
+                                //// console.log(jsonObject);
                                 jsonObject.properties.color = "green";
                                 jsonObject.properties.nameoption = "Geot";
                                 map.data.addGeoJson(jsonObject);
@@ -770,7 +770,7 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
                                 jsonObject = ifdt;
-                                // console.log(jsonObject); 
+                                //// console.log(jsonObject); 
                                 jsonObject.properties.color = "#a17cff";
                                 jsonObject.properties.nameoption = "Culvert";
                                 map.data.addGeoJson(jsonObject);
@@ -782,7 +782,7 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
                                 jsonObject = ifdt;
-                                // console.log(jsonObject); 
+                                //// console.log(jsonObject); 
                                 jsonObject.properties.color = "#135dd6";
                                 jsonObject.properties.nameoption = "Drainage";
                                 map.data.addGeoJson(jsonObject);
@@ -791,7 +791,7 @@
                                 map.setZoom(22);
                             }
                             ifdtobject = ifdt;
-                            console.log(ifdt);
+                            // console.log(ifdt);
                         }
                         $('#spinner').hide();
 
@@ -817,11 +817,11 @@
                     );
                     $("#divmap2").toggleClass('col-md-12 col-md-6');
                     if (map) {
-                        // console.log(map.getCenter());
+                        //// console.log(map.getCenter());
                         google.maps.event.trigger(map, 'resize');
                         map.setCenter(new google.maps.LatLng(15.41, -61.32));
                         map.panTo(new google.maps.LatLng(15.41, -61.32));
-                        // console.log(map.getCenter());
+                        //// console.log(map.getCenter());
                     }
                     $('#datainfo').show();
                     $('#dataupload').show();
@@ -831,7 +831,7 @@
                 nchar = $this.val().length;
 
             }
-            // console.log(nchar);
+            //// console.log(nchar);
 
 
         });
