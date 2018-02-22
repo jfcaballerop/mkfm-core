@@ -1118,12 +1118,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         }
                         debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
                         debug(trackSectionsphy);
-                        debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        debug(trackSectionsnat);
+                        // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                        // debug(trackSectionsnat);
                         debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
                         debug(trackSectionscond);
-                        debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        debug(trackpkreg);
+                        // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
+                        // debug(trackpkreg);
 
                     } else {
                         var ns = 0;
@@ -1156,12 +1156,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         }
                         debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
                         debug(trackSectionsphy);
-                        debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        debug(trackSectionsnat);
+                        // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                        // debug(trackSectionsnat);
                         debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
                         debug(trackSectionscond);
-                        debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        debug(trackpkreg);
+                        // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
+                        // debug(trackpkreg);
 
                     }
                     // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
@@ -1178,13 +1178,17 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     //TODO: terminar de rellenar el nombre
                     for (var ts in trackSectionsphy) {
                         //TODO: cuidado que la moda puede devolver 2 valores si son iguales
+                        //debug(typeof (ts));
+                        ts = Number(ts);
                         if (ts === 0) {
                             antsect = mathjs.mode(trackSectionsphy[0])[0];
                             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
                             pkiniant = trackpkreg[0][0];
                             pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
-                            pkini = pkfinant / 1000;
+                            pkini = pkiniant / 1000;
                             pkfin = pkfinant / 1000;
+                            debug('pkini ' + pkini);
+                            debug('pkfin ' + pkfin);
                             tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
                                 '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
                             // debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
@@ -1192,9 +1196,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         } else {
                             if (mathjs.mode(trackSectionsphy[ts])[0] !== antsect || formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond) {
                                 tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
-                                    '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__' + antsect + '__' + antcond;
+                                    '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__RPHY-' + antsect + '__COND-' + antcond;
                                 debug(tracknamesche);
-                                // debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__' + antsect + '__' + antcond;
+                                // debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__RPHY-' + antsect + '__COND-' + antcond;
                                 pkini = trackpkreg[ts][0] / 1000;
                                 pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
                                 tracknamesche = iup.properties.rcode[0];
@@ -1217,7 +1221,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     // debug(' FIN pkfin: ' + pkfin);
                     // debug(tracknamesche + '-');
                     tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
-                        '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__' + antsect + '__' + antcond;
+                        '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__RPHY-' + antsect + '__COND-' + antcond;
                     debug(tracknamesche);
 
                     for (var ts in trackSectionsnat) {
