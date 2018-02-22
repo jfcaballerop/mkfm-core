@@ -1187,24 +1187,24 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             pkfin = pkfinant / 1000;
                             tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
                                 '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
-                            debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                                ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
+                            // debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
+                            //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
                         } else {
                             if (mathjs.mode(trackSectionsphy[ts])[0] !== antsect || formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond) {
                                 tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
                                     '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__' + antsect + '__' + antcond;
                                 debug(tracknamesche);
-                                debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__' + antsect + '__' + antcond;
+                                // debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__' + antsect + '__' + antcond;
                                 pkini = trackpkreg[ts][0] / 1000;
                                 pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
                                 tracknamesche = iup.properties.rcode[0];
                                 tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
                                     '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
-                                debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                                    ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
+                                // debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
+                                //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
                             } else {
-                                debug('++ADD ' + mathjs.mode(trackSectionsphy[ts]) +
-                                    ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])));
+                                // debug('++ADD ' + mathjs.mode(trackSectionsphy[ts]) +
+                                //     ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])));
                                 pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
                             }
                             antsect = mathjs.mode(trackSectionsphy[ts - 1])[0];
@@ -1214,7 +1214,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         }
 
                     }
-                    debug(' FIN pkfin: ' + pkfin);
+                    // debug(' FIN pkfin: ' + pkfin);
                     // debug(tracknamesche + '-');
                     tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
                         '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__' + antsect + '__' + antcond;
@@ -4285,19 +4285,19 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 debug(' x.toString(): ' + x.toString());
                                                 debug(' diccDominicaToKobo[x.toString()]: ' + diccDominicaToKobo[x.toString()]);
                                                 if (diccDominicaToKobo[x.toString()] !== undefined &&
-                                                ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
-                                            } else {
+                                                    ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
+                                                } else {
 
-                                                if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
-                                                    coincidenciasMechanical++;
-                                                } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
-                                                    coincidenciasDurable++;
+                                                    if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
+                                                        coincidenciasMechanical++;
+                                                    } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
+                                                        coincidenciasDurable++;
+                                                    }
+                                                    coincidencias++;
+                                                    totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                        totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
                                                 }
-                                                coincidencias++;
-                                                totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
-                                                    totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
                                             }
-                                        }
                                         }
                                         debug('totalScoring3:  ' + totalScoring);
                                         // Mechanical Defects, Durable Defects
@@ -4328,12 +4328,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             // debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
                                             debug('coincidencias antes: ' + coincidencias)
                                             for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
-                                                    if (
-                                                        ifdt.properties[z2[k]][i] !== undefined &&
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]] !== undefined &&
-                                                        diccKoboToDominica[ifdt.properties[z2[k]][i].toString()] !== undefined &&
+                                                if (
+                                                    ifdt.properties[z2[k]][i] !== undefined &&
+                                                    diccKoboToDominica[ifdt.properties[z1[k]][i]] !== undefined &&
+                                                    diccKoboToDominica[ifdt.properties[z2[k]][i].toString()] !== undefined &&
                                                     capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]) !== undefined &&
-                                                    diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()] !== undefined &&                                                    
+                                                    diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()] !== undefined &&
                                                     form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])] !== undefined) {
                                                     debug('k: ' + k);
                                                     debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
