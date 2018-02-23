@@ -457,7 +457,7 @@ exports.riskRatingScale = function (lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
-    // debug('lof ' + lof);
+    // debug('lof ' + lof + ' cons ' + cons);
     var lof = lof * 1;
     if (lof >= 0 && lof < 20) {
         lofv = '0-20';

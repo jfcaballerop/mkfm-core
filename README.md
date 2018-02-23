@@ -104,3 +104,7 @@ La aplicación se debugea con el paquete DEBUG de la misma.
 Para ello, se debe arrancar:
 * `DEBUG=debug,i18n,mkfw-corev1,express* npm run devstart`
 Siendo debug,i18n,mkfw-corev1,express* cada uno de los espacios de nombres a controlar.
+
+## CLUSTER
+
+* `pm2 start bin/www -i 2 --node-args="--max-old-space-size=2048"`

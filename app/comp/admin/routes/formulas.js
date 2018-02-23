@@ -1116,12 +1116,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         for (var ts of trackSectionsphy) {
                             l += ts.length;
                         }
-                        debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        debug(trackSectionsphy);
+                        // debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                        // debug(trackSectionsphy);
                         // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
                         // debug(trackSectionsnat);
-                        debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        debug(trackSectionscond);
+                        // debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                        // debug(trackSectionscond);
                         // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
                         // debug(trackpkreg);
 
@@ -1154,12 +1154,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         for (var ts of trackSectionsphy) {
                             l += ts.length;
                         }
-                        debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        debug(trackSectionsphy);
+                        // debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                        // debug(trackSectionsphy);
                         // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
                         // debug(trackSectionsnat);
-                        debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        debug(trackSectionscond);
+                        // debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                        // debug(trackSectionscond);
                         // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
                         // debug(trackpkreg);
 
@@ -1168,8 +1168,10 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
 
 
+                    debug(trackSectionsphy);
                     debug(serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY'));
-                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
+                    //debug(trackSectionsnat);
+                    //debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
 
 
                 }
@@ -1799,9 +1801,9 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                 }
                 if (ifdt.properties.rresphazard[i] !== undefined) {
                     if (typeof ifdt.properties.rresphazard[i] === "string") {
-                        ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", "."));
+                        ifdt.properties.rresphazard[i] === "" ? valrresphazard = 0 : valrresphazard = parseFloat(ifdt.properties.rresphazard[i].replace(",", ".")) / 100;
                     } else if (typeof ifdt.properties.rresphazard[i] === "number") {
-                        valrresphazard = ifdt.properties.rresphazard[i];
+                        valrresphazard = ifdt.properties.rresphazard[i] / 100;
                     } else {
                         valrresphazard = 0;
                     }

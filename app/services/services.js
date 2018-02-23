@@ -1,4 +1,5 @@
 // services.js
+var debug = require('debug')('debug');
 var jwt = require('jwt-simple');
 var jwtweb = require('jsonwebtoken');
 var path = require('path');
@@ -187,6 +188,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         ts = Number(ts);
         if (ts === 0) {
             antsect = mathjs.mode(trackSections[0])[0];
+            debug('antsect ' + antsect);
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
             pkiniant = trackpkreg[0][0];
             pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
@@ -199,7 +201,10 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             // //debug('*NEW ' + mathjs.mode(trackSections[ts]) +
             //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
         } else {
-            if (mathjs.mode(trackSections[ts])[0] !== antsect || formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond) {
+            debug('antsect ' + antsect);
+            debug('setc ' + mathjs.mode(trackSections[ts])[0]);
+
+            if (mathjs.mode(trackSections[ts])[0] !== antsect /*|| formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond*/ ) {
                 tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
                     '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
                 //debug(tracknamesche);
