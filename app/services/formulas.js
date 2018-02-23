@@ -4,7 +4,7 @@ var config = require(path.join(__dirname, '../../config/config'));
 var services = require(path.join(__dirname, './services'));
 
 
-exports.getRangeValues = function (scorerangeval) {
+exports.getRangeValues = function(scorerangeval) {
     var operador = "";
     var minval = 0;
     var maxval = 0;
@@ -31,7 +31,7 @@ exports.getRangeValues = function (scorerangeval) {
 
     return [minval, maxval, operador]
 }
-exports.criticalityValue = function (in_val) {
+exports.criticalityValue = function(in_val) {
 
     cscale = {
         "Very High": {
@@ -80,7 +80,7 @@ exports.criticalityValue = function (in_val) {
 
 }
 
-exports.criticality = function (type, formula, data) {
+exports.criticality = function(type, formula, data) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;
 
@@ -140,7 +140,7 @@ exports.criticality = function (type, formula, data) {
 
 }
 
-exports.condition = function (type, formula, data) {
+exports.condition = function(type, formula, data) {
     // console.log('## formulas condition ##');
     var retCondition = 1.0 * 1.0 - 1.0;
     console.log('\n\n------------------------------------------');
@@ -291,7 +291,7 @@ exports.condition = function (type, formula, data) {
 
 }
 
-exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
+exports.PavementCost = function(coord1, coord2, rcondrmatcost) {
     var ret = 0;
     var dist = services.calDIST(coord1, coord2);
     ret = dist * rcondrmatcost;
@@ -301,7 +301,7 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
 
 }
 
-exports.criticalityRatingScale = function (lof) {
+exports.criticalityRatingScale = function(lof) {
     var ret = 1;
     var crit_rating = [];
     var lofv = "";
@@ -335,7 +335,7 @@ exports.criticalityRatingScale = function (lof) {
     return ret;
 }
 
-exports.criticalityRatingLetterScale = function (critNumVal) {
+exports.criticalityRatingLetterScale = function(critNumVal) {
     var ret = 1;
     var crit_rating = [];
     var critNumValv = "";
@@ -368,7 +368,7 @@ exports.criticalityRatingLetterScale = function (critNumVal) {
 
     return ret;
 }
-exports.LikelihoodofFailureRatingScale = function (cond_letter) {
+exports.LikelihoodofFailureRatingScale = function(cond_letter) {
     var ret = 1;
     var lof_rating = [];
     var lofv = 0;
@@ -411,7 +411,7 @@ exports.LikelihoodofFailureRatingScale = function (cond_letter) {
 
     return ret;
 }
-exports.ConditionRating = function (vcond) {
+exports.ConditionRating = function(vcond) {
     var lof = vcond * 100;
     var condition = [];
     if (lof >= 0 && lof < 20) {
@@ -433,7 +433,7 @@ exports.ConditionRating = function (vcond) {
 
     return condition[cv];
 }
-exports.conditionValueScale = function (condv) {
+exports.conditionValueScale = function(condv) {
     var ret = 1;
     var cond_rating = [];
     // debug('cond ' + cond);
@@ -453,7 +453,23 @@ exports.conditionValueScale = function (condv) {
 
     return ret;
 }
-exports.riskRatingScale = function (lof, cons) {
+exports.NormalizeRiskRatingScale = function(risk_value) {
+    var lofv = risk_value.split('__')[0];
+    // debug('lof ' + lof + ' cons ' + cons);
+    var lof = lofv * 1.0;
+    if (lof >= 0 && lof < 20) {
+        return '0-20__' + risk_value.split('__')[1];
+    } else if (lof >= 20 && lof < 40) {
+        return '20-40__' + risk_value.split('__')[1];
+    } else if (lof >= 40 && lof < 60) {
+        return '40-60__' + risk_value.split('__')[1];
+    } else if (lof >= 60 && lof < 80) {
+        return '60-80__' + risk_value.split('__')[1];
+    } else if (lof >= 80 && lof <= 100) {
+        return '80-100__' + risk_value.split('__')[1];
+    }
+}
+exports.riskRatingScale = function(lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
@@ -506,7 +522,7 @@ exports.riskRatingScale = function (lof, cons) {
 
     return ret;
 }
-exports.riskRatingScaleOrder = function (risk_value) {
+exports.riskRatingScaleOrder = function(risk_value) {
     var ret = 1;
     var risk_rating = [];
     var lof = parseFloat(risk_value.split("__")[0]);
@@ -564,7 +580,7 @@ exports.riskRatingScaleOrder = function (risk_value) {
 }
 
 
-exports.pavCondScale = function (value) {
+exports.pavCondScale = function(value) {
     var ret = "";
 
     if (value < 2.5)
@@ -581,7 +597,7 @@ exports.pavCondScale = function (value) {
 
 }
 
-exports.pavCondScaleNum = function (value) {
+exports.pavCondScaleNum = function(value) {
     var ret = "";
 
     if (value < 2.5)
@@ -598,7 +614,7 @@ exports.pavCondScaleNum = function (value) {
 
 }
 
-exports.pavCondScaleNumIri = function (value) {
+exports.pavCondScaleNumIri = function(value) {
     var ret = "";
 
     if (value < 2.5)
@@ -615,7 +631,7 @@ exports.pavCondScaleNumIri = function (value) {
 
 }
 
-exports.pavCondScaleLetter = function (letter) {
+exports.pavCondScaleLetter = function(letter) {
     var ret = "";
 
     if (letter === "A")

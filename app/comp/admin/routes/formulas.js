@@ -297,7 +297,7 @@ function capitalizeFirstLetter(string) {
             var WordList = string.split(' ');
         }
         if (WordList !== undefined && WordList.length > 0) {
-            WordList.forEach(function (element) {
+            WordList.forEach(function(element) {
                 OutPut += (element.charAt(0).toUpperCase() + element.slice(1).toLowerCase()).replace(' ', '');
             });
         }
@@ -332,7 +332,7 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/formulas', function (req, resp, next) {
+router.get('/formulas', function(req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -346,17 +346,17 @@ router.get('/formulas', function (req, resp, next) {
     // // Peticiones 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         ////// debug('STATUS: ' + res.statusCode);
         ////// debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             ////// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             //// debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // debug(JSON.stringify(responseObject));
@@ -380,7 +380,7 @@ router.get('/formulas', function (req, resp, next) {
 /**
  * Proceso AJAX que recibe la peticion de mostrar todos los tracks afectados por la formular seleccionada
  */
-router.post('/get_formulas_tracks/', function (req, resp) {
+router.post('/get_formulas_tracks/', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
 
@@ -398,15 +398,15 @@ router.post('/get_formulas_tracks/', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -424,7 +424,7 @@ router.post('/get_formulas_tracks/', function (req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_risk/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -442,15 +442,15 @@ router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp)
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -467,7 +467,7 @@ router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp)
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_likelihood/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_likelihood: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -485,15 +485,15 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req,
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -510,7 +510,7 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req,
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -528,15 +528,15 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -553,7 +553,7 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_response/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_response/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -571,15 +571,15 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -596,7 +596,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -614,15 +614,15 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -639,7 +639,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_condition/:formula/:asset', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_formulas_tracks_condition: ' + '' + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
@@ -657,15 +657,15 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
@@ -680,7 +680,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
 /**
  * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
  */
-router.post('/update_field/:field/:value', function (req, resp) {
+router.post('/update_field/:field/:value', function(req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
@@ -698,15 +698,15 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 
-    var request = http.request(options, function (res) {
+    var request = http.request(options, function(res) {
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             //// debug('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function () {
+        res.on('end', function() {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
 
@@ -727,14 +727,14 @@ router.post('/update_field/:field/:value', function (req, resp) {
 
 
 /* GET JSON formulas listing. */
-router.get('/V1/formulas/', function (req, res, next) {
-    conditionFormula.find({}).exec(function (err, formcs) {
+router.get('/V1/formulas/', function(req, res, next) {
+    conditionFormula.find({}).exec(function(err, formcs) {
         if (err) {
             res.send(500, err.message);
         }
         Formula.find({}).sort({
             "properties.HTML.id": -1
-        }).exec(function (err, forms) {
+        }).exec(function(err, forms) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -749,7 +749,7 @@ router.get('/V1/formulas/', function (req, res, next) {
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_risk/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -766,7 +766,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -806,7 +806,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1059,7 +1059,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     "properties.grisknatural2": valuegrisknaturalarr2
                 }
             };
-            await Infodatatrack.findByIdAndUpdate(ifdt._id, query, function (err, iup) {
+            await Infodatatrack.findByIdAndUpdate(ifdt._id, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1091,8 +1091,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         var pkini = iup.properties.pk[0];
 
                         for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = iup.properties.rriskphysical[i];
-                            sectionsnat[ns] = iup.properties.rrisknatural[i];
+                            sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                            sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
                             sectionscond[ns] = iup.properties.rcondition[i];
                             pkreg[ns] = iup.properties.pk[i];
 
@@ -1128,8 +1128,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     } else {
                         var ns = 0;
                         for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = iup.properties.rriskphysical[i];
-                            sectionsnat[ns] = iup.properties.rrisknatural[i];
+                            sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                            sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
                             sectionscond[ns] = iup.properties.rcondition[i];
                             pkreg[ns] = iup.properties.pk[i];
 
@@ -1170,8 +1170,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                     debug(trackSectionsphy);
                     debug(serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY'));
-                    //debug(trackSectionsnat);
-                    //debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
+                    debug(trackSectionsnat);
+                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
 
 
                 }
@@ -1190,7 +1190,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_likelihood/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -1204,7 +1204,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1253,7 +1253,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1661,7 +1661,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     "properties.glofnatural2": valueglofnaturalarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.update(conditions, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -1683,7 +1683,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_sensitivity/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -1697,7 +1697,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1732,7 +1732,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -2074,7 +2074,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     "properties.gsensitivity2": valuegsensitivityarr2
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.update(conditions, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -2095,7 +2095,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -2109,7 +2109,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -2137,7 +2137,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     }
     debug(selectjson);
     // debug(form);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
         if (err) {
             res.send(500, err.message);
         }
@@ -2429,7 +2429,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                     "properties.CRespHazard": valueCresphazardarr
                 }
             };
-            await Infodatatrack.update(conditions, query, function (err, iup) {
+            await Infodatatrack.update(conditions, query, function(err, iup) {
                 if (err) {
                     debug(err.message);
                 }
@@ -2449,7 +2449,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks/');
     var postData = extend({}, req.body);
     var ret = {
@@ -2470,7 +2470,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 
     await Formula.find({
         "name": formula
-    }).exec(async function (err, form) {
+    }).exec(async function(err, form) {
         if (err) {
             res.send(500, err.message);
         }
@@ -2537,7 +2537,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     }
     debug(selectjson);
 
-    await Infodatatrack.find({}, selectjson).exec(function (err, rtracks) {
+    await Infodatatrack.find({}, selectjson).exec(function(err, rtracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -3011,7 +3011,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
         };
         tracksUpdated++;
 
-        await Infodatatrack.update(conditions, query, function (err, iup) {
+        await Infodatatrack.update(conditions, query, function(err, iup) {
             if (err) {
                 debug(err.message);
             }
@@ -3035,7 +3035,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function(req, res, next) {
     debug('API /V1/update_formulas_tracks_condition/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
@@ -3051,7 +3051,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     debug(formula);
     await Formula.find({
         "name": formula
-    }).exec(async function (err, f) {
+    }).exec(async function(err, f) {
         if (err) {
             res.send(500, err.message);
         }
@@ -3083,7 +3083,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     switch (asset) {
         case 'Pavements':
             debug('### Pavements ###');
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3117,7 +3117,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3133,7 +3133,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Culverts':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3255,7 +3255,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3280,7 +3280,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Retaining_Walls':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3315,13 +3315,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3474,7 +3474,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3499,7 +3499,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3534,13 +3534,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3693,7 +3693,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3718,7 +3718,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Cuttings_Embankments':
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3753,13 +3753,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -3912,7 +3912,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -3937,7 +3937,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             // debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3972,13 +3972,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                        // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                        // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                        // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                        // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                        // debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
@@ -4131,7 +4131,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -4161,7 +4161,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({
                 // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
-            }, selectjson).exec(async function (err, ifdts) {
+            }, selectjson).exec(async function(err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4313,7 +4313,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
                                         }
                                         debug('coincidencias despues: ' + coincidencias)
-                                        // **************************
+                                            // **************************
                                         debug('totalScoring3.1:  ' + totalScoring);
                                         debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
                                         // if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
@@ -4420,7 +4420,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function(err, iup) {
                         if (err) {
                             debug(err.message);
                         }
@@ -4471,7 +4471,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
 /* POST update_field */
-router.post('/V1/update_field/', function (req, res, next) {
+router.post('/V1/update_field/', function(req, res, next) {
     debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
@@ -4488,7 +4488,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
     Formula.find({
         "name": arrField[0]
-    }).exec(function (err, f) {
+    }).exec(function(err, f) {
         debug('Formula.find ' + arrField[0]);
         if (err) {
             res.send(500, err.message);
@@ -4513,7 +4513,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                 eval(comando);
 
                 // res.send(f);
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -4535,7 +4535,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]].weight = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -4555,7 +4555,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -4575,7 +4575,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                             // debug(formSave.formulaSpec[key][arrField[2]].weight);
                             // debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
-                            formSave.save(function (err, fsaved) {
+                            formSave.save(function(err, fsaved) {
                                 if (err) {
                                     return res.status(500).send(err.message);
                                 }
@@ -4607,7 +4607,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -4630,7 +4630,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -4652,7 +4652,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -4676,7 +4676,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                         debug(k);
                     }
                 }
-                formSave.save(function (err, fsaved) {
+                formSave.save(function(err, fsaved) {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
@@ -4693,7 +4693,7 @@ router.post('/V1/update_field/', function (req, res, next) {
 
 });
 /* POST get_formulas_tracks */
-router.post('/V1/get_formulas_tracks/', function (req, res, next) {
+router.post('/V1/get_formulas_tracks/', function(req, res, next) {
     // debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     debug(postData);
@@ -4830,7 +4830,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }).exec(function(err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4839,7 +4839,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function (values) {
+            Promise.all(promises).then(function(values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -4865,7 +4865,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function (val, index) {
+                    values.forEach(function(val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;
@@ -5114,7 +5114,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }).exec(function(err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -5123,7 +5123,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
             }));
 
-            Promise.all(promises).then(function (values) {
+            Promise.all(promises).then(function(values) {
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -5149,7 +5149,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
 
                 if (values.length > 0) {
-                    values.forEach(function (val, index) {
+                    values.forEach(function(val, index) {
                         for (var v of val) {
                             // debug(v.properties.name);
                             ant = 0;

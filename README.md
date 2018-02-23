@@ -105,6 +105,14 @@ Para ello, se debe arrancar:
 * `DEBUG=debug,i18n,mkfw-corev1,express* npm run devstart`
 Siendo debug,i18n,mkfw-corev1,express* cada uno de los espacios de nombres a controlar.
 
-## CLUSTER
+## CLUSTER Y MANEJO PM2 
+La aplicacion se maneja con PM2, para ello debemos instalarlo y/o actualizarlo para lo cual (y revisar que cosas se hacen con root):
+* `nvm install --lts`
+* `nvm alias default v8.9.4`
+* `npm install pm2@latest -g`
+* `pm2 update`
+* `pm2 startup`
 
+Con usuario normal
+* `pm2 delete all`
 * `pm2 start bin/www -i 2 --node-args="--max-old-space-size=2048"`
