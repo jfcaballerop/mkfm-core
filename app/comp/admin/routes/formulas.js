@@ -25,6 +25,10 @@ var formulaModels = require(path.join(__dirname, '../models/formula'));
 var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
+var schedulenatModels = require(path.join(__dirname, '../../schedule/models/schedulenat'));
+var Schedulenat = mongoose.model('Schedulenat');
+var schedulephyModels = require(path.join(__dirname, '../../schedule/models/schedulephy'));
+var Schedulephy = mongoose.model('Schedulephy');
 var mathjs = require('mathjs');
 
 var diccKoboToDominica = {
@@ -1169,9 +1173,46 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
 
 
                     debug(trackSectionsphy);
-                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY'));
+                    var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
+                    debug(tgphys);
+                    for (var tgphy of tgphys) {
+
+                        var sphy = new Schedulephy();
+                        sphy.properties = {};
+                        sphy.properties['code'] = tgphy;
+                        sphy.type = 'PAVEMENTS';
+                        sphy.config = {};
+                        sphy.config['color'] = 'grey';
+
+                        sphy.save(function(err, ssaved) {
+                            if (err) {
+                                res.send(500, err.message);
+                            }
+                            tracksUpdated++;
+                        });
+                    }
+
+
                     debug(trackSectionsnat);
-                    debug(serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT'));
+                    var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
+                    debug(tgnats);
+                    for (var tgnat of tgnats) {
+
+                        var snat = new Schedulenat();
+                        snat.properties = {};
+                        snat.properties['code'] = tgnat;
+                        snat.type = 'PAVEMENTS';
+                        snat.config = {};
+                        snat.config['color'] = 'grey';
+
+                        snat.save(function(err, ssaved) {
+                            if (err) {
+                                res.send(500, err.message);
+                            }
+                            tracksUpdated++;
+                        });
+                    }
+
 
 
                 }
