@@ -821,6 +821,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
     });
 
     var fin = 0;
+    var arrGroupTrackNat = [];
+    var arrGroupTrackPhy = [];
+
     for (var ifdt of ifdts) {
         var valuerrisknaturalarr = [];
         var valuerriskphysicalarr = [];
@@ -1172,20 +1175,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
             var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
             // debug(tgphys);
             for (var tgphy of tgphys) {
-                var sphy = new Schedulephy();
-                sphy.properties = {};
-                sphy.properties['code'] = tgphy;
-                sphy.type = 'PAVEMENTS';
-                sphy.config = {};
-                sphy.config['color'] = 'grey';
-
-                await sphy.save(function(err, ssaved) {
-                    if (err) {
-                        res.send(500, err.message);
-                    }
-                    tracksUpdated++;
-                });
-
+                arrGroupTrackPhy.push(tgphy);
             }
 
 
@@ -1193,39 +1183,51 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
             var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
             // debug(tgnats);
             for (var tgnat of tgnats) {
-
-                var snat = new Schedulenat();
-                snat.properties = {};
-                snat.properties['code'] = tgnat;
-                snat.type = 'PAVEMENTS';
-                snat.config = {};
-                snat.config['color'] = 'grey';
-
-                await snat.save(function(err, ssaved) {
-                    if (err) {
-                        res.send(500, err.message);
-                    }
-                    tracksUpdated++;
-
-                });
-
+                arrGroupTrackNat.push(tgnat);
             }
 
 
         });
 
-        if (++fin >= ifdts.length) {
-
-            ret.tracksUpdated = tracksUpdated;
-            debug(tracksUpdated);
-            await res.status(200).jsonp(ret);
-        } else {
-            debug(fin);
-        }
-
-
     }
 
+    for (var gtp of arrGroupTrackPhy) {
+        var sphy = new Schedulephy();
+        sphy.properties = {};
+        sphy.properties['code'] = gtp;
+        sphy.type = 'PAVEMENTS';
+        sphy.config = {};
+        sphy.config['color'] = 'grey';
+
+        await sphy.save(function(err, ssaved) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            tracksUpdated++;
+        });
+    }
+    debug(tracksUpdated);
+
+    for (var gtn of arrGroupTrackNat) {
+        var snat = new Schedulenat();
+        snat.properties = {};
+        snat.properties['code'] = gtn;
+        snat.type = 'PAVEMENTS';
+        snat.config = {};
+        snat.config['color'] = 'grey';
+
+        await snat.save(function(err, ssaved) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            tracksUpdated++;
+
+        });
+    }
+    debug(tracksUpdated);
+
+    ret.tracksUpdated = tracksUpdated;
+    await res.status(200).jsonp(ret);
 
 
 });
