@@ -810,420 +810,424 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
         selectjson.properties[w] = 1;
     }
     debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function(err, ifdts) {
+    var ifdts;
+
+    await Infodatatrack.find({}, selectjson).exec(async function(err, values) {
         if (err) {
             res.send(500, err.message);
         }
         // Arr de valores a updatear
+        ifdts = values;
+    });
+
+    var fin = 0;
+    for (var ifdt of ifdts) {
+        var valuerrisknaturalarr = [];
+        var valuerriskphysicalarr = [];
+        var valuebrisknaturalarr = [];
+        var valuebriskphysicalarr = [];
+        var valueCrisknaturalarr = [];
+        var valueCriskphysicalarr = [];
+        var valuegrisknaturalarr = [];
+        var valuegriskphysicalarr = [];
+        var valuegrisknaturalarr2 = [];
+        var valuegriskphysicalarr2 = [];
+
+        //tracksUpdated++;
+        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+            var rlofphy;
+            var rlofnat;
+            var rcrit;
+            var blofphy;
+            var blofnat;
+            var bcrit;
+            var Clofphy;
+            var Clofnat;
+            var Ccrit;
+            var glofphy;
+            var glofnat;
+            var gcrit;
+            var glofphy2;
+            var glofnat2;
+            var gcrit2;
+            var existsbcode = false;
+            var existsCcode = false;
+            var existsgcode = false;
+            var existsgcode2 = false;
 
 
-        for (var ifdt of ifdts) {
-            var valuerrisknaturalarr = [];
-            var valuerriskphysicalarr = [];
-            var valuebrisknaturalarr = [];
-            var valuebriskphysicalarr = [];
-            var valueCrisknaturalarr = [];
-            var valueCriskphysicalarr = [];
-            var valuegrisknaturalarr = [];
-            var valuegriskphysicalarr = [];
-            var valuegrisknaturalarr2 = [];
-            var valuegriskphysicalarr2 = [];
+            if (ifdt.properties.rlofphysical[i] !== undefined) {
+                if (typeof ifdt.properties.rlofphysical[i] === "string") {
+                    ifdt.properties.rlofphysical[i] === "" ? rlofphy = 0 : rlofphy = parseFloat(ifdt.properties.rlofphysical[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rlofphysical[i] === "number") {
+                    rlofphy = ifdt.properties.rlofphysical[i];
+                } else {
+                    rlofphy = 0;
+                }
+            }
+            if (ifdt.properties.rlofnatural[i] !== undefined) {
+                if (typeof ifdt.properties.rlofnatural[i] === "string") {
+                    ifdt.properties.rlofnatural[i] === "" ? rlofnat = 0 : rlofnat = parseFloat(ifdt.properties.rlofnatural[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rlofnatural[i] === "number") {
+                    rlofnat = ifdt.properties.rlofnatural[i];
+                } else {
+                    rlofnat = 0;
+                }
+            }
+            if (ifdt.properties.rcriticality[i] !== undefined) {
+                if (typeof ifdt.properties.rcriticality[i] === "string") {
+                    ifdt.properties.rcriticality[i] === "" ? rcrit = 0 : rcrit = parseFloat(ifdt.properties.rcriticality[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rcriticality[i] === "number") {
+                    rcrit = ifdt.properties.rcriticality[i];
+                } else {
+                    rcrit = 0;
+                }
+            }
 
-            tracksUpdated++;
-            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                var rlofphy;
-                var rlofnat;
-                var rcrit;
-                var blofphy;
-                var blofnat;
-                var bcrit;
-                var Clofphy;
-                var Clofnat;
-                var Ccrit;
-                var glofphy;
-                var glofnat;
-                var gcrit;
-                var glofphy2;
-                var glofnat2;
-                var gcrit2;
-                var existsbcode = false;
-                var existsCcode = false;
-                var existsgcode = false;
-                var existsgcode2 = false;
+            //         // Revisamos que exista el código del asset
+            if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                existsbcode = true;
+            }
+            if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                existsCcode = true;
+            }
+            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                existsgcode = true;
+            }
+            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                existsgcode2 = true;
+            }
 
+            if (existsbcode) {
 
-                if (ifdt.properties.rlofphysical[i] !== undefined) {
-                    if (typeof ifdt.properties.rlofphysical[i] === "string") {
-                        ifdt.properties.rlofphysical[i] === "" ? rlofphy = 0 : rlofphy = parseFloat(ifdt.properties.rlofphysical[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rlofphysical[i] === "number") {
-                        rlofphy = ifdt.properties.rlofphysical[i];
+                if (ifdt.properties.blofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.blofnatural[i] === "string") {
+                        ifdt.properties.blofnatural[i] === "" ? blofnat = 0 : blofnat = parseFloat(ifdt.properties.blofnatural[i].replace(",", "."));
+                        // debug('ifdt.properties.blofnatural[i] ' + ifdt.properties.blofnatural[i]);
+                    } else if (typeof ifdt.properties.blofnatural[i] === "number") {
+                        blofnat = ifdt.properties.blofnatural[i];
                     } else {
-                        rlofphy = 0;
+                        blofnat = 0;
                     }
                 }
-                if (ifdt.properties.rlofnatural[i] !== undefined) {
-                    if (typeof ifdt.properties.rlofnatural[i] === "string") {
-                        ifdt.properties.rlofnatural[i] === "" ? rlofnat = 0 : rlofnat = parseFloat(ifdt.properties.rlofnatural[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rlofnatural[i] === "number") {
-                        rlofnat = ifdt.properties.rlofnatural[i];
+
+
+                if (ifdt.properties.blofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.blofphysical[i] === "string") {
+                        ifdt.properties.blofphysical[i] === "" ? blofphy = 0 : blofphy = parseFloat(ifdt.properties.blofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.blofphysical[i] === "number") {
+                        blofphy = ifdt.properties.blofphysical[i];
                     } else {
-                        rlofnat = 0;
+                        blofphy = 0;
                     }
                 }
-                if (ifdt.properties.rcriticality[i] !== undefined) {
-                    if (typeof ifdt.properties.rcriticality[i] === "string") {
-                        ifdt.properties.rcriticality[i] === "" ? rcrit = 0 : rcrit = parseFloat(ifdt.properties.rcriticality[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rcriticality[i] === "number") {
-                        rcrit = ifdt.properties.rcriticality[i];
+                if (ifdt.properties.bcriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.bcriticality[i] === "string") {
+                        ifdt.properties.bcriticality[i] === "" ? bcrit = 0 : bcrit = parseFloat(ifdt.properties.bcriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.bcriticality[i] === "number") {
+                        bcrit = ifdt.properties.bcriticality[i];
                     } else {
-                        rcrit = 0;
+                        bcrit = 0;
+                    }
+                }
+            }
+            if (existsCcode) {
+
+                if (ifdt.properties.Clofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.Clofnatural[i] === "string") {
+                        ifdt.properties.Clofnatural[i] === "" ? Clofnat = 0 : Clofnat = parseFloat(ifdt.properties.Clofnatural[i].replace(",", "."));
+                        // debug('ifdt.properties.Clofnatural[i] ' + ifdt.properties.Clofnatural[i]);
+                    } else if (typeof ifdt.properties.Clofnatural[i] === "number") {
+                        Clofnat = ifdt.properties.Clofnatural[i];
+                    } else {
+                        Clofnat = 0;
                     }
                 }
 
-                //         // Revisamos que exista el código del asset
-                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
-                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
-                    existsbcode = true;
-                }
-                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
-                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
-                    existsCcode = true;
-                }
-                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
-                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
-                    existsgcode = true;
-                }
-                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
-                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
-                    existsgcode2 = true;
-                }
 
-                if (existsbcode) {
-
-                    if (ifdt.properties.blofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.blofnatural[i] === "string") {
-                            ifdt.properties.blofnatural[i] === "" ? blofnat = 0 : blofnat = parseFloat(ifdt.properties.blofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.blofnatural[i] ' + ifdt.properties.blofnatural[i]);
-                        } else if (typeof ifdt.properties.blofnatural[i] === "number") {
-                            blofnat = ifdt.properties.blofnatural[i];
-                        } else {
-                            blofnat = 0;
-                        }
-                    }
-
-
-                    if (ifdt.properties.blofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.blofphysical[i] === "string") {
-                            ifdt.properties.blofphysical[i] === "" ? blofphy = 0 : blofphy = parseFloat(ifdt.properties.blofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.blofphysical[i] === "number") {
-                            blofphy = ifdt.properties.blofphysical[i];
-                        } else {
-                            blofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.bcriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.bcriticality[i] === "string") {
-                            ifdt.properties.bcriticality[i] === "" ? bcrit = 0 : bcrit = parseFloat(ifdt.properties.bcriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.bcriticality[i] === "number") {
-                            bcrit = ifdt.properties.bcriticality[i];
-                        } else {
-                            bcrit = 0;
-                        }
+                if (ifdt.properties.Clofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.Clofphysical[i] === "string") {
+                        ifdt.properties.Clofphysical[i] === "" ? Clofphy = 0 : Clofphy = parseFloat(ifdt.properties.Clofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.Clofphysical[i] === "number") {
+                        Clofphy = ifdt.properties.Clofphysical[i];
+                    } else {
+                        Clofphy = 0;
                     }
                 }
-                if (existsCcode) {
-
-                    if (ifdt.properties.Clofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.Clofnatural[i] === "string") {
-                            ifdt.properties.Clofnatural[i] === "" ? Clofnat = 0 : Clofnat = parseFloat(ifdt.properties.Clofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.Clofnatural[i] ' + ifdt.properties.Clofnatural[i]);
-                        } else if (typeof ifdt.properties.Clofnatural[i] === "number") {
-                            Clofnat = ifdt.properties.Clofnatural[i];
-                        } else {
-                            Clofnat = 0;
-                        }
-                    }
-
-
-                    if (ifdt.properties.Clofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.Clofphysical[i] === "string") {
-                            ifdt.properties.Clofphysical[i] === "" ? Clofphy = 0 : Clofphy = parseFloat(ifdt.properties.Clofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.Clofphysical[i] === "number") {
-                            Clofphy = ifdt.properties.Clofphysical[i];
-                        } else {
-                            Clofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.Ccriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.Ccriticality[i] === "string") {
-                            ifdt.properties.Ccriticality[i] === "" ? Ccrit = 0 : Ccrit = parseFloat(ifdt.properties.Ccriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.Ccriticality[i] === "number") {
-                            Ccrit = ifdt.properties.Ccriticality[i];
-                        } else {
-                            Ccrit = 0;
-                        }
+                if (ifdt.properties.Ccriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.Ccriticality[i] === "string") {
+                        ifdt.properties.Ccriticality[i] === "" ? Ccrit = 0 : Ccrit = parseFloat(ifdt.properties.Ccriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.Ccriticality[i] === "number") {
+                        Ccrit = ifdt.properties.Ccriticality[i];
+                    } else {
+                        Ccrit = 0;
                     }
                 }
-                if (existsgcode) {
+            }
+            if (existsgcode) {
 
-                    if (ifdt.properties.glofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.glofnatural[i] === "string") {
-                            ifdt.properties.glofnatural[i] === "" ? glofnat = 0 : glofnat = parseFloat(ifdt.properties.glofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.glofnatural[i] ' + ifdt.properties.glofnatural[i]);
-                        } else if (typeof ifdt.properties.glofnatural[i] === "number") {
-                            glofnat = ifdt.properties.glofnatural[i];
-                        } else {
-                            glofnat = 0;
-                        }
-                    }
-
-                    if (ifdt.properties.glofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.glofphysical[i] === "string") {
-                            ifdt.properties.glofphysical[i] === "" ? glofphy = 0 : glofphy = parseFloat(ifdt.properties.glofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.glofphysical[i] === "number") {
-                            glofphy = ifdt.properties.glofphysical[i];
-                        } else {
-                            glofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.gcriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.gcriticality[i] === "string") {
-                            ifdt.properties.gcriticality[i] === "" ? gcrit = 0 : gcrit = parseFloat(ifdt.properties.gcriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.gcriticality[i] === "number") {
-                            gcrit = ifdt.properties.gcriticality[i];
-                        } else {
-                            gcrit = 0;
-                        }
-                    }
-                }
-                if (existsgcode2) {
-
-                    if (ifdt.properties.glofnatural2[i] !== undefined) {
-                        if (typeof ifdt.properties.glofnatural2[i] === "string") {
-                            ifdt.properties.glofnatural2[i] === "" ? glofnat2 = 0 : glofnat2 = parseFloat(ifdt.properties.glofnatural2[i].replace(",", "."));
-                            // debug('ifdt.properties.glofnatural2[i] ' + ifdt.properties.glofnatural2[i]);
-                        } else if (typeof ifdt.properties.glofnatural2[i] === "number") {
-                            glofnat2 = ifdt.properties.glofnatural2[i];
-                        } else {
-                            glofnat2 = 0;
-                        }
-                    }
-
-                    if (ifdt.properties.glofphysical2[i] !== undefined) {
-                        if (typeof ifdt.properties.glofphysical2[i] === "string") {
-                            ifdt.properties.glofphysical2[i] === "" ? glofphy2 = 0 : glofphy2 = parseFloat(ifdt.properties.glofphysical2[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.glofphysical2[i] === "number") {
-                            glofphy2 = ifdt.properties.glofphysical2[i];
-                        } else {
-                            glofphy2 = 0;
-                        }
-                    }
-                    if (ifdt.properties.gcriticality2[i] !== undefined) {
-                        if (typeof ifdt.properties.gcriticality2[i] === "string") {
-                            ifdt.properties.gcriticality2[i] === "" ? gcrit2 = 0 : gcrit2 = parseFloat(ifdt.properties.gcriticality2[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.gcriticality2[i] === "number") {
-                            gcrit2 = ifdt.properties.gcriticality2[i];
-                        } else {
-                            gcrit2 = 0;
-                        }
+                if (ifdt.properties.glofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.glofnatural[i] === "string") {
+                        ifdt.properties.glofnatural[i] === "" ? glofnat = 0 : glofnat = parseFloat(ifdt.properties.glofnatural[i].replace(",", "."));
+                        // debug('ifdt.properties.glofnatural[i] ' + ifdt.properties.glofnatural[i]);
+                    } else if (typeof ifdt.properties.glofnatural[i] === "number") {
+                        glofnat = ifdt.properties.glofnatural[i];
+                    } else {
+                        glofnat = 0;
                     }
                 }
 
-                valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
-                valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
-                valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-                valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-                valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-                valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-                valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-                valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-                valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
-                valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+                if (ifdt.properties.glofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.glofphysical[i] === "string") {
+                        ifdt.properties.glofphysical[i] === "" ? glofphy = 0 : glofphy = parseFloat(ifdt.properties.glofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.glofphysical[i] === "number") {
+                        glofphy = ifdt.properties.glofphysical[i];
+                    } else {
+                        glofphy = 0;
+                    }
+                }
+                if (ifdt.properties.gcriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.gcriticality[i] === "string") {
+                        ifdt.properties.gcriticality[i] === "" ? gcrit = 0 : gcrit = parseFloat(ifdt.properties.gcriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.gcriticality[i] === "number") {
+                        gcrit = ifdt.properties.gcriticality[i];
+                    } else {
+                        gcrit = 0;
+                    }
+                }
+            }
+            if (existsgcode2) {
 
+                if (ifdt.properties.glofnatural2[i] !== undefined) {
+                    if (typeof ifdt.properties.glofnatural2[i] === "string") {
+                        ifdt.properties.glofnatural2[i] === "" ? glofnat2 = 0 : glofnat2 = parseFloat(ifdt.properties.glofnatural2[i].replace(",", "."));
+                        // debug('ifdt.properties.glofnatural2[i] ' + ifdt.properties.glofnatural2[i]);
+                    } else if (typeof ifdt.properties.glofnatural2[i] === "number") {
+                        glofnat2 = ifdt.properties.glofnatural2[i];
+                    } else {
+                        glofnat2 = 0;
+                    }
+                }
+
+                if (ifdt.properties.glofphysical2[i] !== undefined) {
+                    if (typeof ifdt.properties.glofphysical2[i] === "string") {
+                        ifdt.properties.glofphysical2[i] === "" ? glofphy2 = 0 : glofphy2 = parseFloat(ifdt.properties.glofphysical2[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.glofphysical2[i] === "number") {
+                        glofphy2 = ifdt.properties.glofphysical2[i];
+                    } else {
+                        glofphy2 = 0;
+                    }
+                }
+                if (ifdt.properties.gcriticality2[i] !== undefined) {
+                    if (typeof ifdt.properties.gcriticality2[i] === "string") {
+                        ifdt.properties.gcriticality2[i] === "" ? gcrit2 = 0 : gcrit2 = parseFloat(ifdt.properties.gcriticality2[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.gcriticality2[i] === "number") {
+                        gcrit2 = ifdt.properties.gcriticality2[i];
+                    } else {
+                        gcrit2 = 0;
+                    }
+                }
+            }
+
+            valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+            valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+
+
+        }
+
+
+
+        // Update DB
+        var conditions = {
+            _id: ifdt._id
+        };
+        var query = {
+            $set: {
+                "properties.rriskphysical": valuerriskphysicalarr,
+                "properties.rrisknatural": valuerrisknaturalarr,
+                "properties.briskphysical": valuebriskphysicalarr,
+                "properties.brisknatural": valuebrisknaturalarr,
+                "properties.CRISKphysical": valueCriskphysicalarr,
+                "properties.CRISKnatural": valueCrisknaturalarr,
+                "properties.griskphysical": valuegriskphysicalarr,
+                "properties.grisknatural": valuegrisknaturalarr,
+                "properties.griskphysical2": valuegriskphysicalarr2,
+                "properties.grisknatural2": valuegrisknaturalarr2
+            }
+        };
+        await Infodatatrack.findByIdAndUpdate(ifdt._id, query, async function(err, iup) {
+            if (err) {
+                debug(err.message);
+            }
+            await tracksUpdated++;
+
+            var trackSectionsphy = [];
+            var sectionsphy = [];
+            var trackSectionsnat = [];
+            var sectionsnat = [];
+            var trackSectionscond = [];
+            var sectionscond = [];
+            var nsections = 1;
+            var pkreg = [];
+            var trackpkreg = [];
+
+            var valini = iup.properties.pk[0]; //cojo el primer valo del PK
+            if (iup.inverted) {
+                sectionlength *= -1;
+                var ns = 0;
+                var pkini = iup.properties.pk[0];
+
+                for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                    sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                    sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                    sectionscond[ns] = iup.properties.rcondition[i];
+                    pkreg[ns] = iup.properties.pk[i];
+
+                    if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                        // debug(nsections);
+                        trackSectionsphy.push(sectionsphy);
+                        trackSectionsnat.push(sectionsnat);
+                        trackSectionscond.push(sectionscond);
+                        trackpkreg.push(pkreg);
+                        sectionsphy = [];
+                        sectionsnat = [];
+                        sectionscond = [];
+                        pkreg = [];
+                        nsections++;
+                        ns = 0;
+                    } else {
+                        ns++;
+                    }
+                }
+                var l = 0;
+                for (var ts of trackSectionsphy) {
+                    l += ts.length;
+                }
+                // debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                // debug(trackSectionsphy);
+                // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                // debug(trackSectionsnat);
+                // debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                // debug(trackSectionscond);
+                // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
+                // debug(trackpkreg);
+
+            } else {
+                var ns = 0;
+                for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                    sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                    sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                    sectionscond[ns] = iup.properties.rcondition[i];
+                    pkreg[ns] = iup.properties.pk[i];
+
+                    if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                        // debug(nsections);
+                        trackSectionsphy.push(sectionsphy);
+                        trackSectionsnat.push(sectionsnat);
+                        trackSectionscond.push(sectionscond);
+                        trackpkreg.push(pkreg);
+                        pkreg = [];
+                        sectionsphy = [];
+                        sectionsnat = [];
+                        sectionscond = [];
+
+                        nsections++;
+                        ns = 0;
+                    } else {
+                        ns++;
+                    }
+                }
+                var l = 0;
+                for (var ts of trackSectionsphy) {
+                    l += ts.length;
+                }
+                // debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                // debug(trackSectionsphy);
+                // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                // debug(trackSectionsnat);
+                // debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                // debug(trackSectionscond);
+                // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
+                // debug(trackpkreg);
+
+            }
+            // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
+            // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
+
+
+            // debug(trackSectionsphy);
+
+            var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
+            // debug(tgphys);
+            for (var tgphy of tgphys) {
+                var sphy = new Schedulephy();
+                sphy.properties = {};
+                sphy.properties['code'] = tgphy;
+                sphy.type = 'PAVEMENTS';
+                sphy.config = {};
+                sphy.config['color'] = 'grey';
+
+                await sphy.save(function(err, ssaved) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    tracksUpdated++;
+                });
 
             }
 
 
+            // debug(trackSectionsnat);
+            var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
+            // debug(tgnats);
+            for (var tgnat of tgnats) {
 
-            // Update DB
-            var conditions = {
-                _id: ifdt._id
-            };
-            var query = {
-                $set: {
-                    "properties.rriskphysical": valuerriskphysicalarr,
-                    "properties.rrisknatural": valuerrisknaturalarr,
-                    "properties.briskphysical": valuebriskphysicalarr,
-                    "properties.brisknatural": valuebrisknaturalarr,
-                    "properties.CRISKphysical": valueCriskphysicalarr,
-                    "properties.CRISKnatural": valueCrisknaturalarr,
-                    "properties.griskphysical": valuegriskphysicalarr,
-                    "properties.grisknatural": valuegrisknaturalarr,
-                    "properties.griskphysical2": valuegriskphysicalarr2,
-                    "properties.grisknatural2": valuegrisknaturalarr2
-                }
-            };
-            await Infodatatrack.findByIdAndUpdate(ifdt._id, query, function(err, iup) {
-                if (err) {
-                    debug(err.message);
-                }
-                // debug("SAVE " + iup._id);
-                // debug("Start section track - inverted: " + iup.inverted);
-                //"5a1d981d9fe31575548c495d" -- not inv
-                //"5a0dc03137bb372c9336a66b" -- inverted
+                var snat = new Schedulenat();
+                snat.properties = {};
+                snat.properties['code'] = tgnat;
+                snat.type = 'PAVEMENTS';
+                snat.config = {};
+                snat.config['color'] = 'grey';
 
-                // TODO: añadir sections por cada tipo de Risk physical y natural, además añadir como filtrado por condition
-
-                if (iup._id.toString() === "5a0dc03137bb372c9336a66b") {
-                    debug('track length ' + iup.geometry.coordinates.length);
-
-
-                    var trackSectionsphy = [];
-                    var sectionsphy = [];
-                    var trackSectionsnat = [];
-                    var sectionsnat = [];
-                    var trackSectionscond = [];
-                    var sectionscond = [];
-                    var nsections = 1;
-                    var pkreg = [];
-                    var trackpkreg = [];
-
-                    var valini = iup.properties.pk[0]; //cojo el primer valo del PK
-                    if (iup.inverted) {
-                        sectionlength *= -1;
-                        var ns = 0;
-                        var pkini = iup.properties.pk[0];
-
-                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
-                            sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
-                            sectionscond[ns] = iup.properties.rcondition[i];
-                            pkreg[ns] = iup.properties.pk[i];
-
-                            if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                                // debug(nsections);
-                                trackSectionsphy.push(sectionsphy);
-                                trackSectionsnat.push(sectionsnat);
-                                trackSectionscond.push(sectionscond);
-                                trackpkreg.push(pkreg);
-                                sectionsphy = [];
-                                sectionsnat = [];
-                                sectionscond = [];
-                                pkreg = [];
-                                nsections++;
-                                ns = 0;
-                            } else {
-                                ns++;
-                            }
-                        }
-                        var l = 0;
-                        for (var ts of trackSectionsphy) {
-                            l += ts.length;
-                        }
-                        // debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        // debug(trackSectionsphy);
-                        // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        // debug(trackSectionsnat);
-                        // debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        // debug(trackSectionscond);
-                        // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        // debug(trackpkreg);
-
-                    } else {
-                        var ns = 0;
-                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
-                            sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
-                            sectionscond[ns] = iup.properties.rcondition[i];
-                            pkreg[ns] = iup.properties.pk[i];
-
-                            if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                                // debug(nsections);
-                                trackSectionsphy.push(sectionsphy);
-                                trackSectionsnat.push(sectionsnat);
-                                trackSectionscond.push(sectionscond);
-                                trackpkreg.push(pkreg);
-                                pkreg = [];
-                                sectionsphy = [];
-                                sectionsnat = [];
-                                sectionscond = [];
-
-                                nsections++;
-                                ns = 0;
-                            } else {
-                                ns++;
-                            }
-                        }
-                        var l = 0;
-                        for (var ts of trackSectionsphy) {
-                            l += ts.length;
-                        }
-                        // debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        // debug(trackSectionsphy);
-                        // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        // debug(trackSectionsnat);
-                        // debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        // debug(trackSectionscond);
-                        // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        // debug(trackpkreg);
-
+                await snat.save(function(err, ssaved) {
+                    if (err) {
+                        res.send(500, err.message);
                     }
-                    // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
-                    // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
+                    tracksUpdated++;
+
+                });
+
+            }
 
 
-                    debug(trackSectionsphy);
-                    var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
-                    debug(tgphys);
-                    for (var tgphy of tgphys) {
+        });
 
-                        var sphy = new Schedulephy();
-                        sphy.properties = {};
-                        sphy.properties['code'] = tgphy;
-                        sphy.type = 'PAVEMENTS';
-                        sphy.config = {};
-                        sphy.config['color'] = 'grey';
+        if (++fin >= ifdts.length) {
 
-                        sphy.save(function(err, ssaved) {
-                            if (err) {
-                                res.send(500, err.message);
-                            }
-                            tracksUpdated++;
-                        });
-                    }
-
-
-                    debug(trackSectionsnat);
-                    var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
-                    debug(tgnats);
-                    for (var tgnat of tgnats) {
-
-                        var snat = new Schedulenat();
-                        snat.properties = {};
-                        snat.properties['code'] = tgnat;
-                        snat.type = 'PAVEMENTS';
-                        snat.config = {};
-                        snat.config['color'] = 'grey';
-
-                        snat.save(function(err, ssaved) {
-                            if (err) {
-                                res.send(500, err.message);
-                            }
-                            tracksUpdated++;
-                        });
-                    }
-
-
-
-                }
-            });
-
-
+            ret.tracksUpdated = tracksUpdated;
+            debug(tracksUpdated);
+            await res.status(200).jsonp(ret);
+        } else {
+            debug(fin);
         }
-    });
-    ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+
+
+    }
+
+
+
 });
 
 
