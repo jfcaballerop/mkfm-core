@@ -181,7 +181,6 @@ exports.tracksGroupNameRiskCond = function(trackSections, trackSectionscond, tra
     var pkfin;
     var tracknamesche = iup.properties.rcode[0];
 
-    //TODO: terminar de rellenar el nombre
     for (var ts in trackSections) {
         //TODO: cuidado que la moda puede devolver 2 valores si son iguales
         //debug(typeof (ts));
@@ -204,7 +203,7 @@ exports.tracksGroupNameRiskCond = function(trackSections, trackSectionscond, tra
             // debug('antsect ' + antsect);
             // debug('setc ' + mathjs.mode(trackSections[ts])[0]);
 
-            if (mathjs.mode(trackSections[ts])[0] !== antsect /*|| formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond*/ ) {
+            if (mathjs.mode(trackSections[ts])[0] !== antsect || formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]) !== antcond) {
                 tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
                     '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
                 //debug(tracknamesche);

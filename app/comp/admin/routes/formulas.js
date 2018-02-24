@@ -819,10 +819,18 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
         // Arr de valores a updatear
         ifdts = values;
     });
-
+    await Schedulenat.remove({}, function(err) {
+        if (err) return handleError(err);
+        // removed!
+    });
+    await Schedulephy.remove({}, function(err) {
+        if (err) return handleError(err);
+        // removed!
+    });
     var fin = 0;
     var arrGroupTrackNat = [];
     var arrGroupTrackPhy = [];
+    var arrPromises = [];
 
     for (var ifdt of ifdts) {
         var valuerrisknaturalarr = [];
@@ -1070,165 +1078,226 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function(re
                 "properties.grisknatural2": valuegrisknaturalarr2
             }
         };
-        await Infodatatrack.findByIdAndUpdate(ifdt._id, query, async function(err, iup) {
-            if (err) {
-                debug(err.message);
-            }
-            await tracksUpdated++;
+        arrPromises.push(new Promise(function(resolve, reject) {
 
-            var trackSectionsphy = [];
-            var sectionsphy = [];
-            var trackSectionsnat = [];
-            var sectionsnat = [];
-            var trackSectionscond = [];
-            var sectionscond = [];
-            var nsections = 1;
-            var pkreg = [];
-            var trackpkreg = [];
 
-            var valini = iup.properties.pk[0]; //cojo el primer valo del PK
-            if (iup.inverted) {
-                sectionlength *= -1;
-                var ns = 0;
-                var pkini = iup.properties.pk[0];
 
-                for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                    sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
-                    sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
-                    sectionscond[ns] = iup.properties.rcondition[i];
-                    pkreg[ns] = iup.properties.pk[i];
+            Infodatatrack.findByIdAndUpdate(ifdt._id, query, function(err, iup) {
+                if (err) {
+                    debug(err.message);
+                    reject(err);
+                }
+                tracksUpdated++;
 
-                    if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                        // debug(nsections);
-                        trackSectionsphy.push(sectionsphy);
-                        trackSectionsnat.push(sectionsnat);
-                        trackSectionscond.push(sectionscond);
-                        trackpkreg.push(pkreg);
-                        sectionsphy = [];
-                        sectionsnat = [];
-                        sectionscond = [];
-                        pkreg = [];
-                        nsections++;
-                        ns = 0;
-                    } else {
-                        ns++;
+                var trackSectionsphy = [];
+                var sectionsphy = [];
+                var trackSectionsnat = [];
+                var sectionsnat = [];
+                var trackSectionscond = [];
+                var sectionscond = [];
+                var nsections = 1;
+                var pkreg = [];
+                var trackpkreg = [];
+
+                var valini = iup.properties.pk[0]; //cojo el primer valo del PK
+                if (iup.inverted) {
+                    sectionlength *= -1;
+                    var ns = 0;
+                    var pkini = iup.properties.pk[0];
+
+                    for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                        sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                        sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                        sectionscond[ns] = iup.properties.rcondition[i];
+                        pkreg[ns] = iup.properties.pk[i];
+
+                        if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                            // debug(nsections);
+                            trackSectionsphy.push(sectionsphy);
+                            trackSectionsnat.push(sectionsnat);
+                            trackSectionscond.push(sectionscond);
+                            trackpkreg.push(pkreg);
+                            sectionsphy = [];
+                            sectionsnat = [];
+                            sectionscond = [];
+                            pkreg = [];
+                            nsections++;
+                            ns = 0;
+                        } else {
+                            ns++;
+                        }
                     }
-                }
-                var l = 0;
-                for (var ts of trackSectionsphy) {
-                    l += ts.length;
-                }
-                // debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                // debug(trackSectionsphy);
-                // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                // debug(trackSectionsnat);
-                // debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                // debug(trackSectionscond);
-                // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
-                // debug(trackpkreg);
-
-            } else {
-                var ns = 0;
-                for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                    sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
-                    sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
-                    sectionscond[ns] = iup.properties.rcondition[i];
-                    pkreg[ns] = iup.properties.pk[i];
-
-                    if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                        // debug(nsections);
-                        trackSectionsphy.push(sectionsphy);
-                        trackSectionsnat.push(sectionsnat);
-                        trackSectionscond.push(sectionscond);
-                        trackpkreg.push(pkreg);
-                        pkreg = [];
-                        sectionsphy = [];
-                        sectionsnat = [];
-                        sectionscond = [];
-
-                        nsections++;
-                        ns = 0;
-                    } else {
-                        ns++;
+                    var l = 0;
+                    for (var ts of trackSectionsphy) {
+                        l += ts.length;
                     }
+                    // debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                    // debug(trackSectionsphy);
+                    // debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                    // debug(trackSectionsnat);
+                    // debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                    // debug(trackSectionscond);
+                    // debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
+                    // debug(trackpkreg);
+
+                } else {
+                    var ns = 0;
+                    for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                        sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                        sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                        sectionscond[ns] = iup.properties.rcondition[i];
+                        pkreg[ns] = iup.properties.pk[i];
+
+                        if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                            // debug(nsections);
+                            trackSectionsphy.push(sectionsphy);
+                            trackSectionsnat.push(sectionsnat);
+                            trackSectionscond.push(sectionscond);
+                            trackpkreg.push(pkreg);
+                            pkreg = [];
+                            sectionsphy = [];
+                            sectionsnat = [];
+                            sectionscond = [];
+
+                            nsections++;
+                            ns = 0;
+                        } else {
+                            ns++;
+                        }
+                    }
+                    var l = 0;
+                    for (var ts of trackSectionsphy) {
+                        l += ts.length;
+                    }
+                    // debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                    // debug(trackSectionsphy);
+                    // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+                    // debug(trackSectionsnat);
+                    // debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
+                    // debug(trackSectionscond);
+                    // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
+                    // debug(trackpkreg);
+
                 }
-                var l = 0;
-                for (var ts of trackSectionsphy) {
-                    l += ts.length;
-                }
-                // debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
+                // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
+                // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
+
+
                 // debug(trackSectionsphy);
-                // debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
+
+                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
+                // debug(tgphys);
+                // for (var tgphy of tgphys) {
+                //     arrGroupTrackPhy.push(tgphy);
+                // }
+
+
                 // debug(trackSectionsnat);
-                // debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                // debug(trackSectionscond);
-                // debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
-                // debug(trackpkreg);
+                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
+                // debug(tgnats);
+                // for (var tgnat of tgnats) {
+                //     arrGroupTrackNat.push(tgnat);
+                // }
 
-            }
-            // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
-            // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
-
-
-            // debug(trackSectionsphy);
-
-            var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
-            // debug(tgphys);
-            for (var tgphy of tgphys) {
-                arrGroupTrackPhy.push(tgphy);
-            }
-
-
-            // debug(trackSectionsnat);
-            var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
-            // debug(tgnats);
-            for (var tgnat of tgnats) {
-                arrGroupTrackNat.push(tgnat);
-            }
-
-
-        });
+                // debug(arrGroupTrackPhy.length);
+                // debug(arrGroupTrackNat.length);
+                resolve([tgphys, tgnats]);
+            })
+        }));
 
     }
 
-    for (var gtp of arrGroupTrackPhy) {
-        var sphy = new Schedulephy();
-        sphy.properties = {};
-        sphy.properties['code'] = gtp;
-        sphy.type = 'PAVEMENTS';
-        sphy.config = {};
-        sphy.config['color'] = 'grey';
 
-        await sphy.save(function(err, ssaved) {
-            if (err) {
-                res.send(500, err.message);
+
+
+    // for (var gt of arrGroupTrackNat) {
+    //     var snat = new Schedulenat();
+    //     snat.properties = {};
+    //     snat.properties['code'] = gt;
+    //     snat.type = 'PAVEMENTS';
+    //     snat.config = {};
+    //     snat.config['color'] = 'grey';
+
+    //     arrPromises.push(snat.save(function(err, ssaved) {
+    //         if (err) {
+    //             res.send(500, err.message);
+    //         }
+    //         tracksUpdated++;
+    //     }));
+    // }
+
+    Promise.all(arrPromises).then(function(values) {
+        var arrPromises2 = [];
+        ret['schedphy'] = [];
+        ret['schednat'] = [];
+
+        debug('Values Length ' + values.length);
+        // debug('Values ' + values);
+        for (var val of values) {
+            // debug('Promise phy: ' + val[0].length);
+            for (var gt of val[0]) {
+                ret['schedphy'].push(gt);
+                arrPromises2.push(new Promise(function(resolve, reject) {
+                    var sphy = new Schedulephy();
+                    sphy.properties = {};
+                    sphy.properties['code'] = gt;
+                    sphy.type = 'PAVEMENTS';
+                    sphy.config = {};
+                    sphy.config['color'] = 'grey';
+
+                    sphy.save(function(err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
             }
-            tracksUpdated++;
-        });
-    }
-    debug(tracksUpdated);
+            // debug('Promise nat: ' + val[1].length);
+            for (var gt of val[1]) {
+                ret['schednat'].push(gt);
 
-    for (var gtn of arrGroupTrackNat) {
-        var snat = new Schedulenat();
-        snat.properties = {};
-        snat.properties['code'] = gtn;
-        snat.type = 'PAVEMENTS';
-        snat.config = {};
-        snat.config['color'] = 'grey';
+                arrPromises2.push(new Promise(function(resolve, reject) {
+                    var snat = new Schedulenat();
+                    snat.properties = {};
+                    snat.properties['code'] = gt;
+                    snat.type = 'PAVEMENTS';
+                    snat.config = {};
+                    snat.config['color'] = 'grey';
 
-        await snat.save(function(err, ssaved) {
-            if (err) {
-                res.send(500, err.message);
+                    snat.save(function(err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
             }
-            tracksUpdated++;
+        }
+
+        Promise.all(arrPromises2).then(function(values2) {
+
+            debug('values2 ' + values2.length);
+
+            ret.tracksUpdated = tracksUpdated;
+            res.status(200).jsonp(ret);
+        }).catch(function(reason2) {
+            console.log(reason2);
+            return res.status(500).send(reason2);
 
         });
-    }
-    debug(tracksUpdated);
 
-    ret.tracksUpdated = tracksUpdated;
-    await res.status(200).jsonp(ret);
+    }).catch(function(reason) {
+        console.log(reason);
+        return res.status(500).send(reason);
 
+    });;
 
 });
 
