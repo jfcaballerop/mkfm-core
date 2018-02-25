@@ -11,7 +11,7 @@ var base64Img = require('base64-img');
 var mathjs = require('mathjs');
 var formulasService = require('./formulas');
 
-exports.makeKoboGeoJson = function(arr, index, type) {
+exports.makeKoboGeoJson = function (arr, index, type) {
     // console.log('## Services makeKoboGeoJson ##');
     //console.log(JSON.stringify(arr) + ' ' + index + ' ' + type);
     var retJson = {
@@ -28,7 +28,7 @@ exports.makeKoboGeoJson = function(arr, index, type) {
     return retJson;
 
 }
-exports.createToken = function(user) {
+exports.createToken = function (user) {
     var payload = {
         sub: user._id,
         iat: moment().unix(),
@@ -38,7 +38,7 @@ exports.createToken = function(user) {
 };
 
 // jsonwebtoken
-exports.createWebToken = function(user) {
+exports.createWebToken = function (user) {
     var u = {
         login: user.login,
         id: user._id,
@@ -57,7 +57,7 @@ exports.createWebToken = function(user) {
  * elemant: [long, lat, cot]
  * *
  */
-exports.calDIST = function(element, elemant) {
+exports.calDIST = function (element, elemant) {
     var dist = 0;
 
     var utmValAct = utm.fromLatLon(element[0], element[1], config.ZONE);
@@ -79,7 +79,7 @@ exports.calDIST = function(element, elemant) {
  * Return arrayinverted
  * *
  */
-exports.invertedpk = function(arrpk) {
+exports.invertedpk = function (arrpk) {
     var arrinvertedpk = [];
 
     for (var i = 0; i < arrpk.length; i++) {
@@ -90,7 +90,7 @@ exports.invertedpk = function(arrpk) {
 
 };
 
-exports.mergeDeep = function(obj1, obj2) {
+exports.mergeDeep = function (obj1, obj2) {
     var result = {};
     Object.keys(obj1).forEach(key => result[key] = obj1[key]);
     Object.keys(obj2).forEach(key => result[key] = obj2[key]);
@@ -115,7 +115,7 @@ function getPaths(folder) {
 
 
 }
-exports.docPdf = function(docDefinition, config, dbfields, temp) {
+exports.docPdf = function (docDefinition, config, dbfields, temp) {
     var doc_translate = JSON.stringify(docDefinition);
     for (var f of config.fields) {
         if ((f.type === 'img' || f.type.indexOf('ogo') > -1) && f.value !== '') {
@@ -146,7 +146,7 @@ exports.docPdf = function(docDefinition, config, dbfields, temp) {
         // j++;
     }
     var fs = require('fs');
-    fs.writeFile("/tmp/test", doc_translate, function(err) {
+    fs.writeFile("/tmp/test", doc_translate, function (err) {
         if (err) {
             return console.log(err);
         }
@@ -156,14 +156,14 @@ exports.docPdf = function(docDefinition, config, dbfields, temp) {
 
 };
 
-exports.roundValue = function(value, decimals) {
+exports.roundValue = function (value, decimals) {
     if (typeof value === 'number' && !isNaN(value)) {
         return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
     } else {
         return 0;
     }
 };
-exports.roundValuePerCent = function(value, decimals) {
+exports.roundValuePerCent = function (value, decimals) {
     if (typeof value === 'number' && !isNaN(value)) {
         return Number(Math.round(value * 100 + 'e' + decimals) + 'e-' + decimals);
     } else {
@@ -171,7 +171,7 @@ exports.roundValuePerCent = function(value, decimals) {
     }
 };
 
-exports.tracksGroupNameRiskCond = function(trackSections, trackSectionscond, trackpkreg, iup, type) {
+exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackpkreg, iup, type) {
     var tracksnamessche = [];
     var antsect = mathjs.mode(trackSections[0])[0];
     var antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
@@ -235,4 +235,21 @@ exports.tracksGroupNameRiskCond = function(trackSections, trackSectionscond, tra
     tracksnamessche.push(tracknamesche);
 
     return tracksnamessche;
+}
+
+exports.createNameSched = function (code, pkini, length, cond, risk, type) {
+    var ret = "";
+
+    var vpkini = pkini / 1000;
+    var vpkfin = (parseFloat(pkini) + parseFloat(length)) / 1000;
+    var vcond = formulasService.ConditionRating(cond);
+    var vrisk = formulasService.NormalizeRiskRatingScale(risk);
+    var ret = code + '__KP-' + (vpkini.toString().split('.').length > 1 ? vpkini.toString().split('.')[0] : vpkini.toString()) +
+        '+' + (vpkini.toString().split('.').length > 1 ? vpkini.toString().split('.')[1].substring(0, 3) : '0');
+    ret += '-' + (vpkfin.toString().split('.').length > 1 ? vpkfin.toString().split('.')[0] : vpkfin.toString()) +
+        '+' + (vpkfin.toString().split('.').length > 1 ? vpkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + vrisk + '__COND-' + vcond;
+
+
+    return ret;
+
 }
