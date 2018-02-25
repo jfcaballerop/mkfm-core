@@ -44,9 +44,9 @@
             data: JSON.stringify(dataPost),
             type: 'POST',
             contentType: 'application/json'
-        }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+        }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
         });
-        Promise.all([p1]).then(function (values) {
+        Promise.all([p1]).then(function(values) {
             console.log(values);
             if (values[0].result === "OK") {
                 // TODO: Stop spinner        
@@ -57,6 +57,75 @@
                     tipoDeFormula !== 'update_formulas_tracks_likelihood') {
 
                     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+                    if (tipoDeFormula === 'update_formulas_tracks_risk') {
+                        // console.log(values[0].schedphy);
+                        // console.log(values[0].schednat);
+
+                        $('#FormulaRisk__Risk').empty();
+                        data = values[0].schedphy;
+                        var html = [];
+                        var i = -1;
+                        html[++i] = '<div class="radio">' +
+                            '  <label class="radio-inline">' +
+                            '    <input type="radio" name="optionsRadios" id="radio_phy" value="radio_phy" checked=""> Physical' +
+                            '  </label>' +
+                            '';
+                        html[++i] = '' +
+                            '  <label class="radio-inline">' +
+                            '    <input type="radio" name="optionsRadios" id="radio_nat" value="radio_nat" > Natural' +
+                            '  </label>' +
+                            '</div>';
+
+                        html[++i] = '<div id="div_formulas_tracks_risk_phy" ><table id="table_formulas_tracks_risk_phy" class="table table-bordered table-striped table-condensed"> <thead><tr><th>CODE RISK PHYSICAL</th></tr></thead><tbody>';
+                        for (var d of data) {
+                            html[++i] = '<tr><td>' + d + '</td></tr>';
+                        }
+                        html[++i] = '</tbody></table></div>';
+
+
+                        data2 = values[0].schednat;
+                        html[++i] = '<div id="div_formulas_tracks_risk_nat" style="display:none"><table id="table_formulas_tracks_risk_nat" class="table table-bordered table-striped table-condensed" > <thead><tr><th>CODE RISK NATURAL</th></tr></thead><tbody>';
+                        for (var d of data2) {
+                            html[++i] = '<tr><td>' + d + '</td></tr>';
+                        }
+                        html[++i] = '</tbody></table></div>';
+
+                        $('#FormulaRisk__Risk').html(html.join(''));
+
+                        $('#table_formulas_tracks_risk_phy tbody').paginathing({
+                            perPage: 50, // Pagination controls
+                            prevNext: true,
+                            firstLast: true,
+                            prevText: '&laquo;',
+                            nextText: '&raquo;',
+                            firstText: 'First',
+                            lastText: 'Last',
+                            containerClass: 'pagination-container',
+                            ulClass: 'pagination',
+                            liClass: 'page',
+                            activeClass: 'active',
+                            disabledClass: 'disabled',
+                            limitPagination: 15,
+
+                        });
+                        $('#table_formulas_tracks_risk_nat tbody').paginathing({
+                            perPage: 50, // Pagination controls
+                            prevNext: true,
+                            firstLast: true,
+                            prevText: '&laquo;',
+                            nextText: '&raquo;',
+                            firstText: 'First',
+                            lastText: 'Last',
+                            containerClass: 'pagination-container',
+                            ulClass: 'pagination',
+                            liClass: 'page',
+                            activeClass: 'active',
+                            disabledClass: 'disabled',
+                            limitPagination: 15,
+
+                        });
+
+                    }
                 } else {
                     $('#resultUpdate' + id).append('Tracks updated. Result: ' + values[0].result);
 
@@ -67,14 +136,14 @@
         });
 
     };
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
         // alert(featurePaintCriticality.publicThing);
 
-        $.each(formulasDB, function (index, form) {
+        $.each(formulasDB, function(index, form) {
             //console.log(form.properties.HTML);
-            $('#' + form.properties.HTML.id).on('click', function (event) {
+            $('#' + form.properties.HTML.id).on('click', function(event) {
                 $this = $(this);
                 //alert('AssetCriticality');
                 $('#formulaName').empty();
@@ -90,10 +159,10 @@
                         */
                         featurePaintCondition.paintHTML(form);
 
-                        $('input[type=radio][name=optionsRadios]').on('change', function () {
+                        $('input[type=radio][name=optionsRadios]').on('change', function() {
                             // alert(this.value);
                             var arrRadio = $('input[type=radio][name=optionsRadios]');
-                            $.each(arrRadio, function (r, radio) {
+                            $.each(arrRadio, function(r, radio) {
                                 console.log(r + ' ' + radio.value);
                                 $('#formulaTable' + radio.value).hide();
                             });
@@ -103,7 +172,7 @@
 
                         });
                         var valant = '';
-                        $('input[type=number]').on('focus', function () {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -112,7 +181,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=number]').on('blur', function () {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -128,12 +197,12 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     console.log('koboinfo ' + JSON.stringify(
                                         data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -155,10 +224,10 @@
                         */
                         featurePaintCriticality.paintHTML(form);
 
-                        $('input[type=radio][name=optionsRadios]').on('change', function () {
+                        $('input[type=radio][name=optionsRadios]').on('change', function() {
                             // alert(this.value);
                             var arrRadio = $('input[type=radio][name=optionsRadios]');
-                            $.each(arrRadio, function (r, radio) {
+                            $.each(arrRadio, function(r, radio) {
                                 console.log(r + ' ' + radio.value);
                                 $('#formulaTable' + radio.value).hide();
                             });
@@ -168,7 +237,7 @@
 
                         });
                         var valant = '';
-                        $('input[type=text]').on('focus', function () {
+                        $('input[type=text]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -177,7 +246,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=text]').on('blur', function () {
+                        $('input[type=text]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -193,11 +262,11 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     // console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -223,7 +292,7 @@
 
 
                         var valant = '';
-                        $('input[type=number]').on('focus', function () {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -232,7 +301,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=number]').on('blur', function () {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -248,11 +317,11 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     // console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -277,7 +346,7 @@
 
 
                         var valant = '';
-                        $('input[type=number]').on('focus', function () {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -286,7 +355,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=number]').on('blur', function () {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -302,11 +371,11 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     // console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -331,7 +400,7 @@
 
 
                         var valant = '';
-                        $('input[type=number]').on('focus', function () {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -340,7 +409,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=number]').on('blur', function () {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -356,11 +425,11 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     // console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -387,7 +456,7 @@
 
 
                         var valant = '';
-                        $('input[type=number]').on('focus', function () {
+                        $('input[type=number]').on('focus', function() {
                             console.log(this.value);
                             // On first focus, check to see if we have the default text saved
                             // If not, save current value to data()
@@ -396,7 +465,7 @@
                             // check to see if the input currently equals the default before clearing it
                             valant = $(this).val();
                         });
-                        $('input[type=number]').on('blur', function () {
+                        $('input[type=number]').on('blur', function() {
                             // on blur, if there is no value, set the defaultText
                             if ($(this).val() != valant) {
                                 // $(this).val($(this).data('defaultText'));
@@ -412,11 +481,11 @@
                                     data: JSON.stringify(dataPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function (data) {
+                                }, function(data) {
                                     // console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([p1]).then(function (values) {
+                                Promise.all([p1]).then(function(values) {
                                     console.log(values);
                                     if (values[0].result === "OK") {
                                         $input.css("border", "2px solid green");
@@ -435,7 +504,22 @@
 
             });
         });
+        var checkExist = setInterval(function() {
+            if ($('#div_formulas_tracks_risk_nat').length) {
+                // console.log("Exists!");
+                clearInterval(checkExist);
+                $('input[name=optionsRadios').change(function() {
+                    if ($(this).val() === 'radio_nat') {
+                        $('#div_formulas_tracks_risk_phy').hide();
+                        $('#div_formulas_tracks_risk_nat').show();
+                    } else {
+                        $('#div_formulas_tracks_risk_nat').hide();
+                        $('#div_formulas_tracks_risk_phy').show();
 
+                    }
+                });
+            }
+        }, 1000); // check every 1000ms
 
     });
 </script>

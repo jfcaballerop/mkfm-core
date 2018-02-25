@@ -453,11 +453,27 @@ exports.conditionValueScale = function (condv) {
 
     return ret;
 }
+exports.NormalizeRiskRatingScale = function (risk_value) {
+    var lofv = risk_value.split('__')[0];
+    // debug('lof ' + lof + ' cons ' + cons);
+    var lof = lofv * 1.0;
+    if (lof >= 0 && lof < 20) {
+        return '0-20__' + risk_value.split('__')[1];
+    } else if (lof >= 20 && lof < 40) {
+        return '20-40__' + risk_value.split('__')[1];
+    } else if (lof >= 40 && lof < 60) {
+        return '40-60__' + risk_value.split('__')[1];
+    } else if (lof >= 60 && lof < 80) {
+        return '60-80__' + risk_value.split('__')[1];
+    } else if (lof >= 80 && lof <= 100) {
+        return '80-100__' + risk_value.split('__')[1];
+    }
+}
 exports.riskRatingScale = function (lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
-    // debug('lof ' + lof);
+    // debug('lof ' + lof + ' cons ' + cons);
     var lof = lof * 1;
     if (lof >= 0 && lof < 20) {
         lofv = '0-20';

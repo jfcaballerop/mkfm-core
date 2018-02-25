@@ -25,6 +25,10 @@ var formulaModels = require(path.join(__dirname, '../models/formula'));
 var Formula = mongoose.model('Formula');
 var conditionFormulaModels = require(path.join(__dirname, '../models/formcondition'));
 var conditionFormula = mongoose.model('Formcondition');
+var schedulenatModels = require(path.join(__dirname, '../../schedule/models/schedulenat'));
+var Schedulenat = mongoose.model('Schedulenat');
+var schedulephyModels = require(path.join(__dirname, '../../schedule/models/schedulephy'));
+var Schedulephy = mongoose.model('Schedulephy');
 var mathjs = require('mathjs');
 
 var diccKoboToDominica = {
@@ -309,7 +313,7 @@ function capitalizeFirstLetter(string) {
 }
 
 router.use(function timeLog(req, res, next) {
-    ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
+    ////// //debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
     next();
 });
 router.use(bodyParser.urlencoded({
@@ -347,19 +351,19 @@ router.get('/formulas', function (req, resp, next) {
 
 
     var request = http.request(options, function (res) {
-        ////// debug('STATUS: ' + res.statusCode);
-        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        ////// //debug('STATUS: ' + res.statusCode);
+        ////// //debug('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            ////// debug('BODY: ' + chunk);
+            ////// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
         res.on('end', function () {
-            //// debug('DATA ' + data.length + ' ' + data);
+            //// //debug('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
-            // debug(JSON.stringify(responseObject));
+            // //debug(JSON.stringify(responseObject));
             resp.render('admin_panel_formulas', {
                 formula: responseObject,
                 token: req.token,
@@ -382,7 +386,7 @@ router.get('/formulas', function (req, resp, next) {
  */
 router.post('/get_formulas_tracks/', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
+    //debug('## WEB get_formulas_tracks ' + JSON.stringify(postData));
 
     var options = {
         host: config.HOST_API,
@@ -402,7 +406,7 @@ router.post('/get_formulas_tracks/', function (req, resp) {
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -426,7 +430,7 @@ router.post('/get_formulas_tracks/', function (req, resp) {
  */
 router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
+    //debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
 
     var options = {
         host: config.HOST_API,
@@ -446,7 +450,7 @@ router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp)
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -469,7 +473,7 @@ router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp)
  */
 router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_likelihood: ' + req.params.formula + ' - ' + req.params.asset);
+    //debug('## WEB update_formulas_tracks_likelihood: ' + req.params.formula + ' - ' + req.params.asset);
 
     var options = {
         host: config.HOST_API,
@@ -489,7 +493,7 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req,
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -512,7 +516,7 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req,
  */
 router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
+    //debug('## WEB update_formulas_tracks_sensitivity: ' + req.params.formula + ' - ' + req.params.asset);
 
     var options = {
         host: config.HOST_API,
@@ -532,7 +536,7 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -555,7 +559,7 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
  */
 router.post('/update_formulas_tracks_response/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
+    //debug('## WEB update_formulas_tracks_response: ' + req.params.formula + ' - ' + req.params.asset);
 
     var options = {
         host: config.HOST_API,
@@ -575,7 +579,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -598,7 +602,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
  */
 router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
+    //debug('## WEB update_formulas_tracks: ' + +' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
     var options = {
         host: config.HOST_API,
@@ -618,7 +622,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -641,7 +645,7 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
  */
 router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_formulas_tracks_condition: ' + '' + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
+    //debug('## WEB update_formulas_tracks_condition: ' + '' + ' - ' + req.params.asset + '\n\n\n' + '----------------------------');
 
     var options = {
         host: config.HOST_API,
@@ -661,7 +665,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -682,7 +686,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
  */
 router.post('/update_field/:field/:value', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB update_field: ' + req.params.field + '\n\n\n');
+    //debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
     var options = {
         host: config.HOST_API,
@@ -702,7 +706,7 @@ router.post('/update_field/:field/:value', function (req, resp) {
         res.setEncoding('utf8');
         var data = '';
         res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
+            //// //debug('BODY: ' + chunk);
             data += chunk;
 
         });
@@ -738,7 +742,7 @@ router.get('/V1/formulas/', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            debug(" ### GET Formulas ### \n" + JSON.stringify(formcs));
+            //debug(" ### GET Formulas ### \n" + JSON.stringify(formcs));
 
             res.status(200).jsonp(forms);
         });
@@ -750,7 +754,7 @@ router.get('/V1/formulas/', function (req, res, next) {
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks_risk/');
+    //debug('API /V1/update_formulas_tracks_risk/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
@@ -760,10 +764,17 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
     var sectionlength = 50; //val min por defecto
 
-    debug(postData);
+    //debug(postData);
     var form;
     var formula = Object.keys(postData)[0];
-    debug(formula);
+    //debug(formula);
+
+    /**
+     * Localizar Formula para aplicar
+     * @sectionlenth: es para dividir en tramos los PAV afectados
+     */
+
+
     await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
@@ -777,7 +788,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             }
         }
     });
-    debug('sectionlength ' + sectionlength);
+    //debug('sectionlength ' + sectionlength);
     var wherearr = [];
 
     //add codes asset
@@ -805,424 +816,700 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
     for (var w of wherearr) {
         selectjson.properties[w] = 1;
     }
-    debug(selectjson);
-    await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+    //debug(selectjson);
+    var ifdts;
+
+    /**
+     * @selectjson: Me traigo solo los campos necesarios
+     */
+
+    await Infodatatrack.find({}, selectjson).exec(async function (err, values) {
         if (err) {
             res.send(500, err.message);
         }
         // Arr de valores a updatear
+        ifdts = values;
+    });
+    /**
+     * Cada vez que se actualice el RIKS se regenera los Schedule
+     */
+    await Schedulenat.remove({}, function (err) {
+        if (err) return handleError(err);
+        // removed!
+    });
+    await Schedulephy.remove({}, function (err) {
+        if (err) return handleError(err);
+        // removed!
+    });
 
 
-        for (var ifdt of ifdts) {
-            var valuerrisknaturalarr = [];
-            var valuerriskphysicalarr = [];
-            var valuebrisknaturalarr = [];
-            var valuebriskphysicalarr = [];
-            var valueCrisknaturalarr = [];
-            var valueCriskphysicalarr = [];
-            var valuegrisknaturalarr = [];
-            var valuegriskphysicalarr = [];
-            var valuegrisknaturalarr2 = [];
-            var valuegriskphysicalarr2 = [];
 
-            tracksUpdated++;
-            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                var rlofphy;
-                var rlofnat;
-                var rcrit;
-                var blofphy;
-                var blofnat;
-                var bcrit;
-                var Clofphy;
-                var Clofnat;
-                var Ccrit;
-                var glofphy;
-                var glofnat;
-                var gcrit;
-                var glofphy2;
-                var glofnat2;
-                var gcrit2;
-                var existsbcode = false;
-                var existsCcode = false;
-                var existsgcode = false;
-                var existsgcode2 = false;
+    var fin = 0;
+    var arrGroupTrackNat = [];
+    var arrGroupTrackPhy = [];
+    var arrPromises = [];
 
+    /**
+     * Calculo el riesgo de cada Track y cada punto
+     */
+    for (var ifdt of ifdts) {
+        var valuerrisknaturalarr = [];
+        var valuerriskphysicalarr = [];
+        var valuebrisknaturalarr = [];
+        var valuebriskphysicalarr = [];
+        var valueCrisknaturalarr = [];
+        var valueCriskphysicalarr = [];
+        var valuegrisknaturalarr = [];
+        var valuegriskphysicalarr = [];
+        var valuegrisknaturalarr2 = [];
+        var valuegriskphysicalarr2 = [];
 
-                if (ifdt.properties.rlofphysical[i] !== undefined) {
-                    if (typeof ifdt.properties.rlofphysical[i] === "string") {
-                        ifdt.properties.rlofphysical[i] === "" ? rlofphy = 0 : rlofphy = parseFloat(ifdt.properties.rlofphysical[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rlofphysical[i] === "number") {
-                        rlofphy = ifdt.properties.rlofphysical[i];
-                    } else {
-                        rlofphy = 0;
-                    }
+        /**
+         * Calculo del riesgo por punto
+         */
+        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+            var rlofphy;
+            var rlofnat;
+            var rcrit;
+            var blofphy;
+            var blofnat;
+            var bcrit;
+            var Clofphy;
+            var Clofnat;
+            var Ccrit;
+            var glofphy;
+            var glofnat;
+            var gcrit;
+            var glofphy2;
+            var glofnat2;
+            var gcrit2;
+            var existsbcode = false;
+            var existsCcode = false;
+            var existsgcode = false;
+            var existsgcode2 = false;
+
+            /**
+             * PAVEMENTS
+             */
+            if (ifdt.properties.rlofphysical[i] !== undefined) {
+                if (typeof ifdt.properties.rlofphysical[i] === "string") {
+                    ifdt.properties.rlofphysical[i] === "" ? rlofphy = 0 : rlofphy = parseFloat(ifdt.properties.rlofphysical[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rlofphysical[i] === "number") {
+                    rlofphy = ifdt.properties.rlofphysical[i];
+                } else {
+                    rlofphy = 0;
                 }
-                if (ifdt.properties.rlofnatural[i] !== undefined) {
-                    if (typeof ifdt.properties.rlofnatural[i] === "string") {
-                        ifdt.properties.rlofnatural[i] === "" ? rlofnat = 0 : rlofnat = parseFloat(ifdt.properties.rlofnatural[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rlofnatural[i] === "number") {
-                        rlofnat = ifdt.properties.rlofnatural[i];
-                    } else {
-                        rlofnat = 0;
-                    }
+            }
+            if (ifdt.properties.rlofnatural[i] !== undefined) {
+                if (typeof ifdt.properties.rlofnatural[i] === "string") {
+                    ifdt.properties.rlofnatural[i] === "" ? rlofnat = 0 : rlofnat = parseFloat(ifdt.properties.rlofnatural[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rlofnatural[i] === "number") {
+                    rlofnat = ifdt.properties.rlofnatural[i];
+                } else {
+                    rlofnat = 0;
                 }
-                if (ifdt.properties.rcriticality[i] !== undefined) {
-                    if (typeof ifdt.properties.rcriticality[i] === "string") {
-                        ifdt.properties.rcriticality[i] === "" ? rcrit = 0 : rcrit = parseFloat(ifdt.properties.rcriticality[i].replace(",", "."));
-                    } else if (typeof ifdt.properties.rcriticality[i] === "number") {
-                        rcrit = ifdt.properties.rcriticality[i];
-                    } else {
-                        rcrit = 0;
-                    }
+            }
+            if (ifdt.properties.rcriticality[i] !== undefined) {
+                if (typeof ifdt.properties.rcriticality[i] === "string") {
+                    ifdt.properties.rcriticality[i] === "" ? rcrit = 0 : rcrit = parseFloat(ifdt.properties.rcriticality[i].replace(",", "."));
+                } else if (typeof ifdt.properties.rcriticality[i] === "number") {
+                    rcrit = ifdt.properties.rcriticality[i];
+                } else {
+                    rcrit = 0;
                 }
-
-                //         // Revisamos que exista el código del asset
-                if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
-                    ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
-                    existsbcode = true;
-                }
-                if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
-                    ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
-                    existsCcode = true;
-                }
-                if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
-                    ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
-                    existsgcode = true;
-                }
-                if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
-                    ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
-                    existsgcode2 = true;
-                }
-
-                if (existsbcode) {
-
-                    if (ifdt.properties.blofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.blofnatural[i] === "string") {
-                            ifdt.properties.blofnatural[i] === "" ? blofnat = 0 : blofnat = parseFloat(ifdt.properties.blofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.blofnatural[i] ' + ifdt.properties.blofnatural[i]);
-                        } else if (typeof ifdt.properties.blofnatural[i] === "number") {
-                            blofnat = ifdt.properties.blofnatural[i];
-                        } else {
-                            blofnat = 0;
-                        }
-                    }
-
-
-                    if (ifdt.properties.blofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.blofphysical[i] === "string") {
-                            ifdt.properties.blofphysical[i] === "" ? blofphy = 0 : blofphy = parseFloat(ifdt.properties.blofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.blofphysical[i] === "number") {
-                            blofphy = ifdt.properties.blofphysical[i];
-                        } else {
-                            blofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.bcriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.bcriticality[i] === "string") {
-                            ifdt.properties.bcriticality[i] === "" ? bcrit = 0 : bcrit = parseFloat(ifdt.properties.bcriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.bcriticality[i] === "number") {
-                            bcrit = ifdt.properties.bcriticality[i];
-                        } else {
-                            bcrit = 0;
-                        }
-                    }
-                }
-                if (existsCcode) {
-
-                    if (ifdt.properties.Clofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.Clofnatural[i] === "string") {
-                            ifdt.properties.Clofnatural[i] === "" ? Clofnat = 0 : Clofnat = parseFloat(ifdt.properties.Clofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.Clofnatural[i] ' + ifdt.properties.Clofnatural[i]);
-                        } else if (typeof ifdt.properties.Clofnatural[i] === "number") {
-                            Clofnat = ifdt.properties.Clofnatural[i];
-                        } else {
-                            Clofnat = 0;
-                        }
-                    }
-
-
-                    if (ifdt.properties.Clofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.Clofphysical[i] === "string") {
-                            ifdt.properties.Clofphysical[i] === "" ? Clofphy = 0 : Clofphy = parseFloat(ifdt.properties.Clofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.Clofphysical[i] === "number") {
-                            Clofphy = ifdt.properties.Clofphysical[i];
-                        } else {
-                            Clofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.Ccriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.Ccriticality[i] === "string") {
-                            ifdt.properties.Ccriticality[i] === "" ? Ccrit = 0 : Ccrit = parseFloat(ifdt.properties.Ccriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.Ccriticality[i] === "number") {
-                            Ccrit = ifdt.properties.Ccriticality[i];
-                        } else {
-                            Ccrit = 0;
-                        }
-                    }
-                }
-                if (existsgcode) {
-
-                    if (ifdt.properties.glofnatural[i] !== undefined) {
-                        if (typeof ifdt.properties.glofnatural[i] === "string") {
-                            ifdt.properties.glofnatural[i] === "" ? glofnat = 0 : glofnat = parseFloat(ifdt.properties.glofnatural[i].replace(",", "."));
-                            // debug('ifdt.properties.glofnatural[i] ' + ifdt.properties.glofnatural[i]);
-                        } else if (typeof ifdt.properties.glofnatural[i] === "number") {
-                            glofnat = ifdt.properties.glofnatural[i];
-                        } else {
-                            glofnat = 0;
-                        }
-                    }
-
-                    if (ifdt.properties.glofphysical[i] !== undefined) {
-                        if (typeof ifdt.properties.glofphysical[i] === "string") {
-                            ifdt.properties.glofphysical[i] === "" ? glofphy = 0 : glofphy = parseFloat(ifdt.properties.glofphysical[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.glofphysical[i] === "number") {
-                            glofphy = ifdt.properties.glofphysical[i];
-                        } else {
-                            glofphy = 0;
-                        }
-                    }
-                    if (ifdt.properties.gcriticality[i] !== undefined) {
-                        if (typeof ifdt.properties.gcriticality[i] === "string") {
-                            ifdt.properties.gcriticality[i] === "" ? gcrit = 0 : gcrit = parseFloat(ifdt.properties.gcriticality[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.gcriticality[i] === "number") {
-                            gcrit = ifdt.properties.gcriticality[i];
-                        } else {
-                            gcrit = 0;
-                        }
-                    }
-                }
-                if (existsgcode2) {
-
-                    if (ifdt.properties.glofnatural2[i] !== undefined) {
-                        if (typeof ifdt.properties.glofnatural2[i] === "string") {
-                            ifdt.properties.glofnatural2[i] === "" ? glofnat2 = 0 : glofnat2 = parseFloat(ifdt.properties.glofnatural2[i].replace(",", "."));
-                            // debug('ifdt.properties.glofnatural2[i] ' + ifdt.properties.glofnatural2[i]);
-                        } else if (typeof ifdt.properties.glofnatural2[i] === "number") {
-                            glofnat2 = ifdt.properties.glofnatural2[i];
-                        } else {
-                            glofnat2 = 0;
-                        }
-                    }
-
-                    if (ifdt.properties.glofphysical2[i] !== undefined) {
-                        if (typeof ifdt.properties.glofphysical2[i] === "string") {
-                            ifdt.properties.glofphysical2[i] === "" ? glofphy2 = 0 : glofphy2 = parseFloat(ifdt.properties.glofphysical2[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.glofphysical2[i] === "number") {
-                            glofphy2 = ifdt.properties.glofphysical2[i];
-                        } else {
-                            glofphy2 = 0;
-                        }
-                    }
-                    if (ifdt.properties.gcriticality2[i] !== undefined) {
-                        if (typeof ifdt.properties.gcriticality2[i] === "string") {
-                            ifdt.properties.gcriticality2[i] === "" ? gcrit2 = 0 : gcrit2 = parseFloat(ifdt.properties.gcriticality2[i].replace(",", "."));
-                        } else if (typeof ifdt.properties.gcriticality2[i] === "number") {
-                            gcrit2 = ifdt.properties.gcriticality2[i];
-                        } else {
-                            gcrit2 = 0;
-                        }
-                    }
-                }
-
-                valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
-                valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
-                valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-                valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-                valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-                valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-                valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-                valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-                valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
-                valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
-
-
             }
 
 
+            /**
+             *  Revisamos que exista el código del asset
+             * */
+            if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                existsbcode = true;
+            }
+            if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                existsCcode = true;
+            }
+            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                existsgcode = true;
+            }
+            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                existsgcode2 = true;
+            }
 
-            // Update DB
-            var conditions = {
-                _id: ifdt._id
-            };
-            var query = {
-                $set: {
-                    "properties.rriskphysical": valuerriskphysicalarr,
-                    "properties.rrisknatural": valuerrisknaturalarr,
-                    "properties.briskphysical": valuebriskphysicalarr,
-                    "properties.brisknatural": valuebrisknaturalarr,
-                    "properties.CRISKphysical": valueCriskphysicalarr,
-                    "properties.CRISKnatural": valueCrisknaturalarr,
-                    "properties.griskphysical": valuegriskphysicalarr,
-                    "properties.grisknatural": valuegrisknaturalarr,
-                    "properties.griskphysical2": valuegriskphysicalarr2,
-                    "properties.grisknatural2": valuegrisknaturalarr2
-                }
-            };
-            await Infodatatrack.findByIdAndUpdate(ifdt._id, query, function (err, iup) {
-                if (err) {
-                    debug(err.message);
-                }
-                // debug("SAVE " + iup._id);
-                // debug("Start section track - inverted: " + iup.inverted);
-                //"5a1d981d9fe31575548c495d" -- not inv
-                //"5a0dc03137bb372c9336a66b" -- inverted
+            /**
+             * BRIDGES
+             */
+            if (existsbcode) {
 
-                // TODO: añadir sections por cada tipo de Risk physical y natural, además añadir como filtrado por condition
-
-                if (iup._id.toString() === "5a0dc03137bb372c9336a66b") {
-                    debug('track length ' + iup.geometry.coordinates.length);
-
-
-                    var trackSectionsphy = [];
-                    var sectionsphy = [];
-                    var trackSectionsnat = [];
-                    var sectionsnat = [];
-                    var trackSectionscond = [];
-                    var sectionscond = [];
-                    var nsections = 1;
-                    var pkreg = [];
-                    var trackpkreg = [];
-
-                    var valini = iup.properties.pk[0]; //cojo el primer valo del PK
-                    if (iup.inverted) {
-                        sectionlength *= -1;
-                        var ns = 0;
-                        var pkini = iup.properties.pk[0];
-
-                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = iup.properties.rriskphysical[i];
-                            sectionsnat[ns] = iup.properties.rrisknatural[i];
-                            sectionscond[ns] = iup.properties.rcondition[i];
-                            pkreg[ns] = iup.properties.pk[i];
-
-                            if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                                // debug(nsections);
-                                trackSectionsphy.push(sectionsphy);
-                                trackSectionsnat.push(sectionsnat);
-                                trackSectionscond.push(sectionscond);
-                                trackpkreg.push(pkreg);
-                                sectionsphy = [];
-                                sectionsnat = [];
-                                sectionscond = [];
-                                pkreg = [];
-                                nsections++;
-                                ns = 0;
-                            } else {
-                                ns++;
-                            }
-                        }
-                        var l = 0;
-                        for (var ts of trackSectionsphy) {
-                            l += ts.length;
-                        }
-                        debug('inverted trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        debug(trackSectionsphy);
-                        debug('inverted trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        debug(trackSectionsnat);
-                        debug('inverted trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        debug(trackSectionscond);
-                        debug('inverted trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        debug(trackpkreg);
-
+                if (ifdt.properties.blofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.blofnatural[i] === "string") {
+                        ifdt.properties.blofnatural[i] === "" ? blofnat = 0 : blofnat = parseFloat(ifdt.properties.blofnatural[i].replace(",", "."));
+                        // //debug('ifdt.properties.blofnatural[i] ' + ifdt.properties.blofnatural[i]);
+                    } else if (typeof ifdt.properties.blofnatural[i] === "number") {
+                        blofnat = ifdt.properties.blofnatural[i];
                     } else {
-                        var ns = 0;
-                        for (var i = 0; i < iup.geometry.coordinates.length; i++) {
-                            sectionsphy[ns] = iup.properties.rriskphysical[i];
-                            sectionsnat[ns] = iup.properties.rrisknatural[i];
-                            sectionscond[ns] = iup.properties.rcondition[i];
-                            pkreg[ns] = iup.properties.pk[i];
-
-                            if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
-                                // debug(nsections);
-                                trackSectionsphy.push(sectionsphy);
-                                trackSectionsnat.push(sectionsnat);
-                                trackSectionscond.push(sectionscond);
-                                trackpkreg.push(pkreg);
-                                pkreg = [];
-                                sectionsphy = [];
-                                sectionsnat = [];
-                                sectionscond = [];
-
-                                nsections++;
-                                ns = 0;
-                            } else {
-                                ns++;
-                            }
-                        }
-                        var l = 0;
-                        for (var ts of trackSectionsphy) {
-                            l += ts.length;
-                        }
-                        debug('trackSectionsphy ' + trackSectionsphy.length + ' points ' + l);
-                        debug(trackSectionsphy);
-                        debug('trackSectionsnat ' + trackSectionsnat.length + ' points ' + l);
-                        debug(trackSectionsnat);
-                        debug('trackSectionscond ' + trackSectionscond.length + ' points ' + l);
-                        debug(trackSectionscond);
-                        debug('trackpkreg ' + trackpkreg.length + ' points ' + l);
-                        debug(trackpkreg);
-
+                        blofnat = 0;
                     }
-                    // debug('Moda trackSectionsphy ' + formulasService.getModa(trackSectionsphy));
-                    // debug('Moda trackSectionsnat ' + formulasService.getModa(trackSectionsnat));
-
-                    var antsect = mathjs.mode(trackSectionsphy[0])[0];
-                    var antcond = "";
-                    var pkiniant = trackpkreg[0][0];
-                    var pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
-                    var pkini;
-                    var pkfin;
-                    var trackgroup = iup.properties.rcode;
-                    //TODO: terminar de rellenar el nombre
-                    for (var ts in trackSectionsphy) {
-                        //TODO: cuidado que la moda puede devolver 2 valores si son iguales
-                        if (ts === 0) {
-                            antsect = mathjs.mode(trackSectionsphy[0])[0];
-                            pkiniant = trackpkreg[0][0];
-                            pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
-                            pkini = pkfinant;
-                            pkfin = pkfinant;
-                            debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                                ' pkini: ' + pkini);
-                        } else {
-                            if (mathjs.mode(trackSectionsphy[ts])[0] !== antsect) {
-                                debug(' pkfin: ' + pkfin);
-                                pkini = trackpkreg[ts][0];
-                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1];
-                                debug('*NEW ' + mathjs.mode(trackSectionsphy[ts]) +
-                                    ' pkini: ' + pkini);
-                            } else {
-                                debug('++ADD ' + mathjs.mode(trackSectionsphy[ts]) +
-                                    ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])));
-                                pkfin = trackpkreg[ts][trackpkreg[ts].length - 1];
-                            }
-                            antsect = mathjs.mode(trackSectionsphy[ts - 1])[0];
-                            // pkfin = trackpkreg[ts - 1][trackpkreg[ts - 1].length - 1];
-
-                        }
-
-                    }
-                    debug(' pkfin: ' + pkfin);
-
-                    for (var ts in trackSectionsnat) {
-                        // debug('Moda trackSectionsnat ' + mathjs.mode(trackSectionsnat[ts]) +
-                        //     ' cond: ' + formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])) +
-                        //     ' pkini: ' + trackpkreg[ts][0] + ' pkfin: ' + trackpkreg[ts][trackpkreg[ts].length - 1]);
-                    }
-                    // for (var ts of trackSectionscond) {
-                    //     debug('Moda trackSectionscond ' + formulasService.ConditionRating(mathjs.mode(ts)));
-                    // }
-
                 }
-            });
+
+
+                if (ifdt.properties.blofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.blofphysical[i] === "string") {
+                        ifdt.properties.blofphysical[i] === "" ? blofphy = 0 : blofphy = parseFloat(ifdt.properties.blofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.blofphysical[i] === "number") {
+                        blofphy = ifdt.properties.blofphysical[i];
+                    } else {
+                        blofphy = 0;
+                    }
+                }
+                if (ifdt.properties.bcriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.bcriticality[i] === "string") {
+                        ifdt.properties.bcriticality[i] === "" ? bcrit = 0 : bcrit = parseFloat(ifdt.properties.bcriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.bcriticality[i] === "number") {
+                        bcrit = ifdt.properties.bcriticality[i];
+                    } else {
+                        bcrit = 0;
+                    }
+                }
+            }
+            /**
+             * CULVERTS
+             */
+            if (existsCcode) {
+
+                if (ifdt.properties.Clofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.Clofnatural[i] === "string") {
+                        ifdt.properties.Clofnatural[i] === "" ? Clofnat = 0 : Clofnat = parseFloat(ifdt.properties.Clofnatural[i].replace(",", "."));
+                        // //debug('ifdt.properties.Clofnatural[i] ' + ifdt.properties.Clofnatural[i]);
+                    } else if (typeof ifdt.properties.Clofnatural[i] === "number") {
+                        Clofnat = ifdt.properties.Clofnatural[i];
+                    } else {
+                        Clofnat = 0;
+                    }
+                }
+
+
+                if (ifdt.properties.Clofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.Clofphysical[i] === "string") {
+                        ifdt.properties.Clofphysical[i] === "" ? Clofphy = 0 : Clofphy = parseFloat(ifdt.properties.Clofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.Clofphysical[i] === "number") {
+                        Clofphy = ifdt.properties.Clofphysical[i];
+                    } else {
+                        Clofphy = 0;
+                    }
+                }
+                if (ifdt.properties.Ccriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.Ccriticality[i] === "string") {
+                        ifdt.properties.Ccriticality[i] === "" ? Ccrit = 0 : Ccrit = parseFloat(ifdt.properties.Ccriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.Ccriticality[i] === "number") {
+                        Ccrit = ifdt.properties.Ccriticality[i];
+                    } else {
+                        Ccrit = 0;
+                    }
+                }
+            }
+            /**
+             * GEOT
+             */
+            if (existsgcode) {
+
+                if (ifdt.properties.glofnatural[i] !== undefined) {
+                    if (typeof ifdt.properties.glofnatural[i] === "string") {
+                        ifdt.properties.glofnatural[i] === "" ? glofnat = 0 : glofnat = parseFloat(ifdt.properties.glofnatural[i].replace(",", "."));
+                        // //debug('ifdt.properties.glofnatural[i] ' + ifdt.properties.glofnatural[i]);
+                    } else if (typeof ifdt.properties.glofnatural[i] === "number") {
+                        glofnat = ifdt.properties.glofnatural[i];
+                    } else {
+                        glofnat = 0;
+                    }
+                }
+
+                if (ifdt.properties.glofphysical[i] !== undefined) {
+                    if (typeof ifdt.properties.glofphysical[i] === "string") {
+                        ifdt.properties.glofphysical[i] === "" ? glofphy = 0 : glofphy = parseFloat(ifdt.properties.glofphysical[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.glofphysical[i] === "number") {
+                        glofphy = ifdt.properties.glofphysical[i];
+                    } else {
+                        glofphy = 0;
+                    }
+                }
+                if (ifdt.properties.gcriticality[i] !== undefined) {
+                    if (typeof ifdt.properties.gcriticality[i] === "string") {
+                        ifdt.properties.gcriticality[i] === "" ? gcrit = 0 : gcrit = parseFloat(ifdt.properties.gcriticality[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.gcriticality[i] === "number") {
+                        gcrit = ifdt.properties.gcriticality[i];
+                    } else {
+                        gcrit = 0;
+                    }
+                }
+            }
+            if (existsgcode2) {
+
+                if (ifdt.properties.glofnatural2[i] !== undefined) {
+                    if (typeof ifdt.properties.glofnatural2[i] === "string") {
+                        ifdt.properties.glofnatural2[i] === "" ? glofnat2 = 0 : glofnat2 = parseFloat(ifdt.properties.glofnatural2[i].replace(",", "."));
+                        // //debug('ifdt.properties.glofnatural2[i] ' + ifdt.properties.glofnatural2[i]);
+                    } else if (typeof ifdt.properties.glofnatural2[i] === "number") {
+                        glofnat2 = ifdt.properties.glofnatural2[i];
+                    } else {
+                        glofnat2 = 0;
+                    }
+                }
+
+                if (ifdt.properties.glofphysical2[i] !== undefined) {
+                    if (typeof ifdt.properties.glofphysical2[i] === "string") {
+                        ifdt.properties.glofphysical2[i] === "" ? glofphy2 = 0 : glofphy2 = parseFloat(ifdt.properties.glofphysical2[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.glofphysical2[i] === "number") {
+                        glofphy2 = ifdt.properties.glofphysical2[i];
+                    } else {
+                        glofphy2 = 0;
+                    }
+                }
+                if (ifdt.properties.gcriticality2[i] !== undefined) {
+                    if (typeof ifdt.properties.gcriticality2[i] === "string") {
+                        ifdt.properties.gcriticality2[i] === "" ? gcrit2 = 0 : gcrit2 = parseFloat(ifdt.properties.gcriticality2[i].replace(",", "."));
+                    } else if (typeof ifdt.properties.gcriticality2[i] === "number") {
+                        gcrit2 = ifdt.properties.gcriticality2[i];
+                    } else {
+                        gcrit2 = 0;
+                    }
+                }
+            }
+
+            valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+            valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
 
 
         }
-    });
-    ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+
+
+
+        // Update DB
+        var conditions = {
+            _id: ifdt._id
+        };
+        var query = {
+            $set: {
+                "properties.rriskphysical": valuerriskphysicalarr,
+                "properties.rrisknatural": valuerrisknaturalarr,
+                "properties.briskphysical": valuebriskphysicalarr,
+                "properties.brisknatural": valuebrisknaturalarr,
+                "properties.CRISKphysical": valueCriskphysicalarr,
+                "properties.CRISKnatural": valueCrisknaturalarr,
+                "properties.griskphysical": valuegriskphysicalarr,
+                "properties.grisknatural": valuegrisknaturalarr,
+                "properties.griskphysical2": valuegriskphysicalarr2,
+                "properties.grisknatural2": valuegrisknaturalarr2
+            }
+        };
+
+        /**
+         * UPDATEDB con los riesgos
+         * Se hace de manera que se resuelvan todas las promesas a la vez, para poder calcular
+         * los tramos a aplicar en la obtencion de los SCHED
+         */
+        arrPromises.push(new Promise(function (resolve, reject) {
+
+
+
+            Infodatatrack.findByIdAndUpdate(ifdt._id, query, function (err, iup) {
+                if (err) {
+                    //debug(err.message);
+                    reject(err);
+                }
+                tracksUpdated++;
+
+                var trackSectionsphy = [];
+                var sectionsphy = [];
+                var trackSectionsnat = [];
+                var sectionsnat = [];
+                var trackSectionscond = [];
+                var sectionscond = [];
+                var nsections = 1;
+                var pkreg = [];
+                var trackpkreg = [];
+                var bridgesTrackPhy = [];
+                var bridgesTrackNat = [];
+                var culvertsTrackPhy = [];
+                var culvertsTrackNat = [];
+                var geotsTrackPhy = [];
+                var geotsTrackNat = [];
+
+                var valini = iup.properties.pk[0]; //cojo el primer valo del PK
+
+                /**
+                 * Se comprueba si el PK es creciente o decreciente
+                 * Despues se generan las secciones con el RISK normalizado dentro de los rangos 0-20, 20-40, etc...
+                 * Dividimos los PAV por sections
+                 * SOLO LOS PAVEMENTS ESTAN SECCIONADOS, EL RESTOD DE ASSETS LOS TRAMOS DE MANERA DISCRETA EN SU PUNTO INICIAL !!!
+                 */
+                if (iup.inverted) {
+                    sectionlength *= -1;
+                    var ns = 0;
+                    var pkini = iup.properties.pk[0];
+
+                    for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                        /**
+                         * GEOT
+                         */
+                        if (iup.properties.gcode !== undefined && iup.properties.gcode !== [] && iup.properties.gcode.length > 0 &&
+                            iup.properties.gcode[i] !== undefined && iup.properties.gcode[i] !== null && iup.properties.gcode[i] !== "" &&
+                            iup.properties.glenth !== undefined && iup.properties.glenth !== [] && iup.properties.glenth.length > 0 &&
+                            iup.properties.glenth[i] !== undefined && iup.properties.glenth[i] !== null && iup.properties.glenth[i] !== ""
+                        ) {
+
+                            geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glenth[i],
+                                iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'));
+
+
+                            geotsTrackNat.push(serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glenth[i],
+                                iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'));
+
+                        }
+                        if (iup.properties.gcode2 !== undefined && iup.properties.gcode2 !== [] && iup.properties.gcode2.length > 0 &&
+                            iup.properties.gcode2[i] !== undefined && iup.properties.gcode2[i] !== null && iup.properties.gcode2[i] !== "" &&
+                            iup.properties.glenth2 !== undefined && iup.properties.glenth2 !== [] && iup.properties.glenth2.length > 0 &&
+                            iup.properties.glenth2[i] !== undefined && iup.properties.glenth2[i] !== null && iup.properties.glenth2[i] !== ""
+                        ) {
+
+                            geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glenth2[i],
+                                iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'));
+
+
+                            geotsTrackNat.push(serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glenth2[i],
+                                iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'));
+
+                        }
+                        /**
+                         * CULVERTS
+                         */
+                        if (iup.properties.Ccode !== undefined && iup.properties.Ccode !== [] && iup.properties.Ccode.length > 0 &&
+                            iup.properties.Ccode[i] !== undefined && iup.properties.Ccode[i] !== null && iup.properties.Ccode[i] !== "" &&
+                            iup.properties.Clength !== undefined && iup.properties.Clength !== [] && iup.properties.Clength.length > 0 &&
+                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== ""
+                        ) {
+
+                            culvertsTrackPhy.push(serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'));
+
+
+                            culvertsTrackNat.push(serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'));
+
+                        }
+                        /**
+                         * BRIDGES
+                         */
+                        if (iup.properties.bcode !== undefined && iup.properties.bcode !== [] && iup.properties.bcode.length > 0 &&
+                            iup.properties.bcode[i] !== undefined && iup.properties.bcode[i] !== null && iup.properties.bcode[i] !== "" &&
+                            iup.properties.blenght !== undefined && iup.properties.blenght !== [] && iup.properties.blenght.length > 0 &&
+                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== ""
+                        ) {
+
+                            bridgesTrackPhy.push(serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'));
+
+
+                            bridgesTrackNat.push(serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'));
+
+                        }
+
+                        /**
+                         * PAVEMENTS
+                         */
+
+                        sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                        sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                        sectionscond[ns] = iup.properties.rcondition[i];
+                        pkreg[ns] = iup.properties.pk[i];
+
+                        if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                            // //debug(nsections);
+                            trackSectionsphy.push(sectionsphy);
+                            trackSectionsnat.push(sectionsnat);
+                            trackSectionscond.push(sectionscond);
+                            trackpkreg.push(pkreg);
+                            sectionsphy = [];
+                            sectionsnat = [];
+                            sectionscond = [];
+                            pkreg = [];
+                            nsections++;
+                            ns = 0;
+                        } else {
+                            ns++;
+                        }
+                    }
+                    var l = 0;
+                    for (var ts of trackSectionsphy) {
+                        l += ts.length;
+                    }
+
+
+                } else {
+                    var ns = 0;
+                    for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                        sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
+                        sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
+                        sectionscond[ns] = iup.properties.rcondition[i];
+                        pkreg[ns] = iup.properties.pk[i];
+
+                        if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
+                            // //debug(nsections);
+                            trackSectionsphy.push(sectionsphy);
+                            trackSectionsnat.push(sectionsnat);
+                            trackSectionscond.push(sectionscond);
+                            trackpkreg.push(pkreg);
+                            pkreg = [];
+                            sectionsphy = [];
+                            sectionsnat = [];
+                            sectionscond = [];
+
+                            nsections++;
+                            ns = 0;
+                        } else {
+                            ns++;
+                        }
+                    }
+                    var l = 0;
+                    for (var ts of trackSectionsphy) {
+                        l += ts.length;
+                    }
+
+                }
+
+                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
+                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
+                resolve([tgphys, tgnats, bridgesTrackPhy, bridgesTrackNat, culvertsTrackPhy, culvertsTrackNat, geotsTrackPhy, geotsTrackNat]);
+            })
+        }));
+
+    }
+
+
+
+
+
+    Promise.all(arrPromises).then(function (values) {
+        var arrPromises2 = [];
+        ret['schedphy'] = [];
+        ret['schednat'] = [];
+
+
+        //debug('Values Length ' + values.length);
+        // //debug('Values ' + values);
+        for (var val of values) {
+            // //debug('Promise phy: ' + val[0].length);
+            for (var gt of val[0]) {
+                ret['schedphy'].push(gt);
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var sphy = new Schedulephy();
+                    sphy.properties = {};
+                    sphy.properties['code'] = gt;
+                    sphy.type = 'PAVEMENTS';
+                    sphy.config = {};
+                    sphy.config['color'] = 'grey';
+
+                    sphy.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            // //debug('Promise nat: ' + val[1].length);
+            for (var gt of val[1]) {
+                ret['schednat'].push(gt);
+
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var snat = new Schedulenat();
+                    snat.properties = {};
+                    snat.properties['code'] = gt;
+                    snat.type = 'PAVEMENTS';
+                    snat.config = {};
+                    snat.config['color'] = 'grey';
+
+                    snat.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+
+            // //debug('Promise phy: ' + val[0].length);
+            for (var gt of val[2]) {
+                ret['schedphy'].push(gt);
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var sphy = new Schedulephy();
+                    sphy.properties = {};
+                    sphy.properties['code'] = gt;
+                    sphy.type = 'BRIDGES';
+                    sphy.config = {};
+                    sphy.config['color'] = '#ff00aa';
+
+                    sphy.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            // //debug('Promise nat: ' + val[1].length);
+            for (var gt of val[3]) {
+                ret['schednat'].push(gt);
+
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var snat = new Schedulenat();
+                    snat.properties = {};
+                    snat.properties['code'] = gt;
+                    snat.type = 'BRIDGES';
+                    snat.config = {};
+                    snat.config['color'] = '#ff00aa';
+
+                    snat.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            for (var gt of val[4]) {
+                ret['schedphy'].push(gt);
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var sphy = new Schedulephy();
+                    sphy.properties = {};
+                    sphy.properties['code'] = gt;
+                    sphy.type = 'CULVERTS';
+                    sphy.config = {};
+                    sphy.config['color'] = 'blue';
+
+                    sphy.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            // //debug('Promise nat: ' + val[1].length);
+            for (var gt of val[5]) {
+                ret['schednat'].push(gt);
+
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var snat = new Schedulenat();
+                    snat.properties = {};
+                    snat.properties['code'] = gt;
+                    snat.type = 'CULVERTS';
+                    snat.config = {};
+                    snat.config['color'] = 'blue';
+
+                    snat.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            for (var gt of val[6]) {
+                ret['schedphy'].push(gt);
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var sphy = new Schedulephy();
+                    sphy.properties = {};
+                    sphy.properties['code'] = gt;
+                    sphy.type = 'GEOT';
+                    sphy.config = {};
+                    sphy.config['color'] = 'green';
+
+                    sphy.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+            // //debug('Promise nat: ' + val[1].length);
+            for (var gt of val[7]) {
+                ret['schednat'].push(gt);
+
+                arrPromises2.push(new Promise(function (resolve, reject) {
+                    var snat = new Schedulenat();
+                    snat.properties = {};
+                    snat.properties['code'] = gt;
+                    snat.type = 'GEOT';
+                    snat.config = {};
+                    snat.config['color'] = 'green';
+
+                    snat.save(function (err, ssaved) {
+                        if (err) {
+                            reject(err);
+                            // res.send(500, err.message);
+                        }
+                        resolve(gt);
+                        // tracksUpdated++;
+                    });
+
+                }));
+            }
+        }
+
+        Promise.all(arrPromises2).then(function (values2) {
+
+            //debug('values2 ' + values2.length);
+
+            ret.tracksUpdated = tracksUpdated;
+            res.status(200).jsonp(ret);
+        }).catch(function (reason2) {
+            console.log(reason2);
+            return res.status(500).send(reason2);
+
+        });
+
+    }).catch(function (reason) {
+        console.log(reason);
+        return res.status(500).send(reason);
+
+    });;
+
 });
 
 
@@ -1231,17 +1518,17 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks_likelihood/');
+    //debug('API /V1/update_formulas_tracks_likelihood/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
     };
-    debug(postData);
+    //debug(postData);
     var form;
     var formula = Object.keys(postData)[0];
-    debug(formula);
+    //debug(formula);
     await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
@@ -1250,7 +1537,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
         }
         form = f[0];
     });
-    // debug(form);
+    // //debug(form);
     var wherearr = [];
 
     //add codes asset
@@ -1292,7 +1579,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
     for (var w of wherearr) {
         selectjson.properties[w] = 1;
     }
-    debug(selectjson);
+    //debug(selectjson);
     await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -1311,8 +1598,8 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
             var valueglofphysicalarr = [];
             var valueglofnaturalarr2 = [];
             var valueglofphysicalarr2 = [];
-            //     //debug(ifdt._id);
-            //     // debug(ifdt.geometry.coordinates);
+            //     ////debug(ifdt._id);
+            //     // //debug(ifdt.geometry.coordinates);
             tracksUpdated++;
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                 var valuerlofnatural = 0;
@@ -1362,7 +1649,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                 if (ifdt.properties.rcondition[i] !== undefined) {
                     if (typeof ifdt.properties.rcondition[i] === "string") {
                         ifdt.properties.rcondition[i] === "" ? valrlofphy = 0 : valrlofphy = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
-                        // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                        // //debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
                     } else if (typeof ifdt.properties.rcondition[i] === "number") {
                         valrlofphy = ifdt.properties.rcondition[i];
                     } else {
@@ -1397,7 +1684,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     if (ifdt.properties.bcondition[i] !== undefined) {
                         if (typeof ifdt.properties.bcondition[i] === "string") {
                             ifdt.properties.bcondition[i] === "" ? valblofphy = 0 : valblofphy = parseFloat(ifdt.properties.bcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
+                            // //debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
                         } else if (typeof ifdt.properties.bcondition[i] === "number") {
                             valblofphy = ifdt.properties.bcondition[i];
                         } else {
@@ -1431,7 +1718,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     if (ifdt.properties.Ccondition[i] !== undefined) {
                         if (typeof ifdt.properties.Ccondition[i] === "string") {
                             ifdt.properties.Ccondition[i] === "" ? valClofphy = 0 : valClofphy = parseFloat(ifdt.properties.Ccondition[i].replace(",", "."));
-                            // debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
+                            // //debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
                         } else if (typeof ifdt.properties.Ccondition[i] === "number") {
                             valClofphy = ifdt.properties.Ccondition[i];
                         } else {
@@ -1466,7 +1753,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     if (ifdt.properties.gcondition[i] !== undefined) {
                         if (typeof ifdt.properties.gcondition[i] === "string") {
                             ifdt.properties.gcondition[i] === "" ? valglofphy = 0 : valglofphy = parseFloat(ifdt.properties.gcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
+                            // //debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
                         } else if (typeof ifdt.properties.gcondition[i] === "number") {
                             valglofphy = ifdt.properties.gcondition[i];
                         } else {
@@ -1500,7 +1787,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                     if (ifdt.properties.gcondition2[i] !== undefined) {
                         if (typeof ifdt.properties.gcondition2[i] === "string") {
                             ifdt.properties.gcondition2[i] === "" ? valglofphy2 = 0 : valglofphy2 = parseFloat(ifdt.properties.gcondition2[i].replace(",", "."));
-                            // debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
+                            // //debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
                         } else if (typeof ifdt.properties.gcondition2[i] === "number") {
                             valglofphy2 = ifdt.properties.gcondition2[i];
                         } else {
@@ -1532,7 +1819,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 
                 // En el caso de ser LOFPhysical se iguala a condition
                 // PAVEMENTS //
-                // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                // //debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                 valuerlofphysical = parseFloat(valrlofphy);
                 valueblofphysical = parseFloat(valblofphy);
                 valueClofphysical = parseFloat(valClofphy);
@@ -1646,7 +1933,7 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
                             break;
                     }
                 }
-                // debug("valuerlofnatural " + valuerlofnatural);
+                // //debug("valuerlofnatural " + valuerlofnatural);
 
                 valuerlofphysicalarr[i] = 1 - valuerlofphysical;
                 valuerlofnaturalarr[i] = valuerlofnatural;
@@ -1703,16 +1990,16 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
             };
             await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
-                    debug(err.message);
+                    //debug(err.message);
                 }
-                // debug(iup);
+                // //debug(iup);
 
             });
         }
     });
 
     ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
+    //debug(tracksUpdated);
     res.status(200).jsonp(ret);
 
 
@@ -1724,17 +2011,17 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks_sensitivity/');
+    //debug('API /V1/update_formulas_tracks_sensitivity/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
     };
-    debug(postData);
+    //debug(postData);
     var form;
     var formula = Object.keys(postData)[0];
-    debug(formula);
+    //debug(formula);
     await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
@@ -1743,7 +2030,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
         }
         form = f[0];
     });
-    // debug(form);
+    // //debug(form);
     var wherearr = [];
 
     //add codes asset
@@ -1771,7 +2058,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
     for (var w of wherearr) {
         selectjson.properties[w] = 1;
     }
-    debug(selectjson);
+    //debug(selectjson);
     await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -1785,8 +2072,8 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
             var valueCsensitivityarr = [];
             var valuegsensitivityarr = [];
             var valuegsensitivityarr2 = [];
-            //debug(ifdt._id);
-            // debug(ifdt.geometry.coordinates);
+            ////debug(ifdt._id);
+            // //debug(ifdt.geometry.coordinates);
             tracksUpdated++;
             var bcodeant = "";
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
@@ -1832,7 +2119,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                 if (ifdt.properties.rcondition[i] !== undefined) {
                     if (typeof ifdt.properties.rcondition[i] === "string") {
                         ifdt.properties.rcondition[i] === "" ? valrcond = 0 : valrcond = parseFloat(ifdt.properties.rcondition[i].replace(",", "."));
-                        // debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
+                        // //debug('ifdt.properties.rcondition[i] ' + ifdt.properties.rcondition[i]);
                     } else if (typeof ifdt.properties.rcondition[i] === "number") {
                         valrcond = ifdt.properties.rcondition[i];
                     } else {
@@ -1853,7 +2140,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     if (ifdt.properties.bcondition[i] !== undefined) {
                         if (typeof ifdt.properties.bcondition[i] === "string") {
                             ifdt.properties.bcondition[i] === "" ? valbcond = 0 : valbcond = parseFloat(ifdt.properties.bcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
+                            // //debug('ifdt.properties.bcondition[i] ' + ifdt.properties.bcondition[i]);
                         } else if (typeof ifdt.properties.bcondition[i] === "number") {
                             valbcond = ifdt.properties.bcondition[i];
                         } else {
@@ -1875,7 +2162,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     if (ifdt.properties.Ccondition[i] !== undefined) {
                         if (typeof ifdt.properties.Ccondition[i] === "string") {
                             ifdt.properties.Ccondition[i] === "" ? valCcond = 0 : valCcond = parseFloat(ifdt.properties.Ccondition[i].replace(",", "."));
-                            // debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
+                            // //debug('ifdt.properties.Ccondition[i] ' + ifdt.properties.Ccondition[i]);
                         } else if (typeof ifdt.properties.Ccondition[i] === "number") {
                             valCcond = ifdt.properties.Ccondition[i];
                         } else {
@@ -1897,7 +2184,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     if (ifdt.properties.gcondition[i] !== undefined) {
                         if (typeof ifdt.properties.gcondition[i] === "string") {
                             ifdt.properties.gcondition[i] === "" ? valgcond = 0 : valgcond = parseFloat(ifdt.properties.gcondition[i].replace(",", "."));
-                            // debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
+                            // //debug('ifdt.properties.gcondition[i] ' + ifdt.properties.gcondition[i]);
                         } else if (typeof ifdt.properties.gcondition[i] === "number") {
                             valgcond = ifdt.properties.gcondition[i];
                         } else {
@@ -1919,7 +2206,7 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
                     if (ifdt.properties.gcondition2[i] !== undefined) {
                         if (typeof ifdt.properties.gcondition2[i] === "string") {
                             ifdt.properties.gcondition2[i] === "" ? valgcond2 = 0 : valgcond2 = parseFloat(ifdt.properties.gcondition2[i].replace(",", "."));
-                            // debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
+                            // //debug('ifdt.properties.gcondition2[i] ' + ifdt.properties.gcondition2[i]);
                         } else if (typeof ifdt.properties.gcondition2[i] === "number") {
                             valgcond2 = ifdt.properties.gcondition2[i];
                         } else {
@@ -1942,132 +2229,132 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
 
                         case 'firstcoef':
                             // PAVEMENTS //
-                            // debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                            // //debug ("MIN(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond <= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
-                                // debug(valrcond + ' MIN1 ' + valrresphazard +
+                                // //debug(valrcond + ' MIN1 ' + valrresphazard +
                                 // ' valuersensitivity ' + parseFloat(valuersensitivity));
                             } else {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrresphazard;
-                                // debug(valrcond + ' MIN2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
+                                // //debug(valrcond + ' MIN2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
                             if (existsbcode) {
 
                                 // BRIDGES //
-                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valbcond <= valbresphazard) {
                                     valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
-                                    // debug(valbcond + ' MIN1 ' + valbresphazard +
+                                    // //debug(valbcond + ' MIN1 ' + valbresphazard +
                                     // ' valuebsensitivity ' + parseFloat(valuebsensitivity));
                                 } else {
                                     valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
-                                    // debug(valbcond + ' MIN2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                    // //debug(valbcond + ' MIN2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
 
                                 }
                             }
                             if (existsCcode) {
                                 // CULVERTS //
-                                // debug ("MIN(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valCcond <= valCRespHazard) {
                                     valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
-                                    // debug(valCcond + ' MIN1 ' + valCRespHazard +
+                                    // //debug(valCcond + ' MIN1 ' + valCRespHazard +
                                     // ' valueCsensitivity ' + parseFloat(valueCsensitivity));
                                 } else {
                                     valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
-                                    // debug(valCcond + ' MIN2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                    // //debug(valCcond + ' MIN2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
 
                                 }
                             }
                             if (existsgcode) {
 
                                 // GEOT //
-                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valgcond <= valgresphazard) {
                                     valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
-                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // //debug(valgcond + ' MIN1 ' + valgresphazard +
                                     // ' valuegsensitivity ' + parseFloat(valuegsensitivity));
                                 } else {
                                     valuegsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
-                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity ' + parseFloat(valuebsensitivity));
+                                    // //debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity ' + parseFloat(valuebsensitivity));
 
                                 }
                             }
                             if (existsgcode2) {
 
                                 // GEOT //
-                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valgcond2 <= valgresphazard2) {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
-                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // //debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
                                     // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
                                 } else {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
-                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                    // //debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
 
                                 }
                             }
                             break;
                         case 'secondcoef':
                             // PAVEMENTS //
-                            // debug("MAX(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                            // //debug("MAX(" + valrcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                             if (valrcond >= valrresphazard) {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrcond;
-                                // debug(valrcond + ' MAX1 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
+                                // //debug(valrcond + ' MAX1 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
                             } else {
                                 valuersensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valrresphazard;
-                                // debug(valrcond + ' MAX2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
+                                // //debug(valrcond + ' MAX2 ' + valrresphazard + ' valuersensitivity ' + parseFloat(valuersensitivity));
 
                             }
                             if (existsbcode) {
                                 // BRIDGES //
-                                // debug("MAX(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug("MAX(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valbcond >= valbresphazard) {
                                     valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbcond;
-                                    // debug(valbcond + ' MAX1 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                    // //debug(valbcond + ' MAX1 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
                                 } else {
                                     valuebsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valbresphazard;
-                                    // debug(valbcond + ' MAX2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
+                                    // //debug(valbcond + ' MAX2 ' + valbresphazard + ' valuebsensitivity ' + parseFloat(valuebsensitivity));
 
                                 }
                             }
                             if (existsCcode) {
                                 // CULVERTS //
-                                // debug("MAX(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug("MAX(" + valCcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valCcond >= valCRespHazard) {
                                     valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCcond;
-                                    // debug(valCcond + ' MAX1 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                    // //debug(valCcond + ' MAX1 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
                                 } else {
                                     valueCsensitivity += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valCRespHazard;
-                                    // debug(valCcond + ' MAX2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
+                                    // //debug(valCcond + ' MAX2 ' + valCRespHazard + ' valueCsensitivity ' + parseFloat(valueCsensitivity));
 
                                 }
                             }
                             if (existsgcode) {
 
                                 // GEOT //
-                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valgcond >= valgresphazard) {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond;
-                                    // debug(valgcond + ' MIN1 ' + valgresphazard +
+                                    // //debug(valgcond + ' MIN1 ' + valgresphazard +
                                     // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
                                 } else {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard;
-                                    // debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                    // //debug(valgcond + ' MIN2 ' + valgresphazard + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
 
                                 }
                             }
                             if (existsgcode2) {
 
                                 // GEOT //
-                                // debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
+                                // //debug ("MIN(" + valbcond + "; " + valrresphazard + ")" + parseFloat(form.formulaSpec[f].WEIGHTS.value));
                                 if (valgcond2 >= valgresphazard2) {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgcond2;
-                                    // debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
+                                    // //debug(valgcond2 + ' MIN1 ' + valgresphazard2 +
                                     // ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
                                 } else {
                                     valuegsensitivity2 += parseFloat(form.formulaSpec[f].WEIGHTS.value) * valgresphazard2;
-                                    // debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
+                                    // //debug(valgcond2 + ' MIN2 ' + valgresphazard2 + ' valuegsensitivity2 ' + parseFloat(valuegsensitivity2));
 
                                 }
                             }
@@ -2116,16 +2403,16 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
             };
             await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
-                    debug(err.message);
+                    //debug(err.message);
                 }
-                // debug(iup);
+                // //debug(iup);
 
             });
         }
     });
 
     ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
+    //debug(tracksUpdated);
     res.status(200).jsonp(ret);
 
 
@@ -2136,17 +2423,17 @@ router.post('/V1/update_formulas_tracks_sensitivity/:formula/:asset', async func
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_response/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks_response/');
+    //debug('API /V1/update_formulas_tracks_response/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
     };
-    debug(postData);
+    //debug(postData);
     var form;
     var formula = Object.keys(postData)[0];
-    debug(formula);
+    //debug(formula);
     await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
@@ -2155,7 +2442,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
         }
         form = f[0];
     });
-    // debug(form);
+    // //debug(form);
     var wherearr = [];
     for (var fv of form.formulaSpec) {
         if (wherearr.indexOf(fv.WEIGHTS.dbfield) < 0 && fv.WEIGHTS.dbfield !== '--')
@@ -2175,8 +2462,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     for (var w of wherearr) {
         selectjson.properties[w] = 1;
     }
-    debug(selectjson);
-    // debug(form);
+    //debug(selectjson);
+    // //debug(form);
     await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
         if (err) {
             res.send(500, err.message);
@@ -2190,12 +2477,12 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
             var valueCresphazardarr = [];
             var valuegresphazardarr = [];
             var valuegresphazardarr2 = [];
-            //debug(ifdt._id);
-            // debug(ifdt.geometry.coordinates);
+            ////debug(ifdt._id);
+            // //debug(ifdt.geometry.coordinates);
             tracksUpdated++;
             var bcodeant = "";
             for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                //debug(form.formulaSpec.length);
+                ////debug(form.formulaSpec.length);
                 var valuerresphazard = 0;
                 var valuebresphazard = 0;
                 var valueCresphazard = 0;
@@ -2205,16 +2492,16 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                 for (var f = 0; f < form.formulaSpec.length; f++) {
                     switch (form.formulaSpec[f]["ASSET TYPE"]) {
                         case 'Pavement':
-                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                 valuerresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                // debug(form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                // //debug(form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                 //     form.formulaSpec[f].score.value + ' valuerresphazard ' + valuerresphazard);
                             }
 
                             break;
                         case 'Bridges':
-                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] &&
                                 ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
 
@@ -2222,7 +2509,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        // debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // //debug(ifdt.properties.bcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         //form.formulaSpec[f].score.value + ' valuebresphazard ' + valuebresphazard);
                                     }
                                 } else {
@@ -2238,9 +2525,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            // debug(minval + ' ' + operador + ' ' + maxval);
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // //debug(minval + ' ' + operador + ' ' + maxval);
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             //form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuebresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2252,7 +2539,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                             break;
                         case 'Cross drainage':
-                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode.length > 0 &&
                                 ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
 
@@ -2260,7 +2547,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valueCresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        //debug(ifdt.properties.Ccode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        ////debug(ifdt.properties.Ccode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         //  form.formulaSpec[f].score.value + ' valueCresphazard ' + valueCresphazard);
                                     }
                                 } else {
@@ -2276,9 +2563,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            //debug(minval + ' ' + operador + ' ' + maxval);
-                                            //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            ////debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            ////debug(minval + ' ' + operador + ' ' + maxval);
+                                            ////debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valueCresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2290,7 +2577,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                             break;
                         case 'Earthworks':
-                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode.length > 0 &&
                                 ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "" &&
                                 ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 &&
@@ -2301,7 +2588,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        // debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // //debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         // form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
                                     }
                                 } else {
@@ -2317,9 +2604,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            // debug(minval + ' ' + operador + ' ' + maxval);
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // //debug(minval + ' ' + operador + ' ' + maxval);
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2338,7 +2625,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        // debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // //debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         //     form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
                                     }
                                 } else {
@@ -2354,9 +2641,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            // debug(minval + ' ' + operador + ' ' + maxval);
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // //debug(minval + ' ' + operador + ' ' + maxval);
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             //     form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2369,7 +2656,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             break;
 
                         case 'Retaining walls':
-                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
+                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i]);
                             if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode.length > 0 &&
                                 ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "" &&
                                 ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 &&
@@ -2380,7 +2667,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        // debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // //debug(ifdt.properties.gcode[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         // form.formulaSpec[f].score.value + ' valuegresphazard ' + valuegresphazard);
                                     }
                                 } else {
@@ -2396,9 +2683,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            // debug(minval + ' ' + operador + ' ' + maxval);
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // //debug(minval + ' ' + operador + ' ' + maxval);
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2417,7 +2704,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                                 if (form.formulaSpec[f].score.type === "select") {
                                     if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] === form.formulaSpec[f]["SCORING CRITERIA"]) {
                                         valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
-                                        // debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
+                                        // //debug(ifdt.properties.gcode2[i] + ' ' + form.formulaSpec[f].WEIGHTS.dbfield + ' ' + form.formulaSpec[f]["SCORING CRITERIA"] + '*' +
                                         // form.formulaSpec[f].score.value + ' valuegresphazard2 ' + valuegresphazard2);
                                     }
                                 } else {
@@ -2433,9 +2720,9 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
 
                                         if (ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 >= minval &&
                                             ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 < maxval) {
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
-                                            // debug(minval + ' ' + operador + ' ' + maxval);
-                                            // debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] + ' scorerangeval ' + scorerangeval);
+                                            // //debug(minval + ' ' + operador + ' ' + maxval);
+                                            // //debug(ifdt.properties[form.formulaSpec[f].WEIGHTS.dbfield][i] * 1.0 + ' --> ' + form.formulaSpec[f].score.value + ' * ' +
                                             // form.formulaSpec[f].WEIGHTS.value + ' = ' + form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value);
                                             valuegresphazard2 += form.formulaSpec[f].score.value * form.formulaSpec[f].WEIGHTS.value * 1.0;
                                         }
@@ -2451,11 +2738,14 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
                             break;
                     }
                 }
-                valuerresphazardarr[i] = valuerresphazard;
-                valuebresphazardarr[i] = valuebresphazard;
-                valueCresphazardarr[i] = valueCresphazard;
-                valuegresphazardarr[i] = valuegresphazard;
-                valuegresphazardarr2[i] = valuegresphazard2;
+                /**
+                 * jfcp: lo guardo en tanto por 1
+                 */
+                valuerresphazardarr[i] = valuerresphazard / 100;
+                valuebresphazardarr[i] = valuebresphazard / 100;
+                valueCresphazardarr[i] = valueCresphazard / 100;
+                valuegresphazardarr[i] = valuegresphazard / 100;
+                valuegresphazardarr2[i] = valuegresphazard2 / 100;
             }
             var conditions = {
                 _id: ifdt._id
@@ -2471,16 +2761,16 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
             };
             await Infodatatrack.update(conditions, query, function (err, iup) {
                 if (err) {
-                    debug(err.message);
+                    //debug(err.message);
                 }
-                // debug(iup);
+                // //debug(iup);
 
             });
         }
 
     });
     ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
+    //debug(tracksUpdated);
     res.status(200).jsonp(ret);
 
 });
@@ -2490,13 +2780,13 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks/');
+    //debug('API /V1/update_formulas_tracks/');
     var postData = extend({}, req.body);
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
     };
-    debug(postData);
+    //debug(postData);
     var asset = postData[Object.keys(postData)[0]];
     var formula = Object.keys(postData)[0];
     var sendData = {};
@@ -2506,7 +2796,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     var tracks;
     var tracksUpdated = 0;
     var f;
-    debug('formula: ' + formula + ' asset: ' + asset);
+    //debug('formula: ' + formula + ' asset: ' + asset);
 
     await Formula.find({
         "name": formula
@@ -2517,7 +2807,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
         f = form;
     });
 
-    debug(f);
+    //debug(f);
     var wherearr = [];
     //add codes asset
     wherearr.push('rcode');
@@ -2575,7 +2865,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     for (var w of wherearr) {
         selectjson.properties[w] = 1;
     }
-    debug(selectjson);
+    //debug(selectjson);
 
     await Infodatatrack.find({}, selectjson).exec(function (err, rtracks) {
         if (err) {
@@ -2584,18 +2874,18 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
         tracks = rtracks;
     });
 
-    debug('tracks.length ' + tracks.length);
+    //debug('tracks.length ' + tracks.length);
     for (var ifdt of tracks) {
         // var track = { "_id": "59c91c60100b7d4adb8ea9ec" };
 
-        // debug(ifdt.properties.name);
+        // //debug(ifdt.properties.name);
         var index = 0;
-        // debug(ifdt._id);
+        // //debug(ifdt._id);
         formResult = new Array(ifdt.geometry.coordinates.length);
         formResultLeft = new Array(ifdt.geometry.coordinates.length);
         formResultRight = new Array(ifdt.geometry.coordinates.length);
         for (index = 0; index < ifdt.geometry.coordinates.length; index++) {
-            // debug(index);
+            // //debug(index);
             var calcularValue = false;
             /**
              * debo comprobar que el asset elegido tenga CODE para poder actualizarlo
@@ -2609,9 +2899,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ifdt.properties.rcode[index] !== undefined &&
                         ifdt.properties.rcode[index] !== "") {
                         calcularValue = true;
-                        // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                     } else {
-                        // debug(fieldkey + ' : UNDEFINED');
+                        // //debug(fieldkey + ' : UNDEFINED');
                         calcularValue = false;
                     }
                     break;
@@ -2622,9 +2912,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ifdt.properties.bcode[index] !== undefined &&
                         ifdt.properties.bcode[index] !== "") {
                         calcularValue = true;
-                        // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                     } else {
-                        // debug(fieldkey + ' : UNDEFINED');
+                        // //debug(fieldkey + ' : UNDEFINED');
                         calcularValue = false;
                     }
                     break;
@@ -2635,9 +2925,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ifdt.properties.Ccode[index] !== undefined &&
                         ifdt.properties.Ccode[index] !== "") {
                         calcularValue = true;
-                        // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                     } else {
-                        // debug(fieldkey + ' : UNDEFINED');
+                        // //debug(fieldkey + ' : UNDEFINED');
                         calcularValue = false;
                     }
                     break;
@@ -2667,9 +2957,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype2[index] === "Retaining_walls"
                         )) {
                         calcularValue = true;
-                        // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                     } else {
-                        // debug(fieldkey + ' : UNDEFINED');
+                        // //debug(fieldkey + ' : UNDEFINED');
                         calcularValue = false;
                     }
                     break;
@@ -2702,9 +2992,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             )
                         )) {
                         calcularValue = true;
-                        // debug(index + ': ' + ifdt.properties.gtype[index] + ' : ' + ifdt.properties.gtype2[index]);
+                        // //debug(index + ': ' + ifdt.properties.gtype[index] + ' : ' + ifdt.properties.gtype2[index]);
                     } else {
-                        // debug(index + ' : UNDEFINED');
+                        // //debug(index + ' : UNDEFINED');
                         calcularValue = false;
                     }
                     break;
@@ -2717,7 +3007,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                 if (f[0].formulaSpec !== undefined) {
                     for (var fspec of f[0].formulaSpec) {
                         if (fspec.name === asset) {
-                            // debug(fspec);
+                            // //debug(fspec);
                             for (var [l1key, level1] of Object.entries(fspec)) {
                                 if (typeof level1 === 'object') {
                                     for (var [fieldkey, field] of Object.entries(level1)) {
@@ -2732,9 +3022,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                                                 ifdt.properties[fieldkey][index] !== undefined &&
                                                 ifdt.properties[fieldkey][index] !== "") {
                                                 sendData[fieldkey] = ifdt.properties[fieldkey][index];
-                                                // debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                                                // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
                                             } else {
-                                                // debug(fieldkey + ' : UNDEFINED');
+                                                // //debug(fieldkey + ' : UNDEFINED');
                                                 sendData[fieldkey] = undefined;
                                             }
                                         }
@@ -2745,8 +3035,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     }
                 }
             }
-            // debug(sendData);
-            // debug(fspec);       
+            // //debug(sendData);
+            // //debug(fspec);       
 
             switch (asset) {
                 case 'Pavements':
@@ -2760,8 +3050,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     break;
                 case 'Retaining_Walls':
 
-                    //debug('\n\n\n-----------------------------------------------------------------------------------------');
-                    //debug(fspec);
+                    ////debug('\n\n\n-----------------------------------------------------------------------------------------');
+                    ////debug(fspec);
                     var fspec1 = extend({}, fspec);
                     for (var [leftkey, leftfield] of Object.entries(fspec1)) {
                         if (leftkey.indexOf('2') >= 0) {
@@ -2769,7 +3059,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             delete fspec1[leftkey];
                         }
                     }
-                    //debug(fspec1);
+                    ////debug(fspec1);
                     var fspec2 = extend({}, fspec);
                     for (var [rightkey, rightfield] of Object.entries(fspec2)) {
                         if (rightkey.indexOf('2') >= 0) {
@@ -2777,7 +3067,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             delete fspec2[rightkey.replace('2', '')];
                         }
                     }
-                    //debug(fspec2);
+                    ////debug(fspec2);
 
                     if (
                         ifdt.properties.gcode !== undefined &&
@@ -2874,8 +3164,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     break;
                 case 'Earthworks':
 
-                    //debug('\n\n\n-----------------------------------------------------------------------------------------');
-                    //debug(fspec);
+                    ////debug('\n\n\n-----------------------------------------------------------------------------------------');
+                    ////debug(fspec);
                     var fspec1 = extend({}, fspec);
                     for (var [leftkey, leftfield] of Object.entries(fspec1)) {
                         if (leftkey.indexOf('2') >= 0) {
@@ -2883,7 +3173,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             delete fspec1[leftkey];
                         }
                     }
-                    //debug(fspec1);
+                    ////debug(fspec1);
                     var fspec2 = extend({}, fspec);
                     for (var [rightkey, rightfield] of Object.entries(fspec2)) {
                         if (rightkey.indexOf('2') >= 0) {
@@ -2891,7 +3181,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             delete fspec2[rightkey.replace('2', '')];
                         }
                     }
-                    //debug(fspec2);
+                    ////debug(fspec2);
 
                     if (
                         ifdt.properties.gcode !== undefined &&
@@ -3053,9 +3343,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 
         await Infodatatrack.update(conditions, query, function (err, iup) {
             if (err) {
-                debug(err.message);
+                //debug(err.message);
             }
-            // debug(iup);
+            // //debug(iup);
 
         });
         // ifdt.save(function (err, isaved) {
@@ -3066,7 +3356,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
         // });
     }
     ret.tracksUpdated = tracksUpdated;
-    debug(tracksUpdated);
+    //debug(tracksUpdated);
     res.status(200).jsonp(ret);
 
 
@@ -3076,19 +3366,19 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
-    debug('API /V1/update_formulas_tracks_condition/');
+    //debug('API /V1/update_formulas_tracks_condition/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
         "result": "OK",
         "tracksUpdated": 0
     };
-    debug(postData);
+    //debug(postData);
     var form;
     // var formula = Object.keys(postData)[0];
     var asset = req.params.asset;
     var formula = 'Condition';
-    debug(formula);
+    //debug(formula);
     await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
@@ -3097,7 +3387,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         }
         form = f[0];
     });
-    // debug(form);
+    // //debug(form);
     var wherearr = [];
     // for (var fv of form.formulaSpec) {
     //     if (wherearr.indexOf(fv.WEIGHTS.dbfield) < 0 && fv.WEIGHTS.dbfield !== '--')
@@ -3119,10 +3409,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
     var tracksUpdated2 = 0;
-    //debug(selectjson);
+    ////debug(selectjson);
     switch (asset) {
         case 'Pavements':
-            debug('### Pavements ###');
+            //debug('### Pavements ###');
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
@@ -3159,9 +3449,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
                 }
@@ -3171,7 +3461,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             break;
 
         case 'Culverts':
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -3180,13 +3470,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    //debug(tracksUpdated2);
+                    ////debug(tracksUpdated2);
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
 
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
@@ -3195,37 +3485,36 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] &&
                                             ifdt.properties.Ccode[i] !== null &&
                                             ifdt.properties.Ccode[i] !== "") {
-                                            // debug(ifdt.properties.Ccode);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            // //debug(ifdt.properties.Ccode);
+                                            // //debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
                                             if (ifdt.properties.CDamages.length > 0) {
                                                 for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
-                                                    // debug(score.toString.toUpperCase)
+                                                    // //debug(score.toString.toUpperCase)
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score.toUpperCase());
-                                                        // debug('ifdt.CDamages ' + score.toUpperCase());
+                                                        // //debug('score ' + score.toUpperCase());
+                                                        // //debug('ifdt.CDamages ' + score.toUpperCase());
                                                         if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
                                                             totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                                 totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
-                                                            debug(ifdt.properties.CDamages[i].toString());
-                                                            debug(score.toUpperCase());
-                                                            debug(totalScoring);
+                                                            //debug(ifdt.properties.CDamages[i].toString());
+                                                            //debug(score.toUpperCase());
+                                                            //debug(totalScoring);
                                                             numberOfScores++;
                                                             k = 333333333;
                                                             // while (k > 0) { k--; }
-                                                            // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                                            // //debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         }
                                                     }
-                                                    debug('totalScoring1: ' + totalScoring);
+                                                    //debug('totalScoring1: ' + totalScoring);
                                                 }
                                             } else {
                                                 totalScoring = 100;
                                             }
-                                            debug('totalScoring2: ' + totalScoring);
+                                            //debug('totalScoring2: ' + totalScoring);
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            debug('totalScoring3: ' + totalScoring);
-                                            // debug(totalScoring);
+                                            //debug('totalScoring3: ' + totalScoring);
+                                            // //debug(totalScoring);
 
                                             if (numberOfScores > 2) {
                                                 totalScoring *= 0.9;
@@ -3234,25 +3523,25 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
-                                            debug('totalScoring4: ' + totalScoring);
+                                            //debug('totalScoring4: ' + totalScoring);
                                             //  clearing required
                                             if (ifdt.properties.Cclearing[i].length > 0) {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
-                                                    // debug(score.toString.toUpperCase)
+                                                    // //debug(score.toString.toUpperCase)
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score.toUpperCase());
-                                                        // debug('ifdt.Cclearing ' + score.toUpperCase());
+                                                        // //debug('score ' + score.toUpperCase());
+                                                        // //debug('ifdt.Cclearing ' + score.toUpperCase());
                                                         if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
-                                                            debug(score.toUpperCase())
+                                                            //debug(score.toUpperCase())
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score];
-                                                            debug('form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]: ' + form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]);
-                                                            debug(ifdt.properties.Cclearing[i].toString());
-                                                            debug(score.toUpperCase());
-                                                            debug(totalScoring);
+                                                            //debug('form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]: ' + form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score]);
+                                                            //debug(ifdt.properties.Cclearing[i].toString());
+                                                            //debug(score.toUpperCase());
+                                                            //debug(totalScoring);
                                                             numberOfScores++;
                                                             k = 333333333;
                                                             // while (k > 0) { k--; }
-                                                            // debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
+                                                            // //debug(form.formulaSpec[f].MainFactor.Damages.scoring + ' ' + form.formulaSpec[f].MainFactor.Damages.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3265,8 +3554,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
-                                            debug('totalScoring5: ' + totalScoring);
-                                            //debug(totalScoring + '\n');
+                                            //debug('totalScoring5: ' + totalScoring);
+                                            ////debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
@@ -3281,9 +3570,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     }
                     tracksUpdated++;
-                    debug(ifdt._id);
-                    debug(valueconditionsr.toString());
-                    debug(tracksUpdated);
+                    //debug(ifdt._id);
+                    //debug(valueconditionsr.toString());
+                    //debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
@@ -3297,9 +3586,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -3314,11 +3603,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug(tracksUpdated);
+            //debug(tracksUpdated);
             res.status(200).jsonp(ret);
             break;
         case 'Retaining_Walls':
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -3327,78 +3616,77 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2: ' + tracksUpdated2);
-                    debug(ifdt._id);
+                    //debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         var coincidencias = 0;
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Retaining_Walls':
                                     //////////////////////INICIO///////////////////////////////
-                                    // debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
+                                    // //debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
                                     if (ifdt.properties.gcode.length > 0) {
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
                                             ifdt.properties.gcode[i] !== "") {
-                                            // debug(ifdt.properties.gcode);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            // //debug(ifdt.properties.gcode);
+                                            // //debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            // debug(ifdt.properties.gtypefailure.length);
+                                            // //debug(ifdt.properties.gtypefailure.length);
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                    // //debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // //debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // //debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        // //debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
                                                             // while (true) { ; }
-                                                            // debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                             if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                // debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
-                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
 
                                                                 if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     // while (true) { ; };
-                                                                    debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                                     coincidencias++;
-                                                                    debug(coincidencias);
-                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
-                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                                    //debug(coincidencias);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
-                                                                    debug('totalScoring1:  ' + totalScoring);
+                                                                    //debug('totalScoring1:  ' + totalScoring);
 
                                                                     numberOfScores++;
                                                                     totalScoring *= (Number(ifdt.properties.gextentfailure[i]) !== ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4) ? 9 : (
                                                                             (ifdt.properties.gextentfailure[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8) ? 0.7 : (0.5)))));
-                                                                    debug('totalScoring2:  ' + totalScoring);
+                                                                    //debug('totalScoring2:  ' + totalScoring);
 
-                                                                    debug('gextentfailure: ' + ifdt.properties.gextentfailure[i]);
+                                                                    //debug('gextentfailure: ' + ifdt.properties.gextentfailure[i]);
 
 
                                                                 }
@@ -3416,12 +3704,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                     }
                                                 }
-                                                debug('totalScoring: ' + totalScoring);
+                                                //debug('totalScoring: ' + totalScoring);
                                             } else {
                                                 totalScoring = 100;
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            // debug(totalScoring);
+                                            // //debug(totalScoring);
 
                                             // Existance of several damages
                                             if (numberOfScores > 2) {
@@ -3431,21 +3719,21 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
-                                            // debug('ifdt.properties.gnature:    ' + ifdt.properties.gnature);
-                                            // debug('ifdt.properties.gmaterial:    ' + ifdt.properties.gmaterial);
+                                            // //debug('ifdt.properties.gnature:    ' + ifdt.properties.gnature);
+                                            // //debug('ifdt.properties.gmaterial:    ' + ifdt.properties.gmaterial);
                                             //  CORRECTIVE FACTORS - MATERIAL
                                             if (ifdt.properties.gmaterial !== undefined &&
                                                 ifdt.properties.gmaterial.length > 0 &&
                                                 ifdt.properties.gmaterial[i] !== null &&
                                                 ifdt.properties.gmaterial[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3462,13 +3750,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gnature[i] !== null &&
                                                 ifdt.properties.gnature[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gnature ' + ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gnature ' + ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3481,13 +3769,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
 
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring);
-                                            //debug(totalScoring + '\n');
+                                            valueconditionsr.push(totalScoring / 100);
+                                            ////debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
                                     }
-                                    // debug(valueconditionsr);
+                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;
@@ -3499,10 +3787,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
                     }
-                    // debug('coincidencias: ' + coincidencias);
+                    // //debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    // debug(valueconditionsr.toString());
-                    // debug(tracksUpdated);
+                    // //debug(valueconditionsr.toString());
+                    // //debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
@@ -3516,9 +3804,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -3533,11 +3821,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug('tracksUpdated: ' + tracksUpdated);
+            //debug('tracksUpdated: ' + tracksUpdated);
             // avoiding  "Unhandled promise rejection(rejection id: 1): Error: Can't set headers after they are sent."
             // res.status(200).jsonp(ret);
 
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -3546,78 +3834,77 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2: ' + tracksUpdated2);
-                    debug(ifdt._id);
+                    //debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         var coincidencias = 0;
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Retaining_Walls':
                                     //////////////////////INICIO///////////////////////////////
-                                    // debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
+                                    // //debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
                                     if (ifdt.properties.gcode2.length > 0) {
                                         if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
                                             ifdt.properties.gcode2[i] !== null &&
                                             ifdt.properties.gcode2[i] !== "") {
-                                            // debug(ifdt.properties.gcode2);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            // //debug(ifdt.properties.gcode2);
+                                            // //debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            // debug(ifdt.properties.gtypefailure2.length);
+                                            // //debug(ifdt.properties.gtypefailure2.length);
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    // //debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // //debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // //debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        // //debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
                                                             // while (true) { ; }
-                                                            // debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                             if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                // debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
-                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
 
                                                                 if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     // while (true) { ; };
-                                                                    debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                                     coincidencias++;
-                                                                    debug(coincidencias);
-                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
-                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                                    //debug(coincidencias);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
-                                                                    debug('totalScoring1:  ' + totalScoring);
+                                                                    //debug('totalScoring1:  ' + totalScoring);
 
                                                                     numberOfScores++;
                                                                     totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure2[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4) ? 9 : (
                                                                             (ifdt.properties.gextentfailure2[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8) ? 0.7 : (0.5)))));
-                                                                    debug('totalScoring2:  ' + totalScoring);
+                                                                    //debug('totalScoring2:  ' + totalScoring);
 
-                                                                    debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
+                                                                    //debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
 
 
                                                                 }
@@ -3635,12 +3922,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                     }
                                                 }
-                                                debug('totalScoring: ' + totalScoring);
+                                                //debug('totalScoring: ' + totalScoring);
                                             } else {
                                                 totalScoring = 100;
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            // debug(totalScoring);
+                                            // //debug(totalScoring);
 
                                             // Existance of several damages
                                             if (numberOfScores > 2) {
@@ -3650,21 +3937,21 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
-                                            // debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
-                                            // debug('ifdt.properties.gmaterial2:    ' + ifdt.properties.gmaterial2);
+                                            // //debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
+                                            // //debug('ifdt.properties.gmaterial2:    ' + ifdt.properties.gmaterial2);
                                             //  CORRECTIVE FACTORS - MATERIAL
                                             if (ifdt.properties.gmaterial2 !== undefined &&
                                                 ifdt.properties.gmaterial2.length > 0 &&
                                                 ifdt.properties.gmaterial2[i] !== null &&
                                                 ifdt.properties.gmaterial2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gmaterial2 ' + ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gmaterial2 ' + ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3681,13 +3968,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gnature2[i] !== null &&
                                                 ifdt.properties.gnature2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3700,13 +3987,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
 
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring);
-                                            //debug(totalScoring + '\n');
+                                            valueconditionsr.push(totalScoring / 100);
+                                            ////debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
                                     }
-                                    // debug(valueconditionsr);
+                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;
@@ -3718,10 +4005,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
                     }
-                    // debug('coincidencias: ' + coincidencias);
+                    // //debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    // debug(valueconditionsr.toString());
-                    // debug(tracksUpdated);
+                    // //debug(valueconditionsr.toString());
+                    // //debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
@@ -3735,9 +4022,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -3752,11 +4039,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug('tracksUpdated: ' + tracksUpdated);
+            //debug('tracksUpdated: ' + tracksUpdated);
             res.status(200).jsonp(ret);
             break;
         case 'Cuttings_Embankments':
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -3765,78 +4052,77 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2: ' + tracksUpdated2);
-                    debug(ifdt._id);
+                    //debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         var coincidencias = 0;
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Cuttings_Embankments':
                                     //////////////////////INICIO///////////////////////////////
-                                    // debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
+                                    // //debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
                                     if (ifdt.properties.gcode.length > 0) {
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
                                             ifdt.properties.gcode[i] !== "") {
-                                            // debug(ifdt.properties.gcode);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            // //debug(ifdt.properties.gcode);
+                                            // //debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            // debug(ifdt.properties.gtypefailure.length);
+                                            // //debug(ifdt.properties.gtypefailure.length);
                                             if (ifdt.properties.gtypefailure.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure[i]);
+                                                    // //debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // //debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // //debug('3  ' + ifdt.properties.gtypefailure[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        // //debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
                                                             // while (true) { ; }
-                                                            // debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                             if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                // debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
-                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
 
                                                                 if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     // while (true) { ; };
-                                                                    debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.1  ' + ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                                     coincidencias++;
-                                                                    debug(coincidencias);
-                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
-                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                                    //debug(coincidencias);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
-                                                                    debug('totalScoring1:  ' + totalScoring);
+                                                                    //debug('totalScoring1:  ' + totalScoring);
 
                                                                     numberOfScores++;
                                                                     totalScoring *= (Number(ifdt.properties.gextentfailure[i]) !== ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4) ? 9 : (
                                                                             (ifdt.properties.gextentfailure[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8) ? 0.7 : (0.5)))));
-                                                                    debug('totalScoring2:  ' + totalScoring);
+                                                                    //debug('totalScoring2:  ' + totalScoring);
 
-                                                                    debug('gextentfailure: ' + ifdt.properties.gextentfailure[i]);
+                                                                    //debug('gextentfailure: ' + ifdt.properties.gextentfailure[i]);
 
 
                                                                 }
@@ -3854,12 +4140,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                     }
                                                 }
-                                                debug('totalScoring: ' + totalScoring);
+                                                //debug('totalScoring: ' + totalScoring);
                                             } else {
                                                 totalScoring = 100;
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            // debug(totalScoring);
+                                            // //debug(totalScoring);
 
                                             // Existance of several damages
                                             if (numberOfScores > 2) {
@@ -3869,21 +4155,21 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
-                                            // debug('ifdt.properties.gnature:    ' + ifdt.properties.gnature);
-                                            // debug('ifdt.properties.gblocks:    ' + ifdt.properties.gblocks);
+                                            // //debug('ifdt.properties.gnature:    ' + ifdt.properties.gnature);
+                                            // //debug('ifdt.properties.gblocks:    ' + ifdt.properties.gblocks);
                                             //  CORRECTIVE FACTORS - SizeOfBlocks
                                             if (ifdt.properties.gblocks !== undefined &&
                                                 ifdt.properties.gblocks.length > 0 &&
                                                 ifdt.properties.gblocks[i] !== null &&
                                                 ifdt.properties.gblocks[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gblocks ' + ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gblocks ' + ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3900,13 +4186,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gnature[i] !== null &&
                                                 ifdt.properties.gnature[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gnature ' + ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gnature ' + ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gnature[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -3919,13 +4205,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
 
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring);
-                                            //debug(totalScoring + '\n');
+                                            valueconditionsr.push(totalScoring / 100);
+                                            ////debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
                                     }
-                                    // debug(valueconditionsr);
+                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;
@@ -3937,10 +4223,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
                     }
-                    // debug('coincidencias: ' + coincidencias);
+                    // //debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    // debug(valueconditionsr.toString());
-                    //debug(tracksUpdated);
+                    // //debug(valueconditionsr.toString());
+                    ////debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
@@ -3954,9 +4240,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -3971,11 +4257,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug('tracksUpdated: ' + tracksUpdated);
+            //debug('tracksUpdated: ' + tracksUpdated);
             // avoiding  "Unhandled promise rejection(rejection id: 1): Error: Can't set headers after they are sent."
             // res.status(200).jsonp(ret);
 
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -3984,78 +4270,77 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    debug('tracksUpdated2: ' + tracksUpdated2);
-                    debug(ifdt._id);
+                    //debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         var coincidencias = 0;
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Cuttings_Embankments':
                                     //////////////////////INICIO///////////////////////////////
-                                    // debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
+                                    // //debug('ifdt.properties.gcode2.length: ' + ifdt.properties.gcode2.length);
                                     if (ifdt.properties.gcode2.length > 0) {
                                         if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
                                             ifdt.properties.gcode2[i] !== null &&
                                             ifdt.properties.gcode2[i] !== "") {
-                                            // debug(ifdt.properties.gcode2);
-                                            // TODO: calculo de la formula para Pavements -- Sacarlo a un service
-                                            // debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                            // //debug(ifdt.properties.gcode2);
+                                            // //debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
-                                            // debug(ifdt.properties.gtypefailure2.length);
+                                            // //debug(ifdt.properties.gtypefailure2.length);
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    // //debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
+                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
+                                                    // //debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
+                                                    // //debug('3  ' + ifdt.properties.gtypefailure2[i]);
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        // debug('5  ' + TypeOfFailureProcess1.scoring);
+                                                        // //debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
                                                             // while (true) { ; }
-                                                            // debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                            // //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                             if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                // debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
-                                                                // debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
+                                                                // //debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
 
                                                                 if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     // while (true) { ; };
-                                                                    debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                                    //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
 
                                                                     coincidencias++;
-                                                                    debug(coincidencias);
-                                                                    debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
-                                                                    debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
+                                                                    //debug(coincidencias);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
-                                                                    debug('totalScoring1:  ' + totalScoring);
+                                                                    //debug('totalScoring1:  ' + totalScoring);
 
                                                                     numberOfScores++;
                                                                     totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure2[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4) ? 9 : (
                                                                             (ifdt.properties.gextentfailure2[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8) ? 0.7 : (0.5)))));
-                                                                    debug('totalScoring2:  ' + totalScoring);
+                                                                    //debug('totalScoring2:  ' + totalScoring);
 
-                                                                    debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
+                                                                    //debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
 
 
                                                                 }
@@ -4073,12 +4358,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                     }
                                                 }
-                                                debug('totalScoring: ' + totalScoring);
+                                                //debug('totalScoring: ' + totalScoring);
                                             } else {
                                                 totalScoring = 100;
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                            // debug(totalScoring);
+                                            // //debug(totalScoring);
 
                                             // Existance of several damages
                                             if (numberOfScores > 2) {
@@ -4088,21 +4373,21 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
 
-                                            // debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
-                                            // debug('ifdt.properties.gblocks2:    ' + ifdt.properties.gblocks2);
+                                            // //debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
+                                            // //debug('ifdt.properties.gblocks2:    ' + ifdt.properties.gblocks2);
                                             //  CORRECTIVE FACTORS - SizeOfBlocks
                                             if (ifdt.properties.gblocks2 !== undefined &&
                                                 ifdt.properties.gblocks2.length > 0 &&
                                                 ifdt.properties.gblocks2[i] !== null &&
                                                 ifdt.properties.gblocks2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gblocks2 ' + ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gblocks2 ' + ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -4119,13 +4404,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gnature2[i] !== null &&
                                                 ifdt.properties.gnature2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
-                                                        // debug('score ' + score);
-                                                        // debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                        // //debug('score ' + score);
+                                                        // //debug('ifdt.gnature2 ' + ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                         if (ifdt.properties.gnature2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                            // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
+                                                            // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -4138,13 +4423,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             }
 
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring);
-                                            //debug(totalScoring + '\n');
+                                            valueconditionsr.push(totalScoring / 100);
+                                            ////debug(totalScoring + '\n');
                                         } else {
                                             valueconditionsr.push("");
                                         }
                                     }
-                                    // debug(valueconditionsr);
+                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;
@@ -4156,10 +4441,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 
                     }
-                    // debug('coincidencias: ' + coincidencias);
+                    // //debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    // debug(valueconditionsr.toString());
-                    // debug(tracksUpdated);
+                    // //debug(valueconditionsr.toString());
+                    // //debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
@@ -4173,9 +4458,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -4190,14 +4475,14 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug('tracksUpdated: ' + tracksUpdated);
+            //debug('tracksUpdated: ' + tracksUpdated);
             res.status(200).jsonp(ret);
             break;
 
 
 
         case 'Bridges':
-            // debug(form);
+            // //debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({
                 // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
@@ -4208,38 +4493,38 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    //debug(ifdt._id);
-                    // debug(ifdt.geometry.coordinates);
+                    ////debug(ifdt._id);
+                    // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
-                    //debug('tracksUpdated2: ' + tracksUpdated2);
-                    debug(ifdt._id);
+                    ////debug('tracksUpdated2: ' + tracksUpdated2);
+                    //debug(ifdt._id);
 
                     for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                         // console.log('i:     ' + i);
                         var coincidencias = 0;
                         var coincidenciasMechanical = 0;
                         var coincidenciasDurable = 0;
-                        //debug(form.formulaSpec.length);
+                        ////debug(form.formulaSpec.length);
                         for (var f = 0; f < form.formulaSpec.length; f++) {
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Bridges':
                                     //////////////////////INICIO///////////////////////////////
-                                    // debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
+                                    // //debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
                                     // if (true) {
 
                                     if ((ifdt.properties.bcode !== undefined && ifdt.properties.bcode.length > 0 &&
                                             ifdt.properties.bcode[i] !== null &&
                                             ifdt.properties.bcode[i] !== "" &&
                                             ifdt.properties.bcode.length > 0) || true) {
-                                        debug('totalScoring1 -- :  ' + totalScoring);
+                                        //debug('totalScoring1 -- :  ' + totalScoring);
                                         var numberOfScores = 0;
                                         var numberOfTypeOfFailureProcess = 0;
                                         if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay !== undefined &&
                                             form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[0] !== undefined &&
                                             ifdt.properties.bdamagesfoundationsgeneraltype !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype.length > 0 &&
                                             ifdt.properties.bdamagesfoundationsgeneraltype[i] !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype[i].length > 0) {
-                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
+                                            //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
                                                 if (diccDominicaToKobo[x.toString()] !== undefined &&
                                                     ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
@@ -4254,37 +4539,37 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     coincidencias++;
                                                     totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
                                                         totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
-                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
-                                                    debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight);
+                                                    //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x]);
+                                                    //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight);
                                                 }
                                             }
                                         }
-                                        debug('totalScoring2:  ' + totalScoring);
-                                        debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
+                                        //debug('totalScoring2:  ' + totalScoring);
+                                        //debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
                                         if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay !== undefined &&
                                             form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[0] !== undefined &&
                                             ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
                                             ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length > 0) {
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
-                                                debug(' x: ' + x);
-                                                debug(' x.toString(): ' + x.toString());
-                                                debug(' diccDominicaToKobo[x.toString()]: ' + diccDominicaToKobo[x.toString()]);
+                                                //debug(' x: ' + x);
+                                                //debug(' x.toString(): ' + x.toString());
+                                                //debug(' diccDominicaToKobo[x.toString()]: ' + diccDominicaToKobo[x.toString()]);
                                                 if (diccDominicaToKobo[x.toString()] !== undefined &&
-                                                ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
-                                            } else {
+                                                    ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
+                                                } else {
 
-                                                if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
-                                                    coincidenciasMechanical++;
-                                                } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
-                                                    coincidenciasDurable++;
+                                                    if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
+                                                        coincidenciasMechanical++;
+                                                    } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
+                                                        coincidenciasDurable++;
+                                                    }
+                                                    coincidencias++;
+                                                    totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                        totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
                                                 }
-                                                coincidencias++;
-                                                totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
-                                                    totalScoring : form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
                                             }
                                         }
-                                        }
-                                        debug('totalScoring3:  ' + totalScoring);
+                                        //debug('totalScoring3:  ' + totalScoring);
                                         // Mechanical Defects, Durable Defects
                                         z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBeams", "BdamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas"];
 
@@ -4301,35 +4586,35 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties[z2[k]][i] !== ""
                                             //&& ifdt.properties[z2[k]][i] > 0
                                         ) {
-                                            // debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]][i]);
-                                            // debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]][i]);
-                                            // debug('ifdt.properties[' + z1[k] + ']: ' + diccKoboToDominica[ifdt.properties[z1[k]][i]]);
-                                            // debug('ifdt.properties[' + z2[k] + ']: ' + diccKoboToDominica[ifdt.properties[z2[k]][i]]);
-                                            // debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
-                                            // debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]));
-                                            debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])); // weight
-                                            debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]])); // scoring
+                                            // //debug('ifdt.properties[' + z1[k] + ']: ' + ifdt.properties[z1[k]][i]);
+                                            // //debug('ifdt.properties[' + z2[k] + ']: ' + ifdt.properties[z2[k]][i]);
+                                            // //debug('ifdt.properties[' + z1[k] + ']: ' + diccKoboToDominica[ifdt.properties[z1[k]][i]]);
+                                            // //debug('ifdt.properties[' + z2[k] + ']: ' + diccKoboToDominica[ifdt.properties[z2[k]][i]]);
+                                            // //debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                            // //debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]));
+                                            //debug('ifdt.properties[' + z1[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])); // weight
+                                            //debug('ifdt.properties[' + z2[k] + ']: ' + capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]])); // scoring
                                             // console.log('i:  ' + i);
-                                            // debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
-                                            debug('coincidencias antes: ' + coincidencias)
+                                            // //debug(capitalizeFirstLetter(diccKoboToDominica(ifdt.properties[z2[k]][i])))
+                                            //debug('coincidencias antes: ' + coincidencias)
                                             for (y in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements) {
-                                                    if (
-                                                        ifdt.properties[z2[k]][i] !== undefined &&
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]] !== undefined &&
-                                                        diccKoboToDominica[ifdt.properties[z2[k]][i].toString()] !== undefined &&
+                                                if (
+                                                    ifdt.properties[z2[k]][i] !== undefined &&
+                                                    diccKoboToDominica[ifdt.properties[z1[k]][i]] !== undefined &&
+                                                    diccKoboToDominica[ifdt.properties[z2[k]][i].toString()] !== undefined &&
                                                     capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]) !== undefined &&
-                                                    diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()] !== undefined &&                                                    
+                                                    diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()] !== undefined &&
                                                     form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])] !== undefined) {
-                                                    debug('k: ' + k);
-                                                    debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
-                                                    debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
+                                                    //debug('k: ' + k);
+                                                    //debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]]));
+                                                    //debug('//debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
                                                     // z1 y z2 tienen la misma longitud que form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements
                                                     // console.log(y);
                                                     // console.log('weight: ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight);
                                                     for (a in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]) {
-                                                        debug('debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
+                                                        //debug('//debug1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])]);
                                                         for (b in form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a]) {
-                                                            debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
+                                                            //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
                                                             var temporary = Number.MAX_VALUE;
                                                             if (capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b) === 0) {
                                                                 temporary = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b];
@@ -4339,31 +4624,31 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                                 } else if (diccDominicaToKobo[diccKoboToDominica[ifdt.properties[z1[k]][i]].toString()].indexOf("urable") > -1) {
                                                                     coincidenciasDurable++;
                                                                 }
-                                                                debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
+                                                                //debug('valor:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])][a][b]);
                                                             }
-                                                            debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
+                                                            //debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
                                                             totalScoring = totalScoring < temporary ? totalScoring : temporary;
-                                                            debug(temporary);
-                                                            debug('totalScoring ->: ' + totalScoring);
+                                                            //debug(temporary);
+                                                            //debug('totalScoring ->: ' + totalScoring);
                                                         }
                                                     }
-                                                    debug('temporary: ' + temporary);
+                                                    //debug('temporary: ' + temporary);
                                                     k++;
                                                 }
                                             }
                                         }
-                                        debug('coincidencias despues: ' + coincidencias)
+                                        //debug('coincidencias despues: ' + coincidencias)
                                         // **************************
-                                        debug('totalScoring3.1:  ' + totalScoring);
-                                        debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
+                                        //debug('totalScoring3.1:  ' + totalScoring);
+                                        //debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
                                         // if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
                                         //     ifdt.properties.bdamagesnonstructural[i] !== undefined && ifdt.properties.bdamagesnonstructural[i].length > 0) {
-                                        debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
+                                        //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring);
                                         // for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring) {
                                         if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
-                                            // debug(diccDominicaToKobo[x.toString()]);
-                                            // debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
-                                            // debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
+                                            // //debug(diccDominicaToKobo[x.toString()]);
+                                            // //debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
+                                            // //debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
                                             // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
                                         } else {
 
@@ -4378,9 +4663,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         }
                                         // }
                                         // }
-                                        debug('totalScoring4:  ' + totalScoring);
-                                        debug('coincidencias: ' + coincidencias)
-                                        debug('coincidencias despues2: ' + coincidencias)
+                                        //debug('totalScoring4:  ' + totalScoring);
+                                        //debug('coincidencias: ' + coincidencias)
+                                        //debug('coincidencias despues2: ' + coincidencias)
 
                                         /////////////////////////////////////////////////////////////////
                                         // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
@@ -4393,8 +4678,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         /////////////////////////////////////////////////////////////////
 
                                         totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                        debug('totalScoring5:  ' + totalScoring);
-                                        // debug(totalScoring);
+                                        //debug('totalScoring5:  ' + totalScoring);
+                                        // //debug(totalScoring);
                                         //  CORRECTIVE FACTORS - Bridge type
                                         if (ifdt.properties.btype !== undefined &&
                                             ifdt.properties.btype.length > 0 &&
@@ -4402,15 +4687,15 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties.btype[i] !== null &&
                                             ifdt.properties.btype[i] !== "") {
                                             for (score in form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring) {
-                                                // debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
+                                                // //debug(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''))
                                                 if (score !== undefined && score !== null &&
                                                     ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '') !== undefined) {
-                                                    // debug('score ' + score);
-                                                    // debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
+                                                    // //debug('score ' + score);
+                                                    // //debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
                                                     if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                         totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
-                                                        debug(form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score]);
-                                                        // debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                        //debug(form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score]);
+                                                        // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
                                                     } else {
 
                                                         totalScoring *= 1;
@@ -4423,16 +4708,19 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring *= 0.0;
                                             totalScoring = null;
                                         }
-                                        debug('totalScoring6:  ' + totalScoring);
+                                        //debug('totalScoring6:  ' + totalScoring);
 
                                         totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                        valueconditionsr.push(totalScoring);
-                                        debug('totalScoring7:  ' + totalScoring);
-                                        //debug(totalScoring + '\n');
+                                        /**
+                                         * jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
+                                         */
+                                        valueconditionsr.push(totalScoring / 100);
+                                        //debug('totalScoring7:  ' + totalScoring);
+                                        ////debug(totalScoring + '\n');
                                     } else {
                                         valueconditionsr.push("");
                                     }
-                                    // debug(valueconditionsr);
+                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;
@@ -4445,15 +4733,17 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                         // if (i === 123) { while (true) { ; } }
                     }
-                    // debug('coincidencias: ' + coincidencias);
+                    // //debug('coincidencias: ' + coincidencias);
                     tracksUpdated++;
-                    debug(valueconditionsr.toString());
-                    // debug(tracksUpdated);
+                    //debug(valueconditionsr.toString());
+                    // //debug(tracksUpdated);
 
                     var conditions = {
                         _id: ifdt._id
                     };
-
+                    /** 
+                     * modified jfcp: añado el guardarlo por tanto por 1
+                     */
                     var query = {
                         $set: {
                             "properties.bcondition": valueconditionsr
@@ -4462,9 +4752,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
-                            debug(err.message);
+                            //debug(err.message);
                         }
-                        // debug(iup);  
+                        // //debug(iup);  
 
                     });
 
@@ -4479,7 +4769,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            debug('tracksUpdated: ' + tracksUpdated);
+            //debug('tracksUpdated: ' + tracksUpdated);
             res.status(200).jsonp(ret);
             break;
 
@@ -4512,24 +4802,24 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
 /* POST update_field */
 router.post('/V1/update_field/', function (req, res, next) {
-    debug('API /V1/update_field/');
+    //debug('API /V1/update_field/');
     var postData = extend({}, req.body);
     var ret = {
         "result": "OK"
     };
-    debug(postData);
+    //debug(postData);
     var value = postData[Object.keys(postData)[0]];
     var field_name = Object.keys(postData)[0];
-    debug(field_name + ": " + value);
+    //debug(field_name + ": " + value);
     var sendData = {};
     var arrField = field_name.split('__');
 
-    debug(arrField);
+    //debug(arrField);
 
     Formula.find({
         "name": arrField[0]
     }).exec(function (err, f) {
-        debug('Formula.find ' + arrField[0]);
+        //debug('Formula.find ' + arrField[0]);
         if (err) {
             res.send(500, err.message);
         }
@@ -4568,12 +4858,12 @@ router.post('/V1/update_field/', function (req, res, next) {
             case 'AssetCriticality':
                 if (arrField.length == 3) {
                     for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
-                        //debug(fspec.name);
+                        ////debug(fspec.name);
                         if (fspec.name === arrField[1]) {
                             var formSave = new Formula(f[0]);
-                            // debug('formSave: \n' + JSON.stringify(formSave));
-                            // debug(formSave.formulaSpec[key][arrField[2]].weight);
-                            // debug(key + ' ' + value);
+                            // //debug('formSave: \n' + JSON.stringify(formSave));
+                            // //debug(formSave.formulaSpec[key][arrField[2]].weight);
+                            // //debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]].weight = value;
                             formSave.save(function (err, fsaved) {
                                 if (err) {
@@ -4588,12 +4878,12 @@ router.post('/V1/update_field/', function (req, res, next) {
                     };
                 } else if (arrField.length == 4) {
                     for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
-                        //debug(fspec.name);
+                        ////debug(fspec.name);
                         if (fspec.name === arrField[1]) {
                             var formSave = new Formula(f[0]);
-                            // debug('formSave: \n' + JSON.stringify(formSave));
-                            // debug(formSave.formulaSpec[key][arrField[2]].weight);
-                            // debug(key + ' ' + value);
+                            // //debug('formSave: \n' + JSON.stringify(formSave));
+                            // //debug(formSave.formulaSpec[key][arrField[2]].weight);
+                            // //debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].weight = value;
                             formSave.save(function (err, fsaved) {
                                 if (err) {
@@ -4608,12 +4898,12 @@ router.post('/V1/update_field/', function (req, res, next) {
                     };
                 } else if (arrField.length == 5) {
                     for (var [key, fspec] of Object.entries(f[0].formulaSpec)) {
-                        //debug(fspec.name);
+                        ////debug(fspec.name);
                         if (fspec.name === arrField[1]) {
                             var formSave = new Formula(f[0]);
-                            // debug('formSave: \n' + JSON.stringify(formSave));
-                            // debug(formSave.formulaSpec[key][arrField[2]].weight);
-                            // debug(key + ' ' + value);
+                            // //debug('formSave: \n' + JSON.stringify(formSave));
+                            // //debug(formSave.formulaSpec[key][arrField[2]].weight);
+                            // //debug(key + ' ' + value);
                             formSave.formulaSpec[key][arrField[2]][arrField[3]].scoring[arrField[4]] = value;
                             formSave.save(function (err, fsaved) {
                                 if (err) {
@@ -4631,19 +4921,19 @@ router.post('/V1/update_field/', function (req, res, next) {
 
             case 'AssetResponse':
                 var field = field_name.replace(arrField[0] + '__', '');
-                debug(field);
+                //debug(field);
                 var formSave = new Formula(f[0]);
-                // debug(formSave);
+                // //debug(formSave);
                 // Busco el campo @field en la Formula
                 for (var [k, fspec] of f[0].formulaSpec.entries()) {
-                    // debug(fspec.WEIGHTS);
-                    // debug(fspec.score);
+                    // //debug(fspec.WEIGHTS);
+                    // //debug(fspec.score);
                     if (field === fspec.WEIGHTS.fieldname) {
                         formSave.formulaSpec[k].WEIGHTS.value = value;
-                        debug(k);
+                        //debug(k);
                     } else if (field === fspec.score.fieldname) {
                         formSave.formulaSpec[k].score.value = value;
-                        debug(k);
+                        //debug(k);
 
                     }
                 }
@@ -4658,16 +4948,16 @@ router.post('/V1/update_field/', function (req, res, next) {
 
             case 'AssetSensitivity':
                 var field = field_name.replace(arrField[0] + '__', '');
-                debug(field);
+                //debug(field);
                 var formSave = new Formula(f[0]);
-                // debug(formSave);
+                // //debug(formSave);
                 // Busco el campo @field en la Formula
                 for (var [k, fspec] of f[0].formulaSpec.entries()) {
-                    // debug(fspec.WEIGHTS);
-                    // debug(fspec.score);
+                    // //debug(fspec.WEIGHTS);
+                    // //debug(fspec.score);
                     if (field === fspec.WEIGHTS.fieldname) {
                         formSave.formulaSpec[k].WEIGHTS.value = value;
-                        debug(k);
+                        //debug(k);
                     }
                 }
                 formSave.save(function (err, fsaved) {
@@ -4680,16 +4970,16 @@ router.post('/V1/update_field/', function (req, res, next) {
                 break;
             case 'Likelihood':
                 var field = field_name.replace(arrField[0] + '__', '');
-                debug(field);
+                //debug(field);
                 var formSave = new Formula(f[0]);
-                // debug(formSave);
+                // //debug(formSave);
                 // Busco el campo @field en la Formula
                 for (var [k, fspec] of f[0].formulaSpec.entries()) {
-                    // debug(fspec.WEIGHTS);
-                    // debug(fspec.score);
+                    // //debug(fspec.WEIGHTS);
+                    // //debug(fspec.score);
                     if (field === fspec.WEIGHTS.fieldname) {
                         formSave.formulaSpec[k].WEIGHTS.value = value;
-                        debug(k);
+                        //debug(k);
                     }
                 }
                 formSave.save(function (err, fsaved) {
@@ -4702,18 +4992,18 @@ router.post('/V1/update_field/', function (req, res, next) {
                 break;
             case 'Risk':
                 var field = field_name.replace(arrField[0] + '__', '');
-                debug(field);
+                //debug(field);
                 var formSave = new Formula(f[0]);
-                // debug(formSave);
+                // //debug(formSave);
                 // Busco el campo @field en la Formula
                 for (var [k, fspec] of f[0].formulaSpec.entries()) {
-                    // debug(fspec.WEIGHTS);
-                    // debug(fspec.score);
+                    // //debug(fspec.WEIGHTS);
+                    // //debug(fspec.score);
                     if (fspec.WEIGHTS !== undefined &&
                         fspec.WEIGHTS.fieldname !== undefined &&
                         field === fspec.WEIGHTS.fieldname) {
                         formSave.formulaSpec[k].WEIGHTS.value = value;
-                        debug(k);
+                        //debug(k);
                     }
                 }
                 formSave.save(function (err, fsaved) {
@@ -4734,16 +5024,16 @@ router.post('/V1/update_field/', function (req, res, next) {
 });
 /* POST get_formulas_tracks */
 router.post('/V1/get_formulas_tracks/', function (req, res, next) {
-    // debug('API /V1/update_field/');
+    // //debug('API /V1/update_field/');
     var postData = extend({}, req.body);
-    debug(postData);
+    //debug(postData);
     var ret = {
         "result": "OK"
     };
 
     switch (postData.formname) {
         case 'Criticality':
-            debug('Criticality');
+            //debug('Criticality');
             var orArr = [];
             var orAssetArr = [];
             var andArr = [];
@@ -4754,9 +5044,9 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 switch (f) {
                     case 'Bridge':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.criticalityValue(f).score.min);
-                            // debug(formulasService.criticalityValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.criticalityValue(f).score.min);
+                            // //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.bcriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -4771,15 +5061,15 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
 
                         break;
                     case 'Culvert':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.criticalityValue(f).score.min);
-                            // debug(formulasService.criticalityValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.criticalityValue(f).score.min);
+                            // //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.Ccriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -4794,14 +5084,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
                         break;
                     case 'Geotechnical':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.criticalityValue(f).score.min);
-                            // debug(formulasService.criticalityValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.criticalityValue(f).score.min);
+                            // //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.gcriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -4829,14 +5119,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
                         break;
 
                     default:
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.criticalityValue(f).score.min);
-                            // debug(formulasService.criticalityValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.criticalityValue(f).score.min);
+                            // //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.rcriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -4849,7 +5139,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 $in: postData.filterPav
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
 
 
@@ -4865,7 +5155,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 $or: orArr
             });
 
-            debug(JSON.stringify(andArr));
+            //debug(JSON.stringify(andArr));
 
             promises.push(Infodatatrack.find({
                 $and: andArr
@@ -4874,7 +5164,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 if (err) {
                     res.send(500, err.message);
                 }
-                debug(tracks.length);
+                //debug(tracks.length);
                 return tracks;
 
             }));
@@ -4907,7 +5197,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 if (values.length > 0) {
                     values.forEach(function (val, index) {
                         for (var v of val) {
-                            // debug(v.properties.name);
+                            // //debug(v.properties.name);
                             ant = 0;
                             antBridge = 0;
                             antCulvert = 0;
@@ -4923,11 +5213,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.bcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
                                                     if (key !== (antBridge + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonBri);
                                                         geoJsonBri = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcriticality[key] + ' - ' + f);
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     antBridge = key;
@@ -4939,11 +5229,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.Ccriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonCul);
                                                         geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
                                                     antCulvert = key;
@@ -4955,11 +5245,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.gcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
                                                     if (key !== (antGeo + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonGeo);
                                                         geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     antGeo = key;
@@ -4969,11 +5259,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.gcriticality2[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
                                                     if (key !== (antGeo2 + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonGeo2);
                                                         geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     antGeo2 = key;
@@ -4985,11 +5275,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.rcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (ant == 0) ant = key - 1;
                                                     if (key !== (ant + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonPav);
                                                         geoJsonPav = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     ant = key;
@@ -5000,7 +5290,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
                                 }
                                 if (key + 1 == v.geometry.coordinates.length) {
-                                    // debug('-- new geojson --')
+                                    // //debug('-- new geojson --')
                                     tracks.push(geoJsonPav);
                                     tracks.push(geoJsonBri);
                                     tracks.push(geoJsonCul);
@@ -5018,7 +5308,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         }
                     });
                 }
-                // debug(tracks.length);
+                // //debug(tracks.length);
 
                 res.status(200).jsonp(tracks);
 
@@ -5027,7 +5317,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             break;
 
         case 'Condition':
-            debug('Condition');
+            //debug('Condition');
             var orArr = [];
             var orAssetArr = [];
             var andArr = [];
@@ -5038,9 +5328,9 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 switch (f) {
                     case 'Bridges':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.conditionValue(f).score.min);
-                            // debug(formulasService.conditionValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.conditionValue(f).score.min);
+                            // //debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.bcondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5055,15 +5345,15 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
 
                         break;
                     case 'Culverts':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.conditionValue(f).score.min);
-                            // debug(formulasService.conditionValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.conditionValue(f).score.min);
+                            // //debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.Ccondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5078,14 +5368,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
                         break;
                     case 'Cuttings_Embankments':
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.conditionValue(f).score.min);
-                            // debug(formulasService.conditionValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.conditionValue(f).score.min);
+                            // //debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.gcondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5113,14 +5403,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
                         break;
 
                     default: // retainning walls
                         for (var f of postData.form) {
-                            // debug(f);
-                            // debug(formulasService.conditionValue(f).score.min);
-                            // debug(formulasService.conditionValue(f).score.max);
+                            // //debug(f);
+                            // //debug(formulasService.conditionValue(f).score.min);
+                            // //debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.rcondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5133,7 +5423,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 $in: postData.filterPav
                             }
                         });
-                        // debug(catArr);
+                        // //debug(catArr);
 
 
 
@@ -5149,7 +5439,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 $or: orArr
             });
 
-            debug(JSON.stringify(andArr));
+            //debug(JSON.stringify(andArr));
 
             promises.push(Infodatatrack.find({
                 $and: andArr
@@ -5158,7 +5448,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 if (err) {
                     res.send(500, err.message);
                 }
-                debug(tracks.length);
+                //debug(tracks.length);
                 return tracks;
 
             }));
@@ -5191,7 +5481,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 if (values.length > 0) {
                     values.forEach(function (val, index) {
                         for (var v of val) {
-                            // debug(v.properties.name);
+                            // //debug(v.properties.name);
                             ant = 0;
                             antBridge = 0;
                             antCulvert = 0;
@@ -5207,11 +5497,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.bcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
                                                     if (key !== (antBridge + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonBri);
                                                         geoJsonBri = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcondition[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcondition[key] + ' - ' + f);
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     antBridge = key;
@@ -5223,11 +5513,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.Ccondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonCul);
                                                         geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccondition[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccondition[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
                                                     antCulvert = key;
@@ -5239,11 +5529,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.gcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
                                                     if (key !== (antGeo + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonGeo);
                                                         geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     antGeo = key;
@@ -5253,11 +5543,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.gcondition2[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
                                                     if (key !== (antGeo2 + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonGeo2);
                                                         geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition2[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     antGeo2 = key;
@@ -5269,11 +5559,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.rcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (ant == 0) ant = key - 1;
                                                     if (key !== (ant + 1)) {
-                                                        // debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonPav);
                                                         geoJsonPav = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     ant = key;
@@ -5284,7 +5574,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
                                 }
                                 if (key + 1 == v.geometry.coordinates.length) {
-                                    // debug('-- new geojson --')
+                                    // //debug('-- new geojson --')
                                     tracks.push(geoJsonPav);
                                     tracks.push(geoJsonBri);
                                     tracks.push(geoJsonCul);
@@ -5302,7 +5592,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         }
                     });
                 }
-                // debug(tracks.length);
+                // //debug(tracks.length);
 
                 res.status(200).jsonp(tracks);
 
