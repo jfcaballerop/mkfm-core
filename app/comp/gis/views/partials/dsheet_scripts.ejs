@@ -17,18 +17,17 @@
                 $('#divmap1').prepend(gen_data.join(''));
 
                 $('#generaldatatbody').append('<tr><td>' + 'mnjoisfmoṕasd,fl' + '</td><td>' + 'mnjoisfmoṕasd,fl' + '</td></tr>');
-                $('#generaldatatbody').append('<tr><td>' + 'mnjoisfmoṕasd,fl' + '</td><td>' + 'mnjoisfmoṕasd,fl' + '</td></tr>');
+                $('#generaldatatbody').append(
 
-                $(function() {
-                    $('#fileupload').fileupload({
-                        dataType: 'json',
-                        done: function(e, data) {
-                            $.each(data.result.files, function(index, file) {
-                                $('<p/>').text(file.name).appendTo(document.body);
-                            });
-                        }
-                    });
-                });
+
+
+
+
+
+
+                );
+
+
 
 
                 $('#generaldatadiv').show();
@@ -835,5 +834,47 @@
 
 
         });
+
+
+
+        $("#upload_file_form").bind("submit", function() {
+            // above check 
+            var ext = $('#file_upload').val().split('.').pop().toLowerCase();
+            var ext_sel = $('#type_file').val();
+
+            $('#modal_checkext').modal() // initialized with defaults
+
+            switch (ext_sel) {
+                case 'geojson':
+                    if ($.inArray(ext, [ext_sel]) == -1) {
+                        $('#modal_check_ext_val').text(ext_sel);
+                        $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                        $('#modal_checkext').modal('show');
+
+                        return false;
+                    }
+                    break;
+                case 'gpx':
+                    if ($.inArray(ext, [ext_sel]) == -1) {
+                        $('#modal_check_ext_val').text(ext_sel);
+                        $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                        $('#modal_checkext').modal('show');
+
+                        return false;
+                    }
+                    break;
+                case 'csv':
+                    if ($.inArray(ext, [ext_sel]) == -1) {
+                        $('#modal_check_ext_val').text(ext_sel);
+                        $('#modal_check_ext_orig').text($('#file_upload').val().split('\\').pop().toLowerCase());
+                        $('#modal_checkext').modal('show');
+
+                        return false;
+                    }
+                    break;
+            }
+
+        });
+
     });
 </script>
