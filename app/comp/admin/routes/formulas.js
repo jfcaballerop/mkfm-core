@@ -4296,66 +4296,26 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             // //debug(ifdt.properties.gtypefailure2.length);
                                             if (ifdt.properties.gtypefailure2.length > 0) {
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    // //debug('1  ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess));
-                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1]));
-                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-                                                    // //debug('1.1 ' + Object.keys(form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring));
-                                                    // //debug('1.1 ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring['Unknown']);
-                                                    // //debug('2  ' + TypeOfFailureProcess1.toString().toUpperCase());
-                                                    // //debug('3  ' + ifdt.properties.gtypefailure2[i]);
+                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         // //debug('5  ' + TypeOfFailureProcess1.scoring);
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            // while (true) { ; }
-                                                            // //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                            // //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-
                                                             if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                // //debug(ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
-                                                                // //debug(ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')));
 
                                                                 if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                    // while (true) { ; };
-                                                                    //debug('6.0.0  ' + score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    //debug('6.0.1  ' + ifdt.properties.gintensityfailure[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    //debug('6.1.0  ' + TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-                                                                    //debug('6.1.1  ' + ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, ''));
-
                                                                     coincidencias++;
-                                                                    //debug(coincidencias);
-                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
-                                                                    //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
-
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
-                                                                    //debug('totalScoring1:  ' + totalScoring);
 
                                                                     numberOfScores++;
                                                                     totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure2[i] <= 0.2) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4) ? 9 : (
                                                                             (ifdt.properties.gextentfailure2[i] <= 0.6) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8) ? 0.7 : (0.5)))));
-                                                                    //debug('totalScoring2:  ' + totalScoring);
-
-                                                                    //debug('gextentfailure2: ' + ifdt.properties.gextentfailure2[i]);
-
-
                                                                 }
 
                                                             }
-
-
-
-
-
-
-
                                                         }
-
-
                                                     }
                                                 }
                                                 //debug('totalScoring: ' + totalScoring);
@@ -4372,9 +4332,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 // existance of several damages
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
-
-                                            // //debug('ifdt.properties.gnature2:    ' + ifdt.properties.gnature2);
-                                            // //debug('ifdt.properties.gblocks2:    ' + ifdt.properties.gblocks2);
                                             //  CORRECTIVE FACTORS - SizeOfBlocks
                                             if (ifdt.properties.gblocks2 !== undefined &&
                                                 ifdt.properties.gblocks2.length > 0 &&
@@ -4429,7 +4386,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             valueconditionsr.push("");
                                         }
                                     }
-                                    // //debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
 
                                     break;

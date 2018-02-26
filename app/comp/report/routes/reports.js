@@ -338,14 +338,31 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         }
                         if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '') {
                             if (variables[v].indexOf('img') > -1) {
+
+                                if (nfotos === 0) {
+                                    var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                                    address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
+                                    // nfotos++;
+                                    dbfields.properties[variables[v]] = textToRender.toString();
+                                    jsontoput2['name'] = '##' + variables[v] + '##';
+                                    // jsontoput2['name'] = '##img' + nfotos + '##';
+                                    jsontoput2['type'] = 'img';
+                                    jsontoput2['value'] = '00_gmap_.jpg';
+                                    jsontoput2['style'] = '';
+                                    jsontoput2['path'] = address.join('/');
+                                    nfotos++;
+                                    debug(jsontoput2);
+                                    temp.config.fields.push(jsontoput2);
+                                    arrayJsonProp.push(jsontoput2);
+                                } else {
                                 // debug(kobo.properties);
                                 if (kobo.properties._attachments !== undefined &&
                                     kobo.properties._attachments.length > 0 &&
-                                    nfotos < kobo.properties._attachments.length) {
+                                    nfotos <= kobo.properties._attachments.length) {
                                     var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                    file = kobo.properties._attachments[nfotos].split("/")[kobo.properties._attachments[nfotos].split("/").length - 1];
+                                    file = kobo.properties._attachments[nfotos - 1].split("/")[kobo.properties._attachments[nfotos - 1].split("/").length - 1];
                                     file = file.split('.')[0] + '-small.' + file.split('.')[1];
-                                    address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
+                                    address = kobo.properties._attachments[nfotos - 1].split('/').slice(2, kobo.properties._attachments[nfotos - 1].split('/').length - 1);
                                     nfotos++;
                                     dbfields.properties[variables[v]] = textToRender.toString();
                                     jsontoput2['name'] = '##' + variables[v] + '##';
@@ -359,6 +376,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                     arrayJsonProp.push(jsontoput2);
                                 } else {
                                 }
+                            }
                             }
                         } else {
                             if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
@@ -375,6 +393,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 // S8-SG-01-CU-3020
                             }
                         }
+                        
                     }
 
 
