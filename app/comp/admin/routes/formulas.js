@@ -1146,6 +1146,10 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var culvertsTrackNat = [];
                 var geotsTrackPhy = [];
                 var geotsTrackNat = [];
+                /** 
+                 * Guardo aquellos assets ya visitados para no volver a mostrarlos
+                 * a tener en cuenta que los CODEs deberían ser únicos.
+                 */
                 var assetsVisited = [];
 
                 var valini = iup.properties.pk[0]; //cojo el primer valo del PK
@@ -1168,8 +1172,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.gcode !== undefined && iup.properties.gcode !== [] && iup.properties.gcode.length > 0 &&
                             iup.properties.gcode[i] !== undefined && iup.properties.gcode[i] !== null && iup.properties.gcode[i] !== "" &&
                             iup.properties.glenth !== undefined && iup.properties.glenth !== [] && iup.properties.glenth.length > 0 &&
-                            iup.properties.glenth[i] !== undefined && iup.properties.glenth[i] !== null && iup.properties.glenth[i] !== ""
-                        ) {
+                            iup.properties.glenth[i] !== undefined && iup.properties.glenth[i] !== null && iup.properties.glenth[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode[i])) {
+                            assetsVisited.push(iup.properties.gcode[i]);
 
                             geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glenth[i],
                                 iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'));
@@ -1182,8 +1187,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.gcode2 !== undefined && iup.properties.gcode2 !== [] && iup.properties.gcode2.length > 0 &&
                             iup.properties.gcode2[i] !== undefined && iup.properties.gcode2[i] !== null && iup.properties.gcode2[i] !== "" &&
                             iup.properties.glenth2 !== undefined && iup.properties.glenth2 !== [] && iup.properties.glenth2.length > 0 &&
-                            iup.properties.glenth2[i] !== undefined && iup.properties.glenth2[i] !== null && iup.properties.glenth2[i] !== ""
-                        ) {
+                            iup.properties.glenth2[i] !== undefined && iup.properties.glenth2[i] !== null && iup.properties.glenth2[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode2[i])) {
+                            assetsVisited.push(iup.properties.gcode2[i]);
 
                             geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glenth2[i],
                                 iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'));
@@ -1199,8 +1205,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.Ccode !== undefined && iup.properties.Ccode !== [] && iup.properties.Ccode.length > 0 &&
                             iup.properties.Ccode[i] !== undefined && iup.properties.Ccode[i] !== null && iup.properties.Ccode[i] !== "" &&
                             iup.properties.Clength !== undefined && iup.properties.Clength !== [] && iup.properties.Clength.length > 0 &&
-                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== ""
-                        ) {
+                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.Ccode[i])) {
+                            assetsVisited.push(iup.properties.Ccode[i]);
 
                             culvertsTrackPhy.push(serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
                                 iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'));
@@ -1216,8 +1223,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.bcode !== undefined && iup.properties.bcode !== [] && iup.properties.bcode.length > 0 &&
                             iup.properties.bcode[i] !== undefined && iup.properties.bcode[i] !== null && iup.properties.bcode[i] !== "" &&
                             iup.properties.blenght !== undefined && iup.properties.blenght !== [] && iup.properties.blenght.length > 0 &&
-                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== ""
-                        ) {
+                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.bcode[i])) {
+                            assetsVisited.push(iup.properties.bcode[i]);
 
                             bridgesTrackPhy.push(serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
                                 iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'));
