@@ -1146,6 +1146,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var culvertsTrackNat = [];
                 var geotsTrackPhy = [];
                 var geotsTrackNat = [];
+                var assetsVisited = [];
 
                 var valini = iup.properties.pk[0]; //cojo el primer valo del PK
 
@@ -3892,7 +3893,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                                     coincidencias++;
                                                                     //debug(coincidencias);
-                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score]);
                                                                     //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
@@ -4110,7 +4111,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                                     coincidencias++;
                                                                     //debug(coincidencias);
-                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score.toUpperCase().replace(/[-+()\s]/g, '').replace(/[^\w ]/, '')]);
+                                                                    //debug('score:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score]);
                                                                     //debug('weight:  ' + form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight);
 
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
