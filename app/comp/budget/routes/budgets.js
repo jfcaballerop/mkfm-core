@@ -1017,7 +1017,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     var bcost = 0;
-
+                    // TODO: Terminar los Assets para Bridges, Culverts, Geot
                     if (ifdt.properties.rcondition !== undefined && ifdt.properties.rcondition.length > 0 &&
                         ifdt.properties.rmaterial !== undefined && ifdt.properties.rmaterial.length > 0 &&
                         ifdt.properties.rmaterial[i] !== '') {
