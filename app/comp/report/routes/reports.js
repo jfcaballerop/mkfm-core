@@ -316,7 +316,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     };
                     logotypesArray = ["Dominica_logo.png", "world_bank_logo.jpg"];
                     k = 0;
-                    debug(kobo);
                     for (v in variables) {
 
 
@@ -337,26 +336,27 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                             temp.config.fields.push(jsontoput2);
                             arrayJsonProp.push(jsontoput2);
                         }
-                        if (kobo !== null && kobo !== undefined && kobo !== '') {
-                            if (variables[v].indexOf('img') > -1) {
-
-                                if (nfotos === 0 && kobo.properties !== undefined && kobo.properties._attachments !== undefined && dbfields.properties !== null) {
-                                    var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                    address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
+                                if (nfotos === 0 && variables[v].indexOf('img') > -1) {
+                                    var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
                                     // nfotos++;
                                     dbfields.properties[variables[v]] = textToRender.toString();
-                                    jsontoput2['name'] = '##' + variables[v] + '##';
+                                    jsontoput4['name'] = '##' + variables[v] + '##';
                                     // jsontoput2['name'] = '##img' + nfotos + '##';
-                                    jsontoput2['type'] = 'img';
-                                    jsontoput2['value'] = '00_gmap_.jpg';
-                                    jsontoput2['style'] = '';
-                                    jsontoput2['path'] = address.join('/');
+                                    jsontoput4['type'] = 'map';
+                                    jsontoput4['value'] = req.params.assetCode + '.jpg';
+                                    jsontoput4['style'] = '';
+                                    jsontoput4['path'] = 'gmaps';
                                     nfotos++;
-                                    debug(jsontoput2);
-                                    temp.config.fields.push(jsontoput2);
-                                    arrayJsonProp.push(jsontoput2);
+                                    temp.config.fields.push(jsontoput4);
+                                    arrayJsonProp.push(jsontoput4);
+                                    debug(jsontoput4);
+                                }
+                        if (kobo !== null && kobo !== undefined && kobo !== '') {
+                            if (variables[v].indexOf('img') > -1) {
+                                if (nfotos === 0 && 
+                                    kobo.properties !== undefined && 
+                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {
                                 } else {
-                                    // debug(kobo.properties);
                                     if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '' &&
                                         kobo.properties !== undefined && kobo.properties !== null &&
                                         dbfields.properties !== undefined && dbfields.properties !== null &&
@@ -375,7 +375,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                         jsontoput2['value'] = file;
                                         jsontoput2['style'] = '';
                                         jsontoput2['path'] = address.join('/');
-
                                         temp.config.fields.push(jsontoput2);
                                         arrayJsonProp.push(jsontoput2);
                                     } else {

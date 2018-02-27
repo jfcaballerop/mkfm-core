@@ -128,6 +128,29 @@
                                         $this.prop('disabled', true);
                                     });
                                     break
+                                case 'DRAINAGE':
+                                    $(":radio[value*='RIDG']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', true);
+                                    });
+                                    $(":radio[value*='EAR']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', true);
+                                    });
+                                    $(":radio[value*='LVERT']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', false);
+                                    });
+                                    // $(":radio*").each(function(index) {
+                                    $(":radio[value*='RETA']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', true);
+                                    });
+                                    $(":radio[value*='PAV']").each(function(index) {
+                                        $this = $(this);
+                                        $this.prop('disabled', true);
+                                    });
+                                    break
                                 case 'FORD': // type of culvert
                                     $(":radio[value*='RIDG']").each(function(index) {
                                         $this = $(this);
