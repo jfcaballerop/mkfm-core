@@ -16,10 +16,9 @@
                 nchar = $this.val().length;
                 $('#divmap1').prepend(gen_data.join(''));
 
-                $('#generaldatatbody').append('<tr><td>' + 'mnjoisfmoṕasd,fl' + '</td><td>' + 'mnjoisfmoṕasd,fl' + '</td></tr>');
-
-
-
+                $('#generaldatatbody').append('<form method="post" enctype="multipart/form-data"><div><label for="file">');
+                $('#generaldatatbody').append('Please, choose file to upload');
+                $('#generaldatatbody').append('</label><input type="file" id="file" name="file" multiple></div><div><button>Submit</button></div></form>');
 
                 $('#generaldatadiv').show();
 
