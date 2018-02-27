@@ -1136,7 +1136,9 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var trackSectionsnat = [];
                 var sectionsnat = [];
                 var trackSectionscond = [];
+                var trackSectionswidth = [];
                 var sectionscond = [];
+                var sectionswidth = [];
                 var nsections = 1;
                 var pkreg = [];
                 var trackpkreg = [];
@@ -1146,6 +1148,10 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var culvertsTrackNat = [];
                 var geotsTrackPhy = [];
                 var geotsTrackNat = [];
+                /** 
+                 * Guardo aquellos assets ya visitados para no volver a mostrarlos
+                 * a tener en cuenta que los CODEs deberían ser únicos.
+                 */
                 var assetsVisited = [];
 
                 var valini = iup.properties.pk[0]; //cojo el primer valo del PK
@@ -1167,30 +1173,48 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                          */
                         if (iup.properties.gcode !== undefined && iup.properties.gcode !== [] && iup.properties.gcode.length > 0 &&
                             iup.properties.gcode[i] !== undefined && iup.properties.gcode[i] !== null && iup.properties.gcode[i] !== "" &&
-                            iup.properties.glenth !== undefined && iup.properties.glenth !== [] && iup.properties.glenth.length > 0 &&
-                            iup.properties.glenth[i] !== undefined && iup.properties.glenth[i] !== null && iup.properties.glenth[i] !== ""
-                        ) {
+                            iup.properties.glength !== undefined && iup.properties.glength !== [] && iup.properties.glength.length > 0 &&
+                            iup.properties.glength[i] !== undefined && iup.properties.glength[i] !== null && iup.properties.glength[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode[i])) {
+                            assetsVisited.push(iup.properties.gcode[i]);
 
-                            geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glenth[i],
-                                iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'));
+                            geotsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                    iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
+                                length: iup.properties.glength[i],
+                                height: iup.properties.gheight[i]
+                            });
 
 
-                            geotsTrackNat.push(serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glenth[i],
-                                iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'));
+                            geotsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                    iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
+                                length: iup.properties.glength[i],
+                                height: iup.properties.gheight[i]
+                            });
 
                         }
                         if (iup.properties.gcode2 !== undefined && iup.properties.gcode2 !== [] && iup.properties.gcode2.length > 0 &&
                             iup.properties.gcode2[i] !== undefined && iup.properties.gcode2[i] !== null && iup.properties.gcode2[i] !== "" &&
-                            iup.properties.glenth2 !== undefined && iup.properties.glenth2 !== [] && iup.properties.glenth2.length > 0 &&
-                            iup.properties.glenth2[i] !== undefined && iup.properties.glenth2[i] !== null && iup.properties.glenth2[i] !== ""
-                        ) {
+                            iup.properties.glength2 !== undefined && iup.properties.glength2 !== [] && iup.properties.glength2.length > 0 &&
+                            iup.properties.glength2[i] !== undefined && iup.properties.glength2[i] !== null && iup.properties.glength2[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode2[i])) {
+                            assetsVisited.push(iup.properties.gcode2[i]);
 
-                            geotsTrackPhy.push(serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glenth2[i],
-                                iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'));
+                            geotsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                    iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
+                                length: iup.properties.glength2[i],
+                                height: iup.properties.gheight2[i]
+                            });
 
 
-                            geotsTrackNat.push(serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glenth2[i],
-                                iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'));
+                            geotsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                    iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
+                                length: iup.properties.glength2[i],
+                                height: iup.properties.gheight2[i]
+                            });
 
                         }
                         /**
@@ -1199,15 +1223,22 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.Ccode !== undefined && iup.properties.Ccode !== [] && iup.properties.Ccode.length > 0 &&
                             iup.properties.Ccode[i] !== undefined && iup.properties.Ccode[i] !== null && iup.properties.Ccode[i] !== "" &&
                             iup.properties.Clength !== undefined && iup.properties.Clength !== [] && iup.properties.Clength.length > 0 &&
-                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== ""
-                        ) {
+                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.Ccode[i])) {
+                            assetsVisited.push(iup.properties.Ccode[i]);
 
-                            culvertsTrackPhy.push(serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'));
+                            culvertsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                    iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
+                                length: iup.properties.Clength[i]
+                            });
 
 
-                            culvertsTrackNat.push(serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'));
+                            culvertsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                    iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
+                                length: iup.properties.Clength[i]
+                            });
 
                         }
                         /**
@@ -1216,15 +1247,24 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         if (iup.properties.bcode !== undefined && iup.properties.bcode !== [] && iup.properties.bcode.length > 0 &&
                             iup.properties.bcode[i] !== undefined && iup.properties.bcode[i] !== null && iup.properties.bcode[i] !== "" &&
                             iup.properties.blenght !== undefined && iup.properties.blenght !== [] && iup.properties.blenght.length > 0 &&
-                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== ""
-                        ) {
+                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.bcode[i])) {
+                            assetsVisited.push(iup.properties.bcode[i]);
 
-                            bridgesTrackPhy.push(serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'));
+                            bridgesTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                    iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'),
+                                length: iup.properties.blenght[i],
+                                width: iup.properties.bwidth[i]
+                            });
 
 
-                            bridgesTrackNat.push(serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'));
+                            bridgesTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                    iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'),
+                                length: iup.properties.blenght[i],
+                                width: iup.properties.bwidth[i]
+                            });
 
                         }
 
@@ -1235,6 +1275,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
                         sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
                         sectionscond[ns] = iup.properties.rcondition[i];
+                        sectionswidth[ns] = iup.properties.rwidth[i] !== undefined ? iup.properties.rwidth[i] : '';
                         pkreg[ns] = iup.properties.pk[i];
 
                         if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
@@ -1242,10 +1283,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             trackSectionsphy.push(sectionsphy);
                             trackSectionsnat.push(sectionsnat);
                             trackSectionscond.push(sectionscond);
+                            trackSectionswidth.push(sectionswidth);
                             trackpkreg.push(pkreg);
                             sectionsphy = [];
                             sectionsnat = [];
                             sectionscond = [];
+                            sectionswidth = [];
                             pkreg = [];
                             nsections++;
                             ns = 0;
@@ -1262,9 +1305,109 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 } else {
                     var ns = 0;
                     for (var i = 0; i < iup.geometry.coordinates.length; i++) {
+                        /**
+                         * GEOT
+                         */
+                        if (iup.properties.gcode !== undefined && iup.properties.gcode !== [] && iup.properties.gcode.length > 0 &&
+                            iup.properties.gcode[i] !== undefined && iup.properties.gcode[i] !== null && iup.properties.gcode[i] !== "" &&
+                            iup.properties.glength !== undefined && iup.properties.glength !== [] && iup.properties.glength.length > 0 &&
+                            iup.properties.glength[i] !== undefined && iup.properties.glength[i] !== null && iup.properties.glength[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode[i])) {
+                            assetsVisited.push(iup.properties.gcode[i]);
+
+                            geotsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                    iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
+                                length: iup.properties.glength[i],
+                                height: iup.properties.gheight[i]
+                            });
+
+
+                            geotsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                    iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
+                                length: iup.properties.glength[i],
+                                height: iup.properties.gheight[i]
+                            });
+
+                        }
+                        if (iup.properties.gcode2 !== undefined && iup.properties.gcode2 !== [] && iup.properties.gcode2.length > 0 &&
+                            iup.properties.gcode2[i] !== undefined && iup.properties.gcode2[i] !== null && iup.properties.gcode2[i] !== "" &&
+                            iup.properties.glength2 !== undefined && iup.properties.glength2 !== [] && iup.properties.glength2.length > 0 &&
+                            iup.properties.glength2[i] !== undefined && iup.properties.glength2[i] !== null && iup.properties.glength2[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.gcode2[i])) {
+                            assetsVisited.push(iup.properties.gcode2[i]);
+
+                            geotsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                    iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
+                                length: iup.properties.glength2[i],
+                                height: iup.properties.gheight2[i]
+                            });
+
+
+                            geotsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                    iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
+                                length: iup.properties.glength2[i],
+                                height: iup.properties.gheight2[i]
+                            });
+
+                        }
+                        /**
+                         * CULVERTS
+                         */
+                        if (iup.properties.Ccode !== undefined && iup.properties.Ccode !== [] && iup.properties.Ccode.length > 0 &&
+                            iup.properties.Ccode[i] !== undefined && iup.properties.Ccode[i] !== null && iup.properties.Ccode[i] !== "" &&
+                            iup.properties.Clength !== undefined && iup.properties.Clength !== [] && iup.properties.Clength.length > 0 &&
+                            iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.Ccode[i])) {
+                            assetsVisited.push(iup.properties.Ccode[i]);
+
+                            culvertsTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                    iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
+                                length: iup.properties.Clength[i]
+                            });
+
+
+                            culvertsTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                    iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
+                                length: iup.properties.Clength[i]
+                            });
+
+                        }
+                        /**
+                         * BRIDGES
+                         */
+                        if (iup.properties.bcode !== undefined && iup.properties.bcode !== [] && iup.properties.bcode.length > 0 &&
+                            iup.properties.bcode[i] !== undefined && iup.properties.bcode[i] !== null && iup.properties.bcode[i] !== "" &&
+                            iup.properties.blenght !== undefined && iup.properties.blenght !== [] && iup.properties.blenght.length > 0 &&
+                            iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== "" &&
+                            !assetsVisited.includes(iup.properties.bcode[i])) {
+                            assetsVisited.push(iup.properties.bcode[i]);
+
+                            bridgesTrackPhy.push({
+                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                    iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'),
+                                length: iup.properties.blenght[i],
+                                width: iup.properties.bwidth[i]
+                            });
+
+
+                            bridgesTrackNat.push({
+                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                    iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'),
+                                length: iup.properties.blenght[i],
+                                width: iup.properties.bwidth[i]
+                            });
+
+                        }
                         sectionsphy[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rriskphysical[i]);
                         sectionsnat[ns] = formulasService.NormalizeRiskRatingScale(iup.properties.rrisknatural[i]);
                         sectionscond[ns] = iup.properties.rcondition[i];
+                        sectionswidth[ns] = iup.properties.rwidth[i] !== undefined ? iup.properties.rwidth[i] : '';
                         pkreg[ns] = iup.properties.pk[i];
 
                         if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
@@ -1272,11 +1415,13 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             trackSectionsphy.push(sectionsphy);
                             trackSectionsnat.push(sectionsnat);
                             trackSectionscond.push(sectionscond);
+                            trackSectionswidth.push(sectionswidth);
                             trackpkreg.push(pkreg);
                             pkreg = [];
                             sectionsphy = [];
                             sectionsnat = [];
                             sectionscond = [];
+                            sectionswidth = [];
 
                             nsections++;
                             ns = 0;
@@ -1284,15 +1429,12 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             ns++;
                         }
                     }
-                    var l = 0;
-                    for (var ts of trackSectionsphy) {
-                        l += ts.length;
-                    }
+
 
                 }
-
-                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackpkreg, iup, 'PHY');
-                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackpkreg, iup, 'NAT');
+                // debug(trackSectionswidth);
+                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackSectionswidth, trackpkreg, iup, 'PHY');
+                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackSectionswidth, trackpkreg, iup, 'NAT');
                 resolve([tgphys, tgnats, bridgesTrackPhy, bridgesTrackNat, culvertsTrackPhy, culvertsTrackNat, geotsTrackPhy, geotsTrackNat]);
             })
         }));
@@ -1317,8 +1459,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 ret['schedphy'].push(gt);
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var sphy = new Schedulephy();
-                    sphy.properties = {};
-                    sphy.properties['code'] = gt;
+                    sphy.properties = Object.assign({}, gt);
+                    // sphy.properties['code'] = gt.code;
                     sphy.type = 'PAVEMENTS';
                     sphy.config = {};
                     sphy.config['color'] = 'grey';
@@ -1340,8 +1482,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var snat = new Schedulenat();
-                    snat.properties = {};
-                    snat.properties['code'] = gt;
+                    snat.properties = Object.assign({}, gt);
+                    // snat.properties['code'] = gt.code;
                     snat.type = 'PAVEMENTS';
                     snat.config = {};
                     snat.config['color'] = 'grey';
@@ -1363,8 +1505,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 ret['schedphy'].push(gt);
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var sphy = new Schedulephy();
-                    sphy.properties = {};
-                    sphy.properties['code'] = gt;
+                    sphy.properties = Object.assign({}, gt);
+                    // sphy.properties['code'] = gt.code;
                     sphy.type = 'BRIDGES';
                     sphy.config = {};
                     sphy.config['color'] = '#ff00aa';
@@ -1386,8 +1528,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var snat = new Schedulenat();
-                    snat.properties = {};
-                    snat.properties['code'] = gt;
+                    snat.properties = Object.assign({}, gt);
+                    // snat.properties['code'] = gt.code;
                     snat.type = 'BRIDGES';
                     snat.config = {};
                     snat.config['color'] = '#ff00aa';
@@ -1407,8 +1549,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 ret['schedphy'].push(gt);
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var sphy = new Schedulephy();
-                    sphy.properties = {};
-                    sphy.properties['code'] = gt;
+                    sphy.properties = Object.assign({}, gt);
+                    // sphy.properties['code'] = gt.code;
                     sphy.type = 'CULVERTS';
                     sphy.config = {};
                     sphy.config['color'] = 'blue';
@@ -1430,8 +1572,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var snat = new Schedulenat();
-                    snat.properties = {};
-                    snat.properties['code'] = gt;
+                    snat.properties = Object.assign({}, gt);
+                    // snat.properties['code'] = gt.code;
                     snat.type = 'CULVERTS';
                     snat.config = {};
                     snat.config['color'] = 'blue';
@@ -1448,11 +1590,13 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 }));
             }
             for (var gt of val[6]) {
+                // debug(gt);
+
                 ret['schedphy'].push(gt);
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var sphy = new Schedulephy();
-                    sphy.properties = {};
-                    sphy.properties['code'] = gt;
+                    sphy.properties = Object.assign({}, gt);
+                    // sphy.properties['code'] = gt.code;
                     sphy.type = 'GEOT';
                     sphy.config = {};
                     sphy.config['color'] = 'green';
@@ -1474,8 +1618,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 arrPromises2.push(new Promise(function (resolve, reject) {
                     var snat = new Schedulenat();
-                    snat.properties = {};
-                    snat.properties['code'] = gt;
+                    snat.properties = Object.assign({}, gt);
+                    // snat.properties['code'] = gt.code;
                     snat.type = 'GEOT';
                     snat.config = {};
                     snat.config['color'] = 'green';
