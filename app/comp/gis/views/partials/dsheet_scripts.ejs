@@ -14,16 +14,11 @@
             $('#divmap1').show();
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
-                $('#divmap1').prepend(gen_data.join(''));
-
-                $('#generaldatatbody').append('<form method="post" enctype="multipart/form-data"><div><label for="file">');
-                $('#generaldatatbody').append('Please, choose file to upload');
-                $('#generaldatatbody').append('</label><input type="file" id="file" name="file" multiple></div><div><button>Submit</button></div></form>');
-
-                $('#generaldatadiv').show();
+                $('#divmap1').prepend(file_data.join(''));
+                $('#filedatadiv').show();
 
             } else {
-                $('#generaldatadiv').hide();
+                $('#filedatadiv').hide();
 
             }
         });
