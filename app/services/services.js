@@ -171,10 +171,11 @@ exports.roundValuePerCent = function (value, decimals) {
     }
 };
 
-exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackpkreg, iup, type) {
+exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackSectionswidth, trackpkreg, iup, type) {
     var tracksnamessche = [];
     var antsect = mathjs.mode(trackSections[0])[0];
     var antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
+    var antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
     var pkiniant = trackpkreg[0][0];
     var pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
     var pkini;
@@ -189,6 +190,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             antsect = mathjs.mode(trackSections[0])[0];
             // debug('antsect ' + antsect);
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
+            antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
+
             pkiniant = trackpkreg[0][0];
             pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
             pkini = pkiniant / 1000;
@@ -209,7 +212,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                 //debug(tracknamesche);
                 tracksnamessche.push({
                     code: tracknamesche,
-                    length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000
+                    length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
+                    width: antmaxwidth
                 });
                 // //debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__R'+type+'-' + antsect + '__COND-' + antcond;
                 pkini = trackpkreg[ts][0] / 1000;
@@ -226,6 +230,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             }
             antsect = mathjs.mode(trackSections[ts])[0];
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]);
+            antmaxwidth = trackSectionswidth[ts].length > 0 ? mathjs.max(trackSectionswidth[ts]) : 0;
+
             // pkfin = trackpkreg[ts - 1][trackpkreg[ts - 1].length - 1];
 
         }
@@ -237,7 +243,9 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
     tracksnamessche.push({
         code: tracknamesche,
-        length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000
+        length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
+        width: antmaxwidth
+
     });
 
     return tracksnamessche;

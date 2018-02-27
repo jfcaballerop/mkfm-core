@@ -67,21 +67,23 @@
                         var i = -1;
                         html[++i] = '<div class="radio">' +
                             '  <label class="radio-inline">' +
-                            '    <input type="radio" name="optionsRadios" id="radio_phy" value="radio_phy" checked=""> Physical' +
+                            '    <input type="radio" name="optionsRadiosRisk" id="radio_phy" value="radio_phy" checked=""> Physical' +
                             '  </label>' +
                             '';
                         html[++i] = '' +
                             '  <label class="radio-inline">' +
-                            '    <input type="radio" name="optionsRadios" id="radio_nat" value="radio_nat" > Natural' +
+                            '    <input type="radio" name="optionsRadiosRisk" id="radio_nat" value="radio_nat" > Natural' +
                             '  </label>' +
                             '</div>';
 
                         html[++i] =
                             '<div id="div_formulas_tracks_risk_phy" ><table id="table_formulas_tracks_risk_phy" class="table table-bordered table-striped table-condensed">' +
-                            ' <thead><tr><th>CODE RISK PHYSICAL</th><th>Length (m)</th></tr></thead><tbody>';
+                            ' <thead><tr><th>CODE RISK PHYSICAL</th><th>Length (m)</th>' +
+                            '<th>Width (m)</th><th>Height (m)</th></tr></thead><tbody>';
                         for (var d of data) {
                             html[++i] = '<tr><td>' + d.code + '</td><td>' + Math.round(d.length * 100) / 100 +
-                                '</td></tr>';
+                                '</td><td>' + (d.width !== undefined ? d.width : '--') + '</td>';
+                            html[++i] = '<td>' + (d.height !== undefined ? d.height : '--') + '</td></tr>';
                         }
                         html[++i] = '</tbody></table></div>';
 
@@ -89,10 +91,13 @@
                         data2 = values[0].schednat;
                         html[++i] =
                             '<div id="div_formulas_tracks_risk_nat" style="display:none"><table id="table_formulas_tracks_risk_nat" class="table table-bordered table-striped table-condensed" > ' +
-                            '<thead><tr><th>CODE RISK NATURAL</th><th>Length (m)</th></tr></thead><tbody>';
+                            '<thead><tr><th>CODE RISK NATURAL</th><th>Length (m)</th>' +
+                            '<th>Width (m)</th><th>Height (m)</th></tr></thead><tbody>';
                         for (var d of data2) {
                             html[++i] = '<tr><td>' + d.code + '</td><td>' + Math.round(d.length * 100) / 100 +
-                                '</td></tr>';
+                                '</td><td>' + (d.width !== undefined ? d.width : '--') + '</td>';
+                            html[++i] = '<td>' + (d.height !== undefined ? d.height : '--') + '</td></tr>';
+
                         }
                         html[++i] = '</tbody></table></div>';
 
@@ -512,9 +517,9 @@
         });
         var checkExist = setInterval(function () {
             if ($('#div_formulas_tracks_risk_nat').length) {
-                // console.log("Exists!");
+                console.log("Exists!");
                 clearInterval(checkExist);
-                $('input[name=optionsRadios').change(function () {
+                $('input[name=optionsRadiosRisk').change(function () {
                     if ($(this).val() === 'radio_nat') {
                         $('#div_formulas_tracks_risk_phy').hide();
                         $('#div_formulas_tracks_risk_nat').show();
