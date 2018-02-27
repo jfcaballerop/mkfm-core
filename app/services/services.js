@@ -207,7 +207,10 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                 tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
                     '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
                 //debug(tracknamesche);
-                tracksnamessche.push(tracknamesche);
+                tracksnamessche.push({
+                    code: tracknamesche,
+                    length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000
+                });
                 // //debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__R'+type+'-' + antsect + '__COND-' + antcond;
                 pkini = trackpkreg[ts][0] / 1000;
                 pkfin = trackpkreg[ts][trackpkreg[ts].length - 1] / 1000;
@@ -232,7 +235,10 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
     // //debug(tracknamesche + '-');
     tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
         '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
-    tracksnamessche.push(tracknamesche);
+    tracksnamessche.push({
+        code: tracknamesche,
+        length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000
+    });
 
     return tracksnamessche;
 }
