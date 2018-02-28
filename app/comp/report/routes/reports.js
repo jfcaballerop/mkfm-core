@@ -352,7 +352,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                             nfotos++;
                             temp.config.fields.push(jsontoput4);
                             arrayJsonProp.push(jsontoput4);
-                            debug(jsontoput4);
+                            // debug(jsontoput4);
                         }
                         if (kobo !== null && kobo !== undefined && kobo !== '') {
                             if (variables[v].indexOf('img') > -1) {
