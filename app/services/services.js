@@ -133,8 +133,8 @@ exports.docPdf = function (docDefinition, config, dbfields, temp) {
 
         } else if (f.type === 'dbfield') {
             evaluation = eval('dbfields.' + f.value);
-            // debug(evaluation);
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
+            debug('dbfields.' + f.value + '    ' + evaluation);
+            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2',''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
         } else if (f.type === 'map') {
             doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, '../../public/media/', (f.path), f.value)));
         } else {
