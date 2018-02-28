@@ -214,11 +214,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var assetType = req.params.assetType.replace(/%20/g, " ");
         var textToRender = '';
         // asscode = "F6-SD-06-B-3585";
+        debug('asscode');
+        debug(asscode);
         code = '/' + asscode + '/';
         assetCode = "bcode";
         Infodatatrack.findOne({
             $or: [{
-                "properties.rcode": req.params.assetCode
+                    "properties.rcode": req.params.assetCode
                 },
                 {
                     "properties.rname": req.params.assetCode
@@ -271,7 +273,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 ifdt.properties[variables[v]] !== undefined &&
                                 ifdt.properties[assetCode][i] !== undefined &&
                                 ifdt.properties[variables[v]][i] !== undefined) {
-
                                 // &&
                                 // ifdt.properties['koboedit'][i]['kobo_id'] !== ''
                                 assetIndex = i;
@@ -298,8 +299,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 // debug('************************************   ' + i + '    ' + ifdt.properties['koboedit'][i]['kobo_id']);
                                 if (
                                     ifdt.properties['koboedit'] !== undefined &&
-                                    ifdt.properties['koboedit'][i] !== undefined){
-                                        valkoboid = ifdt.properties['koboedit'][i]['kobo_id'];
+                                    ifdt.properties['koboedit'][i] !== undefined) {
+                                    valkoboid = ifdt.properties['koboedit'][i]['kobo_id'];
                                 }
                             }
                         }
@@ -319,6 +320,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     k = 0;
                     for (v in variables) {
 
+
                         if (variables[v].indexOf('ogo') > -1) {
                             k++ % logotypesArray.length;
                             k %= logotypesArray.length;
@@ -336,50 +338,84 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                             temp.config.fields.push(jsontoput2);
                             arrayJsonProp.push(jsontoput2);
                         }
-                        if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '') {
+                        if (nfotos === 0 && variables[v].indexOf('img') > -1) {
+                            var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                            // nfotos++;
+                            dbfields.properties[variables[v]] = textToRender.toString();
+                            jsontoput4['name'] = '##' + variables[v] + '##';
+                            // jsontoput2['name'] = '##img' + nfotos + '##';
+                            jsontoput4['type'] = 'map';
+                            jsontoput4['value'] = req.params.assetCode + '.jpg';
+                            jsontoput4['style'] = '';
+                            jsontoput4['path'] = 'gmaps';
+                            nfotos++;
+                            temp.config.fields.push(jsontoput4);
+                            arrayJsonProp.push(jsontoput4);
+                            debug(jsontoput4);
+                        }
+                        if (kobo !== null && kobo !== undefined && kobo !== '') {
                             if (variables[v].indexOf('img') > -1) {
-                                // debug(kobo.properties);
-                                if (kobo.properties._attachments !== undefined &&
-                                    kobo.properties._attachments.length > 0 &&
-                                    nfotos < kobo.properties._attachments.length) {
-                                    var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                    file = kobo.properties._attachments[nfotos].split("/")[kobo.properties._attachments[nfotos].split("/").length - 1];
-                                    file = file.split('.')[0] + '-small.' + file.split('.')[1];
-                                    address = kobo.properties._attachments[nfotos].split('/').slice(2, kobo.properties._attachments[nfotos].split('/').length - 1);
-                                    nfotos++;
-                                    dbfields.properties[variables[v]] = textToRender.toString();
-                                    jsontoput2['name'] = '##' + variables[v] + '##';
-                                    // jsontoput2['name'] = '##img' + nfotos + '##';
-                                    jsontoput2['type'] = 'img';
-                                    jsontoput2['value'] = file;
-                                    jsontoput2['style'] = '';
-                                    jsontoput2['path'] = address.join('/');
+                                if (nfotos === 0 &&
+                                    kobo.properties !== undefined &&
+                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {} else {
+                                    if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '' &&
+                                        kobo.properties !== undefined && kobo.properties !== null &&
+                                        dbfields.properties !== undefined && dbfields.properties !== null &&
+                                        kobo.properties._attachments !== undefined &&
+                                        kobo.properties._attachments.length > 0 &&
+                                        nfotos <= kobo.properties._attachments.length) {
+                                        var jsontoput2 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                                        file = kobo.properties._attachments[nfotos - 1].split("/")[kobo.properties._attachments[nfotos - 1].split("/").length - 1];
+                                        file = file.split('.')[0] + '-small.' + file.split('.')[1];
+                                        address = kobo.properties._attachments[nfotos - 1].split('/').slice(2, kobo.properties._attachments[nfotos - 1].split('/').length - 1);
+                                        nfotos++;
+                                        dbfields.properties[variables[v]] = textToRender.toString();
+                                        jsontoput2['name'] = '##' + variables[v] + '##';
+                                        // jsontoput2['name'] = '##img' + nfotos + '##';
+                                        jsontoput2['type'] = 'img';
+                                        jsontoput2['value'] = file;
+                                        jsontoput2['style'] = '';
+                                        jsontoput2['path'] = address.join('/');
+                                        temp.config.fields.push(jsontoput2);
+                                        arrayJsonProp.push(jsontoput2);
+                                    } else {
+                                        if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
+                                            var jsontoput3 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                                            dbfields.properties[variables[v]] = textToRender.toString();
+                                            jsontoput3['name'] = '##' + variables[v] + '##';
+                                            jsontoput3['type'] = 'img';
+                                            jsontoput3['value'] = '';
+                                            jsontoput3['style'] = '';
+                                            jsontoput3['path'] = '';
 
-                                    temp.config.fields.push(jsontoput2);
-                                    arrayJsonProp.push(jsontoput2);
-                                } else {
+                                            temp.config.fields.push(jsontoput3);
+                                            arrayJsonProp.push(jsontoput3);
+                                        }
+                                    }
                                 }
                             }
-                        } else {
-                            if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
-                                var jsontoput3 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                dbfields.properties[variables[v]] = textToRender.toString();
-                                jsontoput3['name'] = '##' + variables[v] + '##';
-                                jsontoput3['type'] = 'img';
-                                jsontoput3['value'] = '';
-                                jsontoput3['style'] = '';
-                                jsontoput3['path'] = '';
+                        } //else {
+                        //     if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
+                        //         var jsontoput3 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                        //         dbfields.properties[variables[v]] = textToRender.toString();
+                        //         jsontoput3['name'] = '##' + variables[v] + '##';
+                        //         jsontoput3['type'] = 'img';
+                        //         jsontoput3['value'] = '';
+                        //         jsontoput3['style'] = '';
+                        //         jsontoput3['path'] = '';
 
-                                temp.config.fields.push(jsontoput3);
-                                arrayJsonProp.push(jsontoput3);
-                                // S8-SG-01-CU-3020
-                            }
-                        }
+                        //         temp.config.fields.push(jsontoput3);
+                        //         arrayJsonProp.push(jsontoput3);
+                        //         // S8-SG-01-CU-3020
+                        //     }
+                        // }
+
                     }
 
 
 
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
+                    debug(arrayJsonProp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
                     }, {
@@ -390,8 +426,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         'new': true
                     }, async function (err, doc) {
                         if (err) {
-                            // console.log("Something wrong when updating data!");
+                            console.log(err + " Something wrong when updating data!");
                         }
+
                     });
                     await res.status(200).jsonp(ret);
 
