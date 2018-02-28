@@ -291,10 +291,10 @@ exports.condition = function (type, formula, data) {
 
 }
 
-exports.PavementCost = function (coord1, coord2, rcondrmatcost) {
+exports.PavementCost = function (coord1, coord2, rcondrmatcost, rwidth) {
     var ret = 0;
     var dist = services.calDIST(coord1, coord2);
-    ret = dist * rcondrmatcost;
+    ret = dist * rwidth * rcondrmatcost;
 
     // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
     return ret;

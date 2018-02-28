@@ -67,3 +67,9 @@ public/media
 # vscode
 .vscode
 .vscode/*
+/find_pictures.js
+/find_pictures_road.js
+/gmaps.sh
+/gmaps10.sh
+/google_images.tar
+/my_archive
