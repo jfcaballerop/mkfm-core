@@ -214,6 +214,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var assetType = req.params.assetType.replace(/%20/g, " ");
         var textToRender = '';
         // asscode = "F6-SD-06-B-3585";
+        debug('asscode');
+        debug(asscode);
         code = '/' + asscode + '/';
         assetCode = "bcode";
         Infodatatrack.findOne({
@@ -336,27 +338,26 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                             temp.config.fields.push(jsontoput2);
                             arrayJsonProp.push(jsontoput2);
                         }
-                                if (nfotos === 0 && variables[v].indexOf('img') > -1) {
-                                    var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                    // nfotos++;
-                                    dbfields.properties[variables[v]] = textToRender.toString();
-                                    jsontoput4['name'] = '##' + variables[v] + '##';
-                                    // jsontoput2['name'] = '##img' + nfotos + '##';
-                                    jsontoput4['type'] = 'map';
-                                    jsontoput4['value'] = req.params.assetCode + '.jpg';
-                                    jsontoput4['style'] = '';
-                                    jsontoput4['path'] = 'gmaps';
-                                    nfotos++;
-                                    temp.config.fields.push(jsontoput4);
-                                    arrayJsonProp.push(jsontoput4);
-                                    debug(jsontoput4);
-                                }
+                        if (nfotos === 0 && variables[v].indexOf('img') > -1) {
+                            var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                            // nfotos++;
+                            dbfields.properties[variables[v]] = textToRender.toString();
+                            jsontoput4['name'] = '##' + variables[v] + '##';
+                            // jsontoput2['name'] = '##img' + nfotos + '##';
+                            jsontoput4['type'] = 'map';
+                            jsontoput4['value'] = req.params.assetCode + '.jpg';
+                            jsontoput4['style'] = '';
+                            jsontoput4['path'] = 'gmaps';
+                            nfotos++;
+                            temp.config.fields.push(jsontoput4);
+                            arrayJsonProp.push(jsontoput4);
+                            debug(jsontoput4);
+                        }
                         if (kobo !== null && kobo !== undefined && kobo !== '') {
                             if (variables[v].indexOf('img') > -1) {
-                                if (nfotos === 0 && 
-                                    kobo.properties !== undefined && 
-                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {
-                                } else {
+                                if (nfotos === 0 &&
+                                    kobo.properties !== undefined &&
+                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {} else {
                                     if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '' &&
                                         kobo.properties !== undefined && kobo.properties !== null &&
                                         dbfields.properties !== undefined && dbfields.properties !== null &&
@@ -414,6 +415,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
 
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
+                    debug(arrayJsonProp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
                     }, {
@@ -424,8 +426,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         'new': true
                     }, async function (err, doc) {
                         if (err) {
-                            // console.log("Something wrong when updating data!");
+                            console.log(err + " Something wrong when updating data!");
                         }
+
                     });
                     await res.status(200).jsonp(ret);
 
