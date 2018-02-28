@@ -426,6 +426,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
                     // debug('temp.name:  ' + temp.name);
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
+                    debug(arrayJsonProp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
                     }, {
@@ -436,8 +437,9 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                         'new': true
                     }, async function (err, doc) {
                         if (err) {
-                            // console.log("Something wrong when updating data!");
+                            console.log(err + " Something wrong when updating data!");
                         }
+
                     });
                     await res.status(200).jsonp(ret);
 
