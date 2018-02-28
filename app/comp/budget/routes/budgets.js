@@ -999,6 +999,11 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.rmaterial": 1,
             "properties.rinvestmentrequired": 1,
             "properties.rwidth": 1,
+            "properties.bcondition": 1,
+            "properties.bcode": 1,
+            "properties.binvestmentrequired": 1,
+            "properties.bwidth": 1,
+            "properties.btype": 1,
             "geometry.coordinates": 1
         }).exec(async function (err, ifdts) {
             if (err) {
@@ -1010,6 +1015,10 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 // debug(ifdt.properties.rcondition.length);
                 // debug(ifdt.properties.rmaterial);
                 // debug(ifdt.properties.rmaterial.length);
+                var existsbcode = false;
+                var existsCcode = false;
+                var existsgcode = false;
+                var existsgcode2 = false;
                 var rcosts = [];
                 var bcosts = [];
                 rcosts[0] = 0;
@@ -1017,7 +1026,65 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     var bcost = 0;
-                    // TODO: Terminar los Assets para Bridges, Culverts, Geot
+                    /**
+                     *  Revisamos que exista el código del asset
+                     * */
+                    if (ifdt.properties.bcode !== undefined && ifdt.properties.bcode !== [] && ifdt.properties.bcode.length > 0 &&
+                        ifdt.properties.bcode[i] !== undefined && ifdt.properties.bcode[i] !== null && ifdt.properties.bcode[i] !== "") {
+                        existsbcode = true;
+                    }
+                    if (ifdt.properties.Ccode !== undefined && ifdt.properties.Ccode !== [] && ifdt.properties.Ccode.length > 0 &&
+                        ifdt.properties.Ccode[i] !== undefined && ifdt.properties.Ccode[i] !== null && ifdt.properties.Ccode[i] !== "") {
+                        existsCcode = true;
+                    }
+                    if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] && ifdt.properties.gcode.length > 0 &&
+                        ifdt.properties.gcode[i] !== undefined && ifdt.properties.gcode[i] !== null && ifdt.properties.gcode[i] !== "") {
+                        existsgcode = true;
+                    }
+                    if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
+                        ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                        existsgcode2 = true;
+                    }
+                    if (existsbcode) {
+
+
+                        // debug('BRIDGES');
+                        if (ifdt.properties.bcondition !== undefined && ifdt.properties.bcondition.length > 0 && ifdt.properties.bcondition[i] !== '' &&
+                            ifdt.properties.bwidth !== undefined && ifdt.properties.bwidth.length > 0 && ifdt.properties.bwidth[i] !== '' &&
+                            ifdt.properties.btype !== undefined && ifdt.properties.btype.length > 0 && ifdt.properties.btype[i] !== '') {
+                            var indexmat = c.Bridges.material.indexOf(ifdt.properties.btype[i]);
+                            // debug(ifdt.properties.btype[i] + ' ' + indexmat);
+                            if (indexmat >= 0) {
+                                switch (formulasService.ConditionRating(ifdt.properties.bcondition[i])) {
+                                    case 'E':
+                                        bcost = c.Bridges.value1[indexmat];
+                                        break;
+                                    case 'D':
+                                        bcost = c.Bridges.value2[indexmat];
+                                        break;
+                                    case 'C':
+                                        bcost = c.Bridges.value3[indexmat];
+                                        break;
+                                    case 'B':
+                                        bcost = c.Bridges.value4[indexmat];
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            } else {
+                                bcost = 0;
+                            }
+                            bcosts[i] = formulasService.BridgesCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], bcost, ifdt.properties.bwidth[i]);
+                        } else {
+                            bcosts[i] = "";
+                        }
+                    }
+                    if (existsCcode) {}
+                    if (existsgcode) {}
+                    if (existsgcode2) {}
+
+
                     if (ifdt.properties.rcondition !== undefined && ifdt.properties.rcondition.length > 0 &&
                         ifdt.properties.rmaterial !== undefined && ifdt.properties.rmaterial.length > 0 &&
                         ifdt.properties.rmaterial[i] !== '') {
@@ -1056,7 +1123,8 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 };
                 var query = {
                     $set: {
-                        "properties.rinvestmentrequired": rcosts
+                        "properties.rinvestmentrequired": rcosts,
+                        "properties.binvestmentrequired": bcosts
                     }
                 };
                 await Infodatatrack.update(conditions, query, function (err, iup) {
