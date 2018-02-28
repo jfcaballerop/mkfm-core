@@ -9,13 +9,38 @@
 
     $(document).ready(function() {
 
+
+        $("form").submit(function(evt) {
+            evt.preventDefault();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                    url: '/auth/WEB/gis/uploadDataSheet',
+                    type: 'POST',
+                    data: formData,
+                    // async: false,
+                    cache: false,
+                    contentType: 'application/json',
+                    // enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function(response) {
+                        alert(JSON.stringify(response));
+                    }
+                },
+                function(data) {
+                    alert(SON.stringify(data));
+                });
+            return false;
+        });
+
         $('#generaldataupload').click(function() {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
+
                 $('#divmap1').prepend(file_list.join(''));
                 $('#divmap1').prepend(file_data.join(''));
+
                 $('#filedatadiv').show();
 
             } else {
