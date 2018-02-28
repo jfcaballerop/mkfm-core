@@ -622,8 +622,10 @@
                 $("#inventorydata").prop("checked", false);
                 $("#operation").prop("checked", false);
                 $("#risk").prop("checked", false);
-                $('#datainfo').show();
-                $('#dataupload').show();
+                // $('#datainfo').show();
+                // $('#dataupload').show();
+                $('#datainfo').hide();
+                $('#dataupload').hide();
 
                 var dataPost = {};
 
@@ -636,6 +638,8 @@
                 } else {
 
 
+                    // $('#datainfo').show();
+                    // $('#dataupload').show();
                     var p1 = $.ajax({
                         url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
                         data: JSON.stringify(dataPost),
@@ -657,6 +661,8 @@
                         ifdt = values[0];
                         //console.log(ifdt);
                         if (ifdt.properties.asset_type === 'ERROR') {
+                            $('#datainfo').hide();
+                            $('#dataupload').hide();
                             $('#error').show();
                             $('#error').append("Search not found.<br>Try again.");
                             map.setCenter(new google.maps.LatLng(15.41, -61.32));
@@ -664,6 +670,8 @@
                             map.setZoom(11);
 
                         } else {
+                            $('#datainfo').show();
+                            $('#dataupload').show();
                             if (ifdt.properties.asset_type === 'ROAD') {
                                 $('#response').empty();
                                 $('#response').show();
@@ -787,8 +795,8 @@
 
             var $this = $(this);
 
-            $('#datainfo').show();
-            $('#dataupload').show();
+            $('#datainfo').hide();
+            $('#dataupload').hide();
             if (nchar == 0 && !resized) {
                 nchar = $this.val().length;
                 $("#divmap2").animate({
@@ -807,8 +815,6 @@
                         map.panTo(new google.maps.LatLng(15.41, -61.32));
                         //// console.log(map.getCenter());
                     }
-                    $('#datainfo').show();
-                    $('#dataupload').show();
 
                 });
             } else {
@@ -824,6 +830,8 @@
 
         $("#upload_file_form").bind("submit", function() {
             // above check 
+            $('#datainfo').show();
+            $('#dataupload').show();
             var ext = $('#file_upload').val().split('.').pop().toLowerCase();
             var ext_sel = $('#type_file').val();
 
