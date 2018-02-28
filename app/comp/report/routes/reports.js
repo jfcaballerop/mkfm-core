@@ -255,7 +255,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
             if (ifdt !== null) {
                 for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
                     if ((ifdt.properties.rcode[i] === req.params.assetCode ||
-                            ifdt.properties.rname[i] === req.params.assetCode ||
                             ifdt.properties.bcode[i] === req.params.assetCode ||
                             ifdt.properties.bname[i] === req.params.assetCode ||
                             ifdt.properties.gcode[i] === req.params.assetCode ||
@@ -289,7 +288,13 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 dbfields.properties[variables[v]] = textToRender.toString();
                                 jsontoput['name'] = '##' + variables[v] + '##';
                                 jsontoput['type'] = 'dbfield';
-                                jsontoput['value'] = 'properties.' + variables[v];
+                                if ((variables[v] === 'gcode' || variables[v] === 'dcode') &&
+                                    (ifdt.properties.gcode2[i] === req.params.assetCode ||
+                                        ifdt.properties.dcode2[i] === req.params.assetCode)) {
+                                    jsontoput['value'] = 'properties.' + variables[v] + '2';
+                                } else {
+                                    jsontoput['value'] = 'properties.' + variables[v];
+                                }
                                 temp.config.fields.push(jsontoput);
                                 // debug('jsontoput:    ' + JSON.stringify(jsontoput))
                                 arrayJsonProp.push(jsontoput);
@@ -317,8 +322,6 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     logotypesArray = ["Dominica_logo.png", "world_bank_logo.jpg"];
                     k = 0;
                     for (v in variables) {
-
-
                         if (variables[v].indexOf('ogo') > -1) {
                             k++ % logotypesArray.length;
                             k %= logotypesArray.length;
@@ -336,27 +339,26 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                             temp.config.fields.push(jsontoput2);
                             arrayJsonProp.push(jsontoput2);
                         }
-                                if (nfotos === 0 && variables[v].indexOf('img') > -1) {
-                                    var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
-                                    // nfotos++;
-                                    dbfields.properties[variables[v]] = textToRender.toString();
-                                    jsontoput4['name'] = '##' + variables[v] + '##';
-                                    // jsontoput2['name'] = '##img' + nfotos + '##';
-                                    jsontoput4['type'] = 'map';
-                                    jsontoput4['value'] = req.params.assetCode + '.jpg';
-                                    jsontoput4['style'] = '';
-                                    jsontoput4['path'] = 'gmaps';
-                                    nfotos++;
-                                    temp.config.fields.push(jsontoput4);
-                                    arrayJsonProp.push(jsontoput4);
-                                    debug(jsontoput4);
-                                }
+                        if (nfotos === 0 && variables[v].indexOf('img') > -1) {
+                            var jsontoput4 = JSON.parse(JSON.stringify(temp.config.fields[0]));
+                            // nfotos++;
+                            dbfields.properties[variables[v]] = textToRender.toString();
+                            jsontoput4['name'] = '##' + variables[v] + '##';
+                            // jsontoput2['name'] = '##img' + nfotos + '##';
+                            jsontoput4['type'] = 'map';
+                            jsontoput4['value'] = req.params.assetCode + '.jpg';
+                            jsontoput4['style'] = '';
+                            jsontoput4['path'] = 'gmaps';
+                            nfotos++;
+                            temp.config.fields.push(jsontoput4);
+                            arrayJsonProp.push(jsontoput4);
+                            debug(jsontoput4);
+                        }
                         if (kobo !== null && kobo !== undefined && kobo !== '') {
                             if (variables[v].indexOf('img') > -1) {
-                                if (nfotos === 0 && 
-                                    kobo.properties !== undefined && 
-                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {
-                                } else {
+                                if (nfotos === 0 &&
+                                    kobo.properties !== undefined &&
+                                    kobo.properties._attachments !== undefined && dbfields.properties !== null) {} else {
                                     if (valkoboid !== undefined && valkoboid !== null && valkoboid !== '' &&
                                         kobo.properties !== undefined && kobo.properties !== null &&
                                         dbfields.properties !== undefined && dbfields.properties !== null &&
@@ -393,7 +395,17 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                     }
                                 }
                             }
-                        } //else {
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        //else {
                         //     if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
                         //         var jsontoput3 = JSON.parse(JSON.stringify(temp.config.fields[0]));
                         //         dbfields.properties[variables[v]] = textToRender.toString();
@@ -412,7 +424,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                     }
 
 
-
+                    // debug('temp.name:  ' + temp.name);
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
