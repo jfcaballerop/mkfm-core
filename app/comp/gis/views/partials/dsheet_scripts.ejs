@@ -9,16 +9,44 @@
 
     $(document).ready(function() {
 
+
+        $("form").submit(function(evt) {
+            evt.preventDefault();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                    url: '/auth/WEB/gis/uploadDataSheet',
+                    type: 'POST',
+                    data: formData,
+                    // async: false,
+                    cache: false,
+                    contentType: 'application/json',
+                    // enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function(response) {
+                        alert(JSON.stringify(response));
+                    }
+                },
+                function(data) {
+                    alert(SON.stringify(data));
+                });
+            return false;
+        });
+
         $('#generaldataupload').click(function() {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
+
+                $('#divmap1').html(file_list.join(''));
                 $('#divmap1').prepend(file_data.join(''));
+
                 $('#filedatadiv').show();
 
             } else {
                 $('#filedatadiv').hide();
+                $('#divmap1').hide();
+                $('#divmap1').html('');
 
             }
         });
@@ -618,12 +646,15 @@
                 $("#datainfophoto").empty();
                 $("#datainfophoto").hide();
                 $('#divmap1').empty();
+                $("#generaldataupload").prop("checked", false);
                 $("#generaldata").prop("checked", false);
                 $("#inventorydata").prop("checked", false);
                 $("#operation").prop("checked", false);
                 $("#risk").prop("checked", false);
-                $('#datainfo').show();
-                $('#dataupload').show();
+                // $('#datainfo').show();
+                // $('#dataupload').show();
+                $('#datainfo').hide();
+                $('#dataupload').hide();
 
                 var dataPost = {};
 
@@ -636,6 +667,8 @@
                 } else {
 
 
+                    // $('#datainfo').show();
+                    // $('#dataupload').show();
                     var p1 = $.ajax({
                         url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
                         data: JSON.stringify(dataPost),
@@ -657,6 +690,8 @@
                         ifdt = values[0];
                         //console.log(ifdt);
                         if (ifdt.properties.asset_type === 'ERROR') {
+                            $('#datainfo').hide();
+                            $('#dataupload').hide();
                             $('#error').show();
                             $('#error').append("Search not found.<br>Try again.");
                             map.setCenter(new google.maps.LatLng(15.41, -61.32));
@@ -664,6 +699,8 @@
                             map.setZoom(11);
 
                         } else {
+                            $('#datainfo').show();
+                            $('#dataupload').show();
                             if (ifdt.properties.asset_type === 'ROAD') {
                                 $('#response').empty();
                                 $('#response').show();
@@ -787,8 +824,9 @@
 
             var $this = $(this);
 
-            $('#datainfo').show();
-            $('#dataupload').show();
+            $("#generaldataupload").prop("checked", false);
+            $('#datainfo').hide();
+            $('#dataupload').hide();
             if (nchar == 0 && !resized) {
                 nchar = $this.val().length;
                 $("#divmap2").animate({
@@ -807,8 +845,6 @@
                         map.panTo(new google.maps.LatLng(15.41, -61.32));
                         //// console.log(map.getCenter());
                     }
-                    $('#datainfo').show();
-                    $('#dataupload').show();
 
                 });
             } else {
@@ -824,6 +860,8 @@
 
         $("#upload_file_form").bind("submit", function() {
             // above check 
+            $('#datainfo').show();
+            $('#dataupload').show();
             var ext = $('#file_upload').val().split('.').pop().toLowerCase();
             var ext_sel = $('#type_file').val();
 
