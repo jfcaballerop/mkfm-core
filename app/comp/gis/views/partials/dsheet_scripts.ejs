@@ -38,13 +38,15 @@
             if ($this.prop('checked')) {
                 nchar = $this.val().length;
 
-                $('#divmap1').prepend(file_list.join(''));
+                $('#divmap1').html(file_list.join(''));
                 $('#divmap1').prepend(file_data.join(''));
 
                 $('#filedatadiv').show();
 
             } else {
                 $('#filedatadiv').hide();
+                $('#divmap1').hide();
+                $('#divmap1').html('');
 
             }
         });
