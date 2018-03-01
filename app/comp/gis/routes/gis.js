@@ -229,87 +229,40 @@ router.get('/uploadDataSheet', function (req, resp, next) {
 /* UPLOAD File.*/
 var uploading = multer({ dest: path.join(process.env.PWD, '/public/uploads/') }).single('file');
 router.post('/uploadDataSheet', uploading, function (req, resp) {
-    // Obtengo la lista de extensiones de ficheros
-    var ft_options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/filetype/V1/',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var requestft = http.request(ft_options, function (res) {
-        ////// console.log('STATUS: ' + res.statusCode);
-        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            ////// console.log('BODY: ' + chunk);
-            data += chunk;
+        // var postData = extend({}, req.file);
+        // postData.owner = req.user_login;
+        // postData.type = req.body.type;
+        // postData.status = 'pending';
 
-        });
-        res.on('end', function () {
-            ////// console.log('DATA ' + data.length + ' ' + data);
-            filetypesObject = JSON.parse(data);
-            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            //resp.status(200).jsonp(filetypesObject);
-        });
-    });
-    requestft.end();
+        // ////// console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
+        // var options = {
+        //     host: config.HOST_API,
+        //     port: config.PORT_API,
+        //     path: config.PATH_API + '/gis/V1/fileupload/',
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+        //         'Authorization': 'Bearer ' + req.cookies.jwtToken
+        //     }
+        // };
+    // var request = http.request(options, function (res) {
+    //     res.setEncoding('utf8');
+    //     var data = '';
+    //     res.on('data', function (chunk) {
+    //         //// debug('BODY: ' + chunk);
+    //         data += chunk;
 
-    ////// console.log('## upload:: ');
-    if (!req.file)
-        return resp.status(400).send('No files were uploaded.');
-    else {
-        ////// console.log(req.body); //form fields
-        ////// console.log(req.file); //form files
-        // SAVE File to DB
-        var postData = extend({}, req.file);
-        postData.owner = req.user_login;
-        postData.type = req.body.type;
-        postData.status = 'pending';
+    //     });
+        // res.on('end', function () {
+            // var responseObject = JSON.parse(data);
+            resp.status(200).jsonp({msg:'Hola manola'});
 
-        ////// console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
-        var options = {
-            host: config.HOST_API,
-            port: config.PORT_API,
-            path: config.PATH_API + '/gis/V1/fileupload/',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-                'Authorization': 'Bearer ' + req.cookies.jwtToken
-            }
-        };
-        var request = http.request(options, function (res) {
-            // ////// console.log('STATUS: ' + res.statusCode);
-            // ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-            res.setEncoding('utf8');
-            var data = '';
-            res.on('data', function (chunk) {
-                // ////// console.log('BODY: ' + chunk);
-                data += chunk;
-
-            });
-            res.on('end', function () {
-                // ////// console.log('DATA ' + data.length + ' ' + data);
-                var responseObject = JSON.parse(data);
-                //success(data);
-                resp.redirect('/auth/WEB/data_sheet/list_info');
-                //resp.send('File uploaded!');
-
-            });
-        });
-        request.on('error', function (err) {
-            console.error('problem with request: ${err.message}');
-        });
-        request.write(JSON.stringify(postData));
-        request.end();
-
-    }
+        // });
+    // });
+    // request.write(JSON.stringify({msg:'Pepe'}));
+    // request.end();
+    
 
 });
 /* UPLOAD File.*/

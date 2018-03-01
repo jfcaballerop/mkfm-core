@@ -52,10 +52,39 @@
 
 
                         } else {
+                            var assetType = '';
+                            switch (ifdt.properties.asset_type) {
+                                case 'BRIDGE':
+                                    assetType = 'BRIDGE';
+                                    break;
+                                case 'ROAD':
+                                    assetType = 'ROAD';
+                                    break;
+                                case 'CULVERT':
+                                    assetType = 'CULVERT';
+                                    break
+                                case 'DRAINAGE':
+                                    assetType = 'DRAINAGE (no report for this asset)';
+                                    break
+                                case 'FORD':
+                                    assetType = 'CULVERT';
+                                    break;
+                                case 'GEOT':
+                                    assetType = 'GEOTECHNICAL';
+                                    break;
+                                case 'GEOT2':
+                                    assetType = 'GEOTECHNICAL';
+                                    break;
+                                default:
+                                    break;
+                            }
+
                             $('#response').empty();
                             $('#response').show();
-                            $('#response').append("Asset type: " + ifdt.properties.asset_type);
+                            $('#response').append("Asset type: " + assetType);
                             // console.log(ifdt.properties.asset_type);
+                            console.log(ifdt.properties.gtype);
+                            console.log(ifdt.properties.gtype2);
                             switch (ifdt.properties.asset_type) {
                                 case 'BRIDGE':
                                     $(":radio[value*='RIDG']").each(function(index) {
@@ -139,7 +168,7 @@
                                     });
                                     $(":radio[value*='LVERT']").each(function(index) {
                                         $this = $(this);
-                                        $this.prop('disabled', false);
+                                        $this.prop('disabled', true);
                                     });
                                     // $(":radio*").each(function(index) {
                                     $(":radio[value*='RETA']").each(function(index) {
@@ -175,52 +204,104 @@
                                     });
                                     break;
                                 case 'GEOT':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // });
+                                    if (ifdt.properties.gtype === 'Cutting' ||
+                                        ifdt.properties.gtype2 === 'Cutting' ||
+                                        ifdt.properties.gtype === 'Embankment' ||
+                                        ifdt.properties.gtype2 === 'Embankment') {
+                                        $(":radio[value*='RIDG']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                    } else {
+                                        $(":radio[value*='RIDG']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='PAV']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                    };
                                     break;
                                 case 'GEOT2':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // });
+                                    if (ifdt.properties.gtype === 'Cutting' ||
+                                        ifdt.properties.gtype2 === 'Cutting' ||
+                                        ifdt.properties.gtype === 'Embankment' ||
+                                        ifdt.properties.gtype2 === 'Embankment') {
+                                        $(":radio[value*='RIDG']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                    } else {
+                                        $(":radio[value*='RIDG']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='PAV']").each(function(index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                    };
                                     break;
 
                                 default:

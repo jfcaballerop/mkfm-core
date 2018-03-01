@@ -99,10 +99,16 @@ exports.mergeDeep = function (obj1, obj2) {
 
 function encodeImageFileAsURL(file_path) {
 
+    var fs = require('fs');
+    pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
     var file = file_path;
+    if (fs.existsSync(file_path)) {
     var data = base64Img.base64Sync(file);
     // console.log(data);
     return data;
+    } else {
+        return pixel;
+    }
 }
 
 function getPaths(folder) {
@@ -126,8 +132,11 @@ exports.docPdf = function (docDefinition, config, dbfields, temp) {
             }
 
         } else if (f.type === 'dbfield') {
-            evaluation = eval('dbfields.' + f.value);
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
+            var evaluation = eval('dbfields.' + f.value);
+            debug('dbfields.' + f.value + '    ' + evaluation);
+            evaluation = eval('dbfields.' + f.value.replace('2', ''));
+            debug('dbfields.' + f.value.replace('2', '') + '    ' + evaluation);
+            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2',''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
         } else if (f.type === 'map') {
             doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, '../../public/media/', (f.path), f.value)));
         } else {
