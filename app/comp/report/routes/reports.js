@@ -273,7 +273,16 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 // &&
                                 // ifdt.properties['koboedit'][i]['kobo_id'] !== ''
                                 assetIndex = i;
-                                textToRender = ifdt.properties[variables[v]][i].toString();
+
+                                if ((variables[v] === 'gcode' ||
+                                    variables[v] === 'gtype' ||
+                                    variables[v] === 'dcode') &&
+                                    (ifdt.properties.gcode2[i] === req.params.assetCode ||
+                                        ifdt.properties.dcode2[i] === req.params.assetCode)) {
+                                    textToRender = ifdt.properties[variables[v] + '2'][i].toString();
+                                } else {
+                                    textToRender = ifdt.properties[variables[v]][i].toString();
+                                }
                                 // var jsontoput = JSON.parse(JSON.stringify(temp.config.fields[0]));
                                 var jsontoput = {};
                                 if (textToRender.split(".")[1] !== undefined &&
@@ -288,11 +297,16 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 dbfields.properties[variables[v]] = textToRender.toString();
                                 jsontoput['name'] = '##' + variables[v] + '##';
                                 jsontoput['type'] = 'dbfield';
-                                if ((variables[v] === 'gcode' || variables[v] === 'dcode') &&
+                                if ((variables[v] === 'gcode' ||
+                                    variables[v] === 'gtype' ||
+                                variables[v] === 'dcode') &&
                                     (ifdt.properties.gcode2[i] === req.params.assetCode ||
-                                        ifdt.properties.dcode2[i] === req.params.assetCode)) {
+                                     ifdt.properties.dcode2[i] === req.params.assetCode)) {
                                     jsontoput['value'] = 'properties.' + variables[v] + '2';
+                                    dbfields.properties[ variables[v] + '2'] = textToRender.toString();
+                                    debug(dbfields);
                                 } else {
+                                    dbfields.properties[variables[v]] = textToRender.toString();
                                     jsontoput['value'] = 'properties.' + variables[v];
                                 }
                                 temp.config.fields.push(jsontoput);
