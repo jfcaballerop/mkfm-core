@@ -1004,6 +1004,13 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.binvestmentrequired": 1,
             "properties.bwidth": 1,
             "properties.btype": 1,
+            "properties.Ccondition": 1,
+            "properties.Ccode": 1,
+            "properties.Cinvestmentrequired": 1,
+            "properties.Cwidth": 1,
+            "properties.Clength": 1,
+            "properties.Cdiameter": 1,
+            "properties.Cmaterial": 1,
             "geometry.coordinates": 1
         }).exec(async function (err, ifdts) {
             if (err) {
@@ -1021,11 +1028,14 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 var existsgcode2 = false;
                 var rcosts = [];
                 var bcosts = [];
+                var Ccosts = [];
                 rcosts[0] = 0;
                 bcosts[0] = 0;
+                Ccosts[0] = 0;
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     var bcost = 0;
+                    var Ccost = 0;
                     /**
                      *  Revisamos que exista el código del asset
                      * */
@@ -1080,7 +1090,48 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                             bcosts[i] = "";
                         }
                     }
-                    if (existsCcode) {}
+                    if (existsCcode) {
+                        // debug('CULVERT');
+                        if (ifdt.properties.Ccondition !== undefined && ifdt.properties.Ccondition.length > 0 && ifdt.properties.Ccondition[i] !== '' &&
+                            ifdt.properties.Cmaterial !== undefined && ifdt.properties.Cmaterial.length > 0 && ifdt.properties.Cmaterial[i] !== '' &&
+                            ifdt.properties.Cdiameter !== undefined && ifdt.properties.Cdiameter.length > 0 && ifdt.properties.Cdiameter[i] !== '' &&
+                            ifdt.properties.Clength !== undefined && ifdt.properties.Clength.length > 0 && ifdt.properties.Clength[i] !== ''
+                        ) {
+                            var indexmat = services.getAllIndexes(c.Culverts.material, ifdt.properties.Cmaterial[i]);
+                            // debug(ifdt.properties.Cmaterial[i]);
+                            // debug(indexmat);
+
+                            if (services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i]) > 0) {
+                                switch (formulasService.ConditionRating(ifdt.properties.Ccondition[i])) {
+                                    case 'E':
+                                        Ccost = c.Culverts.value1[indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]];
+                                        break;
+                                    case 'D':
+                                        Ccost = c.Culverts.value2[indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]];
+                                        break;
+                                    case 'C':
+                                        Ccost = c.Culverts.value3[indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]];
+                                        break;
+                                    case 'B':
+                                        Ccost = c.Culverts.value4[indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]];
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                // debug("Cdiameter: " + ifdt.properties.Cdiameter[i]);
+                                // debug("Ccondition: " + formulasService.ConditionRating(ifdt.properties.Ccondition[i]));
+                                // debug("indexmat: " + indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]);
+                                // debug(c.Culverts.material[indexmat[services.getCulvertDiameterIndex(ifdt.properties.Cdiameter[i])]] + " Cost: " + Ccost + "\n");
+                                Ccosts[i] = formulasService.CulvertsCost(ifdt.properties.Clength[i], Ccost);
+
+                            }
+
+
+
+
+                        }
+                    }
                     if (existsgcode) {}
                     if (existsgcode2) {}
 

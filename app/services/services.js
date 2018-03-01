@@ -103,9 +103,9 @@ function encodeImageFileAsURL(file_path) {
     pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
     var file = file_path;
     if (fs.existsSync(file_path)) {
-    var data = base64Img.base64Sync(file);
-    // console.log(data);
-    return data;
+        var data = base64Img.base64Sync(file);
+        // console.log(data);
+        return data;
     } else {
         return pixel;
     }
@@ -136,7 +136,7 @@ exports.docPdf = function (docDefinition, config, dbfields, temp) {
             debug('dbfields.' + f.value + '    ' + evaluation);
             evaluation = eval('dbfields.' + f.value.replace('2', ''));
             debug('dbfields.' + f.value.replace('2', '') + '    ' + evaluation);
-            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2',''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
+            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2', ''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
         } else if (f.type === 'map') {
             doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, '../../public/media/', (f.path), f.value)));
         } else {
@@ -276,4 +276,35 @@ exports.createNameSched = function (code, pkini, length, cond, risk, type) {
 
     return ret;
 
+}
+
+exports.getAllIndexes = function (arr, val) {
+    var indexes = [],
+        i;
+    for (i = 0; i < arr.length; i++)
+        if (arr[i].indexOf(val) >= 0)
+            indexes.push(i);
+    return indexes;
+}
+
+exports.getCulvertDiameterIndex = function (val) {
+    var ret = -1;
+    var numVal = parseFloat(val.toString().replace(',', '.'));
+    // debug(numVal);
+
+    if (numVal < 0.6) {
+        ret = 0;
+
+    } else if (numVal >= 0.6 && numVal < 0.9) {
+
+        ret = 1;
+    } else if (numVal >= 0.9 && numVal < 1.2) {
+
+        ret = 2;
+    } else if (numVal >= 1.2) {
+
+        ret = 3;
+    }
+    // debug("RET: " + ret);
+    return ret;
 }
