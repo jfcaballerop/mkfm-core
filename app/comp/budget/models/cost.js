@@ -42,19 +42,7 @@ var costSchema = new Schema({
         value3: [],
         value4: []
     },
-    "Longitudinal Drainage": {
-        code: [],
-        material: [],
-        unit_price: {
-            type: String,
-            default: "EC$ / lm"
-        },
-        value1: [],
-        value2: [],
-        value3: [],
-        value4: []
-    },
-    "Cuttings Embankments": {
+    "Cuttings_Embankments": {
         code: [],
         material: [],
         unit_price: {
@@ -66,7 +54,7 @@ var costSchema = new Schema({
         value3: [],
         value4: []
     },
-    "Retaining walls": {
+    "Retaining_walls": {
         code: [],
         material: [],
         unit_price: {

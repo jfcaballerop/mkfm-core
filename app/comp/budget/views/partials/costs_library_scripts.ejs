@@ -12,33 +12,48 @@
             var ass = [];
             var a = -1;
             ass[++a] += '<tr align="center">';
-            ass[++a] += '<td  colspan="7"><b>' + asset + '</b></td>';
+            ass[++a] += '<td  colspan="7"><h4><b>' + asset + '</b></h4></td>';
             ass[++a] += '</tr>';
             for (var ca = 0; ca < costLibrary[asset].code.length; ca++) {
                 ass[++a] += '<tr>';
                 ass[++a] += ' <td> ' + costLibrary[asset].code[ca] + '</td>';
-                ass[++a] += ' <td> ' + costLibrary[asset].material[ca] + '</td>';
-                ass[++a] += ' <td> ' + costLibrary[asset].unit_price + '</td>';
-                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
-                        ' ', '_') +
-                    '__' + costLibrary[asset].code[ca] + '__value1' + '" required value="' + costLibrary[asset]
-                    .value1[ca] +
-                    '" step=".01"></td>';
-                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
-                        ' ', '_') +
-                    '__' + costLibrary[asset].code[ca] + '__value2' + '" required value="' + costLibrary[asset]
-                    .value2[ca] +
-                    '" step=".01"></td>';
-                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
-                        ' ', '_') +
-                    '__' + costLibrary[asset].code[ca] + '__value3' + '" required value="' + costLibrary[asset]
-                    .value3[ca] +
-                    '" step=".01"></td>';
-                ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
-                        ' ', '_') +
-                    '__' + costLibrary[asset].code[ca] + '__value4' + '" required value="' + costLibrary[asset]
-                    .value4[ca] +
-                    '" step=".01"></td>';
+                ass[++a] += ' <td> ' + (costLibrary[asset].code[ca] !== "" ? costLibrary[asset].material[ca] :
+                        '<span style="font-weight: bold;">' + costLibrary[asset].material[ca] + "</span>") +
+                    '</td>';
+                ass[++a] += ' <td> ' + (costLibrary[asset].code[ca] !== "" ? costLibrary[asset].unit_price : "") +
+                    '</td>';
+                if (costLibrary[asset].code[ca] !== "") {
+                    ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                            ' ', '_') +
+                        '__' + costLibrary[asset].code[ca] + '__value1' + '" required value="' + costLibrary[
+                            asset]
+                        .value1[ca] +
+                        '" step=".01"></td>';
+                    ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                            ' ', '_') +
+                        '__' + costLibrary[asset].code[ca] + '__value2' + '" required value="' + costLibrary[
+                            asset]
+                        .value2[ca] +
+                        '" step=".01"></td>';
+                    ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                            ' ', '_') +
+                        '__' + costLibrary[asset].code[ca] + '__value3' + '" required value="' + costLibrary[
+                            asset]
+                        .value3[ca] +
+                        '" step=".01"></td>';
+                    ass[++a] += ' <td> <input class="form-control" type="number" name="' + asset.replace(
+                            ' ', '_') +
+                        '__' + costLibrary[asset].code[ca] + '__value4' + '" required value="' + costLibrary[
+                            asset]
+                        .value4[ca] +
+                        '" step=".01"></td>';
+                } else {
+                    ass[++a] += ' <td></td>';
+                    ass[++a] += ' <td></td>';
+                    ass[++a] += ' <td></td>';
+                    ass[++a] += ' <td></td>';
+                }
+
                 ass[++a] += '</tr>';
             }
             return ass;
@@ -62,14 +77,12 @@
                 case 'Culverts':
                     cul = paintAssetHtml('Culverts');
                     break;
-                case 'Longitudinal Drainage':
-                    dra = paintAssetHtml('Longitudinal Drainage');
+
+                case 'Cuttings_Embankments':
+                    cut = paintAssetHtml('Cuttings_Embankments');
                     break;
-                case 'Cuttings Embankments':
-                    cut = paintAssetHtml('Cuttings Embankments');
-                    break;
-                case 'Retaining walls':
-                    rw = paintAssetHtml('Retaining walls');
+                case 'Retaining_walls':
+                    rw = paintAssetHtml('Retaining_walls');
                     break;
 
                 default:
@@ -79,7 +92,7 @@
         $.merge(html, pav);
         $.merge(html, br);
         $.merge(html, cul);
-        $.merge(html, dra);
+        // $.merge(html, dra);
         $.merge(html, cut);
         $.merge(html, rw);
         $('#costLibraryTable').append(html.join(""));
