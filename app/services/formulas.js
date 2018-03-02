@@ -300,6 +300,33 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost, rwidth) {
     return ret;
 
 }
+exports.BridgesCost = function (coord1, coord2, bcondrmatcost, bwidth) {
+    var ret = 0;
+    var dist = services.calDIST(coord1, coord2);
+    ret = dist * bwidth * bcondrmatcost;
+
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    return ret;
+
+}
+exports.CulvertsCost = function (length, Ccondrmatcost) {
+    var ret = 0;
+    // var dist = services.calDIST(coord1, coord2);
+    ret = length * Ccondrmatcost;
+
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    return ret;
+
+}
+exports.GeotCost = function (length, gcondrmatcost, gheight) {
+    var ret = 0;
+    // var dist = services.calDIST(coord1, coord2);
+    ret = length * gheight * gcondrmatcost;
+
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    return ret;
+
+}
 
 exports.criticalityRatingScale = function (lof) {
     var ret = 1;
