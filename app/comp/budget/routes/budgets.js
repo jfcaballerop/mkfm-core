@@ -1018,7 +1018,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.gheight": 1,
             "properties.glength": 1,
             "properties.gnature": 1,
-            "properties.ginvestmentrequired": 1,
+            "properties.rginvestmentrequired": 1,
             "properties.gcode2": 1,
             "geometry.coordinates": 1
         }).exec(async function (err, ifdts) {
@@ -1038,13 +1038,19 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 var rcosts = [];
                 var bcosts = [];
                 var Ccosts = [];
+                var gcosts = [];
+                var gcosts2 = [];
                 rcosts[0] = 0;
                 bcosts[0] = 0;
                 Ccosts[0] = 0;
+                gcosts[0] = 0;
+                gcosts2[0] = 0;
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     var bcost = 0;
                     var Ccost = 0;
+                    var gcost = 0;
+                    var gcost2 = 0;
                     /**
                      *  Revisamos que exista el código del asset
                      * */
@@ -1150,13 +1156,15 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                         // debug(ifdt.properties.gnature[i]);
                         if (ifdt.properties.gcondition !== undefined && ifdt.properties.gcondition.length > 0 && ifdt.properties.gcondition[i] !== '' &&
                             ifdt.properties.gheight !== undefined && ifdt.properties.gheight.length > 0 && ifdt.properties.gheight[i] !== '' &&
-                            ifdt.properties.glength !== undefined && ifdt.properties.glength.length > 0 && ifdt.properties.glength[i] !== '' &&
+                            ifdt.properties.glength !== undefined && ifdt.properties.glength.length > 0 && ifdt.properties.glength[i] !== undefined && ifdt.properties.glength[i] !== '' &&
                             ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 && ifdt.properties.gtype[i] !== '') {
 
                             if (ifdt.properties.gnature !== undefined && ifdt.properties.gnature.length > 0 && ifdt.properties.gnature[i] !== '' &&
                                 (ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment") &&
                                 parseFloat(ifdt.properties.gheight[i]) >= 3) {
+
                                 var indexmat = c.Cuttings_Embankments.material.indexOf(ifdt.properties.gnature[i]);
+
                                 if (indexmat >= 0) {
                                     switch (formulasService.ConditionRating(ifdt.properties.gcondition[i])) {
                                         case 'E':
@@ -1178,10 +1186,12 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                                 } else {
                                     gcost = 0;
                                 }
-                                gcosts[i] = formulasService.GeotCost(ifdt.geometry.glength[i], gcost, ifdt.properties.gheight[i]);
+
+                                gcosts[i] = formulasService.GeotCost(ifdt.properties.glength[i], gcost, ifdt.properties.gheight[i]);
                                 debug('CuttingEmbankment ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i] + ' ' + gcosts[i]);
                             } else if (ifdt.properties.gmaterial !== undefined && ifdt.properties.gmaterial.length > 0 && ifdt.properties.gmaterial[i] !== '' &&
                                 ifdt.properties.gtype[i] === "Retaining_walls" && parseFloat(ifdt.properties.gheight[i]) >= 1) {
+
                                 debug('Retaining_walls ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i]);
 
                             }
@@ -1234,7 +1244,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                         "properties.rinvestmentrequired": rcosts,
                         "properties.binvestmentrequired": bcosts,
                         "properties.Cinvestmentrequired": Ccosts,
-                        "properties.ginvestmentrequired": gcosts
+                        "properties.rginvestmentrequired": gcosts
                     }
                 };
                 await Infodatatrack.update(conditions, query, function (err, iup) {
