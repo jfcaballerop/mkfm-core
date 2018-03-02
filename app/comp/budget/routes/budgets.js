@@ -1191,8 +1191,32 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                                 debug('CuttingEmbankment ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i] + ' ' + gcosts[i]);
                             } else if (ifdt.properties.gmaterial !== undefined && ifdt.properties.gmaterial.length > 0 && ifdt.properties.gmaterial[i] !== '' &&
                                 ifdt.properties.gtype[i] === "Retaining_walls" && parseFloat(ifdt.properties.gheight[i]) >= 1) {
+                                var indexmat = c.Retaining_walls.material.indexOf(ifdt.properties.gmaterial[i]);
 
-                                debug('Retaining_walls ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i]);
+                                if (indexmat >= 0) {
+                                    switch (formulasService.ConditionRating(ifdt.properties.gcondition[i])) {
+                                        case 'E':
+                                            gcost = c.Retaining_walls.value1[indexmat];
+                                            break;
+                                        case 'D':
+                                            gcost = c.Retaining_walls.value2[indexmat];
+                                            break;
+                                        case 'C':
+                                            gcost = c.Retaining_walls.value3[indexmat];
+                                            break;
+                                        case 'B':
+                                            gcost = c.Retaining_walls.value4[indexmat];
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    gcost = 0;
+                                }
+
+                                gcosts[i] = formulasService.GeotCost(ifdt.properties.glength[i], gcost, ifdt.properties.gheight[i]);
+                                debug('Retaining_walls ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i] + ' ' + gcosts[i]);
 
                             }
 
