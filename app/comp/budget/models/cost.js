@@ -42,7 +42,7 @@ var costSchema = new Schema({
         value3: [],
         value4: []
     },
-    "Cuttings Embankments": {
+    "Cuttings_Embankments": {
         code: [],
         material: [],
         unit_price: {
@@ -54,7 +54,7 @@ var costSchema = new Schema({
         value3: [],
         value4: []
     },
-    "Retaining walls": {
+    "Retaining_walls": {
         code: [],
         material: [],
         unit_price: {

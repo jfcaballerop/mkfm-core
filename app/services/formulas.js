@@ -318,6 +318,15 @@ exports.CulvertsCost = function (length, Ccondrmatcost) {
     return ret;
 
 }
+exports.GeotCost = function (length, gcondrmatcost, gheight) {
+    var ret = 0;
+    // var dist = services.calDIST(coord1, coord2);
+    ret = length * gheight * gcondrmatcost;
+
+    // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
+    return ret;
+
+}
 
 exports.criticalityRatingScale = function (lof) {
     var ret = 1;
