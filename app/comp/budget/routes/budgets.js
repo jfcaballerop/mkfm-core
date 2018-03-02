@@ -1132,7 +1132,13 @@ router.post('/V1/update_budgets/', function (req, res, next) {
 
                         }
                     }
-                    if (existsgcode) {}
+                    if (existsgcode) {
+                        if (ifdt.properties.gcondition !== undefined && ifdt.properties.gcondition.length > 0 && ifdt.properties.gcondition[i] !== '' &&
+                            ifdt.properties.gheight !== undefined && ifdt.properties.gheight.length > 0 && ifdt.properties.gheight[i] !== '' &&
+                            ifdt.properties.btype !== undefined && ifdt.properties.btype.length > 0 && ifdt.properties.btype[i] !== '') {
+
+                        }
+                    }
                     if (existsgcode2) {}
 
 
