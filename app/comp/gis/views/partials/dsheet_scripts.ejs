@@ -678,6 +678,7 @@
                         //// console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
+
                     Promise.all([p1]).then(function(values) {
                         $('#spinner').show();
                         map.data.forEach(function(feature) {
@@ -898,6 +899,8 @@
             }
 
         });
+
+
 
     });
 </script>

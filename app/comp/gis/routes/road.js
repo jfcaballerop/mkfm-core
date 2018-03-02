@@ -484,6 +484,8 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
         var timetot = 0;
 
         var elem2 = roads[0];
+        var varGood = 0;
+        var varBad = 0;
         roads.forEach(function(elem, ind) {
             arrPK = [];
             // console.log(JSON.stringify(road));
@@ -505,18 +507,24 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
                 //console.log('ELEMENT ' + JSON.stringify(element));
                 arrPK[tabindex] = pk;
             });
-            
-            
-            if (elem !== undefined && valid.elemtIsGood(elem)) {
+
+            // with valid.elemtIsGood we are validating the contents inside de object elem
+            if (valid.elemtIsGood(elem)) {
+                varGood++;
+                // console.log('elem.properties.name1:         ' + elem.properties.name);
                 ; // we are all good!
+                // since we are iterating over all the elements, we will use the last good
+                // value for the bad element
                 elem2 = elem;
+                elem = elem2;
             } else {
+                varBad++;
+                console.log('elem._id:         ' + elem._id);
                 //  while(true) {console.log('fck!')}// what to do here?
-                console.log(elem2);
+                // console.log(elem2);
                 console.log('we are NOT all good!');
                 elem = elem2;
             }
-
             resJSON.roadName.push(elem.properties.name); 
             resJSON.roadKm.push(arrPK[arrPK.length - 1]);            
             var time = elem.geometry.coordinates.length;
@@ -535,6 +543,9 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
             var secondsTot = timetot - minutesTot * 60;
             resJSON.roadTotTime = str_pad_left(hoursTot, '0', 2) + ':' + str_pad_left(minutesTot, '0', 2) + ':' + str_pad_left(secondsTot, '0', 2);
         });
+
+        console.log('varGood ' + varGood);
+        console.log('varBad  ' + varBad);
         res.status(200).jsonp(resJSON);
     });
     // Road.findById(req.params.id, function(err, tabdata) {

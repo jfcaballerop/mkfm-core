@@ -157,114 +157,77 @@ router.get('/upload', function(req, resp, next) {
     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
 });
-router.get('/uploadDataSheet', function (req, resp, next) {
-    // Obtengo la lista de extensiones de ficheros
-    var ft_options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/filetype/V1/',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var requestft = http.request(ft_options, function (res) {
-        ////// console.log('STATUS: ' + res.statusCode);
-        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            ////// console.log('BODY: ' + chunk);
-            data += chunk;
+// router.get('/uploadDataSheet', function (req, resp, next) {
 
-        });
-        res.on('end', function () {
-            ////// console.log('DATA ' + data.length + ' ' + data);
-            filetypesObject = JSON.parse(data);
-            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            //resp.status(200).jsonp(filetypesObject);
-        });
-    });
-    requestft.end();
+//     debug('comp/gis/views/partials/uploadDataSheet');
+//     // Obtengo la lista de extensiones de ficheros
+//     var page = 0;
+//     var assetId = 'U7-Tête Morne-05-CU-3';
+//     var ft_options = {
+//         host: config.HOST_API,
+//         port: config.PORT_API,
+//         path: config.PATH_API + '/V1/getUploads/' + assetId + '/' + page,
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + req.cookies.jwtToken
+//         }
+//     };
+//     var requestft = http.request(ft_options, function (res) {
+//         res.setEncoding('utf8');
+//         var data = '';
+//         res.on('data', function (chunk) {
+//             data += chunk;
+//         });
+//         res.on('end', function () {
+//             filetypesObject = JSON.parse(data);
+//         });
+//     });
+//     requestft.end();
 
 
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    // Peticiones 
+//     var options = {
+//         host: config.HOST_API,
+//         port: config.PORT_API,
+//         path: config.PATH_API + '/gis/V1/',
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + req.cookies.jwtToken
+//         }
+//     };
+//     // Peticiones 
 
 
-    var request = http.request(options, function (res) {
-        ////// console.log('STATUS: ' + res.statusCode);
-        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            ////// console.log('BODY: ' + chunk);
-            data += chunk;
+//     var request = http.request(options, function (res) {
+//         ////// console.log('STATUS: ' + res.statusCode);
+//         ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
+//         res.setEncoding('utf8');
+//         var data = '';
+//         res.on('data', function (chunk) {
+//             ////// console.log('BODY: ' + chunk);
+//             data += chunk;
 
-        });
-        res.on('end', function () {
-            //// console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+//         });
+//         res.on('end', function () {
+//             //// console.log('DATA ' + data.length + ' ' + data);
+//             var responseObject = JSON.parse(data);
+//             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+//             resp.render('upload', { token: req.token, ft: filetypesObject, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
-        });
-    });
+//         });
+//     });
 
-    request.end();
-    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+//     request.end();
+//     //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
-});
+// });
 /* UPLOAD File.*/
 var uploading = multer({ dest: path.join(process.env.PWD, '/public/uploads/') }).single('file');
-router.post('/uploadDataSheet', uploading, function (req, resp) {
-        // var postData = extend({}, req.file);
-        // postData.owner = req.user_login;
-        // postData.type = req.body.type;
-        // postData.status = 'pending';
 
-        // ////// console.log('## FUP DATA ::' + JSON.stringify(postData)); //form files
-        // var options = {
-        //     host: config.HOST_API,
-        //     port: config.PORT_API,
-        //     path: config.PATH_API + '/gis/V1/fileupload/',
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-        //         'Authorization': 'Bearer ' + req.cookies.jwtToken
-        //     }
-        // };
-    // var request = http.request(options, function (res) {
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function (chunk) {
-    //         //// debug('BODY: ' + chunk);
-    //         data += chunk;
 
-    //     });
-        // res.on('end', function () {
-            // var responseObject = JSON.parse(data);
-            resp.status(200).jsonp({msg:'Hola manola'});
 
-        // });
-    // });
-    // request.write(JSON.stringify({msg:'Pepe'}));
-    // request.end();
-    
 
-});
 /* UPLOAD File.*/
 var uploading = multer({ dest: path.join(process.env.PWD, '/public/uploads/') }).single('file');
 router.post('/upload', uploading, function(req, resp) {
@@ -681,6 +644,7 @@ router.post('/V1/fileupload/', function(req, res, next) {
         res.status(200).jsonp(file);
     });
 });
+
 
 /* GET JSON files listing. */
 router.get('/V1/', function(req, res, next) {

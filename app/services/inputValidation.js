@@ -8,12 +8,44 @@ var Joi = require('joi');
 
 const isGoodArray = Joi.array().items(Joi.string(), Joi.number()).min(1);  //
 const isGoodNumber = Joi.number().min(-100000000000).max(100000000000);    //
+
 const isGoodString = Joi.string().regex(/^[a-zA-Z0-9]{1,1000}$/);          //
-const isGoodElem = {
-    name: Joi.string().min(1).required(),
-    time: Joi.string().min(1).required(),
-    coordTimes: Joi.array().items(Joi.string(), Joi.number()).min(1).required()
-};
+
+// const isGoodElem = {
+//     elem : joi.string().required(),
+//     elem.properties : joi.string().required(),
+//     elem.properties.name : joi.string().required()
+
+    // _id: Joi.string().min(1),
+    // type: Joi.string().min(1),
+    //         properties: {
+    //             coordTimes: Joi.array().min(1),
+    //             time: Joi.string().min(1),
+    //             name: Joi.string().min(1).required()
+    // //         },
+    // updated_at: Joi.string().min(1),
+    // created_at: Joi.string().min(1),
+    // proccessed: Joi.boolean(),
+    // geometry:{
+    //     type: Joi.string().min(1),
+    //     coordinates: Joi.array().min(1).min(1)
+//     // }
+// };
+const isGoodElem = Joi.object().keys({
+    _id: Joi,
+    $__: Joi,
+    isNew: Joi,
+    errors: Joi,
+    _doc: Joi,
+    type: Joi.required(),
+    $init: Joi,
+    properties: {
+        name: Joi.required(),
+        time: Joi,
+        video_roads: Joi,
+        coordTimes: Joi.array().min(1).required(),
+    }
+}).required();
 
 exports.arrayIsGood = function (x) {
     const arrayIsGood = Joi.validate(x, isGoodArray);
@@ -33,7 +65,10 @@ exports.stringIsGood = function (x) {
 exports.elemtIsGood = function (x) {
     const elemIsGood = Joi.validate(x, isGoodElem);
     return elemIsGood.error == null;
+    // return true;
 }
+
+
 
 
 
