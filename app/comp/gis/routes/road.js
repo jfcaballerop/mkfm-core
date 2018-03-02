@@ -11,6 +11,7 @@ var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var utm = require('utm');
+var valid = require(path.join(__dirname, '../../../services/inputValidation'));
 
 var roadModels = require(path.join(__dirname, '../models/road'));
 var Road = mongoose.model('Road');
@@ -482,6 +483,7 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
         }
         var timetot = 0;
 
+        var elem2 = roads[0];
         roads.forEach(function(elem, ind) {
             arrPK = [];
             // console.log(JSON.stringify(road));
@@ -503,8 +505,20 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
                 //console.log('ELEMENT ' + JSON.stringify(element));
                 arrPK[tabindex] = pk;
             });
-            resJSON.roadName.push(elem.properties.name);
-            resJSON.roadKm.push(arrPK[arrPK.length - 1]);
+            
+            
+            if (elem !== undefined && valid.elemtIsGood(elem)) {
+                ; // we are all good!
+                elem2 = elem;
+            } else {
+                //  while(true) {console.log('fck!')}// what to do here?
+                console.log(elem2);
+                console.log('we are NOT all good!');
+                elem = elem2;
+            }
+
+            resJSON.roadName.push(elem.properties.name); 
+            resJSON.roadKm.push(arrPK[arrPK.length - 1]);            
             var time = elem.geometry.coordinates.length;
             timetot += elem.geometry.coordinates.length;
             var minutes = Math.floor(time / 60);
