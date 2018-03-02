@@ -1,16 +1,20 @@
-<script src="js/jquery-ui-1.10.4.js"></script>
-<script src="js/jquery.fileupload.js">
-</script>
 <script>
     var ifdtobject;
     var nchar = 0;
     var resized = false;
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
+            }
+        });
 
-
-        $("form").submit(function(evt) {
+        $("form").submit(function (evt) {
             evt.preventDefault();
             var formData = new FormData($(this)[0]);
             $.ajax({
@@ -22,17 +26,17 @@
                     contentType: 'application/json',
                     // enctype: 'multipart/form-data',
                     processData: false,
-                    success: function(response) {
+                    success: function (response) {
                         alert(JSON.stringify(response));
                     }
                 },
-                function(data) {
+                function (data) {
                     alert(SON.stringify(data));
                 });
             return false;
         });
 
-        $('#generaldataupload').click(function() {
+        $('#generaldataupload').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -50,7 +54,7 @@
 
             }
         });
-        $('#generaldata').click(function() {
+        $('#generaldata').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -58,23 +62,28 @@
                 $('#divmap1').prepend(gen_data.join(''));
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // console.log(ifdtobject);
-                    $.each(ROADS.general_data, function(key, value) {
+                    $.each(ROADS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -85,23 +94,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // console.log(ifdtobject);
-                    $.each(BRIDGES.general_data, function(key, value) {
+                    $.each(BRIDGES.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -112,23 +126,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // console.log(ifdtobject);
-                    $.each(CULVERTS.general_data, function(key, value) {
+                    $.each(CULVERTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -139,23 +158,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.general_data, function(key, value) {
+                    $.each(GEOTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -166,23 +190,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.general_data, function(key, value) {
+                    $.each(GEOTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
+                                    key + 2][0] != "") {
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -198,7 +227,7 @@
 
             }
         });
-        $('#inventorydata').click(function() {
+        $('#inventorydata').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -208,23 +237,28 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // console.log(ifdtobject);
-                    $.each(ROADS.inventory_data, function(key, value) {
+                    $.each(ROADS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -234,23 +268,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // console.log(ifdtobject);
-                    $.each(BRIDGES.inventory_data, function(key, value) {
+                    $.each(BRIDGES.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -260,23 +299,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // console.log(ifdtobject);
-                    $.each(CULVERTS.inventory_data, function(key, value) {
+                    $.each(CULVERTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -286,23 +330,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.inventory_data, function(key, value) {
+                    $.each(GEOTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -312,23 +361,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.inventory_data, function(key, value) {
+                    $.each(GEOTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
+                                    key + 2][0] != "") {
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -343,7 +397,7 @@
 
             }
         });
-        $('#operation').click(function() {
+        $('#operation').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -353,23 +407,28 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // console.log(ifdtobject);
-                    $.each(ROADS.operations, function(key, value) {
+                    $.each(ROADS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -379,23 +438,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // console.log(ifdtobject);
-                    $.each(BRIDGES.operations, function(key, value) {
+                    $.each(BRIDGES.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -405,23 +469,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // console.log(ifdtobject);
-                    $.each(CULVERTS.operations, function(key, value) {
+                    $.each(CULVERTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -431,23 +500,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.operations, function(key, value) {
+                    $.each(GEOTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -457,23 +531,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.operations, function(key, value) {
+                    $.each(GEOTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
+                                    key + 2][0] != "") {
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -488,7 +567,7 @@
 
             }
         });
-        $('#risk').click(function() {
+        $('#risk').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -498,23 +577,28 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // console.log(ifdtobject);
-                    $.each(ROADS.risk, function(key, value) {
+                    $.each(ROADS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -524,23 +608,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // console.log(ifdtobject);
-                    $.each(BRIDGES.risk, function(key, value) {
+                    $.each(BRIDGES.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -550,23 +639,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // console.log(ifdtobject);
-                    $.each(CULVERTS.risk, function(key, value) {
+                    $.each(CULVERTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -576,23 +670,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.risk, function(key, value) {
+                    $.each(GEOTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[key][0] != "") {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key][0] + '</td></tr>');
+                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                    key][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key] != undefined) {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key] + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -602,23 +701,28 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // console.log(ifdtobject);
-                    $.each(GEOTS.risk, function(key, value) {
+                    $.each(GEOTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // console.log('Is Array');
-                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[key + 2][0] != "") {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2][0] + '</td></tr>');
+                            if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
+                                    key + 2][0] != "") {
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         } else {
                             // console.log('Is NOT Array');
                             if (ifdtobject.properties[key + 2] != undefined) {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + ifdtobject.properties[key + 2] + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' + '--' + '</td></tr>');
+                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                    '--' + '</td></tr>');
 
                             }
                         }
@@ -633,7 +737,7 @@
 
             }
         });
-        $("#searchtool").on('keyup', function(e) {
+        $("#searchtool").on('keyup', function (e) {
             var $this = $(this);
 
             if (e.keyCode == 13) {
@@ -674,13 +778,13 @@
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function(data) {
+                    }, function (data) {
                         //// console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
-                    Promise.all([p1]).then(function(values) {
+                    Promise.all([p1]).then(function (values) {
                         $('#spinner').show();
-                        map.data.forEach(function(feature) {
+                        map.data.forEach(function (feature) {
                             // If you want, check here for some constraints.
                             // if (feature.getProperty('nameoption') === 'Main Road') {
                             map.data.remove(feature);
@@ -711,15 +815,20 @@
                                 jsonObject.properties.color = "#5b5e63";
                                 jsonObject.properties.nameoption = "Main Road";
                                 map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                if (ifdt.geometry.coordinates.length > 0 && ifdt.geometry.coordinates.length <= 100) {
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
+                                    0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
+                                    ifdt.geometry.coordinates[0][0]));
+                                if (ifdt.geometry.coordinates.length > 0 && ifdt.geometry.coordinates
+                                    .length <= 100) {
                                     map.setZoom(19);
-                                } else if (ifdt.geometry.coordinates.length > 100 && ifdt.geometry.coordinates.length <= 400) {
+                                } else if (ifdt.geometry.coordinates.length > 100 && ifdt.geometry
+                                    .coordinates.length <= 400) {
 
                                     map.setZoom(16);
 
-                                } else if (ifdt.geometry.coordinates.length > 400 && ifdt.geometry.coordinates.length <= 1000) {
+                                } else if (ifdt.geometry.coordinates.length > 400 && ifdt.geometry
+                                    .coordinates.length <= 1000) {
                                     map.setZoom(13);
 
                                 } else {
@@ -731,32 +840,57 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
 
-                                if (ifdt.properties.koboedit[0] != undefined || ifdt.properties.koboedit[0].kobo_id != undefined) {
+                                if (ifdt.properties.koboedit[0] != undefined || ifdt.properties
+                                    .koboedit[0].kobo_id != undefined) {
                                     var dataPhotoPost = {};
                                     var pphoto = $.ajax({
-                                        url: '/auth/WEB/koboinfo/list_koboinfos/' + ifdt.properties.koboedit[0].kobo_id,
+                                        url: '/auth/WEB/koboinfo/list_koboinfos/' +
+                                            ifdt.properties.koboedit[0].kobo_id,
                                         data: JSON.stringify(dataPhotoPost),
                                         type: 'POST',
                                         contentType: 'application/json'
-                                    }, function(data) {
+                                    }, function (data) {
                                         //// console.log('koboinfo ' + JSON.stringify(data));
                                         return (data);
                                     });
-                                    Promise.all([pphoto]).then(function(values) {
+                                    Promise.all([pphoto]).then(function (values) {
                                         koboinfo = values[0];
-                                        $.each(koboinfo, function(key, value) {
+                                        $.each(koboinfo, function (key, value) {
                                             if (key === 'properties') {
-                                                $.each(value, function(kprop, vprop) {
+                                                $.each(value, function (kprop,
+                                                    vprop) {
                                                     //console.log(kprop, vprop);
-                                                    if (kprop === "_attachments") {
+                                                    if (kprop ===
+                                                        "_attachments") {
 
-                                                        $("#datainfophoto").empty();
-                                                        $("#datainfophoto").show();
-                                                        $.each(vprop, function(kfoto, vfoto) {
-                                                            var fotosmall = vfoto.replace(".jpg", "-small.jpg");
-                                                            $("#datainfophoto").append('<img src="' + fotosmall + '">');
-                                                            // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
-                                                        });
+                                                        $(
+                                                            "#datainfophoto"
+                                                        ).empty();
+                                                        $(
+                                                            "#datainfophoto"
+                                                        ).show();
+                                                        $.each(vprop,
+                                                            function (
+                                                                kfoto,
+                                                                vfoto
+                                                            ) {
+                                                                var
+                                                                    fotosmall =
+                                                                    vfoto
+                                                                    .replace(
+                                                                        ".jpg",
+                                                                        "-small.jpg"
+                                                                    );
+                                                                $(
+                                                                        "#datainfophoto"
+                                                                    )
+                                                                    .append(
+                                                                        '<img src="' +
+                                                                        fotosmall +
+                                                                        '">'
+                                                                    );
+                                                                // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
+                                                            });
                                                     }
 
 
@@ -770,10 +904,13 @@
                                 jsonObject.properties.color = "#F47983";
                                 jsonObject.properties.nameoption = "Bridge";
                                 map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
+                                    0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
+                                    ifdt.geometry.coordinates[0][0]));
                                 map.setZoom(22);
-                            } else if (ifdt.properties.asset_type === 'GEOT' || ifdt.properties.asset_type === 'GEOT2') {
+                            } else if (ifdt.properties.asset_type === 'GEOT' || ifdt.properties
+                                .asset_type === 'GEOT2') {
                                 $('#response').empty();
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
@@ -783,8 +920,10 @@
                                 jsonObject.properties.color = "green";
                                 jsonObject.properties.nameoption = "Geot";
                                 map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
+                                    0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
+                                    ifdt.geometry.coordinates[0][0]));
                                 map.setZoom(19);
                             } else if (ifdt.properties.asset_type === 'CULVERT') {
                                 $('#response').empty();
@@ -795,8 +934,10 @@
                                 jsonObject.properties.color = "#a17cff";
                                 jsonObject.properties.nameoption = "Culvert";
                                 map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
+                                    0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
+                                    ifdt.geometry.coordinates[0][0]));
                                 map.setZoom(22);
                             } else if (ifdt.properties.asset_type === 'DRAINAGE') {
                                 $('#response').empty();
@@ -807,8 +948,10 @@
                                 jsonObject.properties.color = "#135dd6";
                                 jsonObject.properties.nameoption = "Drainage";
                                 map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1], ifdt.geometry.coordinates[0][0]));
+                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
+                                    0][1], ifdt.geometry.coordinates[0][0]));
+                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
+                                    ifdt.geometry.coordinates[0][0]));
                                 map.setZoom(22);
                             }
                             ifdtobject = ifdt;
@@ -820,7 +963,7 @@
                 }
             }
         });
-        $('#searchtool').on('input', function() {
+        $('#searchtool').on('input', function () {
 
             var $this = $(this);
 
@@ -831,7 +974,7 @@
                 nchar = $this.val().length;
                 $("#divmap2").animate({
                     width: '50%'
-                }, 1500, function() {
+                }, 1500, function () {
                     resized = true;
                     $('#rowmap').prepend('<div id="divmap1"' +
                         'class="col-md-6" style="height:80vh;" >' +
@@ -858,7 +1001,7 @@
 
 
 
-        $("#upload_file_form").bind("submit", function() {
+        $("#upload_file_form").bind("submit", function () {
             // above check 
             $('#datainfo').show();
             $('#dataupload').show();

@@ -324,7 +324,9 @@
     file_data[++f] = '<div id="filedatadiv" class="content-panel" style="display:none;">';
     file_data[++f] = '<div class = "col-md-12" >';
     file_data[++f] = '<center><h3>File archive - asset</h3></center>';
-    file_data[++f] = '<form id="upload_file_form" class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="/auth/WEB/gis/uploadDataSheet">';
+    file_data[++f] = '<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>';
+    file_data[++f] =
+        '<form id="upload_file_form" class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="/auth/WEB/gis/uploadDataSheet">';
     file_data[++f] = '<div class="form-group">';
     file_data[++f] = '<div class="col-sm-10">';
     file_data[++f] = '<input id="file_upload" type="file" name="file" class="alert alert-info">';
