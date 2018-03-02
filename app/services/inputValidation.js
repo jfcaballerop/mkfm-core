@@ -45,7 +45,7 @@ const isGoodElem = Joi.object().keys({
         video_roads: Joi,
         coordTimes: Joi.array().min(1).required(),
     }
-}).required();
+});
 
 exports.arrayIsGood = function (x) {
     const arrayIsGood = Joi.validate(x, isGoodArray);
