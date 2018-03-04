@@ -198,9 +198,7 @@ router.post('/uploadDataSheet', uploadingDS, function (req, resp) {
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
-            resp.status(200).jsonp({
-                msg: 'Hola manola'
-            });
+            resp.status(200).jsonp(responseObject);
 
         });
     });
@@ -633,8 +631,49 @@ router.post('/delete/:id', function (req, resp, next) {
 
 
 });
+/**************************************************************
+ * AJAX CALLS
+ **************************************************************/
+//getFilesByAssetCode
+
+router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## ajax getFilesByAssetCode: ' + req.params.assetCode);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
 
 
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 
 /*******************************************************
  API REST CALLS
@@ -662,6 +701,7 @@ router.get('/V1/', function (req, res, next) {
     });
 
 });
+
 /* GET JSON files listing active_valid. */
 router.get('/V1/active_valid/', function (req, res, next) {
     Fileupload.find({
@@ -692,6 +732,19 @@ router.get('/V1/:id', function (req, res, next) {
 
             res.status(200).jsonp(validFeatureCollection);
         });
+    });
+
+});
+/* GET JSON file by assetCode. */
+router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
+    Fileupload.find({
+        assetCode: req.params.assetCode
+    }, function (err, fup) {
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        res.status(200).jsonp(fup);
     });
 
 });
