@@ -16,18 +16,52 @@ var Schema = mongoose.Schema;
 
 // define the schema for our user model
 var fileuploadSchema = new Schema({
-    filename: { type: String, required: true, unique: true },
-    path: { type: String, required: true },
-    size: { type: Number },
-    destination: { type: String },
-    mimetype: { type: String },
-    owner: { type: String },
-    type: { type: String },
-    activo: { type: Boolean, default: true },
-    status: { type: String, enum: ['pending', 'validate', 'error'] },
-    originalname: { type: String },
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now }
+  filename: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  path: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: Number
+  },
+  destination: {
+    type: String
+  },
+  mimetype: {
+    type: String
+  },
+  owner: {
+    type: String
+  },
+  type: {
+    type: String
+  },
+  assetCode: {
+    type: String
+  },
+  activo: {
+    type: Boolean,
+    default: true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'validate', 'error']
+  },
+  originalname: {
+    type: String
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now
+  }
 
 });
 
