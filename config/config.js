@@ -24,6 +24,7 @@ module.exports = {
     QUERYMAXDISTANCE: 1, // PRECISION in meters
     SOCKETTIMEOUTMS: 600000, // server socketOptions for connections
     KEEPALIVE: 200000,
-    CONNECTTIMEOUTMS: 60000
+    CONNECTTIMEOUTMS: 60000,
+    UPLOADS_FILES_PATH: '/public/uploads/'
 
 };
