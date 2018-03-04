@@ -5,36 +5,63 @@
 
 
     $(document).ready(function () {
-        $('#fileupload').fileupload({
-            dataType: 'json',
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            }
-        });
 
-        $("form").submit(function (evt) {
-            evt.preventDefault();
-            var formData = new FormData($(this)[0]);
-            $.ajax({
+        var checkExist = setInterval(function () {
+            if ($('#file').length) {
+                console.log("Exists file!");
+                clearInterval(checkExist);
+                $('.uploadFile').ajaxForm({
                     url: '/auth/WEB/gis/uploadDataSheet',
                     type: 'POST',
-                    data: formData,
-                    // async: false,
-                    cache: false,
-                    contentType: 'application/json',
-                    // enctype: 'multipart/form-data',
-                    processData: false,
-                    success: function (response) {
-                        alert(JSON.stringify(response));
+                    target: '#myResultsDiv',
+                    clearForm: true,
+                    data: {
+                        assetCode: $("#searchtool").val()
+                    },
+                    dataType: 'json',
+                    success: function (response, statusText, xhr, form) {
+                        // alert('Success');
+                        // message = $(response).text();
+                        console.log(response.msg);
                     }
-                },
-                function (data) {
-                    alert(SON.stringify(data));
                 });
-            return false;
-        });
+
+                $(".uploadFile").on('submit', function (evt) {
+                    console.log("Submit!");
+
+                    evt.preventDefault();
+                    // var formData = new FormData($(this)[0]);
+                    $(this).ajaxSubmit();
+                    return false;
+                });
+
+
+
+                // var url = '/auth/WEB/gis/uploadDataSheet';
+
+                // $('#fileupload').fileupload({
+                //         url: url,
+                //         dataType: 'json',
+                //         done: function (e, data) {
+                //             $.each(data.result.files, function (index, file) {
+                //                 $('<p/>').text(file.name).appendTo('#files');
+                //             });
+                //         },
+                //         progressall: function (e, data) {
+                //             var progress = parseInt(data.loaded / data.total * 100, 10);
+                //             $('#progress .progress-bar').css(
+                //                 'width',
+                //                 progress + '%'
+                //             );
+                //         }
+                //     }).prop('disabled', !$.support.fileInput)
+                //     .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+            }
+        }, 100); // check every 100ms
+
+
+
 
         $('#generaldataupload').click(function () {
             var $this = $(this);
