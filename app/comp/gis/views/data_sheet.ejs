@@ -7,19 +7,20 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-            
+
             #map {
                 height: 100%;
             }
+
             /* Optional: Makes the sample page fill the window. */
-            
+
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-            
+
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -62,23 +63,25 @@
             <section class="wrapper site-min-height">
                 <div class="row mt">
                     <div class="col-md-10">
-                        <h3><i class="fa fa-angle-right"></i>
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
                             <%- trans('MENU_DATASHEET') %>
                         </h3>
                     </div>
                     <div class="col-md-2">
                         <select class="form-control">
-						  <option>- <%- trans('GMAPS_LAYERS') %> -</option>
-						  <option>Open Street Maps</option>
-						  <option>Parrishes boundaries</option>
-						  <option>Flashflood Susceptibility</option>
-						  <option>Landslide Susceptibility</option>
-						  <option>Hurricane Shelters</option>
-						  <option>Health Centers</option>
-						  <option>Airports</option>
-						  <option>Ferry Ports</option>
-						  <option>Tourist Attractions</option>
-						</select>
+                            <option>-
+                                <%- trans('GMAPS_LAYERS') %> -</option>
+                            <option>Open Street Maps</option>
+                            <option>Parrishes boundaries</option>
+                            <option>Flashflood Susceptibility</option>
+                            <option>Landslide Susceptibility</option>
+                            <option>Hurricane Shelters</option>
+                            <option>Health Centers</option>
+                            <option>Airports</option>
+                            <option>Ferry Ports</option>
+                            <option>Tourist Attractions</option>
+                        </select>
                     </div>
                 </div>
                 <!-- page start-->
@@ -86,7 +89,8 @@
                 <div class="row mt">
                     <div class="col-md-2">
                         <div class="form-panel">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
                                 <%- trans('DSHEET_SEARCH_TOOL') %>
                             </h5>
                             <input id="searchtool" type="text" class="form-control round-form">
@@ -95,28 +99,35 @@
 
                         </div>
                         <div id="dataupload" class="form-panel" style="display:none;">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
                                 <%- trans('DSHEET_DATA_UPLOAD') %>
                             </h5>
                             <div class="checkbox">
-                                <label><input id="generaldataupload" type="checkbox" value="General Data" >File Upload</label>
+                                <label>
+                                    <input id="generaldataupload" type="checkbox" value="General Data">File Upload</label>
                             </div>
                         </div>
                         <div id="datainfo" class="form-panel" style="display:none;">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
                                 <%- trans('DSHEET_DATA_INFO') %>
                             </h5>
                             <div class="checkbox">
-                                <label><input id="generaldata" type="checkbox" value="General Data" >General Data</label>
+                                <label>
+                                    <input id="generaldata" type="checkbox" value="General Data">General Data</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="inventorydata"type="checkbox" value="Inventory Data" >Inventory Data</label>
+                                <label>
+                                    <input id="inventorydata" type="checkbox" value="Inventory Data">Inventory Data</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="operation" type="checkbox" value="Operation and Maintenance Data">Operation and Maintenance Data</label>
+                                <label>
+                                    <input id="operation" type="checkbox" value="Operation and Maintenance Data">Operation and Maintenance Data</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="risk" type="checkbox" value="Indexes and risk analysis">Indexes and risk analysis</label>
+                                <label>
+                                    <input id="risk" type="checkbox" value="Indexes and risk analysis">Indexes and risk analysis</label>
                             </div>
 
                         </div>
@@ -169,10 +180,13 @@
 
 
         <!--common script for all pages-->
+        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i"
+            crossorigin="anonymous"></script>
+
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="/assets/js/common-scripts.js"></script>
-
-
+        <script src="/assets/js/moment-with-locales.min.js"></script>
         <!--script for this page-->
         <% include partials/gmaps_functions %>
             <% include ./partials/dsheet_scripts_tables %>
