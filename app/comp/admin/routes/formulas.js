@@ -1184,7 +1184,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
                                     iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
                                 length: iup.properties.glength[i],
-                                height: iup.properties.gheight[i]
+                                height: iup.properties.gheight[i],
+                                cost: iup.properties.rginvestmentrequired[i]
                             });
 
 
@@ -1192,7 +1193,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
                                     iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
                                 length: iup.properties.glength[i],
-                                height: iup.properties.gheight[i]
+                                height: iup.properties.gheight[i],
+                                cost: iup.properties.rginvestmentrequired[i]
                             });
 
                         }
@@ -1207,7 +1209,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
                                     iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
                                 length: iup.properties.glength2[i],
-                                height: iup.properties.gheight2[i]
+                                height: iup.properties.gheight2[i],
+                                cost: iup.properties.rginvestmentrequired2[i]
                             });
 
 
@@ -1215,7 +1218,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
                                     iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
                                 length: iup.properties.glength2[i],
-                                height: iup.properties.gheight2[i]
+                                height: iup.properties.gheight2[i],
+                                cost: iup.properties.rginvestmentrequired2[i]
                             });
 
                         }
@@ -1232,14 +1236,16 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             culvertsTrackPhy.push({
                                 code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
                                     iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
-                                length: iup.properties.Clength[i]
+                                length: iup.properties.Clength[i],
+                                cost: iup.properties.Cinvestmentrequired[i]
                             });
 
 
                             culvertsTrackNat.push({
                                 code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
                                     iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
-                                length: iup.properties.Clength[i]
+                                length: iup.properties.Clength[i],
+                                cost: iup.properties.Cinvestmentrequired[i]
                             });
 
                         }
@@ -1326,7 +1332,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
                                     iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
                                 length: iup.properties.glength[i],
-                                height: iup.properties.gheight[i]
+                                height: iup.properties.gheight[i],
+                                cost: iup.properties.rginvestmentrequired[i]
                             });
 
 
@@ -1334,7 +1341,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
                                     iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
                                 length: iup.properties.glength[i],
-                                height: iup.properties.gheight[i]
+                                height: iup.properties.gheight[i],
+                                cost: iup.properties.rginvestmentrequired[i]
                             });
 
                         }
@@ -1349,7 +1357,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
                                     iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
                                 length: iup.properties.glength2[i],
-                                height: iup.properties.gheight2[i]
+                                height: iup.properties.gheight2[i],
+                                cost: iup.properties.rginvestmentrequired2[i]
                             });
 
 
@@ -1357,7 +1366,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
                                     iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
                                 length: iup.properties.glength2[i],
-                                height: iup.properties.gheight2[i]
+                                height: iup.properties.gheight2[i],
+                                cost: iup.properties.rginvestmentrequired2[i]
                             });
 
                         }
@@ -1374,14 +1384,16 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             culvertsTrackPhy.push({
                                 code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
                                     iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
-                                length: iup.properties.Clength[i]
+                                length: iup.properties.Clength[i],
+                                cost: iup.properties.Cinvestmentrequired[i]
                             });
 
 
                             culvertsTrackNat.push({
                                 code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
                                     iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
-                                length: iup.properties.Clength[i]
+                                length: iup.properties.Clength[i],
+                                cost: iup.properties.Cinvestmentrequired[i]
                             });
 
                         }
