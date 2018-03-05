@@ -181,11 +181,12 @@ exports.roundValuePerCent = function (value, decimals) {
     }
 };
 
-exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackSectionswidth, trackpkreg, iup, type) {
+exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, iup, type) {
     var tracksnamessche = [];
     var antsect = mathjs.mode(trackSections[0])[0];
     var antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
     var antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
+    var antcost = mathjs.sum(trackPavCost[0]);
     var pkiniant = trackpkreg[0][0];
     var pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
     var pkini;
@@ -197,11 +198,14 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         //debug(typeof (ts));
         ts = Number(ts);
         if (ts === 0) {
+            /** 
+             * si es el primer tramo inicializo
+             */
             antsect = mathjs.mode(trackSections[0])[0];
             // debug('antsect ' + antsect);
+            antcost = mathjs.sum(trackPavCost[0]);
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
             antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
-
             pkiniant = trackpkreg[0][0];
             pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
             pkini = pkiniant / 1000;
@@ -213,6 +217,10 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             // //debug('*NEW ' + mathjs.mode(trackSections[ts]) +
             //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
         } else {
+            /** 
+             * Si no es el primer tramo, hago los calculos 
+             */
+
             // debug('antsect ' + antsect);
             // debug('setc ' + mathjs.mode(trackSections[ts])[0]);
 
@@ -223,7 +231,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                 tracksnamessche.push({
                     code: tracknamesche,
                     length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
-                    width: antmaxwidth
+                    width: antmaxwidth,
+                    cost: antcost
                 });
                 // //debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__R'+type+'-' + antsect + '__COND-' + antcond;
                 pkini = trackpkreg[ts][0] / 1000;
@@ -231,6 +240,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                 tracknamesche = iup.properties.rcode[0];
                 tracknamesche += '__KP-' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[0] : pkini.toString()) +
                     '+' + (pkini.toString().split('.').length > 1 ? pkini.toString().split('.')[1].substring(0, 3) : '0');
+                antcost = 0;
                 // //debug('*NEW ' + mathjs.mode(trackSections[ts]) +
                 //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
             } else {
@@ -241,6 +251,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             antsect = mathjs.mode(trackSections[ts])[0];
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]);
             antmaxwidth = trackSectionswidth[ts].length > 0 ? mathjs.max(trackSectionswidth[ts]) : 0;
+            antcost += mathjs.sum(trackPavCost[ts]);
 
             // pkfin = trackpkreg[ts - 1][trackpkreg[ts - 1].length - 1];
 
@@ -251,10 +262,13 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
     // //debug(tracknamesche + '-');
     tracknamesche += '-' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[0] : pkfin.toString()) +
         '+' + (pkfin.toString().split('.').length > 1 ? pkfin.toString().split('.')[1].substring(0, 3) : '0') + '__R' + type + '-' + antsect + '__COND-' + antcond;
+
     tracksnamessche.push({
         code: tracknamesche,
         length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
-        width: antmaxwidth
+        width: antmaxwidth,
+        cost: antcost
+
 
     });
 

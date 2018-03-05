@@ -168,7 +168,7 @@ router.get('/upload', function (req, resp, next) {
 
 /* UPLOAD File.*/
 var uploadingDS = multer({
-    dest: path.join(process.env.PWD, '/public/uploads/')
+    dest: path.join(process.env.PWD, config.UPLOADS_FILES_PATH)
 }).single('file');
 router.post('/uploadDataSheet', uploadingDS, function (req, resp) {
     var postData = extend({}, req.file);
@@ -210,7 +210,7 @@ router.post('/uploadDataSheet', uploadingDS, function (req, resp) {
 });
 /* UPLOAD File.*/
 var uploading = multer({
-    dest: path.join(process.env.PWD, '/public/uploads/')
+    dest: path.join(process.env.PWD, config.UPLOADS_FILES_PATH)
 }).single('file');
 router.post('/upload', uploading, function (req, resp) {
     // Obtengo la lista de extensiones de ficheros
@@ -689,6 +689,7 @@ router.post('/V1/fileupload/', function (req, res, next) {
     });
 });
 
+
 /* GET JSON files listing. */
 router.get('/V1/', function (req, res, next) {
     Fileupload.find().sort({
@@ -881,7 +882,7 @@ router.post('/V1/validate/:id', function (req, res, next) {
             });
             // Guardo un nuevo File en formato GeoJson
             var fname_new = fup.filename + moment().format('YYYYMMDDHHmmss');
-            fs.writeFile(path.join(process.env.PWD, '/public/uploads/', fname_new), JSON.stringify(fconvwithstyles), function (err) {
+            fs.writeFile(path.join(process.env.PWD, config.UPLOADS_FILES_PATH, fname_new), JSON.stringify(fconvwithstyles), function (err) {
                 if (err) {
                     return //// console.log(err);
                 }
@@ -890,10 +891,11 @@ router.post('/V1/validate/:id', function (req, res, next) {
                 fname_new_noext.pop();
                 var new_fu = new Fileupload({
                     "size": Buffer.byteLength(JSON.stringify(fconvwithstyles)),
-                    "path": path.join(process.env.PWD, '/public/uploads/', fname_new),
+                    "path": path.join(process.env.PWD, config.UPLOADS_FILES_PATH, fname_new),
                     "filename": fname_new,
-                    "destination": path.join(process.env.PWD, '/public/uploads/'),
+                    "destination": path.join(process.env.PWD, config.UPLOADS_FILES_PATH),
                     "mimetype": "application/octet-stream",
+                    "assetCode": 'juioñ',
                     "originalname": fname_new_noext + '.geojson',
                     "owner": fup.owner,
                     "type": "geojson",

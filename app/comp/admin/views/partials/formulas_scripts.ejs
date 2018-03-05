@@ -79,11 +79,14 @@
                         html[++i] =
                             '<div id="div_formulas_tracks_risk_phy" ><table id="table_formulas_tracks_risk_phy" class="table table-bordered table-striped table-condensed">' +
                             ' <thead><tr><th>CODE RISK PHYSICAL</th><th>Length (m)</th>' +
-                            '<th>Width (m)</th><th>Height (m)</th></tr></thead><tbody>';
+                            '<th>Width (m)</th><th>Height (m)</th><th>Cost (EC$)</th></tr></thead><tbody>';
                         for (var d of data) {
                             html[++i] = '<tr><td>' + d.code + '</td><td>' + Math.round(d.length * 100) / 100 +
                                 '</td><td>' + (d.width !== undefined ? d.width : '--') + '</td>';
-                            html[++i] = '<td>' + (d.height !== undefined ? d.height : '--') + '</td></tr>';
+                            html[++i] = '<td>' + (d.height !== undefined ? d.height : '--') + '</td>';
+                            html[++i] = '<td>' + (d.cost !== undefined ? Math.round(d.cost * 100) / 100 :
+                                '--') + '</td>';
+                            html[++i] = '</tr>';
                         }
                         html[++i] = '</tbody></table></div>';
 
@@ -96,7 +99,9 @@
                         for (var d of data2) {
                             html[++i] = '<tr><td>' + d.code + '</td><td>' + Math.round(d.length * 100) / 100 +
                                 '</td><td>' + (d.width !== undefined ? d.width : '--') + '</td>';
-                            html[++i] = '<td>' + (d.height !== undefined ? d.height : '--') + '</td></tr>';
+                            html[++i] = '<td>' + (d.cost !== undefined ? Math.round(d.cost * 100) / 100 :
+                                '--') + '</td>';
+                            html[++i] = '</tr>';
 
                         }
                         html[++i] = '</tbody></table></div>';

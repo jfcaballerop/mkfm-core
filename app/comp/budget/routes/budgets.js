@@ -13,6 +13,7 @@ var extend = require('util')._extend;
 var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
 var services = require(path.join(__dirname, '../../../services/services'));
+var valid = require(path.join(__dirname, '../../../services/inputValidation'));
 
 var fileuploadModels = require(path.join(__dirname, '../../gis/models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
@@ -1003,6 +1004,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.bcode": 1,
             "properties.binvestmentrequired": 1,
             "properties.bwidth": 1,
+            "properties.blenght": 1,
             "properties.btype": 1,
             "properties.Ccondition": 1,
             "properties.Ccode": 1,
@@ -1107,7 +1109,7 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                             } else {
                                 bcost = 0;
                             }
-                            bcosts[i] = formulasService.BridgesCost(ifdt.geometry.coordinates[i - 1], ifdt.geometry.coordinates[i], bcost, ifdt.properties.bwidth[i]);
+                            bcosts[i] = formulasService.BridgesCost(ifdt.properties.blenght[i], bcost, ifdt.properties.bwidth[i]);
                         } else {
                             bcosts[i] = "";
                         }
