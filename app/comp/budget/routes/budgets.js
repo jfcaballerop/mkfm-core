@@ -951,7 +951,7 @@ router.post('/V1/update_field/', function (req, res, next) {
     debug(field_name + ": " + value);
     var sendData = {};
     var arrField = field_name.split('__');
-    arrField[0] = arrField[0].replace('_', ' ');
+    //arrField[0] = arrField[0].replace('_', ' ');
     debug(arrField);
 
     Cost.findOne({}).exec(function (err, c) {
@@ -1012,6 +1012,22 @@ router.post('/V1/update_budgets/', function (req, res, next) {
             "properties.Clength": 1,
             "properties.Cdiameter": 1,
             "properties.Cmaterial": 1,
+            "properties.gmaterial": 1,
+            "properties.gcode": 1,
+            "properties.gtype": 1,
+            "properties.gcondition": 1,
+            "properties.gheight": 1,
+            "properties.glength": 1,
+            "properties.gnature": 1,
+            "properties.rginvestmentrequired": 1,
+            "properties.gmaterial2": 1,
+            "properties.gcode2": 1,
+            "properties.gtype2": 1,
+            "properties.gcondition2": 1,
+            "properties.gheight2": 1,
+            "properties.glength2": 1,
+            "properties.gnature2": 1,
+            "properties.rginvestmentrequired2": 1,
             "geometry.coordinates": 1
         }).exec(async function (err, ifdts) {
             if (err) {
@@ -1030,13 +1046,19 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 var rcosts = [];
                 var bcosts = [];
                 var Ccosts = [];
+                var gcosts = [];
+                var gcosts2 = [];
                 rcosts[0] = 0;
                 bcosts[0] = 0;
                 Ccosts[0] = 0;
+                gcosts[0] = 0;
+                gcosts2[0] = 0;
                 for (var i = 1; i < ifdt.geometry.coordinates.length; i++) {
                     var rcost = 0;
                     var bcost = 0;
                     var Ccost = 0;
+                    var gcost = 0;
+                    var gcost2 = 0;
                     /**
                      *  Revisamos que exista el código del asset
                      * */
@@ -1131,16 +1153,154 @@ router.post('/V1/update_budgets/', function (req, res, next) {
 
 
 
+                        } else {
+                            Ccosts[i] = "";
                         }
                     }
                     if (existsgcode) {
                         if (ifdt.properties.gcondition !== undefined && ifdt.properties.gcondition.length > 0 && ifdt.properties.gcondition[i] !== '' &&
                             ifdt.properties.gheight !== undefined && ifdt.properties.gheight.length > 0 && ifdt.properties.gheight[i] !== '' &&
-                            ifdt.properties.btype !== undefined && ifdt.properties.btype.length > 0 && ifdt.properties.btype[i] !== '') {
+                            ifdt.properties.glength !== undefined && ifdt.properties.glength.length > 0 && ifdt.properties.glength[i] !== undefined && ifdt.properties.glength[i] !== '' &&
+                            ifdt.properties.gtype !== undefined && ifdt.properties.gtype.length > 0 && ifdt.properties.gtype[i] !== '') {
 
+                            if (ifdt.properties.gnature !== undefined && ifdt.properties.gnature.length > 0 && ifdt.properties.gnature[i] !== '' &&
+                                (ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment") &&
+                                parseFloat(ifdt.properties.gheight[i]) >= 3) {
+
+                                var indexmat = c.Cuttings_Embankments.material.indexOf(ifdt.properties.gnature[i]);
+
+                                if (indexmat >= 0) {
+                                    switch (formulasService.ConditionRating(ifdt.properties.gcondition[i])) {
+                                        case 'E':
+                                            gcost = c.Cuttings_Embankments.value1[indexmat];
+                                            break;
+                                        case 'D':
+                                            gcost = c.Cuttings_Embankments.value2[indexmat];
+                                            break;
+                                        case 'C':
+                                            gcost = c.Cuttings_Embankments.value3[indexmat];
+                                            break;
+                                        case 'B':
+                                            gcost = c.Cuttings_Embankments.value4[indexmat];
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    gcost = 0;
+                                }
+
+                                gcosts[i] = formulasService.GeotCost(ifdt.properties.glength[i], gcost, ifdt.properties.gheight[i]);
+                                // debug('CuttingEmbankment ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i] + ' ' + gcosts[i]);
+                            } else if (ifdt.properties.gmaterial !== undefined && ifdt.properties.gmaterial.length > 0 && ifdt.properties.gmaterial[i] !== '' &&
+                                ifdt.properties.gtype[i] === "Retaining_walls" && parseFloat(ifdt.properties.gheight[i]) >= 1) {
+                                var indexmat = c.Retaining_walls.material.indexOf(ifdt.properties.gmaterial[i]);
+
+                                if (indexmat >= 0) {
+                                    switch (formulasService.ConditionRating(ifdt.properties.gcondition[i])) {
+                                        case 'E':
+                                            gcost = c.Retaining_walls.value1[indexmat];
+                                            break;
+                                        case 'D':
+                                            gcost = c.Retaining_walls.value2[indexmat];
+                                            break;
+                                        case 'C':
+                                            gcost = c.Retaining_walls.value3[indexmat];
+                                            break;
+                                        case 'B':
+                                            gcost = c.Retaining_walls.value4[indexmat];
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    gcost = 0;
+                                }
+
+                                gcosts[i] = formulasService.GeotCost(ifdt.properties.glength[i], gcost, ifdt.properties.gheight[i]);
+                                // debug('Retaining_walls ' + ifdt.properties.gheight[i] + ' ' + ifdt.properties.glength[i] + ' ' + gcosts[i]);
+
+                            }
+
+                        } else {
+                            gcosts[i] = "";
                         }
                     }
-                    if (existsgcode2) {}
+                    if (existsgcode2) {
+
+                        if (ifdt.properties.gcondition2 !== undefined && ifdt.properties.gcondition2.length > 0 && ifdt.properties.gcondition2[i] !== '' &&
+                            ifdt.properties.gheight2 !== undefined && ifdt.properties.gheight2.length > 0 && ifdt.properties.gheight2[i] !== '' &&
+                            ifdt.properties.glength2 !== undefined && ifdt.properties.glength2.length > 0 && ifdt.properties.glength2[i] !== undefined && ifdt.properties.glength2[i] !== '' &&
+                            ifdt.properties.gtype2 !== undefined && ifdt.properties.gtype2.length > 0 && ifdt.properties.gtype2[i] !== '') {
+
+                            if (ifdt.properties.gnature2 !== undefined && ifdt.properties.gnature2.length > 0 && ifdt.properties.gnature2[i] !== '' &&
+                                (ifdt.properties.gtype2[i] === "Cutting" || ifdt.properties.gtype2[i] === "Embankment") &&
+                                parseFloat(ifdt.properties.gheight2[i]) >= 3) {
+
+                                var indexmat = c.Cuttings_Embankments.material.indexOf(ifdt.properties.gnature2[i]);
+
+                                if (indexmat >= 0) {
+                                    switch (formulasService.ConditionRating(ifdt.properties.gcondition2[i])) {
+                                        case 'E':
+                                            gcost2 = c.Cuttings_Embankments.value1[indexmat];
+                                            break;
+                                        case 'D':
+                                            gcost2 = c.Cuttings_Embankments.value2[indexmat];
+                                            break;
+                                        case 'C':
+                                            gcost2 = c.Cuttings_Embankments.value3[indexmat];
+                                            break;
+                                        case 'B':
+                                            gcost2 = c.Cuttings_Embankments.value4[indexmat];
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    gcost2 = 0;
+                                }
+
+                                gcosts2[i] = formulasService.GeotCost(ifdt.properties.glength2[i], gcost2, ifdt.properties.gheight2[i]);
+                                // debug('CuttingEmbankment ' + ifdt.properties.gheight2[i] + ' ' + ifdt.properties.glength2[i] + ' ' + gcosts2[i]);
+                            } else if (ifdt.properties.gmaterial !== undefined && ifdt.properties.gmaterial.length > 0 && ifdt.properties.gmaterial[i] !== '' &&
+                                ifdt.properties.gtype2[i] === "Retaining_walls" && parseFloat(ifdt.properties.gheight2[i]) >= 1) {
+                                var indexmat = c.Retaining_walls.material.indexOf(ifdt.properties.gmaterial[i]);
+
+                                if (indexmat >= 0) {
+                                    switch (formulasService.ConditionRating(ifdt.properties.gcondition2[i])) {
+                                        case 'E':
+                                            gcost2 = c.Retaining_walls.value1[indexmat];
+                                            break;
+                                        case 'D':
+                                            gcost2 = c.Retaining_walls.value2[indexmat];
+                                            break;
+                                        case 'C':
+                                            gcost2 = c.Retaining_walls.value3[indexmat];
+                                            break;
+                                        case 'B':
+                                            gcost2 = c.Retaining_walls.value4[indexmat];
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    gcost2 = 0;
+                                }
+
+                                gcosts2[i] = formulasService.GeotCost(ifdt.properties.glength2[i], gcost2, ifdt.properties.gheight2[i]);
+                                // debug('Retaining_walls ' + ifdt.properties.gheight2[i] + ' ' + ifdt.properties.glength2[i] + ' ' + gcosts2[i]);
+
+                            }
+
+                        } else {
+                            gcosts2[i] = "";
+                        }
+
+                    }
 
 
                     if (ifdt.properties.rcondition !== undefined && ifdt.properties.rcondition.length > 0 &&
@@ -1182,7 +1342,10 @@ router.post('/V1/update_budgets/', function (req, res, next) {
                 var query = {
                     $set: {
                         "properties.rinvestmentrequired": rcosts,
-                        "properties.binvestmentrequired": bcosts
+                        "properties.binvestmentrequired": bcosts,
+                        "properties.Cinvestmentrequired": Ccosts,
+                        "properties.rginvestmentrequired": gcosts,
+                        "properties.rginvestmentrequired2": gcosts2
                     }
                 };
                 await Infodatatrack.update(conditions, query, function (err, iup) {
