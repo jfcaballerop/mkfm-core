@@ -895,7 +895,7 @@ router.post('/V1/validate/:id', function (req, res, next) {
                     "filename": fname_new,
                     "destination": path.join(process.env.PWD, config.UPLOADS_FILES_PATH),
                     "mimetype": "application/octet-stream",
-                    "assetcodes": 'juioñ',
+                    "assetCode": 'juioñ',
                     "originalname": fname_new_noext + '.geojson',
                     "owner": fup.owner,
                     "type": "geojson",
