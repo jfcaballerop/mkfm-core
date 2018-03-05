@@ -114,6 +114,9 @@
                                                     <th><i class="fa fa-file"></i>
                                                         <%- trans('LOADFILE_TITLE_ORIGNAME') %>
                                                     </th>
+                                                    <th><i class="fa fa-cubes"></i>
+                                                        <%- trans('LOADFILE_TITLE_ASSETCODE') %>
+                                                    </th>
                                                     <th><i class="fa fa-list-alt"></i>
                                                         <%- trans('LOADFILE_TITLE_TYPE') %>
                                                     </th>
@@ -141,6 +144,15 @@
                                                             <%= fup[i].originalname %>
                                                         </td>
                                                         <td>
+
+                                                            <% if( fup[i].assetCode != undefined ){ %>
+                                                                <%= fup[i].assetCode %>
+                                                                    <% } else{ %>
+                                                                        --
+                                                                        <% } %>
+
+                                                        </td>
+                                                        <td>
                                                             <%= fup[i].type %>
                                                         </td>
                                                         <td>
@@ -157,7 +169,7 @@
                                                         </td>
                                                         <td>
                                                             <div id="button_<%= fup[i]._id %>">
-                                                                <% if( "pending" == fup[i].status ) {   %>
+                                                                <% if( "pending" == fup[i].status && false) {   %>
                                                                     <button onclick="validate('<%= fup[i]._id %>');" class="btn btn-warning btn-xs">
                                                                         <i class="fa fa-question-circle"> Sin validar</i> 
                                                                     </button>

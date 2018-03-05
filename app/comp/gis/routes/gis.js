@@ -689,6 +689,7 @@ router.post('/V1/fileupload/', function (req, res, next) {
     });
 });
 
+
 /* GET JSON files listing. */
 router.get('/V1/', function (req, res, next) {
     Fileupload.find().sort({
@@ -894,6 +895,7 @@ router.post('/V1/validate/:id', function (req, res, next) {
                     "filename": fname_new,
                     "destination": path.join(process.env.PWD, config.UPLOADS_FILES_PATH),
                     "mimetype": "application/octet-stream",
+                    "assetCode": 'juioñ',
                     "originalname": fname_new_noext + '.geojson',
                     "owner": fup.owner,
                     "type": "geojson",

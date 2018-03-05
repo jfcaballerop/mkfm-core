@@ -13,6 +13,7 @@ var extend = require('util')._extend;
 var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
 var services = require(path.join(__dirname, '../../../services/services'));
+var valid = require(path.join(__dirname, '../../../services/inputValidation'));
 
 var fileuploadModels = require(path.join(__dirname, '../../gis/models/fileupload'));
 var Fileupload = mongoose.model('Fileupload');
