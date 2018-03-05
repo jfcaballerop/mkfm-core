@@ -17,6 +17,7 @@ var Schema = mongoose.Schema;
 // define the schema for our user model
 var fileuploadSchema = new Schema({
     filename: { type: String, required: true, unique: true },
+    assetcode: { type: String },
     path: { type: String, required: true },
     size: { type: Number },
     destination: { type: String },

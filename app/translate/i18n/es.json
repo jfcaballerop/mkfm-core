@@ -65,6 +65,7 @@
     "CANCEL": "Cancelar",
     "LOADFILE_TITLE_LISTADO": "Listado de Ficheros",
     "LOADFILE_TITLE_ORIGNAME": "Nombre Original",
+    "LOADFILE_TITLE_ASSETCODE": "Asset code",
     "LOADFILE_TITLE_TYPE": "Tipo",
     "LOADFILE_TITLE_MIME": "Mimetype",
     "LOADFILE_TITLE_SIZE": "Tamaño",
