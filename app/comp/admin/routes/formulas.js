@@ -4755,7 +4755,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         /////////////////////////////////////////////////////////////////
                                         // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
                                         //
-                                        totalScoring *= 0.00180000000001 * Math.pow(coincidenciasMechanical, 3) - 0.03050000000001 * Math.pow(coincidenciasMechanical, 2) + 0.03020000000001 * Math.pow(coincidenciasMechanical, 1) + 0.98620000000001;
+                                        if (coincidencias > 0) {
+                                            totalScoring *= 0.00180000000001 * Math.pow(coincidenciasMechanical, 3) - 0.03050000000001 * Math.pow(coincidenciasMechanical, 2) + 0.03020000000001 * Math.pow(coincidenciasMechanical, 1) + 0.98620000000001;
+                                        }
                                         if (coincidenciasDurable > 2) {
                                             totalScoring *= -0.0214 * coincidenciasDurable + 1.0643;
                                         }
