@@ -507,7 +507,7 @@ exports.riskRatingScale = function (lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
-    // debug('lof ' + lof + ' cons ' + cons);
+    debug('lof ' + lof + ' cons ' + cons);
     var lof = lof * 1;
     if (lof >= 0 && lof < 20) {
         lofv = '0-20';
@@ -519,6 +519,8 @@ exports.riskRatingScale = function (lof, cons) {
         lofv = '60-80';
     } else if (lof >= 80 && lof <= 100) {
         lofv = '80-100';
+    } else {
+        return 0;
     }
 
     risk_rating['0-20'] = [];
