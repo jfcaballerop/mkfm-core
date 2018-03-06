@@ -22,6 +22,7 @@ var Filetype = mongoose.model('Filetype');
 var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
 var costModels = require(path.join(__dirname, '../../budget/models/cost'));
+var Cost = mongoose.model('Cost');
 var schedulenatModels = require(path.join(__dirname, '../../schedule/models/schedulenat'));
 var Schedulenat = mongoose.model('Schedulenat');
 var schedulephyModels = require(path.join(__dirname, '../../schedule/models/schedulephy'));

@@ -199,6 +199,142 @@ exports.investmentNatural = function (ret, risknathaz_lof, risknathaz_cons, inve
 
     return ret;
 }
+exports.investmentRisk = function (ret, code, investment, type, assetype) {
+    var codearr = code.split('__');
+    var risk_cons = codearr[3];
+
+    if (type === 'NAT') {
+        var risk_lof = codearr[2].replace('RNAT-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_risknat1'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_brisknat1'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_crisknat1'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_grisknat1'] += investment * 1.0;
+
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_risknat2'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_brisknat2'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_crisknat2'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_grisknat2'] += investment * 1.0;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_risknat3'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_brisknat3'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_crisknat3'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_grisknat3'] += investment * 1.0;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_risknat4'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_brisknat4'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_crisknat4'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_grisknat4'] += investment * 1.0;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_risknat5'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_brisknat5'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_crisknat5'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_grisknat5'] += investment * 1.0;
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    } else {
+        var risk_lof = codearr[2].replace('RPHY-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_riskphy1'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_briskphy1'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_criskphy1'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_griskphy1'] += investment * 1.0;
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_riskphy2'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_briskphy2'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_criskphy2'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_griskphy2'] += investment * 1.0;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_riskphy3'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_briskphy3'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_criskphy3'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_griskphy3'] += investment * 1.0;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_riskphy4'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_briskphy4'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_criskphy4'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_griskphy4'] += investment * 1.0;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_investment_riskphy5'] += investment * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_investment_briskphy5'] += investment * 1.0;
+                if (assetype === 'CULVERTS')
+                    ret['Total_investment_criskphy5'] += investment * 1.0;
+                if (assetype === 'GEOT')
+                    ret['Total_investment_griskphy5'] += investment * 1.0;
+
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    }
+
+    return ret;
+}
 exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
@@ -1297,9 +1433,12 @@ exports.pavInterv = function (ret, schnats, schphys) {
     for (var snat of schnats) {
         // debug(Number(snat.properties.cost));
         ret['Total_investment'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
+        ret = this.investmentRisk(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT', snat.type);
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
             ret['Total_investment_pav'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
+
+
         } else if (snat.type === 'BRIDGES') {
             ret['Total_bridges_interventions']++;
             ret['Total_investment_bridges'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
@@ -1315,13 +1454,17 @@ exports.pavInterv = function (ret, schnats, schphys) {
         }
         ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
         ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
+        //ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)));
     }
     for (var sphy of schphys) {
 
         ret['Total_investment_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
+        ret = this.investmentRisk(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY', sphy.type);
+
         if (sphy.type === 'PAVEMENTS') {
             ret['Total_roads_interventions_phy']++;
             ret['Total_investment_pav_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
+
         } else if (sphy.type === 'BRIDGES') {
             ret['Total_bridges_interventions_phy']++;
             ret['Total_investment_bridges_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
