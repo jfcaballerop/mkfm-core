@@ -835,6 +835,69 @@
                         } else {
                             $('#datainfo').show();
                             $('#dataupload').show();
+
+                            if (ifdt.properties.koboedit !== undefined &&
+                                ifdt.properties.koboedit.length > 0 &&
+                                ifdt.properties.koboedit[0] !== undefined &&
+                                ifdt.properties.koboedit[0].kobo_id !== undefined) {
+                                var dataPhotoPost = {};
+                                var pphoto = $.ajax({
+                                    url: '/auth/WEB/koboinfo/list_koboinfos/' +
+                                        ifdt.properties.koboedit[0].kobo_id,
+                                    data: JSON.stringify(dataPhotoPost),
+                                    type: 'POST',
+                                    contentType: 'application/json'
+                                }, function (data) {
+                                    //// //console.log('koboinfo ' + JSON.stringify(data));
+                                    return (data);
+                                });
+                                Promise.all([pphoto]).then(function (values) {
+                                    koboinfo = values[0];
+                                    $.each(koboinfo, function (key, value) {
+                                        if (key === 'properties') {
+                                            $.each(value, function (kprop,
+                                                vprop) {
+                                                ////console.log(kprop, vprop);
+                                                if (kprop ===
+                                                    "_attachments") {
+
+                                                    $(
+                                                        "#datainfophoto"
+                                                    ).empty();
+                                                    $(
+                                                        "#datainfophoto"
+                                                    ).show();
+                                                    $.each(vprop,
+                                                        function (
+                                                            kfoto,
+                                                            vfoto
+                                                        ) {
+                                                            var
+                                                                fotosmall =
+                                                                vfoto
+                                                                .replace(
+                                                                    ".jpg",
+                                                                    "-small.jpg"
+                                                                );
+                                                            $(
+                                                                    "#datainfophoto"
+                                                                )
+                                                                .append(
+                                                                    '<img src="' +
+                                                                    fotosmall +
+                                                                    '">'
+                                                                );
+                                                            // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
+                                                        });
+                                                }
+
+
+                                            });
+                                        };
+                                    });
+                                });
+                            }
+
                             if (ifdt.properties.asset_type === 'ROAD') {
                                 $('#response').empty();
                                 $('#response').show();
@@ -870,65 +933,7 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
 
-                                if (ifdt.properties.koboedit[0] != undefined || ifdt.properties
-                                    .koboedit[0].kobo_id != undefined) {
-                                    var dataPhotoPost = {};
-                                    var pphoto = $.ajax({
-                                        url: '/auth/WEB/koboinfo/list_koboinfos/' +
-                                            ifdt.properties.koboedit[0].kobo_id,
-                                        data: JSON.stringify(dataPhotoPost),
-                                        type: 'POST',
-                                        contentType: 'application/json'
-                                    }, function (data) {
-                                        //// //console.log('koboinfo ' + JSON.stringify(data));
-                                        return (data);
-                                    });
-                                    Promise.all([pphoto]).then(function (values) {
-                                        koboinfo = values[0];
-                                        $.each(koboinfo, function (key, value) {
-                                            if (key === 'properties') {
-                                                $.each(value, function (kprop,
-                                                    vprop) {
-                                                    ////console.log(kprop, vprop);
-                                                    if (kprop ===
-                                                        "_attachments") {
 
-                                                        $(
-                                                            "#datainfophoto"
-                                                        ).empty();
-                                                        $(
-                                                            "#datainfophoto"
-                                                        ).show();
-                                                        $.each(vprop,
-                                                            function (
-                                                                kfoto,
-                                                                vfoto
-                                                            ) {
-                                                                var
-                                                                    fotosmall =
-                                                                    vfoto
-                                                                    .replace(
-                                                                        ".jpg",
-                                                                        "-small.jpg"
-                                                                    );
-                                                                $(
-                                                                        "#datainfophoto"
-                                                                    )
-                                                                    .append(
-                                                                        '<img src="' +
-                                                                        fotosmall +
-                                                                        '">'
-                                                                    );
-                                                                // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
-                                                            });
-                                                    }
-
-
-                                                });
-                                            };
-                                        });
-                                    });
-                                }
                                 jsonObject = ifdt;
                                 //// //console.log(jsonObject);
                                 jsonObject.properties.color = "#F47983";
