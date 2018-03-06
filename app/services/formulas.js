@@ -300,9 +300,16 @@ exports.PavementCost = function (coord1, coord2, rcondrmatcost, rwidth) {
     return ret;
 
 }
-exports.BridgesCost = function (coord1, coord2, bcondrmatcost, bwidth) {
+exports.PavementCostGroup = function (dist, rcondrmatcost, rwidth) {
     var ret = 0;
-    var dist = services.calDIST(coord1, coord2);
+    ret = dist * rwidth * rcondrmatcost;
+
+    return ret;
+
+}
+exports.BridgesCost = function (dist, bcondrmatcost, bwidth) {
+    var ret = 0;
+    // var dist = services.calDIST(coord1, coord2);
     ret = dist * bwidth * bcondrmatcost;
 
     // debug('Distancia ' + dist + ' cost: ' + ret + ' rcondrmatcost ' + rcondrmatcost);
