@@ -44,31 +44,59 @@ exports.investmentDistrict = function (arrInv, district, investment) {
 
     return arrInv;
 }
-exports.investmentCategory = function (arrInv, cat, investment) {
+exports.investmentCategory = function (arrInv, cat, investment, risk) {
 
-    switch (cat) {
-        case 'Urban':
-            arrInv['Total_investment_Urban'] += investment * 1.0;
+    if (risk === 'NAT') {
 
-            break;
-        case 'Main Road':
-            arrInv['Total_investment_MainRoad'] += investment * 1.0;
+        switch (cat) {
+            case 'Urban':
+                arrInv['Total_investment_Urban'] += investment * 1.0;
 
-
-            break;
-        case 'Feeder':
-            arrInv['Total_investment_Feeder'] += investment * 1.0;
+                break;
+            case 'Main Road':
+                arrInv['Total_investment_MainRoad'] += investment * 1.0;
 
 
-            break;
-        case 'Secondary':
-            arrInv['Total_investment_Secondary'] += investment * 1.0;
+                break;
+            case 'Feeder':
+                arrInv['Total_investment_Feeder'] += investment * 1.0;
 
 
-            break;
+                break;
+            case 'Secondary':
+                arrInv['Total_investment_Secondary'] += investment * 1.0;
 
-        default:
-            break;
+
+                break;
+
+            default:
+                break;
+        }
+    } else {
+        switch (cat) {
+            case 'Urban':
+                arrInv['Total_investment_Urban_phy'] += investment * 1.0;
+
+                break;
+            case 'Main Road':
+                arrInv['Total_investment_MainRoad_phy'] += investment * 1.0;
+
+
+                break;
+            case 'Feeder':
+                arrInv['Total_investment_Feeder_phy'] += investment * 1.0;
+
+
+                break;
+            case 'Secondary':
+                arrInv['Total_investment_Secondary_phy'] += investment * 1.0;
+
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     return arrInv;
@@ -615,32 +643,61 @@ exports.nRoadsDistrict = function (arrInv, district) {
     return arrInv;
 }
 
-exports.nRoadsCategory = function (arrInv, cat) {
+exports.nRoadsCategory = function (arrInv, cat, risk) {
 
-    switch (cat) {
-        case 'Urban':
-            arrInv['Total_roads_interventions_Urban']++;
+    if (risk === 'NAT') {
 
-            break;
-        case 'Main Road':
-            arrInv['Total_roads_interventions_MainRoad']++;
+        switch (cat) {
+            case 'Urban':
+                arrInv['Total_roads_interventions_Urban']++;
 
-
-            break;
-        case 'Feeder':
-            arrInv['Total_roads_interventions_Feeder']++;
+                break;
+            case 'Main Road':
+                arrInv['Total_roads_interventions_MainRoad']++;
 
 
-            break;
-        case 'Secondary':
-            arrInv['Total_roads_interventions_Secondary']++;
+                break;
+            case 'Feeder':
+                arrInv['Total_roads_interventions_Feeder']++;
 
 
-            break;
+                break;
+            case 'Secondary':
+                arrInv['Total_roads_interventions_Secondary']++;
 
 
-        default:
-            break;
+                break;
+
+
+            default:
+                break;
+        }
+    } else {
+        switch (cat) {
+            case 'Urban':
+                arrInv['Total_roads_interventions_Urban_phy']++;
+
+                break;
+            case 'Main Road':
+                arrInv['Total_roads_interventions_MainRoad_phy']++;
+
+
+                break;
+            case 'Feeder':
+                arrInv['Total_roads_interventions_Feeder_phy']++;
+
+
+                break;
+            case 'Secondary':
+                arrInv['Total_roads_interventions_Secondary_phy']++;
+
+
+                break;
+
+
+            default:
+                break;
+        }
     }
 
     return arrInv;
@@ -1227,6 +1284,14 @@ exports.pavInterv = function (ret, schnats, schphys) {
     ret['Total_investment_geot'] = 0;
     ret['Total_geot_interventions_phy'] = 0;
     ret['Total_investment_geot_phy'] = 0;
+    ret['Total_roads_interventions_Urban_phy'] = 0;
+    ret['Total_roads_interventions_MainRoad_phy'] = 0;
+    ret['Total_roads_interventions_Feeder_phy'] = 0;
+    ret['Total_roads_interventions_Secondary_phy'] = 0;
+    ret['Total_investment_Urban_phy'] = 0;
+    ret['Total_investment_MainRoad_phy'] = 0;
+    ret['Total_investment_Feeder_phy'] = 0;
+    ret['Total_investment_Secondary_phy'] = 0;
 
 
     for (var snat of schnats) {
@@ -1248,6 +1313,8 @@ exports.pavInterv = function (ret, schnats, schphys) {
             ret['Total_investment_geot'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
 
         }
+        ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
+        ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
     }
     for (var sphy of schphys) {
 
@@ -1268,6 +1335,9 @@ exports.pavInterv = function (ret, schnats, schphys) {
             ret['Total_investment_geot_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
 
         }
+        ret = this.nRoadsCategory(ret, sphy.properties.rcategory, 'PHY');
+        ret = this.investmentCategory(ret, sphy.properties.rcategory, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
+
     }
     return ret;
 
