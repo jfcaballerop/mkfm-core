@@ -38,15 +38,11 @@
                             <td>Pavements</td>
                             <td>
                                 <input class="form-control" id="disabledInputRiskPavements" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                Math.round(retValues.Total_investment_riskphy5*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_riskphy4*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_riskphy3*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_riskphy2*100/1000000)/100 +
-                                Math.round(retValues.Total_investment_riskphy1*100/1000000)/100 
+                                Math.round(retValues.Total_investment_pav_phy*100/1000000)/100 
                                  %>">
                             </td>
                             <td>
-                                <%- retValues.Total_roads_interventions %>
+                                <%- retValues.Total_roads_interventions_phy %>
                             </td>
 
                         </tr>
@@ -54,11 +50,7 @@
                             <td>Bridges</td>
                             <td>
                                 <input class="form-control" id="disabledInputRiskBridges" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                Math.round((retValues.Total_investment_briskphy5 +
-                                retValues.Total_investment_briskphy4 +
-                                retValues.Total_investment_briskphy3 +
-                                retValues.Total_investment_briskphy2 +
-                                retValues.Total_investment_briskphy1)*100/1000000)/100 
+                                Math.round((retValues.Total_investment_bridges_phy)*100/1000000)/100 
                                  %>">
                             </td>
                             <td>
@@ -70,11 +62,7 @@
                             <td>Culverts</td>
                             <td>
                                 <input class="form-control" id="disabledInputRiskCulverts" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                    Math.round((retValues.Total_investment_criskphy5 + 
-                                    retValues.Total_investment_criskphy4 + 
-                                    retValues.Total_investment_criskphy3 +
-                                    retValues.Total_investment_criskphy2 + 
-                                    retValues.Total_investment_criskphy1)*100/1000000)/100 %>">
+                                    Math.round((retValues.Total_investment_culverts)*100/1000000)/100 %>">
                             </td>
                             <td>
                                 <%- retValues.Total_culverts_interventions_phy %>
@@ -86,11 +74,7 @@
                             <td>Geotechnical assets</td>
                             <td>
                                 <input class="form-control" id="disabledInputRiskGeotechnicalassets" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                                                    Math.round((retValues.Total_investment_griskphy5 + 
-                                                                    retValues.Total_investment_griskphy4 + 
-                                                                    retValues.Total_investment_griskphy3 +
-                                                                    retValues.Total_investment_griskphy2 + 
-                                                                    retValues.Total_investment_griskphy1)*100/1000000)/100 %>">
+                                                                    Math.round((retValues.Total_investment_geot_phy)*100/1000000)/100 %>">
                             </td>
                             <td>
                                 <%- retValues.Total_geot_interventions_phy %>
@@ -109,40 +93,40 @@
                         <tr>
                             <td>Main Roads</td>
                             <td>
-                                <input class="form-control" id="disabledInputMainRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_MainRoad*100/1000000)/100 %>">
+                                <input class="form-control" id="disabledInputMainRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_MainRoad_phy*100/1000000)/100 %>">
                             </td>
                             <td>
-                                <%- retValues.Total_roads_interventions_MainRoad %>
+                                <%- retValues.Total_roads_interventions_MainRoad_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Secondary Roads</td>
                             <td>
-                                <input class="form-control" id="disabledInputSecondaryRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Secondary*100/1000000)/100 %>">
+                                <input class="form-control" id="disabledInputSecondaryRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Secondary_phy*100/1000000)/100 %>">
                             </td>
                             <td>
-                                <%- retValues.Total_roads_interventions_Secondary %>
+                                <%- retValues.Total_roads_interventions_Secondary_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Feeder Roads</td>
                             <td>
-                                <input class="form-control" id="disabledInputFeederRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Feeder*100/1000000)/100 %>">
+                                <input class="form-control" id="disabledInputFeederRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Feeder_phy*100/1000000)/100 %>">
                             </td>
                             <td>
-                                <%- retValues.Total_roads_interventions_Feeder %>
+                                <%- retValues.Total_roads_interventions_Feeder_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Urban Roads</td>
                             <td>
-                                <input class="form-control" id="disabledInputUrbanRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Urban*100/1000000)/100 %>">
+                                <input class="form-control" id="disabledInputUrbanRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Urban_phy*100/1000000)/100 %>">
                             </td>
                             <td>
-                                <%- retValues.Total_roads_interventions_Urban %>
+                                <%- retValues.Total_roads_interventions_Urban_phy %>
                             </td>
 
                         </tr>
