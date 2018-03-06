@@ -1677,7 +1677,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
         console.log(reason);
         return res.status(500).send(reason);
 
-    });;
+    });
 
 });
 
