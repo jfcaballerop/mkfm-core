@@ -4578,7 +4578,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                 for (var ifdt of ifdts) {
                     tracksUpdated2++;
-                    ////debug(ifdt._id);
+                    // debug('ifdt._id    ->    ' + ifdt._id);
                     // //debug(ifdt.geometry.coordinates);
                     var valueconditionsr = [];
                     ////debug('tracksUpdated2: ' + tracksUpdated2);
@@ -4598,11 +4598,16 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     // //debug('ifdt.properties.bcode.length: ' + ifdt.properties.bcode.length);
                                     // if (true) {
 
-                                    if ((ifdt.properties.bcode !== undefined && ifdt.properties.bcode.length > 0 &&
-                                            ifdt.properties.bcode[i] !== null &&
-                                            ifdt.properties.bcode[i] !== "" &&
-                                            ifdt.properties.bcode.length > 0) || true) {
-                                        //debug('totalScoring1 -- :  ' + totalScoring);
+                                    if  (  ifdt.properties.bcode !== undefined &&
+                                           ifdt.properties.bcode !== null &&
+                                           ifdt.properties.bcode.length > 0 &&
+                                           ifdt.properties.bcode[i] !== undefined &&
+                                           ifdt.properties.bcode[i] !== null &&
+                                           ifdt.properties.bcode[i] !== "" &&
+                                        ifdt.properties.bcode[i].length > 0) {
+                                        debug('ifdt._id               ->    ' + ifdt._id);
+                                        debug('ifdt.properties.name   ->    ' + ifdt.properties.name);
+                                        debug('totalScoring1 -- :  ' + totalScoring);
                                         var numberOfScores = 0;
                                         var numberOfTypeOfFailureProcess = 0;
                                         if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay !== undefined &&
@@ -4629,7 +4634,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 }
                                             }
                                         }
-                                        //debug('totalScoring2:  ' + totalScoring);
+                                        debug('totalScoring2:  ' + totalScoring);
                                         //debug('ifdt.properties.BDamagesslabSeverity.length: ' + ifdt.properties.BDamagesslabSeverity.length);
                                         if (form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay !== undefined &&
                                             form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[0] !== undefined &&
@@ -4654,7 +4659,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 }
                                             }
                                         }
-                                        //debug('totalScoring3:  ' + totalScoring);
+                                        debug('totalScoring3:  ' + totalScoring);
                                         // Mechanical Defects, Durable Defects
                                         z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBeams", "BdamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas"];
 
@@ -4714,7 +4719,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                             //debug(capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i].toString()]).indexOf(b));
                                                             totalScoring = totalScoring < temporary ? totalScoring : temporary;
                                                             //debug(temporary);
-                                                            //debug('totalScoring ->: ' + totalScoring);
+                                                            debug('totalScoring ->: ' + totalScoring);
                                                         }
                                                     }
                                                     //debug('temporary: ' + temporary);
@@ -4724,7 +4729,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         }
                                         //debug('coincidencias despues: ' + coincidencias)
                                         // **************************
-                                        //debug('totalScoring3.1:  ' + totalScoring);
+                                        debug('totalScoring3.1:  ' + totalScoring);
                                         //debug('ifdt.properties.bdamagesnonstructural.length: ' + ifdt.properties.bdamagesnonstructural.length);
                                         // if (ifdt.properties.bdamagesnonstructural !== undefined && ifdt.properties.bdamagesnonstructural.length > 0 &&
                                         //     ifdt.properties.bdamagesnonstructural[i] !== undefined && ifdt.properties.bdamagesnonstructural[i].length > 0) {
@@ -4734,7 +4739,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             // //debug(diccDominicaToKobo[x.toString()]);
                                             // //debug('q1:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.DecayOfNonDurableElements.scoring[x]);
                                             // //debug('q2:  ' + form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight);
-                                            // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                            totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
                                         } else {
 
                                             coincidencias++;
@@ -4748,7 +4753,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         }
                                         // }
                                         // }
-                                        //debug('totalScoring4:  ' + totalScoring);
+                                        debug('totalScoring4:  ' + totalScoring);
                                         //debug('coincidencias: ' + coincidencias)
                                         //debug('coincidencias despues2: ' + coincidencias)
 
@@ -4765,7 +4770,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         /////////////////////////////////////////////////////////////////
 
                                         totalScoring = (totalScoring === Number.MAX_VALUE) ? 0 : totalScoring;
-                                        //debug('totalScoring5:  ' + totalScoring);
+                                        debug('totalScoring5:  ' + totalScoring);
                                         // //debug(totalScoring);
                                         //  CORRECTIVE FACTORS - Bridge type
                                         if (ifdt.properties.btype !== undefined &&
@@ -4792,12 +4797,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                         } else {
 
-                                            totalScoring *= 0.0;
-                                            totalScoring = null;
+                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring['Other'];
                                         }
-                                        //debug('totalScoring6:  ' + totalScoring);
+                                        debug('totalScoring6:  ' + totalScoring);
 
                                         totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                        debug('totalScoring7:  ' + totalScoring);
                                         /**
                                          * jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
                                          */
