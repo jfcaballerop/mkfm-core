@@ -507,7 +507,7 @@ exports.riskRatingScale = function (lof, cons) {
     var ret = 1;
     var risk_rating = [];
     var lofv = "";
-    debug('lof ' + lof + ' cons ' + cons);
+    // debug('lof ' + lof + ' cons ' + cons);
     var lof = lof * 1;
     if (lof >= 0 && lof < 20) {
         lofv = '0-20';
@@ -522,6 +522,46 @@ exports.riskRatingScale = function (lof, cons) {
     } else {
         return 0;
     }
+
+    risk_rating['0-20'] = [];
+    risk_rating['0-20']['A'] = 1;
+    risk_rating['0-20']['B'] = 1;
+    risk_rating['0-20']['C'] = 2;
+    risk_rating['0-20']['D'] = 2;
+    risk_rating['0-20']['E'] = 3;
+    risk_rating['20-40'] = [];
+    risk_rating['20-40']['A'] = 1;
+    risk_rating['20-40']['B'] = 2;
+    risk_rating['20-40']['C'] = 2;
+    risk_rating['20-40']['D'] = 3;
+    risk_rating['20-40']['E'] = 3;
+    risk_rating['40-60'] = [];
+    risk_rating['40-60']['A'] = 2;
+    risk_rating['40-60']['B'] = 3;
+    risk_rating['40-60']['C'] = 3;
+    risk_rating['40-60']['D'] = 3;
+    risk_rating['40-60']['E'] = 4;
+    risk_rating['60-80'] = [];
+    risk_rating['60-80']['A'] = 2;
+    risk_rating['60-80']['B'] = 3;
+    risk_rating['60-80']['C'] = 3;
+    risk_rating['60-80']['D'] = 4;
+    risk_rating['60-80']['E'] = 5;
+    risk_rating['80-100'] = [];
+    risk_rating['80-100']['A'] = 3;
+    risk_rating['80-100']['B'] = 3;
+    risk_rating['80-100']['C'] = 4;
+    risk_rating['80-100']['D'] = 5;
+    risk_rating['80-100']['E'] = 5;
+
+    ret = risk_rating[lofv][cons];
+
+    return ret;
+}
+exports.riskRatingScaleString = function (lofv, cons) {
+    var ret = 1;
+    var risk_rating = [];
+
 
     risk_rating['0-20'] = [];
     risk_rating['0-20']['A'] = 1;
