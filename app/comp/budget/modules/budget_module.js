@@ -779,22 +779,24 @@ exports.KmLikelihood = function (ret, code, length, type) {
 
     return ret;
 }
-exports.nLikelihood = function (ret, cond, asset, type) {
+exports.nLikelihood = function (ret, code, asset, type) {
+    var codearr = code.split('__');
 
     switch (type) {
-        case 'phy':
-            switch (formulasService.LikelihoodofFailureRatingScale(cond)) {
+        case 'PHY':
+            var lof = codearr[2].replace('RPHY-', '');
+            switch (formulasService.LikelihoodofFailureRatingScale(lof)) {
                 case 1:
                     switch (asset) {
-                        case 'bridges':
+                        case 'BRIDGES':
                             ret['Total_bridges_lof1']++;
 
                             break;
-                        case 'culverts':
+                        case 'CULVERTS':
                             ret['Total_culverts_lof1']++;
 
                             break;
-                        case 'geot':
+                        case 'GEOT':
                             ret['Total_geot_lof1']++;
 
                             break;
@@ -805,15 +807,15 @@ exports.nLikelihood = function (ret, cond, asset, type) {
                     break;
                 case 2:
                     switch (asset) {
-                        case 'bridges':
+                        case 'BRIDGES':
                             ret['Total_bridges_lof2']++;
 
                             break;
-                        case 'culverts':
+                        case 'CULVERTS':
                             ret['Total_culverts_lof2']++;
 
                             break;
-                        case 'geot':
+                        case 'GEOT':
                             ret['Total_geot_lof2']++;
 
                             break;
@@ -824,15 +826,15 @@ exports.nLikelihood = function (ret, cond, asset, type) {
                     break;
                 case 3:
                     switch (asset) {
-                        case 'bridges':
+                        case 'BRIDGES':
                             ret['Total_bridges_lof3']++;
 
                             break;
-                        case 'culverts':
+                        case 'CULVERTS':
                             ret['Total_culverts_lof3']++;
 
                             break;
-                        case 'geot':
+                        case 'GEOT':
                             ret['Total_geot_lof3']++;
 
                             break;
@@ -843,15 +845,15 @@ exports.nLikelihood = function (ret, cond, asset, type) {
                     break;
                 case 4:
                     switch (asset) {
-                        case 'bridges':
+                        case 'BRIDGES':
                             ret['Total_bridges_lof4']++;
 
                             break;
-                        case 'culverts':
+                        case 'CULVERTS':
                             ret['Total_culverts_lof4']++;
 
                             break;
-                        case 'geot':
+                        case 'GEOT':
                             ret['Total_geot_lof4']++;
 
                             break;
@@ -862,16 +864,120 @@ exports.nLikelihood = function (ret, cond, asset, type) {
                     break;
                 case 5:
                     switch (asset) {
-                        case 'bridges':
+                        case 'BRIDGES':
                             ret['Total_bridges_lof5']++;
 
                             break;
-                        case 'culverts':
+                        case 'CULVERTS':
                             ret['Total_culverts_lof5']++;
 
                             break;
-                        case 'geot':
+                        case 'GEOT':
                             ret['Total_geot_lof5']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            break;
+        case 'NAT':
+            var lof = codearr[2].replace('RNAT-', '');
+            switch (formulasService.LikelihoodofFailureRatingScale(lof)) {
+                case 1:
+                    switch (asset) {
+                        case 'BRIDGES':
+                            ret['Total_bridges_lofnat1']++;
+
+                            break;
+                        case 'CULVERTS':
+                            ret['Total_culverts_lofnat1']++;
+
+                            break;
+                        case 'GEOT':
+                            ret['Total_geot_lofnat1']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (asset) {
+                        case 'BRIDGES':
+                            ret['Total_bridges_lofnat2']++;
+
+                            break;
+                        case 'CULVERTS':
+                            ret['Total_culverts_lofnat2']++;
+
+                            break;
+                        case 'GEOT':
+                            ret['Total_geot_lofnat2']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (asset) {
+                        case 'BRIDGES':
+                            ret['Total_bridges_lofnat3']++;
+
+                            break;
+                        case 'CULVERTS':
+                            ret['Total_culverts_lofnat3']++;
+
+                            break;
+                        case 'GEOT':
+                            ret['Total_geot_lofnat3']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (asset) {
+                        case 'BRIDGES':
+                            ret['Total_bridges_lofnat4']++;
+
+                            break;
+                        case 'CULVERTS':
+                            ret['Total_culverts_lofnat4']++;
+
+                            break;
+                        case 'GEOT':
+                            ret['Total_geot_lofnat4']++;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (asset) {
+                        case 'BRIDGES':
+                            ret['Total_bridges_lofnat5']++;
+
+                            break;
+                        case 'CULVERTS':
+                            ret['Total_culverts_lofnat5']++;
+
+                            break;
+                        case 'GEOT':
+                            ret['Total_geot_lofnat5']++;
 
                             break;
 
@@ -1592,7 +1698,21 @@ exports.pavInterv = function (ret, schnats, schphys) {
     ret['Total_km_lofphy3'] = 0;
     ret['Total_km_lofphy4'] = 0;
     ret['Total_km_lofphy5'] = 0;
-
+    ret['Total_bridges_lofnat1'] = 0;
+    ret['Total_culverts_lofnat1'] = 0;
+    ret['Total_geot_lofnat1'] = 0;
+    ret['Total_bridges_lofnat2'] = 0;
+    ret['Total_culverts_lofnat2'] = 0;
+    ret['Total_geot_lofnat2'] = 0;
+    ret['Total_bridges_lofnat3'] = 0;
+    ret['Total_culverts_lofnat3'] = 0;
+    ret['Total_geot_lofnat3'] = 0;
+    ret['Total_bridges_lofnat4'] = 0;
+    ret['Total_culverts_lofnat4'] = 0;
+    ret['Total_geot_lofnat4'] = 0;
+    ret['Total_bridges_lofnat5'] = 0;
+    ret['Total_culverts_lofnat5'] = 0;
+    ret['Total_geot_lofnat5'] = 0;
 
     for (var snat of schnats) {
         // debug(Number(snat.properties.cost));
@@ -1600,6 +1720,7 @@ exports.pavInterv = function (ret, schnats, schphys) {
         ret = this.investmentRisk(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT', snat.type);
         ret = this.nAssetsRisk(ret, snat.properties.code, snat.properties.length, 'NAT', snat.type);
         ret = this.KmLikelihood(ret, snat.properties.code, snat.properties.length, 'NAT');
+        ret = this.nLikelihood(ret, snat.properties.code, snat.type, 'NAT');
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
             ret['Total_investment_pav'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
@@ -1628,6 +1749,8 @@ exports.pavInterv = function (ret, schnats, schphys) {
         ret = this.investmentRisk(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY', sphy.type);
         ret = this.nAssetsRisk(ret, sphy.properties.code, sphy.properties.length, 'PHY', sphy.type);
         ret = this.KmLikelihood(ret, sphy.properties.code, sphy.properties.length, 'PHY');
+        ret = this.nLikelihood(ret, sphy.properties.code, sphy.type, 'PHY');
+
         if (sphy.type === 'PAVEMENTS') {
             ret['Total_roads_interventions_phy']++;
             ret['Total_investment_pav_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
