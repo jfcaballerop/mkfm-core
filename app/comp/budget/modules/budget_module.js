@@ -335,6 +335,142 @@ exports.investmentRisk = function (ret, code, investment, type, assetype) {
 
     return ret;
 }
+exports.nAssetsRisk = function (ret, code, length, type, assetype) {
+    var codearr = code.split('__');
+    var risk_cons = codearr[3];
+
+    if (type === 'NAT') {
+        var risk_lof = codearr[2].replace('RNAT-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_risknat1'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_brisknat1']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_crisknat1']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_grisknat1']++;
+
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_risknat2'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_brisknat2']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_crisknat2']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_grisknat2']++;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_risknat3'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_brisknat3']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_crisknat3']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_grisknat3']++;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_risknat4'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_brisknat4']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_crisknat4']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_grisknat4']++;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_risknat5'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_brisknat5']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_crisknat5']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_grisknat5']++;
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    } else {
+        var risk_lof = codearr[2].replace('RPHY-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_riskphy1'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_briskphy1']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_criskphy1']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_griskphy1']++;
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_riskphy2'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_briskphy2']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_criskphy2']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_griskphy2']++;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_riskphy3'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_briskphy3']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_criskphy3']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_griskphy3']++;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_riskphy4'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_briskphy4']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_criskphy4']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_griskphy4']++;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Total_km_riskphy5'] += length * 1.0;
+                if (assetype === 'BRIDGES')
+                    ret['Total_num_briskphy5']++;
+                if (assetype === 'CULVERTS')
+                    ret['Total_num_criskphy5']++;
+                if (assetype === 'GEOT')
+                    ret['Total_num_griskphy5']++;
+
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    }
+
+    return ret;
+}
 exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
@@ -590,37 +726,55 @@ exports.investmentKmCriticality = function (ret, crit, coord1, coord2, index) {
 
     return ret;
 }
-exports.KmLikelihood = function (ret, cond, coord1, coord2, index) {
+exports.KmLikelihood = function (ret, code, length, type) {
+    var codearr = code.split('__');
+    var vlength = Number(length);
+    if (type === 'NAT') {
+        var risk_lof = codearr[2].replace('RNAT-', '');
+        switch (formulasService.LikelihoodofFailureRatingScale(risk_lof)) {
+            case 1:
+                // debug(risk_lof);
+                // debug(length);
+                ret['Total_km_lofnat1'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 2:
+                ret['Total_km_lofnat2'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 3:
+                ret['Total_km_lofnat3'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 4:
+                ret['Total_km_lofnat4'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 5:
+                ret['Total_km_lofnat5'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
 
-    switch (formulasService.LikelihoodofFailureRatingScale(cond)) {
-        case 1:
-            if (index > 0) {
-                ret['Total_km_lof1'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 2:
-            if (index > 0) {
-                ret['Total_km_lof2'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 3:
-            if (index > 0) {
-                ret['Total_km_lof3'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 4:
-            if (index > 0) {
-                ret['Total_km_lof4'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 5:
-            if (index > 0) {
-                ret['Total_km_lof5'] += services.calDIST(coord1, coord2);
-            }
-            break;
+            default:
+                break;
+        }
+    } else {
+        var risk_lof = codearr[2].replace('RPHY-', '');
+        switch (formulasService.LikelihoodofFailureRatingScale(risk_lof)) {
+            case 1:
+                ret['Total_km_lofphy1'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 2:
+                ret['Total_km_lofphy2'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 3:
+                ret['Total_km_lofphy3'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 4:
+                ret['Total_km_lofphy4'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 5:
+                ret['Total_km_lofphy5'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
 
-        default:
-            break;
+            default:
+                break;
+        }
     }
 
     return ret;
@@ -1428,12 +1582,24 @@ exports.pavInterv = function (ret, schnats, schphys) {
     ret['Total_investment_MainRoad_phy'] = 0;
     ret['Total_investment_Feeder_phy'] = 0;
     ret['Total_investment_Secondary_phy'] = 0;
+    ret['Total_km_lofnat1'] = 0;
+    ret['Total_km_lofnat2'] = 0;
+    ret['Total_km_lofnat3'] = 0;
+    ret['Total_km_lofnat4'] = 0;
+    ret['Total_km_lofnat5'] = 0;
+    ret['Total_km_lofphy1'] = 0;
+    ret['Total_km_lofphy2'] = 0;
+    ret['Total_km_lofphy3'] = 0;
+    ret['Total_km_lofphy4'] = 0;
+    ret['Total_km_lofphy5'] = 0;
 
 
     for (var snat of schnats) {
         // debug(Number(snat.properties.cost));
         ret['Total_investment'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
         ret = this.investmentRisk(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT', snat.type);
+        ret = this.nAssetsRisk(ret, snat.properties.code, snat.properties.length, 'NAT', snat.type);
+        ret = this.KmLikelihood(ret, snat.properties.code, snat.properties.length, 'NAT');
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
             ret['Total_investment_pav'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
@@ -1460,7 +1626,8 @@ exports.pavInterv = function (ret, schnats, schphys) {
 
         ret['Total_investment_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
         ret = this.investmentRisk(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY', sphy.type);
-
+        ret = this.nAssetsRisk(ret, sphy.properties.code, sphy.properties.length, 'PHY', sphy.type);
+        ret = this.KmLikelihood(ret, sphy.properties.code, sphy.properties.length, 'PHY');
         if (sphy.type === 'PAVEMENTS') {
             ret['Total_roads_interventions_phy']++;
             ret['Total_investment_pav_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));

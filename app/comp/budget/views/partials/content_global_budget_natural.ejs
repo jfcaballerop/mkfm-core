@@ -429,11 +429,16 @@
                             <tbody>
                                 <tr>
                                     <td>Km of Road per Pavement Risk Score</td>
-                                    <td>60 km</td>
-                                    <td>260 km</td>
-                                    <td>320 km</td>
-                                    <td>220 km</td>
-                                    <td>40 km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lofnat1*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lofnat2*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lofnat3*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lofnat4*100/1000)/100  %> km</td>
+                                    <td>
+                                        <%- Math.round(retValues.Total_km_lofnat5*100/1000)/100  %> km</td>
                                 </tr>
                                 <tr>
                                     <td>No of Bridges per Risk Score</td>
