@@ -402,34 +402,34 @@ exports.criticalityRatingLetterScale = function (critNumVal) {
 
     return ret;
 }
-exports.LikelihoodofFailureRatingScale = function (cond_letter) {
-    var ret = 1;
+exports.LikelihoodofFailureRatingScale = function (lofv) {
+    // var ret = 1;
     var lof_rating = [];
-    var lofv = 0;
-    // debug('cond_letter ' + cond_letter);
-    if (cond_letter === "E") {
-        lofv = 10;
-    } else if (cond_letter === "D") {
-        lofv = 30;
-    } else if (cond_letter === "C") {
-        lofv = 50;
-    } else if (cond_letter === "B") {
-        lofv = 70;
-    } else if (cond_letter === "A") {
-        lofv = 90;
-    }
-    lof = 100 - lofv;
-    if (lof >= 0 && lof < 20) {
-        lofv = '0-20';
-    } else if (lof >= 20 && lof < 40) {
-        lofv = '20-40';
-    } else if (lof >= 40 && lof < 60) {
-        lofv = '40-60';
-    } else if (lof >= 60 && lof < 80) {
-        lofv = '60-80';
-    } else if (lof >= 80 && lof <= 100) {
-        lofv = '80-100';
-    }
+    // var lofv = 0;
+    // // debug('cond_letter ' + cond_letter);
+    // if (cond_letter === "E") {
+    //     lofv = 10;
+    // } else if (cond_letter === "D") {
+    //     lofv = 30;
+    // } else if (cond_letter === "C") {
+    //     lofv = 50;
+    // } else if (cond_letter === "B") {
+    //     lofv = 70;
+    // } else if (cond_letter === "A") {
+    //     lofv = 90;
+    // }
+    // lof = 100 - lofv;
+    // if (lof >= 0 && lof < 20) {
+    //     lofv = '0-20';
+    // } else if (lof >= 20 && lof < 40) {
+    //     lofv = '20-40';
+    // } else if (lof >= 40 && lof < 60) {
+    //     lofv = '40-60';
+    // } else if (lof >= 60 && lof < 80) {
+    //     lofv = '60-80';
+    // } else if (lof >= 80 && lof <= 100) {
+    //     lofv = '80-100';
+    // }
     lof_rating['0-20'] = [];
     lof_rating['0-20'] = 1;
     lof_rating['20-40'] = [];
