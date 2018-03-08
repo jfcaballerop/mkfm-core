@@ -55,11 +55,11 @@ var filetypesObject = {};
         WEB CALLS
 **********************************************************/
 /* GET Control panel */
-router.get('/indexes', function (req, resp, next) {
+router.get('/indexes/:level', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/budget/V1/get_budget_files/',
+        path: config.PATH_API + '/budget/V1/get_budget_files/' + req.params.level,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -258,20 +258,267 @@ router.get('/V1/get_costlibrary/', function (req, res, next) {
 
 });
 /* GET JSON ifdts config. */
-router.get('/V1/get_budget_files/', function (req, res, next) {
+router.get('/V1/get_budget_files/:level', function (req, res, next) {
 
     var ret = {};
-
+    var level = Number(req.params.level);
     var schnats;
     var schphys;
     var arrPromises = [];
-    arrPromises.push(Schedulenat.find().exec(function (err, scheds) {
+    var levelRange = [];
+
+
+
+    switch (level) {
+        case 1:
+            // levelRange.push({
+            //     "properties.code": /20-40__A/
+            // });
+            // levelRange.push({
+            //     "properties.code": /0-20__A/
+            // });
+            // levelRange.push({
+            //     "properties.code": /0-20__B/
+            // });
+            levelRange.push({
+                "properties.code": /60-80__A/
+            });
+            levelRange.push({
+                "properties.code": /40-60__A/
+            });
+            levelRange.push({
+                "properties.code": /20-40__B/
+            });
+            levelRange.push({
+                "properties.code": /20-40__C/
+            });
+            levelRange.push({
+                "properties.code": /0-20__C/
+            });
+            levelRange.push({
+                "properties.code": /0-20__D/
+            });
+            levelRange.push({
+                "properties.code": /80-100__A/
+            });
+            levelRange.push({
+                "properties.code": /80-100__B/
+            });
+            levelRange.push({
+                "properties.code": /60-80__B/
+            });
+            levelRange.push({
+                "properties.code": /40-60__B/
+            });
+            levelRange.push({
+                "properties.code": /60-80__C/
+            });
+            levelRange.push({
+                "properties.code": /40-60__C/
+            });
+            levelRange.push({
+                "properties.code": /40-60__D/
+            });
+            levelRange.push({
+                "properties.code": /20-40__D/
+            });
+            levelRange.push({
+                "properties.code": /20-40__E/
+            });
+            levelRange.push({
+                "properties.code": /0-20__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__C/
+            });
+            levelRange.push({
+                "properties.code": /60-80__D/
+            });
+            levelRange.push({
+                "properties.code": /40-60__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__D/
+            });
+            levelRange.push({
+                "properties.code": /60-80__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__E/
+            });
+
+            break;
+        case 2:
+            // levelRange.push({
+            //     "properties.code": /60-80__A/
+            // });
+            // levelRange.push({
+            //     "properties.code": /40-60__A/
+            // });
+            // levelRange.push({
+            //     "properties.code": /20-40__B/
+            // });
+            // levelRange.push({
+            //     "properties.code": /20-40__C/
+            // });
+            // levelRange.push({
+            //     "properties.code": /0-20__C/
+            // });
+            // levelRange.push({
+            //     "properties.code": /0-20__D/
+            // });
+            levelRange.push({
+                "properties.code": /80-100__A/
+            });
+            levelRange.push({
+                "properties.code": /80-100__B/
+            });
+            levelRange.push({
+                "properties.code": /60-80__B/
+            });
+            levelRange.push({
+                "properties.code": /40-60__B/
+            });
+            levelRange.push({
+                "properties.code": /60-80__C/
+            });
+            levelRange.push({
+                "properties.code": /40-60__C/
+            });
+            levelRange.push({
+                "properties.code": /40-60__D/
+            });
+            levelRange.push({
+                "properties.code": /20-40__D/
+            });
+            levelRange.push({
+                "properties.code": /20-40__E/
+            });
+            levelRange.push({
+                "properties.code": /0-20__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__C/
+            });
+            levelRange.push({
+                "properties.code": /60-80__D/
+            });
+            levelRange.push({
+                "properties.code": /40-60__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__D/
+            });
+            levelRange.push({
+                "properties.code": /60-80__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__E/
+            });
+            break;
+        case 3:
+            // levelRange.push({
+            //     "properties.code": /80-100__A/
+            // });
+            // levelRange.push({
+            //     "properties.code": /80-100__B/
+            // });
+            // levelRange.push({
+            //     "properties.code": /60-80__B/
+            // });
+            // levelRange.push({
+            //     "properties.code": /40-60__B/
+            // });
+            // levelRange.push({
+            //     "properties.code": /60-80__C/
+            // });
+            // levelRange.push({
+            //     "properties.code": /40-60__C/
+            // });
+            // levelRange.push({
+            //     "properties.code": /40-60__D/
+            // });
+            // levelRange.push({
+            //     "properties.code": /20-40__D/
+            // });
+            // levelRange.push({
+            //     "properties.code": /20-40__E/
+            // });
+            // levelRange.push({
+            //     "properties.code": /0-20__E/
+            // });
+            levelRange.push({
+                "properties.code": /80-100__C/
+            });
+            levelRange.push({
+                "properties.code": /60-80__D/
+            });
+            levelRange.push({
+                "properties.code": /40-60__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__D/
+            });
+            levelRange.push({
+                "properties.code": /60-80__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__E/
+            });
+            break;
+        case 4:
+            // levelRange.push({
+            //     "properties.code": /80-100__C/
+            // });
+            // levelRange.push({
+            //     "properties.code": /60-80__D/
+            // });
+            // levelRange.push({
+            //     "properties.code": /40-60__E/
+            // });
+            levelRange.push({
+                "properties.code": /80-100__D/
+            });
+            levelRange.push({
+                "properties.code": /60-80__E/
+            });
+            levelRange.push({
+                "properties.code": /80-100__E/
+            });
+            break;
+        case 5:
+            // levelRange.push({
+            //     "properties.code": /80-100__D/
+            // });
+            // levelRange.push({
+            //     "properties.code": /60-80__E/
+            // });
+            // levelRange.push({
+            //     "properties.code": /80-100__E/
+            // });
+            levelRange.push({
+                "properties.code": /NOTHING/
+            });
+            break;
+        default:
+            break;
+    }
+
+    // debug(levelRange);
+    arrPromises.push(Schedulenat.find({
+
+        $or: levelRange
+
+    }).exec(function (err, scheds) {
         if (err) {
             res.send(500, err.message);
         }
         return scheds;
     }));
-    arrPromises.push(Schedulephy.find().exec(function (err, scheds) {
+    arrPromises.push(Schedulephy.find({
+
+        $or: levelRange
+    }).exec(function (err, scheds) {
         if (err) {
             res.send(500, err.message);
         }
@@ -284,7 +531,7 @@ router.get('/V1/get_budget_files/', function (req, res, next) {
         debug('Nat length ' + schnats.length);
         debug('Phy length ' + schphys.length);
 
-        ret = budgetModule.pavInterv(ret, schnats, schphys);
+        ret = budgetModule.schedInterv(ret, schnats, schphys);
         debug(ret);
         res.status(200).jsonp(ret);
 
