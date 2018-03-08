@@ -1647,7 +1647,7 @@ exports.nInterventionsCriticality = function (ret, code, asset, type) {
     return ret;
 }
 
-exports.pavInterv = function (ret, schnats, schphys) {
+exports.schedInterv = function (ret, schnats, schphys) {
 
     ret['Total_interventions'] = schnats.length;
     ret['Total_interventions_phy'] = schphys.length;

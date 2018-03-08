@@ -632,6 +632,31 @@ exports.riskRatingScaleString = function (lofv, cons) {
 
     return ret;
 }
+exports.riskRatingScaleStringLof = function (lofv) {
+    var ret = 1;
+    var risk_rating = [];
+
+
+    risk_rating['0-20'] = [];
+    risk_rating['0-20'] = 1;
+
+    risk_rating['20-40'] = [];
+    risk_rating['20-40'] = 2;
+
+    risk_rating['40-60'] = [];
+    risk_rating['40-60'] = 3;
+
+    risk_rating['60-80'] = [];
+    risk_rating['60-80'] = 4;
+
+    risk_rating['80-100'] = [];
+    risk_rating['80-100'] = 5;
+
+
+    ret = risk_rating[lofv];
+
+    return ret;
+}
 exports.riskRatingScaleOrder = function (risk_value) {
     var ret = 1;
     var risk_rating = [];
