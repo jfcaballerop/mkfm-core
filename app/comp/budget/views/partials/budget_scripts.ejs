@@ -386,10 +386,20 @@
                 return (data);
             });
             Promise.all([p1]).then(function (values) {
-                console.log(values);
+
                 //$("html").html(values[0]);
                 if (values[0].result === "OK") {
                     console.log('OK');
+                    for (var val of Object.keys(values[0])) {
+                        console.log(val + ' ' + values[0][val]);
+                        if (val.indexOf('investment') >= 0)
+                            $('#' + val).html(Math.round(values[0][val] * 100 / 1000000) / 100);
+                        else if (val.indexOf('km') >= 0)
+                            $('#' + val).html(Math.round(values[0][val] * 100 / 1000) / 100);
+                        else
+                            $('#' + val).html(values[0][val]);
+                    }
+
                 } else {
                     console.log('ERROR');
                 }
