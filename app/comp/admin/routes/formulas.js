@@ -4441,7 +4441,6 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            tot_sc_temp = totalScoring;
                                                             if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
 
                                                                 if (ifdt.properties.gintensityfailure2[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
@@ -4450,10 +4449,14 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
                                                                     esnull = true;
 
+                                                                    tot_sc_temp = totalScoring;
                                                                     numberOfScores++;
-                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) !== ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
-                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 9 : (
+                                                                    totalScoring *= ((Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i]) || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
+                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
                                                                             (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5))))); 
+
+
+
                                                                 }
                                                             }
                                                         }
