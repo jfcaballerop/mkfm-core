@@ -368,6 +368,40 @@ exports.criticalityRatingScale = function (lof) {
 
     return ret;
 }
+exports.criticalityRatingScaleLetter = function (lof) {
+    var ret = 1;
+    var crit_rating = [];
+    var lofv = "";
+    // debug('lof ' + lof);
+    // lof = lof * 1;
+    if (lof === 'A') {
+        lofv = '0-20';
+    } else if (lof === 'B') {
+        lofv = '20-40';
+    } else if (lof === 'C') {
+        lofv = '40-60';
+    } else if (lof === 'D') {
+        lofv = '60-80';
+    } else if (lof === 'E') {
+        lofv = '80-100';
+    }
+    // debug('lofv ' + lofv);
+
+    crit_rating['0-20'] = [];
+    crit_rating['0-20'] = 1; //Negligible
+    crit_rating['20-40'] = [];
+    crit_rating['20-40'] = 2; //Minor
+    crit_rating['40-60'] = [];
+    crit_rating['40-60'] = 3; //Moderate
+    crit_rating['60-80'] = [];
+    crit_rating['60-80'] = 4; //Serious
+    crit_rating['80-100'] = [];
+    crit_rating['80-100'] = 5; //Catastrophic
+
+    ret = crit_rating[lofv];
+
+    return ret;
+}
 
 exports.criticalityRatingLetterScale = function (critNumVal) {
     var ret = 1;
@@ -595,6 +629,31 @@ exports.riskRatingScaleString = function (lofv, cons) {
     risk_rating['80-100']['E'] = 5;
 
     ret = risk_rating[lofv][cons];
+
+    return ret;
+}
+exports.riskRatingScaleStringLof = function (lofv) {
+    var ret = 1;
+    var risk_rating = [];
+
+
+    risk_rating['0-20'] = [];
+    risk_rating['0-20'] = 1;
+
+    risk_rating['20-40'] = [];
+    risk_rating['20-40'] = 2;
+
+    risk_rating['40-60'] = [];
+    risk_rating['40-60'] = 3;
+
+    risk_rating['60-80'] = [];
+    risk_rating['60-80'] = 4;
+
+    risk_rating['80-100'] = [];
+    risk_rating['80-100'] = 5;
+
+
+    ret = risk_rating[lofv];
 
     return ret;
 }

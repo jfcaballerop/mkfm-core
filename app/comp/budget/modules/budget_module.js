@@ -691,37 +691,55 @@ exports.investmentGeotNatural = function (ret, risknathaz_lof, risknathaz_cons, 
     }
     return ret;
 }
-exports.investmentKmCriticality = function (ret, crit, coord1, coord2, index) {
+exports.KmCriticality = function (ret, code, length, type) {
+    var codearr = code.split('__');
+    var vlength = Number(length);
+    var risk_cons = codearr[3];
+    // debug(risk_cons);
+    if (type === 'NAT') {
 
-    switch (formulasService.criticalityRatingScale(crit)) {
-        case 1:
-            if (index > 0) {
-                ret['Total_km_crit1'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 2:
-            if (index > 0) {
-                ret['Total_km_crit2'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 3:
-            if (index > 0) {
-                ret['Total_km_crit3'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 4:
-            if (index > 0) {
-                ret['Total_km_crit4'] += services.calDIST(coord1, coord2);
-            }
-            break;
-        case 5:
-            if (index > 0) {
-                ret['Total_km_crit5'] += services.calDIST(coord1, coord2);
-            }
-            break;
+        switch (formulasService.criticalityRatingScaleLetter(risk_cons)) {
+            case 1:
+                ret['Total_km_crit1'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 2:
+                ret['Total_km_crit2'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 3:
+                ret['Total_km_crit3'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 4:
+                ret['Total_km_crit4'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 5:
+                ret['Total_km_crit5'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
 
-        default:
-            break;
+            default:
+                break;
+        }
+    } else {
+        switch (formulasService.criticalityRatingScaleLetter(risk_cons)) {
+            case 1:
+                ret['Total_km_critphy1'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 2:
+                ret['Total_km_critphy2'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 3:
+                ret['Total_km_critphy3'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 4:
+                ret['Total_km_critphy4'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+            case 5:
+                ret['Total_km_critphy5'] += !isNaN(Number(vlength)) ? vlength : 0;
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     return ret;
@@ -1375,132 +1393,261 @@ exports.nInterventions = function (ret, risk_lof, risk_cons, asset, typerisk) {
     return ret;
 }
 
-exports.nInterventionsCriticality = function (ret, crit, asset) {
-    switch (formulasService.criticalityRatingScale(crit)) {
-        case 1:
-            switch (asset) {
-                case 'bridges':
+exports.nInterventionsCriticality = function (ret, code, asset, type) {
+    var codearr = code.split('__');
+    var crit = codearr[3];
 
-                    ret['Total_bridges_crit1']++;
+    if (type === 'NAT') {
+        switch (formulasService.criticalityRatingScaleLetter(crit)) {
+            case 1:
+                switch (asset) {
+                    case 'BRIDGES':
 
-                    break;
-                case 'culverts':
+                        ret['Total_bridges_crit1']++;
 
-                    ret['Total_culverts_crit1']++;
+                        break;
+                    case 'CULVERTS':
 
-                    break;
-                case 'geot':
+                        ret['Total_culverts_crit1']++;
 
-                    ret['Total_geot_crit1']++;
+                        break;
+                    case 'GEOT':
 
-                    break;
+                        ret['Total_geot_crit1']++;
 
-                default:
-                    break;
-            }
+                        break;
+
+                    default:
+                        break;
+                }
 
 
-            break;
-        case 2:
-            switch (asset) {
-                case 'bridges':
+                break;
+            case 2:
+                switch (asset) {
+                    case 'BRIDGES':
 
-                    ret['Total_bridges_crit2']++;
+                        ret['Total_bridges_crit2']++;
 
-                    break;
-                case 'culverts':
+                        break;
+                    case 'CULVERTS':
 
-                    ret['Total_culverts_crit2']++;
+                        ret['Total_culverts_crit2']++;
 
-                    break;
-                case 'geot':
+                        break;
+                    case 'GEOT':
 
-                    ret['Total_geot_crit2']++;
+                        ret['Total_geot_crit2']++;
 
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
 
-            break;
-        case 3:
-            switch (asset) {
-                case 'bridges':
+                break;
+            case 3:
+                switch (asset) {
+                    case 'BRIDGES':
 
-                    ret['Total_bridges_crit3']++;
+                        ret['Total_bridges_crit3']++;
 
-                    break;
-                case 'culverts':
+                        break;
+                    case 'CULVERTS':
 
-                    ret['Total_culverts_crit3']++;
+                        ret['Total_culverts_crit3']++;
 
-                    break;
-                case 'geot':
+                        break;
+                    case 'GEOT':
 
-                    ret['Total_geot_crit3']++;
+                        ret['Total_geot_crit3']++;
 
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
 
-            break;
-        case 4:
-            switch (asset) {
-                case 'bridges':
+                break;
+            case 4:
+                switch (asset) {
+                    case 'BRIDGES':
 
-                    ret['Total_bridges_crit4']++;
+                        ret['Total_bridges_crit4']++;
 
-                    break;
-                case 'culverts':
+                        break;
+                    case 'CULVERTS':
 
-                    ret['Total_culverts_crit4']++;
+                        ret['Total_culverts_crit4']++;
 
-                    break;
-                case 'geot':
+                        break;
+                    case 'GEOT':
 
-                    ret['Total_geot_crit4']++;
+                        ret['Total_geot_crit4']++;
 
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
-            break;
+                    default:
+                        break;
+                }
+                break;
 
-        case 5:
-            switch (asset) {
-                case 'bridges':
+            case 5:
+                switch (asset) {
+                    case 'BRIDGES':
 
-                    ret['Total_bridges_crit5']++;
+                        ret['Total_bridges_crit5']++;
 
-                    break;
-                case 'culverts':
+                        break;
+                    case 'CULVERTS':
 
-                    ret['Total_culverts_crit5']++;
+                        ret['Total_culverts_crit5']++;
 
-                    break;
-                case 'geot':
+                        break;
+                    case 'GEOT':
 
-                    ret['Total_geot_crit5']++;
+                        ret['Total_geot_crit5']++;
 
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
 
-            break;
+                break;
 
-        default:
-            break;
+            default:
+                break;
+        }
+
+    } else {
+        switch (formulasService.criticalityRatingScaleLetter(crit)) {
+            case 1:
+                switch (asset) {
+                    case 'BRIDGES':
+
+                        ret['Total_bridges_critphy1']++;
+
+                        break;
+                    case 'CULVERTS':
+
+                        ret['Total_culverts_critphy1']++;
+
+                        break;
+                    case 'GEOT':
+
+                        ret['Total_geot_critphy1']++;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                break;
+            case 2:
+                switch (asset) {
+                    case 'BRIDGES':
+
+                        ret['Total_bridges_critphy2']++;
+
+                        break;
+                    case 'CULVERTS':
+
+                        ret['Total_culverts_critphy2']++;
+
+                        break;
+                    case 'GEOT':
+
+                        ret['Total_geot_critphy2']++;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                break;
+            case 3:
+                switch (asset) {
+                    case 'BRIDGES':
+
+                        ret['Total_bridges_critphy3']++;
+
+                        break;
+                    case 'CULVERTS':
+
+                        ret['Total_culverts_critphy3']++;
+
+                        break;
+                    case 'GEOT':
+
+                        ret['Total_geot_critphy3']++;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                break;
+            case 4:
+                switch (asset) {
+                    case 'BRIDGES':
+
+                        ret['Total_bridges_critphy4']++;
+
+                        break;
+                    case 'CULVERTS':
+
+                        ret['Total_culverts_critphy4']++;
+
+                        break;
+                    case 'GEOT':
+
+                        ret['Total_geot_critphy4']++;
+
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+
+            case 5:
+                switch (asset) {
+                    case 'BRIDGES':
+
+                        ret['Total_bridges_critphy5']++;
+
+                        break;
+                    case 'CULVERTS':
+
+                        ret['Total_culverts_critphy5']++;
+
+                        break;
+                    case 'GEOT':
+
+                        ret['Total_geot_critphy5']++;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
     }
     return ret;
 }
 
-exports.pavInterv = function (ret, schnats, schphys) {
+exports.schedInterv = function (ret, schnats, schphys) {
 
     ret['Total_interventions'] = schnats.length;
     ret['Total_interventions_phy'] = schphys.length;
@@ -1713,6 +1860,26 @@ exports.pavInterv = function (ret, schnats, schphys) {
     ret['Total_bridges_lofnat5'] = 0;
     ret['Total_culverts_lofnat5'] = 0;
     ret['Total_geot_lofnat5'] = 0;
+    ret['Total_km_critphy5'] = 0;
+    ret['Total_km_critphy4'] = 0;
+    ret['Total_km_critphy3'] = 0;
+    ret['Total_km_critphy2'] = 0;
+    ret['Total_km_critphy1'] = 0;
+    ret['Total_bridges_critphy1'] = 0;
+    ret['Total_culverts_critphy1'] = 0;
+    ret['Total_geot_critphy1'] = 0;
+    ret['Total_bridges_critphy2'] = 0;
+    ret['Total_culverts_critphy2'] = 0;
+    ret['Total_geot_critphy2'] = 0;
+    ret['Total_bridges_critphy3'] = 0;
+    ret['Total_culverts_critphy3'] = 0;
+    ret['Total_geot_critphy3'] = 0;
+    ret['Total_bridges_critphy4'] = 0;
+    ret['Total_culverts_critphy4'] = 0;
+    ret['Total_geot_critphy4'] = 0;
+    ret['Total_bridges_critphy5'] = 0;
+    ret['Total_culverts_critphy5'] = 0;
+    ret['Total_geot_critphy5'] = 0;
 
     for (var snat of schnats) {
         // debug(Number(snat.properties.cost));
@@ -1720,7 +1887,13 @@ exports.pavInterv = function (ret, schnats, schphys) {
         ret = this.investmentRisk(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT', snat.type);
         ret = this.nAssetsRisk(ret, snat.properties.code, snat.properties.length, 'NAT', snat.type);
         ret = this.KmLikelihood(ret, snat.properties.code, snat.properties.length, 'NAT');
+        ret = this.KmCriticality(ret, snat.properties.code, snat.properties.length, 'NAT');
         ret = this.nLikelihood(ret, snat.properties.code, snat.type, 'NAT');
+        ret = this.nInterventionsCriticality(ret, snat.properties.code, snat.type, 'NAT');
+        ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
+        ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
+        //ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)));
+
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
             ret['Total_investment_pav'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
@@ -1739,9 +1912,6 @@ exports.pavInterv = function (ret, schnats, schphys) {
             ret['Total_investment_geot'] += (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost));
 
         }
-        ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
-        ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
-        //ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)));
     }
     for (var sphy of schphys) {
 
@@ -1749,7 +1919,11 @@ exports.pavInterv = function (ret, schnats, schphys) {
         ret = this.investmentRisk(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY', sphy.type);
         ret = this.nAssetsRisk(ret, sphy.properties.code, sphy.properties.length, 'PHY', sphy.type);
         ret = this.KmLikelihood(ret, sphy.properties.code, sphy.properties.length, 'PHY');
+        ret = this.KmCriticality(ret, sphy.properties.code, sphy.properties.length, 'PHY');
         ret = this.nLikelihood(ret, sphy.properties.code, sphy.type, 'PHY');
+        ret = this.nInterventionsCriticality(ret, sphy.properties.code, sphy.type, 'PHY');
+        ret = this.nRoadsCategory(ret, sphy.properties.rcategory, 'PHY');
+        ret = this.investmentCategory(ret, sphy.properties.rcategory, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
 
         if (sphy.type === 'PAVEMENTS') {
             ret['Total_roads_interventions_phy']++;
@@ -1768,8 +1942,6 @@ exports.pavInterv = function (ret, schnats, schphys) {
             ret['Total_investment_geot_phy'] += (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost));
 
         }
-        ret = this.nRoadsCategory(ret, sphy.properties.rcategory, 'PHY');
-        ret = this.investmentCategory(ret, sphy.properties.rcategory, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
 
     }
     return ret;

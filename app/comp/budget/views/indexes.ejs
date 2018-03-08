@@ -106,9 +106,12 @@
                                 </div>
                                 <!-- PARTE DCHA DE RESULTADOS-->
                                 <div class="col-md-9">
-                                    <%- include('partials/content_global_budget_natural.ejs'); %>
-                                        <%- include('partials/content_global_budget_physical.ejs'); %>
-                                            <%- include('partials/content_annual_available_budget.ejs'); %>
+                                    <div class="col-md-12" id="content_global" style="display: none">
+
+                                        <%- include('partials/content_global_budget_natural.ejs'); %>
+                                            <%- include('partials/content_global_budget_physical.ejs'); %>
+                                    </div>
+                                    <%- include('partials/content_annual_available_budget.ejs'); %>
                                 </div>
                                 <!-- PARTE DCHA DE RESULTADOS-->
 
