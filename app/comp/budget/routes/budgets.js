@@ -235,8 +235,51 @@ router.post('/update_budgets', function (req, resp) {
     request.end();
 
 });
+/*******************************************************
+ AJAX REST CALLS
+ **********************************************************/
+router.post('/indexes/:level', function (req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/budget/V1/get_budget_files/' + req.params.level,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    // // Peticiones 
 
 
+    var request = http.request(options, function (res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+
+            // debug(filters);
+
+            //debug(responseObject.config.properties);
+            responseObject.result = 'OK';
+            resp.status(200).jsonp(responseObject);
+
+
+        });
+    });
+
+    request.end();
+    // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+
+});
 
 
 /*******************************************************
@@ -543,6 +586,7 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
 
 
 });
+
 /* GET JSON formulas listing. */
 router.get('/V1/consultas/', function (req, res, next) {
     Infodatatrack.find().exec(function (err, ifdts) {

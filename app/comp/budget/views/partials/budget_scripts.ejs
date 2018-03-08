@@ -363,17 +363,37 @@
 
         $('#levelRisk').change(function (event) {
             console.log($(this).val());
-            var riskrange = $(this).val();
-            var riskfilter = [];
-            for (var row of Object.keys(risk_rating)) {
-                for (var col of Object.keys(risk_rating[row])) {
-                    console.log(row + ': ' + col + ' --> ' + risk_rating[row][col]);
-                    if (risk_rating[row][col] === riskrange * 1) {
-                        riskfilter.push(row + '__' + col);
-                    }
+            // var riskrange = $(this).val();
+            // var riskfilter = [];
+            // for (var row of Object.keys(risk_rating)) {
+            //     for (var col of Object.keys(risk_rating[row])) {
+            //         console.log(row + ': ' + col + ' --> ' + risk_rating[row][col]);
+            //         if (risk_rating[row][col] === riskrange * 1) {
+            //             riskfilter.push(row + '__' + col);
+            //         }
+            //     }
+            // }
+            // console.log(riskfilter);
+            var dataPost = {};
+            dataPost[this.name] = $(this).val();
+            var p1 = $.ajax({
+                url: '/auth/WEB/budget/indexes/' + $(this).val(),
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function (data) {
+                // console.log('koboinfo ' + JSON.stringify(data));
+                return (data);
+            });
+            Promise.all([p1]).then(function (values) {
+                console.log(values);
+                //$("html").html(values[0]);
+                if (values[0].result === "OK") {
+                    console.log('OK');
+                } else {
+                    console.log('ERROR');
                 }
-            }
-            console.log(riskfilter);
+            });
 
 
         });
