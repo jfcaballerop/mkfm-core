@@ -3216,10 +3216,26 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                                                 ifdt.properties[fieldkey][index] !== "") {
                                                 sendData[fieldkey] = ifdt.properties[fieldkey][index];
                                                 // //debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+
                                             } else {
                                                 // //debug(fieldkey + ' : UNDEFINED');
                                                 sendData[fieldkey] = undefined;
                                             }
+                                            // if (ifdt.properties.bcode[index] === 'S8-SG-01-B-3277' && false) {
+                                            //     debug(' rcategory:           ' + ifdt.properties.rcategory[index]);
+                                            //     debug(' rdendritic:          ' + ifdt.properties.rdendritic[index]);
+                                            //     debug(' ralternatitinerary:  ' + ifdt.properties.ralternatitinerary[index]);
+                                            //     debug(' rinfrint:            ' + ifdt.properties.rinfrint[index]);
+                                            //     debug(' rtourism:            ' + ifdt.properties.rtourism[index]);
+                                            //     debug(' rindustrydist:       ' + ifdt.properties.rindustrydist[index]);
+                                            //     debug(' rindustry:           ' + ifdt.properties.rindustry[index]);
+                                            //     debug(' rhealth:             ' + ifdt.properties.rhealth[index]);
+                                            //     debug(' renvironment:        ' + ifdt.properties.renvironment[index]);
+                                            //     debug(' rwaste:              ' + ifdt.properties.rwaste[index]);
+                                            //     debug(' rwidth:              ' + ifdt.properties.rwidth[index]);
+                                            //     debug(' rmaterial:           ' + ifdt.properties.rmaterial[index]);
+                                            //     debug(' rdateconstruct:      ' + ifdt.properties.rdateconstruct[index]);
+                                            // }
                                         }
                                     }
                                 }
@@ -3233,13 +3249,13 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 
             switch (asset) {
                 case 'Pavements':
-                    formResult[index] = calcularValue ? formulasService.criticality('Pavements', fspec, sendData) : undefined;
+                    formResult[index] = calcularValue ? formulasService.criticality('Pavements', fspec, sendData, ifdt, index) : undefined;
                     break;
                 case 'Bridges':
-                    formResult[index] = calcularValue ? formulasService.criticality('Bridges', fspec, sendData) : undefined;
+                    formResult[index] = calcularValue ? formulasService.criticality('Bridges', fspec, sendData, ifdt, index) : undefined;
                     break;
                 case 'Culverts':
-                    formResult[index] = calcularValue ? formulasService.criticality('Culverts', fspec, sendData) : undefined;
+                    formResult[index] = calcularValue ? formulasService.criticality('Culverts', fspec, sendData, ifdt, index) : undefined;
                     break;
                 case 'Retaining_Walls':
 
@@ -3277,7 +3293,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     ) {
                         // en este caso estoy en la izda
                         if (calcularValue) {
-                            formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendData);
+                            formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendData, ifdt, index);
                         } else {
                             if (ifdt.properties.gcriticality !== undefined &&
                                 ifdt.properties.gcriticality !== null &&
@@ -3320,7 +3336,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     ) {
                         // en este caso estoy en la dcha
                         if (calcularValue) {
-                            formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendData);
+                            formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendData, ifdt, index);
                         } else {
                             if (ifdt.properties.gcriticality2 !== undefined &&
                                 ifdt.properties.gcriticality2 !== null &&
@@ -3622,8 +3638,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
                     await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {
-                        }
+                        if (err) {}
                     });
                 }
             });
@@ -3652,8 +3667,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
                                                     if (score !== undefined && score !== null) {
                                                         if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(
-                                                            (score.toUpperCase() === 'LOSSOFDRAINAGEMOUTH' ? 'LOSS' : score.toUpperCase())   /// gnapa due to db values inconsistency
-                                                        ) >= 0) {
+                                                                (score.toUpperCase() === 'LOSSOFDRAINAGEMOUTH' ? 'LOSS' : score.toUpperCase()) /// gnapa due to db values inconsistency
+                                                            ) >= 0) {
                                                             totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
                                                                 totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
                                                             numberOfScores++;
@@ -3710,8 +3725,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     }
 
                     await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {
-                        }
+                        if (err) {}
                     });
                 }
                 // res.status(200).jsonp(ret);
@@ -3866,8 +3880,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
                     await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {
-                        }
+                        if (err) {}
                     });
                 }
                 // res.status(200).jsonp(ret);
@@ -4018,7 +4031,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
                                             ifdt.properties.gcode[i] !== "") {
-                                                
+
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
                                             if (ifdt.properties.gtypefailure.length > 0) {
@@ -4153,7 +4166,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                                     numberOfScores++;
                                                                     totalScoring *= ((Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i]) || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
                                                                         (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
-                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5))))); 
+                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
 
                                                                 }
                                                             }
