@@ -6,10 +6,10 @@
         var url = "";
 
 
-        var featurePaintCondition = (function () {
+        var featurePaintCondition = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) { // ------------------------------------------
+            var paintHTML = function(form) { // ------------------------------------------
                 DBprefix = {
                     "Retaining_Walls": "formulaSpec[0]",
                     "Cuttings_Embankments": "formulaSpec[1]",
@@ -23,7 +23,7 @@
                 var cabeceraPainted = false;
                 var postgressArray = Array();
                 // $.each(form.formulaSpec, function(i, fspec) {
-                $.each(Object.keys(formCondition), function (k, v) { // ------------------------------------------
+                $.each(Object.keys(formCondition), function(k, v) { // ------------------------------------------
                     // console.log(k + ' ' + v);
                     fspec = v;
                     $('#selectFormula').append(
@@ -56,7 +56,7 @@
                         tableName + '">';
                     html[++h] = '<tr>';
                     var counter = 0;
-                    $.each(formCondition[v][0], function (cabeceraCol, val) { // ------------------------------------------
+                    $.each(formCondition[v][0], function(cabeceraCol, val) { // ------------------------------------------
                         if (counter == 0) {
                             counter++;
                         } else {
@@ -73,7 +73,7 @@
                         postgressArray = [];
                         postgressArray.push(DBprefix[v]);
                         counter = 0;
-                        $.each(formCondition[v][l], function (i, val) { // ------------------------------------------
+                        $.each(formCondition[v][l], function(i, val) { // ------------------------------------------
                             if (counter == 0) {
                                 counter++;
                             } else {
@@ -208,7 +208,7 @@
                 $('#formulaSpec').html(html.join(''));
 
 
-                $("document").ready(function () {
+                $("document").ready(function() {
                     if (true) {
                         $("#formulaTableBody").rowspanizer();
                         $("#formulaTableRetaining_Walls").rowspanizer();
@@ -225,13 +225,13 @@
             }
 
         })();
-        var featurePaintCriticality = (function () {
+        var featurePaintCriticality = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     $('#selectFormula').append(
                         '<div class="radio-inline"><label class="radio-inline">' +
                         '<input type="radio" name="optionsRadios" id="option' + fspec.name +
@@ -253,8 +253,7 @@
                         '"></div>';
                     html[++h] =
                         '<table class="table table-bordered table-striped table-condensed" ><tbody id="formulaTableBody">';
-
-                    $.each(fspec, function (key, data) {
+                    $.each(fspec, function(key, data) {
                         // console.log(key);
                         // console.log(data);
                         if (data.constructor === objectConstructor) {
@@ -271,7 +270,11 @@
                                 '">';
                             html[++h] = '</div></td>';
                             var tr = 0;
-                            $.each(data, function (j, data2) {
+                            var reversed_object = {};
+                            Object.keys(data).reverse().forEach(function(key) {
+                                reversed_object[key] = data[key];
+                            });
+                            $.each(reversed_object, function(j, data2) {
                                 if (data2.constructor === objectConstructor) {
 
                                     if (tr > 0) {
@@ -292,7 +295,7 @@
                                     html[++h] = '</td>';
                                     if (data2.scoring != undefined) {
                                         html[++h] = '<td class="col-sm-3">';
-                                        $.each(data2.scoring, function (s, scoring) {
+                                        $.each(data2.scoring, function(s, scoring) {
                                             html[++h] =
                                                 '<label class="col-sm-8 control-label">' +
                                                 s +
@@ -320,6 +323,13 @@
                     html[++h] = '</tbody></table></div>';
                     $('#formulaSpec').html(html.join(''));
 
+
+                    $("document").ready(function() {
+                        if (true) { /// not working :( 
+                            $("#formulaTableBody").rowspanizer();
+                        }
+                    });
+
                 });
 
 
@@ -332,10 +342,10 @@
 
         })();
 
-        var featurePaintResponse = (function () {
+        var featurePaintResponse = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -354,7 +364,7 @@
                 html[++h] =
                     '<table id="assetResponseTable" class="table table-bordered table-striped table-condensed" >';
                 var header = true;
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     // console.log(fspec);
                     // nombre de los campos
                     var fieldname = "";
@@ -411,10 +421,10 @@
             }
 
         })();
-        var featurePaintSensitivity = (function () {
+        var featurePaintSensitivity = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -434,7 +444,7 @@
                     '">';
 
                 html[++h] = '<br><br><h4>Asset Sensitivity = 100 – [(';
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     html[++h] = '<input type="number" step="0.01" name="' + fspec['WEIGHTS'].fieldname +
                         '" value="' + fspec['WEIGHTS'].value +
                         '" >';
@@ -458,10 +468,10 @@
             }
 
         })();
-        var featurePaintLikelihood = (function () {
+        var featurePaintLikelihood = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -487,7 +497,7 @@
 
 
 
-                $.each(form.formulaSpec, function (i, fspec) {
+                $.each(form.formulaSpec, function(i, fspec) {
                     html[++h] = '<tr>';
 
                     html[++h] = '<td>';
@@ -517,10 +527,10 @@
             }
 
         })();
-        var featureRisk = (function () {
+        var featureRisk = (function() {
 
             // variables y funciones privadas
-            var paintHTML = function (form) {
+            var paintHTML = function(form) {
                 var html = [];
                 var h = -1;
                 html[++h] = '<div id="formulaTable' + form.name + '" ">';
@@ -546,7 +556,7 @@
 
 
 
-                $.each(form.formulaSpec.reverse(), function (i, fspec) {
+                $.each(form.formulaSpec.reverse(), function(i, fspec) {
                     html[++h] = '<tr>';
 
                     html[++h] = '<td>';

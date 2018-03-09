@@ -326,3 +326,107 @@ exports.getCulvertDiameterIndex = function (val) {
     // debug("RET: " + ret);
     return ret;
 }
+
+exports.getDistrictDictionary = function (code) {
+    var codes = [];
+    codes['Morne Daniel'] = this.getDistrictSiglas('Saint Paul');
+    codes['Riviere Ciriques'] = this.getDistrictSiglas('Saint David');
+    codes['Canefield'] = this.getDistrictSiglas('Saint Paul');
+    codes['Cochrane'] = this.getDistrictSiglas('Saint Paul');
+    codes['Grand Fond'] = this.getDistrictSiglas('Saint David');
+    codes['Bellevue Chopin'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Morne Jaune'] = this.getDistrictSiglas('Saint David');
+    codes['Grand Fond'] = this.getDistrictSiglas('Saint David');
+    codes['Galba'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Bagatelle'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Petite Savane'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Campbell'] = this.getDistrictSiglas('Saint Paul');
+    codes['Tête Morne'] = this.getDistrictSiglas('Saint Mark');
+    codes['Roseau'] = this.getDistrictSiglas('Saint George');
+    codes['Anse de Mai'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Castle Comfort'] = this.getDistrictSiglas('Saint George');
+    codes['La Plaine'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Trafalgar'] = this.getDistrictSiglas('Saint George');
+    codes['Fond Cani'] = this.getDistrictSiglas('Saint George');
+    codes['St. Joseph'] = this.getDistrictSiglas('Saint Joseph');
+    codes['Logiste'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Layou'] = this.getDistrictSiglas('Saint Joseph');
+    codes['Louis Ville'] = this.getDistrictSiglas('Saint George');
+    codes['Laudat'] = this.getDistrictSiglas('Saint George');
+    codes['Creck Hall'] = this.getDistrictSiglas('Saint Paul');
+    codes['Jimmit'] = this.getDistrictSiglas('Saint Paul');
+    codes['Grand Bay'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Pointe Michel'] = this.getDistrictSiglas('Saint Luke');
+    codes['Loubiere'] = this.getDistrictSiglas('Saint George');
+    codes['Giraudel'] = this.getDistrictSiglas('Saint George');
+    codes['More Prosper'] = this.getDistrictSiglas('Saint George');
+    codes['Mahaut'] = this.getDistrictSiglas('Saint Paul');
+    codes['Portsmouth'] = this.getDistrictSiglas('Saint John');
+    codes['Fond Colé'] = this.getDistrictSiglas('Saint George');
+    codes['Marigot'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Bense'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Wesley'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Enbas'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Penville'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Thibaud'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Cottage'] = this.getDistrictSiglas('Saint John');
+    codes['Cocoyer'] = this.getDistrictSiglas('Saint John');
+    codes['Clifton'] = this.getDistrictSiglas('Saint John');
+    codes['Morne a Louis'] = this.getDistrictSiglas('Saint John');
+    codes['Savane Paille'] = this.getDistrictSiglas('Saint John');
+    codes['Toucari'] = this.getDistrictSiglas('Saint John');
+    codes['Pichelin'] = this.getDistrictSiglas('Saint Patrick');
+    codes["Dos D'Ane"] = this.getDistrictSiglas('Saint Andrew');
+    codes['La Source'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Paix Bouche'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Tarreau'] = this.getDistrictSiglas('Saint Paul');
+    codes['Petite Soufriere'] = this.getDistrictSiglas('Saint David');
+    codes['Saint Sauveur'] = this.getDistrictSiglas('Saint David');
+    codes['Good Hope'] = this.getDistrictSiglas('Saint David');
+    codes['Mero'] = this.getDistrictSiglas('Saint Joseph');
+    codes['Boetica'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Casibishie'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Bataka'] = this.getDistrictSiglas('Saint David');
+    codes['Woodford Hill'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Pointe Baptiste'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Sineku'] = this.getDistrictSiglas('Saint David');
+    codes['Atkinson'] = this.getDistrictSiglas('Saint David');
+    codes['Castle Bruce'] = this.getDistrictSiglas('Saint David');
+    codes['Salybia'] = this.getDistrictSiglas('Saint David');
+    codes['St. Cyr'] = this.getDistrictSiglas('Saint David');
+    codes['Gaulette'] = this.getDistrictSiglas('Saint David');
+    codes['Burarati'] = this.getDistrictSiglas('Saint David');
+    codes['Richmond State'] = this.getDistrictSiglas('Saint David');
+    codes['Soufriere'] = this.getDistrictSiglas('Saint Mark');
+    codes['Fond St. Jean'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Laroche'] = this.getDistrictSiglas('Saint Patrick');
+    codes['Vieille Case'] = this.getDistrictSiglas('Saint Andrew');
+    codes['Coulibistrie'] = this.getDistrictSiglas('Saint Joseph');
+    codes['Morne Raquette'] = this.getDistrictSiglas('Saint Joseph');
+    codes['SA'] = 'SA';
+    codes['SD'] = 'SD';
+    codes['SG'] = 'SG';
+    codes['SJH'] = 'SJH';
+    codes['SJP'] = 'SJP';
+    codes['SL'] = 'SL';
+    codes['SM'] = 'SM';
+    codes['SPK'] = 'SPK';
+    codes['SPL'] = 'SPL';
+    return codes[code];
+
+}
+
+exports.getDistrictSiglas = function (district) {
+    var siglas = [];
+    siglas['Saint Andrew'] = 'SA';
+    siglas['Saint David'] = 'SD';
+    siglas['Saint George'] = 'SG';
+    siglas['Saint John'] = 'SJH';
+    siglas['Saint Joseph'] = 'SJP';
+    siglas['Saint Luke'] = 'SL';
+    siglas['Saint Mark'] = 'SM';
+    siglas['Saint Patrick'] = 'SPK';
+    siglas['Saint Paul'] = 'SPL';
+
+    return siglas[district];
+}
