@@ -4,42 +4,165 @@ var services = require(path.join(__dirname, '../../../services/services'));
 var mathjs = require('mathjs');
 var debug = require('debug')('debug');
 
-exports.investmentDistrict = function (arrInv, district, investment) {
+exports.investmentDistrict = function (arrInv, code, investment, type) {
+    var districtVal = code.split('-')[1];
 
-    switch (district) {
-        case "Saint George":
-            arrInv['Total_investment_Saint_George'] += investment * 1.0;
-            break;
-        case "Saint Paul":
-            arrInv['Total_investment_Saint_Paul'] += investment * 1.0;
-            break;
-        case "Saint Joseph":
-            arrInv['Total_investment_Saint_Joseph'] += investment * 1.0;
-            break;
-        case "Saint Peter":
-            arrInv['Total_investment_Saint_Peter'] += investment * 1.0;
-            break;
-        case "Saint John":
-            arrInv['Total_investment_Saint_John'] += investment * 1.0;
-            break;
-        case "Saint Andrew":
-            arrInv['Total_investment_Saint_Andrew'] += investment * 1.0;
-            break;
-        case "Saint David":
-            arrInv['Total_investment_Saint_David'] += investment * 1.0;
-            break;
-        case "Saint Patrick":
-            arrInv['Total_investment_Saint_Patrick'] += investment * 1.0;
-            break;
-        case "Saint Mark":
-            arrInv['Total_investment_Saint_Mark'] += investment * 1.0;
-            break;
-        case "Saint Luke":
-            arrInv['Total_investment_Saint_Luke'] += investment * 1.0;
-            break;
+    if (type === 'PHY') {
 
-        default:
-            break;
+
+        switch (services.getDistrictDictionary(districtVal)) {
+            case "SG":
+                arrInv['Total_investment_Saint_George'] += investment * 1.0;
+                break;
+            case "SPL":
+                arrInv['Total_investment_Saint_Paul'] += investment * 1.0;
+                break;
+            case "SJP":
+                arrInv['Total_investment_Saint_Joseph'] += investment * 1.0;
+                break;
+            case "SPT":
+                arrInv['Total_investment_Saint_Peter'] += investment * 1.0;
+                break;
+            case "SJH":
+                arrInv['Total_investment_Saint_John'] += investment * 1.0;
+                break;
+            case "SA":
+                arrInv['Total_investment_Saint_Andrew'] += investment * 1.0;
+                break;
+            case "SD":
+                arrInv['Total_investment_Saint_David'] += investment * 1.0;
+                break;
+            case "SPK":
+                arrInv['Total_investment_Saint_Patrick'] += investment * 1.0;
+                break;
+            case "SM":
+                arrInv['Total_investment_Saint_Mark'] += investment * 1.0;
+                break;
+            case "SL":
+                arrInv['Total_investment_Saint_Luke'] += investment * 1.0;
+                break;
+
+            default:
+                break;
+        }
+    } else {
+        switch (services.getDistrictDictionary(districtVal)) {
+            case "SG":
+                arrInv['Total_investment_Saint_George_nat'] += investment * 1.0;
+                break;
+            case "SPL":
+                arrInv['Total_investment_Saint_Paul_nat'] += investment * 1.0;
+                break;
+            case "SJP":
+                arrInv['Total_investment_Saint_Joseph_nat'] += investment * 1.0;
+                break;
+            case "SPT":
+                arrInv['Total_investment_Saint_Peter_nat'] += investment * 1.0;
+                break;
+            case "SJH":
+                arrInv['Total_investment_Saint_John_nat'] += investment * 1.0;
+                break;
+            case "SA":
+                arrInv['Total_investment_Saint_Andrew_nat'] += investment * 1.0;
+                break;
+            case "SD":
+                arrInv['Total_investment_Saint_David_nat'] += investment * 1.0;
+                break;
+            case "SPK":
+                arrInv['Total_investment_Saint_Patrick_nat'] += investment * 1.0;
+                break;
+            case "SM":
+                arrInv['Total_investment_Saint_Mark_nat'] += investment * 1.0;
+                break;
+            case "SL":
+                arrInv['Total_investment_Saint_Luke_nat'] += investment * 1.0;
+                break;
+
+            default:
+                break;
+        }
+
+    }
+    return arrInv;
+}
+
+exports.nRoadsDistrict = function (arrInv, code, type) {
+    var districtVal = code.split('-')[1];
+    // debug(districtVal);
+    if (type === 'PHY') {
+        // debug(services.getDistrictDictionary(districtVal));
+        switch (services.getDistrictDictionary(districtVal)) {
+            case "SG":
+                arrInv['Total_elements_Saint_George']++;
+                break;
+            case "SPL":
+                // debug(arrInv);
+                arrInv['Total_elements_Saint_Paul']++;
+                break;
+            case "SJP":
+                arrInv['Total_elements_Saint_Joseph']++;
+                break;
+            case "SPT":
+                arrInv['Total_elements_Saint_Peter']++;
+                break;
+            case "SJH":
+                arrInv['Total_elements_Saint_John']++;
+                break;
+            case "SA":
+                arrInv['Total_elements_Saint_Andrew']++;
+                break;
+            case "SD":
+                arrInv['Total_elements_Saint_David']++;
+                break;
+            case "SPK":
+                arrInv['Total_elements_Saint_Patrick']++;
+                break;
+            case "SM":
+                arrInv['Total_elements_Saint_Mark']++;
+                break;
+            case "SL":
+                arrInv['Total_elements_Saint_Luke']++;
+                break;
+
+            default:
+                break;
+        }
+    } else {
+        switch (services.getDistrictDictionary(districtVal)) {
+            case "SG":
+                arrInv['Total_elements_Saint_George_nat']++;
+                break;
+            case "SPL":
+                arrInv['Total_elements_Saint_Paul_nat']++;
+                break;
+            case "SJP":
+                arrInv['Total_elements_Saint_Joseph_nat']++;
+                break;
+            case "SPT":
+                arrInv['Total_elements_Saint_Peter_nat']++;
+                break;
+            case "SJH":
+                arrInv['Total_elements_Saint_John_nat']++;
+                break;
+            case "SA":
+                arrInv['Total_elements_Saint_Andrew_nat']++;
+                break;
+            case "SD":
+                arrInv['Total_elements_Saint_David_nat']++;
+                break;
+            case "SPK":
+                arrInv['Total_elements_Saint_Patrick_nat']++;
+                break;
+            case "SM":
+                arrInv['Total_elements_Saint_Mark_nat']++;
+                break;
+            case "SL":
+                arrInv['Total_elements_Saint_Luke_nat']++;
+                break;
+
+            default:
+                break;
+        }
     }
 
     return arrInv;
@@ -1016,46 +1139,7 @@ exports.nLikelihood = function (ret, code, asset, type) {
 
     return ret;
 }
-exports.nRoadsDistrict = function (arrInv, district) {
 
-    switch (district) {
-        case "Saint George":
-            arrInv['Total_elements_Saint_George']++;
-            break;
-        case "Saint Paul":
-            arrInv['Total_elements_Saint_Paul']++;
-            break;
-        case "Saint Joseph":
-            arrInv['Total_elements_Saint_Joseph']++;
-            break;
-        case "Saint Peter":
-            arrInv['Total_elements_Saint_Peter']++;
-            break;
-        case "Saint John":
-            arrInv['Total_elements_Saint_John']++;
-            break;
-        case "Saint Andrew":
-            arrInv['Total_elements_Saint_Andrew']++;
-            break;
-        case "Saint David":
-            arrInv['Total_elements_Saint_David']++;
-            break;
-        case "Saint Patrick":
-            arrInv['Total_elements_Saint_Patrick']++;
-            break;
-        case "Saint Mark":
-            arrInv['Total_elements_Saint_Mark']++;
-            break;
-        case "Saint Luke":
-            arrInv['Total_elements_Saint_Luke']++;
-            break;
-
-        default:
-            break;
-    }
-
-    return arrInv;
-}
 
 exports.nRoadsCategory = function (arrInv, cat, risk) {
 
@@ -1880,6 +1964,26 @@ exports.schedInterv = function (ret, schnats, schphys) {
     ret['Total_bridges_critphy5'] = 0;
     ret['Total_culverts_critphy5'] = 0;
     ret['Total_geot_critphy5'] = 0;
+    ret['Total_investment_Saint_George_nat'] = 0;
+    ret['Total_investment_Saint_Paul_nat'] = 0;
+    ret['Total_investment_Saint_Joseph_nat'] = 0;
+    ret['Total_investment_Saint_Peter_nat'] = 0;
+    ret['Total_investment_Saint_John_nat'] = 0;
+    ret['Total_investment_Saint_Andrew_nat'] = 0;
+    ret['Total_investment_Saint_David_nat'] = 0;
+    ret['Total_investment_Saint_Patrick_nat'] = 0;
+    ret['Total_investment_Saint_Mark_nat'] = 0;
+    ret['Total_investment_Saint_Luke_nat'] = 0;
+    ret['Total_elements_Saint_George_nat'] = 0;
+    ret['Total_elements_Saint_Paul_nat'] = 0;
+    ret['Total_elements_Saint_Joseph_nat'] = 0;
+    ret['Total_elements_Saint_Peter_nat'] = 0;
+    ret['Total_elements_Saint_John_nat'] = 0;
+    ret['Total_elements_Saint_Andrew_nat'] = 0;
+    ret['Total_elements_Saint_David_nat'] = 0;
+    ret['Total_elements_Saint_Patrick_nat'] = 0;
+    ret['Total_elements_Saint_Mark_nat'] = 0;
+    ret['Total_elements_Saint_Luke_nat'] = 0;
 
     for (var snat of schnats) {
         // debug(Number(snat.properties.cost));
@@ -1892,7 +1996,8 @@ exports.schedInterv = function (ret, schnats, schphys) {
         ret = this.nInterventionsCriticality(ret, snat.properties.code, snat.type, 'NAT');
         ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
         ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
-        //ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)));
+        ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
+        ret = this.nRoadsDistrict(ret, snat.properties.code, 'NAT');
 
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
@@ -1924,6 +2029,9 @@ exports.schedInterv = function (ret, schnats, schphys) {
         ret = this.nInterventionsCriticality(ret, sphy.properties.code, sphy.type, 'PHY');
         ret = this.nRoadsCategory(ret, sphy.properties.rcategory, 'PHY');
         ret = this.investmentCategory(ret, sphy.properties.rcategory, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
+        ret = this.investmentDistrict(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
+        ret = this.nRoadsDistrict(ret, sphy.properties.code, 'PHY');
+
 
         if (sphy.type === 'PAVEMENTS') {
             ret['Total_roads_interventions_phy']++;
