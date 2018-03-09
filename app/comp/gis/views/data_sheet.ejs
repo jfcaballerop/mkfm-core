@@ -7,20 +7,19 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-
+            
             #map {
                 height: 100%;
             }
-
             /* Optional: Makes the sample page fill the window. */
-
+            
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-
+            
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -68,7 +67,7 @@
                             <%- trans('MENU_DATASHEET') %>
                         </h3>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" style="display: none;">
                         <select class="form-control">
                             <option>-
                                 <%- trans('GMAPS_LAYERS') %> -</option>
@@ -181,8 +180,7 @@
 
         <!--common script for all pages-->
         <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i"
-            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="/assets/js/common-scripts.js"></script>

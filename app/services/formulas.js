@@ -45,7 +45,7 @@ exports.criticalityValue = function (in_val) {
         "High": {
             score: {
                 scale: 4,
-                color: "#ff0000",
+                color: "#f79646",
                 min: 60,
                 max: 80
             }
@@ -53,7 +53,7 @@ exports.criticalityValue = function (in_val) {
         "Medium": {
             score: {
                 scale: 3,
-                color: "#ff0000",
+                color: "#ffff00",
                 min: 40,
                 max: 60
             }
@@ -61,7 +61,7 @@ exports.criticalityValue = function (in_val) {
         "Low": {
             score: {
                 scale: 2,
-                color: "#ff0000",
+                color: "#92d050",
                 min: 20,
                 max: 40
             }
@@ -69,7 +69,7 @@ exports.criticalityValue = function (in_val) {
         "Very Low": {
             score: {
                 scale: 1,
-                color: "#ff0000",
+                color: "#00b050",
                 min: 0,
                 max: 20
             }
@@ -80,7 +80,7 @@ exports.criticalityValue = function (in_val) {
 
 }
 
-exports.criticality = function (type, formula, data) {
+exports.criticality = function (type, formula, data, ifdt, index) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;
 
@@ -127,6 +127,38 @@ exports.criticality = function (type, formula, data) {
                     }
 
                 }
+                // if (ifdt.properties.gcode[index] === 'S8-SG-01-RWL-2081') {
+                //     debug(' index:               ' + index);
+                //     debug(' bcode[index]:        ' + ifdt.properties.gcode[index]);
+                //     debug(' rcategory:           ' + ifdt.properties.rcategory[index]);
+                //     debug(' rdendritic:          ' + ifdt.properties.rdendritic[index]);
+                //     debug(' ralternatitinerary:  ' + ifdt.properties.ralternatitinerary[index]);
+                //     debug(' rinfrint:            ' + ifdt.properties.rinfrint[index]);
+                //     debug(' rtourism:            ' + ifdt.properties.rtourism[index]);
+                //     debug(' rindustrydist:       ' + ifdt.properties.rindustrydist[index]);
+                //     debug(' rindustry:           ' + ifdt.properties.rindustry[index]);
+                //     debug(' rhealth:             ' + ifdt.properties.rhealth[index]);
+                //     debug(' renvironment:        ' + ifdt.properties.renvironment[index]);
+                //     debug(' rwaste:              ' + ifdt.properties.rwaste[index]);
+                //     debug(' rwidth:              ' + ifdt.properties.rwidth[index]);
+                //     debug(' rmaterial:           ' + ifdt.properties.rmaterial[index]);
+                //     debug(' rdateconstruct:      ' + ifdt.properties.rdateconstruct[index]);
+                //     debug(' gmaterial:           ' + ifdt.properties.gmaterial[index]);
+                //     debug(' gmaterial2:          ' + ifdt.properties.gmaterial2[index]);
+                //     debug(' gheight:             ' + ifdt.properties.gheight[index]);
+                //     debug(' gheight2:            ' + ifdt.properties.gheight2[index]);
+                //     debug(' glength:             ' + ifdt.properties.glength[index]);
+                //     debug(' glength2:            ' + ifdt.properties.glength2[index]);
+                //     debug('l1key:                ' + l1key);
+                //     debug('level1:               ');
+                //     debug(level1);
+                //     debug('l2key:                ' + l2key);
+                //     debug('level2:               ');
+                //     debug(level2);
+                //     debug('rk:                   ' + rk);
+                //     debug('rango:                ' + rango);
+                //     // while (true) { ; };
+                // }
             }
             retCriticality += val * level1.weight / 100;
             // console.log('retCriticality: ' + retCriticality);
