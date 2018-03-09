@@ -19,10 +19,10 @@
                             <td>
                                 <b> Total investment required</b>
                             </td>
-                            <td>
-                                <input class="form-control" id="Totalinvestmentrequired" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_phy*100/1000000)/100 %>">
+                            <td id="Total_investment_phy">
+                                <%- Math.round(retValues.Total_investment_phy*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_interventions_phy">
                                 <%- retValues.Total_interventions_phy %>
                             </td>
                         </tr>
@@ -36,35 +36,35 @@
                         </tr>
                         <tr>
                             <td>Pavements</td>
-                            <td>
-                                <input class="form-control" id="disabledInputRiskPavements" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                            <td id="Total_investment_pav_phy">
+                                <%- 
                                 Math.round(retValues.Total_investment_pav_phy*100/1000000)/100 
-                                 %>">
+                                 %>
                             </td>
-                            <td>
+                            <td id="Total_roads_interventions_phy">
                                 <%- retValues.Total_roads_interventions_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Bridges</td>
-                            <td>
-                                <input class="form-control" id="disabledInputRiskBridges" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
+                            <td id="Total_investment_bridges_phy">
+                                <%- 
                                 Math.round((retValues.Total_investment_bridges_phy)*100/1000000)/100 
-                                 %>">
+                                 %>
                             </td>
-                            <td>
+                            <td id="Total_bridges_interventions_phy">
                                 <%- retValues.Total_bridges_interventions_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Culverts</td>
-                            <td>
-                                <input class="form-control" id="disabledInputRiskCulverts" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                    Math.round((retValues.Total_investment_culverts)*100/1000000)/100 %>">
+                            <td id="Total_investment_culverts_phy">
+                                <%- 
+                                    Math.round((retValues.Total_investment_culverts_phy)*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_culverts_interventions_phy">
                                 <%- retValues.Total_culverts_interventions_phy %>
 
                             </td>
@@ -72,11 +72,11 @@
                         </tr>
                         <tr>
                             <td>Geotechnical assets</td>
-                            <td>
-                                <input class="form-control" id="disabledInputRiskGeotechnicalassets" type="text" placeholder="EC$ 0.00" disabled="" value="<%- 
-                                                                    Math.round((retValues.Total_investment_geot_phy)*100/1000000)/100 %>">
+                            <td id="Total_investment_geot_phy">
+                                <%- 
+                                Math.round((retValues.Total_investment_geot_phy)*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_geot_interventions_phy">
                                 <%- retValues.Total_geot_interventions_phy %>
 
                             </td>
@@ -92,40 +92,40 @@
                         </tr>
                         <tr>
                             <td>Main Roads</td>
-                            <td>
-                                <input class="form-control" id="disabledInputMainRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_MainRoad_phy*100/1000000)/100 %>">
+                            <td id="Total_investment_MainRoad_phy">
+                                <%- Math.round(retValues.Total_investment_MainRoad_phy*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_roads_interventions_MainRoad_phy">
                                 <%- retValues.Total_roads_interventions_MainRoad_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Secondary Roads</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSecondaryRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Secondary_phy*100/1000000)/100 %>">
+                            <td id="Total_investment_Secondary_phy">
+                                <%- Math.round(retValues.Total_investment_Secondary_phy*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_roads_interventions_Secondary_phy">
                                 <%- retValues.Total_roads_interventions_Secondary_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Feeder Roads</td>
-                            <td>
-                                <input class="form-control" id="disabledInputFeederRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Feeder_phy*100/1000000)/100 %>">
+                            <td id="Total_investment_Feeder_phy">
+                                <%- Math.round(retValues.Total_investment_Feeder_phy*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_roads_interventions_Feeder_phy">
                                 <%- retValues.Total_roads_interventions_Feeder_phy %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Urban Roads</td>
-                            <td>
-                                <input class="form-control" id="disabledInputUrbanRoads" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Urban_phy*100/1000000)/100 %>">
+                            <td id="Total_investment_Urban_phy">
+                                <%- Math.round(retValues.Total_investment_Urban_phy*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_roads_interventions_Urban_phy">
                                 <%- retValues.Total_roads_interventions_Urban_phy %>
                             </td>
 
@@ -140,10 +140,10 @@
                         </tr>
                         <tr>
                             <td>Saint Andrew</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintAndrew" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Andrew*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Andrew">
+                                <%- Math.round(retValues.Total_investment_Saint_Andrew*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Andrew">
                                 <%- retValues.Total_elements_Saint_Andrew %>
                             </td>
 
@@ -151,90 +151,90 @@
 
                         <tr>
                             <td>Saint David</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintDavid" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_David*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_David">
+                                <%- Math.round(retValues.Total_investment_Saint_David*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_David">
                                 <%- retValues.Total_elements_Saint_David %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint George</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintGeorge" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_George*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_George">
+                                <%- Math.round(retValues.Total_investment_Saint_George*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_George">
                                 <%- retValues.Total_elements_Saint_George %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint John</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintJohn" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_John*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_John">
+                                <%- Math.round(retValues.Total_investment_Saint_John*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_John">
                                 <%- retValues.Total_elements_Saint_John %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Joseph</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintJoseph" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Joseph*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Joseph">
+                                <%- Math.round(retValues.Total_investment_Saint_Joseph*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Joseph">
                                 <%- retValues.Total_elements_Saint_Joseph %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Luke</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintLuke" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Luke*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Luke">
+                                <%- Math.round(retValues.Total_investment_Saint_Luke*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Luke">
                                 <%- retValues.Total_elements_Saint_Luke %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Mark</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintMark" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Mark*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Mark">
+                                <%- Math.round(retValues.Total_investment_Saint_Mark*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Mark">
                                 <%- retValues.Total_elements_Saint_Mark %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Paul</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintPaul" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Paul*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Paul">
+                                <%- Math.round(retValues.Total_investment_Saint_Paul*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Paul">
                                 <%- retValues.Total_elements_Saint_Paul %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Patrick</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintPatrick" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Patrick*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Patrick">
+                                <%- Math.round(retValues.Total_investment_Saint_Patrick*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Patrick">
                                 <%- retValues.Total_elements_Saint_Patrick %>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Saint Peter</td>
-                            <td>
-                                <input class="form-control" id="disabledInputSaintPeter" type="text" placeholder="EC$ 0.00" disabled="" value="<%- Math.round(retValues.Total_investment_Saint_Peter*100/1000000)/100 %>">
+                            <td id="Total_investment_Saint_Peter">
+                                <%- Math.round(retValues.Total_investment_Saint_Peter*100/1000000)/100 %>
                             </td>
-                            <td>
+                            <td id="Total_elements_Saint_Peter">
                                 <%- retValues.Total_elements_Saint_Peter %>
                             </td>
 
@@ -263,73 +263,73 @@
                             <tbody>
                                 <tr>
                                     <td>Road Pavement Interventions</td>
-                                    <td>
+                                    <td id="Total_investment_riskphy5">
                                         <%- Math.round(retValues.Total_investment_riskphy5*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_riskphy4">
                                         <%- Math.round(retValues.Total_investment_riskphy4*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_riskphy3">
                                         <%- Math.round(retValues.Total_investment_riskphy3*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_riskphy2">
                                         <%- Math.round(retValues.Total_investment_riskphy2*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_riskphy1">
                                         <%- Math.round(retValues.Total_investment_riskphy1*100/1000000)/100 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Bridges</td>
-                                    <td>
+                                    <td id="Total_investment_briskphy5">
                                         <%- Math.round(retValues.Total_investment_briskphy5*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_briskphy4">
                                         <%- Math.round(retValues.Total_investment_briskphy4*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_briskphy3">
                                         <%- Math.round(retValues.Total_investment_briskphy3*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_briskphy2">
                                         <%- Math.round(retValues.Total_investment_briskphy2*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_briskphy1">
                                         <%- Math.round(retValues.Total_investment_briskphy1*100/1000000)/100 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Culverts</td>
-                                    <td>
+                                    <td id="Total_investment_criskphy5">
                                         <%- Math.round(retValues.Total_investment_criskphy5*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_criskphy4">
                                         <%- Math.round(retValues.Total_investment_criskphy4*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_criskphy3">
                                         <%- Math.round(retValues.Total_investment_criskphy3*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_criskphy2">
                                         <%- Math.round(retValues.Total_investment_criskphy2*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_criskphy1">
                                         <%- Math.round(retValues.Total_investment_criskphy1*100/1000000)/100 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Geotechnical A.</td>
-                                    <td>
+                                    <td id="Total_investment_griskphy5">
                                         <%- Math.round(retValues.Total_investment_griskphy5*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_griskphy4">
                                         <%- Math.round(retValues.Total_investment_griskphy4*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_griskphy3">
                                         <%- Math.round(retValues.Total_investment_griskphy3*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_griskphy2">
                                         <%- Math.round(retValues.Total_investment_griskphy2*100/1000000)/100 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_investment_griskphy1">
                                         <%- Math.round(retValues.Total_investment_griskphy1*100/1000000)/100 %>
                                     </td>
                                 </tr>
@@ -356,73 +356,73 @@
                             <tbody>
                                 <tr>
                                     <td>Km of Road per Pavement Risk Score</td>
-                                    <td>
+                                    <td id="Total_km_riskphy5">
                                         <%- Math.round(retValues.Total_km_riskphy5*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_riskphy4">
                                         <%- Math.round(retValues.Total_km_riskphy4*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_riskphy3">
                                         <%- Math.round(retValues.Total_km_riskphy3*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_riskphy2">
                                         <%- Math.round(retValues.Total_km_riskphy2*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_riskphy1">
                                         <%- Math.round(retValues.Total_km_riskphy1*100/1000)/100 %> km
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>No of Bridges per Risk Score</td>
-                                    <td>
+                                    <td id="Total_num_briskphy5">
                                         <%- retValues.Total_num_briskphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_briskphy4">
                                         <%- retValues.Total_num_briskphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_briskphy3">
                                         <%- retValues.Total_num_briskphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_briskphy2">
                                         <%- retValues.Total_num_briskphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_briskphy1">
                                         <%- retValues.Total_num_briskphy1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>No of Culverts per Risk Score</td>
-                                    <td>
+                                    <td id="Total_num_criskphy5">
                                         <%- retValues.Total_num_criskphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_criskphy4">
                                         <%- retValues.Total_num_criskphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_criskphy3">
                                         <%- retValues.Total_num_criskphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_criskphy2">
                                         <%- retValues.Total_num_criskphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_criskphy1">
                                         <%- retValues.Total_num_criskphy1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>No of Geotechnical Assets per Risk Score</td>
-                                    <td>
+                                    <td id="Total_num_griskphy5">
                                         <%- retValues.Total_num_griskphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_griskphy4">
                                         <%- retValues.Total_num_griskphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_griskphy3">
                                         <%- retValues.Total_num_griskphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_griskphy2">
                                         <%- retValues.Total_num_griskphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_num_griskphy1">
                                         <%- retValues.Total_num_griskphy1 %>
                                     </td>
                                 </tr>
@@ -449,68 +449,68 @@
                             <tbody>
                                 <tr>
                                     <td>Km of Road per Pavement Risk Score</td>
-                                    <td>
+                                    <td id="Total_km_lofphy5">
                                         <%- Math.round(retValues.Total_km_lofphy5*100/1000)/100  %> km</td>
-                                    <td>
+                                    <td id="Total_km_lofphy4">
                                         <%- Math.round(retValues.Total_km_lofphy4*100/1000)/100  %> km</td>
-                                    <td>
+                                    <td id="Total_km_lofphy3">
                                         <%- Math.round(retValues.Total_km_lofphy3*100/1000)/100  %> km</td>
-                                    <td>
+                                    <td id="Total_km_lofphy2">
                                         <%- Math.round(retValues.Total_km_lofphy2*100/1000)/100  %> km</td>
-                                    <td>
+                                    <td id="Total_km_lofphy1">
                                         <%- Math.round(retValues.Total_km_lofphy1*100/1000)/100  %> km</td>
                                 </tr>
                                 <tr>
                                     <td>No of Bridges per Risk Score</td>
-                                    <td>
+                                    <td id="Total_bridges_lof5">
                                         <%- retValues.Total_bridges_lof5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_lof4">
                                         <%- retValues.Total_bridges_lof4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_lof3">
                                         <%- retValues.Total_bridges_lof3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_lof2">
                                         <%- retValues.Total_bridges_lof2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_lof1">
                                         <%- retValues.Total_bridges_lof1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>No of Culverts per Risk Score</td>
-                                    <td>
+                                    <td id="Total_culverts_lof5">
                                         <%- retValues.Total_culverts_lof5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_lof4">
                                         <%- retValues.Total_culverts_lof4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_lof3">
                                         <%- retValues.Total_culverts_lof3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_lof2">
                                         <%- retValues.Total_culverts_lof2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_lof1">
                                         <%- retValues.Total_culverts_lof1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>No of Geotechnical Assets per Risk Score</td>
-                                    <td>
+                                    <td id="Total_geot_lof5">
                                         <%- retValues.Total_geot_lof5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_lof4">
                                         <%- retValues.Total_geot_lof4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_lof3">
                                         <%- retValues.Total_geot_lof3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_lof2">
                                         <%- retValues.Total_geot_lof2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_lof1">
                                         <%- retValues.Total_geot_lof1 %>
                                     </td>
                                 </tr>
@@ -537,73 +537,73 @@
                             <tbody>
                                 <tr>
                                     <td>Road Pavement Interventions</td>
-                                    <td>
+                                    <td id="Total_km_critphy5">
                                         <%- Math.round(retValues.Total_km_critphy5*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_critphy4">
                                         <%- Math.round(retValues.Total_km_critphy4*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_critphy3">
                                         <%- Math.round(retValues.Total_km_critphy3*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_critphy2">
                                         <%- Math.round(retValues.Total_km_critphy2*100/1000)/100 %> km
                                     </td>
-                                    <td>
+                                    <td id="Total_km_critphy1">
                                         <%- Math.round(retValues.Total_km_critphy1*100/1000)/100 %> km
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Bridges</td>
-                                    <td>
+                                    <td id="Total_bridges_critphy5">
                                         <%- retValues.Total_bridges_critphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_critphy4">
                                         <%- retValues.Total_bridges_critphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_critphy3">
                                         <%- retValues.Total_bridges_critphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_critphy2">
                                         <%- retValues.Total_bridges_critphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_bridges_critphy1">
                                         <%- retValues.Total_bridges_critphy1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Culverts</td>
-                                    <td>
+                                    <td id="Total_culverts_critphy5">
                                         <%- retValues.Total_culverts_critphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_critphy4">
                                         <%- retValues.Total_culverts_critphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_critphy3">
                                         <%- retValues.Total_culverts_critphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_critphy2">
                                         <%- retValues.Total_culverts_critphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_culverts_critphy1">
                                         <%- retValues.Total_culverts_critphy1 %>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Repair / Rehabilitation of Geotechnical A.</td>
-                                    <td>
+                                    <td id="Total_geot_critphy5">
                                         <%- retValues.Total_geot_critphy5 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_critphy4">
                                         <%- retValues.Total_geot_critphy4 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_critphy3">
                                         <%- retValues.Total_geot_critphy3 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_critphy2">
                                         <%- retValues.Total_geot_critphy2 %>
                                     </td>
-                                    <td>
+                                    <td id="Total_geot_critphy1">
                                         <%- retValues.Total_geot_critphy1 %>
                                     </td>
                                 </tr>
