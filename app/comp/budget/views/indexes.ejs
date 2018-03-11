@@ -110,6 +110,7 @@
 
                                         <%- include('partials/content_global_budget_natural.ejs'); %>
                                             <%- include('partials/content_global_budget_physical.ejs'); %>
+                                                <%- include('partials/content_global_budget_graph.ejs'); %>
                                     </div>
                                     <%- include('partials/content_annual_available_budget.ejs'); %>
                                 </div>
@@ -151,6 +152,10 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> -->
         <%- include('partials/budget_scripts'); %>
             <script src="/assets/js/jquery.table2excel.min.js"></script>
             <script src="/assets/js/gmaps/gmaps.js"></script>
