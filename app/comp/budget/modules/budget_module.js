@@ -458,6 +458,7 @@ exports.investmentRisk = function (ret, code, investment, type, assetype) {
 
     return ret;
 }
+
 exports.nAssetsRisk = function (ret, code, length, type, assetype) {
     var codearr = code.split('__');
     var risk_cons = codearr[3];
@@ -583,6 +584,142 @@ exports.nAssetsRisk = function (ret, code, length, type, assetype) {
                     ret['Total_num_criskphy5']++;
                 if (assetype === 'GEOT')
                     ret['Total_num_griskphy5']++;
+
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    }
+
+    return ret;
+}
+exports.nAssetsRiskGraph = function (ret, code, type, assetype) {
+    var codearr = code.split('__');
+    var risk_cons = codearr[3];
+
+    if (type === 'NAT') {
+        var risk_lof = codearr[2].replace('RNAT-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_risknat1']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_brisknat1']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_crisknat1']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_grisknat1']++;
+
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_risknat2']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_brisknat2']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_crisknat2']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_grisknat2']++;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_risknat3']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_brisknat3']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_crisknat3']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_grisknat3']++;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_risknat4']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_brisknat4']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_crisknat4']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_grisknat4']++;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_risknat5']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_brisknat5']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_crisknat5']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_grisknat5']++;
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    } else {
+        var risk_lof = codearr[2].replace('RPHY-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_riskphy1']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_briskphy1']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_criskphy1']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_griskphy1']++;
+
+                break;
+            case 2:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_riskphy2']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_briskphy2']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_criskphy2']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_griskphy2']++;
+
+                break;
+            case 3:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_riskphy3']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_briskphy3']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_criskphy3']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_griskphy3']++;
+
+                break;
+            case 4:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_riskphy4']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_briskphy4']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_criskphy4']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_griskphy4']++;
+
+                break;
+            case 5:
+                if (assetype === 'PAVEMENTS')
+                    ret['Graph_km_riskphy5']++;
+                if (assetype === 'BRIDGES')
+                    ret['Graph_num_briskphy5']++;
+                if (assetype === 'CULVERTS')
+                    ret['Graph_num_criskphy5']++;
+                if (assetype === 'GEOT')
+                    ret['Graph_num_griskphy5']++;
 
                 break;
 
@@ -1727,6 +1864,62 @@ exports.nInterventionsCriticality = function (ret, code, asset, type) {
                 break;
         }
 
+    }
+    return ret;
+}
+exports.schedIntervGraph = function (ret, schnatsGraph, schphysGraph) {
+
+    ret['Graph_km_risknat1'] = 0;
+    ret['Graph_num_brisknat1'] = 0;
+    ret['Graph_num_crisknat1'] = 0;
+    ret['Graph_num_grisknat1'] = 0;
+    ret['Graph_km_riskphy1'] = 0;
+    ret['Graph_num_briskphy1'] = 0;
+    ret['Graph_num_criskphy1'] = 0;
+    ret['Graph_num_griskphy1'] = 0;
+    ret['Graph_km_risknat2'] = 0;
+    ret['Graph_num_brisknat2'] = 0;
+    ret['Graph_num_crisknat2'] = 0;
+    ret['Graph_num_grisknat2'] = 0;
+    ret['Graph_km_riskphy2'] = 0;
+    ret['Graph_num_briskphy2'] = 0;
+    ret['Graph_num_criskphy2'] = 0;
+    ret['Graph_num_griskphy2'] = 0;
+    ret['Graph_km_risknat3'] = 0;
+    ret['Graph_num_brisknat3'] = 0;
+    ret['Graph_num_crisknat3'] = 0;
+    ret['Graph_num_grisknat3'] = 0;
+    ret['Graph_km_riskphy3'] = 0;
+    ret['Graph_num_briskphy3'] = 0;
+    ret['Graph_num_criskphy3'] = 0;
+    ret['Graph_num_griskphy3'] = 0;
+    ret['Graph_km_risknat4'] = 0;
+    ret['Graph_num_brisknat4'] = 0;
+    ret['Graph_num_crisknat4'] = 0;
+    ret['Graph_num_grisknat4'] = 0;
+    ret['Graph_km_riskphy4'] = 0;
+    ret['Graph_num_briskphy4'] = 0;
+    ret['Graph_num_criskphy4'] = 0;
+    ret['Graph_num_griskphy4'] = 0;
+    ret['Graph_km_risknat5'] = 0;
+    ret['Graph_num_brisknat5'] = 0;
+    ret['Graph_num_crisknat5'] = 0;
+    ret['Graph_num_grisknat5'] = 0;
+    ret['Graph_km_riskphy5'] = 0;
+    ret['Graph_num_briskphy5'] = 0;
+    ret['Graph_num_criskphy5'] = 0;
+    ret['Graph_num_griskphy5'] = 0;
+
+
+
+
+    for (var snat of schnatsGraph) {
+        ret = this.nAssetsRiskGraph(ret, snat.properties.code, 'NAT', snat.type);
+
+    }
+    for (var sphy of schphysGraph) {
+
+        ret = this.nAssetsRiskGraph(ret, sphy.properties.code, 'PHY', sphy.type);
     }
     return ret;
 }
