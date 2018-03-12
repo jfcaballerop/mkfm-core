@@ -48,7 +48,7 @@ router.use(bodyParser.json());
         WEB CALLS
 **********************************************************/
 /* GET List infodatatracks */
-router.post('/list_ifdt/:info', function(req, resp, next) {
+router.post('/list_ifdt/:info', function (req, resp, next) {
     // req.params.info = req.params.info.replace(/%20/g, " ");
     // debug("LLego aqui");
     var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
@@ -66,18 +66,18 @@ router.post('/list_ifdt/:info', function(req, resp, next) {
     // console.log('\n## list_ifdt ##\n' + encoded_url);
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // // console.log('STATUS: ' + res.statusCode);
         // // console.log('HEADERS: ' + JSON.stringify(res.headers));
         // // console.log('KOBO ID: ' + req.params.id);
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -89,7 +89,62 @@ router.post('/list_ifdt/:info', function(req, resp, next) {
         });
 
     });
-    request.on('error', function(e) {
+    request.on('error', function (e) {
+        // General error, i.e.
+        //  - ECONNRESET - server closed the socket unexpectedly
+        //  - ECONNREFUSED - server did not listen
+        //  - HPE_INVALID_VERSION
+        //  - HPE_INVALID_STATUS
+        //  - ... (other HPE_* codes) - server returned garbage
+        // console.log(e);
+    });
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+/* GET List infodatatracks GENERAL*/
+router.post('/list_ifdt_general/:info', function (req, resp, next) {
+    // req.params.info = req.params.info.replace(/%20/g, " ");
+    // debug("LLego aqui");
+    var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt_general/' + req.params.info);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: encoded_url,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    // console.log('\n## list_ifdt ##\n' + encoded_url);
+
+
+    var request = http.request(options, function (res) {
+        // // console.log('STATUS: ' + res.statusCode);
+        // // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // // console.log('KOBO ID: ' + req.params.id);
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            // // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+
+            // // console.log('## ResponseObject:: \n' + JSON.stringify(responseObject.properties));
+            resp.status(200).jsonp(responseObject);
+        });
+
+    });
+    request.on('error', function (e) {
         // General error, i.e.
         //  - ECONNRESET - server closed the socket unexpectedly
         //  - ECONNREFUSED - server did not listen
@@ -105,7 +160,7 @@ router.post('/list_ifdt/:info', function(req, resp, next) {
 /**
  * Modify ROWS
  */
-router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
+router.post('/delrows/:idifdt/:rowid/:koboid', function (req, resp, next) {
     var postData = extend({}, req.body);
 
     var options = {
@@ -122,17 +177,17 @@ router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -152,7 +207,7 @@ router.post('/delrows/:idifdt/:rowid/:koboid', function(req, resp, next) {
 /**
  * SAVE DATA
  */
-router.post('/save_tabular_data/', function(req, resp, next) {
+router.post('/save_tabular_data/', function (req, resp, next) {
 
     var postData = extend({}, req.body);
     // // console.log('INFODATA TRACK postData ' + JSON.stringify(req.body));
@@ -171,17 +226,17 @@ router.post('/save_tabular_data/', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // // // console.log('STATUS: ' + res.statusCode);
         // // // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // // // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -198,7 +253,7 @@ router.post('/save_tabular_data/', function(req, resp, next) {
 
 
 /* GET List infodatatracks */
-router.get('/list_infodatatrack/:id', function(req, resp, next) {
+router.get('/list_infodatatrack/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -213,17 +268,17 @@ router.get('/list_infodatatrack/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -239,7 +294,7 @@ router.get('/list_infodatatrack/:id', function(req, resp, next) {
 
 });
 /* GET List infodatatracks */
-router.get('/list_infodatatrackbyid/:id', function(req, resp, next) {
+router.get('/list_infodatatrackbyid/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -254,17 +309,17 @@ router.get('/list_infodatatrackbyid/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -281,7 +336,7 @@ router.get('/list_infodatatrackbyid/:id', function(req, resp, next) {
 });
 
 /* GET Near infodatatracks */
-router.post('/list_infodatatracks/:lng/:lat', function(req, resp, next) {
+router.post('/list_infodatatracks/:lng/:lat', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -296,17 +351,17 @@ router.post('/list_infodatatracks/:lng/:lat', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -323,7 +378,7 @@ router.post('/list_infodatatracks/:lng/:lat', function(req, resp, next) {
 });
 
 /* GET List infodatatracks */
-router.post('/list_infodatatracks/:id', function(req, resp, next) {
+router.post('/list_infodatatracks/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -338,17 +393,17 @@ router.post('/list_infodatatracks/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -365,7 +420,7 @@ router.post('/list_infodatatracks/:id', function(req, resp, next) {
 });
 
 /* EDIT List infodatatracks */
-router.get('/edit_infodatatrack/:id', function(req, resp, next) {
+router.get('/edit_infodatatrack/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -380,17 +435,17 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // 'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
@@ -417,7 +472,7 @@ router.get('/edit_infodatatrack/:id', function(req, resp, next) {
 
 });
 
-router.get('/edit_video_infodatatrack/:id', function(req, resp, next) {
+router.get('/edit_video_infodatatrack/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -432,17 +487,17 @@ router.get('/edit_video_infodatatrack/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //// // console.log('STATUS: ' + res.statusCode);
         //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // 'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
@@ -470,7 +525,7 @@ router.get('/edit_video_infodatatrack/:id', function(req, resp, next) {
 });
 
 
-router.post('/update_infodatatrack', function(req, resp, next) {
+router.post('/update_infodatatrack', function (req, resp, next) {
     var postData = extend({}, req.body.infodatatrack);
     var options = {
         host: config.HOST_API,
@@ -483,17 +538,17 @@ router.post('/update_infodatatrack', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // //// // console.log('STATUS: ' + res.statusCode);
         // //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
@@ -501,7 +556,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -509,7 +564,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
 });
 
 
-router.post('/update_videoinfodatatrack', function(req, resp, next) {
+router.post('/update_videoinfodatatrack', function (req, resp, next) {
     var postData = extend({}, req.body.infodatatrack);
     var arrOneCoord = [];
     var arrCoord = [];
@@ -520,9 +575,9 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
         // // console.log('## WEB/update_videoinfodatatrack inverted ## ' + postData.inverted);
         if (postData.geometry.coordinates !== undefined) {
             //// console.log(JSON.stringify(postData.geometry.coordinates));
-            postData.geometry.coordinates.forEach(function(element, index) {
+            postData.geometry.coordinates.forEach(function (element, index) {
                 arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
-                arrOneCoord.forEach(function(e, i) {
+                arrOneCoord.forEach(function (e, i) {
                     arrOneCoord[i] = parseFloat(e.trim());
                 });
                 arrCoord[index] = arrOneCoord;
@@ -551,17 +606,17 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // //// // console.log('STATUS: ' + res.statusCode);
         // //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
@@ -569,7 +624,7 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -581,7 +636,7 @@ router.post('/update_videoinfodatatrack', function(req, resp, next) {
 UPDATE ROAD
 */
 
-router.post('/update_infodatatrack', function(req, resp, next) {
+router.post('/update_infodatatrack', function (req, resp, next) {
     var postData = extend({}, req.body.infodatatrack);
     var options = {
         host: config.HOST_API,
@@ -594,17 +649,17 @@ router.post('/update_infodatatrack', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // //// // console.log('STATUS: ' + res.statusCode);
         // //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // //// // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // //// // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
@@ -612,7 +667,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -622,7 +677,7 @@ router.post('/update_infodatatrack', function(req, resp, next) {
 /**
  * duplicate rows
  */
-router.post('/duplicate_rows', function(req, resp, next) {
+router.post('/duplicate_rows', function (req, resp, next) {
     var _id = req.body._id;
     // // console.log('## WEB/duplicate_rows ID ##:: ' + _id);
 
@@ -637,17 +692,17 @@ router.post('/duplicate_rows', function(req, resp, next) {
         }
     };
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // // console.log('STATUS: ' + res.statusCode);
         // // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // // console.log('postData:: ' + JSON.stringify(postData));
@@ -657,7 +712,7 @@ router.post('/duplicate_rows', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     // request.write(JSON.stringify(postData));
@@ -667,7 +722,7 @@ router.post('/duplicate_rows', function(req, resp, next) {
 /**
  * invertedpk
  */
-router.post('/invertedpk', function(req, resp, next) {
+router.post('/invertedpk', function (req, resp, next) {
     var _id = req.body._id;
     // // console.log('## WEB/invertedpk ID ##:: ' + _id);
 
@@ -682,17 +737,17 @@ router.post('/invertedpk', function(req, resp, next) {
         }
     };
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // // console.log('STATUS: ' + res.statusCode);
         // // console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // // console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             // // console.log('postData:: ' + JSON.stringify(postData));
@@ -702,7 +757,7 @@ router.post('/invertedpk', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     // request.write(JSON.stringify(postData));
@@ -717,9 +772,9 @@ router.post('/invertedpk', function(req, resp, next) {
 
 
 /* POST infodatatrack */
-router.post('/V1/', function(req, res, next) {
+router.post('/V1/', function (req, res, next) {
     idata = new Infodatatrack(req.body);
-    idata.save(function(err, infodatatrack) {
+    idata.save(function (err, infodatatrack) {
         if (err) {
             return res.status(500).send(err.message);
         }
@@ -728,7 +783,7 @@ router.post('/V1/', function(req, res, next) {
 });
 
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/', function(req, res, next) {
+router.get('/V1/', function (req, res, next) {
     var fields = {
         type: 1,
         name: 1,
@@ -741,7 +796,7 @@ router.get('/V1/', function(req, res, next) {
         "properties.gcode2": 1
     };
 
-    Infodatatrack.find({}, fields).exec(function(err, infodatatracks) {
+    Infodatatrack.find({}, fields).exec(function (err, infodatatracks) {
         if (err)
             res.send(500, err.ssage);
         res.status(200).jsonp(infodatatracks);
@@ -749,14 +804,14 @@ router.get('/V1/', function(req, res, next) {
 
 });
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/list_order', function(req, res, next) {
+router.get('/V1/list_order', function (req, res, next) {
     var properties = {
         'properties.name': 1
 
     };
     Infodatatrack.find({}, properties).sort({
         'properties.name': 1
-    }).exec(function(err, infodatatracks) {
+    }).exec(function (err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -766,8 +821,8 @@ router.get('/V1/list_order', function(req, res, next) {
 });
 
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/list_info/:id', function(req, res, next) {
-    Infodatatrack.find().exec(function(err, infodatatracks) {
+router.get('/V1/list_info/:id', function (req, res, next) {
+    Infodatatrack.find().exec(function (err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -778,12 +833,12 @@ router.get('/V1/list_info/:id', function(req, res, next) {
 
 
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/:id_video', function(req, res, next) {
+router.get('/V1/:id_video', function (req, res, next) {
     Infodatatrack.findOne({
         'properties.video_roads': req.params.id_video
     }).sort({
         "updated_at": -1
-    }).exec(function(err, infodatatracks) {
+    }).exec(function (err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -792,8 +847,8 @@ router.get('/V1/:id_video', function(req, res, next) {
 
 });
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/list_byid/:id', function(req, res, next) {
-    Infodatatrack.findById(req.params.id).exec(function(err, infodatatrack) {
+router.get('/V1/list_byid/:id', function (req, res, next) {
+    Infodatatrack.findById(req.params.id).exec(function (err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
@@ -802,11 +857,11 @@ router.get('/V1/list_byid/:id', function(req, res, next) {
 
 });
 /* GET JSON Infodatatracks listing id. */
-router.get('/V1/list_id/', function(req, res, next) {
+router.get('/V1/list_id/', function (req, res, next) {
     Infodatatrack.find({}, {
         _id: 1,
         "properties.name": 1
-    }).exec(function(err, infodatatracks) {
+    }).exec(function (err, infodatatracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -815,8 +870,8 @@ router.get('/V1/list_id/', function(req, res, next) {
 
 });
 /* GET JSON infodatatrack by id. */
-router.get('/V1/list_infobyid/:id', function(req, res, next) {
-    Infodatatrack.findById(req.params.id).exec(function(err, infodatatrack) {
+router.get('/V1/list_infobyid/:id', function (req, res, next) {
+    Infodatatrack.findById(req.params.id).exec(function (err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
@@ -824,7 +879,7 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
         // TODO: cargar la info de los Kobos
         var koboProm = new Array();
 
-        infodatatrack.geometry.coordinates.forEach(function(element, tabindex) {
+        infodatatrack.geometry.coordinates.forEach(function (element, tabindex) {
 
             var point = {
                 type: "Point",
@@ -833,7 +888,7 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
             koboProm[tabindex] = Koboinfo.geoNear(point, {
                 maxDistance: config.QUERYMAXDISTANCE,
                 spherical: true
-            }, function(err, kobos) {
+            }, function (err, kobos) {
                 if (err) {
                     //// console.log(err);
                     return res.status(500).send(err.message);
@@ -842,9 +897,9 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
             });
         });
 
-        Promise.all(koboProm).then(function(values) {
+        Promise.all(koboProm).then(function (values) {
             var koboarr = [];
-            values.forEach(function(val, index) {
+            values.forEach(function (val, index) {
                 if (val.length > 0) {
                     // // console.log('VAL: ' + val[0].dis);
                     koboarr[index] = {
@@ -862,7 +917,7 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
             infodatatrack.properties.kobo = koboarr;
             // // console.log('TABDATA ' + JSON.stringify(tabdata));
             res.status(200).jsonp(infodatatrack);
-        }).catch(function(reason) {
+        }).catch(function (reason) {
             // console.log(reason);
             return res.status(500).send(reason);
 
@@ -876,13 +931,13 @@ router.get('/V1/list_infobyid/:id', function(req, res, next) {
 
 
 /* DEL file */
-router.post('/V1/delete/:id', function(req, res, next) {
-    Infodatatrack.findByIdAndRemove(req.params.id, function(err, file) {
+router.post('/V1/delete/:id', function (req, res, next) {
+    Infodatatrack.findByIdAndRemove(req.params.id, function (err, file) {
         // // // console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        Infodatatrack.find(function(err, files) {
+        Infodatatrack.find(function (err, files) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -893,9 +948,9 @@ router.post('/V1/delete/:id', function(req, res, next) {
 });
 
 /* UPDATE Infodatatrack */
-router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
+router.post('/V1/update_infodatatrack/:id', function (req, res, next) {
     //// console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
-    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+    Infodatatrack.findById(req.params.id, function (err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
         for (var key in saveInfodatatrack) {
             //// console.log(key + ": " + saveInfodatatrack[key]);
@@ -918,7 +973,7 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
 
         //// console.log('## UPDATE Infodatatrack ##\nfind&update: ' + JSON.stringify(infodatatrack));
         infodatatrack.updated_at = new Date();
-        infodatatrack.save(function(err, data) {
+        infodatatrack.save(function (err, data) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -938,7 +993,7 @@ router.post('/V1/update_infodatatrack/:id', function(req, res, next) {
 
 });
 /* GET JSON Infodatatracks near. */
-router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
+router.get('/V1/getNear/:lng/:lat', function (req, res, next) {
     var point = {
         type: "Point",
         coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)]
@@ -947,7 +1002,7 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
     Infodatatrack.geoNear(point, {
         maxDistance: config.MAXDISTANCE,
         spherical: true
-    }, function(err, infodatatracks) {
+    }, function (err, infodatatracks) {
         if (err) {
             //// // console.log(err);
             return res.status(500).send(err.message);
@@ -963,23 +1018,23 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 });
 
 /* POST Data Road Track */
-router.post('/V1/save_tabular_data/', function(req, res, next) {
+router.post('/V1/save_tabular_data/', function (req, res, next) {
     // // console.log('API save_tabular_data ' + JSON.stringify(req.body));
     infodatatrack = new Infodatatrack(req.body);
-    infodatatrack.save(function(err, data) {
+    infodatatrack.save(function (err, data) {
         if (err) {
             return res.status(500).send(err.message);
         }
 
         Road.findOne({
             "properties.name": infodatatrack.properties.name
-        }).exec(function(err, road) {
+        }).exec(function (err, road) {
             if (err) {
                 res.send(500, err.message);
             }
             // roads.forEach(function(road, index) {
             road.proccessed = true;
-            road.save(function(err2, data2) {
+            road.save(function (err2, data2) {
                 if (err2) {
                     return res.status(500).send(err2.message);
                 }
@@ -995,9 +1050,9 @@ router.post('/V1/save_tabular_data/', function(req, res, next) {
 /**
  * Duplicate ROWS
  */
-router.post('/V1/duplicate_rows/:id', function(req, res, next) {
+router.post('/V1/duplicate_rows/:id', function (req, res, next) {
     // console.log('## duplicate_rows Infodatatrack ## ' + req.params.id);
-    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+    Infodatatrack.findById(req.params.id, function (err, infodatatrack) {
         //// console.log('infodatatrack:: \n' + infodatatrack._id);
         //// console.log('infodatatrack2:: \n' + JSON.stringify(infodatatrack));
 
@@ -1050,7 +1105,7 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
 
         //// console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack);
         infodatatrack.updated_at = new Date();
-        infodatatrack.save(function(err, data) {
+        infodatatrack.save(function (err, data) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -1072,16 +1127,16 @@ router.post('/V1/duplicate_rows/:id', function(req, res, next) {
 /**
  * invertedpk
  */
-router.post('/V1/invertedpk/:id', function(req, res, next) {
+router.post('/V1/invertedpk/:id', function (req, res, next) {
     // console.log('## invertedpk Infodatatrack ## ' + req.params.id);
-    Infodatatrack.findById(req.params.id, function(err, infodatatrack) {
+    Infodatatrack.findById(req.params.id, function (err, infodatatrack) {
 
         // console.log('## UPDATE Infodatatrack ##\nfind&update: ' + infodatatrack.inverted);
         infodatatrack.updated_at = new Date();
         infodatatrack.inverted = true;
         var invertedpk = service.invertedpk(infodatatrack.properties.pk);
         infodatatrack.properties.pk = invertedpk;
-        infodatatrack.save(function(err, data) {
+        infodatatrack.save(function (err, data) {
             if (err) {
                 return res.status(500).send(err.message);
             }
@@ -1094,14 +1149,14 @@ router.post('/V1/invertedpk/:id', function(req, res, next) {
 });
 
 /* UPDATE Infodatatrack */
-router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
+router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function (req, res, next) {
     // console.log('## UPDATE delrowskobo ##\nBODY: ' + JSON.stringify(req.body));
-    Koboinfo.findById(req.params.koboid, function(err, kobomod) {
+    Koboinfo.findById(req.params.koboid, function (err, kobomod) {
         if (err) {
             return res.status(500).send(err.message);
         }
         // console.log('kobomod ' + kobomod._id);
-        Infodatatrack.findById(req.params.idifdt, function(err, ifdt) {
+        Infodatatrack.findById(req.params.idifdt, function (err, ifdt) {
             if (err) return handleError(err);
 
             var arrkoboedit = [];
@@ -1167,7 +1222,7 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
             ifdt.properties.koboedit = arrkoboedit;
             ifdt.isNew = false;
 
-            ifdt.save(function(err, imod) {
+            ifdt.save(function (err, imod) {
                 if (err) {
                     return res.status(500).send(err.message);
                 }
@@ -1182,7 +1237,7 @@ router.post('/V1/delrowskobo/:idifdt/:rowid/:koboid', function(req, res, next) {
 
 });
 /* GET JSON Infodatatracks listing. */
-router.get('/V1/list_ifdt/:info', function(req, res, next) {
+router.get('/V1/list_ifdt/:info', function (req, res, next) {
     req.params.info = req.params.info;
     var returnObject = {};
     var index = 0;
@@ -1217,7 +1272,7 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
                 "properties.Ccode": req.params.info
             }
         ]
-    }).exec(function(err, infodatatrack) {
+    }).exec(function (err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1648,6 +1703,161 @@ router.get('/V1/list_ifdt/:info', function(req, res, next) {
 
         }
         // // console.log('/V1/list_ifdt/:info properties.asset_type ' + JSON.stringify(returnObject.properties.asset_type));
+        res.status(200).jsonp(returnObject);
+    });
+
+});
+/* GET JSON Infodatatracks listing BY ANY FIELD. */
+router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
+    req.params.info = req.params.info;
+    var returnObject = {};
+    var index = 0;
+    var lastindex = 0;
+    // // console.log(req.params.info.replace('%20', ' '));
+    var tofind = req.params.info;
+    Infodatatrack.find({
+        $or: [{
+                "properties.rcode": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.rname": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.bcode": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.bname": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.gcode": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.gcode2": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.dcode": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.dcode2": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            },
+            {
+                "properties.Ccode": {
+                    "$regex": tofind,
+                    "$options": "i"
+                }
+            }
+            // ,
+            // {
+            //     "properties.name": {"$regex": tofind, "$options" : "i" }
+            // }
+        ]
+    }).exec(function (err, infodatatrack) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        var matchestoquery = {};
+        var texto = '';
+
+        for (i in infodatatrack) {
+            if (infodatatrack[i] !== undefined &&
+                infodatatrack[i].properties !== undefined) {
+
+                if (infodatatrack.length > 0) {
+                    // //console.log('infodatatrack:  ' + JSON.stringify(infodatatrack[i].properties.name) + '*********');
+                    for (j in infodatatrack[i].properties.rcode){
+                        if (true) {
+                            if (infodatatrack[i].properties.rcode[j] !== undefined &&
+                                infodatatrack[i].properties.rcode[j] !== undefined &&
+                                 infodatatrack[i].properties.rcode[j].length > 3 &&
+                                 infodatatrack[i].properties.rcode[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.rcode[j]] = 'rcode';
+                                // texto += ;
+                            }
+                            if (infodatatrack[i].properties.rname[j] !== undefined &&
+                                infodatatrack[i].properties.rname[j] !== undefined &&
+                                 infodatatrack[i].properties.rname[j].length > 3 &&
+                                 infodatatrack[i].properties.rname[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.rname[j]] = 'rname';
+                            }
+                            if (infodatatrack[i].properties.bcode[j] !== undefined &&
+                                infodatatrack[i].properties.bcode[j] !== undefined &&
+                                 infodatatrack[i].properties.bcode[j].length > 3 &&
+                                 infodatatrack[i].properties.bcode[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.bcode[j]] = 'bcode';
+                            }
+                            if (infodatatrack[i].properties.bname[j] !== undefined &&
+                                infodatatrack[i].properties.bname[j] !== undefined &&
+                                 infodatatrack[i].properties.bname[j].length > 3 &&
+                                 infodatatrack[i].properties.bname[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.bname[j]] = 'bname';
+                            }
+                            if (infodatatrack[i].properties.gcode[j] !== undefined &&
+                                infodatatrack[i].properties.gcode[j] !== undefined &&
+                                 infodatatrack[i].properties.gcode[j].length > 3 &&
+                                 infodatatrack[i].properties.gcode[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.gcode[j]] = 'gcode';
+                            }
+                            if (infodatatrack[i].properties.gcode2[j] !== undefined &&
+                                infodatatrack[i].properties.gcode2[j] !== undefined &&
+                                 infodatatrack[i].properties.gcode2[j].length > 3 &&
+                                 infodatatrack[i].properties.gcode2[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.gcode2[j]] = 'gcode2';
+                            }
+                            if (infodatatrack[i].properties.dcode[j] !== undefined &&
+                                infodatatrack[i].properties.dcode[j] !== undefined &&
+                                 infodatatrack[i].properties.dcode[j].length > 3 &&
+                                 infodatatrack[i].properties.dcode[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.dcode[j]] = 'dcode';
+                            }
+                            if (infodatatrack[i].properties.dcode2[j] !== undefined &&
+                                infodatatrack[i].properties.dcode2[j] !== undefined &&
+                                 infodatatrack[i].properties.dcode2[j].length > 3 &&
+                                 infodatatrack[i].properties.dcode2[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.dcode2[j]] = 'dcode2';
+                            }
+                            if (infodatatrack[i].properties.Ccode[j] !== undefined &&
+                                infodatatrack[i].properties.Ccode[j] !== undefined &&
+                                 infodatatrack[i].properties.Ccode[j].length > 3 &&
+                                 infodatatrack[i].properties.Ccode[j].length < 70) {
+                                matchestoquery[infodatatrack[i].properties.Ccode[j]] = 'Ccode';
+                            }
+                        }
+                    }
+                    returnObject = extend({}, matchestoquery);
+                } else {
+
+                    returnObject = extend({}, {});
+                    returnObject["properties"] = {};
+                    returnObject["properties"]["asset_type"] = "ERROR";
+
+                }
+            }
+        }
+        // //console.log('/V1/list_ifdt/:info properties.asset_type ' + JSON.stringify(returnObject.properties.asset_type));
         res.status(200).jsonp(returnObject);
     });
 
