@@ -674,7 +674,46 @@ router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
     request.end();
 
 });
+//getFilesByAssetCode GENERAL
 
+router.post('/getFilesByAssetCode_general/:assetCode', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## ajax getFilesByAssetCode_general: ' + req.params.assetCode);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/gis/V1/getFilesByAssetCode_general/' + req.params.assetCode,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /*******************************************************
  API REST CALLS
  **********************************************************/
@@ -745,6 +784,53 @@ router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
             res.send(500, err.message);
         }
 
+        res.status(200).jsonp(fup);
+    });
+
+});
+/* GET JSON file by assetCode. GENERAL*/
+router.post('/V1/getFilesByAssetCode_general/:assetCode', function (req, res, next) {
+    Fileupload.find({
+        $or: [{
+            "properties.rcode": /req.params.assetCode/i
+        },
+        {
+            "properties.rname": /req.params.assetCode/i
+        },
+        {
+            "properties.bcode": /req.params.assetCode/i
+        },
+        {
+            "properties.bname": /req.params.assetCode/i
+        },
+        {
+            "properties.gcode": /req.params.assetCode/i
+        },
+        {
+            "properties.gcode2": /req.params.assetCode/i
+        },
+        {
+            "properties.dcode": /req.params.assetCode/i
+        },
+        {
+            "properties.dcode2": /req.params.assetCode/i
+        },
+        {
+            "properties.Ccode": /req.params.assetCode/i
+        },
+        {
+            "properties.name": /req.params.assetCode/i
+        }
+        ]
+        
+    }, function (err, fup) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        console.log(fup._id);
+        // console.log(req);
+        // console.log(res);
+        // console.log(next);
         res.status(200).jsonp(fup);
     });
 
