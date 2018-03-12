@@ -1,3 +1,4 @@
+var debug = require('debug')('debug');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -1713,8 +1714,9 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
     var returnObject = {};
     var index = 0;
     var lastindex = 0;
-    // // console.log(req.params.info.replace('%20', ' '));
+    // console.log(req.params.info.replace('%20', ' '));
     var tofind = req.params.info;
+    debug('req.params.info ' + req.params.info);
     Infodatatrack.find({
         $or: [{
                 "properties.rcode": {
@@ -1782,81 +1784,101 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
         var matchestoquery = {};
         var texto = '';
 
+        console.log('infodatatrack length ' + infodatatrack.length);
+        // for (var [i, v] of Object.keys(infodatatrack[0]._doc.properties).entries()) {
+        // for (var [k,ind] of Object.keys(infodatatrack[0]._doc.properties).entries()) {
+        //     debug(k);
+        //     debug(ind);
+        // }
+
         for (i in infodatatrack) {
             if (infodatatrack[i] !== undefined &&
                 infodatatrack[i].properties !== undefined) {
-
                 if (infodatatrack.length > 0) {
                     // //console.log('infodatatrack:  ' + JSON.stringify(infodatatrack[i].properties.name) + '*********');
-                    for (j in infodatatrack[i].properties.rcode){
+                    for (var j=0; j<= infodatatrack[i].properties.rcode.length; j++){
+                        // debug(j);
                         if (true) {
                             if (infodatatrack[i].properties.rcode[j] !== undefined &&
                                 infodatatrack[i].properties.rcode[j] !== undefined &&
                                  infodatatrack[i].properties.rcode[j].length > 3 &&
-                                 infodatatrack[i].properties.rcode[j].length < 70) {
+                                 infodatatrack[i].properties.rcode[j].length < 70 &&
+                                infodatatrack[i].properties.rcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.rcode[j]] = 'rcode';
                                 // texto += ;
                             }
                             if (infodatatrack[i].properties.rname[j] !== undefined &&
                                 infodatatrack[i].properties.rname[j] !== undefined &&
                                  infodatatrack[i].properties.rname[j].length > 3 &&
-                                 infodatatrack[i].properties.rname[j].length < 70) {
+                                infodatatrack[i].properties.rname[j].length < 70 &&
+                                infodatatrack[i].properties.rname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.rname[j]] = 'rname';
                             }
                             if (infodatatrack[i].properties.bcode[j] !== undefined &&
                                 infodatatrack[i].properties.bcode[j] !== undefined &&
                                  infodatatrack[i].properties.bcode[j].length > 3 &&
-                                 infodatatrack[i].properties.bcode[j].length < 70) {
+                                infodatatrack[i].properties.bcode[j].length < 70 &&
+                                infodatatrack[i].properties.bcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.bcode[j]] = 'bcode';
                             }
                             if (infodatatrack[i].properties.bname[j] !== undefined &&
                                 infodatatrack[i].properties.bname[j] !== undefined &&
                                  infodatatrack[i].properties.bname[j].length > 3 &&
-                                 infodatatrack[i].properties.bname[j].length < 70) {
+                                infodatatrack[i].properties.bname[j].length < 70 &&
+                                infodatatrack[i].properties.bname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.bname[j]] = 'bname';
                             }
                             if (infodatatrack[i].properties.gcode[j] !== undefined &&
                                 infodatatrack[i].properties.gcode[j] !== undefined &&
                                  infodatatrack[i].properties.gcode[j].length > 3 &&
-                                 infodatatrack[i].properties.gcode[j].length < 70) {
+                                infodatatrack[i].properties.gcode[j].length < 70 &&
+                                infodatatrack[i].properties.gcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.gcode[j]] = 'gcode';
                             }
                             if (infodatatrack[i].properties.gcode2[j] !== undefined &&
                                 infodatatrack[i].properties.gcode2[j] !== undefined &&
                                  infodatatrack[i].properties.gcode2[j].length > 3 &&
-                                 infodatatrack[i].properties.gcode2[j].length < 70) {
+                                infodatatrack[i].properties.gcode2[j].length < 70 &&
+                                infodatatrack[i].properties.gcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.gcode2[j]] = 'gcode2';
                             }
                             if (infodatatrack[i].properties.dcode[j] !== undefined &&
                                 infodatatrack[i].properties.dcode[j] !== undefined &&
                                  infodatatrack[i].properties.dcode[j].length > 3 &&
-                                 infodatatrack[i].properties.dcode[j].length < 70) {
+                                infodatatrack[i].properties.dcode[j].length < 70 &&
+                                infodatatrack[i].properties.dcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.dcode[j]] = 'dcode';
                             }
                             if (infodatatrack[i].properties.dcode2[j] !== undefined &&
                                 infodatatrack[i].properties.dcode2[j] !== undefined &&
                                  infodatatrack[i].properties.dcode2[j].length > 3 &&
-                                 infodatatrack[i].properties.dcode2[j].length < 70) {
+                                infodatatrack[i].properties.dcode2[j].length < 70 &&
+                                infodatatrack[i].properties.dcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.dcode2[j]] = 'dcode2';
                             }
                             if (infodatatrack[i].properties.Ccode[j] !== undefined &&
                                 infodatatrack[i].properties.Ccode[j] !== undefined &&
                                  infodatatrack[i].properties.Ccode[j].length > 3 &&
-                                 infodatatrack[i].properties.Ccode[j].length < 70) {
+                                infodatatrack[i].properties.Ccode[j].length < 70 &&
+                                infodatatrack[i].properties.Ccode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                debug(infodatatrack[i].properties.Ccode[j]);
+                                debug(tofind.toUpperCase());
                                 matchestoquery[infodatatrack[i].properties.Ccode[j]] = 'Ccode';
                             }
+                            // debug(matchestoquery);
                         }
                     }
-                    returnObject = extend({}, matchestoquery);
-                } else {
+                } //else {
 
-                    returnObject = extend({}, {});
-                    returnObject["properties"] = {};
-                    returnObject["properties"]["asset_type"] = "ERROR";
+                //     returnObject = extend({}, {});
+                //     returnObject["properties"] = {};
+                //     returnObject["properties"]["asset_type"] = "ERROR";
 
-                }
+                // }
             }
         }
+        returnObject = extend({}, matchestoquery);
+        // console.log(matchestoquery);
         // //console.log('/V1/list_ifdt/:info properties.asset_type ' + JSON.stringify(returnObject.properties.asset_type));
         res.status(200).jsonp(returnObject);
     });
