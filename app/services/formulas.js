@@ -175,9 +175,9 @@ exports.criticality = function (type, formula, data, ifdt, index) {
 exports.condition = function (type, formula, data) {
     // console.log('## formulas condition ##');
     var retCondition = 1.0 * 1.0 - 1.0;
-    console.log('\n\n------------------------------------------');
-    debug(formula)
-    console.log('\n\n------------------------------------------');
+    // console.log('\n\n------------------------------------------');
+    // debug(formula)
+    // console.log('\n\n------------------------------------------');
 
     weight = 1.0 * 1;
     scoring = 0.0 * 1;
