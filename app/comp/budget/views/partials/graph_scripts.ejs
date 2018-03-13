@@ -114,6 +114,57 @@
         return ret;
     };
 
+    function getChartData(vlabels, rangeValues, arrValues) {
+        var ret = {};
+        var vdataSet = [];
+
+        for (var k of Object.keys(rangeValues)) {
+
+            console.log(rangeValues[k]);
+            var vdata = [];
+            var elem = {};
+            elem["label"] = rangeValues[k];
+            switch (rangeValues[k]) {
+                case 1:
+                    elem["backgroundColor"] = window.chartColors.dark_green;
+                    break;
+                case 2:
+                    elem["backgroundColor"] = window.chartColors.green;
+                    break;
+                case 3:
+                    elem["backgroundColor"] = window.chartColors.yellow;
+                    break;
+                case 4:
+                    elem["backgroundColor"] = window.chartColors.orange;
+                    break;
+                case 5:
+                    elem["backgroundColor"] = window.chartColors.red;
+                    break;
+
+                default:
+                    break;
+            }
+            for (var j of vlabels) {
+                vdata.push(arrValues[rangeValues[k]][j]);
+
+            }
+            elem['data'] = vdata;
+            vdataSet.push(elem);
+
+
+
+        }
+
+        ret = {
+            labels: vlabels,
+            datasets: vdataSet
+
+        };
+
+
+        return ret;
+    }
+
     $(document).ready(function () {
         var graphIzda = true;
 
@@ -146,6 +197,8 @@
 
             switch ($('input:radio[name="riskoptionsRadios"]:checked').val()) {
                 case 'PhysicalDeterioration':
+                    var arrValuesGraph = [];
+
                     var Graph_km_riskphy5 = <%- JSON.stringify(retValues.Graph_km_riskphy5) %>
                     var Graph_km_riskphy4 = <%- JSON.stringify(retValues.Graph_km_riskphy4) %>
                     var Graph_km_riskphy3 = <%- JSON.stringify(retValues.Graph_km_riskphy3) %>
@@ -183,92 +236,56 @@
                         Graph_num_griskphy3 +
                         Graph_num_griskphy4 +
                         Graph_num_griskphy5;
+                    arrValuesGraph[1] = [];
+                    arrValuesGraph[1]['Pavements'] = Math.round((Graph_km_riskphy1 /
+                        Total_Graph_km_riskphy) * 100 * 100) / 100;
+                    arrValuesGraph[1]['Bridges'] = Math.round((Graph_num_briskphy1 /
+                        Total_Graph_num_briskphy) * 100 * 100) / 100;
+                    arrValuesGraph[1]['Culverts'] = Math.round((Graph_num_criskphy1 /
+                        Total_Graph_num_criskphy) * 100 * 100) / 100;
+                    arrValuesGraph[1]['Geot'] = Math.round((Graph_num_griskphy1 /
+                        Total_Graph_num_griskphy) * 100 * 100) / 100;
+                    arrValuesGraph[2] = [];
+                    arrValuesGraph[2]['Pavements'] = Math.round((Graph_km_riskphy2 /
+                        Total_Graph_km_riskphy) * 100 * 100) / 100;
+                    arrValuesGraph[2]['Bridges'] = Math.round((Graph_num_briskphy2 /
+                        Total_Graph_num_briskphy) * 100 * 100) / 100;
+                    arrValuesGraph[2]['Culverts'] = Math.round((Graph_num_criskphy2 /
+                        Total_Graph_num_criskphy) * 100 * 100) / 100;
+                    arrValuesGraph[2]['Geot'] = Math.round((Graph_num_griskphy2 /
+                        Total_Graph_num_griskphy) * 100 * 100) / 100;
+                    arrValuesGraph[3] = [];
+                    arrValuesGraph[3]['Pavements'] = Math.round((Graph_km_riskphy3 /
+                        Total_Graph_km_riskphy) * 100 * 100) / 100;
+                    arrValuesGraph[3]['Bridges'] = Math.round((Graph_num_briskphy3 /
+                        Total_Graph_num_briskphy) * 100 * 100) / 100;
+                    arrValuesGraph[3]['Culverts'] = Math.round((Graph_num_criskphy3 /
+                        Total_Graph_num_criskphy) * 100 * 100) / 100;
+                    arrValuesGraph[3]['Geot'] = Math.round((Graph_num_griskphy3 /
+                        Total_Graph_num_griskphy) * 100 * 100) / 100;
+                    arrValuesGraph[4] = [];
+                    arrValuesGraph[4]['Pavements'] = Math.round((Graph_km_riskphy4 /
+                        Total_Graph_km_riskphy) * 100 * 100) / 100;
+                    arrValuesGraph[4]['Bridges'] = Math.round((Graph_num_briskphy4 /
+                        Total_Graph_num_briskphy) * 100 * 100) / 100;
+                    arrValuesGraph[4]['Culverts'] = Math.round((Graph_num_criskphy4 /
+                        Total_Graph_num_criskphy) * 100 * 100) / 100;
+                    arrValuesGraph[4]['Geot'] = Math.round((Graph_num_griskphy4 /
+                        Total_Graph_num_griskphy) * 100 * 100) / 100;
+                    arrValuesGraph[5] = [];
+                    arrValuesGraph[5]['Pavements'] = Math.round((Graph_km_riskphy5 /
+                        Total_Graph_km_riskphy) * 100 * 100) / 100;
+                    arrValuesGraph[5]['Bridges'] = Math.round((Graph_num_briskphy5 /
+                        Total_Graph_num_briskphy) * 100 * 100) / 100;
+                    arrValuesGraph[5]['Culverts'] = Math.round((Graph_num_criskphy5 /
+                        Total_Graph_num_criskphy) * 100 * 100) / 100;
+                    arrValuesGraph[5]['Geot'] = Math.round((Graph_num_griskphy5 /
+                        Total_Graph_num_griskphy) * 100 * 100) / 100;
 
-                    var barChartData = {
-                        labels: ['Pavements', 'Bridges', 'Culverts', 'Geot'],
-                        datasets: [{
-                            label: '1',
-                            backgroundColor: window.chartColors.dark_green,
-                            data: [
-                                Math.round((Graph_km_riskphy1 / Total_Graph_km_riskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_briskphy1 /
-                                        Total_Graph_num_briskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_criskphy1 /
-                                        Total_Graph_num_criskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_griskphy1 /
-                                        Total_Graph_num_griskphy) *
-                                    100 * 100) / 100
-                            ]
-                        }, {
-                            label: '2',
-                            backgroundColor: window.chartColors.green,
-                            data: [
-                                Math.round((Graph_km_riskphy2 / Total_Graph_km_riskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_briskphy2 /
-                                        Total_Graph_num_briskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_criskphy2 /
-                                        Total_Graph_num_criskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_griskphy2 /
-                                        Total_Graph_num_griskphy) *
-                                    100 * 100) / 100
-                            ]
-                        }, {
-                            label: '3',
-                            backgroundColor: window.chartColors.yellow,
-                            data: [
-                                Math.round((Graph_km_riskphy3 / Total_Graph_km_riskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_briskphy3 /
-                                        Total_Graph_num_briskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_criskphy3 /
-                                        Total_Graph_num_criskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_griskphy3 /
-                                        Total_Graph_num_griskphy) *
-                                    100 * 100) / 100
-                            ]
-                        }, {
-                            label: '4',
-                            backgroundColor: window.chartColors.orange,
-                            data: [
-                                Math.round((Graph_km_riskphy4 / Total_Graph_km_riskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_briskphy4 /
-                                        Total_Graph_num_briskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_criskphy4 /
-                                        Total_Graph_num_criskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_griskphy4 /
-                                        Total_Graph_num_griskphy) *
-                                    100 * 100) / 100
-                            ]
-                        }, {
-                            label: '5',
-                            backgroundColor: window.chartColors.red,
-                            data: [
-                                Math.round((Graph_km_riskphy5 / Total_Graph_km_riskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_briskphy5 /
-                                        Total_Graph_num_briskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_criskphy5 /
-                                        Total_Graph_num_criskphy) *
-                                    100 * 100) / 100,
-                                Math.round((Graph_num_griskphy5 /
-                                        Total_Graph_num_griskphy) *
-                                    100 * 100) / 100
-                            ]
-                        }]
 
-                    };
+                    var barChartData = getChartData(['Pavements', 'Bridges', 'Culverts', 'Geot'], [1, 2,
+                        3, 4, 5
+                    ], arrValuesGraph);
                     break;
                 case 'NaturalHazards':
                     break;
