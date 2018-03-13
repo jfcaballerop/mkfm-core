@@ -643,7 +643,7 @@ router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode,
+        path: encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode),
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -679,11 +679,13 @@ router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
 router.post('/getFilesByAssetCode_general/:assetCode', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## ajax getFilesByAssetCode_general: ' + req.params.assetCode);
+    debug('## ajax getFilesByAssetCode_general: ' + encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode));
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/getFilesByAssetCode_general/' + req.params.assetCode,
+        path: encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode),
+        // path: config.PATH_API + '/gis/V1/getFilesByAssetCode_general/' + req.params.assetCode,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -777,6 +779,11 @@ router.get('/V1/:id', function (req, res, next) {
 });
 /* GET JSON file by assetCode. */
 router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
+
+    req.params.assetCode = decodeURIComponent(req.params.assetCode);
+    debug('************************************************************');
+    debug('**************************** ' + req.params.assetCode + ' ********************************');
+    debug('**************************** ' + decodeURIComponent(req.params.assetCode) + ' ********************************');
     Fileupload.find({
         assetCode: req.params.assetCode
     }, function (err, fup) {

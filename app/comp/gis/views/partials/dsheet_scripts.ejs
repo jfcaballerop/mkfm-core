@@ -797,7 +797,7 @@
                 // $('#datainfo').show();
                 // $('#dataupload').show();
                 var p1 = $.ajax({
-                    url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
+                    url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
                     data: JSON.stringify(dataPost),
                     type: 'POST',
                     contentType: 'application/json'
@@ -1009,7 +1009,7 @@
             console.log(e);
             var $this = $(this);
 
-            if (e.keyCode == 13 || e.keyCode === undefined) {
+            if (e.keyCode == 13 || e.keyCode == undefined) {
                 // Do something
                 // alert('Buscando ...' + $this.val().length);
                 $('#error').hide();
@@ -1249,7 +1249,7 @@
                 }
             } else {
                 if ($this.val().length > 3) {
-                    console.log('keyup');
+                    // console.log('keyup');
                     $('#json-datalist').empty();
                     if (true) {
                         // Do something
@@ -1294,7 +1294,8 @@
                                 return (data);
                             });
                             var p2 = $.ajax({
-                                url: '/auth/WEB/gis/getFilesByAssetCode_general/' + $this.val(),
+                                url: '/auth/WEB/gis/getFilesByAssetCode/' + $this.val(),
+                                // url: '/auth/WEB/gis/getFilesByAssetCode_general/' + $this.val(),
                                 data: JSON.stringify(dataPost),
                                 type: 'POST',
                                 contentType: 'application/json'

@@ -1246,31 +1246,31 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
     // // console.log(req.params.info.replace('%20', ' '));
     Infodatatrack.find({
         $or: [{
-                "properties.rcode": req.params.info
+            "properties.rcode": decodeURIComponent(req.params.info)
             },
             {
-                "properties.rname": req.params.info
+                "properties.rname": decodeURIComponent(req.params.info)
             },
             {
-                "properties.bcode": req.params.info
+                "properties.bcode": decodeURIComponent(req.params.info)
             },
             {
-                "properties.bname": req.params.info
+                "properties.bname": decodeURIComponent(req.params.info)
             },
             {
-                "properties.gcode": req.params.info
+                "properties.gcode": decodeURIComponent(req.params.info)
             },
             {
-                "properties.gcode2": req.params.info
+                "properties.gcode2": decodeURIComponent(req.params.info)
             },
             {
-                "properties.dcode": req.params.info
+                "properties.dcode": decodeURIComponent(req.params.info)
             },
             {
-                "properties.dcode2": req.params.info
+                "properties.dcode2": decodeURIComponent(req.params.info)
             },
             {
-                "properties.Ccode": req.params.info
+                "properties.Ccode": decodeURIComponent(req.params.info)
             }
         ]
     }).exec(function (err, infodatatrack) {
@@ -1281,8 +1281,8 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
             returnObject = extend({}, infodatatrack[0]._doc);
             // // console.log('returnObject1 ' + JSON.stringify(infodatatrack[0].properties.Ccode));
 
-            if (infodatatrack[0].properties.rcode.indexOf(req.params.info) >= 0 ||
-                infodatatrack[0].properties.rname.indexOf(req.params.info) >= 0) {
+            if (infodatatrack[0].properties.rcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
+                infodatatrack[0].properties.rname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "ROAD";
                 /**
                  * En caso de ROAD hay que añadir los siguientes valores
@@ -1484,20 +1484,20 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 returnObject["properties"]["rnumverticalsignaling"] = rnumverticalsignaling;
                 returnObject["properties"]["rnumstreetlights"] = rnumstreetlights;
 
-            } else if (infodatatrack[0].properties.bcode.indexOf(req.params.info) >= 0 ||
-                infodatatrack[0].properties.bname.indexOf(req.params.info) >= 0) {
+            } else if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
+                infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "BRIDGE";
 
-                if (infodatatrack[0].properties.bcode.indexOf(req.params.info) >= 0) {
-                    //// console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.bcode.indexOf(req.params.info);
-                    //// console.log('bcode lastindex ' + infodatatrack[0].properties.bcode.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.bcode.lastIndexOf(req.params.info);
+                if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                    //// console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('bcode lastindex ' + infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info));
                 } else {
-                    //// console.log('bcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.bname.indexOf(req.params.info);
-                    //// console.log('bname lastindex ' + infodatatrack[0].properties.bname.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.bname.lastIndexOf(req.params.info);
+                    //// console.log('bcode index ' + infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('bname lastindex ' + infodatatrack[0].properties.bname.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.bname.lastIndexOf(decodeURIComponent(req.params.info));
                 }
                 if (index == 0) {
                     //// console.log('index ' + index + ' ' + lastindex);
@@ -1538,25 +1538,25 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
 
-            } else if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0 ||
-                infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
-                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
+            } else if (infodatatrack[0].properties.gcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
+                infodatatrack[0].properties.gcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                if (infodatatrack[0].properties.gcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                     returnObject["properties"]["asset_type"] = "GEOT";
-                } else if (infodatatrack[0].properties.gcode2.indexOf(req.params.info) >= 0) {
+                } else if (infodatatrack[0].properties.gcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                     returnObject["properties"]["asset_type"] = "GEOT2";
 
                 }
 
-                if (infodatatrack[0].properties.gcode.indexOf(req.params.info) >= 0) {
-                    //// console.log('gcode index ' + infodatatrack[0].properties.gcode.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.gcode.indexOf(req.params.info);
-                    //// console.log('gcode lastindex ' + infodatatrack[0].properties.gcode.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.gcode.lastIndexOf(req.params.info);
+                if (infodatatrack[0].properties.gcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                    //// console.log('gcode index ' + infodatatrack[0].properties.gcode.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.gcode.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('gcode lastindex ' + infodatatrack[0].properties.gcode.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.gcode.lastIndexOf(decodeURIComponent(req.params.info));
                 } else {
-                    //// console.log('gcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.gcode2.indexOf(req.params.info);
-                    //// console.log('gcode2 lastindex ' + infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.gcode2.lastIndexOf(req.params.info);
+                    //// console.log('gcode index ' + infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.gcode2.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('gcode2 lastindex ' + infodatatrack[0].properties.gcode2.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.gcode2.lastIndexOf(decodeURIComponent(req.params.info));
                 }
                 if (index == 0) {
                     //// console.log('index ' + index + ' ' + lastindex);
@@ -1594,15 +1594,15 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
 
                 }
-            } else if (infodatatrack[0].properties.Ccode.indexOf(req.params.info) >= 0) {
+            } else if (infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "CULVERT";
 
-                //// console.log('Ccode  ' + req.params.info);
-                if (infodatatrack[0].properties.Ccode.indexOf(req.params.info) >= 0) {
-                    //// console.log('Ccode index ' + infodatatrack[0].properties.Ccode.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.Ccode.indexOf(req.params.info);
-                    //// console.log('Ccode lastindex ' + infodatatrack[0].properties.Ccode.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.Ccode.lastIndexOf(req.params.info);
+                //// console.log('Ccode  ' + decodeURIComponent(req.params.info));
+                if (infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                    //// console.log('Ccode index ' + infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('Ccode lastindex ' + infodatatrack[0].properties.Ccode.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.Ccode.lastIndexOf(decodeURIComponent(req.params.info));
                 }
                 if (index == 0) {
                     //// console.log('index1 ' + index + ' ' + lastindex);
@@ -1643,20 +1643,20 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 }
                 //// console.log('returnObject.properties ' + JSON.stringify(returnObject.properties));
 
-            } else if (infodatatrack[0].properties.dcode.indexOf(req.params.info) >= 0 ||
-                infodatatrack[0].properties.dcode2.indexOf(req.params.info) >= 0) {
+            } else if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
+                infodatatrack[0].properties.dcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "DRAINAGE";
 
-                if (infodatatrack[0].properties.dcode.indexOf(req.params.info) >= 0) {
-                    //// console.log('dcode index ' + infodatatrack[0].properties.dcode.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.dcode.indexOf(req.params.info);
-                    //// console.log('dcode lastindex ' + infodatatrack[0].properties.dcode.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.dcode.lastIndexOf(req.params.info);
+                if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                    //// console.log('dcode index ' + infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('dcode lastindex ' + infodatatrack[0].properties.dcode.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.dcode.lastIndexOf(decodeURIComponent(req.params.info));
                 } else {
-                    //// console.log('dcode index ' + infodatatrack[0].properties.bname.indexOf(req.params.info));
-                    index = infodatatrack[0].properties.dcode2.indexOf(req.params.info);
-                    //// console.log('dcode2 lastindex ' + infodatatrack[0].properties.dcode2.lastIndexOf(req.params.info));
-                    lastindex = infodatatrack[0].properties.dcode2.lastIndexOf(req.params.info);
+                    //// console.log('dcode index ' + infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)));
+                    index = infodatatrack[0].properties.dcode2.indexOf(decodeURIComponent(req.params.info));
+                    //// console.log('dcode2 lastindex ' + infodatatrack[0].properties.dcode2.lastIndexOf(decodeURIComponent(req.params.info)));
+                    lastindex = infodatatrack[0].properties.dcode2.lastIndexOf(decodeURIComponent(req.params.info));
                 }
                 if (index == 0) {
                     //// console.log('index ' + index + ' ' + lastindex);
@@ -1710,12 +1710,12 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 });
 /* GET JSON Infodatatracks listing BY ANY FIELD. */
 router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
-    req.params.info = req.params.info;
+    // req.params.info = req.params.info;
     var returnObject = {};
     var index = 0;
     var lastindex = 0;
     // console.log(req.params.info.replace('%20', ' '));
-    var tofind = req.params.info;
+    var tofind = decodeURIComponent(req.params.info);
     debug('req.params.info ' + req.params.info);
     Infodatatrack.find({
         $or: [{
@@ -1776,8 +1776,18 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
             // {
             //     "properties.name": {"$regex": tofind, "$options" : "i" }
             // }
-        ]
-    }).exec(function (err, infodatatrack) {
+        ],
+    },{
+            'properties.rcode': 1,
+            'properties.rname': 1,
+            'properties.bcode': 1,
+            'properties.bname': 1,
+            'properties.gcode': 1,
+            'properties.gcode2': 1,
+            'properties.dcode': 1,
+            'properties.dcode2': 1,
+            'properties.Ccode': 1}
+).exec(function (err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1800,66 +1810,48 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
                         // debug(j);
                         if (true) {
                             if (infodatatrack[i].properties.rcode[j] !== undefined &&
-                                infodatatrack[i].properties.rcode[j] !== undefined &&
                                  infodatatrack[i].properties.rcode[j].length > 3 &&
-                                 infodatatrack[i].properties.rcode[j].length < 70 &&
                                 infodatatrack[i].properties.rcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.rcode[j]] = 'rcode';
                                 // texto += ;
                             }
                             if (infodatatrack[i].properties.rname[j] !== undefined &&
-                                infodatatrack[i].properties.rname[j] !== undefined &&
                                  infodatatrack[i].properties.rname[j].length > 3 &&
-                                infodatatrack[i].properties.rname[j].length < 70 &&
                                 infodatatrack[i].properties.rname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.rname[j]] = 'rname';
                             }
                             if (infodatatrack[i].properties.bcode[j] !== undefined &&
-                                infodatatrack[i].properties.bcode[j] !== undefined &&
                                  infodatatrack[i].properties.bcode[j].length > 3 &&
-                                infodatatrack[i].properties.bcode[j].length < 70 &&
                                 infodatatrack[i].properties.bcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.bcode[j]] = 'bcode';
                             }
                             if (infodatatrack[i].properties.bname[j] !== undefined &&
-                                infodatatrack[i].properties.bname[j] !== undefined &&
                                  infodatatrack[i].properties.bname[j].length > 3 &&
-                                infodatatrack[i].properties.bname[j].length < 70 &&
                                 infodatatrack[i].properties.bname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.bname[j]] = 'bname';
                             }
                             if (infodatatrack[i].properties.gcode[j] !== undefined &&
-                                infodatatrack[i].properties.gcode[j] !== undefined &&
                                  infodatatrack[i].properties.gcode[j].length > 3 &&
-                                infodatatrack[i].properties.gcode[j].length < 70 &&
                                 infodatatrack[i].properties.gcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.gcode[j]] = 'gcode';
                             }
                             if (infodatatrack[i].properties.gcode2[j] !== undefined &&
-                                infodatatrack[i].properties.gcode2[j] !== undefined &&
                                  infodatatrack[i].properties.gcode2[j].length > 3 &&
-                                infodatatrack[i].properties.gcode2[j].length < 70 &&
                                 infodatatrack[i].properties.gcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.gcode2[j]] = 'gcode2';
                             }
                             if (infodatatrack[i].properties.dcode[j] !== undefined &&
-                                infodatatrack[i].properties.dcode[j] !== undefined &&
                                  infodatatrack[i].properties.dcode[j].length > 3 &&
-                                infodatatrack[i].properties.dcode[j].length < 70 &&
                                 infodatatrack[i].properties.dcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.dcode[j]] = 'dcode';
                             }
                             if (infodatatrack[i].properties.dcode2[j] !== undefined &&
-                                infodatatrack[i].properties.dcode2[j] !== undefined &&
                                  infodatatrack[i].properties.dcode2[j].length > 3 &&
-                                infodatatrack[i].properties.dcode2[j].length < 70 &&
                                 infodatatrack[i].properties.dcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 matchestoquery[infodatatrack[i].properties.dcode2[j]] = 'dcode2';
                             }
                             if (infodatatrack[i].properties.Ccode[j] !== undefined &&
-                                infodatatrack[i].properties.Ccode[j] !== undefined &&
                                  infodatatrack[i].properties.Ccode[j].length > 3 &&
-                                infodatatrack[i].properties.Ccode[j].length < 70 &&
                                 infodatatrack[i].properties.Ccode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
                                 debug(infodatatrack[i].properties.Ccode[j]);
                                 debug(tofind.toUpperCase());
