@@ -731,6 +731,436 @@ exports.nAssetsRiskGraph = function (ret, code, type, assetype) {
 
     return ret;
 }
+exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
+    var codearr = code.split('__');
+    var risk_cons = codearr[3];
+    var districtVal = code.split('-')[1];
+
+
+    if (type === 'NAT') {
+        var risk_lof = codearr[2].replace('RNAT-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_nat1']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_nat1']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_nat1']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_nat1']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_nat1']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_nat1']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_nat1']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_nat1']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_nat1']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_nat1']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_nat1']++;
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                break;
+            case 2:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_nat2']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_nat2']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_nat2']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_nat2']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_nat2']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_nat2']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_nat2']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_nat2']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_nat2']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_nat2']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_nat2']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 3:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_nat3']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_nat3']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_nat3']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_nat3']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_nat3']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_nat3']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_nat3']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_nat3']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_nat3']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_nat3']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_nat3']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 4:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_nat4']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_nat4']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_nat4']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_nat4']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_nat4']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_nat4']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_nat4']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_nat4']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_nat4']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_nat4']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_nat4']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 5:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_nat5']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_nat5']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_nat5']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_nat5']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_nat5']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_nat5']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_nat5']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_nat5']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_nat5']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_nat5']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_nat5']++;
+                    default:
+                        break;
+                }
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + risknathaz_lof + ' ' + risknathaz_cons);
+                break;
+        }
+    } else {
+        var risk_lof = codearr[2].replace('RPHY-', '');
+        //debug(risk_lof, risk_cons);
+        switch (formulasService.riskRatingScaleString(risk_lof, risk_cons)) {
+            case 1:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_phy1']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_phy1']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_phy1']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_phy1']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_phy1']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_phy1']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_phy1']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_phy1']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_phy1']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_phy1']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_phy1']++;
+                    default:
+                        break;
+                }
+
+
+                break;
+            case 2:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_phy2']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_phy2']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_phy2']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_phy2']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_phy2']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_phy2']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_phy2']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_phy2']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_phy2']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_phy2']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_phy2']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 3:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_phy3']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_phy3']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_phy3']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_phy3']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_phy3']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_phy3']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_phy3']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_phy3']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_phy3']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_phy3']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_phy3']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 4:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_phy4']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_phy4']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_phy4']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_phy4']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_phy4']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_phy4']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_phy4']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_phy4']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_phy4']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_phy4']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_phy4']++;
+                    default:
+                        break;
+                }
+
+                break;
+            case 5:
+                switch (services.getDistrictDictionary(districtVal)) {
+
+                    case "SG":
+                        arrInv['Graph_elements_Saint_George_phy5']++;
+                        break;
+                    case "SPL":
+                        arrInv['Graph_elements_Saint_Paul_phy5']++;
+                        break;
+                    case "SJP":
+                        arrInv['Graph_elements_Saint_Joseph_phy5']++;
+                        break;
+                    case "SPT":
+                        arrInv['Graph_elements_Saint_Peter_phy5']++;
+                        break;
+                    case "SJH":
+                        arrInv['Graph_elements_Saint_John_phy5']++;
+                        break;
+                    case "SA":
+                        arrInv['Graph_elements_Saint_Andrew_phy5']++;
+                        break;
+                    case "SD":
+                        arrInv['Graph_elements_Saint_David_phy5']++;
+                        break;
+                    case "SPK":
+                        arrInv['Graph_elements_Saint_Patrick_phy5']++;
+                        break;
+                    case "SM":
+                        arrInv['Graph_elements_Saint_Mark_phy5']++;
+                        break;
+                    case "SL":
+                        arrInv['Graph_elements_Saint_Luke_phy5']++;
+                        break;
+                    case "SPR":
+                        arrInv['Graph_elements_Saint_Peter_phy5']++;
+                    default:
+                        break;
+                }
+                break;
+
+            default:
+                //debug('##### investmentNatural Value not find: ' + riskphyhaz_lof + ' ' + riskphyhaz_cons);
+                break;
+        }
+    }
+
+    return arrInv;
+}
 exports.investmentBridgesPhysical = function (ret, riskphyhaz_lof, riskphyhaz_cons, investment) {
 
     switch (formulasService.riskRatingScale(riskphyhaz_lof, riskphyhaz_cons)) {
@@ -1867,62 +2297,7 @@ exports.nInterventionsCriticality = function (ret, code, asset, type) {
     }
     return ret;
 }
-exports.schedIntervGraph = function (ret, schnatsGraph, schphysGraph) {
 
-    ret['Graph_km_risknat1'] = 0;
-    ret['Graph_num_brisknat1'] = 0;
-    ret['Graph_num_crisknat1'] = 0;
-    ret['Graph_num_grisknat1'] = 0;
-    ret['Graph_km_riskphy1'] = 0;
-    ret['Graph_num_briskphy1'] = 0;
-    ret['Graph_num_criskphy1'] = 0;
-    ret['Graph_num_griskphy1'] = 0;
-    ret['Graph_km_risknat2'] = 0;
-    ret['Graph_num_brisknat2'] = 0;
-    ret['Graph_num_crisknat2'] = 0;
-    ret['Graph_num_grisknat2'] = 0;
-    ret['Graph_km_riskphy2'] = 0;
-    ret['Graph_num_briskphy2'] = 0;
-    ret['Graph_num_criskphy2'] = 0;
-    ret['Graph_num_griskphy2'] = 0;
-    ret['Graph_km_risknat3'] = 0;
-    ret['Graph_num_brisknat3'] = 0;
-    ret['Graph_num_crisknat3'] = 0;
-    ret['Graph_num_grisknat3'] = 0;
-    ret['Graph_km_riskphy3'] = 0;
-    ret['Graph_num_briskphy3'] = 0;
-    ret['Graph_num_criskphy3'] = 0;
-    ret['Graph_num_griskphy3'] = 0;
-    ret['Graph_km_risknat4'] = 0;
-    ret['Graph_num_brisknat4'] = 0;
-    ret['Graph_num_crisknat4'] = 0;
-    ret['Graph_num_grisknat4'] = 0;
-    ret['Graph_km_riskphy4'] = 0;
-    ret['Graph_num_briskphy4'] = 0;
-    ret['Graph_num_criskphy4'] = 0;
-    ret['Graph_num_griskphy4'] = 0;
-    ret['Graph_km_risknat5'] = 0;
-    ret['Graph_num_brisknat5'] = 0;
-    ret['Graph_num_crisknat5'] = 0;
-    ret['Graph_num_grisknat5'] = 0;
-    ret['Graph_km_riskphy5'] = 0;
-    ret['Graph_num_briskphy5'] = 0;
-    ret['Graph_num_criskphy5'] = 0;
-    ret['Graph_num_griskphy5'] = 0;
-
-
-
-
-    for (var snat of schnatsGraph) {
-        ret = this.nAssetsRiskGraph(ret, snat.properties.code, 'NAT', snat.type);
-
-    }
-    for (var sphy of schphysGraph) {
-
-        ret = this.nAssetsRiskGraph(ret, sphy.properties.code, 'PHY', sphy.type);
-    }
-    return ret;
-}
 
 exports.schedInterv = function (ret, schnats, schphys) {
 
@@ -2247,4 +2622,167 @@ exports.schedInterv = function (ret, schnats, schphys) {
     }
     return ret;
 
+}
+
+exports.schedIntervGraph = function (ret, schnatsGraph, schphysGraph) {
+
+    ret['Graph_km_risknat1'] = 0;
+    ret['Graph_num_brisknat1'] = 0;
+    ret['Graph_num_crisknat1'] = 0;
+    ret['Graph_num_grisknat1'] = 0;
+    ret['Graph_km_riskphy1'] = 0;
+    ret['Graph_num_briskphy1'] = 0;
+    ret['Graph_num_criskphy1'] = 0;
+    ret['Graph_num_griskphy1'] = 0;
+    ret['Graph_km_risknat2'] = 0;
+    ret['Graph_num_brisknat2'] = 0;
+    ret['Graph_num_crisknat2'] = 0;
+    ret['Graph_num_grisknat2'] = 0;
+    ret['Graph_km_riskphy2'] = 0;
+    ret['Graph_num_briskphy2'] = 0;
+    ret['Graph_num_criskphy2'] = 0;
+    ret['Graph_num_griskphy2'] = 0;
+    ret['Graph_km_risknat3'] = 0;
+    ret['Graph_num_brisknat3'] = 0;
+    ret['Graph_num_crisknat3'] = 0;
+    ret['Graph_num_grisknat3'] = 0;
+    ret['Graph_km_riskphy3'] = 0;
+    ret['Graph_num_briskphy3'] = 0;
+    ret['Graph_num_criskphy3'] = 0;
+    ret['Graph_num_griskphy3'] = 0;
+    ret['Graph_km_risknat4'] = 0;
+    ret['Graph_num_brisknat4'] = 0;
+    ret['Graph_num_crisknat4'] = 0;
+    ret['Graph_num_grisknat4'] = 0;
+    ret['Graph_km_riskphy4'] = 0;
+    ret['Graph_num_briskphy4'] = 0;
+    ret['Graph_num_criskphy4'] = 0;
+    ret['Graph_num_griskphy4'] = 0;
+    ret['Graph_km_risknat5'] = 0;
+    ret['Graph_num_brisknat5'] = 0;
+    ret['Graph_num_crisknat5'] = 0;
+    ret['Graph_num_grisknat5'] = 0;
+    ret['Graph_km_riskphy5'] = 0;
+    ret['Graph_num_briskphy5'] = 0;
+    ret['Graph_num_criskphy5'] = 0;
+    ret['Graph_num_griskphy5'] = 0;
+
+    //---------------//
+
+    ret['Graph_elements_Saint_George_nat5'] = 0;
+    ret['Graph_elements_Saint_Paul_nat5'] = 0;
+    ret['Graph_elements_Saint_Joseph_nat5'] = 0;
+    ret['Graph_elements_Saint_Peter_nat5'] = 0;
+    ret['Graph_elements_Saint_John_nat5'] = 0;
+    ret['Graph_elements_Saint_Andrew_nat5'] = 0;
+    ret['Graph_elements_Saint_David_nat5'] = 0;
+    ret['Graph_elements_Saint_Patrick_nat5'] = 0;
+    ret['Graph_elements_Saint_Mark_nat5'] = 0;
+    ret['Graph_elements_Saint_Luke_nat5'] = 0;
+    ret['Graph_elements_Saint_George_nat4'] = 0;
+    ret['Graph_elements_Saint_Paul_nat4'] = 0;
+    ret['Graph_elements_Saint_Joseph_nat4'] = 0;
+    ret['Graph_elements_Saint_Peter_nat4'] = 0;
+    ret['Graph_elements_Saint_John_nat4'] = 0;
+    ret['Graph_elements_Saint_Andrew_nat4'] = 0;
+    ret['Graph_elements_Saint_David_nat4'] = 0;
+    ret['Graph_elements_Saint_Patrick_nat4'] = 0;
+    ret['Graph_elements_Saint_Mark_nat4'] = 0;
+    ret['Graph_elements_Saint_Luke_nat4'] = 0;
+    ret['Graph_elements_Saint_George_nat3'] = 0;
+    ret['Graph_elements_Saint_Paul_nat3'] = 0;
+    ret['Graph_elements_Saint_Joseph_nat3'] = 0;
+    ret['Graph_elements_Saint_Peter_nat3'] = 0;
+    ret['Graph_elements_Saint_John_nat3'] = 0;
+    ret['Graph_elements_Saint_Andrew_nat3'] = 0;
+    ret['Graph_elements_Saint_David_nat3'] = 0;
+    ret['Graph_elements_Saint_Patrick_nat3'] = 0;
+    ret['Graph_elements_Saint_Mark_nat3'] = 0;
+    ret['Graph_elements_Saint_Luke_nat3'] = 0;
+    ret['Graph_elements_Saint_George_nat2'] = 0;
+    ret['Graph_elements_Saint_Paul_nat2'] = 0;
+    ret['Graph_elements_Saint_Joseph_nat2'] = 0;
+    ret['Graph_elements_Saint_Peter_nat2'] = 0;
+    ret['Graph_elements_Saint_John_nat2'] = 0;
+    ret['Graph_elements_Saint_Andrew_nat2'] = 0;
+    ret['Graph_elements_Saint_David_nat2'] = 0;
+    ret['Graph_elements_Saint_Patrick_nat2'] = 0;
+    ret['Graph_elements_Saint_Mark_nat2'] = 0;
+    ret['Graph_elements_Saint_Luke_nat2'] = 0;
+    ret['Graph_elements_Saint_George_nat1'] = 0;
+    ret['Graph_elements_Saint_Paul_nat1'] = 0;
+    ret['Graph_elements_Saint_Joseph_nat1'] = 0;
+    ret['Graph_elements_Saint_Peter_nat1'] = 0;
+    ret['Graph_elements_Saint_John_nat1'] = 0;
+    ret['Graph_elements_Saint_Andrew_nat1'] = 0;
+    ret['Graph_elements_Saint_David_nat1'] = 0;
+    ret['Graph_elements_Saint_Patrick_nat1'] = 0;
+    ret['Graph_elements_Saint_Mark_nat1'] = 0;
+    ret['Graph_elements_Saint_Luke_nat1'] = 0;
+
+    ret['Graph_elements_Saint_George_phy5'] = 0;
+    ret['Graph_elements_Saint_Paul_phy5'] = 0;
+    ret['Graph_elements_Saint_Joseph_phy5'] = 0;
+    ret['Graph_elements_Saint_Peter_phy5'] = 0;
+    ret['Graph_elements_Saint_John_phy5'] = 0;
+    ret['Graph_elements_Saint_Andrew_phy5'] = 0;
+    ret['Graph_elements_Saint_David_phy5'] = 0;
+    ret['Graph_elements_Saint_Patrick_phy5'] = 0;
+    ret['Graph_elements_Saint_Mark_phy5'] = 0;
+    ret['Graph_elements_Saint_Luke_phy5'] = 0;
+    ret['Graph_elements_Saint_George_phy4'] = 0;
+    ret['Graph_elements_Saint_Paul_phy4'] = 0;
+    ret['Graph_elements_Saint_Joseph_phy4'] = 0;
+    ret['Graph_elements_Saint_Peter_phy4'] = 0;
+    ret['Graph_elements_Saint_John_phy4'] = 0;
+    ret['Graph_elements_Saint_Andrew_phy4'] = 0;
+    ret['Graph_elements_Saint_David_phy4'] = 0;
+    ret['Graph_elements_Saint_Patrick_phy4'] = 0;
+    ret['Graph_elements_Saint_Mark_phy4'] = 0;
+    ret['Graph_elements_Saint_Luke_phy4'] = 0;
+    ret['Graph_elements_Saint_George_phy3'] = 0;
+    ret['Graph_elements_Saint_Paul_phy3'] = 0;
+    ret['Graph_elements_Saint_Joseph_phy3'] = 0;
+    ret['Graph_elements_Saint_Peter_phy3'] = 0;
+    ret['Graph_elements_Saint_John_phy3'] = 0;
+    ret['Graph_elements_Saint_Andrew_phy3'] = 0;
+    ret['Graph_elements_Saint_David_phy3'] = 0;
+    ret['Graph_elements_Saint_Patrick_phy3'] = 0;
+    ret['Graph_elements_Saint_Mark_phy3'] = 0;
+    ret['Graph_elements_Saint_Luke_phy3'] = 0;
+    ret['Graph_elements_Saint_George_phy2'] = 0;
+    ret['Graph_elements_Saint_Paul_phy2'] = 0;
+    ret['Graph_elements_Saint_Joseph_phy2'] = 0;
+    ret['Graph_elements_Saint_Peter_phy2'] = 0;
+    ret['Graph_elements_Saint_John_phy2'] = 0;
+    ret['Graph_elements_Saint_Andrew_phy2'] = 0;
+    ret['Graph_elements_Saint_David_phy2'] = 0;
+    ret['Graph_elements_Saint_Patrick_phy2'] = 0;
+    ret['Graph_elements_Saint_Mark_phy2'] = 0;
+    ret['Graph_elements_Saint_Luke_phy2'] = 0;
+    ret['Graph_elements_Saint_George_phy1'] = 0;
+    ret['Graph_elements_Saint_Paul_phy1'] = 0;
+    ret['Graph_elements_Saint_Joseph_phy1'] = 0;
+    ret['Graph_elements_Saint_Peter_phy1'] = 0;
+    ret['Graph_elements_Saint_John_phy1'] = 0;
+    ret['Graph_elements_Saint_Andrew_phy1'] = 0;
+    ret['Graph_elements_Saint_David_phy1'] = 0;
+    ret['Graph_elements_Saint_Patrick_phy1'] = 0;
+    ret['Graph_elements_Saint_Mark_phy1'] = 0;
+    ret['Graph_elements_Saint_Luke_phy1'] = 0;
+
+
+
+
+    for (var snat of schnatsGraph) {
+        ret = this.nAssetsRiskGraph(ret, snat.properties.code, 'NAT', snat.type);
+        ret = this.nAssetsRiskGraphParish(ret, snat.properties.code, 'NAT');
+
+    }
+    for (var sphy of schphysGraph) {
+
+        ret = this.nAssetsRiskGraph(ret, sphy.properties.code, 'PHY', sphy.type);
+        ret = this.nAssetsRiskGraphParish(ret, sphy.properties.code, 'PHY');
+    }
+    return ret;
 }

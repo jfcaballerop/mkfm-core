@@ -32,6 +32,8 @@
         {
             name: 'INITIAL RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile per parish',
             type: 'bar',
+            labels: ["SG", "SPL", "SJP", "SPT", "SJH", "SA", "SD", "SPK", "SM", "SL", "SPR"],
+            rangeValues: [1, 2, 3, 4, 5],
             options: {
                 title: {
                     display: true,
@@ -132,6 +134,26 @@
         $.each(selectGraphValues, function (key, value) {
             if (val === value.name) {
                 ret = value.options;
+            }
+        });
+        return ret;
+    };
+
+    function getLabelsChart(val) {
+        var ret = [];
+        $.each(selectGraphValues, function (key, value) {
+            if (val === value.name) {
+                ret = value.labels;
+            }
+        });
+        return ret;
+    };
+
+    function getRangeValuesChart(val) {
+        var ret = [];
+        $.each(selectGraphValues, function (key, value) {
+            if (val === value.name) {
+                ret = value.rangeValues;
             }
         });
         return ret;
@@ -284,6 +306,257 @@
                         Total_Graph_num_griskphy) * 100 * 100) / 100;
                     break;
 
+
+
+                case 2:
+                    var Graph_elements_Saint_George_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_George_phy5)  %>
+                    var Graph_elements_Saint_Paul_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Paul_phy5)  %>
+                    var Graph_elements_Saint_Joseph_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Joseph_phy5)  %>
+                    var Graph_elements_Saint_Peter_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Peter_phy5)  %>
+                    var Graph_elements_Saint_John_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_John_phy5)  %>
+                    var Graph_elements_Saint_Andrew_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Andrew_phy5)  %>
+                    var Graph_elements_Saint_David_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_David_phy5)  %>
+                    var Graph_elements_Saint_Patrick_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Patrick_phy5)  %>
+                    var Graph_elements_Saint_Mark_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Mark_phy5)  %>
+                    var Graph_elements_Saint_Luke_phy5 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Luke_phy5)  %>
+                    var Graph_elements_Saint_George_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_George_phy4)  %>
+                    var Graph_elements_Saint_Paul_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Paul_phy4)  %>
+                    var Graph_elements_Saint_Joseph_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Joseph_phy4)  %>
+                    var Graph_elements_Saint_Peter_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Peter_phy4)  %>
+                    var Graph_elements_Saint_John_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_John_phy4)  %>
+                    var Graph_elements_Saint_Andrew_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Andrew_phy4)  %>
+                    var Graph_elements_Saint_David_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_David_phy4)  %>
+                    var Graph_elements_Saint_Patrick_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Patrick_phy4)  %>
+                    var Graph_elements_Saint_Mark_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Mark_phy4)  %>
+                    var Graph_elements_Saint_Luke_phy4 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Luke_phy4)  %>
+                    var Graph_elements_Saint_George_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_George_phy3)  %>
+                    var Graph_elements_Saint_Paul_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Paul_phy3)  %>
+                    var Graph_elements_Saint_Joseph_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Joseph_phy3)  %>
+                    var Graph_elements_Saint_Peter_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Peter_phy3)  %>
+                    var Graph_elements_Saint_John_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_John_phy3)  %>
+                    var Graph_elements_Saint_Andrew_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Andrew_phy3)  %>
+                    var Graph_elements_Saint_David_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_David_phy3)  %>
+                    var Graph_elements_Saint_Patrick_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Patrick_phy3)  %>
+                    var Graph_elements_Saint_Mark_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Mark_phy3)  %>
+                    var Graph_elements_Saint_Luke_phy3 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Luke_phy3)  %>
+                    var Graph_elements_Saint_George_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_George_phy2)  %>
+                    var Graph_elements_Saint_Paul_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Paul_phy2)  %>
+                    var Graph_elements_Saint_Joseph_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Joseph_phy2)  %>
+                    var Graph_elements_Saint_Peter_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Peter_phy2)  %>
+                    var Graph_elements_Saint_John_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_John_phy2)  %>
+                    var Graph_elements_Saint_Andrew_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Andrew_phy2)  %>
+                    var Graph_elements_Saint_David_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_David_phy2)  %>
+                    var Graph_elements_Saint_Patrick_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Patrick_phy2)  %>
+                    var Graph_elements_Saint_Mark_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Mark_phy2)  %>
+                    var Graph_elements_Saint_Luke_phy2 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Luke_phy2)  %>
+                    var Graph_elements_Saint_George_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_George_phy1)  %>
+                    var Graph_elements_Saint_Paul_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Paul_phy1)  %>
+                    var Graph_elements_Saint_Joseph_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Joseph_phy1)  %>
+                    var Graph_elements_Saint_Peter_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Peter_phy1)  %>
+                    var Graph_elements_Saint_John_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_John_phy1)  %>
+                    var Graph_elements_Saint_Andrew_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Andrew_phy1)  %>
+                    var Graph_elements_Saint_David_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_David_phy1)  %>
+                    var Graph_elements_Saint_Patrick_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Patrick_phy1)  %>
+                    var Graph_elements_Saint_Mark_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Mark_phy1)  %>
+                    var Graph_elements_Saint_Luke_phy1 =
+                        <%- JSON.stringify(retValues.Graph_elements_Saint_Luke_phy1)  %>
+                    var Total_Graph_elements_Saint_George_phy = Graph_elements_Saint_George_phy1 +
+                        Graph_elements_Saint_George_phy2 + Graph_elements_Saint_George_phy3 +
+                        Graph_elements_Saint_George_phy4 + Graph_elements_Saint_George_phy5;
+                    var Total_Graph_elements_Saint_Paul_phy = Graph_elements_Saint_Paul_phy1 +
+                        Graph_elements_Saint_Paul_phy2 + Graph_elements_Saint_Paul_phy3 +
+                        Graph_elements_Saint_Paul_phy4 + Graph_elements_Saint_Paul_phy5;
+                    var Total_Graph_elements_Saint_Joseph_phy = Graph_elements_Saint_Joseph_phy1 +
+                        Graph_elements_Saint_Joseph_phy2 + Graph_elements_Saint_Joseph_phy3 +
+                        Graph_elements_Saint_Joseph_phy4 + Graph_elements_Saint_Joseph_phy5;
+                    var Total_Graph_elements_Saint_Peter_phy = Graph_elements_Saint_Peter_phy1 +
+                        Graph_elements_Saint_Peter_phy2 + Graph_elements_Saint_Peter_phy3 +
+                        Graph_elements_Saint_Peter_phy4 + Graph_elements_Saint_Peter_phy5;
+                    var Total_Graph_elements_Saint_John_phy = Graph_elements_Saint_John_phy1 +
+                        Graph_elements_Saint_John_phy2 + Graph_elements_Saint_John_phy3 +
+                        Graph_elements_Saint_John_phy4 + Graph_elements_Saint_John_phy5;
+                    var Total_Graph_elements_Saint_Andrew_phy = Graph_elements_Saint_Andrew_phy1 +
+                        Graph_elements_Saint_Andrew_phy2 + Graph_elements_Saint_Andrew_phy3 +
+                        Graph_elements_Saint_Andrew_phy4 + Graph_elements_Saint_Andrew_phy5;
+                    var Total_Graph_elements_Saint_David_phy = Graph_elements_Saint_David_phy1 +
+                        Graph_elements_Saint_David_phy2 + Graph_elements_Saint_David_phy3 +
+                        Graph_elements_Saint_David_phy4 + Graph_elements_Saint_David_phy5;
+                    var Total_Graph_elements_Saint_Patrick_phy = Graph_elements_Saint_Patrick_phy1 +
+                        Graph_elements_Saint_Patrick_phy2 + Graph_elements_Saint_Patrick_phy3 +
+                        Graph_elements_Saint_Patrick_phy4 + Graph_elements_Saint_Patrick_phy5;
+                    var Total_Graph_elements_Saint_Mark_phy = Graph_elements_Saint_Mark_phy1 +
+                        Graph_elements_Saint_Mark_phy2 + Graph_elements_Saint_Mark_phy3 +
+                        Graph_elements_Saint_Mark_phy4 + Graph_elements_Saint_Mark_phy5;
+                    var Total_Graph_elements_Saint_Luke_phy = Graph_elements_Saint_Luke_phy1 +
+                        Graph_elements_Saint_Luke_phy2 + Graph_elements_Saint_Luke_phy3 +
+                        Graph_elements_Saint_Luke_phy4 + Graph_elements_Saint_Luke_phy5;
+                    arrValuesGraph[1] = [];
+                    arrValuesGraph[1]["SG"] = Math.round((Graph_elements_Saint_George_phy1 /
+                        Total_Graph_elements_Saint_George_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SPL"] = Math.round((Graph_elements_Saint_Paul_phy1 /
+                        Total_Graph_elements_Saint_Paul_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SJP"] = Math.round((Graph_elements_Saint_Joseph_phy1 /
+                        Total_Graph_elements_Saint_Joseph_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SPT"] = Math.round((Graph_elements_Saint_Peter_phy1 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SJH"] = Math.round((Graph_elements_Saint_John_phy1 /
+                        Total_Graph_elements_Saint_John_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SA"] = Math.round((Graph_elements_Saint_Andrew_phy1 /
+                        Total_Graph_elements_Saint_Andrew_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SD"] = Math.round((Graph_elements_Saint_David_phy1 /
+                        Total_Graph_elements_Saint_David_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SPK"] = Math.round((Graph_elements_Saint_Patrick_phy1 /
+                        Total_Graph_elements_Saint_Patrick_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SM"] = Math.round((Graph_elements_Saint_Mark_phy1 /
+                        Total_Graph_elements_Saint_Mark_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SL"] = Math.round((Graph_elements_Saint_Luke_phy1 /
+                        Total_Graph_elements_Saint_Luke_phy) * 100 * 100) / 100;
+                    arrValuesGraph[1]["SPR"] = Math.round((Graph_elements_Saint_Peter_phy1 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2] = [];
+                    arrValuesGraph[2]["SG"] = Math.round((Graph_elements_Saint_George_phy2 /
+                        Total_Graph_elements_Saint_George_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SPL"] = Math.round((Graph_elements_Saint_Paul_phy2 /
+                        Total_Graph_elements_Saint_Paul_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SJP"] = Math.round((Graph_elements_Saint_Joseph_phy2 /
+                        Total_Graph_elements_Saint_Joseph_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SPT"] = Math.round((Graph_elements_Saint_Peter_phy2 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SJH"] = Math.round((Graph_elements_Saint_John_phy2 /
+                        Total_Graph_elements_Saint_John_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SA"] = Math.round((Graph_elements_Saint_Andrew_phy2 /
+                        Total_Graph_elements_Saint_Andrew_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SD"] = Math.round((Graph_elements_Saint_David_phy2 /
+                        Total_Graph_elements_Saint_David_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SPK"] = Math.round((Graph_elements_Saint_Patrick_phy2 /
+                        Total_Graph_elements_Saint_Patrick_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SM"] = Math.round((Graph_elements_Saint_Mark_phy2 /
+                        Total_Graph_elements_Saint_Mark_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SL"] = Math.round((Graph_elements_Saint_Luke_phy2 /
+                        Total_Graph_elements_Saint_Luke_phy) * 100 * 100) / 100;
+                    arrValuesGraph[2]["SPR"] = Math.round((Graph_elements_Saint_Peter_phy2 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3] = [];
+                    arrValuesGraph[3]["SG"] = Math.round((Graph_elements_Saint_George_phy3 /
+                        Total_Graph_elements_Saint_George_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SPL"] = Math.round((Graph_elements_Saint_Paul_phy3 /
+                        Total_Graph_elements_Saint_Paul_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SJP"] = Math.round((Graph_elements_Saint_Joseph_phy3 /
+                        Total_Graph_elements_Saint_Joseph_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SPT"] = Math.round((Graph_elements_Saint_Peter_phy3 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SJH"] = Math.round((Graph_elements_Saint_John_phy3 /
+                        Total_Graph_elements_Saint_John_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SA"] = Math.round((Graph_elements_Saint_Andrew_phy3 /
+                        Total_Graph_elements_Saint_Andrew_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SD"] = Math.round((Graph_elements_Saint_David_phy3 /
+                        Total_Graph_elements_Saint_David_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SPK"] = Math.round((Graph_elements_Saint_Patrick_phy3 /
+                        Total_Graph_elements_Saint_Patrick_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SM"] = Math.round((Graph_elements_Saint_Mark_phy3 /
+                        Total_Graph_elements_Saint_Mark_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SL"] = Math.round((Graph_elements_Saint_Luke_phy3 /
+                        Total_Graph_elements_Saint_Luke_phy) * 100 * 100) / 100;
+                    arrValuesGraph[3]["SPR"] = Math.round((Graph_elements_Saint_Peter_phy3 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4] = [];
+                    arrValuesGraph[4]["SG"] = Math.round((Graph_elements_Saint_George_phy4 /
+                        Total_Graph_elements_Saint_George_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SPL"] = Math.round((Graph_elements_Saint_Paul_phy4 /
+                        Total_Graph_elements_Saint_Paul_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SJP"] = Math.round((Graph_elements_Saint_Joseph_phy4 /
+                        Total_Graph_elements_Saint_Joseph_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SPT"] = Math.round((Graph_elements_Saint_Peter_phy4 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SJH"] = Math.round((Graph_elements_Saint_John_phy4 /
+                        Total_Graph_elements_Saint_John_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SA"] = Math.round((Graph_elements_Saint_Andrew_phy4 /
+                        Total_Graph_elements_Saint_Andrew_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SD"] = Math.round((Graph_elements_Saint_David_phy4 /
+                        Total_Graph_elements_Saint_David_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SPK"] = Math.round((Graph_elements_Saint_Patrick_phy4 /
+                        Total_Graph_elements_Saint_Patrick_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SM"] = Math.round((Graph_elements_Saint_Mark_phy4 /
+                        Total_Graph_elements_Saint_Mark_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SL"] = Math.round((Graph_elements_Saint_Luke_phy4 /
+                        Total_Graph_elements_Saint_Luke_phy) * 100 * 100) / 100;
+                    arrValuesGraph[4]["SPR"] = Math.round((Graph_elements_Saint_Peter_phy4 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5] = [];
+                    arrValuesGraph[5]["SG"] = Math.round((Graph_elements_Saint_George_phy5 /
+                        Total_Graph_elements_Saint_George_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SPL"] = Math.round((Graph_elements_Saint_Paul_phy5 /
+                        Total_Graph_elements_Saint_Paul_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SJP"] = Math.round((Graph_elements_Saint_Joseph_phy5 /
+                        Total_Graph_elements_Saint_Joseph_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SPT"] = Math.round((Graph_elements_Saint_Peter_phy5 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SJH"] = Math.round((Graph_elements_Saint_John_phy5 /
+                        Total_Graph_elements_Saint_John_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SA"] = Math.round((Graph_elements_Saint_Andrew_phy5 /
+                        Total_Graph_elements_Saint_Andrew_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SD"] = Math.round((Graph_elements_Saint_David_phy5 /
+                        Total_Graph_elements_Saint_David_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SPK"] = Math.round((Graph_elements_Saint_Patrick_phy5 /
+                        Total_Graph_elements_Saint_Patrick_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SM"] = Math.round((Graph_elements_Saint_Mark_phy5 /
+                        Total_Graph_elements_Saint_Mark_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SL"] = Math.round((Graph_elements_Saint_Luke_phy5 /
+                        Total_Graph_elements_Saint_Luke_phy) * 100 * 100) / 100;
+                    arrValuesGraph[5]["SPR"] = Math.round((Graph_elements_Saint_Peter_phy5 /
+                        Total_Graph_elements_Saint_Peter_phy) * 100 * 100) / 100;
+
+
+                    break;
                 default:
                     break;
             }
