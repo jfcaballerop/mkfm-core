@@ -70,7 +70,7 @@
                         "<td>" + f.owner + "</td>" +
                         "<td>" + moment(f.updated_at).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
                         "<td>" +
-                        "<a href='" + '/auth/WEB/gis/getfile/' + f._id + "' id='filedatadiv' >Visit google</a>" +
+                        "<a href='" + '/auth/WEB/gis/getfile/' + f._id + "' id='filedatadiv' >" + f.originalname + "</a>" +
                         "</td>" +
                         "</tr> ";
                     $('#tbodyFiles').append(rowfile);
