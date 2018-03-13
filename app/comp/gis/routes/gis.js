@@ -176,7 +176,7 @@ router.post('/uploadDataSheet', uploadingDS, function (req, resp) {
     postData.assetCode = req.body.assetCode;
     postData.status = 'pending';
     // debug(req);
-    debug('## FUP DATA uploadDataSheet ::' + JSON.stringify(postData)); //form files
+    // debug('## FUP DATA uploadDataSheet ::' + JSON.stringify(postData)); //form files
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -369,38 +369,58 @@ router.post('/validate/:id', function (req, resp) {
  * GET File Valid
  */
 router.get('/getfile/:id', function (req, resp) {
-    ////// console.log('## WEB GET File: ' + req.params.id);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/' + req.params.id,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
+    Fileupload.findById(req.params.id, function (err, fup) {
+        if (err) {
+            resp.send(500, err.message);
         }
-    };
-    var request = http.request(options, function (res) {
-        ////// console.log('STATUS: ' + res.statusCode);
-        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            ////// console.log('BODY: ' + chunk);
-            data += chunk;
 
-        });
-        res.on('end', function () {
-            ////// console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            resp.status(200).jsonp(responseObject);
+        var options = {
+            host: config.HOST_API,
+            port: config.PORT_API,
+            path: config.PATH_API + '/gis/V1/' + req.params.id,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + req.cookies.jwtToken
+            }
+        };
+        var request = http.request(options, function (res) {
+            console.log('STATUS: ****************************************************** ' + res.statusCode);
+            ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
+            res.setEncoding('utf8');
+            var data = '';
+            res.on('data', function (chunk) {
+                ////// console.log('BODY: ' + chunk);
+                data += chunk;
 
+            });
+            res.on('end', function () {
+                var responseObject = JSON.parse(data);
+                // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+                //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+                resp.status(200).jsonp(responseObject);
+                // res.attachment(data.path);
+            });
         });
+
+        var filePath = path.join(fup.path);
+        var stat = fs.statSync(filePath);
+        debug(fup.mimetype + '  **************************');
+        resp.header('Content-Disposition', 'attachment; filename="' + fup.originalname + '"');
+        resp.writeHead(200, {
+            'Content-Type': fup.mimetype,
+            // 'Access-Control-Allow-Origin': '*',
+            'Content-Length': stat.size
+        });
+
+        var readStream = fs.createReadStream(filePath);
+        readStream.pipe(resp);
+        readStream.on('finish', function () {
+            resp.end();
+        });
+        console.log('The length was:', stat.size);
+        request.end();
     });
-
-    request.end();
 
 });
 /* DESACTIVATE file */
@@ -638,12 +658,12 @@ router.post('/delete/:id', function (req, resp, next) {
 
 router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## ajax getFilesByAssetCode: ' + req.params.assetCode);
+    // debug('## ajax getFilesByAssetCode: ' + req.params.assetCode);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode,
+        path: encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode),
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -674,19 +694,67 @@ router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
     request.end();
 
 });
+//getFilesByAssetCode GENERAL
 
+router.post('/getFilesByAssetCode_general/:assetCode', function (req, resp) {
+    var postData = extend({}, req.body);
+    // debug('## ajax getFilesByAssetCode_general: ' + req.params.assetCode);
+    // debug('## ajax getFilesByAssetCode_general: ' + encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode));
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode),
+        // path: config.PATH_API + '/gis/V1/getFilesByAssetCode_general/' + req.params.assetCode,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 /*******************************************************
  API REST CALLS
  **********************************************************/
 /* POST file */
 router.post('/V1/fileupload/', function (req, res, next) {
-    fu = new Fileupload(req.body);
-    fu.save(function (err, file) {
-        if (err) {
-            return res.status(500).send(err.message);
-        }
-        res.status(200).jsonp(file);
-    });
+    debug(req.body);
+
+    if (req.body.path !== undefined &&
+        req.body.path !== null) {
+        fu = new Fileupload(req.body);
+        fu.save(function (err, file) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            res.status(200).jsonp(file);
+        });
+    } else {
+        res.status(200);
+    }
 });
 
 
@@ -719,25 +787,39 @@ router.get('/V1/active_valid/', function (req, res, next) {
 
 /* GET JSON file by id. */
 router.get('/V1/:id', function (req, res, next) {
+    // debug('llega a /V1/:id --------------------------------');
+    // debug(req.params.id);
     Fileupload.findById(req.params.id, function (err, fup) {
+        debug(fup);
+        if (fup !== undefined){
         if (err) {
-            res.send(500, err.message);
+            // res.send(500, err.message);
+            res.status(500).send(err.message)
         }
         var validFeatureCollection = {};
         fs.readFile(fup.path, function (err, dataFile) {
             if (err) {
                 return res.status(500).send(err.message);
             }
-            // //// console.log('## File DATA:: ' + dataFile);
-            validFeatureCollection = JSON.parse(dataFile);
+            // console.log('## File DATA:: ' + dataFile);
+            // validFeatureCollection = JSON.parse(dataFile);
 
-            res.status(200).jsonp(validFeatureCollection);
+            // res.status(200).jsonp(validFeatureCollection);
+            res.status(200);
         });
+    } else {
+            res.status(200);
+    }
     });
 
 });
 /* GET JSON file by assetCode. */
 router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
+
+    req.params.assetCode = decodeURIComponent(req.params.assetCode);
+    // debug('************************************************************');
+    // debug('**************************** ' + req.params.assetCode + ' ********************************');
+    // debug('**************************** ' + decodeURIComponent(req.params.assetCode) + ' ********************************');
     Fileupload.find({
         assetCode: req.params.assetCode
     }, function (err, fup) {
@@ -745,6 +827,53 @@ router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
             res.send(500, err.message);
         }
 
+        res.status(200).jsonp(fup);
+    });
+
+});
+/* GET JSON file by assetCode. GENERAL*/
+router.post('/V1/getFilesByAssetCode_general/:assetCode', function (req, res, next) {
+    Fileupload.find({
+        $or: [{
+                "properties.rcode": /req.params.assetCode/i
+            },
+            {
+                "properties.rname": /req.params.assetCode/i
+            },
+            {
+                "properties.bcode": /req.params.assetCode/i
+            },
+            {
+                "properties.bname": /req.params.assetCode/i
+            },
+            {
+                "properties.gcode": /req.params.assetCode/i
+            },
+            {
+                "properties.gcode2": /req.params.assetCode/i
+            },
+            {
+                "properties.dcode": /req.params.assetCode/i
+            },
+            {
+                "properties.dcode2": /req.params.assetCode/i
+            },
+            {
+                "properties.Ccode": /req.params.assetCode/i
+            },
+            {
+                "properties.name": /req.params.assetCode/i
+            }
+        ]
+
+    }, function (err, fup) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        console.log(fup._id);
+        // console.log(req);
+        // console.log(res);
+        // console.log(next);
         res.status(200).jsonp(fup);
     });
 

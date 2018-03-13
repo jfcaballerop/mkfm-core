@@ -1692,13 +1692,13 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             ret.tracksUpdated = tracksUpdated;
             res.status(200).jsonp(ret);
         }).catch(function (reason2) {
-            console.log(reason2);
+            // console.log(reason2);
             return res.status(500).send(reason2);
 
         });
 
     }).catch(function (reason) {
-        console.log(reason);
+        // console.log(reason);
         return res.status(500).send(reason);
 
     });
@@ -4561,7 +4561,7 @@ router.post('/V1/update_field/', function (req, res, next) {
          * Para Length = 4 estoy en el segundo level
          * Para Length = 5 estoy en scoring
          */
-        console.log(arrField[0]);
+        // console.log(arrField[0]);
         switch (arrField[0]) {
             case 'Condition':
                 var arrFieldShift = arrField.slice(0);
@@ -4572,7 +4572,7 @@ router.post('/V1/update_field/', function (req, res, next) {
                 comando = 'formSave' + '.' + posicion + '=' + value;
 
 
-                console.log('\n\n\n' + comando + '\n\n\n');
+                // console.log('\n\n\n' + comando + '\n\n\n');
                 eval(comando);
 
                 // res.send(f);
