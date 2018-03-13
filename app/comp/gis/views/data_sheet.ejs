@@ -92,20 +92,11 @@
                                 <i class="fa fa-angle-right"></i>
                                 <%- trans('DSHEET_SEARCH_TOOL') %>
                             </h5>
-                            <input id="searchtool" type="text" class="form-control round-form">
+                            <input id="searchtool" type="text" list="json-datalist" class="form-control round-form">
+                            <datalist id="json-datalist"></datalist>
                             <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
                             <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
 
-                        </div>
-                        <div id="dataupload" class="form-panel" style="display:none;">
-                            <h5 class="mb">
-                                <i class="fa fa-angle-right"></i>
-                                <%- trans('DSHEET_DATA_UPLOAD') %>
-                            </h5>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="generaldataupload" type="checkbox" value="General Data">File Upload</label>
-                            </div>
                         </div>
                         <div id="datainfo" class="form-panel" style="display:none;">
                             <h5 class="mb">
@@ -129,6 +120,16 @@
                                     <input id="risk" type="checkbox" value="Indexes and risk analysis">Indexes and risk analysis</label>
                             </div>
 
+                        </div>
+                        <div id="dataupload" class="form-panel" style="display:none;">
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
+                                <%- trans('DSHEET_DATA_UPLOAD') %>
+                            </h5>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="generaldataupload" type="checkbox" value="General Data">File Upload</label>
+                            </div>
                         </div>
                         <div id="datainfophoto" class="form-panel" style="display:none;">
 

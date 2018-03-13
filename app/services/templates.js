@@ -14,7 +14,7 @@ exports.templateGeneration = function (tokenString, temp, req, ifdt) {
     var variablesJson ={};
     for (oneMatch in parsedString) {
         variables.push(parsedString[oneMatch].replace(/#/g, ''));
-        debug(parsedString[oneMatch].replace(/#/g, ''));
+        // debug(parsedString[oneMatch].replace(/#/g, ''));
 
         switch (parsedString[oneMatch]) {
             case 'string':
