@@ -81,10 +81,11 @@
                 value: 15
             }
         ];
-        var ddata3 = [{
-                label: "Design Projects",
-                value: 15
-            },
+        var ddata3 = [
+            // {
+            //     label: "Design Projects",
+            //     value: 15
+            // },
             {
                 label: "Work Interventions",
                 value: 75
@@ -195,25 +196,25 @@
         function paintDonutChart3() {
             var total = ValPeriodic * ValAmount / 100
 
+            // if ($('#Brushcutting').val().length > 0) {
+            //     ddata3[0].value = ValDesignProjects * total / 100;
+            // } else {
+            //     ddata3[0].value = 0;
+            //     // ddata3[0].value = 15 * total / 100;
+
+            // }
             if ($('#Brushcutting').val().length > 0) {
-                ddata3[0].value = ValDesignProjects * total / 100;
+                ddata3[0].value = ValWorkInterventions * total / 100;
             } else {
                 ddata3[0].value = 0;
-                // ddata3[0].value = 15 * total / 100;
+                // ddata3[0].value = 75 * total / 100;
 
             }
             if ($('#Drainclearing').val().length > 0) {
-                ddata3[1].value = ValWorkInterventions * total / 100;
+                ddata3[1].value = ValInspections * total / 100;
             } else {
                 ddata3[1].value = 0;
-                // ddata3[1].value = 75 * total / 100;
-
-            }
-            if ($('#Patching').val().length > 0) {
-                ddata3[2].value = ValInspections * total / 100;
-            } else {
-                ddata3[2].value = 0;
-                // ddata3[2].value = 10 * total / 100;
+                // ddata3[1].value = 10 * total / 100;
 
             }
 
@@ -226,7 +227,7 @@
                     // Chart data records -- each entry in this array corresponds to a point on
                     // the chart.
                     data: ddata3,
-                    colors: ['#ff0000', '#d6021e', '#bf0062']
+                    colors: ['#ff0000', '#d6021e']
                 });
             } else {
                 donut3.setData(ddata3);
@@ -306,7 +307,7 @@
             sanitizeNumberFields($(this));
             ValPeriodic = $('#Periodic').val();
             $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
-            $('#DesignProjects').trigger('change');
+            //$('#DesignProjects').trigger('change');
             $('#WorkInterventions').trigger('change');
             $('#Inspections').trigger('change');
             paintDonutChart1();
