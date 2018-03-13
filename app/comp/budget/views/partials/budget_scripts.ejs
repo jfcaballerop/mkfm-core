@@ -1,7 +1,7 @@
 <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         console.log('budget_scripts.ejs');
         var donut1 = undefined;
         var donut2 = undefined;
@@ -52,48 +52,38 @@
         console.log(risk_rating);
 
         var ddata1 = [{
-                label: "Routine",
-                value: 25
-            },
-            {
-                label: "Periodic",
-                value: 70
-            },
-            {
-                label: "Emergency",
-                value: 5
-            }
-        ];
+            label: "Routine",
+            value: 25
+        }, {
+            label: "Periodic",
+            value: 70
+        }, {
+            label: "Emergency",
+            value: 5
+        }];
         var ddata2 = [{
-                label: "Brush cutting",
-                value: 45
-            },
-            {
-                label: "Drain clearing",
-                value: 20
-            },
-            {
-                label: "Patching",
-                value: 20
-            },
-            {
-                label: "Road Safety Improvement",
-                value: 15
-            }
-        ];
+            label: "Brush cutting",
+            value: 45
+        }, {
+            label: "Drain clearing",
+            value: 20
+        }, {
+            label: "Patching",
+            value: 20
+        }, {
+            label: "Road Safety Improvement",
+            value: 15
+        }];
         var ddata3 = [{
-                label: "Design Projects",
-                value: 15
-            },
-            {
-                label: "Work Interventions",
-                value: 75
-            },
-            {
-                label: "Inspections",
-                value: 10
-            }
-        ];
+            label: "Design Projects",
+            value: 15
+        }, {
+            label: "Work Interventions",
+            value: 75
+        }, {
+            label: "Inspections",
+            value: 10
+        }];
 
         function sanitizeNumberFields(field) {
             var max = parseInt(field.attr('max'));
@@ -224,12 +214,12 @@
 
         }
 
-        $('#Summary').click(function () {
+        $('#Summary').click(function() {
             //alert('Summary');
             $('#SummaryContent').toggle('blind', {}, 500);
 
         });
-        $('input[type=radio][name=optionsRadios]').change(function () {
+        $('input[type=radio][name=optionsRadios]').change(function() {
             switch ($(this).val()) {
                 case "Annualavailablebudget":
                     $('#amountdiv').show();
@@ -252,7 +242,7 @@
                     break;
             }
         });
-        $('input[type=radio][name=riskoptionsRadios]').change(function () {
+        $('input[type=radio][name=riskoptionsRadios]').change(function() {
             switch ($(this).val()) {
                 case "NaturalHazards":
                     $('#naturalHazardsContent').show();
@@ -275,13 +265,13 @@
         //     $('#content_annual').toggle('blind', {}, 500);
         // });
 
-        $('#amountdiv').change(function (event) {
+        $('#amountdiv').change(function(event) {
             $('#InvestmentFY2018').val('EC$ ' + $('#amount').val());
             ValAmount = $('#amount').val();
             paintDonutChart1();
         });
 
-        $('#Routine').change(function (event) {
+        $('#Routine').change(function(event) {
             sanitizeNumberFields($(this));
             ValRoutine = $('#Routine').val();
             $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
@@ -292,7 +282,7 @@
             paintDonutChart1();
             paintDonutChart2();
         });
-        $('#Periodic').change(function (event) {
+        $('#Periodic').change(function(event) {
             sanitizeNumberFields($(this));
             ValPeriodic = $('#Periodic').val();
             $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
@@ -302,7 +292,7 @@
             paintDonutChart1();
             paintDonutChart3();
         });
-        $('#Emergency').change(function (event) {
+        $('#Emergency').change(function(event) {
             sanitizeNumberFields($(this));
             ValEmergency = $('#Emergency').val();
             $('#disabledInputEmergency').val('EC$ ' + ValAmount * ValEmergency / 100);
@@ -310,27 +300,27 @@
         });
 
 
-        $('#Brushcutting').change(function (event) {
+        $('#Brushcutting').change(function(event) {
             sanitizeNumberFields($(this));
             ValBrushcutting = $('#Brushcutting').val();
             $('#disabledInputBrushcutting').val('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
                 10000);
             paintDonutChart2();
         });
-        $('#Drainclearing').change(function (event) {
+        $('#Drainclearing').change(function(event) {
             sanitizeNumberFields($(this));
             ValDrainclearing = $('#Drainclearing').val();
             $('#disabledInputDrainclearing').val('EC$ ' + ValAmount * ValRoutine * ValDrainclearing /
                 10000);
             paintDonutChart2();
         });
-        $('#Patching').change(function (event) {
+        $('#Patching').change(function(event) {
             sanitizeNumberFields($(this));
             ValPatching = $('#Patching').val();
             $('#disabledInputPatching').val('EC$ ' + ValAmount * ValRoutine * ValPatching / 10000);
             paintDonutChart2();
         });
-        $('#RoadSafetyImprovement').change(function (event) {
+        $('#RoadSafetyImprovement').change(function(event) {
             sanitizeNumberFields($(this));
             ValRoadSafetyImprovement = $('#RoadSafetyImprovement').val();
             $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
@@ -340,14 +330,14 @@
 
 
 
-        $('#DesignProjects').change(function (event) {
+        $('#DesignProjects').change(function(event) {
             sanitizeNumberFields($(this));
             ValDesignProjects = $('#DesignProjects').val();
             $('#disabledInputDesignProjects').val('EC$ ' + ValAmount * ValPeriodic * ValDesignProjects /
                 10000);
             paintDonutChart3();
         });
-        $('#WorkInterventions').change(function (event) {
+        $('#WorkInterventions').change(function(event) {
             sanitizeNumberFields($(this));
             ValWorkInterventions = $('#WorkInterventions').val();
             $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
@@ -355,7 +345,7 @@
                 10000);
             paintDonutChart3();
         });
-        $('#Inspections').change(function (event) {
+        $('#Inspections').change(function(event) {
             sanitizeNumberFields($(this));
             ValInspections = $('#Inspections').val();
             $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic * ValInspections /
@@ -363,7 +353,7 @@
             paintDonutChart3();
         });
 
-        $('#levelRisk').change(function (event) {
+        $('#levelRisk').change(function(event) {
             console.log($(this).val());
             // var riskrange = $(this).val();
             // var riskfilter = [];
@@ -383,17 +373,17 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function (data) {
+            }, function(data) {
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function (values) {
+            Promise.all([p1]).then(function(values) {
 
                 //$("html").html(values[0]);
                 if (values[0].result === "OK") {
-                    console.log('OK');
+                    // console.log('OK');
                     for (var val of Object.keys(values[0])) {
-                        console.log(val + ' ' + values[0][val]);
+                        // console.log(val + ' ' + values[0][val]);
                         if (val.indexOf('investment') >= 0)
                             $('#' + val).html(Math.round(values[0][val] * 100 / 1000000) / 100);
                         else if (val.indexOf('km') >= 0)
@@ -403,7 +393,7 @@
                     }
 
                 } else {
-                    console.log('ERROR');
+                    // console.log('ERROR');
                 }
             });
 
