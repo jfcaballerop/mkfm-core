@@ -110,19 +110,22 @@
             if ($('#Routine').val().length > 0) {
                 ddata1[0].value = ValRoutine * ValAmount / 100;
             } else {
-                ddata1[0].value = 25 * ValAmount / 100;
+                ddata1[0].value = 0;
+                // ddata1[0].value = 25 * ValAmount / 100;
 
             }
             if ($('#Periodic').val().length > 0) {
                 ddata1[1].value = ValPeriodic * ValAmount / 100;
             } else {
-                ddata1[1].value = 70 * ValAmount / 100;
+                ddata1[1].value = 0;
+                // ddata1[1].value = 70 * ValAmount / 100;
 
             }
             if ($('#Emergency').val().length > 0) {
                 ddata1[2].value = ValEmergency * ValAmount / 100;
             } else {
-                ddata1[2].value = 5 * ValAmount / 100;
+                ddata1[2].value = 0;
+                // ddata1[2].value = 5 * ValAmount / 100;
 
             }
 
@@ -147,25 +150,29 @@
             if ($('#Brushcutting').val().length > 0) {
                 ddata2[0].value = ValBrushcutting * total / 100;
             } else {
-                ddata2[0].value = 25 * total / 100;
+                ddata2[0].value = 0;
+                // ddata2[0].value = 25 * total / 100;
 
             }
             if ($('#Drainclearing').val().length > 0) {
                 ddata2[1].value = ValDrainclearing * total / 100;
             } else {
-                ddata2[1].value = 70 * total / 100;
+                ddata2[1].value = 0;
+                // ddata2[1].value = 70 * total / 100;
 
             }
             if ($('#Patching').val().length > 0) {
                 ddata2[2].value = ValPatching * total / 100;
             } else {
-                ddata2[2].value = 5 * total / 100;
+                // ddata2[2].value = 5 * total / 100;
+                ddata2[2].value = 0;
 
             }
             if ($('#RoadSafetyImprovement').val().length > 0) {
                 ddata2[3].value = ValRoadSafetyImprovement * total / 100;
             } else {
-                ddata2[3].value = 5 * total / 100;
+                ddata2[3].value = 0;
+                // ddata2[3].value = 5 * total / 100;
 
             }
 
@@ -191,19 +198,22 @@
             if ($('#Brushcutting').val().length > 0) {
                 ddata3[0].value = ValDesignProjects * total / 100;
             } else {
-                ddata3[0].value = 15 * total / 100;
+                ddata3[0].value = 0;
+                // ddata3[0].value = 15 * total / 100;
 
             }
             if ($('#Drainclearing').val().length > 0) {
                 ddata3[1].value = ValWorkInterventions * total / 100;
             } else {
-                ddata3[1].value = 75 * total / 100;
+                ddata3[1].value = 0;
+                // ddata3[1].value = 75 * total / 100;
 
             }
             if ($('#Patching').val().length > 0) {
                 ddata3[2].value = ValInspections * total / 100;
             } else {
-                ddata3[2].value = 10 * total / 100;
+                ddata3[2].value = 0;
+                // ddata3[2].value = 10 * total / 100;
 
             }
 
