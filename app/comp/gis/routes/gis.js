@@ -369,38 +369,58 @@ router.post('/validate/:id', function (req, resp) {
  * GET File Valid
  */
 router.get('/getfile/:id', function (req, resp) {
-    ////// console.log('## WEB GET File: ' + req.params.id);
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/gis/V1/' + req.params.id,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
+    Fileupload.findById(req.params.id, function (err, fup) {
+        if (err) {
+            resp.send(500, err.message);
         }
-    };
-    var request = http.request(options, function (res) {
-        ////// console.log('STATUS: ' + res.statusCode);
-        ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            ////// console.log('BODY: ' + chunk);
-            data += chunk;
 
-        });
-        res.on('end', function () {
-            ////// console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-            resp.status(200).jsonp(responseObject);
+        var options = {
+            host: config.HOST_API,
+            port: config.PORT_API,
+            path: config.PATH_API + '/gis/V1/' + req.params.id,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + req.cookies.jwtToken
+            }
+        };
+        var request = http.request(options, function (res) {
+            console.log('STATUS: ****************************************************** ' + res.statusCode);
+            ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
+            res.setEncoding('utf8');
+            var data = '';
+            res.on('data', function (chunk) {
+                ////// console.log('BODY: ' + chunk);
+                data += chunk;
 
+            });
+            res.on('end', function () {
+                var responseObject = JSON.parse(data);
+                // resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+                //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+                resp.status(200).jsonp(responseObject);
+                // res.attachment(data.path);
+            });
         });
+
+        var filePath = path.join(fup.path);
+        var stat = fs.statSync(filePath);
+        debug(fup.mimetype + '  **************************');
+        resp.header('Content-Disposition', 'attachment; filename="' + fup.originalname + '"');
+        resp.writeHead(200, {
+            'Content-Type': fup.mimetype,
+            // 'Access-Control-Allow-Origin': '*',
+            'Content-Length': stat.size
+        });
+
+        var readStream = fs.createReadStream(filePath);
+        readStream.pipe(resp);
+        readStream.on('finish', function () {
+            resp.end();
+        });
+        console.log('The length was:', stat.size);
+        request.end();
     });
-
-    request.end();
 
 });
 /* DESACTIVATE file */
@@ -767,20 +787,29 @@ router.get('/V1/active_valid/', function (req, res, next) {
 
 /* GET JSON file by id. */
 router.get('/V1/:id', function (req, res, next) {
+    // debug('llega a /V1/:id --------------------------------');
+    // debug(req.params.id);
     Fileupload.findById(req.params.id, function (err, fup) {
+        debug(fup);
+        if (fup !== undefined){
         if (err) {
-            res.send(500, err.message);
+            // res.send(500, err.message);
+            res.status(500).send(err.message)
         }
         var validFeatureCollection = {};
         fs.readFile(fup.path, function (err, dataFile) {
             if (err) {
                 return res.status(500).send(err.message);
             }
-            // //// console.log('## File DATA:: ' + dataFile);
-            validFeatureCollection = JSON.parse(dataFile);
+            // console.log('## File DATA:: ' + dataFile);
+            // validFeatureCollection = JSON.parse(dataFile);
 
-            res.status(200).jsonp(validFeatureCollection);
+            // res.status(200).jsonp(validFeatureCollection);
+            res.status(200);
         });
+    } else {
+            res.status(200);
+    }
     });
 
 });

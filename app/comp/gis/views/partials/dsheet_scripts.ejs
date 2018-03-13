@@ -53,8 +53,6 @@
         }, 500); // check every 100ms
 
 
-
-
         $('#generaldataupload').click(function() {
             var $this = $(this);
             $('#divmap1').show();
@@ -64,9 +62,17 @@
                 $('#divmap1').html(file_list.join(''));
                 $('#divmap1').prepend(file_data.join(''));
 
+
                 for (var f of filelist) {
-                    var rowfile = "<tr><td>" + f.originalname + "</td><td>" + f.owner + "</td><td>" +
-                        moment(f.updated_at).format('YYYY-MM-DD HH:mm:ss') + "</td></tr>"
+                    var rowfile =
+                        "<tr>" +
+                        "<td>" + f.originalname + "</td>" +
+                        "<td>" + f.owner + "</td>" +
+                        "<td>" + moment(f.updated_at).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
+                        "<td>" +
+                        "<a href='" + '/auth/WEB/gis/getfile/' + f._id + "' id='filedatadiv' >Visit google</a>" +
+                        "</td>" +
+                        "</tr> ";
                     $('#tbodyFiles').append(rowfile);
                 }
 
@@ -79,6 +85,15 @@
 
             }
         });
+
+        $('#filedatadiv').click(function() {
+            console.log('dowlodad');
+            if (!('download' in downloadDiv.children('a:first').get(0))) {
+                downloadDiv.append(' (save the file as' + this.getAttribute('href') + '  )');
+            }
+        });
+
+
         $('#generaldata').click(function() {
             var $this = $(this);
             $('#divmap1').show();
