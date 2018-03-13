@@ -412,6 +412,7 @@ exports.getDistrictDictionary = function (code) {
     codes['SM'] = 'SM';
     codes['SPK'] = 'SPK';
     codes['SPL'] = 'SPL';
+    codes['SPR'] = 'SPR';
     return codes[code];
 
 }
@@ -427,6 +428,7 @@ exports.getDistrictSiglas = function (district) {
     siglas['Saint Mark'] = 'SM';
     siglas['Saint Patrick'] = 'SPK';
     siglas['Saint Paul'] = 'SPL';
+    siglas['Saint Peter'] = 'SPR';
 
     return siglas[district];
 }
