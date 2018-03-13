@@ -1716,7 +1716,7 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
     var lastindex = 0;
     // console.log(req.params.info.replace('%20', ' '));
     var tofind = decodeURIComponent(req.params.info);
-    debug('req.params.info ' + req.params.info);
+    // debug('req.params.info ' + req.params.info);
     Infodatatrack.find({
         $or: [{
                 "properties.rcode": {
@@ -1794,7 +1794,7 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
         var matchestoquery = {};
         var texto = '';
 
-        console.log('infodatatrack length ' + infodatatrack.length);
+        // console.log('infodatatrack length ' + infodatatrack.length);
         // for (var [i, v] of Object.keys(infodatatrack[0]._doc.properties).entries()) {
         // for (var [k,ind] of Object.keys(infodatatrack[0]._doc.properties).entries()) {
         //     debug(k);
@@ -1853,8 +1853,8 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
                             if (infodatatrack[i].properties.Ccode[j] !== undefined &&
                                  infodatatrack[i].properties.Ccode[j].length > 3 &&
                                 infodatatrack[i].properties.Ccode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
-                                debug(infodatatrack[i].properties.Ccode[j]);
-                                debug(tofind.toUpperCase());
+                                // debug(infodatatrack[i].properties.Ccode[j]);
+                                // debug(tofind.toUpperCase());
                                 matchestoquery[infodatatrack[i].properties.Ccode[j]] = 'Ccode';
                             }
                             // debug(matchestoquery);

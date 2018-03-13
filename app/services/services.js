@@ -133,9 +133,9 @@ exports.docPdf = function (docDefinition, config, dbfields, temp) {
 
         } else if (f.type === 'dbfield') {
             var evaluation = eval('dbfields.' + f.value);
-            debug('dbfields.' + f.value + '    ' + evaluation);
+            // debug('dbfields.' + f.value + '    ' + evaluation);
             evaluation = eval('dbfields.' + f.value.replace('2', ''));
-            debug('dbfields.' + f.value.replace('2', '') + '    ' + evaluation);
+            // debug('dbfields.' + f.value.replace('2', '') + '    ' + evaluation);
             doc_translate = doc_translate.replace(new RegExp(f.name.replace('2', ''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
         } else if (f.type === 'map') {
             doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, '../../public/media/', (f.path), f.value)));

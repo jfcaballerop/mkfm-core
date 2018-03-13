@@ -14,7 +14,7 @@
     $(document).ready(function() {
 
         var checkExist = setInterval(function() {
-            if ($('#file').length) {
+            if ($('#file').length > 0) {
                 //console.log("Exists file!");
                 clearInterval(checkExist);
                 $('.uploadFile').ajaxForm({
@@ -1324,11 +1324,15 @@
                                     $('#dataupload').hide();
                                     $('#error').show();
                                     // $('#error').append(Object.keys(values[0]));
-
+                                    var html1 = '';
                                     $.each(values[0], function(key, element) {
+
+                                        // html1 += '<option value="' + key + '">';
                                         $('#json-datalist').append(
                                             '<option value="' + key + '">');
                                     });
+                                    // .exec($('#json-datalist').html(html1));
+
 
                                     $('#error').append("<br><br>" +
                                         "Search not found.<br>Try again.");
@@ -1339,7 +1343,7 @@
                                     $('#spinner').hide();
 
                                 });
-                            }, 1000);
+                            }, 100);
 
                         }
                     }

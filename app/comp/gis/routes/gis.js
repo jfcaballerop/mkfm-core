@@ -176,7 +176,7 @@ router.post('/uploadDataSheet', uploadingDS, function (req, resp) {
     postData.assetCode = req.body.assetCode;
     postData.status = 'pending';
     // debug(req);
-    debug('## FUP DATA uploadDataSheet ::' + JSON.stringify(postData)); //form files
+    // debug('## FUP DATA uploadDataSheet ::' + JSON.stringify(postData)); //form files
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -638,7 +638,7 @@ router.post('/delete/:id', function (req, resp, next) {
 
 router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## ajax getFilesByAssetCode: ' + req.params.assetCode);
+    // debug('## ajax getFilesByAssetCode: ' + req.params.assetCode);
 
     var options = {
         host: config.HOST_API,
@@ -678,8 +678,8 @@ router.post('/getFilesByAssetCode/:assetCode', function (req, resp) {
 
 router.post('/getFilesByAssetCode_general/:assetCode', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## ajax getFilesByAssetCode_general: ' + req.params.assetCode);
-    debug('## ajax getFilesByAssetCode_general: ' + encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode));
+    // debug('## ajax getFilesByAssetCode_general: ' + req.params.assetCode);
+    // debug('## ajax getFilesByAssetCode_general: ' + encodeURI(config.PATH_API + '/gis/V1/getFilesByAssetCode/' + req.params.assetCode));
 
     var options = {
         host: config.HOST_API,
@@ -721,13 +721,20 @@ router.post('/getFilesByAssetCode_general/:assetCode', function (req, resp) {
  **********************************************************/
 /* POST file */
 router.post('/V1/fileupload/', function (req, res, next) {
-    fu = new Fileupload(req.body);
-    fu.save(function (err, file) {
-        if (err) {
-            return res.status(500).send(err.message);
-        }
-        res.status(200).jsonp(file);
-    });
+    debug(req.body);
+
+    if (req.body.path !== undefined &&
+        req.body.path !== null) {
+        fu = new Fileupload(req.body);
+        fu.save(function (err, file) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            res.status(200).jsonp(file);
+        });
+    } else {
+        res.status(200);
+    }
 });
 
 
@@ -781,9 +788,9 @@ router.get('/V1/:id', function (req, res, next) {
 router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
 
     req.params.assetCode = decodeURIComponent(req.params.assetCode);
-    debug('************************************************************');
-    debug('**************************** ' + req.params.assetCode + ' ********************************');
-    debug('**************************** ' + decodeURIComponent(req.params.assetCode) + ' ********************************');
+    // debug('************************************************************');
+    // debug('**************************** ' + req.params.assetCode + ' ********************************');
+    // debug('**************************** ' + decodeURIComponent(req.params.assetCode) + ' ********************************');
     Fileupload.find({
         assetCode: req.params.assetCode
     }, function (err, fup) {
@@ -799,37 +806,37 @@ router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
 router.post('/V1/getFilesByAssetCode_general/:assetCode', function (req, res, next) {
     Fileupload.find({
         $or: [{
-            "properties.rcode": /req.params.assetCode/i
-        },
-        {
-            "properties.rname": /req.params.assetCode/i
-        },
-        {
-            "properties.bcode": /req.params.assetCode/i
-        },
-        {
-            "properties.bname": /req.params.assetCode/i
-        },
-        {
-            "properties.gcode": /req.params.assetCode/i
-        },
-        {
-            "properties.gcode2": /req.params.assetCode/i
-        },
-        {
-            "properties.dcode": /req.params.assetCode/i
-        },
-        {
-            "properties.dcode2": /req.params.assetCode/i
-        },
-        {
-            "properties.Ccode": /req.params.assetCode/i
-        },
-        {
-            "properties.name": /req.params.assetCode/i
-        }
+                "properties.rcode": /req.params.assetCode/i
+            },
+            {
+                "properties.rname": /req.params.assetCode/i
+            },
+            {
+                "properties.bcode": /req.params.assetCode/i
+            },
+            {
+                "properties.bname": /req.params.assetCode/i
+            },
+            {
+                "properties.gcode": /req.params.assetCode/i
+            },
+            {
+                "properties.gcode2": /req.params.assetCode/i
+            },
+            {
+                "properties.dcode": /req.params.assetCode/i
+            },
+            {
+                "properties.dcode2": /req.params.assetCode/i
+            },
+            {
+                "properties.Ccode": /req.params.assetCode/i
+            },
+            {
+                "properties.name": /req.params.assetCode/i
+            }
         ]
-        
+
     }, function (err, fup) {
         if (err) {
             res.send(500, err.message);
