@@ -309,6 +309,7 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
     var schphys;
     var arrPromises = [];
     var levelRange = [];
+    var levelRangeGraph = [];
 
 
 
@@ -389,6 +390,84 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
             levelRange.push({
                 "properties.code": /80-100__E/
             });
+            /**
+             * El rango para Graph
+             */
+            levelRangeGraph.push({
+                "properties.code": /20-40__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__E/
+            });
 
             break;
         case 2:
@@ -458,6 +537,85 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
             levelRange.push({
                 "properties.code": /80-100__E/
             });
+
+            /**
+             * El rango para Graph
+             */
+            // levelRangeGraph.push({
+            //     "properties.code": /20-40__A/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /0-20__A/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /0-20__B/
+            // });
+            levelRangeGraph.push({
+                "properties.code": /60-80__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__E/
+            });
             break;
         case 3:
             // levelRange.push({
@@ -508,6 +666,76 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
             levelRange.push({
                 "properties.code": /80-100__E/
             });
+            /**
+             * El rango para Graph
+             */
+            // levelRangeGraph.push({
+            //     "properties.code": /60-80__A/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /40-60__A/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /20-40__B/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /20-40__C/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /0-20__C/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /0-20__D/
+            // });
+            levelRangeGraph.push({
+                "properties.code": /80-100__A/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__B/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /20-40__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /0-20__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__E/
+            });
+
             break;
         case 4:
             // levelRange.push({
@@ -528,19 +756,73 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
             levelRange.push({
                 "properties.code": /80-100__E/
             });
+            /**
+             * El rango para Graph
+             */
+            // levelRangeGraph.push({
+            //     "properties.code": /80-100__A/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /80-100__B/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /60-80__B/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /40-60__B/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /60-80__C/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /40-60__C/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /40-60__D/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /20-40__D/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /20-40__E/
+            // });
+            // levelRangeGraph.push({
+            //     "properties.code": /0-20__E/
+            // });
+            levelRangeGraph.push({
+                "properties.code": /80-100__C/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /40-60__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__E/
+            });
             break;
         case 5:
-            // levelRange.push({
-            //     "properties.code": /80-100__D/
-            // });
-            // levelRange.push({
-            //     "properties.code": /60-80__E/
-            // });
-            // levelRange.push({
-            //     "properties.code": /80-100__E/
-            // });
             levelRange.push({
                 "properties.code": /NOTHING/
+            });
+            /**
+             * El rango para Graph
+             */
+            levelRangeGraph.push({
+                "properties.code": /80-100__D/
+            });
+            levelRangeGraph.push({
+                "properties.code": /60-80__E/
+            });
+            levelRangeGraph.push({
+                "properties.code": /80-100__E/
             });
             break;
         default:
@@ -568,13 +850,41 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
         return scheds;
     }));
 
+    /**
+     * El rango para Graph
+     */
+    arrPromises.push(Schedulenat.find({
+
+        $or: levelRangeGraph
+
+    }).exec(function (err, scheds) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        return scheds;
+    }));
+    arrPromises.push(Schedulephy.find({
+
+        $or: levelRangeGraph
+    }).exec(function (err, scheds) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        return scheds;
+    }));
+
     Promise.all(arrPromises).then(function (values) {
         schnats = values[0];
         schphys = values[1];
+        schnatsGraph = values[2];
+        schphysGraph = values[3];
         debug('Nat length ' + schnats.length);
         debug('Phy length ' + schphys.length);
+        debug('NatGraph length ' + schnatsGraph.length);
+        debug('PhyGraph length ' + schphysGraph.length);
 
         ret = budgetModule.schedInterv(ret, schnats, schphys);
+        ret = budgetModule.schedIntervGraph(ret, schnatsGraph, schphysGraph);
         debug(ret);
         res.status(200).jsonp(ret);
 
