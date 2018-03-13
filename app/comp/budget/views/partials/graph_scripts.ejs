@@ -5,6 +5,10 @@
         {
             name: 'INITIAL RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile per type of asset',
             type: 'bar',
+            labels: ['Pavements', 'Bridges', 'Culverts', 'Geot'],
+            rangeValues: [1, 2,
+                3, 4, 5
+            ],
             options: {
                 title: {
                     display: true,
@@ -28,58 +32,77 @@
         {
             name: 'INITIAL RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile per parish',
             type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per type of asset ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per type of asset and risk category ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per Parish ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per Parish and risk category ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per Parish and asset type ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment required per road category ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment in pavement interventions per pavement material ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment in bridge interventions per structural typology ',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'INVESTMENT REQUIRED‐ Investment in geotechnical interventions per geotechnical nature',
-            type: 'bar',
-            stacked: true
-        },
-        {
-            name: 'RESULTING RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile by type of asset and parish',
-            type: 'bar',
-            stacked: true
+            options: {
+                title: {
+                    display: true,
+                    text: 'INITIAL RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile per parish'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
         }
+        // ,
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per type of asset ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per type of asset and risk category ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per Parish ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per Parish and risk category ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per Parish and asset type ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment required per road category ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment in pavement interventions per pavement material ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment in bridge interventions per structural typology ',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'INVESTMENT REQUIRED‐ Investment in geotechnical interventions per geotechnical nature',
+        //     type: 'bar',
+        //     stacked: true
+        // },
+        // {
+        //     name: 'RESULTING RISK PROFILE OF THE ROAD NETWORK ‐ Road network risk profile by type of asset and parish',
+        //     type: 'bar',
+        //     stacked: true
+        // }
     ];
 
     window.chartColors = {
@@ -165,40 +188,18 @@
         return ret;
     }
 
-    $(document).ready(function () {
-        var graphIzda = true;
+    function getRenderArrays(val, type) {
+        var str = selectGraphValues[val].name;
+        var vlab = selectGraphValues[val].labels;
+        var vrang = selectGraphValues[val].rangeValues;
+        // alert(val + ' -- ' + str);
+        var arrValuesGraph = [];
+        var ret = [];
 
-        $.each(selectGraphValues, function (key, value) {
-            $('#selectGraph')
-                .append($("<option></option>")
-                    .attr("value", key)
-                    .text(value.name));
-        });
+        if (type === 'PHY') {
 
-        $('#selectGraph').change(function () {
-            var str = "";
-            var value = 0;
-            var type = "";
-            $("select option:selected").each(function () {
-                str = $(this).text();
-                val = $(this).val();
-
-            });
-            alert(val + ' -- ' + str);
-            if (graphIzda) {
-                graphIzda = false;
-                $('#graphIzda').append('<canvas id="Chart' + val +
-                    '" width="400" height="400"></canvas>');
-            } else {
-                graphIzda = true;
-                $('#graphDcha').append('<canvas id="Chart' + val +
-                    '" width="400" height="400"></canvas>');
-            }
-
-            switch ($('input:radio[name="riskoptionsRadios"]:checked').val()) {
-                case 'PhysicalDeterioration':
-                    var arrValuesGraph = [];
-
+            switch (Number(val)) {
+                case 1:
                     var Graph_km_riskphy5 = <%- JSON.stringify(retValues.Graph_km_riskphy5) %>
                     var Graph_km_riskphy4 = <%- JSON.stringify(retValues.Graph_km_riskphy4) %>
                     var Graph_km_riskphy3 = <%- JSON.stringify(retValues.Graph_km_riskphy3) %>
@@ -281,11 +282,56 @@
                         Total_Graph_num_criskphy) * 100 * 100) / 100;
                     arrValuesGraph[5]['Geot'] = Math.round((Graph_num_griskphy5 /
                         Total_Graph_num_griskphy) * 100 * 100) / 100;
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+        ret[0] = vlab;
+        ret[1] = vrang;
+        ret[2] = arrValuesGraph;
 
 
-                    var barChartData = getChartData(['Pavements', 'Bridges', 'Culverts', 'Geot'], [1, 2,
-                        3, 4, 5
-                    ], arrValuesGraph);
+        return ret;
+
+    }
+
+    $(document).ready(function () {
+        var graphIzda = true;
+
+        $.each(selectGraphValues, function (key, value) {
+            $('#selectGraph')
+                .append($("<option></option>")
+                    .attr("value", key)
+                    .text(value.name));
+        });
+
+        $('#selectGraph').change(function () {
+            var str = "";
+            var value = 0;
+            var type = "";
+            $("select option:selected").each(function () {
+                str = $(this).text();
+                val = $(this).val();
+
+            });
+            if (graphIzda) {
+                graphIzda = false;
+                $('#graphIzda').append('<canvas id="Chart' + val +
+                    '" width="400" height="400"></canvas>');
+            } else {
+                graphIzda = true;
+                $('#graphDcha').append('<canvas id="Chart' + val +
+                    '" width="400" height="400"></canvas>');
+            }
+
+            switch ($('input:radio[name="riskoptionsRadios"]:checked').val()) {
+                case 'PhysicalDeterioration':
+
+                    var chartData = getChartData(getRenderArrays(val, 'PHY')[0], getRenderArrays(val,
+                        'PHY')[1], getRenderArrays(val, 'PHY')[2]);
                     break;
                 case 'NaturalHazards':
                     break;
@@ -298,7 +344,7 @@
             var graphSelected = [];
             graphSelected[val] = new Chart(ctx, {
                 type: getTypeChart(str),
-                data: barChartData,
+                data: chartData,
                 options: getOptionsChart(str)
             });
         });
