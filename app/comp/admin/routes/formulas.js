@@ -1182,23 +1182,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             !assetsVisited.includes(iup.properties.gcode[i])) {
                             assetsVisited.push(iup.properties.gcode[i]);
 
+                            var code = serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY');
                             geotsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
-                                    iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.glength[i],
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT');
                             geotsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
-                                    iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.glength[i],
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }
@@ -1208,24 +1211,28 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.glength2[i] !== undefined && iup.properties.glength2[i] !== null && iup.properties.glength2[i] !== "" &&
                             !assetsVisited.includes(iup.properties.gcode2[i])) {
                             assetsVisited.push(iup.properties.gcode2[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY');
                             geotsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
-                                    iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.glength2[i],
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
+
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT');
                             geotsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
-                                    iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.glength2[i],
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
+
                             });
 
                         }
@@ -1238,22 +1245,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== "" &&
                             !assetsVisited.includes(iup.properties.Ccode[i])) {
                             assetsVisited.push(iup.properties.Ccode[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY');
                             culvertsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                    iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
+
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT')
                             culvertsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                    iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
+
                             });
 
                         }
@@ -1266,24 +1277,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== "" &&
                             !assetsVisited.includes(iup.properties.bcode[i])) {
                             assetsVisited.push(iup.properties.bcode[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY');
                             bridgesTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                    iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.blenght[i],
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT');
                             bridgesTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                    iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.blenght[i],
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }
@@ -1341,23 +1354,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             !assetsVisited.includes(iup.properties.gcode[i])) {
                             assetsVisited.push(iup.properties.gcode[i]);
 
+                            var code = serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY');
                             geotsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
-                                    iup.properties.gcondition[i], iup.properties.griskphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.glength[i],
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
+                                iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT');
                             geotsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.gcode[i], iup.properties.pk[i], iup.properties.glength[i],
-                                    iup.properties.gcondition[i], iup.properties.grisknatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.glength[i],
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }
@@ -1367,24 +1383,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.glength2[i] !== undefined && iup.properties.glength2[i] !== null && iup.properties.glength2[i] !== "" &&
                             !assetsVisited.includes(iup.properties.gcode2[i])) {
                             assetsVisited.push(iup.properties.gcode2[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY');
                             geotsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
-                                    iup.properties.gcondition2[i], iup.properties.griskphysical2[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.glength2[i],
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
+                                iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT')
                             geotsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.gcode2[i], iup.properties.pk[i], iup.properties.glength2[i],
-                                    iup.properties.gcondition2[i], iup.properties.grisknatural2[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.glength2[i],
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }
@@ -1397,22 +1415,24 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.Clength[i] !== undefined && iup.properties.Clength[i] !== null && iup.properties.Clength[i] !== "" &&
                             !assetsVisited.includes(iup.properties.Ccode[i])) {
                             assetsVisited.push(iup.properties.Ccode[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY');
                             culvertsTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                    iup.properties.Ccondition[i], iup.properties.CRISKphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
+                                iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT');
                             culvertsTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.Ccode[i], iup.properties.pk[i], iup.properties.Clength[i],
-                                    iup.properties.Ccondition[i], iup.properties.CRISKnatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }
@@ -1425,24 +1445,26 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             iup.properties.blenght[i] !== undefined && iup.properties.blenght[i] !== null && iup.properties.blenght[i] !== "" &&
                             !assetsVisited.includes(iup.properties.bcode[i])) {
                             assetsVisited.push(iup.properties.bcode[i]);
-
+                            var code = serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY');
                             bridgesTrackPhy.push({
-                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                    iup.properties.bcondition[i], iup.properties.briskphysical[i], 'PHY'),
+                                code: code,
                                 length: iup.properties.blenght[i],
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
-
+                            var code = serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
+                                iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT');
                             bridgesTrackNat.push({
-                                code: serviceService.createNameSched(iup.properties.bcode[i], iup.properties.pk[i], iup.properties.blenght[i],
-                                    iup.properties.bcondition[i], iup.properties.brisknatural[i], 'NAT'),
+                                code: code,
                                 length: iup.properties.blenght[i],
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
-                                rcategory: iup.properties.rcategory[i]
+                                rcategory: iup.properties.rcategory[i],
+                                riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
                         }

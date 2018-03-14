@@ -17,7 +17,10 @@ var services = require(path.join(__dirname, '../../../services/services'));
 
 var scheduleModels = require(path.join(__dirname, '../models/schedule'));
 var Schedule = mongoose.model('Schedule');
-
+var schedulenatModels = require(path.join(__dirname, '../models/schedulenat'));
+var Schedulenat = mongoose.model('Schedulenat');
+var schedulephyModels = require(path.join(__dirname, '../models/schedulephy'));
+var Schedulephy = mongoose.model('Schedulephy');
 
 router.use(function timeLog(req, res, next) {
     ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
@@ -81,6 +84,46 @@ router.get('/index', function (req, resp, next) {
 /*******************************************************
         AJAX CALLS
 **********************************************************/
+
+router.post('/getSched/:riskType/:budget', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB getSched: ' + req.params.riskType);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/getSchedule/' + req.params.riskType + '/' + req.params.budget,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
+
 router.post('/saveEvent/:name/:startDate/:endDate', function (req, resp) {
     var postData = extend({}, req.body);
     debug('## WEB saveEvent: ' + req.params.name);
@@ -173,6 +216,111 @@ router.get('/V1/getSchedule/', function (req, res, next) {
         res.status(200).jsonp(scheds);
 
     });
+
+});
+/* GET JSON Sched. */
+router.get('/V1/getSchedule/:type', function (req, res, next) {
+    var ret = {
+        "result": "OK"
+    };
+
+
+    if (req.params.type === 'PHY') {
+        Schedulephy.find().sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            ret['data'] = scheds;
+            res.status(200).jsonp(ret);
+
+        });
+    } else if (req.params.type === 'NAT') {
+        Schedulenat.find().sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            ret['data'] = scheds;
+            res.status(200).jsonp(ret);
+        });
+    } else {
+        Schedule.find().exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            ret['data'] = scheds;
+            res.status(200).jsonp(ret);
+        });
+
+    }
+
+});
+/* GET JSON Sched. */
+router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
+    var ret = {
+        "result": "OK"
+    };
+    var limitBudget = Number(req.params.budget);
+
+
+    if (req.params.type === 'PHY') {
+        Schedulephy.find().sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            var total = 0;
+            ret['data'] = [];
+            for (var s of scheds) {
+                if (total <= parseFloat(limitBudget))
+                    ret['data'].push(s);
+                total += parseFloat(s.properties.cost);
+
+            }
+            res.status(200).jsonp(ret);
+
+        });
+    } else if (req.params.type === 'NAT') {
+        Schedulenat.find().sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            var total = 0;
+            ret['data'] = [];
+            for (var s of scheds) {
+                if (total <= parseFloat(limitBudget))
+                    ret['data'].push(s);
+                total += parseFloat(s.properties.cost);
+
+            }
+            res.status(200).jsonp(ret);
+        });
+    } else {
+        Schedule.find().exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            ret['data'] = scheds;
+            res.status(200).jsonp(ret);
+        });
+
+    }
 
 });
 
