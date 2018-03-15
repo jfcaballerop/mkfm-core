@@ -501,7 +501,7 @@
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
-                        html[++h] = '<td>' + riskv[0] + riskv[1] + '</td>';
+                        html[++h] = '<td>' + riskv[0] + '-' + riskv[1] + '</td>';
                         html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split('-')[
                             2] + riskv[3] + '</td>';
                         html[++h] = '<td>' + val.type.charAt(0) + '</td>';

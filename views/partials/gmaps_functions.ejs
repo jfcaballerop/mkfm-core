@@ -340,12 +340,12 @@
         var infoWnd = new google.maps.InfoWindow();
 
         // on mouseout (moved mouse off marker) make infoWindow disappear
-        map.data.addListener('mouseout', function (event) {
-            infoWnd.close();
-        });
+        // map.data.addListener('click', function(event) {
+        //     infoWnd.close();
+        // });
 
         // Set mouseover event for each feature.
-        map.data.addListener('mouseover', function (event) {
+        map.data.addListener('click', function(event) {
             //console.log(event.latLng);
             infoWnd.setPosition(event.latLng);
             infoWnd.setContent(getContent(event.feature.getProperty('kobo_type'), event));
@@ -368,7 +368,7 @@
             document.getElementById('info-box').textContent = infoTextContent;
 
         });
-        map.data.setStyle(function (feature) {
+        map.data.setStyle(function(feature) {
             var color = feature.getProperty('color');
             var nameopt = feature.getProperty('nameoption');
             $('#layergps option[value="' + nameopt + '"]').prop('style', 'color: ' + color);
@@ -392,45 +392,58 @@
         // });
     };
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         console.log("Funciones Listas a ejecutarse!");
         var featureActive = [];
-        $('#Criticality').click(function () {
+        $('#Criticality').click(function() {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#CriticalityForm').show();
             } else {
                 $('#CriticalityForm').hide();
-                $('#CriticalityForm input[type=checkbox]').each(function (index) {
+                $('#CriticalityForm input[type=checkbox]').each(function(index) {
                     $(this).prop('checked', false);
                 });
 
 
             }
         });
-        $('#Condition').click(function () {
+        $('#ROAD').click(function() {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#pavements').show();
+            } else {
+                $('#pavements').hide();
+                $('#pavements input[type=checkbox]').each(function(index) {
+                    $(this).prop('checked', false);
+                });
+
+
+            }
+        });
+        $('#Condition').click(function() {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#ConditionForm').show();
             } else {
                 $('#ConditionForm').hide();
-                $('#ConditionForm input[type=checkbox]').each(function (index) {
+                $('#ConditionForm input[type=checkbox]').each(function(index) {
                     $(this).prop('checked', false);
                 });
             }
         });
-        $('#Calculation').click(function () {
+        $('#Calculation').click(function() {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#CalculationForm').show();
             } else {
                 $('#CalculationForm').hide();
-                $('#CalculationForm input[type=checkbox]').each(function (index) {
+                $('#CalculationForm input[type=checkbox]').each(function(index) {
                     $(this).prop('checked', false);
                 });
             }
         });
-        $('#PhysicalDeterioration').click(function () {
+        $('#PhysicalDeterioration').click(function() {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#PhysicalCalculationForm').show();
@@ -439,7 +452,7 @@
 
             }
         });
-        $('#NaturalHazards').click(function () {
+        $('#NaturalHazards').click(function() {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#NaturalHazardsForm').show();
@@ -448,10 +461,20 @@
 
             }
         });
-        $('#Culvert').click(function () {
+        $('#Culvert').click(function() {
             $('#spinner').show();
             var $this = $(this);
             var all = true;
+
+            console.log('******* map.data *****************');
+            console.log(map.data);
+            // ;.forEach(function(feature) {
+            //     // If you want, check here for some constraints.
+            //     if (feature.getProperty('nameoption') === 'Culvert') {
+            //         ;.remove(feature);
+            //     }
+
+            // });
 
             if ($this.prop('checked')) {
                 // alert(' ## Culvert ##');
@@ -459,6 +482,9 @@
                     console.log('#mainr');
                     all = false;
                     <% kobo_mainr_odt.forEach(function(element) { %>
+                    debug('---------------------------------------------------------------------------');
+                    debug(element);
+                    debug('---------------------------------------------------------------------------');
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
@@ -516,7 +542,7 @@
 
             } else {
                 // alert(' ## DESACTIVO Culvert ##');
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption') === 'Culvert') {
                         map.data.remove(feature);
@@ -529,7 +555,7 @@
 
         });
 
-        $('#BRIDGE').click(function () {
+        $('#BRIDGE').click(function() {
             $('#spinner').show();
             var $this = $(this);
             var all = true;
@@ -599,7 +625,7 @@
 
             } else {
                 // alert(' ## DESACTIVO BRIDGE ##');
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption') === 'BRIDGE') {
                         map.data.remove(feature);
@@ -611,7 +637,7 @@
             }
         });
 
-        $('#GEOT').click(function () {
+        $('#GEOT').click(function() {
             $('#spinner').show();
             var $this = $(this);
             var all = true;
@@ -681,7 +707,7 @@
 
             } else {
                 // alert(' ## DESACTIVO GEOT ##');
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption') === 'GEOT') {
                         map.data.remove(feature);
@@ -694,7 +720,7 @@
         });
 
 
-        $('#mainr').click(function () {
+        $('#mainr').click(function() {
             var $this = $(this);
             // alert($this.prop('checked'));
             $('#spinner').show();
@@ -707,7 +733,7 @@
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
                         map.data.remove(feature);
@@ -717,7 +743,7 @@
             }
             $('#spinner').hide(2000);
         });
-        $('#secondaryr').click(function () {
+        $('#secondaryr').click(function() {
             var $this = $(this);
             //alert($this.val());
             $('#spinner').show();
@@ -731,7 +757,7 @@
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
                         map.data.remove(feature);
@@ -741,7 +767,7 @@
             }
             $('#spinner').hide(2000);
         });
-        $('#feederr').click(function () {
+        $('#feederr').click(function() {
             var $this = $(this);
             //alert($this.val());
             $('#spinner').show();
@@ -755,7 +781,7 @@
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
                         map.data.remove(feature);
@@ -765,7 +791,7 @@
             }
             $('#spinner').hide(2000);
         });
-        $('#urbanr').click(function () {
+        $('#urbanr').click(function() {
             var $this = $(this);
             //alert($this.val());
             $('#spinner').show();
@@ -779,7 +805,7 @@
                 map.data.addGeoJson(jsonObject);
                 <%}); %>
             } else {
-                map.data.forEach(function (feature) {
+                map.data.forEach(function(feature) {
                     // If you want, check here for some constraints.
                     if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
                         map.data.remove(feature);
@@ -791,7 +817,7 @@
         });
 
         // Risk Assessment
-        $('#CriticalityForm input[type=checkbox]').click(async function () {
+        $('#CriticalityForm input[type=checkbox]').click(async function() {
             var $this = $(this);
             var filterPav = false;
             var filterPavArr = [];
@@ -808,7 +834,7 @@
 
             console.log('pulsado ' + pulsado);
 
-            $('#pavements input[type=checkbox]').each(function (index) {
+            $('#pavements input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
@@ -817,7 +843,7 @@
 
                 }
             });
-            $('#assets input[type=checkbox]').each(function (index) {
+            $('#assets input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
@@ -828,7 +854,7 @@
             // alert($this.val());
 
             var optChecked = [];
-            await $('#CriticalityForm input[type=checkbox]').each(function (index) {
+            await $('#CriticalityForm input[type=checkbox]').each(function(index) {
                 if ($(this).is(':checked')) {
                     optChecked.push($(this).val());
                 }
@@ -836,7 +862,7 @@
             });
 
 
-            map.data.forEach(function (feature) {
+            map.data.forEach(function(feature) {
                 // If you want, check here for some constraints.
                 if (feature.getProperty('nameoption').indexOf('CRITICALITY') >= 0) {
                     map.data.remove(feature);
@@ -854,7 +880,7 @@
 
             if (optChecked.length > 0) {
 
-                await $('#CriticalityForm input[type=checkbox]').each(function (index) {
+                await $('#CriticalityForm input[type=checkbox]').each(function(index) {
                     if ($(this).is(':checked')) {
                         $('#spinnerCriticality').show();
 
@@ -876,18 +902,16 @@
                         data: JSON.stringify(sendData),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
-                    Promise.all([p1]).then(function (values) {
+                    Promise.all([p1]).then(function(values) {
                         console.log(values);
                         if (values[0].length > 0) {
 
 
-                            $.each(values[0], function (index, value) {
+                            $.each(values[0], function(index, value) {
                                 jsonObject = value;
                                 var color_to_paint = "red";
-                                // TODO: Aqui se cambiaría el color para cada valor de CRiticality
-                                // Sería montar un SWITCH para el valor del mismo.
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CRITICALITY: " +
                                     jsonObject.properties.name;
@@ -911,6 +935,123 @@
 
         });
 
+        $('#ConditionForm input[type=checkbox]').click(async function() {
+            var $this = $(this);
+            var filterPav = false;
+            var filterPavArr = [];
+            var filterAssetArr = [];
+            var filterArr = [];
+            var sendData = {
+                filter: [],
+                filterPav: [],
+                filterAsset: [],
+                formname: "Condition",
+                form: []
+            };
+            var pulsado = $this.is(':checked') | false;
+
+            console.log('pulsado ' + pulsado);
+
+            $('#pavements input[type=checkbox]').each(function(index) {
+                if ($(this).is(':checked')) {
+                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterPavArr.push($(this).val());
+                    filterArr.push($(this).val());
+                    filterPav = true;
+
+                }
+            });
+            $('#assets input[type=checkbox]').each(function(index) {
+                if ($(this).is(':checked')) {
+                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    filterAssetArr.push($(this).val());
+                    filterArr.push($(this).val());
+                    filterPav = true;
+                }
+            });
+            // alert($this.val());
+
+            var optChecked = [];
+            await $('#ConditionForm input[type=checkbox]').each(function(index) {
+                if ($(this).is(':checked')) {
+                    optChecked.push($(this).val());
+                }
+
+            });
+
+
+            map.data.forEach(function(feature) {
+                // If you want, check here for some constraints.
+                if (feature.getProperty('nameoption').indexOf('CONDITION') >= 0) {
+                    map.data.remove(feature);
+                }
+
+            });
+
+            if ($this.is(':checked')) {
+                if (!filterPav) {
+                    $('#myModal').modal();
+                    $('#alertModalContent').empty();
+                    $('#alertModalContent').append('<p>Filters not selected!</p>');
+                }
+            }
+
+            if (optChecked.length > 0) {
+
+                await $('#ConditionForm input[type=checkbox]').each(function(index) {
+                    if ($(this).is(':checked')) {
+                        $('#spinnerCondition').show();
+
+                        sendData.form.push($(this).val());
+                    } else {
+                        var ix = sendData.form.indexOf($(this).val())
+                        ix > -1 ? sendData.form.splice(ix, 1) : false;
+
+                    }
+
+                });
+                sendData.filterPav = filterPavArr;
+                sendData.filterAsset = filterAssetArr;
+                sendData.filter = filterArr;
+                if (pulsado && filterPav) {
+
+                    var p1 = $.ajax({
+                        url: '/auth/WEB/admin/get_formulas_tracks/',
+                        data: JSON.stringify(sendData),
+                        type: 'POST',
+                        contentType: 'application/json'
+                    }, function(data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    });
+                    Promise.all([p1]).then(function(values) {
+                        console.log(values);
+                        if (values[0].length > 0) {
+
+
+                            $.each(values[0], function(index, value) {
+                                jsonObject = value;
+                                var color_to_paint = "red";
+                                jsonObject.properties.color = color_to_paint;
+                                jsonObject.properties.nameoption = "CONDITION: " +
+                                    jsonObject.properties.name;
+                                featureCrit = map.data.addGeoJson(jsonObject);
+
+                            });
+                            $('#spinnerCondition').hide();
+
+                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                        } else {
+                            $('#spinnerCondition').hide();
+
+                        }
+                    });
+                } else {
+                    $('#spinnerCondition').hide();
+
+                }
+            }
+
+        });
     });
 </script>
 

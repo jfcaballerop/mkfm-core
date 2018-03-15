@@ -3787,8 +3787,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     coincidencias++;
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
@@ -3835,11 +3835,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gmaterial[i] !== null &&
                                                 ifdt.properties.gmaterial[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
-                                                    // //debug(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
                                                         // //debug('score ' + score);
-                                                        // //debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''));
-                                                        if (ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        // //debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
                                                             // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
                                                         } else {
@@ -3858,11 +3858,11 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gtypevegetation[i] !== null &&
                                                 ifdt.properties.gtypevegetation[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // //debug(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''))
+                                                    // //debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
                                                     if (score !== undefined && score !== null) {
                                                         // //debug('score ' + score);
-                                                        // //debug('ifdt.gtypevegetation ' + ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''));
-                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        // //debug('ifdt.gtypevegetation ' + ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
+                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
                                                             // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
                                                         } else {
@@ -3934,8 +3934,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     coincidencias++;
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
@@ -3968,7 +3968,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gmaterial2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
                                                         } else {
 
@@ -3987,7 +3987,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gtypevegetation2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
                                                         } else {
 
@@ -4060,8 +4060,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     coincidencias++;
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
@@ -4094,7 +4094,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gblocks[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
                                                         } else {
 
@@ -4113,7 +4113,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gtypevegetation[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
                                                         } else {
 
@@ -4178,9 +4178,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
                                                     if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
                                                         for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
 
-                                                                if (ifdt.properties.gintensityfailure2[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                if (ifdt.properties.gintensityfailure2[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                                     coincidencias++;
                                                                     totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
                                                                         totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
@@ -4213,7 +4213,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gblocks2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
                                                         } else {
 
@@ -4230,7 +4230,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gtypevegetation2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
                                                         } else {
                                                             totalScoring *= 1;
@@ -4321,14 +4321,14 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties.bdamagesfoundationsgeneraltype[i] !== undefined && ifdt.properties.bdamagesfoundationsgeneraltype[i].length !== 0) {
                                             //debug(form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
-                                                if (diccDominicaToKobo[x.toString()] !== undefined &&
-                                                    ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {
+                                                if (x.toString() !== undefined &&
+                                                    ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()] === undefined) {
                                                     // totalScoring = 0.85 * form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
                                                 } else {
 
-                                                    if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
+                                                    if (x.toString().indexOf("echanical") > -1) {
                                                         coincidenciasMechanical++;
-                                                    } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
+                                                    } else if (x.toString().indexOf("urable") > -1) {
                                                         coincidenciasDurable++;
                                                     }
                                                     coincidencias++;
@@ -4344,13 +4344,13 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
                                             ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length !== 0) {
                                             for (x in form.formulaSpec[f].MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
-                                                if (diccDominicaToKobo[x.toString()] !== undefined &&
-                                                    ifdt.properties.bdamagesfoundationsdetailedtype[diccDominicaToKobo[x.toString()]] === undefined) {;
+                                                if (x.toString() !== undefined &&
+                                                    ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()] === undefined) {;
                                                 } else {
 
-                                                    if (diccDominicaToKobo[x.toString()].indexOf("echanical") > -1) {
+                                                    if (x.toString().indexOf("echanical") > -1) {
                                                         coincidenciasMechanical++;
-                                                    } else if (diccDominicaToKobo[x.toString()].indexOf("urable") > -1) {
+                                                    } else if (x.toString().indexOf("urable") > -1) {
                                                         coincidenciasDurable++;
                                                     }
                                                     coincidencias++;
@@ -4384,21 +4384,19 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     ifdt.properties[z1[k]][i] !== undefined &&
                                                     ifdt.properties[z2[k]][i] !== '' &&
                                                     ifdt.properties[z1[k]][i] !== '' &&
-                                                    diccKoboToDominica[ifdt.properties[z1[k]][i]] !== undefined &&
-                                                    diccKoboToDominica[ifdt.properties[z2[k]][i]] !== undefined &&
-                                                    capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]]) !== undefined &&
+                                                    capitalizeFirstLetter(ifdt.properties[z2[k]][i]) !== undefined &&
                                                     capitalizeFirstLetter(ifdt.properties[z1[k]][i]) !== undefined &&
-                                                    form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])] !== undefined
+                                                    form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i])] !== undefined
                                                 ) {
-                                                    FACTOR = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z1[k]][i]])].scoring[capitalizeFirstLetter(diccKoboToDominica[ifdt.properties[z2[k]][i]])];
+                                                    FACTOR = form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y].weight * form.formulaSpec[f].MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i])].scoring[capitalizeFirstLetter(ifdt.properties[z2[k]][i])];
                                                     coincidencias++;
-                                                    if (diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("echan") > -1 ||
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("No bearing") > -1 ||
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("rings displac") > -1) {
+                                                    if (ifdt.properties[z1[k]][i].indexOf("echan") > -1 ||
+                                                        ifdt.properties[z1[k]][i].indexOf("No bearing") > -1 ||
+                                                        ifdt.properties[z1[k]][i].indexOf("rings displac") > -1) {
                                                         coincidenciasMechanical++;
-                                                    } else if (diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("urabl") > -1 ||
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("rings de") > -1 ||
-                                                        diccKoboToDominica[ifdt.properties[z1[k]][i]].indexOf("ther da") > -1) {
+                                                    } else if (ifdt.properties[z1[k]][i].indexOf("urabl") > -1 ||
+                                                        ifdt.properties[z1[k]][i].indexOf("rings de") > -1 ||
+                                                        ifdt.properties[z1[k]][i].indexOf("ther da") > -1) {
                                                         coincidenciasDurable++;
                                                     }
                                                     totalScoring = totalScoring < FACTOR ? totalScoring : FACTOR;
@@ -4445,12 +4443,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             ifdt.properties.btype[i] !== null &&
                                             ifdt.properties.btype[i] !== "") {
                                             for (score in form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring) {
-                                                // //debug(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''))
+                                                // //debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
                                                 if (score !== undefined && score !== null &&
-                                                    ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '') !== undefined) {
+                                                    ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '') !== undefined) {
                                                     // //debug('score ' + score);
-                                                    // //debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, ''));
-                                                    if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                    // //debug('ifdt.btype ' + ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
+                                                    if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                         totalScoring *= form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score];
                                                         //debug(form.formulaSpec[f].CorrectiveFactors.BridgeType.scoring[score]);
                                                         // //debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
@@ -4781,7 +4779,9 @@ router.post('/V1/update_field/', function (req, res, next) {
 router.post('/V1/get_formulas_tracks/', function (req, res, next) {
     // //debug('API /V1/update_field/');
     var postData = extend({}, req.body);
-    //debug(postData);
+    debug('postData: ');
+    debug(postData);
+    debug(postData.formname);
     var ret = {
         "result": "OK"
     };
@@ -4975,6 +4975,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcriticality[key] + ' - ' + f);
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antBridge = key;
                                                 }
                                                 break;
@@ -4991,6 +4993,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antCulvert = key;
                                                 }
                                                 break;
@@ -5007,6 +5011,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.gcriticality2[key] !== null &&
@@ -5021,6 +5027,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo2 = key;
                                                 }
                                                 break;
@@ -5037,6 +5045,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     ant = key;
                                                 }
                                                 break;
@@ -5078,10 +5088,12 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             var andArr = [];
             var catArr = [];
             var promises = [];
-
+            debug('*****************************************');
+            debug(postData.filter);
+            debug('*****************************************');
             for (var f of postData.filter) {
                 switch (f) {
-                    case 'Bridges':
+                    case 'Bridge':
                         for (var f of postData.form) {
                             // //debug(f);
                             // //debug(formulasService.conditionValue(f).score.min);
@@ -5104,11 +5116,12 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
 
                         break;
-                    case 'Culverts':
+                    case 'Culvert':
                         for (var f of postData.form) {
-                            // //debug(f);
-                            // //debug(formulasService.conditionValue(f).score.min);
-                            // //debug(formulasService.conditionValue(f).score.max);
+                            debug('f    ' + f);
+                            debug('formulasService.conditionValue(f).score.min    ' + formulasService.conditionValue(f).score.min);
+                            debug('score.min   ' + formulasService.conditionValue(f).score.min);
+                            debug('score.max   ' + formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.Ccondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5126,7 +5139,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         // //debug(catArr);
 
                         break;
-                    case 'Cuttings_Embankments':
+                    case 'Geotechnical':
                         for (var f of postData.form) {
                             // //debug(f);
                             // //debug(formulasService.conditionValue(f).score.min);
@@ -5193,6 +5206,10 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             andArr.push({
                 $or: orArr
             });
+            debug('orAssetArr: ');
+            debug(orAssetArr);
+            debug('andArr: ' );
+            debug(andArr);
 
             //debug(JSON.stringify(andArr));
 
@@ -5207,8 +5224,10 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 return tracks;
 
             }));
+            // debug(Infodatatrack);
 
             Promise.all(promises).then(function (values) {
+                debug('********0*************');
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -5224,7 +5243,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                     },
                     properties: {
                         rcondition: [],
-                        name: ""
+                        name: "",
+                        color: "#ffffff"
                     }
                 };
                 var geoJsonPav = JSON.parse(JSON.stringify(geoJson));
@@ -5232,6 +5252,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
+                debug('***********1**********');
 
                 if (values.length !== 0) {
                     values.forEach(function (val, index) {
@@ -5242,12 +5263,17 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             antCulvert = 0;
                             antGeo = 0;
                             antGeo2 = 0;
+                            // debug('*********2************');
+                            var indice=0;
                             for (var [key, cval] of v.geometry.coordinates.entries()) {
                                 for (var f of postData.form) {
                                     for (var filter of postData.filter) {
+                                        // debug('v.properties.Ccondition[key]                ' + v.properties.Ccondition[key]);
                                         switch (filter) {
                                             case 'Bridge':
                                                 if (v.properties.bcondition[key] !== null &&
+                                                    v.properties.bcondition[key] !== undefined &&
+                                                    v.properties.bcondition[key] !== '' &&
                                                     v.properties.bcondition[key] >= formulasService.conditionValue(f).score.min &&
                                                     v.properties.bcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
@@ -5259,27 +5285,57 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Bri---' + key + ' : ant ' + (antBridge + 1) + ' - ' + cval + ' #Crit: ' + v.properties.bcondition[key] + ' - ' + f);
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.geometry.coordinates.push(cval);
+                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antBridge = key;
                                                 }
                                                 break;
                                             case 'Culvert':
-                                                if (v.properties.Ccondition[key] !== null &&
-                                                    v.properties.Ccondition[key] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.Ccondition[key] < formulasService.conditionValue(f).score.max) {
+                                                // debug(v.properties.Ccondition[indice]);
+                                                if (v.properties.Ccondition[indice] !== null &&
+                                                    v.properties.Ccondition[indice] !== undefined &&
+                                                    v.properties.Ccondition[indice] !== '' &&
+                                                    v.properties.Ccondition[indice] >= formulasService.conditionValue(f).score.min &&
+                                                    v.properties.Ccondition[indice] < formulasService.conditionValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
-                                                        // //debug('-- new geojson --');
+                                                        // debug('-- new geojson --');
                                                         tracks.push(geoJsonCul);
                                                         geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // //debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccondition[key] + ' - ' + f);
+                                                    // debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccondition[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
+                                                    geoJsonCul.geometry.coordinates.push(cval);
+                                                    geoJsonCul.properties['rcondition']=0.5;
+                                                    geoJsonCul.geometry["type"] = 'MultiPoint';
+                                                    geoJsonCul.properties['color'] = '';
+                                                    geoJsonCul.properties['color'] = formulasService.conditionValue(f).score.color;
+                                                    debug(geoJsonCul.properties['color'] + '********************************************************');
+                                                    geoJsonCul.properties['width'] = 30;
+                                                    geoJsonCul.properties["weight"] = 5;
+                                                    // geoJsonCul.properties["marker-symbol"] = "bus";
+                                                        // geoJsonCul.properties["description"] = "A description";
+                                                        geoJsonCul.properties["marker-size"] = "medium";
+                                                        // geoJsonCul.properties["marker-symbol"] = "bus";
+                                                        geoJsonCul.properties["marker-color"] = formulasService.conditionValue(f).score.color;
+                                                        geoJsonCul.properties["stroke"] = formulasService.conditionValue(f).score.color;
+                                                        // geoJsonCul.properties["stroke-opacity"] = 1.0;
+                                                        geoJsonCul.properties["stroke-width"] = 2;
+                                                        geoJsonCul.properties["fill"] = formulasService.conditionValue(f).score.color;
+                                                        // geoJsonCul.properties["fill-opacity"] = 1;
+                                                    debug(formulasService.conditionValue(f).score.color);
+                                                    debug(formulasService.conditionValue(f));
+                                                    debug(f);
+                                                    console.log(JSON.stringify(geoJsonCul));
                                                     antCulvert = key;
+                                                    indice ++;
                                                 }
                                                 break;
                                             case 'Geotechnical':
                                                 if (v.properties.gcondition[key] !== null &&
+                                                    v.properties.gcondition[key] !== undefined &&
+                                                    v.properties.gcondition[key] !== '' &&
                                                     v.properties.gcondition[key] >= formulasService.conditionValue(f).score.min &&
                                                     v.properties.gcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
@@ -5291,9 +5347,13 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
+                                                    geoJsonGeo.geometry.coordinates.push(cval);
+                                                    geoJsonGeo.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.gcondition2[key] !== null &&
+                                                    v.properties.gcondition2[key] !== undefined &&
+                                                    v.properties.gcondition2[key] !== '' &&
                                                     v.properties.gcondition2[key] >= formulasService.conditionValue(f).score.min &&
                                                     v.properties.gcondition2[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
@@ -5305,11 +5365,15 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
+                                                    geoJsonGeo2.geometry.coordinates.push(cval);
+                                                    geoJsonGeo2.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo2 = key;
                                                 }
                                                 break;
                                             default:
                                                 if (v.properties.rcondition[key] !== null &&
+                                                    v.properties.rcondition[key] !== undefined &&
+                                                    v.properties.rcondition[key] !== '' &&
                                                     v.properties.rcondition[key] >= formulasService.conditionValue(f).score.min &&
                                                     v.properties.rcondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (ant == 0) ant = key - 1;
@@ -5321,6 +5385,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // //debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
+                                                    geoJsonPav.geometry.coordinates.push(cval);
+                                                    geoJsonPav.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     ant = key;
                                                 }
                                                 break;
@@ -5330,6 +5396,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                 }
                                 if (key + 1 == v.geometry.coordinates.length) {
                                     // //debug('-- new geojson --')
+                                    // console.log(geoJsonPav);
+                                    // console.log(geoJsonBri);
+                                    // console.log(geoJsonCul);
+                                    // console.log(geoJsonGeo);
+                                    // console.log(geoJsonGeo2);
                                     tracks.push(geoJsonPav);
                                     tracks.push(geoJsonBri);
                                     tracks.push(geoJsonCul);
