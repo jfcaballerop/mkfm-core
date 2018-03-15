@@ -75,6 +75,8 @@ router.get('/consultas', function (req, resp, next) {
             var responseObject = JSON.parse(data);
 
             var filters = Infodatatrack.schema.tree.properties;
+            debug('FILTERS')
+            debug(filters);
             var filtersOff = ['time', 'name', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
             debug(filters);
             for (var foff of filtersOff) {

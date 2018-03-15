@@ -845,762 +845,762 @@ db.infodatatracks.update({}, {
                 gcode: {
                     desc: "Asset Code",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gyearconstruct: {
                     desc: "Year of construction",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtype: {
                     desc: "Type of geotechnical asset",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gposition: {
                     desc: "Position",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gmaterial: {
                     desc: "Material - Retaining walls",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gnature: {
                     desc: "Nature - Earthworks",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gheight: {
                     desc: "Height (m)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gh_h: {
                     desc: "Relation h/H ",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gslope: {
                     desc: "Slope / Angle (º)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gdistance: {
                     desc: "Distance to road (m)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gshoulders: {
                     desc: "Shoulders / Verges",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glength: {
                     desc: "Length (m)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gblocks: {
                     desc: "Size of blocks (m)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatments: {
                     desc: "Existence of geotechnical treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretaining: {
                     desc: "Existence  of retaining treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingtype: {
                     desc: "Type  of retaining treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingextension: {
                     desc: "Extension of retaining treatments (%)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingeffectiveness: {
                     desc: "Effectiveness of retaining treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingconservation: {
                     desc: "Conservation of retaining treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingother: {
                     desc: "Other retaining treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefence: {
                     desc: "Existence  of defence treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefencetype: {
                     desc: "Type  of defence treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceextension: {
                     desc: "Extension of defence treatments (%)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceeffectiveness: {
                     desc: "Effectiveness of defence treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceconservation: {
                     desc: "Conservation of defence treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceother: {
                     desc: "Other defence treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoating: {
                     desc: "Existence  of coating treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingtype: {
                     desc: "Type  of coating treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingextension: {
                     desc: "Extension of coating treatments (%)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingeffectiveness: {
                     desc: "Effectiveness of coating treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingconservation: {
                     desc: "Conservation of coating treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingother: {
                     desc: "Other coating treatments",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainages: {
                     desc: "Existence  of internal drainages",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainagesextension: {
                     desc: "Extension of internal drainages (%)",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainageseffectiveness: {
                     desc: "Effectiveness of internal drainages",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainagesconservation: {
                     desc: "Conservation of internal drainages",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gvegetation: {
                     desc: "Existence of vegetation",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtypevegetation: {
                     desc: "Type of vegetation",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gphoto: {
                     desc: "Photographs",
                     subgroup: "Geotechnical Assets Left Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gvisualcondition: {
                     desc: "Current visual condition",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gconslos: {
                     desc: "Consequences of failure on LOS",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gprevcondition: {
                     desc: "Previous condition rate",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glastinspection: {
                     desc: "Date of last inspection",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gsurveyfreq: {
                     desc: "Survey frequency",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gnextsurvey: {
                     desc: "Date of next survey",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gfailure: {
                     desc: "Failure history",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gevidrecfailures: {
                     desc: "Evidence of recent failures?",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtypefailure: {
                     desc: "Type of failure process",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gintensityfailure: {
                     desc: "Intensity of failure process",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gextentfailure: {
                     desc: "Extent of failure (%)",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gpastinterv: {
                     desc: "Have there been past interventions performed during the last year?",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gintervextent: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gdateinterv: {
                     desc: "Date of performance of last year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gscopeinterv: {
                     desc: "Scope of last year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 qintervcost: {
                     desc: "Cost of last year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gimpactinterv: {
                     desc: "Impact of last year interventions on asset condition",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glocdocinterv: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearinterv: {
                     desc: "Have there been interventions performed during the current year?",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervextent: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervdate: {
                     desc: "Date of performance of current year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervscope: {
                     desc: "Scope of current year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervcost: {
                     desc: "Accummulated cost of current year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glocdoccurryearinterv: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gmaintissues: {
                     desc: "Maintainability issues",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 ginvestment10years: {
                     desc: "Investment undertaken in the last 10 years",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 rginvestmentrequired: {
                     desc: "Investment required to upgrade to A class",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gomcomments: {
                     desc: "Comments to maintainance",
                     subgroup: "Geotechnical Assets Left Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcondition: {
                     desc: "Current condition",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcriticality: {
                     desc: "Criticality",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glandslide: {
                     desc: "Exposure to landslide hazard",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gflood: {
                     desc: "Exposure to flood hazard",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gresphazard: {
                     desc: "Asset Response against hazards",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gsensitivity: {
                     desc: "Asset Sensitivity",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 grisk: {
                     desc: "RISK",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 griskphysical: {
                     desc: "Risk due to Physical Deterioration",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 grisknatural: {
                     desc: "Risk due to Natural Hazards",
                     subgroup: "Geotechnical Assets Left Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcode2: {
                     desc: "Asset Code",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gyearconstruct2: {
                     desc: "Year of construction",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtype2: {
                     desc: "Type of geotechnical asset",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gposition2: {
                     desc: "Position",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gmaterial2: {
                     desc: "Material - Retaining walls",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gnature2: {
                     desc: "Nature - Earthworks",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gheight2: {
                     desc: "Height (m)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gh_h2: {
                     desc: "Relation h/H ",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gslope2: {
                     desc: "Slope / Angle (º)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gdistance2: {
                     desc: "Distance to road (m)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gshoulders2: {
                     desc: "Shoulders / Verges",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glength2: {
                     desc: "Length (m)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gblocks2: {
                     desc: "Size of blocks (m)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatments2: {
                     desc: "Existence of geotechnical treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretaining2: {
                     desc: "Existence  of retaining treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingtype2: {
                     desc: "Type  of retaining treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingextension2: {
                     desc: "Extension of retaining treatments (%)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingeffectiveness2: {
                     desc: "Effectiveness of retaining treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingconservation2: {
                     desc: "Conservation of retaining treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsretainingother2: {
                     desc: "Other retaining treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefence2: {
                     desc: "Existence  of defence treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefencetype2: {
                     desc: "Type  of defence treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceextension2: {
                     desc: "Extension of defence treatments (%)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceeffectiveness2: {
                     desc: "Effectiveness of defence treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceconservation2: {
                     desc: "Conservation of defence treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsdefenceother2: {
                     desc: "Other defence treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoating2: {
                     desc: "Existence  of coating treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingtype2: {
                     desc: "Type  of coating treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingextension2: {
                     desc: "Extension of coating treatments (%)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingeffectiveness2: {
                     desc: "Effectiveness of coating treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingconservation2: {
                     desc: "Conservation of coating treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentscoatingother2: {
                     desc: "Other coating treatments",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainages2: {
                     desc: "Existence  of internal drainages",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainagesextension2: {
                     desc: "Extension of internal drainages (%)",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainageseffectiveness2: {
                     desc: "Effectiveness of internal drainages",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtreatmentsinternaldrainagesconservation2: {
                     desc: "Conservation of internal drainages",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gvegetation2: {
                     desc: "Existence of vegetation",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtypevegetation2: {
                     desc: "Type of vegetation",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gphoto2: {
                     desc: "Photographs",
                     subgroup: "Geotechnical Assets Right Side Group 1: General and Inventory Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gvisualcondition2: {
                     desc: "Current visual condition",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gconslos2: {
                     desc: "Consequences of failure on LOS",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gprevcondition2: {
                     desc: "Previous condition rate",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glastinspection2: {
                     desc: "Date of last inspection",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gsurveyfreq2: {
                     desc: "Survey frequency",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gnextsurvey2: {
                     desc: "Date of next survey",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gfailure2: {
                     desc: "Failure history",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gevidrecfailures2: {
                     desc: "Evidence of recent failures?",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gtypefailure2: {
                     desc: "Type of failure process",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gintensityfailure2: {
                     desc: "Intensity of failure process",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gextentfailure2: {
                     desc: "Extent of failure (%)",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gpastinterv2: {
                     desc: "Have there been past interventions performed during the last year?",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gdateinterv2: {
                     desc: "Date of performance of last year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gscopeinterv2: {
                     desc: "Scope of last year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 qintervcost2: {
                     desc: "Cost of last year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gimpactinterv2: {
                     desc: "Impact of last year interventions on asset condition",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glocdocinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearinterv2: {
                     desc: "Have there been interventions performed during the current year?",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervdate2: {
                     desc: "Date of performance of current year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervscope2: {
                     desc: "Scope of current year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcurryearintervcost2: {
                     desc: "Accummulated cost of current year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glocdoccurryearinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gmaintissues2: {
                     desc: "Maintainability issues",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 ginvestment10years2: {
                     desc: "Investment undertaken in the last 10 years",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 rginvestmentrequired2: {
                     desc: "Investment required to upgrade to A class",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gomcomments2: {
                     desc: "Comments to maintainance",
                     subgroup: "Geotechnical Assets Right Side Group 2: Operation and Maintenance Data",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcondition2: {
                     desc: "Current condition",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gcriticality2: {
                     desc: "Criticality",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glandslide2: {
                     desc: "Exposure to landslide hazard",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gflood2: {
                     desc: "Exposure to flood hazard",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gresphazard2: {
                     desc: "Asset Response against hazards",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 gsensitivity2: {
                     desc: "Asset Sensitivity",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 grisk2: {
                     desc: "RISK",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 griskphysical2: {
                     desc: "Risk due to Physical Deterioration",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 grisknatural2: {
                     desc: "Risk due to Natural Hazards",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 Ccode: {
                     desc: "Asset Code",
@@ -1865,252 +1865,252 @@ db.infodatatracks.update({}, {
                 dcode: {
                     desc: "Asset Code",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dyearconstruc: {
                     desc: "Year of construction",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dtype: {
                     desc: "Type of drainage",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dsection: {
                     desc: "Type of section",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dposition: {
                     desc: "Position",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dslope: {
                     desc: "Slope (%)",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dphoto: {
                     desc: "Photographs",
                     subgroup: "Longitudinal Drainage Left Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dconslos: {
                     desc: "Consequences of failure on LOS",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dfailure: {
                     desc: "Failure history",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlastinspection: {
                     desc: "Have there been past interventions performed during the last year?",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dintervextent: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 ddateinterv: {
                     desc: "Date of performance of last year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dscopeinterv: {
                     desc: "Scope of last year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlastyearintervcost: {
                     desc: "Cost of last year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlocdocinterv: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearinterv: {
                     desc: "Have there been interventions performed during the current year?",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervextent: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervdate: {
                     desc: "Date of performance of current year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervscope: {
                     desc: "Scope of current year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervcost: {
                     desc: "Accummulated cost of current year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlocdoccurryearinterv: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dmaintissues: {
                     desc: "Maintainability issues",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dinvestment10years: {
                     desc: "Investment undertaken in the last 10 years",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dinvestmentrequired: {
                     desc: "Investment required for replacement",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 domcomments: {
                     desc: "Comments to operation and maintainance",
                     subgroup: "Longitudinal Drainage Left Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - LEFT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcode2: {
                     desc: "Asset Code",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dyearconstruc2: {
                     desc: "Year of construction",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dtype2: {
                     desc: "Type of drainage",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dsection2: {
                     desc: "Type of section",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dposition2: {
                     desc: "Position",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dslope2: {
                     desc: "Slope (%)",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dphoto2: {
                     desc: "Photographs",
                     subgroup: "Longitudinal Drainage Right Side Group 1: General and Inventory Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dconslos2: {
                     desc: "Consequences of failure on LOS",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dfailure2: {
                     desc: "Failure history",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlastinspection2: {
                     desc: "Have there been past interventions performed during the last year?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 ddateinterv2: {
                     desc: "Date of performance of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dscopeinterv2: {
                     desc: "Scope of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlastyearintervcost2: {
                     desc: "Cost of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlocdocinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearinterv2: {
                     desc: "Have there been interventions performed during the current year?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervextent2: {
                     desc: "Have they been global or partial interventions?",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervdate2: {
                     desc: "Date of performance of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervscope2: {
                     desc: "Scope of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dcurryearintervcost2: {
                     desc: "Accummulated cost of current year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dlocdoccurryearinterv2: {
                     desc: "Location of the documentation of last year interventions",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dmaintissues2: {
                     desc: "Maintainability issues",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dinvestment10years2: {
                     desc: "Investment undertaken in the last 10 years",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 dinvestmentrequired2: {
                     desc: "Investment required for replacement",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 domcomments2: {
                     desc: "Comments to operation and maintainance",
                     subgroup: "Longitudinal Drainage Right Side Group 2: Operations and Maintenance Data",
-                    group: "LONGITUDINAL DRAINAGE - RIGHT SIDE"
+                    group: "LONGITUDINAL DRAINAGE - LEFT/RIGHT SIDE"
                 },
                 rlofnatural: {
                     desc: "rlofnatural",
@@ -2145,22 +2145,22 @@ db.infodatatracks.update({}, {
                 glofnatural: {
                     desc: "glofnatural",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glofphysical: {
                     desc: "glofphysical",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - LEFT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glofnatural2: {
                     desc: "glofnatural2",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 glofphysical2: {
                     desc: "glofphysical2",
                     subgroup: "Geotechnical Assets Right Side Group 3: Indexes and Risk Analysis",
-                    group: "GEOTECHNICAL ASSETS - RIGHT SIDE"
+                    group: "GEOTECHNICAL ASSETS - LEFT/RIGHT SIDE"
                 },
                 rcondition: {
                     desc: "rcondition",
