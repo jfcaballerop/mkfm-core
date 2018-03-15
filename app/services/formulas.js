@@ -80,6 +80,55 @@ exports.criticalityValue = function (in_val) {
 
 }
 
+exports.conditionValue = function (in_val) {
+
+    cscale = {
+        "Very High": {
+            score: {
+                scale: 5,
+                color: "#00b050", 
+                min: 80,
+                max: 101
+            }
+        },
+        "High": {
+            score: {
+                scale: 4,
+                color: "#92d050", 
+                min: 60,
+                max: 80
+            }
+        },
+        "Medium": {
+            score: {
+                scale: 3,
+                color: "#ffff00",
+                min: 40,
+                max: 60
+            }
+        },
+        "Low": {
+            score: {
+                scale: 2,
+                color: "#f79646", 
+                min: 20,
+                max: 40
+            }
+        },
+        "Very Low": {
+            score: {
+                scale: 1,
+                color: "#ff0000", 
+                min: 0,
+                max: 20
+            }
+        }
+    };
+    return cscale[in_val];
+
+
+}
+
 exports.criticality = function (type, formula, data, ifdt, index) {
     // console.log('## formulas criticality ##');
     var retCriticality = 0;
