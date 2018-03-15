@@ -96,7 +96,7 @@
                             <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
 
                         </div>
-                        <div class="form-panel" id="pavements">
+                        <!-- <div class="form-panel" id="pavements">
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ROAD_NET') %>
                             </h5>
@@ -112,13 +112,28 @@
                             <div class="checkbox">
                                 <label><input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-panel" id="assets">
                             <h5 class="mb"><i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ASSETS') %>
+                                    <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
                             </h5>
                             <div class="checkbox">
                                 <label><input id="ROAD" type="checkbox" value="Pavement">Pavements</label>
+                                <div id="pavements" class="form-panel" style="display: none;">
+                                    <div class="checkbox">
+                                        <label><input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="checkbox">
                                 <label><input id="BRIDGE" type="checkbox" value="Bridge">Bridge</label>
