@@ -231,13 +231,24 @@
             }
 
         }
+        var capaActiva = 'summaryGraphContent';
 
-        $('#Summary').click(function() {
+        $('#Summary').click(function () {
             //alert('Summary');
-            $('#SummaryContent').toggle('blind', {}, 500);
-
+            $('#' + capaActiva).hide(500);
+            $('#riskCriteria').hide();
+            $('#summaryGraphContent').show();
+            capaActiva = 'summaryGraphContent';
         });
-        $('input[type=radio][name=optionsRadios]').change(function() {
+        $('#PriorizationofInterventions').click(function () {
+            //alert('Summary');
+            $('#' + capaActiva).hide(500);
+            $('#interventionsContent').show();
+            $('#riskCriteria').show();
+            capaActiva = 'interventionsContent';
+        });
+
+        $('input[type=radio][name=optionsRadios]').change(function () {
             switch ($(this).val()) {
                 case "Annualavailablebudget":
                     $('#amountdiv').show();
@@ -260,7 +271,7 @@
                     break;
             }
         });
-        $('input[type=radio][name=riskoptionsRadios]').change(function() {
+        $('input[type=radio][name=riskoptionsRadios]').change(function () {
             switch ($(this).val()) {
                 case "NaturalHazards":
                     $('#naturalHazardsContent').show();
@@ -283,13 +294,14 @@
         //     $('#content_annual').toggle('blind', {}, 500);
         // });
 
-        $('#amountdiv').change(function(event) {
+        $('#amountdiv').change(function (event) {
             $('#InvestmentFY2018').val('EC$ ' + $('#amount').val());
             ValAmount = $('#amount').val();
             paintDonutChart1();
+
         });
 
-        $('#Routine').change(function(event) {
+        $('#Routine').change(function (event) {
             sanitizeNumberFields($(this));
             ValRoutine = $('#Routine').val();
             $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
@@ -300,7 +312,7 @@
             paintDonutChart1();
             paintDonutChart2();
         });
-        $('#Periodic').change(function(event) {
+        $('#Periodic').change(function (event) {
             sanitizeNumberFields($(this));
             ValPeriodic = $('#Periodic').val();
             $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
@@ -310,7 +322,7 @@
             paintDonutChart1();
             paintDonutChart3();
         });
-        $('#Emergency').change(function(event) {
+        $('#Emergency').change(function (event) {
             sanitizeNumberFields($(this));
             ValEmergency = $('#Emergency').val();
             $('#disabledInputEmergency').val('EC$ ' + ValAmount * ValEmergency / 100);
@@ -318,27 +330,27 @@
         });
 
 
-        $('#Brushcutting').change(function(event) {
+        $('#Brushcutting').change(function (event) {
             sanitizeNumberFields($(this));
             ValBrushcutting = $('#Brushcutting').val();
             $('#disabledInputBrushcutting').val('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
                 10000);
             paintDonutChart2();
         });
-        $('#Drainclearing').change(function(event) {
+        $('#Drainclearing').change(function (event) {
             sanitizeNumberFields($(this));
             ValDrainclearing = $('#Drainclearing').val();
             $('#disabledInputDrainclearing').val('EC$ ' + ValAmount * ValRoutine * ValDrainclearing /
                 10000);
             paintDonutChart2();
         });
-        $('#Patching').change(function(event) {
+        $('#Patching').change(function (event) {
             sanitizeNumberFields($(this));
             ValPatching = $('#Patching').val();
             $('#disabledInputPatching').val('EC$ ' + ValAmount * ValRoutine * ValPatching / 10000);
             paintDonutChart2();
         });
-        $('#RoadSafetyImprovement').change(function(event) {
+        $('#RoadSafetyImprovement').change(function (event) {
             sanitizeNumberFields($(this));
             ValRoadSafetyImprovement = $('#RoadSafetyImprovement').val();
             $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
@@ -348,22 +360,26 @@
 
 
 
-        $('#DesignProjects').change(function(event) {
+        $('#DesignProjects').change(function (event) {
             sanitizeNumberFields($(this));
             ValDesignProjects = $('#DesignProjects').val();
             $('#disabledInputDesignProjects').val('EC$ ' + ValAmount * ValPeriodic * ValDesignProjects /
                 10000);
             paintDonutChart3();
         });
-        $('#WorkInterventions').change(function(event) {
+        $('#WorkInterventions').change(function (event) {
             sanitizeNumberFields($(this));
             ValWorkInterventions = $('#WorkInterventions').val();
             $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
                 ValWorkInterventions /
                 10000);
             paintDonutChart3();
+            if (Number(ValAmount) > 0 && Number(ValPeriodic) > 0 && Number(ValWorkInterventions) > 0) {
+                $('#PhysicalDeterioration').prop("disabled", false);
+                $('#NaturalHazards').prop("disabled", false);
+            }
         });
-        $('#Inspections').change(function(event) {
+        $('#Inspections').change(function (event) {
             sanitizeNumberFields($(this));
             ValInspections = $('#Inspections').val();
             $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic * ValInspections /
@@ -371,7 +387,7 @@
             paintDonutChart3();
         });
 
-        $('#levelRisk').change(function(event) {
+        $('#levelRisk').change(function (event) {
             console.log($(this).val());
             // var riskrange = $(this).val();
             // var riskfilter = [];
@@ -391,11 +407,11 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
 
                 //$("html").html(values[0]);
                 if (values[0].result === "OK") {
@@ -418,7 +434,91 @@
 
         });
 
+        $('input[type=radio][name=optionRisk]').change(function () {
+            var riskType = "";
+            switch ($(this).val()) {
+                case "PhysicalDeterioration":
+                    $('#divTableRisk').empty();
+                    // $('#divTableRisk').append('Physical Deterioration');
+                    riskType = 'PHY';
 
+                    break;
+                case "NaturalHazards":
+                    $('#divTableRisk').empty();
+                    // $('#divTableRisk').append('Natural Hazards');
+                    riskType = 'NAT';
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            var dataPost = {};
+            dataPost['riskType'] = riskType;
+            var p1 = $.ajax({
+                url: '/auth/WEB/schedule/getSched/' + riskType + '/' + (ValAmount * ValPeriodic *
+                    ValWorkInterventions),
+                data: JSON.stringify(dataPost),
+                type: 'POST',
+                contentType: 'application/json'
+            }, function (data) {
+                // console.log('koboinfo ' + JSON.stringify(data));
+                return (data);
+            });
+            Promise.all([p1]).then(function (values) {
+
+                //$("html").html(values[0]);
+                console.log(values[0]);
+                if (values[0].result === "OK") {
+
+                    // console.log(result);
+                    var h = -1;
+                    var html = [];
+                    if (riskType === 'PHY') {
+                        html[++h] =
+                            'Physical Deterioration <a href="#" id="filterPhy" title="Filter/Show data"><i class="fas fa-filter"></i></a>';
+                    } else {
+                        html[++h] =
+                            'Natural Hazards <a href="#" id="filterNat" title="Filter/Show data"><i class="fas fa-filter"></i></a>';
+
+                    }
+                    html[++h] =
+                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="risk"' +
+                        riskType + '>';
+                    html[++h] = '<thead>';
+                    html[++h] = '<tr>';
+                    html[++h] = '<th>#</th>';
+                    html[++h] = '<th>Asset</th>';
+                    html[++h] = '<th>Risk</th>';
+                    html[++h] = '<th>Type</th>';
+                    html[++h] = '<th>Budget</th>';
+                    html[++h] = '</tr>';
+                    html[++h] = '<tbody>';
+
+                    j = 0;
+                    for (var val of values[0].data) {
+                        html[++h] = '<tr>';
+                        html[++h] = '<td>' + (++j) + '</td>';
+                        var riskv = val.properties.code.split('__');
+                        html[++h] = '<td>' + riskv[0] + '-' + riskv[1] + '</td>';
+                        html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split('-')[
+                            2] + riskv[3] + '</td>';
+                        html[++h] = '<td>' + val.type.charAt(0) + '</td>';
+                        html[++h] = '<td>' + Math.round(val.properties.cost * 100) / 100 +
+                            '</td>';
+                        html[++h] = '</tr>';
+                    }
+                    html[++h] = '</tbody></table>';
+
+                    $('#divTableRisk').html(html.join(''));
+
+
+                } else {
+                    // console.log('ERROR');
+                }
+            });
+        });
 
     });
 </script>

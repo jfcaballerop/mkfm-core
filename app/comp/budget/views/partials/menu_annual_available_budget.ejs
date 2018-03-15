@@ -142,9 +142,9 @@
 
         </div>
     </div>
-    <hr>
 
-    <div class="row mt">
+    <div class="row mt" id="riskCriteria" style="display: none;">
+        <hr>
         <!-- Risk Criteria -->
         <div class="col-md-12">
             <h5 class="mb">
@@ -152,11 +152,11 @@
             </h5>
             <div class="checkbox">
                 <label for="PhysicalDeterioration">
-                    <input type="checkbox" id="PhysicalDeterioration" value="PhysicalDeterioration"> Physical Deterioration
+                    <input type="radio" name="optionRisk" id="PhysicalDeterioration" value="PhysicalDeterioration" disabled> Physical Deterioration
                 </label>
                 <br>
                 <label for="NaturalHazards">
-                    <input type="checkbox" id="NaturalHazards" value="NaturalHazards"> Natural Hazards
+                    <input type="radio" name="optionRisk" id="NaturalHazards" value="NaturalHazards" disabled> Natural Hazards
                 </label>
             </div>
         </div>

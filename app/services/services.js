@@ -235,7 +235,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                     length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
                     width: antmaxwidth,
                     cost: antcost,
-                    rcategory: antcat
+                    rcategory: antcat,
+                    riskOrder: formulasService.riskRatingScaleOrderCode(tracknamesche)
                 });
                 // //debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__R'+type+'-' + antsect + '__COND-' + antcond;
                 pkini = trackpkreg[ts][0] / 1000;
@@ -272,7 +273,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         length: (pkini - pkfin) < 0 ? (pkini - pkfin) * -1000 : (pkini - pkfin) * 1000,
         width: antmaxwidth,
         cost: antcost,
-        rcategory: antcat
+        rcategory: antcat,
+        riskOrder: formulasService.riskRatingScaleOrderCode(tracknamesche)
 
     });
 

@@ -794,6 +794,65 @@ exports.riskRatingScaleOrder = function (risk_value) {
 
     return ret;
 }
+exports.riskRatingScaleOrderCode = function (code) {
+    var arrcode = code.split('__');
+    var risk_value = arrcode[2].split('-')[1] + '-' + arrcode[2].split('-')[2] + '__' + arrcode[3];
+    // debug(risk_value);
+    var ret = 1;
+    var risk_rating = [];
+    var lof = parseFloat(risk_value.split("__")[0]);
+    var cons = risk_value.split("__")[1];
+
+    // console.log('lof ' + lof);
+    // console.log('cons ' + cons);
+    var lof = lof * 1;
+    if (lof >= 0 && lof < 20) {
+        lofv = '0-20';
+    } else if (lof >= 20 && lof < 40) {
+        lofv = '20-40';
+    } else if (lof >= 40 && lof < 60) {
+        lofv = '40-60';
+    } else if (lof >= 60 && lof < 80) {
+        lofv = '60-80';
+    } else if (lof >= 80 && lof <= 100) {
+        lofv = '80-100';
+    }
+
+    risk_rating['0-20'] = [];
+    risk_rating['20-40'] = [];
+    risk_rating['40-60'] = [];
+    risk_rating['60-80'] = [];
+    risk_rating['80-100'] = [];
+    risk_rating['80-100']['E'] = 1;
+    risk_rating['80-100']['D'] = 2;
+    risk_rating['60-80']['E'] = 3;
+    risk_rating['60-80']['D'] = 4;
+    risk_rating['80-100']['C'] = 5;
+    risk_rating['40-60']['E'] = 6;
+    risk_rating['60-80']['C'] = 7;
+    risk_rating['40-60']['D'] = 8;
+    risk_rating['80-100']['B'] = 9;
+    risk_rating['20-40']['E'] = 10;
+    risk_rating['40-60']['C'] = 11;
+    risk_rating['60-80']['B'] = 12;
+    risk_rating['20-40']['D'] = 13;
+    risk_rating['40-60']['B'] = 14;
+    risk_rating['80-100']['A'] = 15;
+    risk_rating['0-20']['E'] = 16;
+    risk_rating['60-80']['A'] = 17;
+    risk_rating['0-20']['D'] = 18;
+    risk_rating['40-60']['A'] = 19;
+    risk_rating['20-40']['C'] = 20;
+    risk_rating['0-20']['C'] = 21;
+    risk_rating['20-40']['B'] = 22;
+    risk_rating['20-40']['A'] = 23;
+    risk_rating['0-20']['B'] = 24;
+    risk_rating['0-20']['A'] = 25;
+
+    ret = risk_rating[lofv][cons];
+
+    return ret;
+}
 
 
 exports.pavCondScale = function (value) {
