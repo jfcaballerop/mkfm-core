@@ -176,7 +176,7 @@ exports.criticality = function (type, formula, data, ifdt, index) {
                     }
 
                 }
-                // if (ifdt.properties.gcode[index] === 'S8-SG-01-RWL-2081') {
+                // if (ifdt.properties.bcode[index] === 'S8-SG-01-B-1453') {
                 //     debug(' index:               ' + index);
                 //     debug(' bcode[index]:        ' + ifdt.properties.gcode[index]);
                 //     debug(' rcategory:           ' + ifdt.properties.rcategory[index]);
