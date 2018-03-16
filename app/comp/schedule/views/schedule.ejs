@@ -122,7 +122,12 @@
                                                                     <%- i %>
                                                                 </td>
                                                                 <td>
-                                                                    <%- s.properties.code %>
+                                                                    <%  
+                                                                    var riskv = s.properties.code.split('__');
+                                                                                    %>
+                                                                        <%-riskv[0] %>
+                                                                            -
+                                                                            <%-riskv[1] %>
                                                                 </td>
                                                                 <td>
                                                                     <%- moment(s.startDate).format('YYYY-MM-DD') %>

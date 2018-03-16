@@ -2155,7 +2155,7 @@
                     (typeof data.properties.gshoulders[index] !== "undefined" ? data.properties.gshoulders[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.glength[index] !== "undefined" ? data.properties.glength[index] : '') + '">' +
+                    (typeof data.properties.glength[index] !== "undefined" ? Math.abs(data.properties.glength[index]) : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gblocks]"><input name="infodatatrack[properties][gblocks]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gblocks[index] !== "undefined" ? data.properties.gblocks[index] : '') + '">' +
@@ -2403,7 +2403,7 @@
                     (typeof data.properties.gshoulders2[index] !== "undefined" ? data.properties.gshoulders2[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][glength2]"><input name="infodatatrack[properties][glength2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.glength2[index] !== "undefined" ? data.properties.glength2[index] : '') + '">' +
+                    (typeof data.properties.glength2[index] !== "undefined" ? Math.abs(data.properties.glength2[index]) : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gblocks2]"><input name="infodatatrack[properties][gblocks2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                     (typeof data.properties.gblocks2[index] !== "undefined" ? data.properties.gblocks2[index] : '') + '">' +
@@ -2601,7 +2601,7 @@
                     (typeof data.properties.Cnumelem[index] !== "undefined" ? data.properties.Cnumelem[index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][Clength]"><input name="infodatatrack[properties][Clength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Clength[index] !== "undefined" ? data.properties.Clength[index] : '') + '">' +
+                    (typeof data.properties.Clength[index] !== "undefined" ? Math.abs(data.properties.Clength[index]: '')) + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][CConsLOS]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][CConsLOS]" class="form-control">' +

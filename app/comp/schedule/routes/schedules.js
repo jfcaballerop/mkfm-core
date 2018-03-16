@@ -14,6 +14,8 @@ var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
 var services = require(path.join(__dirname, '../../../services/services'));
 
+var budgetModels = require(path.join(__dirname, '../../budget/models/budget'));
+var Budget = mongoose.model('Budget');
 
 var scheduleModels = require(path.join(__dirname, '../models/schedule'));
 var Schedule = mongoose.model('Schedule');
@@ -68,6 +70,48 @@ router.get('/index', function (req, resp, next) {
             // debug(JSON.stringify(responseObject));
             resp.render('schedule', {
                 schedules: responseObject,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME
+            });
+
+        });
+    });
+
+    request.end();
+
+
+});
+/* GET Schedule */
+router.get('/index/:type', function (req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/getSchedule/' + req.params.type,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    var request = http.request(options, function (res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // debug(JSON.stringify(responseObject));
+            resp.render('schedule', {
+                schedules: responseObject.data,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -233,9 +277,21 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 res.send(500, err.message);
             }
             // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
-            ret['data'] = scheds;
-            res.status(200).jsonp(ret);
+            Budget.find().exec(function (err, budgets) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                        ret['data'].push(s);
+                    total += parseFloat(s.properties.cost);
 
+                }
+                res.status(200).jsonp(ret);
+
+            });
         });
     } else if (req.params.type === 'NAT') {
         Schedulenat.find().sort({
@@ -245,9 +301,21 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 res.send(500, err.message);
             }
             // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            Budget.find().exec(function (err, budgets) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                        ret['data'].push(s);
+                    total += parseFloat(s.properties.cost);
 
-            ret['data'] = scheds;
-            res.status(200).jsonp(ret);
+                }
+                res.status(200).jsonp(ret);
+
+            });
         });
     } else {
         Schedule.find().exec(function (err, scheds) {
