@@ -1476,13 +1476,14 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
-                returnObject["properties"]["rnumLongitudinaldrainage"] = rnumLongitudinaldrainage;
+                returnObject["properties"]["rnumLongitudinaldrainage"] = Math.abs(rnumLongitudinaldrainage);
                 returnObject["properties"]["rnumretainingwalls"] = rnumretainingwalls;
                 returnObject["properties"]["rnumcuttings"] = rnumcuttings;
                 returnObject["properties"]["rnumembankments"] = rnumembankments;
                 returnObject["properties"]["rnumbarriers"] = rnumbarriers;
                 returnObject["properties"]["rnumverticalsignaling"] = rnumverticalsignaling;
                 returnObject["properties"]["rnumstreetlights"] = rnumstreetlights;
+                returnObject["properties"]["pk"] = infodatatrack[0]["properties"]["pk"];
 
             } else if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
