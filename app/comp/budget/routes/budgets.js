@@ -1042,25 +1042,20 @@ router.post('/V1/update_field_budget/', function (req, res, next) {
     var field_name = Object.keys(postData)[0];
     debug(field_name + ": " + value);
     var sendData = {};
-    var arrField = field_name.split('__');
-    //arrField[0] = arrField[0].replace('_', ' ');
-    debug(arrField);
 
     Budget.findOne({}).exec(function (err, c) {
         if (err) {
             res.send(500, err.message);
         }
 
-        var csave = new Cost(c);
-        for (var i = 0; i < csave[arrField[0]].code.length; i++) {
-            if (csave[arrField[0]].code[i] === arrField[1]) {
-                csave[arrField[0]][arrField[2]][i] = value;
+        var bsave = new Budget(c);
+        
+        bsave[field_name] = value;
 
-            }
-        }
+        
         // debug(c);
-        csave.updated_at = new Date();
-        csave.save(function (err, csaved) {
+        bsave.updated_at = new Date();
+        bsave.save(function (err, bsaved) {
             if (err) {
                 return res.status(500).send(err.message);
             }
