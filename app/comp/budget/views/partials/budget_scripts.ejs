@@ -458,7 +458,7 @@
             dataPost['riskType'] = riskType;
             var p1 = $.ajax({
                 url: '/auth/WEB/schedule/getSched/' + riskType + '/' + (ValAmount * ValPeriodic *
-                    ValWorkInterventions),
+                    ValWorkInterventions * 1000),
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
