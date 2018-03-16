@@ -1,7 +1,7 @@
 <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // console.log('query_scripts.ejs');
         var numFilters = 0;
         var arrFilters = [];
@@ -21,7 +21,7 @@
         var numColumnsFilter = 2;
         var valueColumnsSelected = '';
 
-        $.each(filtersDB, function (k, v) {
+        $.each(filtersDB, function(k, v) {
             listHtml = '';
             // listHtml += '<li class="list-group-item">';
             listHtml += '<label class="checkbox-inline" id = "LabelSwitchOption' + k +
@@ -46,13 +46,27 @@
 
         });
         // console.log(arrList);
+        var gant = 'initial value';
         for (var g of Object.keys(arrGroups)) {
+            gant = g;
             var panel = '';
+            debug('uno');
+            debug(g.replace(/ /g, ''));
+            debug(gant.replace(/ /g, ''));
+            debug('dos');
+            // debug(g.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', ''));
+            // debug(gant.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', ''));
+            // debug(g.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', '') ===
+            //     gant.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', ''));
+            // if (g.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', '') !==
+            //     gant.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', '')) {
             panel += '<div  class="ui-widget-content ui-corner-all">' +
-                '<h5 id="effect' + g.replace(/ /g, '') + '" class="ui-widget-header ui-corner-all primary">' +
-                g +
-                '</h5><div id="Contenteffect' + g.replace(
-                    / /g, '') + '" style="display: none;">';
+                '<h5 id="effect' + g.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', '') +
+                '" class="ui-widget-header ui-corner-all primary">' +
+                g.replace(' - LEFT SIDE', '').replace(' - RIGHT SIDE', '') +
+                '</h5><div id="Contenteffect' + g.replace(/ /g, '').replace('-LEFTSIDE', '').replace('-RIGHTSIDE', '') +
+                '" style="display: none;">';
+            // }
             for (var sg of arrGroups[g]) {
                 // console.log(g);
                 // console.log(arrList[g]);
@@ -75,13 +89,13 @@
             $('#ListSwitchOption').append(panel);
         }
 
-        $('[id^=effect]').click(function () {
+        $('[id^=effect]').click(function() {
 
             $('#Content' + $(this).attr('id')).toggle('blind', {}, 500);
         });
 
 
-        $('#ListSwitchOption label[id^=LabelSwitchOption]').each(function (index) {
+        $('#ListSwitchOption label[id^=LabelSwitchOption]').each(function(index) {
             // console.log('deberia ir despues');
             if (config[$(this).attr('id').replace('LabelSwitchOption', '')] !== undefined) {
 
@@ -94,7 +108,7 @@
             }
         });
 
-        $('#ListSwitchOption input[name^=SwitchOption]').change(function () {
+        $('#ListSwitchOption input[name^=SwitchOption]').change(function() {
             // console.log($(this));
             // console.log($(this).attr('name').replace('SwitchOption', ''));
             var filter = $(this).attr('name').replace('SwitchOption', '');
@@ -112,11 +126,11 @@
                     data: JSON.stringify(dataPost),
                     type: 'POST',
                     contentType: 'application/json'
-                }, function (data) {
+                }, function(data) {
                     //// console.log('filtros ' + JSON.stringify(data));
                     return (data);
                 });
-                Promise.all([p1]).then(function (values) {
+                Promise.all([p1]).then(function(values) {
                     //// console.log(values);
 
                     if (values[0].result === "ERROR") {
@@ -132,7 +146,7 @@
                         } else {
                             filterDiv += '<select id="select' + filter +
                                 '" multiple="" class="form-control">';
-                            $.each(filters, function (i, v) {
+                            $.each(filters, function(i, v) {
                                 filterDiv += '<option>' + v + '</option>';
 
                             });
@@ -164,10 +178,10 @@
 
         });
 
-        $('#filterApply').click(function () {
+        $('#filterApply').click(function() {
             // console.log(arrFilters);
             // almaceno los filtros y los valores de los filtros para mandarlos al server
-            $.each(arrFilters, function (i, val) {
+            $.each(arrFilters, function(i, val) {
                 var optionsVal = $('#select' + val).val();
                 arrFiltersValues[val] = optionsVal;
                 // console.log(arrFiltersValues);
@@ -239,7 +253,7 @@
                 '<div id="filterColumns" class="col-md-12">Groups<div class="form-panel">' +
                 filterDiv + '</div></div>');
             $('#rowfilter').append(panel);
-            $('#selectFilterColums').on('change', function (e) {
+            $('#selectFilterColums').on('change', function(e) {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
                 // console.log(valueSelected);
@@ -279,11 +293,11 @@
 
 
         });
-        var dataTableExist = setInterval(function () {
+        var dataTableExist = setInterval(function() {
             if ($('#dataTable').length) {
                 // console.log("Exists dataTable!");
                 clearInterval(dataTableExist);
-                $('#exportbutton').click(function (e) {
+                $('#exportbutton').click(function(e) {
                     var name = 'query_results_' + Math.floor((Math.random() * 9999999) +
                         1000000) + '.xls';
                     $("#dataTable").table2excel({
@@ -295,7 +309,7 @@
 
 
                 });
-                $('#mapsbutton').click(function (e) {
+                $('#mapsbutton').click(function(e) {
                     var name = 'query_results_' + Math.floor((Math.random() * 9999999) +
                         1000000) + '.xls';
                     $("#dataTable").remove();
@@ -316,7 +330,7 @@
                         lng: mapcenter.lng
                     });
                     map.setZoom(configzoom * 1);
-                    $.each(arrMarkerPos, function (k, v) {
+                    $.each(arrMarkerPos, function(k, v) {
                         var infoContent = '';
                         map.addMarker({
                             lat: v[1],
@@ -337,10 +351,10 @@
                 });
             }
         });
-        var checkExist = setInterval(function () {
+        var checkExist = setInterval(function() {
             if ($('#cancel').length) {
                 clearInterval(checkExist);
-                $('#cancel').click(function () {
+                $('#cancel').click(function() {
                     location.reload();
 
                 });
@@ -350,8 +364,8 @@
             if ($('#columnApply').length) {
                 // console.log("Exists!");
                 clearInterval(checkExist);
-                $('#columnApply').click(function () {
-                    $('input[name^=check]:checked').each(function () {
+                $('#columnApply').click(function() {
+                    $('input[name^=check]:checked').each(function() {
 
                         arrColumnsChecked.push($(this).attr('name').replace('check', ''));
                     })
@@ -370,11 +384,11 @@
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) {
+                    }, function(data) {
                         //// console.log('filtros ' + JSON.stringify(data));
                         return (data);
                     });
-                    Promise.all([p1]).then(function (values) {
+                    Promise.all([p1]).then(function(values) {
                         // console.log(values);
                         if (values[0].result === "ERROR") {
                             // console.log(values[0].data);
@@ -405,7 +419,7 @@
 
                             }
 
-                            $.each(values[0].data, function (k, v) {
+                            $.each(values[0].data, function(k, v) {
                                 if (v.geometry.coordinates.length > 0) {
                                     if (header) {
                                         header = false;
@@ -415,7 +429,7 @@
 
                                         if (arrColumnsChecked.length > 0) {
                                             $.each(Object.keys(v.properties).reverse(),
-                                                function (k1, v1) {
+                                                function(k1, v1) {
                                                     if (arrColumnsChecked.indexOf(
                                                             v1) >= 0) {
                                                         table += '<th>' +
@@ -444,7 +458,7 @@
                                                 row]);
                                             var markerContent = '';
                                             $.each(Object.keys(v.properties).reverse(),
-                                                function (k1, v1) {
+                                                function(k1, v1) {
                                                     // console.log(k1);
                                                     // console.log(v1);
                                                     // console.log(v.properties[v1]);
@@ -495,7 +509,7 @@
 
 
                         }
-                    }).catch(function (err) {
+                    }).catch(function(err) {
                         // console.log('error catch');
                         alert(err.responseText);
                         if (err.status === 401) {

@@ -105,31 +105,43 @@
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
                     $.each(ROADS.general_data, function(key, value) {
-                        if (Array.isArray(ifdtobject.properties[key])) {
-                            // //console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    ifdtobject.properties[key][0] + '</td></tr>');
 
+                        if (key !== 'rlength') {
+                            if (Array.isArray(ifdtobject.properties[key])) {
+                                // //console.log('Is Array');
+                                if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                                        key][0] != "") {
+                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                        ifdtobject.properties[key][0] + '</td></tr>');
+
+                                } else {
+                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                        '--' + '</td></tr>');
+
+                                }
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // //console.log('Is NOT Array');
+                                if (ifdtobject.properties[key] != undefined) {
+                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                        ifdtobject.properties[key] + '</td></tr>');
 
+                                } else {
+                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                        '--' + '</td></tr>');
+
+                                }
                             }
                         } else {
-                            // //console.log('Is NOT Array');
-                            if (ifdtobject.properties[key] != undefined) {
+                            if (ifdtobject.properties['pk'] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    ifdtobject.properties[key] + '</td></tr>');
+                                    Math.abs(ifdtobject.properties.pk[0] - ifdtobject.properties.pk[ifdtobject.properties.pk.length - 1]) + '</td></tr>');
 
                             } else {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     '--' + '</td></tr>');
-
                             }
-                        }
 
+                        }
 
                     });
 

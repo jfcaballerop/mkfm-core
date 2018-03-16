@@ -80,6 +80,7 @@
                                                 <h5 class="mb">
                                                     <i class="fa fa-angle-right"></i> Budget Criteria
                                                 </h5>
+
                                                 <div class="radio">
                                                     <label for="Globalbudget">
                                                         <input type="radio" name="optionsRadios" id="Globalbudget" value="Globalbudget"> Global budget
@@ -89,10 +90,16 @@
                                                         <input type="radio" name="optionsRadios" id="Annualavailablebudget" value="Annualavailablebudget"> Annual available budget
                                                     </label>
                                                     <div id="amountdiv" style="display: none">
+                                                        <div class="row mt">
+                                                            <div class="col-md-12">
+                                                                <button type="button" id="graphAnnual" class="btn btn-theme">
+                                                                    <i class="fa fa-chart-pie"></i> Graph</button>
+                                                            </div>
+                                                        </div>
                                                         <br>
                                                         <label for="amount">
                                                             Amount (Millions EC$):
-                                                            <input type="number" id="amount" name="amount">
+                                                            <input type="number" id="ammount" name="ammount" value="<%- retValues.budget.ammount %>">
                                                         </label>
 
                                                     </div>
