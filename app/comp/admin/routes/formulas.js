@@ -4083,6 +4083,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
                                             //  CORRECTIVE FACTORS - SizeOfBlocks
+                                            var factorSize0 = 1;
                                             if (ifdt.properties.gblocks !== undefined &&
                                                 ifdt.properties.gblocks.length > 0 &&
                                                 ifdt.properties.gblocks[i] !== null &&
@@ -4090,13 +4091,16 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
                                                         if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
+                                                            // totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
+                                                            factorSize0 = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize0 ?
+                                                                form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize0;
                                                         } else {
 
                                                             totalScoring *= 1;
                                                         }
                                                     }
                                                 }
+                                                totalScoring *= factorSize0;
 
                                             } else {
 
@@ -4163,7 +4167,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Cuttings_Embankments':
-                                    var AssetADebugear2 = 'S8-SG-01-CR-2049-nouse';
+                                    var AssetADebugear2 = 'S8-SG-01-CR-2049-njasdkf';
                                     if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                         debug('------------');
                                         debug(ifdt.properties.gcode2[i]);
@@ -4235,12 +4239,15 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gblocks2.length > 0 &&
                                                 ifdt.properties.gblocks2[i] !== null &&
                                                 ifdt.properties.gblocks2[i] !== "") {
+                                                    var factorSize = 1;
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
                                                         if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
+                                                            factorSize = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize ?
+                                                                form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize;
                                                             if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                                 debug(form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                                debug('factorSize: ' + factorSize);
                                                             }
                                                         } else {
 
@@ -4248,6 +4255,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                         }
                                                     }
                                                 }
+                                                totalScoring *= factorSize;
                                             } else {
                                                 totalScoring *= 1;
                                             }
