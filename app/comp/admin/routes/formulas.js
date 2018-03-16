@@ -4163,20 +4163,21 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             var totalScoring = Number.MAX_VALUE;
                             switch (form.formulaSpec[f].name) {
                                 case 'Cuttings_Embankments':
-                                    var AssetADebugear2 = 'S8-SG-01-CR-3213'
-                                    if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                    var AssetADebugear2 = 'S8-SG-01-CR-2049-nouse';
+                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                         debug('------------');
+                                        debug(ifdt.properties.gcode2[i]);
                                         debug('totalScoring1: ' + totalScoring);
                                     }
-                                    if (ifdt.properties.gcode2 === AssetADebugear2) {
-                                        debug('ifdt.properties.gcode2    :' + ifdt.properties.gcode2);
-                                        debug('ifdt.properties.gtypefailure2    :' + ifdt.properties.gtypefailure2);
-                                        debug('ifdt.properties.gintensityfailure2    :' + ifdt.properties.gintensityfailure2);
-                                        debug('ifdt.properties.gextentfailure2    :' + ifdt.properties.gextentfailure2);
-                                        debug('ifdt.properties.gblocks2    :' + ifdt.properties.gblocks2);
-                                        debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2);                               
+                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                        debug('ifdt.properties.gcode2    :' + ifdt.properties.gcode2[i]);
+                                        debug('ifdt.properties.gtypefailure2    :' + ifdt.properties.gtypefailure2[i]);
+                                        debug('ifdt.properties.gintensityfailure2    :' + ifdt.properties.gintensityfailure2[i]);
+                                        debug('ifdt.properties.gextentfailure2    :' + ifdt.properties.gextentfailure2[i]);
+                                        debug('ifdt.properties.gblocks2    :' + ifdt.properties.gblocks2[i]);
+                                        debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2[i]);                               
                                     }
-                                    if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                         debug('totalScoring2: ' + totalScoring);
                                     }
                                     if (ifdt.properties.gcode2.length > 0) {
@@ -4201,8 +4202,10 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                                         (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
                                                                             (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
 
-                                                                    if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                                         debug('totalScoring3: ' + totalScoring);
+                                                                        debug('numberOfScores: ' + numberOfScores); 
+                                                                        debug('score: ' + score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
                                                                     }
                                                                 }
                                                             }
@@ -4212,8 +4215,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             } else {
                                                 totalScoring = 100;
                                             }
-                                            if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                 debug('totalScoring4: ' + totalScoring);
+                                                debug('numberOfScores: ' + numberOfScores);
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
                                             // Existance of several damages
@@ -4223,7 +4227,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 // existance of several damages
                                                 totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                             }
-                                            if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                 debug('totalScoring5: ' + totalScoring);
                                             }
                                             //  CORRECTIVE FACTORS - SizeOfBlocks
@@ -4235,6 +4239,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     if (score !== undefined && score !== null) {
                                                         if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
                                                             totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
+                                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                                debug(form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                            }
                                                         } else {
 
                                                             totalScoring *= 1;
@@ -4242,9 +4249,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                     }
                                                 }
                                             } else {
-                                                totalScoring *= 0.98;
+                                                totalScoring *= 1;
                                             }
-                                            if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                 debug('totalScoring6: ' + totalScoring);
                                             }
                                             //  CORRECTIVE FACTORS - VEGETATION
@@ -4262,9 +4269,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 }
                                             } else {
 
-                                                totalScoring *= 0.8;
+                                                totalScoring *= 1;
                                             }
-                                            if (ifdt.properties.gcode2 === AssetADebugear2) {
+                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                 debug('totalScoring7: ' + totalScoring);
                                             }
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
