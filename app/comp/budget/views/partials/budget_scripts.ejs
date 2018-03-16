@@ -520,5 +520,37 @@
             });
         });
 
+        $('input[type=number]').on('blur', function () {
+            console.log($(this).val());
+            if ($(this).val() != valant) {
+                // $(this).val($(this).data('defaultText'));
+                var dataPost = {};
+                dataPost[this.name] = this.value;
+                var $input = $(this);
+
+                console.log('New Val: ' + JSON.stringify(dataPost));
+
+                var p1 = $.ajax({
+                    url: '/auth/WEB/budget/update_field_budget/' + this.name + '/' +
+                        this.value,
+                    data: JSON.stringify(dataPost),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function (data) {
+                    // console.log('koboinfo ' + JSON.stringify(data));
+                    return (data);
+                });
+                Promise.all([p1]).then(function (values) {
+                    console.log(values);
+                    if (values[0].result === "OK") {
+                        $input.css("border", "2px solid green");
+                    } else {
+                        $input.css("border", "2px solid red");
+                    }
+                });
+
+            }
+        });
+
     });
 </script>

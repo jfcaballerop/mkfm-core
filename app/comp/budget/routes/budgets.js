@@ -23,6 +23,10 @@ var infodatatrackModels = require(path.join(__dirname, '../../gis/models/infodat
 var Infodatatrack = mongoose.model('Infodatatrack');
 var costModels = require(path.join(__dirname, '../../budget/models/cost'));
 var Cost = mongoose.model('Cost');
+
+var budgetModels = require(path.join(__dirname, '../models/budget'));
+var Budget = mongoose.model('Budget');
+
 var schedulenatModels = require(path.join(__dirname, '../../schedule/models/schedulenat'));
 var Schedulenat = mongoose.model('Schedulenat');
 var schedulephyModels = require(path.join(__dirname, '../../schedule/models/schedulephy'));
@@ -85,7 +89,7 @@ router.get('/indexes/:level', function (req, resp, next) {
 
             // debug(filters);
 
-            //debug(responseObject.config.properties);
+            debug(responseObject.budget);
 
             resp.render('indexes', {
                 retValues: responseObject,
@@ -150,46 +154,7 @@ router.get('/costs', function (req, resp, next) {
     // resp.render('admin_panel_formulas', { token: req.token, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
 
 });
-/* Update field*/
-/**
- * Proceso AJAX que recibe la peticion de actualizar un campo de una formula en modo arbol con 3 niveles
- */
-router.post('/update_field/:field/:value', function (req, resp) {
-    var postData = extend({}, req.body);
-    debug('## WEB update_field: ' + req.params.field + '\n\n\n');
 
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/budget/V1/update_field/',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-
-
-
-    var request = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            //// debug('BODY: ' + chunk);
-            data += chunk;
-
-        });
-        res.on('end', function () {
-            var responseObject = JSON.parse(data);
-            resp.status(200).jsonp(responseObject);
-
-        });
-    });
-    request.write(JSON.stringify(postData));
-    request.end();
-
-});
 /* Update budgets*/
 /**
  * Proceso ajax para actualizar todos los tracks, en base a su seccion, y con la formula aplicada
@@ -238,6 +203,82 @@ router.post('/update_budgets', function (req, resp) {
 /*******************************************************
  AJAX REST CALLS
  **********************************************************/
+/* Update field*/
+
+router.post('/update_field/:field/:value', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_field: ' + req.params.field + '\n\n\n');
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/budget/V1/update_field/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
+/* Update field budget*/
+
+router.post('/update_field_budget/:field/:value', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB update_field_budget: ' + req.params.field + '\n\n\n');
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/budget/V1/update_field_budget/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            resp.status(200).jsonp(responseObject);
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 router.post('/indexes/:level', function (req, resp, next) {
     var options = {
         host: config.HOST_API,
@@ -849,6 +890,17 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
         }
         return scheds;
     }));
+    /**
+     * Lista de valores precargados de Budgets
+     */
+    arrPromises.push(Budget.find().exec(function (err, budgets) {
+        if (err) {
+            res.send(500, err.message);
+        }
+        return budgets;
+    }));
+
+
 
     /**
      * El rango para Graph
@@ -876,15 +928,19 @@ router.get('/V1/get_budget_files/:level', function (req, res, next) {
     Promise.all(arrPromises).then(function (values) {
         schnats = values[0];
         schphys = values[1];
-        schnatsGraph = values[2];
-        schphysGraph = values[3];
+        budgets = values[2];
+        schnatsGraph = values[3];
+        schphysGraph = values[4];
         debug('Nat length ' + schnats.length);
         debug('Phy length ' + schphys.length);
+        debug('Budgets length ' + budgets.length);
         debug('NatGraph length ' + schnatsGraph.length);
         debug('PhyGraph length ' + schphysGraph.length);
 
         ret = budgetModule.schedInterv(ret, schnats, schphys);
         ret = budgetModule.schedIntervGraph(ret, schnatsGraph, schphysGraph);
+        ret['budget'] = budgets.length > 0 ? budgets[0] : undefined;
+
         debug(ret);
         res.status(200).jsonp(ret);
 
@@ -950,6 +1006,47 @@ router.post('/V1/update_field/', function (req, res, next) {
     debug(arrField);
 
     Cost.findOne({}).exec(function (err, c) {
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        var csave = new Cost(c);
+        for (var i = 0; i < csave[arrField[0]].code.length; i++) {
+            if (csave[arrField[0]].code[i] === arrField[1]) {
+                csave[arrField[0]][arrField[2]][i] = value;
+
+            }
+        }
+        // debug(c);
+        csave.updated_at = new Date();
+        csave.save(function (err, csaved) {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
+            res.status(200).jsonp(ret);
+
+        });
+    });
+
+
+});
+/* POST update_field_budget */
+router.post('/V1/update_field_budget/', function (req, res, next) {
+    debug('API /V1/update_field_budget/');
+    var postData = extend({}, req.body);
+    var ret = {
+        "result": "OK"
+    };
+    debug(postData);
+    var value = postData[Object.keys(postData)[0]];
+    var field_name = Object.keys(postData)[0];
+    debug(field_name + ": " + value);
+    var sendData = {};
+    var arrField = field_name.split('__');
+    //arrField[0] = arrField[0].replace('_', ' ');
+    debug(arrField);
+
+    Budget.findOne({}).exec(function (err, c) {
         if (err) {
             res.send(500, err.message);
         }
