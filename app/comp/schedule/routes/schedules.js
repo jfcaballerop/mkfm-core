@@ -14,6 +14,8 @@ var multer = require('multer');
 var formulasService = require(path.join(__dirname, '../../../services/formulas'));
 var services = require(path.join(__dirname, '../../../services/services'));
 
+var budgetModels = require(path.join(__dirname, '../../budget/models/budget'));
+var Budget = mongoose.model('Budget');
 
 var scheduleModels = require(path.join(__dirname, '../models/schedule'));
 var Schedule = mongoose.model('Schedule');
@@ -275,9 +277,21 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 res.send(500, err.message);
             }
             // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
-            ret['data'] = scheds;
-            res.status(200).jsonp(ret);
+            Budget.find().exec(function (err, budgets) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                        ret['data'].push(s);
+                    total += parseFloat(s.properties.cost);
 
+                }
+                res.status(200).jsonp(ret);
+
+            });
         });
     } else if (req.params.type === 'NAT') {
         Schedulenat.find().sort({
@@ -287,9 +301,21 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 res.send(500, err.message);
             }
             // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            Budget.find().exec(function (err, budgets) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                        ret['data'].push(s);
+                    total += parseFloat(s.properties.cost);
 
-            ret['data'] = scheds;
-            res.status(200).jsonp(ret);
+                }
+                res.status(200).jsonp(ret);
+
+            });
         });
     } else {
         Schedule.find().exec(function (err, scheds) {
