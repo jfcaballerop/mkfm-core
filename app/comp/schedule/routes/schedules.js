@@ -81,6 +81,48 @@ router.get('/index', function (req, resp, next) {
 
 
 });
+/* GET Schedule */
+router.get('/index/:type', function (req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/getSchedule/' + req.params.type,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    var request = http.request(options, function (res) {
+        ////// debug('STATUS: ' + res.statusCode);
+        ////// debug('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            ////// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// debug('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            // debug(JSON.stringify(responseObject));
+            resp.render('schedule', {
+                schedules: responseObject.data,
+                token: req.token,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME
+            });
+
+        });
+    });
+
+    request.end();
+
+
+});
 /*******************************************************
         AJAX CALLS
 **********************************************************/

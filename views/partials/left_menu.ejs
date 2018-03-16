@@ -23,8 +23,8 @@
             <a href="/auth/WEB/maps/view_data" class="dcjq-parent">
                 <i class="fas fa-database"></i>
                 <span>
-            <%- trans('MENU_DATABASE') %>
-        </span>
+                    <%- trans('MENU_DATABASE') %>
+                </span>
             </a>
 
         </li>
@@ -46,6 +46,7 @@
             </a>
 
         </li>
+
         <li class="sub-menu dcjq-parent-li">
             <a href="/auth/WEB/query/consultas" class="dcjq-parent">
                 <i class=" fa fa-table"></i>
@@ -55,6 +56,7 @@
             </a>
 
         </li>
+
         <li class="sub-menu dcjq-parent-li">
             <a href="/auth/WEB/budget/indexes/1" class="dcjq-parent">
                 <i class=" fa fa-usd"></i>
@@ -74,14 +76,23 @@
 
         </li>
         <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/schedule/index" class="dcjq-parent">
-                <i class="fas fa-calendar-alt"></i>
+            <a href="javascript:;" class="dcjq-parent">
+                <i class="fa fa-th"></i>
                 <span>
                     <%- trans('MENU_SCHEDULE') %>
                 </span>
+                <span class="dcjq-icon"></span>
             </a>
-
+            <ul class="sub" style="display: block;">
+                <li>
+                    <a href="/auth/WEB/schedule/index/PHY">Physicals</a>
+                </li>
+                <li>
+                    <a href="/auth/WEB/schedule/index">Naturals</a>
+                </li>
+            </ul>
         </li>
+
         <!--
             ADMIN MENU
         -->
