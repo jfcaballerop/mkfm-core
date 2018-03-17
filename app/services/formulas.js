@@ -83,44 +83,44 @@ exports.criticalityValue = function (in_val) {
 exports.conditionValue = function (in_val) {
 
     cscale = {
-        "Very High": {
+        "Excellent": {
             score: {
                 scale: 5,
-                color: "#00b050", 
-                min: 80,
-                max: 101
+                color: "#00b050",
+                min: 0.8,
+                max: 1.01
             }
         },
-        "High": {
+        "Good": {
             score: {
                 scale: 4,
-                color: "#92d050", 
-                min: 60,
-                max: 80
+                color: "#92d050",
+                min: 0.60,
+                max: 0.80
             }
         },
-        "Medium": {
+        "Fair": {
             score: {
                 scale: 3,
                 color: "#ffff00",
-                min: 40,
-                max: 60
+                min: 0.40,
+                max: 0.60
             }
         },
-        "Low": {
+        "Poor": {
             score: {
                 scale: 2,
-                color: "#f79646", 
-                min: 20,
-                max: 40
+                color: "#f79646",
+                min: 0.20,
+                max: 0.40
             }
         },
-        "Very Low": {
+        "Very Poor": {
             score: {
                 scale: 1,
-                color: "#ff0000", 
+                color: "#ff0000",
                 min: 0,
-                max: 20
+                max: 0.20
             }
         }
     };

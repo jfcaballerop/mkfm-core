@@ -4179,7 +4179,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         debug('ifdt.properties.gintensityfailure2    :' + ifdt.properties.gintensityfailure2[i]);
                                         debug('ifdt.properties.gextentfailure2    :' + ifdt.properties.gextentfailure2[i]);
                                         debug('ifdt.properties.gblocks2    :' + ifdt.properties.gblocks2[i]);
-                                        debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2[i]);                               
+                                        debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2[i]);
                                     }
                                     if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                         debug('totalScoring2: ' + totalScoring);
@@ -4208,7 +4208,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
                                                                     if (ifdt.properties.gcode2[i] === AssetADebugear2) {
                                                                         debug('totalScoring3: ' + totalScoring);
-                                                                        debug('numberOfScores: ' + numberOfScores); 
+                                                                        debug('numberOfScores: ' + numberOfScores);
                                                                         debug('score: ' + score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
                                                                     }
                                                                 }
@@ -4239,7 +4239,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                                 ifdt.properties.gblocks2.length > 0 &&
                                                 ifdt.properties.gblocks2[i] !== null &&
                                                 ifdt.properties.gblocks2[i] !== "") {
-                                                    var factorSize = 1;
+                                                var factorSize = 1;
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
                                                     if (score !== undefined && score !== null) {
                                                         if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
@@ -5235,7 +5235,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             break;
 
         case 'Condition':
-            //debug('Condition');
+            debug('Condition');
             var orArr = [];
             var orAssetArr = [];
             var andArr = [];
@@ -5248,9 +5248,9 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 switch (f) {
                     case 'Bridge':
                         for (var f of postData.form) {
-                            // //debug(f);
-                            // //debug(formulasService.conditionValue(f).score.min);
-                            // //debug(formulasService.conditionValue(f).score.max);
+                            debug(f);
+                            debug(formulasService.conditionValue(f).score.min);
+                            debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.bcondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5327,11 +5327,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         // //debug(catArr);
                         break;
 
-                    default: // retainning walls
+                    default:
                         for (var f of postData.form) {
                             // //debug(f);
-                            // //debug(formulasService.conditionValue(f).score.min);
-                            // //debug(formulasService.conditionValue(f).score.max);
+                            debug(formulasService.conditionValue(f).score.min);
+                            debug(formulasService.conditionValue(f).score.max);
                             orArr.push({
                                 "properties.rcondition": {
                                     $gte: formulasService.conditionValue(f).score.min,
@@ -5365,11 +5365,28 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             debug(andArr);
 
             //debug(JSON.stringify(andArr));
+            var wherearr = [];
 
+            //add codes asset
+            wherearr.push('rcondition');
+            wherearr.push('bcondition');
+            wherearr.push('Ccondition');
+            wherearr.push('gcondition');
+            wherearr.push('gcondition2');
+            wherearr.push('name');
+            wherearr.push('rcode');
+
+            var selectjson = {
+                "geometry.coordinates": 1,
+                properties: []
+            };
+            for (var w of wherearr) {
+                selectjson.properties[w] = 1;
+            }
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }, selectjson).exec(function (err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
