@@ -106,8 +106,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Asset</th>
-                                            <th>Starting Date</th>
-                                            <th>End Date</th>
+                                            <th>Start</th>
+                                            <th>End</th>
                                             <th>Completed</th>
                                         </tr>
                                     </thead>
@@ -117,28 +117,39 @@
                                                 <tr style="color: red;font-weight:bold">
                                                     <% } else{ %>
                                                         <tr style="color:<%- s.config.color %>;">
+
                                                             <% } %>
-                                                                <td>
-                                                                    <%- i %>
+                                                                <td class="small" class="small">
+                                                                    <small>
+
+                                                                        <%- i %>
+                                                                    </small>
                                                                 </td>
-                                                                <td>
-                                                                    <%  
-                                                                    var riskv = s.properties.code.split('__');
-                                                                                    %>
-                                                                        <%-riskv[0] %>
-                                                                            -
-                                                                            <%-riskv[1] %>
+                                                                <td class="small">
+                                                                    <small>
+                                                                        <%  
+                                                                            var riskv = s.properties.code.split('__');
+                                                                            %>
+                                                                            <%-riskv[0]+'-'+riskv[1] %>
+                                                                    </small>
+
                                                                 </td>
-                                                                <td>
-                                                                    <%- moment(s.startDate).format('YYYY-MM-DD') %>
+                                                                <td class="small">
+                                                                    <small>
+                                                                        <%- moment(s.startDate).format('YYYY-MM-DD') %>
+                                                                    </small>
                                                                 </td>
-                                                                <td>
-                                                                    <%- moment(s.endDate).format('YYYY-MM-DD') %>
+                                                                <td class="small">
+                                                                    <small>
+                                                                        <%- moment(s.endDate).format('YYYY-MM-DD') %>
+                                                                    </small>
                                                                 </td>
-                                                                <td>
-                                                                    <% if(s.completed) {%>
-                                                                        <i class="fas fa-check text-success"></i>
-                                                                        <% } %>
+                                                                <td class="small">
+                                                                    <small>
+                                                                        <% if(s.completed) {%>
+                                                                            <i class="fas fa-check text-success"></i>
+                                                                            <% } %>
+                                                                    </small>
 
                                                                 </td>
                                                         </tr>
