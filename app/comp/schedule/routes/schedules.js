@@ -112,6 +112,7 @@ router.get('/index/:type', function (req, resp, next) {
             // debug(JSON.stringify(responseObject));
             resp.render('schedule', {
                 schedules: responseObject.data,
+                type: req.params.type,
                 token: req.token,
                 moment: moment,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
@@ -168,14 +169,16 @@ router.post('/getSched/:riskType/:budget', function (req, resp) {
 
 });
 
-router.post('/saveEvent/:name/:startDate/:endDate', function (req, resp) {
+router.post('/saveEvent/:name/:startDate/:endDate/:type', function (req, resp) {
     var postData = extend({}, req.body);
-    debug('## WEB saveEvent: ' + req.params.name);
+    var name = decodeURIComponent(req.params.name);
+    debug('## WEB saveEvent: ' + name + ' ' + req.params.type);
+    var encoded_url = encodeURI(config.PATH_API + '/schedule/V1/saveEvent/' + name + '/' + req.params.startDate + '/' + req.params.endDate + '/' + req.params.type);
 
     var options = {
         host: config.HOST_API,
         port: config.PORT_API,
-        path: config.PATH_API + '/schedule/V1/saveEvent/' + req.params.name + '/' + req.params.startDate + '/' + req.params.endDate,
+        path: encoded_url,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -393,28 +396,67 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
 });
 
 /* GET JSON Report */
-router.post('/V1/saveEvent/:name/:startDate/:endDate', function (req, res, next) {
+router.post('/V1/saveEvent/:name/:startDate/:endDate/:type', function (req, res, next) {
+    req.params.name = decodeURIComponent(req.params.name);
+    type = decodeURIComponent(req.params.type);
+    debug(req.params.name);
     var ret = {
         "result": "OK"
     };
     var dbfields = {
         properties: {}
     };
-    Schedule.findOneAndUpdate({
-        "properties.code": req.params.name
-    }, {
-        $set: {
-            startDate: req.params.startDate,
-            endDate: req.params.endDate
-        }
-    }).exec(function (err, doc) {
-        if (err) {
-            res.send(500, err.message);
-        }
-        debug(doc);
-        res.status(200).jsonp(ret);
+    if (type === 'PHY') {
+        Schedulephy.findOneAndUpdate({
+            "properties.code": req.params.name
+        }, {
+            $set: {
+                startDate: req.params.startDate,
+                endDate: req.params.endDate
+            }
+        }).exec(function (err, doc) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            debug(doc);
+            res.status(200).jsonp(ret);
 
-    });
+        });
+
+    } else if (type === 'NAT') {
+        Schedulenat.findOneAndUpdate({
+            "properties.code": req.params.name
+        }, {
+            $set: {
+                startDate: req.params.startDate,
+                endDate: req.params.endDate
+            }
+        }).exec(function (err, doc) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            debug(doc);
+            res.status(200).jsonp(ret);
+
+        });
+    } else {
+        Schedule.findOneAndUpdate({
+            "properties.code": req.params.name
+        }, {
+            $set: {
+                startDate: req.params.startDate,
+                endDate: req.params.endDate
+            }
+        }).exec(function (err, doc) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            debug(doc);
+            res.status(200).jsonp(ret);
+
+        });
+
+    }
 
 
 });

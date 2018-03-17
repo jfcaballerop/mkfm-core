@@ -2,6 +2,9 @@
     $(document).ready(function () {
 
         var dataSchedule = <%- JSON.stringify(schedules) %>;
+        var type = <%- JSON.stringify(type) %>;
+
+        console.log(type);
 
         function updateModalDataSource(data, option) {
             $('#event-modal select[name="event-name"]').html('');
@@ -222,7 +225,7 @@
 
             var p1 = $.ajax({
                 url: '/auth/WEB/schedule/saveEvent/' + event.name + '/' + moment(event.startDate).format(
-                    'YYYY-MM-DD') + '/' + moment(event.endDate).format('YYYY-MM-DD'),
+                    'YYYY-MM-DD') + '/' + moment(event.endDate).format('YYYY-MM-DD') + '/' + type,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
