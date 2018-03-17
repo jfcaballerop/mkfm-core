@@ -2,6 +2,9 @@
     $(document).ready(function () {
 
         var dataSchedule = <%- JSON.stringify(schedules) %>;
+        var type = <%- JSON.stringify(type) %>;
+
+        console.log(type);
 
         function updateModalDataSource(data, option) {
             $('#event-modal select[name="event-name"]').html('');
@@ -65,7 +68,7 @@
                     var dataPost = {};
 
                     var p1 = $.ajax({
-                        url: '/auth/WEB/schedule/completeEvent/' + event.name,
+                        url: '/auth/WEB/schedule/completeEvent/' + event.name + '/' + type,
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
@@ -88,9 +91,13 @@
                         //     $('#spinner').hide();
 
                         // }
-                        var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+                        var nameEventTd = event.name.split('__');
+
+                        var $selectTR = $('#tableSchedule tr td:contains("' + nameEventTd[0] + '-' +
+                            nameEventTd[1] + '")').parent();
                         $selectTR.find("td:eq(4)").fadeOut(function () {
-                            $(this).html('<i class="fas fa-check text-success"></i>').fadeIn();
+                            $(this).html('<i class="fas fa-check text-success"></i>').fadeIn(
+                                500).fadeOut(500).fadeIn(500);
                         });
 
                     });
@@ -196,7 +203,8 @@
                 //elimino el anterior
 
                 for (var d in dataSource) {
-                    var index = dataSource[d].name.indexOf(event.name.trim());
+                    console.log(event.name);
+                    var index = dataSource[d].name.indexOf(event.name);
                     if (index > -1) {
                         dataSource.splice(d, 1);
                     }
@@ -205,14 +213,21 @@
 
                 dataSource.push(event);
             }
-            var $selectTR = $('#tableSchedule tr td:contains("' + event.name + '")').parent();
+            var nameEventTd = event.name.split('__');
+
+            var $selectTR = $('#tableSchedule tr td:contains("' + nameEventTd[0] + '-' + nameEventTd[1] + '")')
+                .parent();
             $selectTR.css('color', event.color).css(
                 'font-weight', 'normal');
             $selectTR.find("td:eq(2)").fadeOut(function () {
-                $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn();
+                $(this).text(moment(event.startDate).format('YYYY-MM-DD')).fadeIn(1000).fadeOut(1000).fadeIn(
+                    1000).fadeOut(1000).fadeIn(
+                    1000);
             });
             $selectTR.find("td:eq(3)").fadeOut(function () {
-                $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn();
+                $(this).text(moment(event.endDate).format('YYYY-MM-DD')).fadeIn(1000).fadeOut(1000).fadeIn(
+                    1000).fadeOut(1000).fadeIn(
+                    1000);
             });
             updateModalDataSource(dataSource, 'save');
             $('#calendar').data('calendar').setDataSource(dataSource);
@@ -222,7 +237,7 @@
 
             var p1 = $.ajax({
                 url: '/auth/WEB/schedule/saveEvent/' + event.name + '/' + moment(event.startDate).format(
-                    'YYYY-MM-DD') + '/' + moment(event.endDate).format('YYYY-MM-DD'),
+                    'YYYY-MM-DD') + '/' + moment(event.endDate).format('YYYY-MM-DD') + '/' + type,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
@@ -257,7 +272,7 @@
         var dataSource = [];
         var i = 0;
         for (var s of dataSchedule) {
-            console.log(s.startDate);
+            //console.log(s);
 
             var val = {
                 id: i,
@@ -302,11 +317,11 @@
                     for (var i in e.events) {
                         console.log(e.events[i].startDate);
                         content += '<div class="event-tooltip-content">' +
-                            '<div class="event-name" style="color:' + e.events[i].color +
+                            '<div class="event-name small" style="color:' + e.events[i].color +
                             ';font-weight:bold" >' + e.events[
                                 i].name + '</div>' +
-                            '<div class="event-type">' + e.events[i].type + '</div>' +
-                            '<div class="event-start-date">' + formatDate(e.events[i].startDate) +
+                            '<div class="event-type small">' + e.events[i].type + '</div>' +
+                            '<div class="event-start-date small">' + formatDate(e.events[i].startDate) +
                             ' - ' + formatDate(e.events[i].endDate) + '</div>' +
                             '</div>';
                         formatDate
