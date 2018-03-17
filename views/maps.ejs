@@ -7,19 +7,20 @@
         <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
-            
+
             #map {
                 height: 100%;
             }
+
             /* Optional: Makes the sample page fill the window. */
-            
+
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-            
+
             #info-box {
                 background-color: white;
                 border: 1px solid black;
@@ -62,23 +63,25 @@
             <section class="wrapper site-min-height">
                 <div class="row mt">
                     <div class="col-md-10">
-                        <h3><i class="fa fa-angle-right"></i>
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
                             <%- trans('MENU_MAPS_GMAPS') %>
                         </h3>
                     </div>
                     <div class="col-md-2" style="display: none;">
                         <select class="form-control">
-						  <option>- <%- trans('GMAPS_LAYERS') %> -</option>
-						  <option>Open Street Maps</option>
-						  <option>Parrishes boundaries</option>
-						  <option>Flashflood Susceptibility</option>
-						  <option>Landslide Susceptibility</option>
-						  <option>Hurricane Shelters</option>
-						  <option>Health Centers</option>
-						  <option>Airports</option>
-						  <option>Ferry Ports</option>
-						  <option>Tourist Attractions</option>
-						</select>
+                            <option>-
+                                <%- trans('GMAPS_LAYERS') %> -</option>
+                            <option>Open Street Maps</option>
+                            <option>Parrishes boundaries</option>
+                            <option>Flashflood Susceptibility</option>
+                            <option>Landslide Susceptibility</option>
+                            <option>Hurricane Shelters</option>
+                            <option>Health Centers</option>
+                            <option>Airports</option>
+                            <option>Ferry Ports</option>
+                            <option>Tourist Attractions</option>
+                        </select>
                     </div>
                 </div>
                 <!-- page start-->
@@ -114,123 +117,158 @@
                             </div>
                         </div> -->
                         <div class="form-panel" id="assets">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ASSETS') %>
                                     <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
                             </h5>
                             <div class="checkbox">
-                                <label><input id="ROAD" type="checkbox" value="Pavement">Pavements</label>
+                                <label>
+                                    <input id="ROAD" type="checkbox" value="Pavement">Pavements</label>
                                 <div id="pavements" class="form-panel" style="display: none;">
                                     <div class="checkbox">
-                                        <label><input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
+                                        <label>
+                                            <input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
+                                        <label>
+                                            <input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
+                                        <label>
+                                            <input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
+                                        <label>
+                                            <input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="checkbox">
-                                <label><input id="BRIDGE" type="checkbox" value="Bridge">Bridge</label>
+                                <label>
+                                    <input id="BRIDGE" type="checkbox" value="Bridge">Bridge</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="Culvert"type="checkbox" value="Culvert">Culvert</label>
+                                <label>
+                                    <input id="Culvert" type="checkbox" value="Culvert">Culvert</label>
                             </div>
                             <div class="checkbox">
-                                <label><input id="GEOT" type="checkbox" value="Geotechnical">Geotechnical</label>
+                                <label>
+                                    <input id="GEOT" type="checkbox" value="Geotechnical">Geotechnical</label>
                             </div>
 
                         </div>
                         <div class="form-panel">
-                            <h5 class="mb"><i class="fa fa-angle-right"></i>
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_RISK_ASSESSMENT') %>
                                     <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
                             </h5>
                             <div class="checkbox">
-                                <label><input id="Criticality" type="checkbox" value="Asset Criticality">Asset Criticality</label>
+                                <label>
+                                    <input id="Criticality" type="checkbox" value="Asset Criticality">Asset Criticality</label>
                                 <div id="CriticalityForm" class="form-panel" style="display: none;">
                                     <div class="checkbox">
-                                        <label><input id="CriticalityFormVeryHigh" type="checkbox" value="Very High">Very High</label>
+                                        <label>
+                                            <input id="CriticalityFormVeryHigh" type="checkbox" value="Very High">Very High</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="CriticalityFormHigh" type="checkbox" value="High">High</label>
+                                        <label>
+                                            <input id="CriticalityFormHigh" type="checkbox" value="High">High</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="CriticalityFormMedium" type="checkbox" value="Medium">Medium</label>
+                                        <label>
+                                            <input id="CriticalityFormMedium" type="checkbox" value="Medium">Medium</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="CriticalityFormLow" type="checkbox" value="Low">Low</label>
+                                        <label>
+                                            <input id="CriticalityFormLow" type="checkbox" value="Low">Low</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="CriticalityFormVeryLow" type="checkbox" value="Very Low">Very Low</label>
+                                        <label>
+                                            <input id="CriticalityFormVeryLow" type="checkbox" value="Very Low">Very Low</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="checkbox">
-                                <label><input id="Condition" type="checkbox" value="Asset Condition">Asset Condition</label>
+                                <label>
+                                    <input id="Condition" type="checkbox" value="Asset Condition">Asset Condition</label>
                                 <div id="ConditionForm" class="form-panel" style="display: none;">
                                     <div class="checkbox">
-                                        <label><input id="Excellent" type="checkbox" value="Excellent">Excellent</label>
+                                        <label>
+                                            <input id="Excellent" type="checkbox" value="Excellent">Excellent</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="Good" type="checkbox" value="Good">Good</label>
+                                        <label>
+                                            <input id="Good" type="checkbox" value="Good">Good</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="Fair" type="checkbox" value="Fair">Fair</label>
+                                        <label>
+                                            <input id="Fair" type="checkbox" value="Fair">Fair</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="Poor" type="checkbox" value="Poor">Poor</label>
+                                        <label>
+                                            <input id="Poor" type="checkbox" value="Poor">Poor</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="Very Poor" type="checkbox" value="Very Poor">Very Poor</label>
+                                        <label>
+                                            <input id="Very Poor" type="checkbox" value="Very Poor">Very Poor</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="checkbox">
-                                <label><input id="Calculation" type="checkbox" value="Risk Calculation">Risk Calculation</label>
+                                <label>
+                                    <input id="Calculation" type="checkbox" value="Risk Calculation">Risk Calculation</label>
                                 <div id="CalculationForm" class="form-panel" style="display: none;">
                                     <div class="checkbox">
-                                        <label><input id="PhysicalDeterioration" type="checkbox" value="Physical Deterioration">Physical Deterioration</label>
+                                        <label>
+                                            <input id="PhysicalDeterioration" type="checkbox" value="Physical Deterioration">Physical Deterioration</label>
                                         <div id="PhysicalCalculationForm" class="form-panel" style="display: none;">
                                             <div class="checkbox">
-                                                <label><input id="Physical Very High" type="checkbox" value="Very High">Very High</label>
+                                                <label>
+                                                    <input id="Physical Very High" type="checkbox" value="Very High">Very High</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="Physical High" type="checkbox" value="High">High</label>
+                                                <label>
+                                                    <input id="Physical High" type="checkbox" value="High">High</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="Physical Medium" type="checkbox" value="Medium">Medium</label>
+                                                <label>
+                                                    <input id="Physical Medium" type="checkbox" value="Medium">Medium</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="Physical Low" type="checkbox" value="Low">Low</label>
+                                                <label>
+                                                    <input id="Physical Low" type="checkbox" value="Low">Low</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="Physical Very Low" type="checkbox" value="Very Low">Very Low</label>
+                                                <label>
+                                                    <input id="Physical Very Low" type="checkbox" value="Very Low">Very Low</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input id="NaturalHazards" type="checkbox" value="Natural Hazards">Natural Hazards</label>
+                                        <label>
+                                            <input id="NaturalHazards" type="checkbox" value="Natural Hazards">Natural Hazards</label>
                                         <div id="NaturalHazardsForm" class="form-panel" style="display: none;">
                                             <div class="checkbox">
-                                                <label><input id="NaturalHazards Very High" type="checkbox" value="Very High">Very High</label>
+                                                <label>
+                                                    <input id="NaturalHazards Very High" type="checkbox" value="Very High">Very High</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="NaturalHazards High" type="checkbox" value="High">High</label>
+                                                <label>
+                                                    <input id="NaturalHazards High" type="checkbox" value="High">High</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="NaturalHazards Medium" type="checkbox" value="Medium">Medium</label>
+                                                <label>
+                                                    <input id="NaturalHazards Medium" type="checkbox" value="Medium">Medium</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="NaturalHazards Low" type="checkbox" value="Low">Low</label>
+                                                <label>
+                                                    <input id="NaturalHazards Low" type="checkbox" value="Low">Low</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input id="NaturalHazards Very Low" type="checkbox" value="Very Low">Very Low</label>
+                                                <label>
+                                                    <input id="NaturalHazards Very Low" type="checkbox" value="Very Low">Very Low</label>
                                             </div>
                                         </div>
                                     </div>
@@ -292,16 +330,10 @@
 
     <% include partials/footer_scripts %>
         <!-- js placed at the end of the document so the pages load faster -->
-        <!-- <script src="/assets/js/jquery.js"></script> -->
-        <script src="/assets/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="/assets/js/jquery.scrollTo.min.js"></script>
-        <script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
 
         <!--common script for all pages-->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="/assets/js/common-scripts.js"></script>
+
 
         <!--script for this page-->
 
