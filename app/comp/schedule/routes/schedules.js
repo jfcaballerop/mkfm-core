@@ -290,7 +290,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 var total = 0;
                 ret['data'] = [];
                 for (var s of scheds) {
-                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                    if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
                         ret['data'].push(s);
                     total += parseFloat(s.properties.cost);
 
@@ -314,7 +314,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 var total = 0;
                 ret['data'] = [];
                 for (var s of scheds) {
-                    if (total <= parseFloat(budgets[0].ammount * budgets[0].Periodic * budgets[0].WorkInterventions / 10))
+                    if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
                         ret['data'].push(s);
                     total += parseFloat(s.properties.cost);
 
