@@ -3,17 +3,17 @@
     var nchar = 0;
     var resized = false;
     var filelist;
-    var delay = (function() {
+    var delay = (function () {
         var timer = 0;
-        return function(callback, ms) {
+        return function (callback, ms) {
             clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
     })();
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        var checkExist = setInterval(function() {
+        var checkExist = setInterval(function () {
             if ($('#file').length > 0) {
                 //console.log("Exists file!");
                 clearInterval(checkExist);
@@ -26,7 +26,7 @@
                         assetCode: $("#searchtool").val()
                     },
                     dataType: 'json',
-                    success: function(response, statusText, xhr, form) {
+                    success: function (response, statusText, xhr, form) {
                         // alert('Success');
                         // message = $(response).text();
                         //console.log(response);
@@ -35,7 +35,8 @@
                             "</td><td>" +
                             moment(response.updated_at).format('YYYY-MM-DD HH:mm:ss') +
                             "</td><td>" +
-                            "<a href='" + '/auth/WEB/gis/getfile/' + response._id + "' id='filedatadiv' ><i class='fas fa-cloud-download-alt'></i></a>"
+                            "<a href='" + '/auth/WEB/gis/getfile/' + response._id +
+                            "' id='filedatadiv' ><i class='fas fa-cloud-download-alt'></i></a>"
                         "</td></tr>"
                         $('#tbodyFiles').append(rowfile);
                         //console.log(ifdt);
@@ -43,7 +44,7 @@
                     }
                 });
 
-                $(".uploadFile").on('submit', function(evt) {
+                $(".uploadFile").on('submit', function (evt) {
                     //console.log("Submit!");
 
                     evt.preventDefault();
@@ -55,7 +56,7 @@
         }, 500); // check every 100ms
 
 
-        $('#generaldataupload').click(function() {
+        $('#generaldataupload').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -72,7 +73,8 @@
                         "<td>" + f.owner + "</td>" +
                         "<td>" + moment(f.updated_at).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
                         "<td>" +
-                        "<a href='" + '/auth/WEB/gis/getfile/' + f._id + "' id='filedatadiv' ><i class='fas fa-cloud-download-alt'></i></a>" +
+                        "<a href='" + '/auth/WEB/gis/getfile/' + f._id +
+                        "' id='filedatadiv' ><i class='fas fa-cloud-download-alt'></i></a>" +
                         "</td>" +
                         "</tr> ";
                     $('#tbodyFiles').append(rowfile);
@@ -88,7 +90,7 @@
             }
         });
 
-        $('#filedatadiv').click(function() {
+        $('#filedatadiv').click(function () {
             console.log('dowlodad');
             if (!('download' in downloadDiv.children('a:first').get(0))) {
                 downloadDiv.append(' (save the file as' + this.getAttribute('href') + '  )');
@@ -96,7 +98,7 @@
         });
 
 
-        $('#generaldata').click(function() {
+        $('#generaldata').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -104,29 +106,33 @@
                 $('#divmap1').prepend(gen_data.join(''));
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
-                    $.each(ROADS.general_data, function(key, value) {
+                    $.each(ROADS.general_data, function (key, value) {
 
                         if (key !== 'rlength') {
                             if (Array.isArray(ifdtobject.properties[key])) {
                                 // //console.log('Is Array');
                                 if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
                                         key][0] != "") {
-                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    $('#generaldatatbody').append('<tr><td>' + value +
+                                        '</td><td>' +
                                         ifdtobject.properties[key][0] + '</td></tr>');
 
                                 } else {
-                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    $('#generaldatatbody').append('<tr><td>' + value +
+                                        '</td><td>' +
                                         '--' + '</td></tr>');
 
                                 }
                             } else {
                                 // //console.log('Is NOT Array');
                                 if (ifdtobject.properties[key] != undefined) {
-                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    $('#generaldatatbody').append('<tr><td>' + value +
+                                        '</td><td>' +
                                         ifdtobject.properties[key] + '</td></tr>');
 
                                 } else {
-                                    $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                    $('#generaldatatbody').append('<tr><td>' + value +
+                                        '</td><td>' +
                                         '--' + '</td></tr>');
 
                                 }
@@ -134,7 +140,9 @@
                         } else {
                             if (ifdtobject.properties['pk'] != undefined) {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    Math.abs(ifdtobject.properties.pk[0] - ifdtobject.properties.pk[ifdtobject.properties.pk.length - 1]) + '</td></tr>');
+                                    Math.abs(ifdtobject.properties.pk[0] - ifdtobject.properties
+                                        .pk[ifdtobject.properties.pk.length - 1]) +
+                                    '</td></tr>');
 
                             } else {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
@@ -148,7 +156,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // //console.log(ifdtobject);
-                    $.each(BRIDGES.general_data, function(key, value) {
+                    $.each(BRIDGES.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -180,7 +188,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // //console.log(ifdtobject);
-                    $.each(CULVERTS.general_data, function(key, value) {
+                    $.each(CULVERTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -212,7 +220,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.general_data, function(key, value) {
+                    $.each(GEOTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -244,7 +252,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.general_data, function(key, value) {
+                    $.each(GEOTS.general_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
@@ -281,7 +289,7 @@
 
             }
         });
-        $('#inventorydata').click(function() {
+        $('#inventorydata').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -291,7 +299,7 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
-                    $.each(ROADS.inventory_data, function(key, value) {
+                    $.each(ROADS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -322,7 +330,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // //console.log(ifdtobject);
-                    $.each(BRIDGES.inventory_data, function(key, value) {
+                    $.each(BRIDGES.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -353,7 +361,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // //console.log(ifdtobject);
-                    $.each(CULVERTS.inventory_data, function(key, value) {
+                    $.each(CULVERTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -384,7 +392,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.inventory_data, function(key, value) {
+                    $.each(GEOTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -415,7 +423,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.inventory_data, function(key, value) {
+                    $.each(GEOTS.inventory_data, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
@@ -451,7 +459,7 @@
 
             }
         });
-        $('#operation').click(function() {
+        $('#operation').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -461,7 +469,7 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
-                    $.each(ROADS.operations, function(key, value) {
+                    $.each(ROADS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -492,7 +500,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // //console.log(ifdtobject);
-                    $.each(BRIDGES.operations, function(key, value) {
+                    $.each(BRIDGES.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -523,7 +531,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // //console.log(ifdtobject);
-                    $.each(CULVERTS.operations, function(key, value) {
+                    $.each(CULVERTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -554,7 +562,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.operations, function(key, value) {
+                    $.each(GEOTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -585,7 +593,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.operations, function(key, value) {
+                    $.each(GEOTS.operations, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
@@ -621,7 +629,7 @@
 
             }
         });
-        $('#risk').click(function() {
+        $('#risk').click(function () {
             var $this = $(this);
             $('#divmap1').show();
             if ($this.prop('checked')) {
@@ -631,7 +639,7 @@
 
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
-                    $.each(ROADS.risk, function(key, value) {
+                    $.each(ROADS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -662,7 +670,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'BRIDGE') {
                     // //console.log(ifdtobject);
-                    $.each(BRIDGES.risk, function(key, value) {
+                    $.each(BRIDGES.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -693,7 +701,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'CULVERT') {
                     // //console.log(ifdtobject);
-                    $.each(CULVERTS.risk, function(key, value) {
+                    $.each(CULVERTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -724,7 +732,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.risk, function(key, value) {
+                    $.each(GEOTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
@@ -755,7 +763,7 @@
                 }
                 if (ifdtobject.properties.asset_type === 'GEOT2') {
                     // //console.log(ifdtobject);
-                    $.each(GEOTS.risk, function(key, value) {
+                    $.each(GEOTS.risk, function (key, value) {
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
@@ -792,7 +800,7 @@
             }
         });
 
-        $("#json-datalist").on('click', function(e) {
+        $("#json-datalist").on('click', function (e) {
             // Do something
             // alert('Buscando ...' + $this.val().length);
             $('#error').hide();
@@ -830,7 +838,7 @@
                     data: JSON.stringify(dataPost),
                     type: 'POST',
                     contentType: 'application/json'
-                }, function(data) {
+                }, function (data) {
                     //// //console.log('koboinfo ' + JSON.stringify(data));
                     return (data);
                 });
@@ -839,15 +847,15 @@
                     data: JSON.stringify(dataPost),
                     type: 'POST',
                     contentType: 'application/json'
-                }, function(data) {
+                }, function (data) {
                     //// //console.log('koboinfo ' + JSON.stringify(data));
                     return (data);
                 });
 
 
-                Promise.all([p1, p2]).then(function(values) {
+                Promise.all([p1, p2]).then(function (values) {
                     $('#spinner').show();
-                    map.data.forEach(function(feature) {
+                    map.data.forEach(function (feature) {
                         // If you want, check here for some constraints.
                         // if (feature.getProperty('nameoption') === 'Main Road') {
                         map.data.remove(feature);
@@ -881,15 +889,15 @@
                                 data: JSON.stringify(dataPhotoPost),
                                 type: 'POST',
                                 contentType: 'application/json'
-                            }, function(data) {
+                            }, function (data) {
                                 //// //console.log('koboinfo ' + JSON.stringify(data));
                                 return (data);
                             });
-                            Promise.all([pphoto]).then(function(values) {
+                            Promise.all([pphoto]).then(function (values) {
                                 koboinfo = values[0];
-                                $.each(koboinfo, function(key, value) {
+                                $.each(koboinfo, function (key, value) {
                                     if (key === 'properties') {
-                                        $.each(value, function(kprop,
+                                        $.each(value, function (kprop,
                                             vprop) {
                                             ////console.log(kprop, vprop);
                                             if (kprop ===
@@ -902,7 +910,7 @@
                                                     "#datainfophoto"
                                                 ).show();
                                                 $.each(vprop,
-                                                    function(
+                                                    function (
                                                         kfoto,
                                                         vfoto
                                                     ) {
@@ -1033,7 +1041,7 @@
         })
 
 
-        $("#searchtool").on('keyup', function(e) {
+        $("#searchtool").on('keyup', function (e) {
 
             console.log(e);
             var $this = $(this);
@@ -1076,7 +1084,7 @@
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function(data) {
+                    }, function (data) {
                         //// //console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
@@ -1085,15 +1093,15 @@
                         data: JSON.stringify(dataPost),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function(data) {
+                    }, function (data) {
                         //// //console.log('koboinfo ' + JSON.stringify(data));
                         return (data);
                     });
 
 
-                    Promise.all([p1, p2]).then(function(values) {
+                    Promise.all([p1, p2]).then(function (values) {
                         $('#spinner').show();
-                        map.data.forEach(function(feature) {
+                        map.data.forEach(function (feature) {
                             // If you want, check here for some constraints.
                             // if (feature.getProperty('nameoption') === 'Main Road') {
                             map.data.remove(feature);
@@ -1127,15 +1135,15 @@
                                     data: JSON.stringify(dataPhotoPost),
                                     type: 'POST',
                                     contentType: 'application/json'
-                                }, function(data) {
+                                }, function (data) {
                                     //// //console.log('koboinfo ' + JSON.stringify(data));
                                     return (data);
                                 });
-                                Promise.all([pphoto]).then(function(values) {
+                                Promise.all([pphoto]).then(function (values) {
                                     koboinfo = values[0];
-                                    $.each(koboinfo, function(key, value) {
+                                    $.each(koboinfo, function (key, value) {
                                         if (key === 'properties') {
-                                            $.each(value, function(kprop,
+                                            $.each(value, function (kprop,
                                                 vprop) {
                                                 ////console.log(kprop, vprop);
                                                 if (kprop ===
@@ -1148,7 +1156,7 @@
                                                         "#datainfophoto"
                                                     ).show();
                                                     $.each(vprop,
-                                                        function(
+                                                        function (
                                                             kfoto,
                                                             vfoto
                                                         ) {
@@ -1318,7 +1326,7 @@
                                 data: JSON.stringify(dataPost),
                                 type: 'POST',
                                 contentType: 'application/json'
-                            }, function(data) {
+                            }, function (data) {
                                 //// //console.log('koboinfo ' + JSON.stringify(data));
                                 return (data);
                             });
@@ -1328,16 +1336,16 @@
                                 data: JSON.stringify(dataPost),
                                 type: 'POST',
                                 contentType: 'application/json'
-                            }, function(data) {
+                            }, function (data) {
                                 //// //console.log('koboinfo ' + JSON.stringify(data));
                                 return (data);
                             });
 
-                            delay(function() {
+                            delay(function () {
                                 console.log('Time elapsed!');
-                                Promise.all([p1, p2]).then(function(values) {
+                                Promise.all([p1, p2]).then(function (values) {
                                     $('#spinner').show();
-                                    map.data.forEach(function(feature) {
+                                    map.data.forEach(function (feature) {
                                         // If you want, check here for some constraints.
                                         // if (feature.getProperty('nameoption') === 'Main Road') {
                                         map.data.remove(feature);
@@ -1354,7 +1362,7 @@
                                     $('#error').show();
                                     // $('#error').append(Object.keys(values[0]));
                                     var html1 = '';
-                                    $.each(values[0], function(key, element) {
+                                    $.each(values[0], function (key, element) {
 
                                         // html1 += '<option value="' + key + '">';
                                         $('#json-datalist').append(
@@ -1379,7 +1387,7 @@
                 }
             }
         });
-        $('#searchtool').on('input', function() {
+        $('#searchtool').on('input', function () {
 
             var $this = $(this);
 
@@ -1390,7 +1398,7 @@
                 nchar = $this.val().length;
                 $("#divmap2").animate({
                     width: '50%'
-                }, 1500, function() {
+                }, 1500, function () {
                     resized = true;
                     $('#rowmap').prepend('<div id="divmap1"' +
                         'class="col-md-6" style="height:80vh;" >' +
@@ -1427,7 +1435,7 @@
 
 
 
-        $("#upload_file_form").bind("submit", function() {
+        $("#upload_file_form").bind("submit", function () {
             // above check 
             $('#datainfo').show();
             $('#dataupload').show();
