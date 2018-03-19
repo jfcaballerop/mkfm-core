@@ -444,24 +444,58 @@
                 });
             }
         });
-        $('#PhysicalDeterioration').click(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#PhysicalCalculationForm').show();
-            } else {
-                $('#PhysicalCalculationForm').hide();
 
+        $('input[type=radio][name=radioRisk]').change(function (event) {
+            $this = $(this);
+            switch ($('input:radio[name=radioRisk]:checked').val()) {
+                case 'PhysicalDeterioration':
+                    console.log('PhysicalDeterioration');
+                    $('#NaturalHazardsForm').hide();
+                    $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
+                        $(this).prop('checked', false);
+                    });
+                    $('#PhysicalCalculationForm').show();
+
+                    break;
+                case 'NaturalHazards':
+                    console.log('NaturalHazards');
+                    $('#PhysicalCalculationForm').hide();
+                    $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
+                        $(this).prop('checked', false);
+                    });
+                    $('#NaturalHazardsForm').show();
+
+                    break;
+
+                default:
+                    break;
             }
         });
-        $('#NaturalHazards').click(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#NaturalHazardsForm').show();
-            } else {
-                $('#NaturalHazardsForm').hide();
 
-            }
-        });
+        // $('#PhysicalDeterioration').click(function () {
+        //     var $this = $(this);
+        //     if ($this.prop('checked')) {
+        //         $('#PhysicalCalculationForm').show();
+        //     } else {
+        //         $('#PhysicalCalculationForm').hide();
+        //         $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
+        //             $(this).prop('checked', false);
+        //         });
+
+        //     }
+        // });
+        // $('#NaturalHazards').click(function () {
+        //     var $this = $(this);
+        //     if ($this.prop('checked')) {
+        //         $('#NaturalHazardsForm').show();
+        //     } else {
+        //         $('#NaturalHazardsForm').hide();
+        //         $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
+        //             $(this).prop('checked', false);
+        //         });
+
+        //     }
+        // });
         $('#Culvert').click(function () {
             $('#spinner').show();
             var $this = $(this);
