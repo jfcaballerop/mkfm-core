@@ -83,6 +83,22 @@ exports.riskRatingValue = function (in_val) {
 
     return ret;
 }
+exports.riskRatingColorValue = function (in_val) {
+    var ret = 1;
+    var risk_rating = [];
+
+    risk_rating['Very Low'] = "#92d050";
+    risk_rating['Low'] = "#00b050";
+    risk_rating['Medium'] = "#ffff00";
+    risk_rating['High'] = "#f79646";
+    risk_rating['Very High'] = "#ff0000";
+
+
+
+    ret = risk_rating[in_val];
+
+    return ret;
+}
 
 exports.criticalityValue = function (in_val) {
 

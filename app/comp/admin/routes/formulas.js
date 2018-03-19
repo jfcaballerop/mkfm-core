@@ -5159,7 +5159,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antBridge = key;
                                                 }
                                                 break;
@@ -5177,7 +5177,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antCulvert = key;
                                                 }
                                                 break;
@@ -5195,7 +5195,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.gcriticality2[key] !== null &&
@@ -5211,7 +5211,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antGeo2 = key;
                                                 }
                                                 break;
@@ -5229,7 +5229,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     ant = key;
                                                 }
                                                 break;
@@ -5847,7 +5847,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    // geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antBridge = key;
                                                 }
                                                 break;
@@ -5877,7 +5877,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // geoJsonCul.properties["description"] = "A description";
                                                     geoJsonCul.properties["marker-size"] = "medium";
                                                     // geoJsonCul.properties["marker-symbol"] = "bus";
-                                                    // geoJsonCul.properties["marker-color"] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonCul.properties["marker-color"] = formulasService.riskRatingColorValue(f);;
                                                     // geoJsonCul.properties["stroke"] = formulasService.conditionValue(f).score.color;
                                                     // geoJsonCul.properties["stroke-opacity"] = 1.0;
                                                     geoJsonCul.properties["stroke-width"] = 2;
@@ -5905,7 +5905,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     geoJsonGeo.geometry.coordinates.push(cval);
-                                                    // geoJsonGeo.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonGeo.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.griskphysicalnorm2[key] !== null &&
@@ -5921,7 +5921,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
-                                                    // geoJsonGeo2.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonGeo2.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antGeo2 = key;
                                                 }
                                                 break;
@@ -5939,7 +5939,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     geoJsonPav.geometry.coordinates.push(cval);
-                                                    // geoJsonPav.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonPav.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     ant = key;
                                                 }
                                                 break;
@@ -6201,7 +6201,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    // geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonBri.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antBridge = key;
                                                 }
                                                 break;
@@ -6231,7 +6231,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // geoJsonCul.properties["description"] = "A description";
                                                     geoJsonCul.properties["marker-size"] = "medium";
                                                     // geoJsonCul.properties["marker-symbol"] = "bus";
-                                                    // geoJsonCul.properties["marker-color"] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonCul.properties["marker-color"] = formulasService.riskRatingColorValue(f);
                                                     // geoJsonCul.properties["stroke"] = formulasService.conditionValue(f).score.color;
                                                     // geoJsonCul.properties["stroke-opacity"] = 1.0;
                                                     geoJsonCul.properties["stroke-width"] = 2;
@@ -6259,7 +6259,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     geoJsonGeo.geometry.coordinates.push(cval);
-                                                    // geoJsonGeo.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonGeo.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.grisknaturalnorm2[key] !== null &&
@@ -6275,7 +6275,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
-                                                    // geoJsonGeo2.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonGeo2.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     antGeo2 = key;
                                                 }
                                                 break;
@@ -6293,7 +6293,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     geoJsonPav.geometry.coordinates.push(cval);
-                                                    // geoJsonPav.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    geoJsonPav.properties['marker-color'] = formulasService.riskRatingColorValue(f);
                                                     ant = key;
                                                 }
                                                 break;
