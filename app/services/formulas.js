@@ -31,6 +31,59 @@ exports.getRangeValues = function (scorerangeval) {
 
     return [minval, maxval, operador]
 }
+
+exports.riskRatingValue = function (in_val) {
+    var ret = 1;
+    var risk_rating = [];
+
+    risk_rating['Very Low'] = [];
+    risk_rating['Very Low'] = [
+        '0-20__A',
+        '0-20__B',
+        '20-40__A'
+    ];
+    risk_rating['Low'] = [];
+    risk_rating['Low'] = [
+        '0-20__C',
+        '0-20__D',
+        '20-40__B',
+        '20-40__C',
+        '40-60__A',
+        '60-80__A'
+    ];
+    risk_rating['Medium'] = [];
+    risk_rating['Medium'] = [
+        '0-20__E',
+        '20-40__D',
+        '20-40__E',
+        '40-60__B',
+        '40-60__C',
+        '40-60__D',
+        '60-80__B',
+        '60-80__C',
+        '80-100__A',
+        '80-100__B'
+    ];
+    risk_rating['High'] = [];
+    risk_rating['High'] = [
+        '40-60__E',
+        '60-80__D',
+        '80-100__C'
+    ];
+    risk_rating['Very High'] = [];
+    risk_rating['Very High'] = [
+        '60-80__E',
+        '80-100__D',
+        '80-100__E'
+    ];
+
+
+
+    ret = risk_rating[in_val];
+
+    return ret;
+}
+
 exports.criticalityValue = function (in_val) {
 
     cscale = {
@@ -679,35 +732,35 @@ exports.riskRatingScaleString = function (lofv, cons) {
 
 
     risk_rating['0-20'] = [];
-    risk_rating['0-20']['A'] = 1;
-    risk_rating['0-20']['B'] = 1;
-    risk_rating['0-20']['C'] = 2;
-    risk_rating['0-20']['D'] = 2;
-    risk_rating['0-20']['E'] = 3;
+    risk_rating['0-20']['A'] = 1; //Very Low
+    risk_rating['0-20']['B'] = 1; //Very Low
+    risk_rating['0-20']['C'] = 2; //Low
+    risk_rating['0-20']['D'] = 2; //Low
+    risk_rating['0-20']['E'] = 3; //Medium
     risk_rating['20-40'] = [];
-    risk_rating['20-40']['A'] = 1;
-    risk_rating['20-40']['B'] = 2;
-    risk_rating['20-40']['C'] = 2;
-    risk_rating['20-40']['D'] = 3;
-    risk_rating['20-40']['E'] = 3;
+    risk_rating['20-40']['A'] = 1; //Very Low
+    risk_rating['20-40']['B'] = 2; //Low
+    risk_rating['20-40']['C'] = 2; //Low
+    risk_rating['20-40']['D'] = 3; //Medium
+    risk_rating['20-40']['E'] = 3; //Medium
     risk_rating['40-60'] = [];
-    risk_rating['40-60']['A'] = 2;
-    risk_rating['40-60']['B'] = 3;
-    risk_rating['40-60']['C'] = 3;
-    risk_rating['40-60']['D'] = 3;
-    risk_rating['40-60']['E'] = 4;
+    risk_rating['40-60']['A'] = 2; //Low
+    risk_rating['40-60']['B'] = 3; //Medium
+    risk_rating['40-60']['C'] = 3; //Medium
+    risk_rating['40-60']['D'] = 3; //Medium
+    risk_rating['40-60']['E'] = 4; //High
     risk_rating['60-80'] = [];
-    risk_rating['60-80']['A'] = 2;
-    risk_rating['60-80']['B'] = 3;
-    risk_rating['60-80']['C'] = 3;
-    risk_rating['60-80']['D'] = 4;
-    risk_rating['60-80']['E'] = 5;
+    risk_rating['60-80']['A'] = 2; //Low
+    risk_rating['60-80']['B'] = 3; //Medium
+    risk_rating['60-80']['C'] = 3; //Medium
+    risk_rating['60-80']['D'] = 4; //High
+    risk_rating['60-80']['E'] = 5; //Very High
     risk_rating['80-100'] = [];
-    risk_rating['80-100']['A'] = 3;
-    risk_rating['80-100']['B'] = 3;
-    risk_rating['80-100']['C'] = 4;
-    risk_rating['80-100']['D'] = 5;
-    risk_rating['80-100']['E'] = 5;
+    risk_rating['80-100']['A'] = 3; //Medium
+    risk_rating['80-100']['B'] = 3; //Medium
+    risk_rating['80-100']['C'] = 4; //High
+    risk_rating['80-100']['D'] = 5; //Very High
+    risk_rating['80-100']['E'] = 5; //Very High
 
     ret = risk_rating[lofv][cons];
 
