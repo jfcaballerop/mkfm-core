@@ -52,19 +52,20 @@
                 '<br>';
             subcontent += '<span style="font-weight: bold;">Width: </span>' + event.feature.getProperty("bwidth") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Free height:</span>' + event.feature.getProperty(
+            subcontent += '<span style="font-weight: bold;">Free height: </span>' + event.feature.getProperty(
                 "bfreeheight") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Material:</span><br>';
+            subcontent += '<span style="font-weight: bold;">Material: </span><br>';
             subcontent += '<span style="font-weight: bold;">Deck: </span>' + event.feature.getProperty("bmaterialdeck") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Piers:</span>' + event.feature.getProperty("bmaterialpiers") +
+            subcontent += '<span style="font-weight: bold;">Piers: </span>' + event.feature.getProperty(
+                    "bmaterialpiers") +
                 '<br>';
             subcontent += '<span style="font-weight: bold;">Abutments: </span>' + event.feature.getProperty(
                 "bmaterialabutments") + '<br>';
             subcontent += '<br>O&M Data<br>';
-            subcontent += '<span style="font-weight: bold;">Type of damages: Damages on foundations</span>' + event.feature
+            subcontent += '<span style="font-weight: bold;">Type of damages: </span>' + event.feature
                 .getProperty("bdamagesfoundationsgeneraltype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Current Visual Condition: C</span>' + event.feature.getProperty(
+            subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
                 "bvisualcondition") + '<br>';
 
             vfoto = event.feature.getProperty("_attachments");
@@ -78,19 +79,29 @@
         } else {
             subcontent += 'Inventory Data<br>';
 
-            subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Position: Left</span>' + event.feature.getProperty("gposition") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty("gslope") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature") + '<br>';
+            subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") +
+                '<br>';
+            subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty("gposition") +
+                '<br>';
+            subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight") +
+                '<br>';
+            subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength") +
+                '<br>';
+            subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty("gslope") +
+                '<br>';
+            subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature") +
+                '<br>';
 
 
             subcontent += '<br>O&M Data<br>';
-            subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty("gnature") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature.getProperty("bdamagesfoundationsgeneraltype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty("gintensityfailure") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty("gvisualcondition") + '<br>';
+            subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
+                "gnature") + '<br>';
+            subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature.getProperty(
+                "bdamagesfoundationsgeneraltype") + '<br>';
+            subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
+                "gintensityfailure") + '<br>';
+            subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
+                "gvisualcondition") + '<br>';
             vfoto = event.feature.getProperty("_attachments");
             if (vfoto.length > 0) {
 
