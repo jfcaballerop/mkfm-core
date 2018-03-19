@@ -863,6 +863,16 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
         var valuegriskphysicalarr = [];
         var valuegrisknaturalarr2 = [];
         var valuegriskphysicalarr2 = [];
+        var valuerrisknaturalarrnorm = [];
+        var valuerriskphysicalarrnorm = [];
+        var valuebrisknaturalarrnorm = [];
+        var valuebriskphysicalarrnorm = [];
+        var valueCrisknaturalarrnorm = [];
+        var valueCriskphysicalarrnorm = [];
+        var valuegrisknaturalarrnorm = [];
+        var valuegriskphysicalarrnorm = [];
+        var valuegrisknaturalarr2norm = [];
+        var valuegriskphysicalarr2norm = [];
 
         /**
          * Calculo del riesgo por punto
@@ -1081,15 +1091,25 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             }
 
             valuerriskphysicalarr[i] = serviceService.roundValuePerCent(rlofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuerriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuerriskphysicalarr[i]);
             valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
+            valuerrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuerrisknaturalarr[i]);
             valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valuebriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuebriskphysicalarr[i]);
             valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
+            valuebrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuebrisknaturalarr[i]);
             valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valueCriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valueCriskphysicalarr[i]);
             valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
+            valueCrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valueCrisknaturalarr[i]);
             valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuegriskphysicalarr[i]);
             valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
+            valuegrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuegrisknaturalarr[i]);
             valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+            valuegriskphysicalarr2norm[i] = formulasService.NormalizeRiskRatingScale(valuegriskphysicalarr2[i]);
             valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
+            valuegrisknaturalarr2norm[i] = formulasService.NormalizeRiskRatingScale(valuegrisknaturalarr2[i]);
 
 
         }
@@ -1111,7 +1131,17 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 "properties.griskphysical": valuegriskphysicalarr,
                 "properties.grisknatural": valuegrisknaturalarr,
                 "properties.griskphysical2": valuegriskphysicalarr2,
-                "properties.grisknatural2": valuegrisknaturalarr2
+                "properties.grisknatural2": valuegrisknaturalarr2,
+                "properties.rriskphysicalnorm": valuerriskphysicalarrnorm,
+                "properties.rrisknaturalnorm": valuerrisknaturalarrnorm,
+                "properties.briskphysicalnorm": valuebriskphysicalarrnorm,
+                "properties.brisknaturalnorm": valuebrisknaturalarrnorm,
+                "properties.CRISKphysicalnorm": valueCriskphysicalarrnorm,
+                "properties.CRISKnaturalnorm": valueCrisknaturalarrnorm,
+                "properties.griskphysicalnorm": valuegriskphysicalarrnorm,
+                "properties.grisknaturalnorm": valuegrisknaturalarrnorm,
+                "properties.griskphysicalnorm2": valuegriskphysicalarr2norm,
+                "properties.grisknaturalnorm2": valuegrisknaturalarr2norm
             }
         };
 
@@ -5605,19 +5635,18 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             var andArr = [];
             var catArr = [];
             var promises = [];
-            debug('*****************************************');
+            // debug('*****************************************');
             debug(postData.filter);
-            debug('*****************************************');
+            // debug('*****************************************');
             for (var f of postData.filter) {
                 switch (f) {
                     case 'Bridge':
                         for (var f of postData.form) {
                             debug(f);
-                            debug(formulasService.conditionValue(f).score.min);
-                            debug(formulasService.conditionValue(f).score.max);
+                            debug(formulasService.riskRatingValue(f));
                             orArr.push({
-                                "properties.bcondition": {
-                                    $in: formulasService.conditionValue(f).score.min
+                                "properties.briskphysicalnorm": {
+                                    $in: formulasService.riskRatingValue(f)
                                 }
                             });
                         }
@@ -5634,14 +5663,12 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         break;
                     case 'Culvert':
                         for (var f of postData.form) {
-                            debug('f    ' + f);
-                            debug('formulasService.conditionValue(f).score.min    ' + formulasService.conditionValue(f).score.min);
-                            debug('score.min   ' + formulasService.conditionValue(f).score.min);
-                            debug('score.max   ' + formulasService.conditionValue(f).score.max);
+                            debug(f);
+                            debug(formulasService.riskRatingValue(f));
                             orArr.push({
-                                "properties.Ccondition": {
-                                    $gte: formulasService.conditionValue(f).score.min,
-                                    $lt: formulasService.conditionValue(f).score.max
+                                "properties.CRISKphysicalnorm": {
+                                    $in: formulasService.riskRatingValue(f)
+
                                 }
                             });
                         }
@@ -5657,19 +5684,18 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         break;
                     case 'Geotechnical':
                         for (var f of postData.form) {
-                            // //debug(f);
-                            // //debug(formulasService.conditionValue(f).score.min);
-                            // //debug(formulasService.conditionValue(f).score.max);
+                            debug(f);
+                            debug(formulasService.riskRatingValue(f));
                             orArr.push({
-                                "properties.gcondition": {
-                                    $gte: formulasService.conditionValue(f).score.min,
-                                    $lt: formulasService.conditionValue(f).score.max
+                                "properties.griskphysicalnorm": {
+                                    $in: formulasService.riskRatingValue(f)
+
                                 }
                             });
                             orArr.push({
-                                "properties.gcondition2": {
-                                    $gte: formulasService.conditionValue(f).score.min,
-                                    $lt: formulasService.conditionValue(f).score.max
+                                "properties.griskphysicalnorm2": {
+                                    $in: formulasService.riskRatingValue(f)
+
                                 }
                             });
                         }
@@ -5690,15 +5716,15 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         // //debug(catArr);
                         break;
 
-                    default:
+                    default: // Pavements
                         for (var f of postData.form) {
-                            // //debug(f);
-                            debug(formulasService.conditionValue(f).score.min);
-                            debug(formulasService.conditionValue(f).score.max);
+                            debug(f);
+                            debug(formulasService.riskRatingValue(f));
+
                             orArr.push({
-                                "properties.rcondition": {
-                                    $gte: formulasService.conditionValue(f).score.min,
-                                    $lt: formulasService.conditionValue(f).score.max
+                                "properties.rriskphysicalnorm": {
+                                    $in: formulasService.riskRatingValue(f)
+
                                 }
                             });
                         }
@@ -5731,11 +5757,16 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             var wherearr = [];
 
             //add codes asset
-            wherearr.push('rcondition');
-            wherearr.push('bcondition');
-            wherearr.push('Ccondition');
-            wherearr.push('gcondition');
-            wherearr.push('gcondition2');
+            wherearr.push("properties.rriskphysicalnorm");
+            wherearr.push("properties.briskphysicalnorm");
+            wherearr.push("properties.CRISKphysicalnorm");
+            wherearr.push("properties.griskphysicalnorm");
+            wherearr.push("properties.griskphysicalnorm2");
+            // wherearr.push('rcondition');
+            // wherearr.push('bcondition');
+            // wherearr.push('Ccondition');
+            // wherearr.push('gcondition');
+            // wherearr.push('gcondition2');
             wherearr.push('name');
             wherearr.push('rcode');
 
@@ -5760,7 +5791,6 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             // debug(Infodatatrack);
 
             Promise.all(promises).then(function (values) {
-                debug('********0*************');
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -5785,7 +5815,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
-                debug('***********1**********');
+                // debug('***********1**********');
 
                 if (values.length !== 0) {
                     values.forEach(function (val, index) {
@@ -5804,11 +5834,9 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                         // debug('v.properties.Ccondition[key]                ' + v.properties.Ccondition[key]);
                                         switch (filter) {
                                             case 'Bridge':
-                                                if (v.properties.bcondition[key] !== null &&
-                                                    v.properties.bcondition[key] !== undefined &&
-                                                    v.properties.bcondition[key] !== '' &&
-                                                    v.properties.bcondition[key] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.bcondition[key] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.briskphysicalnorm[key] !== null &&
+                                                    v.properties.briskphysicalnorm[key] !== undefined &&
+                                                    v.properties.briskphysicalnorm[key] !== '') {
                                                     if (antBridge == 0) antBridge = key - 1;
                                                     if (key !== (antBridge + 1)) {
                                                         // //debug('-- new geojson --');
@@ -5819,17 +5847,15 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonBri.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonBri.geometry.coordinates.push(cval);
                                                     geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonBri.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antBridge = key;
                                                 }
                                                 break;
                                             case 'Culvert':
                                                 // debug(v.properties.Ccondition[indice]);
-                                                if (v.properties.Ccondition[indice] !== null &&
-                                                    v.properties.Ccondition[indice] !== undefined &&
-                                                    v.properties.Ccondition[indice] !== '' &&
-                                                    v.properties.Ccondition[indice] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.Ccondition[indice] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.CRISKphysicalnorm[indice] !== null &&
+                                                    v.properties.CRISKphysicalnorm[indice] !== undefined &&
+                                                    v.properties.CRISKphysicalnorm[indice] !== '') {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
                                                         // debug('-- new geojson --');
@@ -5843,52 +5869,48 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonCul.properties['rcondition'] = 0.5;
                                                     geoJsonCul.geometry["type"] = 'MultiPoint';
                                                     geoJsonCul.properties['color'] = '';
-                                                    geoJsonCul.properties['color'] = formulasService.conditionValue(f).score.color;
-                                                    debug(geoJsonCul.properties['color'] + '********************************************************');
+                                                    // geoJsonCul.properties['color'] = formulasService.conditionValue(f).score.color;
+                                                    // debug(geoJsonCul.properties['color'] + '********************************************************');
                                                     geoJsonCul.properties['width'] = 30;
                                                     geoJsonCul.properties["weight"] = 5;
                                                     // geoJsonCul.properties["marker-symbol"] = "bus";
                                                     // geoJsonCul.properties["description"] = "A description";
                                                     geoJsonCul.properties["marker-size"] = "medium";
                                                     // geoJsonCul.properties["marker-symbol"] = "bus";
-                                                    geoJsonCul.properties["marker-color"] = formulasService.conditionValue(f).score.color;
-                                                    geoJsonCul.properties["stroke"] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonCul.properties["marker-color"] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonCul.properties["stroke"] = formulasService.conditionValue(f).score.color;
                                                     // geoJsonCul.properties["stroke-opacity"] = 1.0;
                                                     geoJsonCul.properties["stroke-width"] = 2;
-                                                    geoJsonCul.properties["fill"] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonCul.properties["fill"] = formulasService.conditionValue(f).score.color;
                                                     // geoJsonCul.properties["fill-opacity"] = 1;
-                                                    debug(formulasService.conditionValue(f).score.color);
-                                                    debug(formulasService.conditionValue(f));
-                                                    debug(f);
+                                                    // debug(formulasService.conditionValue(f).score.color);
+                                                    // debug(formulasService.conditionValue(f));
+                                                    // debug(f);
                                                     console.log(JSON.stringify(geoJsonCul));
                                                     antCulvert = key;
                                                     indice++;
                                                 }
                                                 break;
                                             case 'Geotechnical':
-                                                if (v.properties.gcondition[key] !== null &&
-                                                    v.properties.gcondition[key] !== undefined &&
-                                                    v.properties.gcondition[key] !== '' &&
-                                                    v.properties.gcondition[key] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.gcondition[key] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.griskphysicalnorm[key] !== null &&
+                                                    v.properties.griskphysicalnorm[key] !== undefined &&
+                                                    v.properties.griskphysicalnorm[key] !== '') {
                                                     if (antGeo == 0) antGeo = key - 1;
                                                     if (key !== (antGeo + 1)) {
                                                         // //debug('-- new geojson --');
                                                         tracks.push(geoJsonGeo);
                                                         geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcondition[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.griskphysicalnorm[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
                                                     geoJsonGeo.geometry.coordinates.push(cval);
-                                                    geoJsonGeo.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonGeo.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo = key;
                                                 }
-                                                if (v.properties.gcondition2[key] !== null &&
-                                                    v.properties.gcondition2[key] !== undefined &&
-                                                    v.properties.gcondition2[key] !== '' &&
-                                                    v.properties.gcondition2[key] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.gcondition2[key] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.griskphysicalnorm2[key] !== null &&
+                                                    v.properties.griskphysicalnorm2[key] !== undefined &&
+                                                    v.properties.griskphysicalnorm2[key] !== '') {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
                                                     if (key !== (antGeo2 + 1)) {
                                                         // //debug('-- new geojson --');
@@ -5899,16 +5921,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
-                                                    geoJsonGeo2.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonGeo2.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     antGeo2 = key;
                                                 }
                                                 break;
                                             default:
-                                                if (v.properties.rcondition[key] !== null &&
-                                                    v.properties.rcondition[key] !== undefined &&
-                                                    v.properties.rcondition[key] !== '' &&
-                                                    v.properties.rcondition[key] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.rcondition[key] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.rriskphysicalnorm[key] !== null &&
+                                                    v.properties.rriskphysicalnorm[key] !== undefined &&
+                                                    v.properties.rriskphysicalnorm[key] !== '') {
                                                     if (ant == 0) ant = key - 1;
                                                     if (key !== (ant + 1)) {
                                                         // //debug('-- new geojson --');
@@ -5919,7 +5939,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
                                                     geoJsonPav.geometry.coordinates.push(cval);
-                                                    geoJsonPav.properties['marker-color'] = formulasService.conditionValue(f).score.color;
+                                                    // geoJsonPav.properties['marker-color'] = formulasService.conditionValue(f).score.color;
                                                     ant = key;
                                                 }
                                                 break;
@@ -5958,6 +5978,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             });
 
             break;
+
 
         default:
             break;

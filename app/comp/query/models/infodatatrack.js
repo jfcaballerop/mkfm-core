@@ -96,6 +96,8 @@ var infodatatrackSchema = new Schema({
         rrisk: [],
         rriskphysical: [],
         rrisknatural: [],
+        rriskphysicalnorm: [],
+        rrisknaturalnorm: [],
         rlofnatural: [],
         rlofphysical: [],
 
@@ -197,6 +199,8 @@ var infodatatrackSchema = new Schema({
         brisk: [],
         briskphysical: [],
         brisknatural: [],
+        briskphysicalnorm: [],
+        brisknaturalnorm: [],
         blofnatural: [],
         blofphysical: [],
         gcode: [], // GEOTECHNICAL ASSETS        
@@ -275,6 +279,8 @@ var infodatatrackSchema = new Schema({
         grisk: [],
         griskphysical: [],
         grisknatural: [],
+        griskphysicalnorm: [],
+        grisknaturalnorm: [],
         glofnatural: [],
         glofphysical: [],
         gcode2: [], // GEOTECHNICAL ASSETS  2      
@@ -353,6 +359,8 @@ var infodatatrackSchema = new Schema({
         grisk2: [],
         griskphysical2: [],
         grisknatural2: [],
+        griskphysicalnorm2: [],
+        grisknaturalnorm2: [],
         glofnatural2: [],
         glofphysical2: [],
         Ccode: [], //CULVERTS
@@ -407,6 +415,8 @@ var infodatatrackSchema = new Schema({
         CRISK: [],
         CRISKphysical: [],
         CRISKnatural: [],
+        CRISKphysicalnorm: [],
+        CRISKnaturalnorm: [],
         Clofnatural: [],
         Clofphysical: [],
         dcode: [], //DRAINAGES
