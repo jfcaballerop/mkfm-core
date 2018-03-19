@@ -472,30 +472,7 @@
             }
         });
 
-        // $('#PhysicalDeterioration').click(function () {
-        //     var $this = $(this);
-        //     if ($this.prop('checked')) {
-        //         $('#PhysicalCalculationForm').show();
-        //     } else {
-        //         $('#PhysicalCalculationForm').hide();
-        //         $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-        //             $(this).prop('checked', false);
-        //         });
 
-        //     }
-        // });
-        // $('#NaturalHazards').click(function () {
-        //     var $this = $(this);
-        //     if ($this.prop('checked')) {
-        //         $('#NaturalHazardsForm').show();
-        //     } else {
-        //         $('#NaturalHazardsForm').hide();
-        //         $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-        //             $(this).prop('checked', false);
-        //         });
-
-        //     }
-        // });
         $('#Culvert').click(function () {
             $('#spinner').show();
             var $this = $(this);
@@ -944,13 +921,15 @@
                     }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
                     Promise.all([p1]).then(function (values) {
-                        console.log(values);
+                        // console.log(values);
                         if (values[0].length > 0) {
 
 
                             $.each(values[0], function (index, value) {
+                                console.log('value' + JSON.stringify(value));
                                 jsonObject = value;
-                                var color_to_paint = "red";
+                                var color_to_paint = value.properties['marker-color'];
+
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CRITICALITY: " +
                                     jsonObject.properties.name;
@@ -1068,7 +1047,8 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = "red";
+                                var color_to_paint = value.properties['marker-color'];
+
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CONDITION: " +
                                     jsonObject.properties.name;
@@ -1188,7 +1168,7 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = "red";
+                                var color_to_paint = value.properties['marker-color'];
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "RISKPHY: " +
                                     jsonObject.properties.name;
@@ -1308,7 +1288,7 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = "red";
+                                var color_to_paint = value.properties['marker-color'];
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "RISKPHY: " +
                                     jsonObject.properties.name;
@@ -1332,7 +1312,4 @@
 
         });
     });
-</script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
 </script>
