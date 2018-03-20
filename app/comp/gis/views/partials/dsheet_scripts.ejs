@@ -11,6 +11,13 @@
         };
     })();
 
+    Array.prototype.firstindex = function (v) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] === v) return i;
+        }
+        return -1;
+    };
+
     $(document).ready(function () {
 
         var checkExist = setInterval(function () {
@@ -1196,6 +1203,12 @@
                                 jsonObject.properties.color = "#5b5e63";
                                 jsonObject.properties.nameoption = "Main Road";
                                 map.data.addGeoJson(jsonObject);
+
+                                assetIndex = elem.properties.gcode.firstindex(ifdt.properties.rcode);
+                                console.log(assetIndex);
+                                console.log(ifdt.geometry.coordinates[0][1]);
+                                console.log(ifdt.geometry.coordinates[0][0]);
+ 
                                 map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
                                     0][1], ifdt.geometry.coordinates[0][0]));
                                 map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
