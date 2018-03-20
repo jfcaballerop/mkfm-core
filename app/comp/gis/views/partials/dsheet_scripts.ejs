@@ -1362,11 +1362,25 @@
                                     $('#error').show();
                                     // $('#error').append(Object.keys(values[0]));
                                     var html1 = '';
+                                    var j = 0;
+                                    var maxresults = 20
                                     $.each(values[0], function (key, element) {
 
                                         // html1 += '<option value="' + key + '">';
-                                        $('#json-datalist').append(
-                                            '<option value="' + key + '">');
+
+                                        if (++j > maxresults) {
+                                            $('#json-datalist').append(
+                                                '<option value="... more than ' +
+                                                maxresults +
+                                                ' results available for: ' +
+                                                $this.val() + '">'
+                                            );
+                                            return false;
+                                        } else {
+                                            $('#json-datalist').append(
+                                                '<option value="' + key +
+                                                '">');
+                                        }
                                     });
                                     // .exec($('#json-datalist').html(html1));
 
