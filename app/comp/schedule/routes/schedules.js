@@ -343,7 +343,7 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
         "result": "OK"
     };
     var limitBudget = Number(req.params.budget);
-
+    debug('limitBudget ' + limitBudget);
 
     if (req.params.type === 'PHY') {
         Schedulephy.find().sort({
@@ -356,10 +356,12 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (total <= parseFloat(limitBudget))
-                    ret['data'].push(s);
-                total += parseFloat(s.properties.cost);
-
+                if (!isNaN(s.properties.cost)) {
+                    if (total <= Number(limitBudget)) {
+                        ret['data'].push(s);
+                    }
+                    total += Number(s.properties.cost);
+                }
             }
             res.status(200).jsonp(ret);
 
@@ -376,10 +378,12 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (total <= parseFloat(limitBudget))
-                    ret['data'].push(s);
-                total += parseFloat(s.properties.cost);
-
+                if (!isNaN(s.properties.cost)) {
+                    if (total <= Number(limitBudget)) {
+                        ret['data'].push(s);
+                    }
+                    total += Number(s.properties.cost);
+                }
             }
             res.status(200).jsonp(ret);
         });
