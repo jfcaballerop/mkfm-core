@@ -25,6 +25,11 @@ exports.makeKoboGeoJson = function (arr, index, type) {
         }
     };
     retJson.geometry.coordinates = arr.geometry.coordinates[index];
+
+    for (var v of Object.keys(arr.properties)) {
+        retJson.properties[v] = arr.properties[v][index];
+        // debug(v + ': ' + retJson.properties[v]);
+    }
     return retJson;
 
 }
