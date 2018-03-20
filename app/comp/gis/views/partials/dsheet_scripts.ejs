@@ -11,13 +11,6 @@
         };
     })();
 
-    Array.prototype.firstindex = function (v) {
-        for (var i = 0; i < this.length; i++) {
-            if (this[i] === v) return i;
-        }
-        return -1;
-    };
-
     $(document).ready(function () {
 
         var checkExist = setInterval(function () {
@@ -118,16 +111,19 @@
                         if (key !== 'rlength') {
                             if (Array.isArray(ifdtobject.properties[key])) {
                                 // //console.log('Is Array');
+                                console.log('********************************');
+                                console.log(ifdtobject.properties['kval']);
+                                console.log('********************************');
                                 if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                        key][0] != "") {
+                                    key][0] != "") {
                                     $('#generaldatatbody').append('<tr><td>' + value +
                                         '</td><td>' +
                                         ifdtobject.properties[key][0] + '</td></tr>');
 
                                 } else {
-                                    $('#generaldatatbody').append('<tr><td>' + value +
-                                        '</td><td>' +
-                                        '--' + '</td></tr>');
+                                    // $('#generaldatatbody').append('<tr><td>' + value +
+                                    //     '</td><td>' +
+                                    //     '--' + '</td></tr>');
 
                                 }
                             } else {
@@ -138,9 +134,9 @@
                                         ifdtobject.properties[key] + '</td></tr>');
 
                                 } else {
-                                    $('#generaldatatbody').append('<tr><td>' + value +
-                                        '</td><td>' +
-                                        '--' + '</td></tr>');
+                                    // $('#generaldatatbody').append('<tr><td>' + value +
+                                    //     '</td><td>' +
+                                    //     '--' + '</td></tr>');
 
                                 }
                             }
@@ -152,8 +148,8 @@
                                     '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
                             }
 
                         }
@@ -167,13 +163,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -183,8 +179,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -199,13 +195,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -215,8 +211,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -231,13 +227,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -247,8 +243,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -263,13 +259,13 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                    key + 2][0] != "") {
+                                key + 2][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -279,8 +275,8 @@
                                     ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -310,13 +306,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -326,8 +322,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -341,13 +337,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -357,8 +353,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -372,13 +368,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -388,8 +384,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -403,13 +399,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -419,8 +415,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -434,13 +430,13 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                    key + 2][0] != "") {
+                                key + 2][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -450,8 +446,8 @@
                                     ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -480,13 +476,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -496,8 +492,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -511,13 +507,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -527,8 +523,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -542,13 +538,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -558,8 +554,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -573,13 +569,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -589,8 +585,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -604,13 +600,13 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                    key + 2][0] != "") {
+                                key + 2][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -620,8 +616,8 @@
                                     ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -650,13 +646,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -666,8 +662,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -681,13 +677,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -697,8 +693,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -712,13 +708,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -728,8 +724,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -743,13 +739,13 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -759,8 +755,8 @@
                                     ifdtobject.properties[key] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -774,13 +770,13 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                    key + 2][0] != "") {
+                                key + 2][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         } else {
@@ -790,8 +786,8 @@
                                     ifdtobject.properties[key + 2] + '</td></tr>');
 
                             } else {
-                                $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
-                                    '--' + '</td></tr>');
+                                // $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
+                                //     '--' + '</td></tr>');
 
                             }
                         }
@@ -923,14 +919,14 @@
                                                     ) {
                                                         var
                                                             fotosmall =
-                                                            vfoto
-                                                            .replace(
-                                                                ".jpg",
-                                                                "-small.jpg"
-                                                            );
+                                                                vfoto
+                                                                    .replace(
+                                                                        ".jpg",
+                                                                        "-small.jpg"
+                                                                    );
                                                         $(
-                                                                "#datainfophoto"
-                                                            )
+                                                            "#datainfophoto"
+                                                        )
                                                             .append(
                                                                 '<img src="' +
                                                                 fotosmall +
@@ -1169,14 +1165,14 @@
                                                         ) {
                                                             var
                                                                 fotosmall =
-                                                                vfoto
-                                                                .replace(
-                                                                    ".jpg",
-                                                                    "-small.jpg"
-                                                                );
+                                                                    vfoto
+                                                                        .replace(
+                                                                            ".jpg",
+                                                                            "-small.jpg"
+                                                                        );
                                                             $(
-                                                                    "#datainfophoto"
-                                                                )
+                                                                "#datainfophoto"
+                                                            )
                                                                 .append(
                                                                     '<img src="' +
                                                                     fotosmall +
@@ -1203,12 +1199,6 @@
                                 jsonObject.properties.color = "#5b5e63";
                                 jsonObject.properties.nameoption = "Main Road";
                                 map.data.addGeoJson(jsonObject);
-
-                                assetIndex = elem.properties.gcode.firstindex(ifdt.properties.rcode);
-                                console.log(assetIndex);
-                                console.log(ifdt.geometry.coordinates[0][1]);
-                                console.log(ifdt.geometry.coordinates[0][0]);
- 
                                 map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
                                     0][1], ifdt.geometry.coordinates[0][0]));
                                 map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
