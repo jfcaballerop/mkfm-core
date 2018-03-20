@@ -964,8 +964,6 @@ router.get('/V1/list_infobyid/:id', function (req, res, next) {
 
 });
 
-
-
 /* DEL file */
 router.post('/V1/delete/:id', function (req, res, next) {
     Infodatatrack.findByIdAndRemove(req.params.id, function (err, file) {
@@ -1312,6 +1310,8 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
         if (err) {
             res.send(500, err.message);
         }
+        var roadCodeForAsset = '';
+        var indexForAsset = '';
         if (infodatatrack.length > 0) {
             returnObject = extend({}, infodatatrack[0]._doc);
             // // console.log('returnObject1 ' + JSON.stringify(infodatatrack[0].properties.Ccode));
@@ -1331,6 +1331,13 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     :"No. of vertical signaling",
                     :"No. of street lights",
                  */
+                for (var i = 0; i < infodatatrack[0].properties.rcode.length ; i++){
+                    if (infodatatrack[0].properties['rcode'][i].indexOf(decodeURIComponent(req.params.info)) >= 0) {
+                        roadCodeForAsset = infodatatrack[0].properties.rcode[i];
+                        indexForAsset = i;
+                        break;
+                    }
+                }
                 var rnumbridges = 0;
                 var rnumculverts = 0;
                 var rnumLongitudinaldrainage = 0;
@@ -1508,7 +1515,8 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
 
                 }
-
+                
+                returnObject["properties"]["rcode"] = roadCodeForAsset; // achtung!! rcode rewriting
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
                 returnObject["properties"]["rnumLongitudinaldrainage"] = Math.abs(rnumLongitudinaldrainage);
@@ -1519,6 +1527,8 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 returnObject["properties"]["rnumverticalsignaling"] = rnumverticalsignaling;
                 returnObject["properties"]["rnumstreetlights"] = rnumstreetlights;
                 returnObject["properties"]["pk"] = infodatatrack[0]["properties"]["pk"];
+                // TODO: añadir kval como index
+                // añadir las Coordenates
 
             } else if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.bname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
@@ -1682,7 +1692,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
             } else if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.dcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "DRAINAGE";
-
+                returnObject["properties"]
                 if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                     //// console.log('dcode index ' + infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)));
                     index = infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info));
@@ -1731,9 +1741,8 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
                 }
             }
-
+            returnObject["properties"]["kval"] = kval;
         } else {
-
 
             returnObject["properties"] = {};
             returnObject["properties"]["asset_type"] = "ERROR";
