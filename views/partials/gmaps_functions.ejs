@@ -32,7 +32,7 @@
                 "CVisualCondition") + '<br>';
 
             vfoto = event.feature.getProperty("_attachments");
-            if (vfoto.length > 0) {
+            if (vfoto !== undefined && vfoto.length > 0) {
 
                 var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
                 subcontent += '<img src="' +
@@ -69,7 +69,7 @@
                 "bvisualcondition") + '<br>';
 
             vfoto = event.feature.getProperty("_attachments");
-            if (vfoto.length > 0) {
+            if (vfoto !== undefined && vfoto.length > 0) {
 
                 var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
                 subcontent += '<img src="' +
@@ -103,7 +103,7 @@
             subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
                 "gvisualcondition") + '<br>';
             vfoto = event.feature.getProperty("_attachments");
-            if (vfoto.length > 0) {
+            if (vfoto !== undefined && vfoto.length > 0) {
 
                 var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
                 subcontent += '<img src="' +
@@ -306,9 +306,9 @@
                     console.log('#mainr');
                     all = false;
                     <% kobo_mainr_odt.forEach(function(element) { %>
-                    debug('---------------------------------------------------------------------------');
-                    debug(element);
-                    debug('---------------------------------------------------------------------------');
+                    // debug('---------------------------------------------------------------------------');
+                    // debug(element);
+                    // debug('---------------------------------------------------------------------------');
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
