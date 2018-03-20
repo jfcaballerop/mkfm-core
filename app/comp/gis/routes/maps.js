@@ -1,3 +1,4 @@
+var debug = require('debug')('debug');
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -473,6 +474,8 @@ router.get('/list_info', function (req, resp, next) {
                 var unique = elem.properties.Ccode.unique();
                 for (var u of unique) {
                     if (u != '') {
+                        // debug(u + ' : ' + elem.properties.Ccode.firstindex(u) + '\n');
+                        // debug(elem.properties.Ctype[elem.properties.Ccode.firstindex(u)]);
                         kobo_mainr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                     }
                 }

@@ -794,7 +794,42 @@ router.get('/V1/', function (req, res, next) {
         "properties.Ccode": 1,
         "properties.bcode": 1,
         "properties.gcode": 1,
-        "properties.gcode2": 1
+        "properties.gcode2": 1,
+        "properties.Ctype": 1,
+        "properties.Cnumelem": 1,
+        "properties.Csection": 1,
+        "properties.Cmaterial": 1,
+        "properties.Cdiameter": 1,
+        "properties.Cwidth": 1,
+        "properties.Clength": 1,
+        "properties.Cclearing": 1,
+        "properties.CVisualCondition": 1,
+        "properties.btype": 1,
+        "properties.bspans": 1,
+        "properties.blenght": 1,
+        "properties.bwidth": 1,
+        "properties.bfreeheight": 1,
+        "properties.bmaterialdeck": 1,
+        "properties.bmaterialpiers": 1,
+        "properties.bmaterialabutments": 1,
+        "properties.bdamagesfoundationsgeneraltype": 1,
+        "properties.bvisualcondition": 1,
+        "properties.gtype": 1,
+        "properties.gposition": 1,
+        "properties.gheight": 1,
+        "properties.glength": 1,
+        "properties.gslope": 1,
+        "properties.gnature": 1,
+        "properties.gintensityfailure": 1,
+        "properties.gvisualcondition": 1,
+        "properties.gtype2": 1,
+        "properties.gposition2": 1,
+        "properties.gheight2": 1,
+        "properties.glength2": 1,
+        "properties.gslope2": 1,
+        "properties.gnature2": 1,
+        "properties.gintensityfailure2": 1,
+        "properties.gvisualcondition2": 1
     };
 
     Infodatatrack.find({}, fields).exec(function (err, infodatatracks) {
@@ -1246,7 +1281,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
     // // console.log(req.params.info.replace('%20', ' '));
     Infodatatrack.find({
         $or: [{
-            "properties.rcode": decodeURIComponent(req.params.info)
+                "properties.rcode": decodeURIComponent(req.params.info)
             },
             {
                 "properties.rname": decodeURIComponent(req.params.info)
@@ -1778,17 +1813,17 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
             //     "properties.name": {"$regex": tofind, "$options" : "i" }
             // }
         ],
-    },{
-            'properties.rcode': 1,
-            'properties.rname': 1,
-            'properties.bcode': 1,
-            'properties.bname': 1,
-            'properties.gcode': 1,
-            'properties.gcode2': 1,
-            'properties.dcode': 1,
-            'properties.dcode2': 1,
-            'properties.Ccode': 1}
-).exec(function (err, infodatatrack) {
+    }, {
+        'properties.rcode': 1,
+        'properties.rname': 1,
+        'properties.bcode': 1,
+        'properties.bname': 1,
+        'properties.gcode': 1,
+        'properties.gcode2': 1,
+        'properties.dcode': 1,
+        'properties.dcode2': 1,
+        'properties.Ccode': 1
+    }).exec(function (err, infodatatrack) {
         if (err) {
             res.send(500, err.message);
         }
@@ -1807,53 +1842,53 @@ router.get('/V1/list_ifdt_general/:info', function (req, res, next) {
                 infodatatrack[i].properties !== undefined) {
                 if (infodatatrack.length > 0) {
                     // //console.log('infodatatrack:  ' + JSON.stringify(infodatatrack[i].properties.name) + '*********');
-                    for (var j=0; j<= infodatatrack[i].properties.rcode.length; j++){
+                    for (var j = 0; j <= infodatatrack[i].properties.rcode.length; j++) {
                         // debug(j);
                         if (true) {
                             if (infodatatrack[i].properties.rcode[j] !== undefined &&
-                                 infodatatrack[i].properties.rcode[j].length > 3 &&
-                                infodatatrack[i].properties.rcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.rcode[j].length > 3 &&
+                                infodatatrack[i].properties.rcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.rcode[j]] = 'rcode';
                                 // texto += ;
                             }
                             if (infodatatrack[i].properties.rname[j] !== undefined &&
-                                 infodatatrack[i].properties.rname[j].length > 3 &&
-                                infodatatrack[i].properties.rname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.rname[j].length > 3 &&
+                                infodatatrack[i].properties.rname[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.rname[j]] = 'rname';
                             }
                             if (infodatatrack[i].properties.bcode[j] !== undefined &&
-                                 infodatatrack[i].properties.bcode[j].length > 3 &&
-                                infodatatrack[i].properties.bcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.bcode[j].length > 3 &&
+                                infodatatrack[i].properties.bcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.bcode[j]] = 'bcode';
                             }
                             if (infodatatrack[i].properties.bname[j] !== undefined &&
-                                 infodatatrack[i].properties.bname[j].length > 3 &&
-                                infodatatrack[i].properties.bname[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.bname[j].length > 3 &&
+                                infodatatrack[i].properties.bname[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.bname[j]] = 'bname';
                             }
                             if (infodatatrack[i].properties.gcode[j] !== undefined &&
-                                 infodatatrack[i].properties.gcode[j].length > 3 &&
-                                infodatatrack[i].properties.gcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.gcode[j].length > 3 &&
+                                infodatatrack[i].properties.gcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.gcode[j]] = 'gcode';
                             }
                             if (infodatatrack[i].properties.gcode2[j] !== undefined &&
-                                 infodatatrack[i].properties.gcode2[j].length > 3 &&
-                                infodatatrack[i].properties.gcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.gcode2[j].length > 3 &&
+                                infodatatrack[i].properties.gcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.gcode2[j]] = 'gcode2';
                             }
                             if (infodatatrack[i].properties.dcode[j] !== undefined &&
-                                 infodatatrack[i].properties.dcode[j].length > 3 &&
-                                infodatatrack[i].properties.dcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.dcode[j].length > 3 &&
+                                infodatatrack[i].properties.dcode[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.dcode[j]] = 'dcode';
                             }
                             if (infodatatrack[i].properties.dcode2[j] !== undefined &&
-                                 infodatatrack[i].properties.dcode2[j].length > 3 &&
-                                infodatatrack[i].properties.dcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.dcode2[j].length > 3 &&
+                                infodatatrack[i].properties.dcode2[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 matchestoquery[infodatatrack[i].properties.dcode2[j]] = 'dcode2';
                             }
                             if (infodatatrack[i].properties.Ccode[j] !== undefined &&
-                                 infodatatrack[i].properties.Ccode[j].length > 3 &&
-                                infodatatrack[i].properties.Ccode[j].toUpperCase().indexOf(tofind.toUpperCase()) >=0) {
+                                infodatatrack[i].properties.Ccode[j].length > 3 &&
+                                infodatatrack[i].properties.Ccode[j].toUpperCase().indexOf(tofind.toUpperCase()) >= 0) {
                                 // debug(infodatatrack[i].properties.Ccode[j]);
                                 // debug(tofind.toUpperCase());
                                 matchestoquery[infodatatrack[i].properties.Ccode[j]] = 'Ccode';
