@@ -3631,7 +3631,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var form;
     var asset = req.params.asset;
     var formula = 'Condition';
-    await Formula.find({
+    Formula.find({
         "name": formula
     }).exec(async function (err, f) {
         if (err) {
@@ -3654,7 +3654,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var tracksUpdated2 = 0;
     switch (asset) {
         case 'Pavements':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3684,7 +3684,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.rcondition": rcond
                         }
                     }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3692,7 +3692,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             res.status(200).jsonp(ret);
             break;
         case 'Culverts':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3771,7 +3771,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3782,7 +3782,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             res.status(200).jsonp(ret);
             break;
         case 'Retaining_Walls':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3926,7 +3926,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.gcondition": valueconditionsr
                         }
                     }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3934,7 +3934,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             });
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4046,7 +4046,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             ////debug(err.message);
                         }
@@ -4061,7 +4061,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             res.status(200).jsonp(ret);
             break;
         case 'Cuttings_Embankments':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4175,7 +4175,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.gcondition": valueconditionsr
                         }
                     }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -4183,7 +4183,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4335,7 +4335,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -4352,7 +4352,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Bridges':
             // ////debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({
+            Infodatatrack.find({
                 // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
             }, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -4686,7 +4686,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                    Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             ////debug(err.message);
                         }
