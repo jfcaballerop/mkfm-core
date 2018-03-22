@@ -3631,7 +3631,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var form;
     var asset = req.params.asset;
     var formula = 'Condition';
-    Formula.find({
+    await Formula.find({
         "name": formula
     }).exec(async function (err, f) {
         if (err) {
@@ -3654,7 +3654,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
     var tracksUpdated2 = 0;
     switch (asset) {
         case 'Pavements':
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            // Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3684,7 +3685,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.rcondition": rcond
                         }
                     }
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3692,7 +3693,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             res.status(200).jsonp(ret);
             break;
         case 'Culverts':
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3751,7 +3752,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
                                         } else {
-                                            valueconditionsr.push("");
+                                            // valueconditionsr.push("");
+                                            if (ifdt.properties.Ccondition[i] !== undefined) {
+                                                valueconditionsr.push(ifdt.properties.Ccondition[i]);
+                                            } else {
+                                                valueconditionsr.push('');
+                                            }
                                         }
                                     }
                                     break;
@@ -3764,14 +3770,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     var conditions = {
                         _id: ifdt._id
                     };
-
                     var query = {
                         $set: {
                             "properties.Ccondition": valueconditionsr
                         }
                     }
-
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3801,7 +3805,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (ifdt.properties.gcode.length > 0) {
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
-                                            ifdt.properties.gcode[i] !== "") {
+                                            ifdt.properties.gcode[i] !== "" &&
+                                            ifdt.properties.gtype[i].indexOf('aining') > 0 ) {
                                             // ////debug(ifdt.properties.gcode);
                                             // ////debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
@@ -3905,7 +3910,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             valueconditionsr.push(totalScoring / 100);
                                             //////debug(totalScoring + '\n');
                                         } else {
-                                            valueconditionsr.push("");
+                                            // valueconditionsr.push("");
+                                            if (ifdt.properties.gcondition[i] !== undefined) {
+                                                valueconditionsr.push(ifdt.properties.gcondition[i]);
+                                            } else {
+                                                valueconditionsr.push('');
+                                            }
                                         }
                                     }
                                     // ////debug(valueconditionsr);
@@ -3926,7 +3936,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.gcondition": valueconditionsr
                         }
                     }
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -3934,7 +3944,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             });
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -3951,7 +3961,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (ifdt.properties.gcode2.length > 0) {
                                         if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
                                             ifdt.properties.gcode2[i] !== null &&
-                                            ifdt.properties.gcode2[i] !== "") {
+                                            ifdt.properties.gcode2[i] !== "" &&
+                                            ifdt.properties.gtype2[i].indexOf('aining') > 0) {
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
                                             if (ifdt.properties.gtypefailure2.length > 0) {
@@ -4026,7 +4037,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
                                         } else {
-                                            valueconditionsr.push("");
+                                            // valueconditionsr.push("");
+                                            if (ifdt.properties.gcondition2[i] !== undefined) {
+                                                valueconditionsr.push(ifdt.properties.gcondition2[i]);
+                                            } else {
+                                                valueconditionsr.push('');
+                                            }
                                         }
                                     }
                                     break;
@@ -4045,12 +4061,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.gcondition2": valueconditionsr
                         }
                     }
-
-                    Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {
-                            ////debug(err.message);
-                        }
-                        // ////debug(iup);  
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
+                        if (err) { }
                     });
                 }
                 // res.status(200).jsonp(ret);
@@ -4061,7 +4073,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
             res.status(200).jsonp(ret);
             break;
         case 'Cuttings_Embankments':
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4077,8 +4089,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (ifdt.properties.gcode.length > 0) {
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
-                                            ifdt.properties.gcode[i] !== "") {
-
+                                            ifdt.properties.gcode[i] !== "" &&
+                                            ( ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment")
+                                        ) {
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
                                             if (ifdt.properties.gtypefailure.length > 0) {
@@ -4157,7 +4170,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
                                         } else {
-                                            valueconditionsr.push("");
+                                            // valueconditionsr.push("");
+                                            if (ifdt.properties.gcondition[i] !== undefined) {
+                                                valueconditionsr.push(ifdt.properties.gcondition[i]);
+                                            } else {
+                                                valueconditionsr.push('');
+                                            }
                                         }
                                     }
                                     break;
@@ -4175,7 +4193,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                             "properties.gcondition": valueconditionsr
                         }
                     }
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -4183,7 +4201,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
 
             tracksUpdated2 = tracksUpdated;
             ret.tracksUpdated = tracksUpdated;
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -4217,7 +4235,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                     if (ifdt.properties.gcode2.length > 0) {
                                         if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
                                             ifdt.properties.gcode2[i] !== null &&
-                                            ifdt.properties.gcode2[i] !== "") {
+                                            ifdt.properties.gcode2[i] !== "" &&
+                                            (ifdt.properties.gtype2[i] === "Cutting" || ifdt.properties.gtype2[i] === "Embankment")
+                                        ) {
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
                                             if (ifdt.properties.gtypefailure2.length > 0) {
@@ -4315,7 +4335,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
                                             valueconditionsr.push(totalScoring / 100);
                                         } else {
-                                            valueconditionsr.push("");
+                                            // valueconditionsr.push("");
+                                            if (ifdt.properties.gcondition2[i] !== undefined) {
+                                                valueconditionsr.push(ifdt.properties.gcondition2[i]);
+                                            } else {
+                                                valueconditionsr.push('');
+                                            }
                                         }
                                     }
                                     break;
@@ -4335,7 +4360,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {}
                     });
                 }
@@ -4352,7 +4377,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         case 'Bridges':
             // ////debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            Infodatatrack.find({
+            await Infodatatrack.find({
                 // _id: ObjectId("59ca119c100b7d4adb8ecb9a")
             }, selectjson).exec(async function (err, ifdts) {
                 if (err) {
@@ -4657,7 +4682,12 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         ////debug('totalScoring7:  ' + totalScoring);
                                         //////debug(totalScoring + '\n');
                                     } else {
-                                        valueconditionsr.push("");
+                                        // valueconditionsr.push("");
+                                        if (ifdt.properties.bcondition[i] !== undefined) {
+                                            valueconditionsr.push(ifdt.properties.bcondition[i]);
+                                        } else {
+                                            valueconditionsr.push('');
+                                        }
                                     }
                                     // ////debug(valueconditionsr);
                                     ///////////////////////FINAL//////////////////////////////////////////////
@@ -4686,7 +4716,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
 
-                    Infodatatrack.update(conditions, query, function (err, iup) {
+                    await Infodatatrack.update(conditions, query, function (err, iup) {
                         if (err) {
                             ////debug(err.message);
                         }
