@@ -1,291 +1,395 @@
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $(":radio").prop('disabled', true);
         $("#generateReport").prop('disabled', true);
 
-        $('#openPdf').click(function() {
+        $('#openPdf').click(function () {
 
             pdfMake.createPdf(docDefinition).open();
         });
 
-        $("#searchtool").on('keyup', function(e) {
-            var $this = $(this);
-            if (e.keyCode == 13 || e.keyCode == undefined) {
-                // Do something
-                // alert('Buscando ...' + $this.val().length);
+
+        $("#json-datalist").on('click', function (e) {
+            // Do something
+            alert('Buscando ...' + $this.val().length);
+
+            var dataPost = {};
+
+            if ($this.val().length <= 0) {
                 $('#error').hide();
                 $('#error').empty();
-                $('#response').hide();
-                $('#response').empty();
-                $("#datainfophoto").empty();
-                $("#datainfophoto").hide();
-                $('#divmap1').empty();
-                $("#generaldataupload").prop("checked", false);
-                $("#generaldata").prop("checked", false);
-                $("#inventorydata").prop("checked", false);
-                $("#operation").prop("checked", false);
-                $("#risk").prop("checked", false);
+                $('#error').append("Empty value.<br>Try again.");
+                $('#error').show();
+
+            } else {
+
+
                 // $('#datainfo').show();
                 // $('#dataupload').show();
-                $('#datainfo').hide();
-                $('#dataupload').hide();
+                var p1 = $.ajax({
+                    url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
+                    data: JSON.stringify(dataPost),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function (data) {
+                    //// //console.log('koboinfo ' + JSON.stringify(data));
+                    return (data);
+                });
 
-                var dataPost = {};
+                Promise.all([p1]).then(function (values) {
+                    $('#spinner').show();
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        // if (feature.getProperty('nameoption') === 'Main Road') {
+                        map.data.remove(feature);
+                        // }
 
-                if ($this.val().length <= 0) {
+                    });
+                    ifdt = values[0];
+                    ////console.log(ifdt);
+                    console.log('ifdt.properties.asset_type');
+                    console.log(ifdt.properties.asset_type);
+                    if (ifdt.properties.asset_type === 'ERROR') {
+                        $('#error').show();
+                        $('#error').append("Search not found.<br>Try again.");
+                    } else {
+                        ifdtobject = ifdt;
+                        console.log('ifdt:');
+                        console.log(ifdt);
+                    }
+                    $('#spinner').hide();
+
+                });
+            }
+        })
+
+        $("#searchtool").on('keyup', function (e) {
+
+            console.log(e);
+            console.log(' ');
+            console.log('e.keyCode: ');
+            console.log(e.keyCode);
+            var $this = $(this);
+
+            if (e.keyCode == 13 || e.keyCode == undefined) {
+                var $this = $(this);
+                if (e.keyCode == 13) {
+                    $(":radio").prop('checked', false);
+
                     $('#error').hide();
                     $('#error').empty();
-                    $('#error').append("Empty value.<br>Try again.");
-                    $('#error').show();
+                    $('#response').hide();
+                    $('#response').empty();
+                    var dataPost = {};
 
-                } else {
+                    if ($this.val().length <= 0) {
+                        $('#error').hide();
+                        $('#error').empty();
+                        $('#error').append("Empty value.<br>Try again.");
+                        $('#error').show();
+                        $(":radio").prop('disabled', true);
+                        $("#generateReport").prop('disabled', true);
 
-
-                    // $('#datainfo').show();
-                    // $('#dataupload').show();
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
-                        data: JSON.stringify(dataPost),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) {
-                        //// //console.log('koboinfo ' + JSON.stringify(data));
-                        return (data);
-                    });
-                    var p2 = $.ajax({
-                        url: '/auth/WEB/gis/getFilesByAssetCode/' + $this.val(),
-                        data: JSON.stringify(dataPost),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) {
-                        //// //console.log('koboinfo ' + JSON.stringify(data));
-                        return (data);
-                    });
+                    } else {
 
 
-                    Promise.all([p1, p2]).then(function (values) {
-                        $('#spinner').show();
-                        map.data.forEach(function (feature) {
-                            // If you want, check here for some constraints.
-                            // if (feature.getProperty('nameoption') === 'Main Road') {
-                            map.data.remove(feature);
-                            // }
-
+                        var p1 = $.ajax({
+                            url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
+                            data: JSON.stringify(dataPost),
+                            type: 'POST',
+                            contentType: 'application/json'
+                        }, function (data) {
+                            //// console.log('koboinfo ' + JSON.stringify(data));
+                            return (data);
                         });
-                        ifdt = values[0];
-                        filelist = values[1];
-                        ////console.log(ifdt);
-                        if (ifdt.properties.asset_type === 'ERROR') {
-                            $('#datainfo').hide();
-                            $('#dataupload').hide();
-                            $('#error').show();
-                            $('#error').append("Search not found.<br>Try again.");
-                            map.setCenter(new google.maps.LatLng(15.41, -61.32));
-                            map.panTo(new google.maps.LatLng(15.41, -61.32));
-                            map.setZoom(11);
-
-                        } else {
-                            $('#datainfo').show();
-                            $('#dataupload').show();
-
-                            if (ifdt.properties.koboedit !== undefined &&
-                                ifdt.properties.koboedit.length > 0 &&
-                                ifdt.properties.koboedit[0] !== undefined &&
-                                ifdt.properties.koboedit[0].kobo_id !== undefined) {
-                                var dataPhotoPost = {};
-                                var pphoto = $.ajax({
-                                    url: '/auth/WEB/koboinfo/list_koboinfos/' +
-                                        ifdt.properties.koboedit[0].kobo_id,
-                                    data: JSON.stringify(dataPhotoPost),
-                                    type: 'POST',
-                                    contentType: 'application/json'
-                                }, function (data) {
-                                    //// //console.log('koboinfo ' + JSON.stringify(data));
-                                    return (data);
-                                });
-                                Promise.all([pphoto]).then(function (values) {
-                                    koboinfo = values[0];
-                                    $.each(koboinfo, function (key, value) {
-                                        if (key === 'properties') {
-                                            $.each(value, function (kprop,
-                                                vprop) {
-                                                ////console.log(kprop, vprop);
-                                                if (kprop ===
-                                                    "_attachments") {
-
-                                                    $(
-                                                        "#datainfophoto"
-                                                    ).empty();
-                                                    $(
-                                                        "#datainfophoto"
-                                                    ).show();
-                                                    $.each(vprop,
-                                                        function (
-                                                            kfoto,
-                                                            vfoto
-                                                        ) {
-                                                            var
-                                                                fotosmall =
-                                                                    vfoto
-                                                                        .replace(
-                                                                            ".jpg",
-                                                                            "-small.jpg"
-                                                                        );
-                                                            $(
-                                                                "#datainfophoto"
-                                                            )
-                                                                .append(
-                                                                    '<img src="' +
-                                                                    fotosmall +
-                                                                    '">'
-                                                                );
-                                                            // $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
-                                                        });
-                                                }
+                        Promise.all([p1]).then(function (values) {
+                            $('#spinner').show();
+                            ifdt = values[0];
+                            // console.log(ifdt);
+                            if (ifdt.properties.asset_type === 'ERROR') {
+                                $('#error').show();
+                                $('#error').append("Search not found.<br>Try again.");
+                                $(":radio").prop('disabled', true);
+                                $("#generateReport").prop('disabled', true);
 
 
+                            } else {
+                                var assetType = '';
+                                switch (ifdt.properties.asset_type) {
+                                    case 'BRIDGE':
+                                        assetType = 'BRIDGE';
+                                        break;
+                                    case 'ROAD':
+                                        assetType = 'ROAD';
+                                        break;
+                                    case 'CULVERT':
+                                        assetType = 'CULVERT';
+                                        break
+                                    case 'DRAINAGE':
+                                        assetType = 'DRAINAGE (no report for this asset)';
+                                        break
+                                    case 'FORD':
+                                        assetType = 'CULVERT';
+                                        break;
+                                    case 'GEOT':
+                                        assetType = 'GEOTECHNICAL';
+                                        break;
+                                    case 'GEOT2':
+                                        assetType = 'GEOTECHNICAL';
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + assetType);
+                                switch (ifdt.properties.asset_type) {
+                                    case 'BRIDGE':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+
+                                        break;
+                                    case 'ROAD':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+
+                                        break;
+                                    case 'CULVERT':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break
+                                    case 'DRAINAGE':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break
+                                    case 'FORD': // type of culvert
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break;
+                                    case 'GEOT':
+                                        if (ifdt.properties.gtype[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype2[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype[0] === 'Embankment' ||
+                                            ifdt.properties.gtype2[0] === 'Embankment') {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        } else {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
                                             });
                                         };
-                                    });
-                                });
-                            }
+                                        break;
+                                    case 'GEOT2':
+                                        if (ifdt.properties.gtype[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype2[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype[0] === 'Embankment' ||
+                                            ifdt.properties.gtype2[0] === 'Embankment') {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        } else {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        };
+                                        break;
 
-                            if (ifdt.properties.asset_type === 'ROAD') {
-                                $('#response').empty();
-                                $('#response').show();
-                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
-                                jsonObject = ifdt;
-                                //// //console.log(jsonObject);
-                                jsonObject.properties.color = "#5b5e63";
-                                jsonObject.properties.nameoption = "Main Road";
-                                map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
-                                    0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
-                                    ifdt.geometry.coordinates[0][0]));
-                                if (ifdt.geometry.coordinates.length > 0 && ifdt.geometry.coordinates
-                                    .length <= 100) {
-                                    map.setZoom(19);
-                                } else if (ifdt.geometry.coordinates.length > 100 && ifdt.geometry
-                                    .coordinates.length <= 400) {
-
-                                    map.setZoom(16);
-
-                                } else if (ifdt.geometry.coordinates.length > 400 && ifdt.geometry
-                                    .coordinates.length <= 1000) {
-                                    map.setZoom(13);
-
-                                } else {
-                                    map.setZoom(11);
-
+                                    default:
+                                        break;
                                 }
-                            } else if (ifdt.properties.asset_type === 'BRIDGE') {
-                                $('#response').empty();
-                                $('#response').show();
-                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
+
+                                $("#generateReport").prop('disabled', true);
 
 
-                                jsonObject = ifdt;
-                                //// //console.log(jsonObject);
-                                jsonObject.properties.color = "#F47983";
-                                jsonObject.properties.nameoption = "Bridge";
-                                map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
-                                    0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
-                                    ifdt.geometry.coordinates[0][0]));
-                                map.setZoom(22);
-                            } else if (ifdt.properties.asset_type === 'GEOT' || ifdt.properties
-                                .asset_type === 'GEOT2') {
-                                $('#response').empty();
-                                $('#response').show();
-                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
-
-                                jsonObject = ifdt;
-                                //// //console.log(jsonObject);
-                                jsonObject.properties.color = "green";
-                                jsonObject.properties.nameoption = "Geot";
-                                map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
-                                    0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
-                                    ifdt.geometry.coordinates[0][0]));
-                                map.setZoom(19);
-                            } else if (ifdt.properties.asset_type === 'CULVERT') {
-                                $('#response').empty();
-                                $('#response').show();
-                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
-                                jsonObject = ifdt;
-                                //// //console.log(jsonObject); 
-                                jsonObject.properties.color = "#a17cff";
-                                jsonObject.properties.nameoption = "Culvert";
-                                map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
-                                    0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
-                                    ifdt.geometry.coordinates[0][0]));
-                                map.setZoom(22);
-                            } else if (ifdt.properties.asset_type === 'DRAINAGE') {
-                                $('#response').empty();
-                                $('#response').show();
-                                $('#response').append("Asset type: " + ifdt.properties.asset_type);
-                                jsonObject = ifdt;
-                                //// //console.log(jsonObject); 
-                                jsonObject.properties.color = "#135dd6";
-                                jsonObject.properties.nameoption = "Drainage";
-                                map.data.addGeoJson(jsonObject);
-                                map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
-                                    0][1], ifdt.geometry.coordinates[0][0]));
-                                map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
-                                    ifdt.geometry.coordinates[0][0]));
-                                map.setZoom(22);
                             }
-                            ifdtobject = ifdt;
-                            // //console.log(ifdt);
-                        }
-                        $('#spinner').hide();
 
-                    });
+                            $('#spinner').hide();
+
+                        });
+                    }
                 }
+
             } else {
+                console.log('*************');
                 if ($this.val().length > 3) {
                     // console.log('keyup');
                     $('#json-datalist').empty();
                     if (true) {
-                        // Do something
-                        // alert('Buscando ...' + $this.val().length);
-                        $('#error').hide();
-                        $('#error').empty();
-                        $('#response').hide();
-                        $('#response').empty();
-                        $("#datainfophoto").empty();
-                        $("#datainfophoto").hide();
-                        $('#divmap1').empty();
-                        $("#generaldataupload").prop("checked", false);
-                        $("#generaldata").prop("checked", false);
-                        $("#inventorydata").prop("checked", false);
-                        $("#operation").prop("checked", false);
-                        $("#risk").prop("checked", false);
-                        // $('#datainfo').show();
-                        // $('#dataupload').show();
-                        $('#datainfo').hide();
-                        $('#dataupload').hide();
 
                         var dataPost = {};
+                        console.log($this.val().length);
+                        if ($this.val().length > 0) {
 
-                        if ($this.val().length <= 0) {
-                            $('#error').hide();
-                            $('#error').empty();
-                            $('#error').append("\n \n Empty value.<br>Try again.");
-                            $('#error').show();
-
-                        } else {
-
-
-                            // $('#datainfo').show();
-                            // $('#dataupload').show();
                             var p1 = $.ajax({
                                 url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
                                 data: JSON.stringify(dataPost),
@@ -295,67 +399,48 @@
                                 //// //console.log('koboinfo ' + JSON.stringify(data));
                                 return (data);
                             });
-                            var p2 = $.ajax({
-                                url: '/auth/WEB/gis/getFilesByAssetCode/' + $this.val(),
-                                // url: '/auth/WEB/gis/getFilesByAssetCode_general/' + $this.val(),
-                                data: JSON.stringify(dataPost),
-                                type: 'POST',
-                                contentType: 'application/json'
-                            }, function (data) {
-                                //// //console.log('koboinfo ' + JSON.stringify(data));
-                                return (data);
-                            });
 
-                            delay(function () {
-                                console.log('Time elapsed!');
-                                Promise.all([p1, p2]).then(function (values) {
-                                    $('#spinner').show();
-                                    map.data.forEach(function (feature) {
-                                        // If you want, check here for some constraints.
-                                        // if (feature.getProperty('nameoption') === 'Main Road') {
-                                        map.data.remove(feature);
-                                        // }
+                            console.log('Time elapsed!');
+                            Promise.all([p1]).then(function (values) {
+                                $('#spinner').show();
+                                console.log('values: ');
+                                console.log(values);
+                                console.log(Object.keys(values[0]));
+                                ifdt = values[0];
+                                filelist = values[1];
+                                $('#datainfo').hide();
+                                $('#dataupload').hide();
+                                $('#error').show();
+                                // $('#error').append(Object.keys(values[0]));
+                                var html1 = '';
+                                console.log(values[0]);
+                                $.each(values[0], function (key, element) {
 
-
-                                    });
-                                    console.log(values);
-                                    console.log(Object.keys(values[0]));
-                                    ifdt = values[0];
-                                    filelist = values[1];
-                                    $('#datainfo').hide();
-                                    $('#dataupload').hide();
-                                    $('#error').show();
-                                    // $('#error').append(Object.keys(values[0]));
-                                    var html1 = '';
-                                    $.each(values[0], function (key, element) {
-
-                                        // html1 += '<option value="' + key + '">';
-                                        $('#json-datalist').append(
-                                            '<option value="' + key + '">');
-                                    });
-                                    // .exec($('#json-datalist').html(html1));
-
-
-                                    $('#error').append("<br><br>" +
-                                        "Search not found.<br>Try again.");
-                                    map.setCenter(new google.maps.LatLng(15.41, -61.32));
-                                    map.panTo(new google.maps.LatLng(15.41, -61.32));
-                                    map.setZoom(11);
-
-                                    $('#spinner').hide();
-
+                                    // html1 += '<option value="' + key + '">';
+                                    $('#json-datalist').append(
+                                        '<option value="' + key + '">');
                                 });
-                            }, 100);
+                                // .exec($('#json-datalist').html(html1));
+
+
+                                $('#error').append("<br><br>" +
+                                    "Search not found.<br>Try again.");
+                                // map.setCenter(new google.maps.LatLng(15.41, -61.32));
+                                // map.panTo(new google.maps.LatLng(15.41, -61.32));
+                                // map.setZoom(11);
+
+                                $('#spinner').hide();
+
+                            });
 
                         }
                     }
                 }
             }
-
         });
 
         var selected;
-        $(":radio").change(function() {
+        $(":radio").change(function () {
             $this = $(this);
             // console.log($this[0].value);
             selected = $this[0].value;
@@ -365,7 +450,7 @@
 
 
 
-        $('#generateReport').click(function() {
+        $('#generateReport').click(function () {
             var dataPost = {};
 
             var p1 = $.ajax({
@@ -374,11 +459,11 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 //// console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 $('#spinner').show();
                 ret = values[0];
                 // console.log(ret);
