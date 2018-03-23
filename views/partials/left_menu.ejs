@@ -1,26 +1,20 @@
 <div id="sidebar" class="nav-collapse ">
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
-
-        <p class="centered">
-            <a href="profile.html">
-                <i class="fa fa-user fa-5x" aria-hidden="true" style="color: white;"></i>
-            </a>
+        <p class="centered sidebar-main-logo">
+            <img src="/assets/img/logo-dominica.png" alt="Dominica" />
         </p>
-        <h5 class="centered">
-            <%= token.login %>
-        </h5>
 
         <li class="mt">
-            <a class="active" href="/auth/WEB/index">
+            <a href="/auth/WEB/index">
                 <i class="fa fa-dashboard"></i>
                 <span>
                     <%- trans('MENU_DASHBOARD') %>
                 </span>
             </a>
         </li>
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/maps/view_data" class="dcjq-parent">
+        <li class="sub-menu">
+            <a href="/auth/WEB/maps/view_data">
                 <i class="fas fa-database"></i>
                 <span>
                     <%- trans('MENU_DATABASE') %>
@@ -28,17 +22,17 @@
             </a>
 
         </li>
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/maps/list_info" class="dcjq-parent">
-                <i class="fas fa-binoculars"></i>
+        <li>
+            <a href="/auth/WEB/maps/list_info">
+                <i class="fas fa-map-marker"></i>
                 <span>
                     <%- trans('MENU_MAPS_GMAPS') %>
                 </span>
             </a>
 
         </li>
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/data_sheet/list_info" class="dcjq-parent">
+        <li>
+            <a href="/auth/WEB/data_sheet/list_info">
                 <i class="fas fa-info-circle"></i>
                 <span>
                     <%- trans('MENU_DATASHEET') %>
@@ -47,8 +41,8 @@
 
         </li>
 
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/query/consultas" class="dcjq-parent">
+        <li>
+            <a href="/auth/WEB/query/consultas">
                 <i class=" fa fa-table"></i>
                 <span>
                     <%- trans('MENU_QUERYS') %>
@@ -57,8 +51,8 @@
 
         </li>
 
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/budget/indexes/1" class="dcjq-parent">
+        <li>
+            <a href="/auth/WEB/budget/indexes/1">
                 <i class=" fa fa-usd"></i>
                 <span>
                     <%- trans('MENU_BUDGET') %>
@@ -66,8 +60,8 @@
             </a>
 
         </li>
-        <li class="sub-menu dcjq-parent-li">
-            <a href="/auth/WEB/report/pdfmake" class="dcjq-parent">
+        <li>
+            <a href="/auth/WEB/report/pdfmake">
                 <i class=" fa fa-file-text-o"></i>
                 <span>
                     <%- trans('MENU_REPORTS') %>
@@ -75,8 +69,8 @@
             </a>
 
         </li>
-        <li class="sub-menu dcjq-parent-li">
-            <a href="javascript:;" class="dcjq-parent">
+        <li class="sub-menu">
+            <a href="javascript:;">
                 <i class="fa fa-th"></i>
                 <span>
                     <%- trans('MENU_SCHEDULE') %>
@@ -97,17 +91,20 @@
             ADMIN MENU
         -->
         <% if (token.admin) { %>
-            <li class="sub-menu dcjq-parent-li">
-                <a href="javascript:;" class="dcjq-parent">
+            <li class="sub-menu">
+                <a href="javascript:;">
                     <i class=" fa fa-cogs"></i>
                     <span>
                         <%- trans('MENU_CP') %>
                     </span>
+                    <span class="dcjq-icon"></span>
+
                 </a>
                 <ul class="sub">
                     <li>
                         <a href="/auth/WEB/users/list_users">
-                            <span class=" fa fa-user">
+                            <i class=" fa fa-users"></i>
+                            <span>
                                 <%- trans('MENU_CP_USERS') %>
                             </span>
                         </a>
@@ -116,7 +113,8 @@
                 <ul class="sub">
                     <li>
                         <a href="/auth/WEB/gis/upload">
-                            <span class=" fa fa-upload">
+                            <i class=" fa fa-upload"></i>
+                            <span>
                                 <%- trans('MENU_CP_UPFILE') %>
                             </span>
                         </a>
@@ -125,7 +123,8 @@
                 <ul class="sub">
                     <li>
                         <a href="/auth/WEB/admin/formulas">
-                            <span class=" fa fa-wrench ">
+                            <i class=" fa fa-wrench"></i>
+                            <span>
                                 <%- trans('MENU_CP_FORM') %>
                             </span>
                         </a>
@@ -134,7 +133,8 @@
                 <ul class="sub">
                     <li>
                         <a href="/auth/WEB/maps/view_data">
-                            <span class=" fa fa-road ">
+                            <i class=" fa fa-road"></i>
+                            <span>
                                 Edit Tracks
                             </span>
                         </a>
@@ -143,7 +143,8 @@
                 <ul class="sub">
                     <li>
                         <a href="/auth/WEB/budget/costs">
-                            <span class=" fa fa-money ">
+                            <i class=" fa fa-money"></i>
+                            <span>
                                 <%- trans('MENU_COST') %>
                             </span>
                         </a>
@@ -151,69 +152,9 @@
                 </ul>
             </li>
             <% } %>
-                <!-- <li class="sub-menu">
-            <a href="javascript:;">
-                <i class="fa fa-desktop"></i>
-                <span>UI Elements</span>
-            </a>
-            <ul class="sub">
-                <li><a href="general.html">General</a></li>
-                <li><a href="buttons.html">Buttons</a></li>
-                <li><a href="panels.html">Panels</a></li>
-            </ul>
-        </li>
-
-        <li class="sub-menu">
-            <a href="javascript:;">
-                <i class="fa fa-cogs"></i>
-                <span>Components</span>
-            </a>
-            <ul class="sub">
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="todo_list.html">Todo List</a></li>
-            </ul>
-        </li>
-        <li class="sub-menu">
-            <a href="javascript:;">
-                <i class="fa fa-book"></i>
-                <span>Extra Pages</span>
-            </a>
-            <ul class="sub">
-                <li><a href="blank.html">Blank Page</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="lock_screen.html">Lock Screen</a></li>
-            </ul>
-        </li>
-        <li class="sub-menu">
-            <a href="javascript:;">
-                <i class="fa fa-tasks"></i>
-                <span>Forms</span>
-            </a>
-            <ul class="sub">
-                <li><a href="form_component.html">Form Components</a></li>
-            </ul>
-        </li>
-        <li class="sub-menu">
-            <a href="javascript:;">
-                <i class="fa fa-th"></i>
-                <span>Data Tables</span>
-            </a>
-            <ul class="sub">
-                <li><a href="basic_table.html">Basic Table</a></li>
-                <li><a href="responsive_table.html">Responsive Table</a></li>
-            </ul>
-        </li>
-        <li class="sub-menu">
-            <a href="javascript:;">
-                <i class=" fa fa-bar-chart-o"></i>
-                <span>Charts</span>
-            </a>
-            <ul class="sub">
-                <li><a href="morris.html">Morris</a></li>
-                <li><a href="chartjs.html">Chartjs</a></li>
-            </ul>
-        </li> -->
+                <p class="centered sidebar-secondary-logo">
+                    <img src="/assets/img/logo-banco-mundial.png" alt="The World Bank" />
+                </p>
 
     </ul>
     <!-- sidebar menu end-->
