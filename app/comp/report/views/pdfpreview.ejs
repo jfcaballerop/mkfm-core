@@ -104,7 +104,11 @@
                                             <div class="col-md-12">
                                                 <div class="search">
                                                     <span class="fa fa-search"></span>
-                                                    <input id="searchtool" type="text" placeholder="Search term">
+                                                    <input id="searchtool" type="text" list="json-datalist" class="form-control round-form">
+                                                    <datalist id="json-datalist"></datalist>
+                                                    <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                                    <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
+
                                                     <div id="spinner" class="spinner" style="display:none;">
                                                         <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
                                                     </div>

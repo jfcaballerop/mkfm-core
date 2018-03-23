@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
             api_key: config.MAPS_API_KEY
         });
     });
-    console.log('## Files 2: ' + list_files);
+    // console.log('## Files 2: ' + list_files);
 
 });
 
@@ -135,7 +135,7 @@ router.get('/view_data', function (req, resp, next) {
 
     // now wait for all promises to be done
     Promise.all(promises).then(function (allData) {
-        console.log('## maps.js ## Promise.all ##');
+        // console.log('## maps.js ## Promise.all ##');
 
         resp.render('maps_data', {
             utm: utm,

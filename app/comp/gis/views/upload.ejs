@@ -37,102 +37,125 @@
                     <!--main content start-->
                     <section id="main-content">
                         <section class="wrapper">
-                            <h3><i class="fa fa-angle-right"></i>
-                                <%- trans('LOADFILE_TITLE') %>
-                            </h3>
+
                             <div class="row mt">
                                 <div class="col-md-12">
-                                    <div class="form-panel">
-                                        <!-- Modal -->
-                                        <div id="modal_checkext" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
+                                    <h3>
+                                        <i class="fa fa-angle-right"></i>
+                                        <%- trans('LOADFILE_TITLE') %>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row mt">
+                                <div class="col-md-11 col-md-offset-1">
+                                    <!-- Modal -->
+                                    <div id="modal_checkext" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
 
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">
-                                                            <%- trans('LOADFILE_TITLE_MODAL') %>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>
-                                                            <%- trans('LOADFILE_TITLE_MODAL_MSG1')%> (
-                                                                <span id="modal_check_ext_orig"> </span> )
-                                                                <%- trans('LOADFILE_TITLE_MODAL_MSG2')%> (
-                                                                    <span id="modal_check_ext_val"> </span> )
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal"><%- trans('CLOSE')%></button>
-                                                    </div>
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">
+                                                        <%- trans('LOADFILE_TITLE_MODAL') %>
+                                                    </h4>
                                                 </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        <%- trans('LOADFILE_TITLE_MODAL_MSG1')%> (
+                                                            <span id="modal_check_ext_orig"> </span> )
+                                                            <%- trans('LOADFILE_TITLE_MODAL_MSG2')%> (
+                                                                <span id="modal_check_ext_val"> </span> )
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        <%- trans('CLOSE')%>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <form id="upload_file_form" class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="#">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 col-sm-2 control-label">
+                                                <%- trans('TYPE_FILE') %>
+                                            </label>
+                                            <div class="col-sm-2">
+
+                                                <select id="type_file" class="form-control" name="type">
+                                                    <% for (var j=0; j < ft.length; j++){ %>
+                                                        <option value="<%= ft[j].extension%>">
+                                                            <%= ft[j].type %>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <input id="file_upload" type="file" name="file" class="alert alert-info">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <!-- <input type="submit" value="Upload"> -->
+                                                <button type="submit" class="btn btn-success" value="Upload">
+                                                    <i class="fa fa-check"></i>
+                                                    <%- trans('UPLOAD') %>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    <%- trans('CANCEL') %>
+                                                </button>
 
                                             </div>
                                         </div>
-                                        <form id="upload_file_form" class="form-horizontal style-form" enctype="multipart/form-data" method="post" action="#">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 col-sm-2 control-label"><%- trans('TYPE_FILE') %></label>
-                                                <div class="col-sm-2">
-
-                                                    <select id="type_file" class="form-control" name="type">
-                                                        <% for (var j=0; j < ft.length; j++){ %>
-                                                            <option value="<%= ft[j].extension%>"><%= ft[j].type %></option>
-                                                            <% } %>
-                                                          </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-10">
-                                                    <input id="file_upload" type="file" name="file" class="alert alert-info">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-10">
-                                                    <!-- <input type="submit" value="Upload"> -->
-                                                    <button type="submit" class="btn btn-success" value="Upload"><i class="fa fa-check"></i> <%- trans('UPLOAD') %></button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><%- trans('CANCEL') %></button>
-
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- /content-panel -->
+                                    </form>
                                 </div>
-                                <!-- /col-md-12 -->
+                                <!-- /content-panel -->
                             </div>
                             <!-- /row -->
                             <div class="row mt">
                                 <div class="col-md-12">
                                     <div class="content-panel" id="listado_ficheros">
-                                        <h4><i class="fa fa-angle-right"></i>
+                                        <h3>
+                                            <i class="fa fa-angle-right"></i>
                                             <%- trans('LOADFILE_TITLE_LISTADO') %>
-                                        </h4>
+                                        </h3>
                                         <table id="table_files" class="table table-striped table-advance table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-file"></i>
+                                                    <th>
+                                                        <i class="fa fa-file"></i>
                                                         <%- trans('LOADFILE_TITLE_ORIGNAME') %>
                                                     </th>
-                                                    <th><i class="fa fa-cubes"></i>
+                                                    <th>
+                                                        <i class="fa fa-cubes"></i>
                                                         <%- trans('LOADFILE_TITLE_ASSETCODE') %>
                                                     </th>
-                                                    <th><i class="fa fa-list-alt"></i>
+                                                    <th>
+                                                        <i class="fa fa-list-alt"></i>
                                                         <%- trans('LOADFILE_TITLE_TYPE') %>
                                                     </th>
-                                                    <th><i class="fa fa-code"></i>
+                                                    <th>
+                                                        <i class="fa fa-code"></i>
                                                         <%- trans('LOADFILE_TITLE_MIME') %>
                                                     </th>
-                                                    <th><i class="fa fa-hdd-o"></i>
+                                                    <th>
+                                                        <i class="fa fa-hdd-o"></i>
                                                         <%- trans('LOADFILE_TITLE_SIZE') %>
                                                     </th>
-                                                    <th><i class="fa fa-user-circle"></i>
+                                                    <th>
+                                                        <i class="fa fa-user-circle"></i>
                                                         <%- trans('LOADFILE_TITLE_PROP') %>
                                                     </th>
-                                                    <th><i class=" fa fa-calendar"></i>
+                                                    <th>
+                                                        <i class=" fa fa-calendar"></i>
                                                         <%- trans('LOADFILE_TITLE_DATE') %>
                                                     </th>
-                                                    <th><i class=" fa fa-edit"></i>
+                                                    <th>
+                                                        <i class=" fa fa-edit"></i>
                                                         <%- trans('LOADFILE_TITLE_ACTION') %>
                                                     </th>
                                                 </tr>
@@ -171,18 +194,18 @@
                                                             <div id="button_<%= fup[i]._id %>">
                                                                 <% if( "pending" == fup[i].status && false) {   %>
                                                                     <button onclick="validate('<%= fup[i]._id %>');" class="btn btn-warning btn-xs">
-                                                                        <i class="fa fa-question-circle"> Sin validar</i> 
+                                                                        <i class="fa fa-question-circle"> Sin validar</i>
                                                                     </button>
                                                                     <% } else if( "validate" == fup[i].status ) { %>
                                                                         <button class="btn btn-success btn-xs">
-                                                                            <i class="fa fa-check"></i> 
+                                                                            <i class="fa fa-check"></i>
                                                                         </button>
                                                                         <!-- <button class="btn btn-warning btn-xs">
                                                                             <i class="fa fa-exchange"></i> 
                                                                         </button> -->
                                                                         <% } else if( "error" == fup[i].status ) { %>
                                                                             <button class="btn btn-danger btn-xs">
-                                                                                <i class="fa fa-exclamation-triangle"> Error</i> 
+                                                                                <i class="fa fa-exclamation-triangle"> Error</i>
                                                                             </button>
                                                                             <% } %>
                                                                                 <%# if(fup[i].activo){ %>
@@ -192,8 +215,8 @@
                                                                                         <%# }   %>
 
                                                                                             <button onclick="delfile('<%= fup[i]._id %>');" class="btn btn-danger btn-xs">
-                                                                        <i class="fa fa-trash-o"></i> 
-                                                                     </button>
+                                                                                                <i class="fa fa-trash-o"></i>
+                                                                                            </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -230,7 +253,7 @@
         <script>
             function validate(id) {
                 // alert("VALIDATE " + id);
-                $.post('/auth/WEB/gis/validate/' + id, function(returnedData) {
+                $.post('/auth/WEB/gis/validate/' + id, function (returnedData) {
                     console.log(returnedData);
                     var rowCount = $('#table_files tr').length - 1; //Hay que quitar el TH
                     console.log('rowCount ' + rowCount);
@@ -251,7 +274,7 @@
 
             function desactivate(id) {
                 // alert("DES " + id);
-                $.post('/auth/WEB/gis/desactivate/' + id, function(returnedData) {
+                $.post('/auth/WEB/gis/desactivate/' + id, function (returnedData) {
                     //console.log(returnedData);
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
 
@@ -261,7 +284,7 @@
 
             function activate(id) {
                 // alert("ACT " + id);
-                $.post('/auth/WEB/gis/activate/' + id, function(returnedData) {
+                $.post('/auth/WEB/gis/activate/' + id, function (returnedData) {
                     //console.log(returnedData);
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
 
@@ -270,7 +293,7 @@
             };
 
             function delfile(id) {
-                $.post('/auth/WEB/gis/delete/' + id, function(returnedData) {
+                $.post('/auth/WEB/gis/delete/' + id, function (returnedData) {
                     //     //console.log(returnedData);
                     $("#listado_ficheros").load(location.href + " #listado_ficheros"); // Add space between URL and selector.
 
@@ -278,7 +301,7 @@
 
             };
 
-            $("#upload_file_form").bind("submit", function() {
+            $("#upload_file_form").bind("submit", function () {
                 // above check 
                 var ext = $('#file_upload').val().split('.').pop().toLowerCase();
                 var ext_sel = $('#type_file').val();

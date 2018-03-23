@@ -4,7 +4,7 @@
 <head>
     <% include partials/head %>
 
-        <style>
+        <!-- <style>
             /* Always set the map height explicitly to define the size of the div
              * element that contains the map. */
 
@@ -29,7 +29,7 @@
                 word-break: keep-all;
                 background-color: white;
             }
-        </style>
+        </style> -->
 </head>
 
 <body>
@@ -60,23 +60,26 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3>
-                    <i class="fa fa-angle-right"></i>
-                    <%- trans('MAPSDATA_TITLE') %>
-                </h3>
-                <!-- page start-->
                 <div class="row mt">
-                    <div class="col-md-12" style="height:80vh;">
+                    <div class="col-md-12">
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
+                            <%- trans('MAPSDATA_TITLE') %>
+                        </h3>
+                    </div>
+                </div>
+                <div class="row mt">
+                    <div class="col-md-12">
                         <div class="content-panel">
-                            <div class="form-panel">
+                            <h4>
+                                <i class="fa fa-angle-right">
+                                    <%- trans('MAPSDATA_FILTER') %>
+                                </i>
+                            </h4>
+                            <hr>
+                            <div class="form-inline">
+                                <div class="form-group">
 
-                                <h4>
-                                    <i class="fa fa-angle-right">
-                                        <%- trans('MAPSDATA_FILTER') %>
-                                    </i>
-                                </h4>
-                                <hr>
-                                <div class="form-inline">
                                     <select id="roads" class="form-control" style="width:auto;">
                                         <option value="0">-
                                             <%- trans('MAPSDATA_SELECT_ROAD') %> -</option>
@@ -100,7 +103,9 @@
                                             <% }); %>
 
                                     </select>
-                                    <br>
+                                </div>
+                                <div class="form-group">
+
                                     <button id="editbutton" onclick="go_edit_road();" type="button" class="btn btn-primary" style="display: none;">
                                         <i class="fa fa-pencil-square-o">
                                             <%- trans('MAPSDATA_BUTTON_EDIT') %>
@@ -124,33 +129,35 @@
                                         <%- trans('MAPSDATA_BUTTON_EXPORT') %>
                                     </button>
                                     <span id="ultimaversion" style="display: none;"></span>
-                                    <div>
-                                        <div id="accordion" style="display:none;">
-                                            <div class="table-responsive">
-                                                <table id="dataTable" class="table table-bordered">
-
-                                                    <tr>
-
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- form panel-->
                                 </div>
-                                <!--/content-panel -->
                             </div>
+                            <div>
+                                <div id="accordion" style="display:none;">
+                                    <div class="table-responsive">
+                                        <table id="dataTable" class="table table-bordered">
+
+                                            <tr>
+
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- form panel-->
                         </div>
-                        <!-- page end-->
+                        <!--/content-panel -->
+                    </div>
+                </div>
+                <!-- page end-->
             </section>
         </section>
         <!-- /MAIN CONTENT -->
@@ -167,7 +174,6 @@
     <% include partials/footer_scripts %>
 
         <!--common script for all pages-->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 
         <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
@@ -177,6 +183,7 @@
         <% include ./partials/maps_data_scripts %>
 
             <script src="/assets/js/jquery.table2excel.min.js"></script>
+
 
 </body>
 

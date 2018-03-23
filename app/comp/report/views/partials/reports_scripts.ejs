@@ -1,328 +1,446 @@
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $(":radio").prop('disabled', true);
         $("#generateReport").prop('disabled', true);
 
-        $('#openPdf').click(function() {
+        $('#openPdf').click(function () {
 
             pdfMake.createPdf(docDefinition).open();
         });
 
-        $("#searchtool").on('keyup', function(e) {
-            var $this = $(this);
-            if (e.keyCode == 13) {
-                $(":radio").prop('checked', false);
 
+        $("#json-datalist").on('click', function (e) {
+            // Do something
+            alert('Buscando ...' + $this.val().length);
+
+            var dataPost = {};
+
+            if ($this.val().length <= 0) {
                 $('#error').hide();
                 $('#error').empty();
-                $('#response').hide();
-                $('#response').empty();
-                var dataPost = {};
+                $('#error').append("Empty value.<br>Try again.");
+                $('#error').show();
 
-                if ($this.val().length <= 0) {
+            } else {
+
+
+                // $('#datainfo').show();
+                // $('#dataupload').show();
+                var p1 = $.ajax({
+                    url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
+                    data: JSON.stringify(dataPost),
+                    type: 'POST',
+                    contentType: 'application/json'
+                }, function (data) {
+                    //// //console.log('koboinfo ' + JSON.stringify(data));
+                    return (data);
+                });
+
+                Promise.all([p1]).then(function (values) {
+                    $('#spinner').show();
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        // if (feature.getProperty('nameoption') === 'Main Road') {
+                        map.data.remove(feature);
+                        // }
+
+                    });
+                    ifdt = values[0];
+                    ////console.log(ifdt);
+                    console.log('ifdt.properties.asset_type');
+                    console.log(ifdt.properties.asset_type);
+                    if (ifdt.properties.asset_type === 'ERROR') {
+                        $('#error').show();
+                        $('#error').append("Search not found.<br>Try again.");
+                    } else {
+                        ifdtobject = ifdt;
+                        console.log('ifdt:');
+                        console.log(ifdt);
+                    }
+                    $('#spinner').hide();
+
+                });
+            }
+        })
+
+        $("#searchtool").on('keyup', function (e) {
+
+            console.log(e);
+            console.log(' ');
+            console.log('e.keyCode: ');
+            console.log(e.keyCode);
+            var $this = $(this);
+
+            if (e.keyCode == 13 || e.keyCode == undefined) {
+                var $this = $(this);
+                if (e.keyCode == 13) {
+                    $(":radio").prop('checked', false);
+
                     $('#error').hide();
                     $('#error').empty();
-                    $('#error').append("Empty value.<br>Try again.");
-                    $('#error').show();
-                    $(":radio").prop('disabled', true);
-                    $("#generateReport").prop('disabled', true);
+                    $('#response').hide();
+                    $('#response').empty();
+                    var dataPost = {};
 
-                } else {
+                    if ($this.val().length <= 0) {
+                        $('#error').hide();
+                        $('#error').empty();
+                        $('#error').append("Empty value.<br>Try again.");
+                        $('#error').show();
+                        $(":radio").prop('disabled', true);
+                        $("#generateReport").prop('disabled', true);
 
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
-                        data: JSON.stringify(dataPost),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function(data) {
-                        //// console.log('koboinfo ' + JSON.stringify(data));
-                        return (data);
-                    });
-                    Promise.all([p1]).then(function(values) {
-                        $('#spinner').show();
-                        ifdt = values[0];
-                        // console.log(ifdt);
-                        if (ifdt.properties.asset_type === 'ERROR') {
-                            $('#error').show();
-                            $('#error').append("Search not found.<br>Try again.");
-                            $(":radio").prop('disabled', true);
-                            $("#generateReport").prop('disabled', true);
+                    } else {
 
 
-                        } else {
-                            var assetType = '';
-                            switch (ifdt.properties.asset_type) {
-                                case 'BRIDGE':
-                                    assetType = 'BRIDGE';
-                                    break;
-                                case 'ROAD':
-                                    assetType = 'ROAD';
-                                    break;
-                                case 'CULVERT':
-                                    assetType = 'CULVERT';
-                                    break
-                                case 'DRAINAGE':
-                                    assetType = 'DRAINAGE (no report for this asset)';
-                                    break
-                                case 'FORD':
-                                    assetType = 'CULVERT';
-                                    break;
-                                case 'GEOT':
-                                    assetType = 'GEOTECHNICAL';
-                                    break;
-                                case 'GEOT2':
-                                    assetType = 'GEOTECHNICAL';
-                                    break;
-                                default:
-                                    break;
+                        var p1 = $.ajax({
+                            url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
+                            data: JSON.stringify(dataPost),
+                            type: 'POST',
+                            contentType: 'application/json'
+                        }, function (data) {
+                            //// console.log('koboinfo ' + JSON.stringify(data));
+                            return (data);
+                        });
+                        Promise.all([p1]).then(function (values) {
+                            $('#spinner').show();
+                            ifdt = values[0];
+                            // console.log(ifdt);
+                            if (ifdt.properties.asset_type === 'ERROR') {
+                                $('#error').show();
+                                $('#error').append("Search not found.<br>Try again.");
+                                $(":radio").prop('disabled', true);
+                                $("#generateReport").prop('disabled', true);
+
+
+                            } else {
+                                var assetType = '';
+                                switch (ifdt.properties.asset_type) {
+                                    case 'BRIDGE':
+                                        assetType = 'BRIDGE';
+                                        break;
+                                    case 'ROAD':
+                                        assetType = 'ROAD';
+                                        break;
+                                    case 'CULVERT':
+                                        assetType = 'CULVERT';
+                                        break
+                                    case 'DRAINAGE':
+                                        assetType = 'DRAINAGE (no report for this asset)';
+                                        break
+                                    case 'FORD':
+                                        assetType = 'CULVERT';
+                                        break;
+                                    case 'GEOT':
+                                        assetType = 'GEOTECHNICAL';
+                                        break;
+                                    case 'GEOT2':
+                                        assetType = 'GEOTECHNICAL';
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                $('#response').empty();
+                                $('#response').show();
+                                $('#response').append("Asset type: " + assetType);
+                                switch (ifdt.properties.asset_type) {
+                                    case 'BRIDGE':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+
+                                        break;
+                                    case 'ROAD':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+
+                                        break;
+                                    case 'CULVERT':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break
+                                    case 'DRAINAGE':
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break
+                                    case 'FORD': // type of culvert
+                                        $(":radio[value*='RIDG']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='EAR']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='LVERT']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', false);
+                                        });
+                                        // $(":radio*").each(function(index) {
+                                        $(":radio[value*='RETA']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        $(":radio[value*='PAV']").each(function (index) {
+                                            $this = $(this);
+                                            $this.prop('disabled', true);
+                                        });
+                                        break;
+                                    case 'GEOT':
+                                        if (ifdt.properties.gtype[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype2[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype[0] === 'Embankment' ||
+                                            ifdt.properties.gtype2[0] === 'Embankment') {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        } else {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        };
+                                        break;
+                                    case 'GEOT2':
+                                        if (ifdt.properties.gtype[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype2[0].indexOf('uttin') > -1 ||
+                                            ifdt.properties.gtype[0] === 'Embankment' ||
+                                            ifdt.properties.gtype2[0] === 'Embankment') {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        } else {
+                                            $(":radio[value*='RIDG']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='EAR']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            $(":radio[value*='LVERT']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                            // $(":radio*").each(function(index) {
+                                            $(":radio[value*='RETA']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', false);
+                                            });
+                                            $(":radio[value*='PAV']").each(function (index) {
+                                                $this = $(this);
+                                                $this.prop('disabled', true);
+                                            });
+                                        };
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                                $("#generateReport").prop('disabled', true);
+
+
                             }
 
-                            $('#response').empty();
-                            $('#response').show();
-                            $('#response').append("Asset type: " + assetType);
-                            // console.log(ifdt.properties.asset_type);
-                            console.log(ifdt.properties.gtype);
-                            console.log(ifdt.properties.gtype2);
-                            switch (ifdt.properties.asset_type) {
-                                case 'BRIDGE':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
+                            $('#spinner').hide();
 
-                                    break;
-                                case 'ROAD':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
+                        });
+                    }
+                }
 
-                                    break;
-                                case 'CULVERT':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    break
-                                case 'DRAINAGE':
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    break
-                                case 'FORD': // type of culvert
-                                    $(":radio[value*='RIDG']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='EAR']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='LVERT']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', false);
-                                    });
-                                    // $(":radio*").each(function(index) {
-                                    $(":radio[value*='RETA']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    $(":radio[value*='PAV']").each(function(index) {
-                                        $this = $(this);
-                                        $this.prop('disabled', true);
-                                    });
-                                    break;
-                                case 'GEOT':
-                                    if (ifdt.properties.gtype === 'Cutting' ||
-                                        ifdt.properties.gtype2 === 'Cutting' ||
-                                        ifdt.properties.gtype === 'Embankment' ||
-                                        ifdt.properties.gtype2 === 'Embankment') {
-                                        $(":radio[value*='RIDG']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='EAR']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', false);
-                                        });
-                                        $(":radio[value*='LVERT']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        // $(":radio*").each(function(index) {
-                                        $(":radio[value*='RETA']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='PAV']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                    } else {
-                                        $(":radio[value*='RIDG']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='EAR']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='LVERT']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        // $(":radio*").each(function(index) {
-                                        $(":radio[value*='RETA']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', false);
-                                        });
-                                        $(":radio[value*='PAV']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                    };
-                                    break;
-                                case 'GEOT2':
-                                    if (ifdt.properties.gtype === 'Cutting' ||
-                                        ifdt.properties.gtype2 === 'Cutting' ||
-                                        ifdt.properties.gtype === 'Embankment' ||
-                                        ifdt.properties.gtype2 === 'Embankment') {
-                                        $(":radio[value*='RIDG']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='EAR']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', false);
-                                        });
-                                        $(":radio[value*='LVERT']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        // $(":radio*").each(function(index) {
-                                        $(":radio[value*='RETA']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='PAV']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                    } else {
-                                        $(":radio[value*='RIDG']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='EAR']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        $(":radio[value*='LVERT']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                        // $(":radio*").each(function(index) {
-                                        $(":radio[value*='RETA']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', false);
-                                        });
-                                        $(":radio[value*='PAV']").each(function(index) {
-                                            $this = $(this);
-                                            $this.prop('disabled', true);
-                                        });
-                                    };
-                                    break;
+            } else {
+                console.log('*************');
+                if ($this.val().length > 3) {
+                    // console.log('keyup');
+                    $('#json-datalist').empty();
+                    if (true) {
 
-                                default:
-                                    break;
-                            }
+                        var dataPost = {};
+                        console.log($this.val().length);
+                        if ($this.val().length > 0) {
 
-                            $("#generateReport").prop('disabled', true);
+                            var p1 = $.ajax({
+                                url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
+                                data: JSON.stringify(dataPost),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }, function (data) {
+                                //// //console.log('koboinfo ' + JSON.stringify(data));
+                                return (data);
+                            });
 
+                            console.log('Time elapsed!');
+                            Promise.all([p1]).then(function (values) {
+                                $('#spinner').show();
+                                console.log('values: ');
+                                console.log(values);
+                                console.log(Object.keys(values[0]));
+                                ifdt = values[0];
+                                filelist = values[1];
+                                $('#datainfo').hide();
+                                $('#dataupload').hide();
+                                $('#error').show();
+                                // $('#error').append(Object.keys(values[0]));
+                                var html1 = '';
+                                console.log(values[0]);
+                                $.each(values[0], function (key, element) {
+
+                                    // html1 += '<option value="' + key + '">';
+                                    $('#json-datalist').append(
+                                        '<option value="' + key + '">');
+                                });
+                                // .exec($('#json-datalist').html(html1));
+
+
+                                $('#error').append("<br><br>" +
+                                    "Search not found.<br>Try again.");
+                                // map.setCenter(new google.maps.LatLng(15.41, -61.32));
+                                // map.panTo(new google.maps.LatLng(15.41, -61.32));
+                                // map.setZoom(11);
+
+                                $('#spinner').hide();
+
+                            });
 
                         }
-
-                        $('#spinner').hide();
-
-                    });
+                    }
                 }
             }
-
         });
 
         var selected;
-        $(":radio").change(function() {
+        $(":radio").change(function () {
             $this = $(this);
             // console.log($this[0].value);
             selected = $this[0].value;
@@ -332,7 +450,7 @@
 
 
 
-        $('#generateReport').click(function() {
+        $('#generateReport').click(function () {
             var dataPost = {};
 
             var p1 = $.ajax({
@@ -341,11 +459,11 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 //// console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 $('#spinner').show();
                 ret = values[0];
                 // console.log(ret);

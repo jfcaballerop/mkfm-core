@@ -3,7 +3,7 @@
 
 <head>
     <% include partials/head %>
-        <style>
+        <!-- <style>
             th,
             td {
                 /*use this property to disbale soft wrap*/
@@ -12,7 +12,7 @@
                 word-break: keep-all;
                 background-color: white;
             }
-        </style>
+        </style> -->
 </head>
 
 <body>
@@ -43,12 +43,14 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-                <h3><i class="fa fa-angle-right"></i>
-                    <%- trans('EDIT_VIDEO_INFO_TITLE') %>
-                </h3>
+
                 <!-- page start-->
                 <div class="row mt">
-                    <div class="col-md-12" style="height:80vh;">
+                    <div class="col-md-12">
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
+                            <%- trans('EDIT_VIDEO_INFO_TITLE') %>
+                        </h3>
                         <div class="content-panel">
 
                             <div id="accordion">
@@ -59,19 +61,28 @@
 
                                             <input type="hidden" name="infodatatrack[_id]" value="<%- infodatatrack._id %>">
                                             <input type="hidden" name="infodatatrack[inverted]" value="<%- infodatatrack.inverted %>">
-                                            <label class="col-xs-2 control-label"><%- trans('ROAD') %> : </label>
+                                            <label class="col-xs-2 control-label">
+                                                <%- trans('ROAD') %> : </label>
                                             <div class="col-xs-6">
-                                                <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>" required>
-                                                <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>" required>
+                                                <input name="infodatatrack[properties][name]" type="text" class="form-control round-form input-sm" value="<%- infodatatrack.properties.name %>"
+                                                    required>
+                                                <input name="infodatatrack[properties][video_roads]" type="hidden" class="form-control round-form input-sm" value="<%- infodatatrack.properties.video_roads %>"
+                                                    required>
                                             </div>
                                             <div class="col-xs-4">
-                                                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> <%- trans('MODIFY') %></button>
-                                                <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal"><%- trans('CANCEL') %></button>
+                                                <button type="submit" class="btn btn-success btn-lg">
+                                                    <i class="fa fa-check"></i>
+                                                    <%- trans('MODIFY') %>
+                                                </button>
+                                                <button onclick="window.location='/auth/WEB/maps/view_data';" type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    <%- trans('CANCEL') %>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="row mt">
                                             <div class="col-xs-4">
-                                                <b><%- trans('UPDATED') %>:</b>
+                                                <b>
+                                                    <%- trans('UPDATED') %>:</b>
                                                 <%- moment(infodatatrack.updated_at).format('DD/MM/YYYY HH:mm:ss') %>
                                             </div>
 
@@ -83,10 +94,22 @@
                                         <div class="row mt">
 
                                             <div class="col-xs-4">
-                                                <button id="showall" type="button" class="btn btn-round btn-success"><i class="fa fa-eye"></i> <%- trans('EDIT_VIDEO_INFO_SHOW')%></button>
-                                                <button id="checkcoord" type="button" class="btn btn-round btn-warning"><i class="fa fa-files-o"></i> <%- trans('EDIT_VIDEO_INFO_CHECK')%></button>
-                                                <button id="addcoord" type="button" class="btn btn-round btn-theme03"><i class="fa fa-plus"></i> <%- trans('EDIT_VIDEO_INFO_ADD')%></button>
-                                                <button id="inverted" type="button" class="btn btn-round btn-primary"><i class="fa fa-refresh"></i> <%- trans('EDIT_VIDEO_INFO_INV')%></button>
+                                                <button id="showall" type="button" class="btn btn-round btn-success">
+                                                    <i class="fa fa-eye"></i>
+                                                    <%- trans('EDIT_VIDEO_INFO_SHOW')%>
+                                                </button>
+                                                <button id="checkcoord" type="button" class="btn btn-round btn-warning">
+                                                    <i class="fa fa-files-o"></i>
+                                                    <%- trans('EDIT_VIDEO_INFO_CHECK')%>
+                                                </button>
+                                                <button id="addcoord" type="button" class="btn btn-round btn-theme03">
+                                                    <i class="fa fa-plus"></i>
+                                                    <%- trans('EDIT_VIDEO_INFO_ADD')%>
+                                                </button>
+                                                <button id="inverted" type="button" class="btn btn-round btn-primary">
+                                                    <i class="fa fa-refresh"></i>
+                                                    <%- trans('EDIT_VIDEO_INFO_INV')%>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -99,11 +122,14 @@
                                             </div> -->
 
                                         <div class="row mt">
-                                            <div class="col-xs-12">
+                                            <div class="col-md-12">
                                                 <div class="paging"></div>
-                                                <table id="dataTable" class="table table-bordered table-xs">
+                                                <div class="table-responsive">
 
-                                                </table>
+                                                    <table id="dataTable" class="table table-bordered table-xs">
+                                                    </table>
+                                                </div>
+
 
 
                                             </div>
@@ -140,16 +166,6 @@
     <% include partials/footer_scripts %>
 
 
-        <!-- <script src="/assets/js/jquery.js "></script> -->
-        <!-- <script src="/assets/js/bootstrap.min.js "></script> -->
-        <script class="include " type="text/javascript " src="/assets/js/jquery.dcjqaccordion.2.7.js "></script>
-        <script src="/assets/js/jquery.scrollTo.min.js "></script>
-        <script src="/assets/js/jquery.nicescroll.js " type="text/javascript "></script>
-
-
-        <!--common script for all pages-->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js "></script>
-        <script src="/assets/js/common-scripts.js "></script>
         <script src="https://momentjs.com/downloads/moment-with-locales.min.js "></script>
         <script src="/assets/js/jquery-dateFormat.js"></script>
 
