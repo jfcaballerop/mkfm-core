@@ -37,30 +37,44 @@
                     <!--main content start-->
                     <section id="main-content">
                         <section class="wrapper">
-                            <h3><i class="fa fa-angle-right"></i>
-                                <%- trans('USER_TITLE') %>
-                            </h3>
+
+                            <div class="row mt">
+                                <div class="col-md-12">
+                                    <h3>
+                                        <i class="fa fa-angle-right"></i>
+                                        <%- trans('USER_TITLE') %>
+                                    </h3>
+                                </div>
+                            </div>
                             <div class="row mt" style="height:80vh;">
                                 <div class="col-md-12">
                                     <div class="content-panel">
                                         <table class="table table-striped table-advance table-hover">
-                                            <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#newUser"><i class="fa fa-user-plus"></i> <%- trans('USER') %></button>
+                                            <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#newUser">
+                                                <i class="fa fa-user-plus"></i>
+                                                <%- trans('USER') %>
+                                            </button>
                                             <hr>
                                             <thead>
                                                 <tr>
-                                                    <th><i class="fa fa-address-card-o"></i>
+                                                    <th>
+                                                        <i class="fa fa-address-card-o"></i>
                                                         <%- trans("USER_NOMBRE") %>
                                                     </th>
-                                                    <th><i class="fa fa-users"></i>
+                                                    <th>
+                                                        <i class="fa fa-users"></i>
                                                         <%- trans("USER_ROL") %>
                                                     </th>
-                                                    <th><i class="fa fa-user-circle"></i>
+                                                    <th>
+                                                        <i class="fa fa-user-circle"></i>
                                                         <%- trans("USER_LOGIN") %>
                                                     </th>
-                                                    <th><i class="fa fa-power-off"></i>
+                                                    <th>
+                                                        <i class="fa fa-power-off"></i>
                                                         <%- trans("USER_ESTADO") %>
                                                     </th>
-                                                    <th><i class=" fa fa-edit"></i>
+                                                    <th>
+                                                        <i class=" fa fa-edit"></i>
                                                         <%- trans("USER_ACCION") %>
                                                     </th>
                                                     <th></th>
@@ -96,9 +110,13 @@
                                                         <td>
                                                             <div id="button_<%= users[i]._id %>">
                                                                 <% if(users[i].activo){ %>
-                                                                    <button onclick="desactivate('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
+                                                                    <button onclick="desactivate('<%= users[i]._id %>');" class="btn btn-danger btn-xs">
+                                                                        <i class="fa fa-close"></i>
+                                                                    </button>
                                                                     <% } else { %>
-                                                                        <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+                                                                        <button onclick="activate('<%= users[i]._id %>');" class="btn btn-success btn-xs">
+                                                                            <i class="fa fa-check"></i>
+                                                                        </button>
                                                                         <% }   %>
                                                                             <button id="modifymodal" data-params='{"_id" : "<%= users[i]._id %>",
                                                                         "nombre" : "<%= users[i].nombre %>",
@@ -106,8 +124,13 @@
                                                                         "apellido2" : "<%= users[i].apellido2 %>",
                                                                         "login" : "<%= users[i].login %>",
                                                                         "password" : "<%= users[i].password %>"
-                                                                    }' class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyUser"><i class="fa fa-pencil"></i></button>
-                                                                            <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                                                    }' class="btn btn-primary btn-xs" data-toggle="modal"
+                                                                                data-target="#modifyUser">
+                                                                                <i class="fa fa-pencil"></i>
+                                                                            </button>
+                                                                            <button onclick="deluser('<%= users[i]._id %>');" class="btn btn-danger btn-xs">
+                                                                                <i class="fa fa-trash-o "></i>
+                                                                            </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -152,7 +175,7 @@
             //custom select box
             function desactivate(id) {
                 // alert("DES " + id);
-                $.post('/auth/WEB/users/desactivate/' + id, function(returnedData) {
+                $.post('/auth/WEB/users/desactivate/' + id, function (returnedData) {
                     //console.log(returnedData);
                     $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
@@ -163,7 +186,7 @@
 
             function activate(id) {
                 // alert("ACT " + id);
-                $.post('/auth/WEB/users/activate/' + id, function(returnedData) {
+                $.post('/auth/WEB/users/activate/' + id, function (returnedData) {
                     //console.log(returnedData);
                     $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
                     $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
@@ -174,7 +197,7 @@
 
             function deluser(id) {
                 // alert("ACT " + id);
-                $.post('/auth/WEB/users/delete/' + id, function(returnedData) {
+                $.post('/auth/WEB/users/delete/' + id, function (returnedData) {
                     //console.log(returnedData);
                     $('#myTableRow_' + id).remove();
 
@@ -182,7 +205,7 @@
 
             };
 
-            $(document).on("click", "#modifymodal", function() {
+            $(document).on("click", "#modifymodal", function () {
                 // var res = '{"id" :"' + $(this).data('data') + '"}'
                 var res = JSON.stringify($(this).data('params'));
                 // alert(res);
@@ -190,7 +213,7 @@
                 console.log(obj);
                 //console.log(obj[0].key);
                 //console.log(obj[1].key);
-                $.each(obj, function(key, value) {
+                $.each(obj, function (key, value) {
                     console.log(key, value);
                     $("input[name*='user[" + key + "]']").val(value);
                 });

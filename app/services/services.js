@@ -141,19 +141,19 @@ exports.docPdf = function (docDefinition, config, dbfields, temp) {
             // debug('dbfields.' + f.value + '    ' + evaluation);
             evaluation = eval('dbfields.' + f.value.replace('2', ''));
             // debug('dbfields.' + f.value.replace('2', '') + '    ' + evaluation);
-            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2', ''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '--');
+            doc_translate = doc_translate.replace(new RegExp(f.name.replace('2', ''), "g"), (evaluation !== undefined && evaluation !== '' && evaluation !== null) ? evaluation : '  ');
         } else if (f.type === 'map') {
             doc_translate = doc_translate.replace(f.name, encodeImageFileAsURL(path.join(__dirname, '../../public/media/', (f.path), f.value)));
         } else {
 
-            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '##--##' : f.value);
+            doc_translate = doc_translate.replace(new RegExp(f.name, "g"), f.value === '' ? '##  ##' : f.value);
         }
     }
     doc_translate = doc_translate.replace('##TITLE_HEADER##', temp.name);
 
     pixel = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDADknKzIrJDkyLjJAPTlEVo9dVk9PVq99hGiPz7ba1su2yMTk////5PP/9sTI////////////3f//////////////2wBDAT1AQFZLVqhdXaj/7Mjs////////////////////////////////////////////////////////////////////wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAUn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEB//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q==';
 
-    var find = ["##im\\w{2,30}##", "##dr\\w{2,30}##", "##\\w{2,70}##", "##--##"];
+    var find = ["##im\\w{2,30}##", "##dr\\w{2,30}##", "##\\w{2,70}##", "##  ##"];
     var toreplace = [pixel, pixel, '', pixel];
     var j = 0;
     for (var rep of find) {
