@@ -207,9 +207,11 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var chorizoParseado = JSON.stringify(chorizo).match(regex);
 
         var variables = [];
-        for (choricillo in chorizoParseado) {
-            variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
+
+        for (choricillo of chorizoParseado) {
+            variables.push(choricillo.replace(/#/g, ''));
         }
+
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType.replace(/%20/g, " ");
         var textToRender = '';
@@ -275,8 +277,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 assetIndex = i;
 
                                 if ((variables[v] === 'gcode' ||
-                                    variables[v] === 'gtype' ||
-                                    variables[v] === 'dcode') &&
+                                        variables[v] === 'gtype' ||
+                                        variables[v] === 'dcode') &&
                                     (ifdt.properties.gcode2[i] === req.params.assetCode ||
                                         ifdt.properties.dcode2[i] === req.params.assetCode)) {
                                     textToRender = ifdt.properties[variables[v] + '2'][i].toString();
@@ -298,12 +300,12 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 jsontoput['name'] = '##' + variables[v] + '##';
                                 jsontoput['type'] = 'dbfield';
                                 if ((variables[v] === 'gcode' ||
-                                    variables[v] === 'gtype' ||
-                                variables[v] === 'dcode') &&
+                                        variables[v] === 'gtype' ||
+                                        variables[v] === 'dcode') &&
                                     (ifdt.properties.gcode2[i] === req.params.assetCode ||
-                                     ifdt.properties.dcode2[i] === req.params.assetCode)) {
+                                        ifdt.properties.dcode2[i] === req.params.assetCode)) {
                                     jsontoput['value'] = 'properties.' + variables[v] + '2';
-                                    dbfields.properties[ variables[v] + '2'] = textToRender.toString();
+                                    dbfields.properties[variables[v] + '2'] = textToRender.toString();
                                     debug(dbfields);
                                 } else {
                                     dbfields.properties[variables[v]] = textToRender.toString();
@@ -410,15 +412,15 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                 }
                             }
                         }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
+
+
+
+
                         //else {
                         //     if ((variables[v].indexOf('img') > -1) || (variables[v].indexOf('ogo') > -1)) {
                         //         var jsontoput3 = JSON.parse(JSON.stringify(temp.config.fields[0]));
