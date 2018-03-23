@@ -207,8 +207,8 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
         var chorizoParseado = JSON.stringify(chorizo).match(regex);
 
         var variables = [];
-        for (choricillo in chorizoParseado) {
-            variables.push(chorizoParseado[choricillo].replace(/#/g, ''));
+        for (choricillo of chorizoParseado) {
+            variables.push(choricillo.replace(/#/g, ''));
         }
         var asscode = req.params.assetCode;
         var assetType = req.params.assetType.replace(/%20/g, " ");
@@ -304,7 +304,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
                                      ifdt.properties.dcode2[i] === req.params.assetCode)) {
                                     jsontoput['value'] = 'properties.' + variables[v] + '2';
                                     dbfields.properties[ variables[v] + '2'] = textToRender.toString();
-                                    debug(dbfields);
+                                    // debug(dbfields);
                                 } else {
                                     dbfields.properties[variables[v]] = textToRender.toString();
                                     jsontoput['value'] = 'properties.' + variables[v];
@@ -440,7 +440,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
                     // debug('temp.name:  ' + temp.name);
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
-                    debug(arrayJsonProp);
+                    // debug(arrayJsonProp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
                     }, {
