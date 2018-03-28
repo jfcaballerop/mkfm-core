@@ -442,7 +442,7 @@ router.post('/V1/generatePDF/:reportName/:assetType/:assetCode', async function 
 
                     // debug('temp.name:  ' + temp.name);
                     ret.docDefinition = await services.docPdf(temp.docDefinition, temp.config, dbfields, temp);
-                    debug(arrayJsonProp);
+                    // debug(arrayJsonProp);
                     await Template.findOneAndUpdate({
                         "config.HTML.id": req.params.reportName
                     }, {
