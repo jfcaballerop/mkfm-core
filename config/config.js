@@ -2,7 +2,8 @@ module.exports = {
     CLIENT_NAME: "INES",
     APP_NAME: 'dominica',
     TOKEN_SECRET: process.env.TOKEN_SECRET || "mkfwcorev1_20170815",
-    MAPS_API_KEY: 'AIzaSyA9u-Lw4kqLsjaKaZCfFEtxVbeXZJpW67c',
+    // MAPS_API_KEY: 'AIzaSyA9u-Lw4kqLsjaKaZCfFEtxVbeXZJpW67c',
+    MAPS_API_KEY: 'AIzaSyCbW4EbkDkwkbO8y1j02z-YRpFDzrwJ6Nw',
     MAPS_CENTER_POS: {
         lat: 15.41,
         lng: -61.32
