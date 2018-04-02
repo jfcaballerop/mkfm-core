@@ -3806,7 +3806,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
                                             ifdt.properties.gcode[i] !== "" &&
-                                            ifdt.properties.gtype[i].indexOf('aining') > 0 ) {
+                                            ifdt.properties.gtype[i].indexOf('aining') > 0) {
                                             // ////debug(ifdt.properties.gcode);
                                             // ////debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
                                             var numberOfScores = 0;
@@ -4062,7 +4062,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         }
                     }
                     await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) { }
+                        if (err) {}
                     });
                 }
                 // res.status(200).jsonp(ret);
@@ -4090,7 +4090,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
                                             ifdt.properties.gcode[i] !== null &&
                                             ifdt.properties.gcode[i] !== "" &&
-                                            ( ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment")
+                                            (ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment")
                                         ) {
                                             var numberOfScores = 0;
                                             var numberOfTypeOfFailureProcess = 0;
@@ -5001,20 +5001,22 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
 
     switch (postData.formname) {
         case 'Criticality':
-            ////debug('Criticality');
+            //debug('Criticality');
             var orArr = [];
             var orAssetArr = [];
             var andArr = [];
             var catArr = [];
             var promises = [];
-
+            //debug('*****************************************');
+            //debug(postData.filter);
+            //debug('*****************************************');
             for (var f of postData.filter) {
                 switch (f) {
                     case 'Bridge':
                         for (var f of postData.form) {
-                            // ////debug(f);
-                            // ////debug(formulasService.criticalityValue(f).score.min);
-                            // ////debug(formulasService.criticalityValue(f).score.max);
+                            //debug(f);
+                            //debug(formulasService.criticalityValue(f).score.min);
+                            //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.bcriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -5035,9 +5037,10 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                         break;
                     case 'Culvert':
                         for (var f of postData.form) {
-                            // ////debug(f);
-                            // ////debug(formulasService.criticalityValue(f).score.min);
-                            // ////debug(formulasService.criticalityValue(f).score.max);
+                            //debug('f    ' + f);
+                            //debug('formulasService.criticalityValue(f).score.min    ' + formulasService.criticalityValue(f).score.min);
+                            //debug('score.min   ' + formulasService.criticalityValue(f).score.min);
+                            //debug('score.max   ' + formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.Ccriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -5093,8 +5096,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                     default:
                         for (var f of postData.form) {
                             // ////debug(f);
-                            // ////debug(formulasService.criticalityValue(f).score.min);
-                            // ////debug(formulasService.criticalityValue(f).score.max);
+                            //debug(formulasService.criticalityValue(f).score.min);
+                            //debug(formulasService.criticalityValue(f).score.max);
                             orArr.push({
                                 "properties.rcriticality": {
                                     $gte: formulasService.criticalityValue(f).score.min,
@@ -5122,13 +5125,36 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             andArr.push({
                 $or: orArr
             });
+            //debug('orAssetArr: ');
+            //debug(orAssetArr);
+            //debug('andArr: ');
+            //debug(andArr);
 
             ////debug(JSON.stringify(andArr));
+            var wherearr = [];
 
+            //add codes asset
+            wherearr.push('rcriticality');
+            wherearr.push('bcriticality');
+            wherearr.push('Ccriticality');
+            wherearr.push('gcriticality');
+            wherearr.push('gcriticality2');
+            wherearr.push('name');
+            wherearr.push('rcode');
+
+            var selectjson = {
+                "geometry.coordinates": 1,
+                properties: []
+            };
+            for (var w of wherearr) {
+                selectjson.properties[w] = 1;
+            }
+            debug(JSON.stringify(andArr));
+            debug(selectjson);
             promises.push(Infodatatrack.find({
                 $and: andArr
 
-            }).exec(function (err, tracks) {
+            }, selectjson).exec(function (err, tracks) {
                 if (err) {
                     res.send(500, err.message);
                 }
@@ -5136,8 +5162,10 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 return tracks;
 
             }));
+            // //debug(Infodatatrack);
 
             Promise.all(promises).then(function (values) {
+                //debug('********0*************');
                 var tracks = [];
                 var resultados = [];
                 var ant = 0;
@@ -5153,7 +5181,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                     },
                     properties: {
                         rcriticality: [],
-                        name: ""
+                        name: "",
+                        color: "#ffffff"
                     }
                 };
                 var geoJsonPav = JSON.parse(JSON.stringify(geoJson));
@@ -5174,9 +5203,12 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             for (var [key, cval] of v.geometry.coordinates.entries()) {
                                 for (var f of postData.form) {
                                     for (var filter of postData.filter) {
+                                        // //debug('v.properties.Ccriticality[key]                ' + v.properties.Ccriticality[key]);
                                         switch (filter) {
                                             case 'Bridge':
                                                 if (v.properties.bcriticality[key] !== null &&
+                                                    v.properties.bcriticality[key] !== undefined &&
+                                                    v.properties.bcriticality[key] !== '' &&
                                                     v.properties.bcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.bcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antBridge == 0) antBridge = key - 1;
@@ -5194,25 +5226,51 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                 }
                                                 break;
                                             case 'Culvert':
-                                                if (v.properties.Ccriticality[key] !== null &&
-                                                    v.properties.Ccriticality[key] >= formulasService.criticalityValue(f).score.min &&
-                                                    v.properties.Ccriticality[key] < formulasService.criticalityValue(f).score.max) {
+                                                // //debug(v.properties.Ccriticality[indice]);
+                                                if (v.properties.Ccriticality[indice] !== null &&
+                                                    v.properties.Ccriticality[indice] !== undefined &&
+                                                    v.properties.Ccriticality[indice] !== '' &&
+                                                    v.properties.Ccriticality[indice] >= formulasService.criticalityValue(f).score.min &&
+                                                    v.properties.Ccriticality[indice] < formulasService.criticalityValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
-                                                        // ////debug('-- new geojson --');
+                                                        // //debug('-- new geojson --');
                                                         tracks.push(geoJsonCul);
                                                         geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                                                     }
-                                                    // ////debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
+                                                    // //debug('--- Add Coord Cul---' + key + ' : ant ' + (antCulvert + 1) + ' - ' + cval + ' #Crit: ' + v.properties.Ccriticality[key] + ' - ' + f);
                                                     geoJsonCul.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonCul.geometry.coordinates.push(cval);
-                                                    geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
+                                                    geoJsonCul.geometry.coordinates.push(cval);
+                                                    geoJsonCul.properties['rcriticality'] = 0.5;
+                                                    geoJsonCul.geometry["type"] = 'MultiPoint';
+                                                    geoJsonCul.properties['color'] = '';
+                                                    geoJsonCul.properties['color'] = formulasService.criticalityValue(f).score.color;
+                                                    //debug(geoJsonCul.properties['color'] + '********************************************************');
+                                                    geoJsonCul.properties['width'] = 30;
+                                                    geoJsonCul.properties["weight"] = 5;
+                                                    // geoJsonCul.properties["marker-symbol"] = "bus";
+                                                    // geoJsonCul.properties["description"] = "A description";
+                                                    geoJsonCul.properties["marker-size"] = "medium";
+                                                    // geoJsonCul.properties["marker-symbol"] = "bus";
+                                                    geoJsonCul.properties["marker-color"] = formulasService.criticalityValue(f).score.color;
+                                                    geoJsonCul.properties["stroke"] = formulasService.criticalityValue(f).score.color;
+                                                    // geoJsonCul.properties["stroke-opacity"] = 1.0;
+                                                    geoJsonCul.properties["stroke-width"] = 2;
+                                                    geoJsonCul.properties["fill"] = formulasService.criticalityValue(f).score.color;
+                                                    // geoJsonCul.properties["fill-opacity"] = 1;
+                                                    //debug(formulasService.criticalityValue(f).score.color);
+                                                    //debug(formulasService.criticalityValue(f));
+                                                    //debug(f);
+                                                    // console.log(JSON.stringify(geoJsonCul));
                                                     antCulvert = key;
+                                                    indice++;
                                                 }
                                                 break;
                                             case 'Geotechnical':
                                                 if (v.properties.gcriticality[key] !== null &&
+                                                    v.properties.gcriticality[key] !== undefined &&
+                                                    v.properties.gcriticality[key] !== '' &&
                                                     v.properties.gcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.gcriticality[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo == 0) antGeo = key - 1;
@@ -5224,11 +5282,13 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // ////debug('--- Add Coord Geo---' + key + ' : ant ' + (antGeo + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality[key] + ' - ' + f);
                                                     geoJsonGeo.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo.geometry.coordinates.push(cval);
-                                                    geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
+                                                    geoJsonGeo.geometry.coordinates.push(cval);
+                                                    geoJsonGeo.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antGeo = key;
                                                 }
                                                 if (v.properties.gcriticality2[key] !== null &&
+                                                    v.properties.gcriticality2[key] !== undefined &&
+                                                    v.properties.gcriticality2[key] !== '' &&
                                                     v.properties.gcriticality2[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.gcriticality2[key] < formulasService.criticalityValue(f).score.max) {
                                                     if (antGeo2 == 0) antGeo2 = key - 1;
@@ -5240,16 +5300,18 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // ////debug('--- Add Coord Geo2---' + key + ' : ant ' + (antGeo2 + 1) + ' - ' + cval + ' #Crit: ' + v.properties.gcriticality2[key] + ' - ' + f);
                                                     geoJsonGeo2.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonGeo2.geometry.coordinates.push(cval);
-                                                    geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
+                                                    geoJsonGeo2.geometry.coordinates.push(cval);
+                                                    geoJsonGeo2.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     antGeo2 = key;
                                                 }
                                                 break;
                                             default:
                                                 if (v.properties.rcriticality[key] !== null &&
+                                                    v.properties.rcriticality[key] !== undefined &&
+                                                    v.properties.rcriticality[key] !== '' &&
                                                     v.properties.rcriticality[key] >= formulasService.criticalityValue(f).score.min &&
                                                     v.properties.rcriticality[key] < formulasService.criticalityValue(f).score.max) {
-                                                    if (ant == 0) ant = key - 1;
+                                                    if (ant === 0) ant = key - 1;
                                                     if (key !== (ant + 1)) {
                                                         // ////debug('-- new geojson --');
                                                         tracks.push(geoJsonPav);
@@ -5258,8 +5320,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     // ////debug('--- Add Coord Pav ---' + key + ' : ant ' + (ant + 1) + ' - ' + cval + ' #Crit: ' + v.properties.rcriticality[key] + ' - ' + f);
                                                     geoJsonPav.properties.name = v.properties.name + ' - ' + f;
                                                     geoJsonPav.geometry.coordinates.push(cval);
-                                                    geoJsonBri.geometry.coordinates.push(cval);
-                                                    geoJsonBri.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
+                                                    geoJsonPav.geometry.coordinates.push(cval);
+                                                    geoJsonPav.properties['marker-color'] = formulasService.criticalityValue(f).score.color;
                                                     ant = key;
                                                 }
                                                 break;
@@ -5267,8 +5329,13 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                     }
 
                                 }
-                                if (key + 1 == v.geometry.coordinates.length) {
+                                if (key + 1 === v.geometry.coordinates.length) {
                                     // ////debug('-- new geojson --')
+                                    // console.log(geoJsonPav);
+                                    // console.log(geoJsonBri);
+                                    // console.log(geoJsonCul);
+                                    // console.log(geoJsonGeo);
+                                    // console.log(geoJsonGeo2);
                                     tracks.push(geoJsonPav);
                                     tracks.push(geoJsonBri);
                                     tracks.push(geoJsonCul);
@@ -5293,6 +5360,14 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             });
 
             break;
+
+
+            /**
+             * CONDITION
+             */
+
+
+
 
         case 'Condition':
             //debug('Condition');
@@ -5443,6 +5518,8 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
             for (var w of wherearr) {
                 selectjson.properties[w] = 1;
             }
+            debug(JSON.stringify(andArr));
+            debug(selectjson);
             promises.push(Infodatatrack.find({
                 $and: andArr
 
@@ -5482,7 +5559,6 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                 var geoJsonCul = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo = JSON.parse(JSON.stringify(geoJson));
                 var geoJsonGeo2 = JSON.parse(JSON.stringify(geoJson));
-                //debug('***********1**********');
 
                 if (values.length !== 0) {
                     values.forEach(function (val, index) {
@@ -5493,8 +5569,6 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                             antCulvert = 0;
                             antGeo = 0;
                             antGeo2 = 0;
-                            // //debug('*********2************');
-                            var indice = 0;
                             for (var [key, cval] of v.geometry.coordinates.entries()) {
                                 for (var f of postData.form) {
                                     for (var filter of postData.filter) {
@@ -5606,7 +5680,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                     v.properties.rcondition[key] !== '' &&
                                                     v.properties.rcondition[key] >= formulasService.conditionValue(f).score.min &&
                                                     v.properties.rcondition[key] < formulasService.conditionValue(f).score.max) {
-                                                    if (ant == 0) ant = key - 1;
+                                                    if (ant === 0) ant = key - 1;
                                                     if (key !== (ant + 1)) {
                                                         // ////debug('-- new geojson --');
                                                         tracks.push(geoJsonPav);
@@ -5624,7 +5698,7 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                     }
 
                                 }
-                                if (key + 1 == v.geometry.coordinates.length) {
+                                if (key + 1 === v.geometry.coordinates.length) {
                                     // ////debug('-- new geojson --')
                                     // console.log(geoJsonPav);
                                     // console.log(geoJsonBri);
