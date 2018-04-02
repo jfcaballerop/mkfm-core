@@ -158,7 +158,7 @@
 
         // Set mouseover event for each feature.
         map.data.addListener('click', function (event) {
-            //console.log(event.latLng);
+            ////console.log(event.latLng);
             infoWnd.setPosition(event.latLng);
             infoWnd.setContent(getContent(event.feature.getProperty('kobo_type'), event));
             // Close active window if exists - [one might expect this to be default behaviour no?]				
@@ -205,7 +205,7 @@
     };
 
     $(document).ready(function () {
-        console.log("Funciones Listas a ejecutarse!");
+        //console.log("Funciones Listas a ejecutarse!");
         var featureActive = [];
         $('#Criticality').click(function () {
             var $this = $(this);
@@ -261,7 +261,7 @@
             $this = $(this);
             switch ($('input:radio[name=radioRisk]:checked').val()) {
                 case 'PhysicalDeterioration':
-                    console.log('PhysicalDeterioration');
+                    //console.log('PhysicalDeterioration');
                     $('#NaturalHazardsForm').hide();
                     $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
                         $(this).prop('checked', false);
@@ -270,7 +270,7 @@
 
                     break;
                 case 'NaturalHazards':
-                    console.log('NaturalHazards');
+                    //console.log('NaturalHazards');
                     $('#PhysicalCalculationForm').hide();
                     $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
                         $(this).prop('checked', false);
@@ -290,8 +290,8 @@
             var $this = $(this);
             var all = true;
 
-            console.log('******* map.data *****************');
-            console.log(map.data);
+            //console.log('******* map.data *****************');
+            //console.log(map.data);
             // ;.forEach(function(feature) {
             //     // If you want, check here for some constraints.
             //     if (feature.getProperty('nameoption') === 'Culvert') {
@@ -303,7 +303,7 @@
             if ($this.prop('checked')) {
                 // alert(' ## Culvert ##');
                 if ($('#mainr').is(':checked')) {
-                    console.log('#mainr');
+                    //console.log('#mainr');
                     all = false;
                     <% kobo_mainr_odt.forEach(function(element) { %>
                     // debug('---------------------------------------------------------------------------');
@@ -312,43 +312,43 @@
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#secondaryr').is(':checked')) {
-                    console.log('#secondaryr');
+                    //console.log('#secondaryr');
                     all = false;
 
                     <% kobo_secondaryr_odt.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#feederr').is(':checked')) {
-                    console.log('#feederr');
+                    //console.log('#feederr');
                     all = false;
 
                     <% kobo_feederr_odt.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#urbanr').is(':checked')) {
-                    console.log('#urbanr');
+                    //console.log('#urbanr');
                     all = false;
 
                     <% kobo_urbanr_odt.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
@@ -357,7 +357,7 @@
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "blue";
                     jsonObject.properties.nameoption = "Culvert";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
@@ -389,49 +389,49 @@
 
 
                 if ($('#mainr').is(':checked')) {
-                    console.log('#mainr');
+                    //console.log('#mainr');
                     all = false;
                     <% kobo_mainr_bridge.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "#F47983";
                     jsonObject.properties.nameoption = "BRIDGE";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#secondaryr').is(':checked')) {
-                    console.log('#secondaryr');
+                    //console.log('#secondaryr');
                     all = false;
 
                     <% kobo_secondaryr_bridge.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "#F47983";
                     jsonObject.properties.nameoption = "BRIDGE";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#feederr').is(':checked')) {
-                    console.log('#feederr');
+                    //console.log('#feederr');
                     all = false;
 
                     <% kobo_feederr_bridge.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "#F47983";
                     jsonObject.properties.nameoption = "BRIDGE";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#urbanr').is(':checked')) {
-                    console.log('#urbanr');
+                    //console.log('#urbanr');
                     all = false;
 
                     <% kobo_urbanr_bridge.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "#F47983";
                     jsonObject.properties.nameoption = "BRIDGE";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
@@ -440,7 +440,7 @@
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "#F47983";
                     jsonObject.properties.nameoption = "BRIDGE";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
 
                     <%}); %>
@@ -471,49 +471,49 @@
                 // alert(' ## GEOT ##');
 
                 if ($('#mainr').is(':checked')) {
-                    console.log('#mainr');
+                    //console.log('#mainr');
                     all = false;
                     <% kobo_mainr_geo.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "green";
                     jsonObject.properties.nameoption = "GEOT";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#secondaryr').is(':checked')) {
-                    console.log('#secondaryr');
+                    //console.log('#secondaryr');
                     all = false;
 
                     <% kobo_secondaryr_geo.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "green";
                     jsonObject.properties.nameoption = "GEOT";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#feederr').is(':checked')) {
-                    console.log('#feederr');
+                    //console.log('#feederr');
                     all = false;
 
                     <% kobo_feederr_geo.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "green";
                     jsonObject.properties.nameoption = "GEOT";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
                 if ($('#urbanr').is(':checked')) {
-                    console.log('#urbanr');
+                    //console.log('#urbanr');
                     all = false;
 
                     <% kobo_urbanr_geo.forEach(function(element) { %>
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "green";
                     jsonObject.properties.nameoption = "GEOT";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
@@ -522,7 +522,7 @@
                     jsonObject = <%- JSON.stringify(element) %>;
                     jsonObject.properties.color = "green";
                     jsonObject.properties.nameoption = "GEOT";
-                    //console.log(JSON.stringify(jsonObject));
+                    ////console.log(JSON.stringify(jsonObject));
                     map.data.addGeoJson(jsonObject);
 
                     <%}); %>
@@ -551,7 +551,7 @@
             if ($this.prop('checked')) {
                 <% mainr.forEach(function(element) { %>
                 jsonObject = <%- JSON.stringify(element) %>;
-                // console.log(jsonObject);
+                // //console.log(jsonObject);
                 jsonObject.properties.color = "#5b5e63";
                 jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
@@ -575,7 +575,7 @@
 
                 <% secondaryr.forEach(function(element) { %>
                 jsonObject = <%- JSON.stringify(element) %>;
-                // console.log(jsonObject);
+                // //console.log(jsonObject);
                 jsonObject.properties.color = "#f29318";
                 jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
@@ -599,7 +599,7 @@
 
                 <% feederr.forEach(function(element) { %>
                 jsonObject = <%- JSON.stringify(element) %>;
-                // console.log(jsonObject);
+                // //console.log(jsonObject);
                 jsonObject.properties.color = "#fc1e3f";
                 jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
@@ -623,7 +623,7 @@
 
                 <% urbanr.forEach(function(element) { %>
                 jsonObject = <%- JSON.stringify(element) %>;
-                // console.log(jsonObject);
+                // //console.log(jsonObject);
                 jsonObject.properties.color = "#a8b2f7";
                 jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
                 map.data.addGeoJson(jsonObject);
@@ -660,11 +660,11 @@
             };
             var pulsado = $this.is(':checked') | false;
 
-            console.log('pulsado ' + pulsado);
+            //console.log('pulsado ' + pulsado);
 
             $('#pavements input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -673,7 +673,7 @@
             });
             $('#assets input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -730,15 +730,15 @@
                         data: JSON.stringify(sendData),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
                     Promise.all([p1]).then(function (values) {
-                        // console.log(values);
+                        // //console.log(values);
                         if (values[0].length > 0) {
 
 
                             $.each(values[0], function (index, value) {
-                                console.log('value' + JSON.stringify(value));
+                                //console.log('value' + JSON.stringify(value));
                                 jsonObject = value;
                                 var color_to_paint = value.properties['marker-color'];
 
@@ -780,11 +780,11 @@
             };
             var pulsado = $this.is(':checked') | false;
 
-            console.log('pulsado ' + pulsado);
+            //console.log('pulsado ' + pulsado);
 
             $('#pavements input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -793,7 +793,7 @@
             });
             $('#assets input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -850,10 +850,10 @@
                         data: JSON.stringify(sendData),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
                     Promise.all([p1]).then(function (values) {
-                        console.log(values);
+                        //console.log(values);
                         if (values[0].length > 0) {
 
 
@@ -901,11 +901,11 @@
             };
             var pulsado = $this.is(':checked') | false;
 
-            console.log('pulsado ' + pulsado);
+            //console.log('pulsado ' + pulsado);
 
             $('#pavements input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -914,7 +914,7 @@
             });
             $('#assets input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -971,10 +971,10 @@
                         data: JSON.stringify(sendData),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
                     Promise.all([p1]).then(function (values) {
-                        console.log(values);
+                        //console.log(values);
                         if (values[0].length > 0) {
 
 
@@ -1021,11 +1021,11 @@
             };
             var pulsado = $this.is(':checked') | false;
 
-            console.log('pulsado ' + pulsado);
+            //console.log('pulsado ' + pulsado);
 
             $('#pavements input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -1034,7 +1034,7 @@
             });
             $('#assets input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -1091,10 +1091,10 @@
                         data: JSON.stringify(sendData),
                         type: 'POST',
                         contentType: 'application/json'
-                    }, function (data) { // console.log('koboinfo ' + JSON.stringify(data)); return (data);
+                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                     });
                     Promise.all([p1]).then(function (values) {
-                        console.log(values);
+                        //console.log(values);
                         if (values[0].length > 0) {
 
 
