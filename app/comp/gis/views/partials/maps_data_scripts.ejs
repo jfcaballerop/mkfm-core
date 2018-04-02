@@ -443,11 +443,31 @@
             domcomments2: "Comments to operation and maintainance"
         }
     };
-    $(document).ready(function() {
+    $(document).ready(function () {
         //console.log("ready!");
         // $('#editbutton').hide();
         // $('#versionbutton').hide();
         // $('#downloadbutton').hide();
+
+        var options = $('#infodatas option');
+        var arr = options.map(function (_, o) {
+            return {
+                t: $(o).text(),
+                v: o.value
+            };
+        }).get();
+        arr.sort(function (o1, o2) {
+            return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+        });
+        var first = {
+            t: '- Select option -',
+            v: '0'
+        }
+        arr.unshift(first);
+        options.each(function (i, o) {
+            o.value = arr[i].v;
+            $(o).text(arr[i].t);
+        });
 
     });
 
@@ -470,12 +490,12 @@
             window.location = '/auth/WEB/infodatatrack/edit_video_infodatatrack/' + dataTrack._id;
         }
     }
-    $('#downloadbutton').click(function() {
+    $('#downloadbutton').click(function () {
         $("<a />", {
                 "download": "data.geojson",
                 "href": "data:application/json," + encodeURIComponent(JSON.stringify(dataTrack))
             }).appendTo("body")
-            .click(function() {
+            .click(function () {
                 $(this).remove()
             })[0].click()
     });
@@ -486,7 +506,7 @@
         for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
         return buf;
     }
-    $('#exportbutton').click(function(e) {
+    $('#exportbutton').click(function (e) {
 
         var name = 'exported_track_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
         $("#dataTable").table2excel({
@@ -500,7 +520,7 @@
     });
 
 
-    $('#versionbutton').click(function() {
+    $('#versionbutton').click(function () {
         // alert('Versionando documento');
         dataPost.properties.video_roads = dataPost._id;
         delete dataPost._id;
@@ -513,31 +533,32 @@
             data: JSON.stringify(dataPost),
             type: 'POST',
             contentType: 'application/json'
-        }, function(data) {
+        }, function (data) {
             // //console.log('dataRoad ' + JSON.stringify(data));
             return (data);
         });
 
-        Promise.all([p1]).then(function(values) {
+        Promise.all([p1]).then(function (values) {
             $('#ultimaversion').empty();
             $('#editbutton').show();
             $('#editvideobutton').show();
             $('#downloadbutton').show();
             $('#exportbutton').show();
             ////console.log(JSON.stringify(values));
-            $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
+            $('#ultimaversion').append('<b> Version: ' + moment(values[0].updated_at).format(
+                'DD-MM-YYYY HH:mm:ss') + '</b>');
             $('#ultimaversion').show();
             dataTrack = values[0];
-        }).catch(function(reason) {
+        }).catch(function (reason) {
             //console.log(reason)
         });
     });
-    $(document).on('change', "#infodatas", function() {
+    $(document).on('change', "#infodatas", function () {
         var id = $("#infodatas").val();
         // alert("ACT " + id);
         $("#accordion").hide();
         $("#accordion").slideToggle('slow');
-        var p2 = $.get('/auth/WEB/infodatatrack/list_infodatatrackbyid/' + id, function(data) {
+        var p2 = $.get('/auth/WEB/infodatatrack/list_infodatatrackbyid/' + id, function (data) {
             console.log('list_infodatatrack ' + JSON.stringify(data));
             if (data) {
                 data.returnId = "datatrack";
@@ -548,13 +569,14 @@
 
         });
 
-        Promise.all([p2]).then(function(values) {
+        Promise.all([p2]).then(function (values) {
             var dataRoad;
             dataTrack = values[0];
             // console.log(JSON.stringify(dataTrack));
             if (dataTrack !== "undefined" && dataTrack != null) {
                 $('#ultimaversion').empty();
-                $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format('DD-MM-YYYY HH:mm:ss') + '</b>');
+                $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format(
+                    'DD-MM-YYYY HH:mm:ss') + '</b>');
                 $('#ultimaversion').show();
                 $('#editbutton').show();
                 $('#editvideobutton').show();
@@ -569,24 +591,27 @@
                     j = -1;
                 r[++j] = '<thead>';
                 r[++j] = '<tr>';
-                $.each(propertiesCols, function(key1, value1) {
-                    r[++j] = '<th colspan="' + Object.keys(propertiesCols[key1]).length + '" scope="colgroup" class="' +
+                $.each(propertiesCols, function (key1, value1) {
+                    r[++j] = '<th colspan="' + Object.keys(propertiesCols[key1]).length +
+                        '" scope="colgroup" class="' +
                         key1 + '" >' + key1 + '</th>';
                 });
                 r[++j] = '</tr>';
                 r[++j] = '<tr>';
-                $.each(propertiesCols, function(key1, value1) {
+                $.each(propertiesCols, function (key1, value1) {
                     //console.log(key1, value1);
-                    $.each(value1, function(key, value) {
+                    $.each(value1, function (key, value) {
                         //console.log(key, value);
-                        r[++j] = '<th title="' + key + '" class="' + key1 + '" style="max-width:100px; white-space:pre-wrap;">' + value + '</th>';
+                        r[++j] = '<th title="' + key + '" class="' + key1 +
+                            '" style="max-width:100px; white-space:pre-wrap;">' + value +
+                            '</th>';
                     });
                 });
                 r[++j] = '</tr></thead>';
 
-                dataRoad.properties.coordTimes.forEach(function(drval, drindex) {
+                dataRoad.properties.coordTimes.forEach(function (drval, drindex) {
                     r[++j] = '<tr>';
-                    $.each(propertiesCols, function(key1, value1) {
+                    $.each(propertiesCols, function (key1, value1) {
                         //console.log(key1, value1);
 
                         //console.log(key, value);
@@ -594,11 +619,14 @@
                             r[++j] = '<td>';
                             r[++j] = drindex;
                             r[++j] = '</td><td>';
-                            r[++j] = dataRoad.properties.inventario ? dataRoad.properties.inventario[drindex] : '--';
+                            r[++j] = dataRoad.properties.inventario ? dataRoad.properties
+                                .inventario[drindex] : '--';
                             r[++j] = '</td><td>';
-                            r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format('DD-MM-YYYY HH:mm:ss');
+                            r[++j] = moment(dataRoad.properties.coordTimes[drindex]).format(
+                                'DD-MM-YYYY HH:mm:ss');
                             r[++j] = '</td><td>';
-                            r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] + ' ]';
+                            r[++j] = '[ ' + dataRoad.geometry.coordinates[drindex] +
+                                ' ]';
                             r[++j] = '</td>';
                             r[++j] = '</td><td>';
                             r[++j] = dataRoad.geometry.coordinates[drindex][0];
@@ -610,9 +638,13 @@
                             r[++j] = dataRoad.geometry.coordinates[drindex][2];
                             r[++j] = '</td>';
                         } else {
-                            $.each(value1, function(key, value) {
+                            $.each(value1, function (key, value) {
                                 r[++j] = '<td>';
-                                r[++j] = (dataRoad.properties[key] != undefined && dataRoad.properties[key][drindex] != undefined) ? dataRoad.properties[key][drindex] : '--';
+                                r[++j] = (dataRoad.properties[key] != undefined &&
+                                    dataRoad.properties[key][drindex] !=
+                                    undefined) ? dataRoad.properties[key][
+                                    drindex
+                                ] : '--';
                                 r[++j] = '</td>';
                             });
                         }
@@ -635,7 +667,7 @@
 
         });
     });
-    $(document).on('change', "#roads", function() {
+    $(document).on('change', "#roads", function () {
         var id = $("#roads").val();
         $('#ultimaversion').empty();
         $('#ultimaversion').hide();
@@ -647,20 +679,20 @@
         $('#versionbutton').show();
         // alert("ACT " + id);
         if (id != 0) {
-            var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function(data) {
+            var p1 = $.post('/auth/WEB/road/tabular_data/' + id, function (data) {
                 data.returnId = "roads";
                 //console.log('dataRoad ' + JSON.stringify(data));
                 return (data);
             });
 
 
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 dataPost = values[0];
                 //console.log(dataTrack);
 
 
 
-            }).catch(function(reason) {
+            }).catch(function (reason) {
                 //console.log(reason)
             });
         } else {
