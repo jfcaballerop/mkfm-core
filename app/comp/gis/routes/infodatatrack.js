@@ -842,7 +842,8 @@ router.get('/V1/', function (req, res, next) {
 /* GET JSON Infodatatracks listing. */
 router.get('/V1/list_order', function (req, res, next) {
     var properties = {
-        'properties.name': 1
+        'properties.name': 1,
+        'properties.rcode': 1
 
     };
     Infodatatrack.find({}, properties).sort({
@@ -1331,7 +1332,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     :"No. of vertical signaling",
                     :"No. of street lights",
                  */
-                for (var i = 0; i < infodatatrack[0].properties.rcode.length ; i++){
+                for (var i = 0; i < infodatatrack[0].properties.rcode.length; i++) {
                     if (infodatatrack[0].properties['rcode'][i].indexOf(decodeURIComponent(req.params.info)) >= 0) {
                         roadCodeForAsset = infodatatrack[0].properties.rcode[i];
                         indexForAsset = i;
@@ -1515,7 +1516,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
 
                 }
-                
+
                 returnObject["properties"]["rcode"] = roadCodeForAsset; // achtung!! rcode rewriting
                 returnObject["properties"]["rnumbridges"] = rnumbridges;
                 returnObject["properties"]["rnumculverts"] = rnumculverts;
