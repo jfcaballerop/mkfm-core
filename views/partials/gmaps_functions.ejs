@@ -4,6 +4,9 @@
     var map;
     var activeInfoWindow;
     var featureCrit = [];
+    var featureCond = [];
+    var featureRiskPhy = [];
+    var featureRiskNat = [];
 
     function getContent(type, event) {
         var content = 'Type of Asset: <span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') +
@@ -737,6 +740,7 @@
         $('#CriticalityForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
+            var filterAsset = false;
             var filterPavArr = [];
             var filterAssetArr = [];
             var filterArr = [];
@@ -765,7 +769,7 @@
                     //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
-                    filterPav = true;
+                    filterAsset = true;
                 }
             });
             // alert($this.val());
@@ -788,7 +792,7 @@
             });
 
             if ($this.is(':checked')) {
-                if (!filterPav) {
+                if (!filterPav && !filterAsset) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
@@ -812,7 +816,7 @@
                 sendData.filterPav = filterPavArr;
                 sendData.filterAsset = filterAssetArr;
                 sendData.filter = filterArr;
-                if (pulsado && filterPav) {
+                if (pulsado && (filterPav || filterAsset)) {
 
                     var p1 = $.ajax({
                         url: '/auth/WEB/admin/get_formulas_tracks/',
@@ -955,7 +959,7 @@
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CONDITION: " +
                                     jsonObject.properties.name;
-                                featureCrit = map.data.addGeoJson(jsonObject);
+                                featureCond = map.data.addGeoJson(jsonObject);
 
                             });
                             $('#spinnerCondition').hide();
@@ -1076,7 +1080,7 @@
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "RISKPHY: " +
                                     jsonObject.properties.name;
-                                featureCrit = map.data.addGeoJson(jsonObject);
+                                featureRiskPhy = map.data.addGeoJson(jsonObject);
 
                             });
                             $('#spinnerCondition').hide();
@@ -1195,9 +1199,9 @@
                                 var color_to_paint = value.properties[
                                     'marker-color'];
                                 jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "RISKPHY: " +
+                                jsonObject.properties.nameoption = "RISKNAT: " +
                                     jsonObject.properties.name;
-                                featureCrit = map.data.addGeoJson(jsonObject);
+                                featureRiskNat = map.data.addGeoJson(jsonObject);
 
                             });
                             $('#spinnerCondition').hide();
