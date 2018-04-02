@@ -222,16 +222,105 @@
         });
         $('#ROAD').click(function () {
             var $this = $(this);
-            // if ($this.prop('checked')) {
-            //     $('#pavements').show();
-            // } else {
-            //     $('#pavements').hide();
-            //     $('#pavements input[type=checkbox]').each(function (index) {
-            //         $(this).prop('checked', false);
-            //     });
+
+            if ($('#mainr').is(':checked')) {
+                var $this = $(this);
+                // alert($this.prop('checked'));
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+                    <% mainr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#5b5e63";
+                    jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            }
+
+            if ($('#secondaryr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% secondaryr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#f29318";
+                    jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
+            if ($('#feederr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% feederr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#fc1e3f";
+                    jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
+            if ($('#urbanr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% urbanr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#a8b2f7";
+                    jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
 
 
-            // }
         });
 
         $('#Condition').click(function () {
@@ -544,101 +633,101 @@
         });
 
 
-        $('#mainr').click(function () {
-            var $this = $(this);
-            // alert($this.prop('checked'));
-            $('#spinner').show();
-            if ($this.prop('checked')) {
-                <% mainr.forEach(function(element) { %>
-                jsonObject = <%- JSON.stringify(element) %>;
-                // //console.log(jsonObject);
-                jsonObject.properties.color = "#5b5e63";
-                jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
-                map.data.addGeoJson(jsonObject);
-                <%}); %>
-            } else {
-                map.data.forEach(function (feature) {
-                    // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
-                        map.data.remove(feature);
-                    }
+        // $('#mainr').click(function () {
+        //     var $this = $(this);
+        //     // alert($this.prop('checked'));
+        //     $('#spinner').show();
+        //     if ($this.prop('checked')) {
+        //         <% mainr.forEach(function(element) { %>
+        //         jsonObject = <%- JSON.stringify(element) %>;
+        //         // //console.log(jsonObject);
+        //         jsonObject.properties.color = "#5b5e63";
+        //         jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
+        //         map.data.addGeoJson(jsonObject);
+        //         <%}); %>
+        //     } else {
+        //         map.data.forEach(function (feature) {
+        //             // If you want, check here for some constraints.
+        //             if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
+        //                 map.data.remove(feature);
+        //             }
 
-                });
-            }
-            $('#spinner').hide(2000);
-        });
-        $('#secondaryr').click(function () {
-            var $this = $(this);
-            //alert($this.val());
-            $('#spinner').show();
-            if ($this.prop('checked')) {
+        //         });
+        //     }
+        //     $('#spinner').hide(2000);
+        // });
+        // $('#secondaryr').click(function () {
+        //     var $this = $(this);
+        //     //alert($this.val());
+        //     $('#spinner').show();
+        //     if ($this.prop('checked')) {
 
-                <% secondaryr.forEach(function(element) { %>
-                jsonObject = <%- JSON.stringify(element) %>;
-                // //console.log(jsonObject);
-                jsonObject.properties.color = "#f29318";
-                jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
-                map.data.addGeoJson(jsonObject);
-                <%}); %>
-            } else {
-                map.data.forEach(function (feature) {
-                    // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
-                        map.data.remove(feature);
-                    }
+        //         <% secondaryr.forEach(function(element) { %>
+        //         jsonObject = <%- JSON.stringify(element) %>;
+        //         // //console.log(jsonObject);
+        //         jsonObject.properties.color = "#f29318";
+        //         jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
+        //         map.data.addGeoJson(jsonObject);
+        //         <%}); %>
+        //     } else {
+        //         map.data.forEach(function (feature) {
+        //             // If you want, check here for some constraints.
+        //             if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
+        //                 map.data.remove(feature);
+        //             }
 
-                });
-            }
-            $('#spinner').hide(2000);
-        });
-        $('#feederr').click(function () {
-            var $this = $(this);
-            //alert($this.val());
-            $('#spinner').show();
-            if ($this.prop('checked')) {
+        //         });
+        //     }
+        //     $('#spinner').hide(2000);
+        // });
+        // $('#feederr').click(function () {
+        //     var $this = $(this);
+        //     //alert($this.val());
+        //     $('#spinner').show();
+        //     if ($this.prop('checked')) {
 
-                <% feederr.forEach(function(element) { %>
-                jsonObject = <%- JSON.stringify(element) %>;
-                // //console.log(jsonObject);
-                jsonObject.properties.color = "#fc1e3f";
-                jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
-                map.data.addGeoJson(jsonObject);
-                <%}); %>
-            } else {
-                map.data.forEach(function (feature) {
-                    // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
-                        map.data.remove(feature);
-                    }
+        //         <% feederr.forEach(function(element) { %>
+        //         jsonObject = <%- JSON.stringify(element) %>;
+        //         // //console.log(jsonObject);
+        //         jsonObject.properties.color = "#fc1e3f";
+        //         jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
+        //         map.data.addGeoJson(jsonObject);
+        //         <%}); %>
+        //     } else {
+        //         map.data.forEach(function (feature) {
+        //             // If you want, check here for some constraints.
+        //             if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
+        //                 map.data.remove(feature);
+        //             }
 
-                });
-            }
-            $('#spinner').hide(2000);
-        });
-        $('#urbanr').click(function () {
-            var $this = $(this);
-            //alert($this.val());
-            $('#spinner').show();
-            if ($this.prop('checked')) {
+        //         });
+        //     }
+        //     $('#spinner').hide(2000);
+        // });
+        // $('#urbanr').click(function () {
+        //     var $this = $(this);
+        //     //alert($this.val());
+        //     $('#spinner').show();
+        //     if ($this.prop('checked')) {
 
-                <% urbanr.forEach(function(element) { %>
-                jsonObject = <%- JSON.stringify(element) %>;
-                // //console.log(jsonObject);
-                jsonObject.properties.color = "#a8b2f7";
-                jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
-                map.data.addGeoJson(jsonObject);
-                <%}); %>
-            } else {
-                map.data.forEach(function (feature) {
-                    // If you want, check here for some constraints.
-                    if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
-                        map.data.remove(feature);
-                    }
+        //         <% urbanr.forEach(function(element) { %>
+        //         jsonObject = <%- JSON.stringify(element) %>;
+        //         // //console.log(jsonObject);
+        //         jsonObject.properties.color = "#a8b2f7";
+        //         jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
+        //         map.data.addGeoJson(jsonObject);
+        //         <%}); %>
+        //     } else {
+        //         map.data.forEach(function (feature) {
+        //             // If you want, check here for some constraints.
+        //             if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
+        //                 map.data.remove(feature);
+        //             }
 
-                });
-            }
-            $('#spinner').hide(2000);
-        });
+        //         });
+        //     }
+        //     $('#spinner').hide(2000);
+        // });
 
         // Risk Assessment
         /**
@@ -740,7 +829,8 @@
                             $.each(values[0], function (index, value) {
                                 //console.log('value' + JSON.stringify(value));
                                 jsonObject = value;
-                                var color_to_paint = value.properties['marker-color'];
+                                var color_to_paint = value.properties[
+                                    'marker-color'];
 
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CRITICALITY: " +
@@ -859,7 +949,8 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = value.properties['marker-color'];
+                                var color_to_paint = value.properties[
+                                    'marker-color'];
 
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "CONDITION: " +
@@ -980,7 +1071,8 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = value.properties['marker-color'];
+                                var color_to_paint = value.properties[
+                                    'marker-color'];
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "RISKPHY: " +
                                     jsonObject.properties.name;
@@ -1100,7 +1192,8 @@
 
                             $.each(values[0], function (index, value) {
                                 jsonObject = value;
-                                var color_to_paint = value.properties['marker-color'];
+                                var color_to_paint = value.properties[
+                                    'marker-color'];
                                 jsonObject.properties.color = color_to_paint;
                                 jsonObject.properties.nameoption = "RISKPHY: " +
                                     jsonObject.properties.name;
