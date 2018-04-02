@@ -1,6 +1,6 @@
 module.exports = {
-    CLIENT_NAME: "INES",
-    APP_NAME: 'dominica',
+    CLIENT_NAME: "Risk",
+    APP_NAME: 'based Asset Management System',
     TOKEN_SECRET: process.env.TOKEN_SECRET || "mkfwcorev1_20170815",
     // MAPS_API_KEY: 'AIzaSyA9u-Lw4kqLsjaKaZCfFEtxVbeXZJpW67c',
     MAPS_API_KEY: 'AIzaSyCbW4EbkDkwkbO8y1j02z-YRpFDzrwJ6Nw',
