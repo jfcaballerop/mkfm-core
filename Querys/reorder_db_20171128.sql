@@ -411,7 +411,7 @@ domcomments2,LDOMComments,
 
 
 /**
-* Querys
+* Queries
 */
 db.koboinfos.update({"properties.kobo_type":"ODT"},{$set:{"properties.kobo_type":"Culvert"}},false,true);
 db.infodatatracks.update({"properties.koboedit.kobo_type":"ODT"},{$set:{"properties.koboedit":[]}},false,true);
