@@ -725,76 +725,67 @@
             });
 
             if ($this.is(':checked')) {
-                if (!filterPav && !filterAsset) {
+                if (!filterPav || !filterAsset) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
-
-            if (optChecked.length > 0) {
-
-                await $('#CriticalityForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCriticality').show();
-
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
-
-                    }
-
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && (filterPav || filterAsset)) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        // //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                //console.log('value' + JSON.stringify(value));
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "CRITICALITY: " +
-                                    jsonObject.properties.name;
-                                featureCrit = map.data.addGeoJson(jsonObject);
-
+                } else {
+                    if (optChecked.length > 0) {
+                        await $('#CriticalityForm input[type=checkbox]').each(function (index) {
+                            if ($(this).is(':checked')) {
+                                $('#spinnerCriticality').show();
+                                sendData.form.push($(this).val());
+                            } else {
+                                var ix = sendData.form.indexOf($(this).val())
+                                ix > -1 ? sendData.form.splice(ix, 1) : false;
+                            }
+                        });
+                        sendData.filterPav = filterPavArr;
+                        sendData.filterAsset = filterAssetArr;
+                        sendData.filter = filterArr;
+                        if (pulsado && (filterPav || filterAsset)) {
+                            var p1 = $.ajax({
+                                url: '/auth/WEB/admin/get_formulas_tracks/',
+                                data: JSON.stringify(sendData),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }, function (data) { // //console.log('koboinfo' + JSON.stringify(data)); 
+                                return (data);
                             });
-                            $('#spinnerCriticality').hide();
-
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
-
+                            Promise.all([p1]).then(function (values) { // //console.log(values); 
+                                if (values[0].length > 0) {
+                                    $.each(values[0], function (index, value) { //console.log('value' + JSON.stringify(value)); 
+                                        jsonObject = value;
+                                        var
+                                            color_to_paint = value.properties[
+                                                'marker-color'];
+                                        jsonObject.properties.color =
+                                            color_to_paint;
+                                        jsonObject.properties.nameoption =
+                                            "CRITICALITY: " +
+                                            jsonObject.properties.name;
+                                        featureCrit = map.data.addGeoJson(
+                                            jsonObject);
+                                    });
+                                    $('#spinnerCriticality').hide();
+                                    // $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated); } else { $('#spinnerCriticality').hide();
+                                }
+                            });
                         } else {
                             $('#spinnerCriticality').hide();
-
                         }
-                    });
-                } else {
-                    $('#spinnerCriticality').hide();
-
+                    }
                 }
             }
+
 
         });
 
         $('#ConditionForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
+            var filterAsset = false;
+
             var filterPavArr = [];
             var filterAssetArr = [];
             var filterArr = [];
@@ -823,7 +814,7 @@
                     //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
-                    filterPav = true;
+                    filterAsset = true;
                 }
             });
             // alert($this.val());
@@ -846,67 +837,70 @@
             });
 
             if ($this.is(':checked')) {
-                if (!filterPav) {
+                if (!filterPav || !filterAsset) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
+                } else {
+                    if (optChecked.length > 0) {
 
-            if (optChecked.length > 0) {
+                        await $('#ConditionForm input[type=checkbox]').each(function (index) {
+                            if ($(this).is(':checked')) {
+                                $('#spinnerCondition').show();
 
-                await $('#ConditionForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
+                                sendData.form.push($(this).val());
+                            } else {
+                                var ix = sendData.form.indexOf($(this).val())
+                                ix > -1 ? sendData.form.splice(ix, 1) : false;
 
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
+                            }
 
-                    }
+                        });
+                        sendData.filterPav = filterPavArr;
+                        sendData.filterAsset = filterAssetArr;
+                        sendData.filter = filterArr;
+                        if (pulsado && filterPav) {
 
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "CONDITION: " +
-                                    jsonObject.properties.name;
-                                featureCond = map.data.addGeoJson(jsonObject);
-
+                            var p1 = $.ajax({
+                                url: '/auth/WEB/admin/get_formulas_tracks/',
+                                data: JSON.stringify(sendData),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                             });
-                            $('#spinnerCondition').hide();
+                            Promise.all([p1]).then(function (values) {
+                                //console.log(values);
+                                if (values[0].length > 0) {
 
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
 
+                                    $.each(values[0], function (index, value) {
+                                        jsonObject = value;
+                                        var color_to_paint = value.properties[
+                                            'marker-color'];
+
+                                        jsonObject.properties.color =
+                                            color_to_paint;
+                                        jsonObject.properties.nameoption =
+                                            "CONDITION: " +
+                                            jsonObject.properties.name;
+                                        featureCond = map.data.addGeoJson(
+                                            jsonObject);
+
+                                    });
+                                    $('#spinnerCondition').hide();
+
+                                    //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                                } else {
+                                    $('#spinnerCondition').hide();
+
+                                }
+                            });
                         } else {
                             $('#spinnerCondition').hide();
 
                         }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
+                    }
                 }
             }
 
@@ -917,6 +911,7 @@
         $('#PhysicalCalculationForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
+            var filterAsset = false;
             var filterPavArr = [];
             var filterAssetArr = [];
             var filterArr = [];
@@ -968,68 +963,74 @@
             });
 
             if ($this.is(':checked')) {
-                if (!filterPav) {
+                if (!filterPav || !filterAsset) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
+                } else {
+                    if (optChecked.length > 0) {
 
-            if (optChecked.length > 0) {
+                        await $('#PhysicalCalculationForm input[type=checkbox]').each(function (
+                            index) {
+                            if ($(this).is(':checked')) {
+                                $('#spinnerCondition').show();
 
-                await $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
+                                sendData.form.push($(this).val());
+                            } else {
+                                var ix = sendData.form.indexOf($(this).val())
+                                ix > -1 ? sendData.form.splice(ix, 1) : false;
 
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
+                            }
 
-                    }
+                        });
+                        sendData.filterPav = filterPavArr;
+                        sendData.filterAsset = filterAssetArr;
+                        sendData.filter = filterArr;
+                        if (pulsado && filterPav) {
 
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "RISKPHY: " +
-                                    jsonObject.properties.name;
-                                featureRiskPhy = map.data.addGeoJson(jsonObject);
-
+                            var p1 = $.ajax({
+                                url: '/auth/WEB/admin/get_formulas_tracks/',
+                                data: JSON.stringify(sendData),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                             });
-                            $('#spinnerCondition').hide();
+                            Promise.all([p1]).then(function (values) {
+                                //console.log(values);
+                                if (values[0].length > 0) {
 
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
 
+                                    $.each(values[0], function (index, value) {
+                                        jsonObject = value;
+                                        var color_to_paint = value.properties[
+                                            'marker-color'];
+                                        jsonObject.properties.color =
+                                            color_to_paint;
+                                        jsonObject.properties.nameoption =
+                                            "RISKPHY: " +
+                                            jsonObject.properties.name;
+                                        featureRiskPhy = map.data.addGeoJson(
+                                            jsonObject);
+
+                                    });
+                                    $('#spinnerCondition').hide();
+
+                                    //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                                } else {
+                                    $('#spinnerCondition').hide();
+
+                                }
+                            });
                         } else {
                             $('#spinnerCondition').hide();
 
                         }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
+                    }
                 }
             }
+
+
 
         });
         /**
@@ -1038,6 +1039,7 @@
         $('#NaturalHazardsForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
+            var filterAsset = false;
             var filterPavArr = [];
             var filterAssetArr = [];
             var filterArr = [];
@@ -1089,68 +1091,73 @@
             });
 
             if ($this.is(':checked')) {
-                if (!filterPav) {
+                if (!filterPav || !filterAsset) {
                     $('#myModal').modal();
                     $('#alertModalContent').empty();
                     $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
+                } else {
+                    if (optChecked.length > 0) {
 
-            if (optChecked.length > 0) {
+                        await $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
+                            if ($(this).is(':checked')) {
+                                $('#spinnerCondition').show();
 
-                await $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
+                                sendData.form.push($(this).val());
+                            } else {
+                                var ix = sendData.form.indexOf($(this).val())
+                                ix > -1 ? sendData.form.splice(ix, 1) : false;
 
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
+                            }
 
-                    }
+                        });
+                        sendData.filterPav = filterPavArr;
+                        sendData.filterAsset = filterAssetArr;
+                        sendData.filter = filterArr;
+                        if (pulsado && filterPav) {
 
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "RISKNAT: " +
-                                    jsonObject.properties.name;
-                                featureRiskNat = map.data.addGeoJson(jsonObject);
-
+                            var p1 = $.ajax({
+                                url: '/auth/WEB/admin/get_formulas_tracks/',
+                                data: JSON.stringify(sendData),
+                                type: 'POST',
+                                contentType: 'application/json'
+                            }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
                             });
-                            $('#spinnerCondition').hide();
+                            Promise.all([p1]).then(function (values) {
+                                //console.log(values);
+                                if (values[0].length > 0) {
 
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
 
+                                    $.each(values[0], function (index, value) {
+                                        jsonObject = value;
+                                        var color_to_paint = value.properties[
+                                            'marker-color'];
+                                        jsonObject.properties.color =
+                                            color_to_paint;
+                                        jsonObject.properties.nameoption =
+                                            "RISKNAT: " +
+                                            jsonObject.properties.name;
+                                        featureRiskNat = map.data.addGeoJson(
+                                            jsonObject);
+
+                                    });
+                                    $('#spinnerCondition').hide();
+
+                                    //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
+
+                                } else {
+                                    $('#spinnerCondition').hide();
+
+                                }
+                            });
                         } else {
                             $('#spinnerCondition').hide();
 
                         }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
+                    }
                 }
             }
+
+
 
         });
     });
