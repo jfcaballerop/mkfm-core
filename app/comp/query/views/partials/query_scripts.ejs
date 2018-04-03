@@ -8,7 +8,7 @@
         var arrFiltersValues = [];
         var filtersDB = <%- JSON.stringify(filters) %>;
         var config = <%- JSON.stringify(config) %>;
-        console.log(config);
+        // console.log(config);
         // console.log(filtersDB);
         var arrColumnsChecked = [];
         var arrMarkerPos = [];
@@ -143,29 +143,7 @@
                         var filters = values[0].filters;
                         var filterDiv = "";
                         if (filters.length > 500) {
-                            filterDiv = 'Mas de 500 resultados disponibles<br>';
-                            console.log(config[filter]);
-                            if(config[filter].type !== undefined && config[filter].type === "String"){
-
-
-                                filterDiv += '<input id="searchtool" name="' +
-                                             filter +
-                                             '" type="text" list="json-datalist" class="form-control round-form">' +
-                                             '<datalist id="json-datalist">';
-
-                                var jsonDatalist = '';
-
-                                for(var i = 0; i < values[0].filters.length-1; i++) {
-                                    jsonDatalist += '<option value="' + values[0].filters[i] + '">';
-                                }
-                                jsonDatalist += "<br><br>" +
-                                    "Search not found.<br>Try again."
-                                filterDiv += jsonDatalist + '</datalist >';
-
-                            } else if (config[filter].type !== undefined && config[filter].type === "Number") {
-                                filterDiv += 'min: <input type=text></input><br>';
-                                filterDiv += 'max: <input type=text></input>';
-                            }
+                            filterDiv = 'Mas de 500 resultados disponibles';
                         } else {
                             filterDiv += '<select id="select' + filter +
                                 '" multiple="" class="form-control">';
@@ -544,126 +522,6 @@
 
             }
         }, 100);
-
-
-        $("#searchtool").on('keyup', function (e) {
-
-            console.log(e);
-            console.log(' ');
-            console.log('e.keyCode: ');
-            console.log(e.keyCode);
-            var $this = $(this);
-
-            if (e.keyCode == 13 || e.keyCode == undefined) {
-                var $this = $(this);
-                if (e.keyCode == 13) {
-                    $(":radio").prop('checked', false);
-
-                    $('#error').hide();
-                    $('#error').empty();
-                    $('#response').hide();
-                    $('#response').empty();
-                    var dataPost = {};
-
-                    if ($this.val().length <= 0) {
-                        $('#error').hide();
-                        $('#error').empty();
-                        $('#error').append("Empty value.<br>Try again.");
-                        $('#error').show();
-                        $(":radio").prop('disabled', true);
-                        $("#generateReport").prop('disabled', true);
-
-                    } else {
-
-
-                        var p1 = $.ajax({
-                            url: '/auth/WEB/infodatatrack/list_ifdt/' + $this.val(),
-                            data: JSON.stringify(dataPost),
-                            type: 'POST',
-                            contentType: 'application/json'
-                        }, function (data) {
-                            //// console.log('koboinfo ' + JSON.stringify(data));
-                            return (data);
-                        });
-                        Promise.all([p1]).then(function (values) {
-                            $('#spinner').show();
-                            ifdt = values[0];
-                            // console.log(ifdt);
-                            if (ifdt.properties.asset_type === 'ERROR') {
-                                $('#error').show();
-                                $('#error').append("Search not found.<br>Try again.");
-                                $(":radio").prop('disabled', true);
-                                $("#generateReport").prop('disabled', true);
-
-
-                            } else {
-                            }
-
-                            $('#spinner').hide();
-
-                        });
-                    }
-                }
-
-            } else {
-                console.log('*************');
-                if ($this.val().length > 3) {
-                    // console.log('keyup');
-                    $('#json-datalist').empty();
-                    if (true) {
-
-                        var dataPost = {};
-                        console.log($this.val().length);
-                        if ($this.val().length > 0) {
-
-                            var p1 = $.ajax({
-                                url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
-                                data: JSON.stringify(dataPost),
-                                type: 'POST',
-                                contentType: 'application/json'
-                            }, function (data) {
-                                //// //console.log('koboinfo ' + JSON.stringify(data));
-                                return (data);
-                            });
-
-                            console.log('Time elapsed!');
-                            Promise.all([p1]).then(function (values) {
-                                $('#spinner').show();
-                                console.log('values: ');
-                                console.log(values);
-                                console.log(Object.keys(values[0]));
-                                ifdt = values[0];
-                                filelist = values[1];
-                                $('#datainfo').hide();
-                                $('#dataupload').hide();
-                                $('#error').show();
-                                // $('#error').append(Object.keys(values[0]));
-                                var html1 = '';
-                                console.log(values[0]);
-                                $.each(values[0], function (key, element) {
-
-                                    // html1 += '<option value="' + key + '">';
-                                    $('#json-datalist').append(
-                                        '<option value="' + key + '">');
-                                });
-                                // .exec($('#json-datalist').html(html1));
-
-
-                                $('#error').append("<br><br>" +
-                                    "Search not found.<br>Try again.");
-                                // map.setCenter(new google.maps.LatLng(15.41, -61.32));
-                                // map.panTo(new google.maps.LatLng(15.41, -61.32));
-                                // map.setZoom(11);
-
-                                $('#spinner').hide();
-
-                            });
-
-                        }
-                    }
-                }
-            }
-        });
 
     });
 </script>

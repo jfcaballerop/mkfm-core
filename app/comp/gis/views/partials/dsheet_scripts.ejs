@@ -115,7 +115,7 @@
                                 console.log(ifdtobject.properties['kval']);
                                 console.log('********************************');
                                 if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                    key][0] != "") {
+                                        key][0] != "") {
                                     $('#generaldatatbody').append('<tr><td>' + value +
                                         '</td><td>' +
                                         ifdtobject.properties[key][0] + '</td></tr>');
@@ -163,7 +163,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -195,7 +195,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -227,7 +227,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -259,7 +259,7 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                key + 2][0] != "") {
+                                    key + 2][0] != "") {
                                 $('#generaldatatbody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -303,30 +303,40 @@
                 if (ifdtobject.properties.asset_type === 'ROAD') {
                     // //console.log(ifdtobject);
                     $.each(ROADS.inventory_data, function (key, value) {
-                        if (Array.isArray(ifdtobject.properties[key])) {
-                            // //console.log('Is Array');
-                            if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                        if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
                                 key][0] != "") {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    ifdtobject.properties[key][0] + '</td></tr>');
+                            $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                ifdtobject.properties[key][0] + '</td></tr>');
 
-                            } else {
-                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                //     '--' + '</td></tr>');
-
-                            }
                         } else {
-                            // //console.log('Is NOT Array');
-                            if (ifdtobject.properties[key] != undefined) {
-                                $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                    ifdtobject.properties[key] + '</td></tr>');
+                            $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                                '--' + '</td></tr>');
 
-                            } else {
-                                // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
-                                //     '--' + '</td></tr>');
-
-                            }
                         }
+                        // if (Array.isArray(ifdtobject.properties[key])) {
+                        //     // //console.log('Is Array');
+                        //     if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
+                        //         key][0] != "") {
+                        //         $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                        //             ifdtobject.properties[key][0] + '</td></tr>');
+
+                        //     } else {
+                        //         // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                        //         //     '--' + '</td></tr>');
+
+                        //     }
+                        // } else {
+                        //     // //console.log('Is NOT Array');
+                        //     if (ifdtobject.properties[key] != undefined) {
+                        //         $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                        //             ifdtobject.properties[key] + '</td></tr>');
+
+                        //     } else {
+                        //         // $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
+                        //         //     '--' + '</td></tr>');
+
+                        //     }
+                        // }
 
 
                     });
@@ -337,7 +347,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -368,7 +378,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -399,7 +409,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -430,7 +440,7 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                key + 2][0] != "") {
+                                    key + 2][0] != "") {
                                 $('#inventorydatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -476,7 +486,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -507,7 +517,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -538,7 +548,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -569,7 +579,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -600,7 +610,7 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                key + 2][0] != "") {
+                                    key + 2][0] != "") {
                                 $('#operationdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -646,7 +656,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -677,7 +687,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -708,7 +718,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -739,7 +749,7 @@
                         if (Array.isArray(ifdtobject.properties[key])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key][0] != undefined && ifdtobject.properties[
-                                key][0] != "") {
+                                    key][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key][0] + '</td></tr>');
 
@@ -770,7 +780,7 @@
                         if (Array.isArray(ifdtobject.properties[key + 2])) {
                             // //console.log('Is Array');
                             if (ifdtobject.properties[key + 2][0] != undefined && ifdtobject.properties[
-                                key + 2][0] != "") {
+                                    key + 2][0] != "") {
                                 $('#riskdatabody').append('<tr><td>' + value + '</td><td>' +
                                     ifdtobject.properties[key + 2][0] + '</td></tr>');
 
@@ -919,14 +929,14 @@
                                                     ) {
                                                         var
                                                             fotosmall =
-                                                                vfoto
-                                                                    .replace(
-                                                                        ".jpg",
-                                                                        "-small.jpg"
-                                                                    );
+                                                            vfoto
+                                                            .replace(
+                                                                ".jpg",
+                                                                "-small.jpg"
+                                                            );
                                                         $(
-                                                            "#datainfophoto"
-                                                        )
+                                                                "#datainfophoto"
+                                                            )
                                                             .append(
                                                                 '<img src="' +
                                                                 fotosmall +
@@ -955,9 +965,13 @@
                             map.data.addGeoJson(jsonObject);
                             map.setCenter(new google.maps.LatLng(ifdt.geometry.coordinates[
                                 0][1], ifdt.geometry.coordinates[0][0]));
-                            var myIcon = L.divIcon({ className: 'my-div-icon' });
+                            var myIcon = L.divIcon({
+                                className: 'my-div-icon'
+                            });
                             // you can set .my-div-icon styles in CSS
-                            L.marker([50.505, 30.57], { icon: myIcon }).addTo(map);
+                            L.marker([50.505, 30.57], {
+                                icon: myIcon
+                            }).addTo(map);
                             map.panTo(new google.maps.LatLng(ifdt.geometry.coordinates[0][1],
                                 ifdt.geometry.coordinates[0][0]));
                             if (ifdt.geometry.coordinates.length > 0 && ifdt.geometry.coordinates
@@ -1168,14 +1182,14 @@
                                                         ) {
                                                             var
                                                                 fotosmall =
-                                                                    vfoto
-                                                                        .replace(
-                                                                            ".jpg",
-                                                                            "-small.jpg"
-                                                                        );
+                                                                vfoto
+                                                                .replace(
+                                                                    ".jpg",
+                                                                    "-small.jpg"
+                                                                );
                                                             $(
-                                                                "#datainfophoto"
-                                                            )
+                                                                    "#datainfophoto"
+                                                                )
                                                                 .append(
                                                                     '<img src="' +
                                                                     fotosmall +
@@ -1371,10 +1385,12 @@
                                     var j = 0;
                                     var maxresults = 20
                                     $.each(values[0], function (key, element) {
-                                        console.log('--------------------------');
-                                        console.log(typeof(key));
+                                        console.log(
+                                            '--------------------------');
+                                        console.log(typeof (key));
                                         $('#json-datalist').append(
-                                            '<option value="' + 'MA783' + '">');
+                                            '<option value="' + 'MA783' +
+                                            '">');
                                         // html1 += '<option value="' + key + '">';
 
                                         if (++j > maxresults) {
