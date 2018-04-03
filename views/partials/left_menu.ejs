@@ -5,13 +5,32 @@
             <img src="/assets/img/logo-dominica.png" alt="Dominica" />
         </p>
 
-        <li class="mt">
+        <!-- <li class="mt">
             <a href="/auth/WEB/index">
                 <i class="fa fa-dashboard"></i>
                 <span>
                     <%- trans('MENU_DASHBOARD') %>
                 </span>
             </a>
+        </li> -->
+        <li>
+            <a href="/auth/WEB/maps/list_info">
+                <i class="fas fa-map-marker"></i>
+                <span>
+                    <%- trans('MENU_MAPS_GMAPS') %>
+                </span>
+            </a>
+
+        </li>
+
+        <li>
+            <a href="/auth/WEB/data_sheet/list_info">
+                <i class="fas fa-info-circle"></i>
+                <span>
+                    <%- trans('MENU_DATASHEET') %>
+                </span>
+            </a>
+
         </li>
         <li class="sub-menu">
             <a href="/auth/WEB/maps/view_data">
@@ -22,25 +41,6 @@
             </a>
 
         </li>
-        <li>
-            <a href="/auth/WEB/maps/list_info">
-                <i class="fas fa-map-marker"></i>
-                <span>
-                    <%- trans('MENU_MAPS_GMAPS') %>
-                </span>
-            </a>
-
-        </li>
-        <li>
-            <a href="/auth/WEB/data_sheet/list_info">
-                <i class="fas fa-info-circle"></i>
-                <span>
-                    <%- trans('MENU_DATASHEET') %>
-                </span>
-            </a>
-
-        </li>
-
         <li>
             <a href="/auth/WEB/query/consultas">
                 <i class=" fa fa-table"></i>
