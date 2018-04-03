@@ -288,11 +288,17 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                     res.send(500, err.message);
                 }
                 var total = 0;
+                var totalB = parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100));
+                debug(totalB);
                 ret['data'] = [];
                 for (var s of scheds) {
-                    if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
+                    if (total <= totalB) {
                         ret['data'].push(s);
-                    total += parseFloat(s.properties.cost);
+                        // debug(parseFloat(s.properties.cost));
+
+                    }
+                    total += isNaN(parseFloat(s.properties.cost)) ? 0 : parseFloat(s.properties.cost);
+                    // debug(total);
 
                 }
                 res.status(200).jsonp(ret);
@@ -316,7 +322,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 for (var s of scheds) {
                     if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
                         ret['data'].push(s);
-                    total += parseFloat(s.properties.cost);
+                    total += isNaN(parseFloat(s.properties.cost)) ? 0 : parseFloat(s.properties.cost);
 
                 }
                 res.status(200).jsonp(ret);
