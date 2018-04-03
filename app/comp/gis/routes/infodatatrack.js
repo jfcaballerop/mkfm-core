@@ -829,8 +829,10 @@ router.get('/V1/', function (req, res, next) {
         "properties.gslope2": 1,
         "properties.gnature2": 1,
         "properties.gintensityfailure2": 1,
-        "properties.gvisualcondition2": 1
+        "properties.gvisualcondition2": 1,
+        "properties.koboedit": 1
     };
+    debug(fields);
 
     Infodatatrack.find({}, fields).exec(function (err, infodatatracks) {
         if (err)
