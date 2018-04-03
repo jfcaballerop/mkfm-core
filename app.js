@@ -1,4 +1,5 @@
 // DEBUG APP
+var dotenv = require('dotenv').load()
 var debug = require('debug')('mkfw-corev1');
 
 var express = require('express');
@@ -52,8 +53,8 @@ i18n.configure({
     autoReload: true,
     cookie: 'ulang',
     api: {
-        '__': 'trans', //now req.__ becomes req.t 
-        '__n': 'tn' //and req.__n can be called as req.tn 
+        '__': 'trans', //now req.__ becomes req.t
+        '__n': 'tn' //and req.__n can be called as req.tn
     }
 
 });
@@ -115,7 +116,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('connect', console.debug.bind(console, 'MongoDB CONNECTION OK!'));
 
 /*********************************
- *  URL - Routes 
+ *  URL - Routes
  * *******************************/
 // Require ROUTES de la aplicacion
 var login = require('./routes/login');

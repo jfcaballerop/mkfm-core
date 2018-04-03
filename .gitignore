@@ -74,5 +74,6 @@ public/media
 /google_images.tar
 /my_archive
 /_mongodata
+/_backups
 /_tools/**/*.json
 .DS_Store
