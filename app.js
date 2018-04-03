@@ -154,4 +154,20 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
+
+// any exception not catched end up here
+// ideally we should clean up and finish the process
+// but now, for developement, log it and keep the app working
+process.on('uncaughtException', err => {
+    console.warn('OOOPS! Unhandled ERROR', err.message);
+    console.warn('Maybe you should try/catch the operation?');
+    console.log(err);
+});
+
+process.on('unhandledRejection', err => {
+    console.warn('OOOPS! Unhandled Promise rejection', err.message);
+    console.log(err);
+})
+
+
 module.exports = app;
