@@ -77,7 +77,7 @@ router.get('/consultas', function (req, resp, next) {
             var filters = Infodatatrack.schema.tree.properties;
             debug('FILTERS')
             debug(filters);
-            var filtersOff = ['time', 'name', 'proccessed', 'kobo', 'koboedit', 'video_roads', 'surveyor', 'datesurvey', 'coordTimes'];
+            var filtersOff = ['time', 'name', 'proccessed', 'kobo', 'koboedit', 'video_roads'];
             debug(filters);
             for (var foff of filtersOff) {
                 delete filters[foff];
@@ -245,7 +245,8 @@ router.post('/V1/get_filter_values/:filter', function (req, res, next) {
             res.send(500, ret);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
-        ret.filters = filters;
+        ret.filters = filters.sort();
+
         debug(filters);
         //res.status(200).jsonp(ifdts);
         res.status(200).jsonp(ret);
