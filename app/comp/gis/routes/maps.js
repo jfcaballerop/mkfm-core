@@ -328,16 +328,6 @@ router.get('/list_info', function (req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var optionsKobo = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/koboinfo/V1/',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
 
     promises.push(new Promise(function (resolve, reject) {
         // save options locally because it will be reassigned to a different object
@@ -375,42 +365,7 @@ router.get('/list_info', function (req, resp, next) {
         });
         req.end();
     }));
-    promises.push(new Promise(function (resolve, reject) {
-        // save options locally because it will be reassigned to a different object
-        // before it gets used in the callback below
-        var localOptions = optionsKobo;
-        var req = http.request(localOptions, function (res) {
-            var data = "";
-            res.on('data', function (chunk) {
-                data += chunk;
-            });
-            res.on('end', function () {
-                var responseObject = JSON.parse(data);
-                responseObject.forEach(function (item) {
-                    delete item["_id"];
-                    delete item["updated_at"];
-                    delete item["created_at"];
-                    //delete item["properties"]["coordTimes"];
 
-                });
-                // resolve with the accumulated data
-                // do it this way so that the promise infrastructure will order it for us
-                resolve({
-                    hostname: localOptions.hostname,
-                    port: localOptions.port,
-                    path: localOptions.path,
-                    statusCode: res.statusCode,
-                    responseHeaders: JSON.stringify(res.headers),
-                    body: responseObject
-                });
-            });
-        });
-        req.on('error', function (e) {
-            console.error(e);
-            reject(e);
-        });
-        req.end();
-    }));
 
     // now wait for all promises to be done
     Promise.all(promises).then(function (allData) {
@@ -458,16 +413,16 @@ router.get('/list_info', function (req, resp, next) {
             return -1;
         };
 
-        allData[1].body.forEach(function (elem, index) {
-            if (elem.properties.kobo_type === "Culvert") {
-                koboinfos_odt.push(elem);
-            } else if (elem.properties.kobo_type === "Bridge") {
-                koboinfos_bridge.push(elem);
+        // allData[1].body.forEach(function (elem, index) {
+        //     if (elem.properties.kobo_type === "Culvert") {
+        //         koboinfos_odt.push(elem);
+        //     } else if (elem.properties.kobo_type === "Bridge") {
+        //         koboinfos_bridge.push(elem);
 
-            } else {
-                koboinfos_geo.push(elem);
-            }
-        });
+        //     } else {
+        //         koboinfos_geo.push(elem);
+        //     }
+        // });
         allData[0].body.forEach(function (elem, index) {
             if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
                 mainr.push(elem);
@@ -625,9 +580,6 @@ router.get('/list_info', function (req, resp, next) {
             feederr: feederr,
             secondaryr: secondaryr,
             mainr: mainr,
-            koboinfos_geo: koboinfos_geo,
-            koboinfos_odt: koboinfos_odt,
-            koboinfos_bridge: koboinfos_bridge,
             token: req.token,
             title: config.CLIENT_NAME + '-' + config.APP_NAME,
             cname: config.CLIENT_NAME,

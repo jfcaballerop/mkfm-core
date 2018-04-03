@@ -13,6 +13,9 @@
             '</span><br>';
         var subcontent = "";
         if (event.feature.getProperty('kobo_type') === "Culvert") {
+            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('Ccode') +
+                '</span><br><hr>';
+
             subcontent += 'Inventory Data<br>';
             subcontent += '<span style="font-weight: bold;">N. Elements : </span>' + event.feature.getProperty(
                 "Cnumelem") + '<br>';
@@ -46,6 +49,8 @@
 
 
         } else if (event.feature.getProperty('kobo_type') === "Bridge") {
+            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('bcode') +
+                '</span><br><hr>';
             subcontent += 'Inventory Data<br>';
             subcontent += '<span style="font-weight: bold;">Structural typology: </span>' + event.feature.getProperty(
                 "btype") + '<br>';
@@ -80,46 +85,93 @@
                     '">' + '<br>';
             }
         } else {
-            subcontent += 'Inventory Data<br>';
+            if (event.feature.getProperty('gcode') !== "") {
+                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode') +
+                    '</span><br><hr>';
+                subcontent += 'Inventory Data<br>';
 
-            subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") +
-                '<br>';
-            subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty("gposition") +
-                '<br>';
-            subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight") +
-                '<br>';
-            subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength") +
-                '<br>';
-            subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty("gslope") +
-                '<br>';
-            subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature") +
-                '<br>';
+                subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty(
+                        "gposition") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty(
+                        "gslope") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature") +
+                    '<br>';
 
 
-            subcontent += '<br>O&M Data<br>';
-            subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
-                "gnature") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature.getProperty(
-                "bdamagesfoundationsgeneraltype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
-                "gintensityfailure") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
-                "gvisualcondition") + '<br>';
-            vfoto = event.feature.getProperty("_attachments");
-            if (vfoto !== undefined && vfoto.length > 0) {
+                subcontent += '<br>O&M Data<br>';
+                subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
+                    "gnature") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature
+                    .getProperty(
+                        "bdamagesfoundationsgeneraltype") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
+                    "gintensityfailure") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
+                    "gvisualcondition") + '<br>';
+                vfoto = event.feature.getProperty("_attachments");
+                if (vfoto !== undefined && vfoto.length > 0) {
 
-                var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
-                subcontent += '<img src="' +
-                    fotosmall +
-                    '">' + '<br>';
+                    var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
+                    subcontent += '<img src="' +
+                        fotosmall +
+                        '">' + '<br>';
+                }
+            } else {
+                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode2') +
+                    '</span><br><hr>';
+                subcontent += 'Inventory Data<br>';
+
+                subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype2") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty(
+                        "gposition2") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight2") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength2") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty(
+                        "gslope2") +
+                    '<br>';
+                subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature2") +
+                    '<br>';
+
+
+                subcontent += '<br>O&M Data<br>';
+                subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
+                    "gnature2") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature
+                    .getProperty(
+                        "bdamagesfoundationsgeneraltype2") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
+                    "gintensityfailure2") + '<br>';
+                subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
+                    "gvisualcondition2") + '<br>';
+                vfoto = event.feature.getProperty("_attachments");
+                if (vfoto !== undefined && vfoto.length > 0) {
+
+                    var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
+                    subcontent += '<img src="' +
+                        fotosmall +
+                        '">' + '<br>';
+                }
             }
+
         }
 
         content += '<div class="scrollFix">' +
             // event.feature.getProperty('xform_id_string') + " -- " +
             // event.feature.getProperty('_id') + '<br>' +
             // '[ ' + event.latLng.toUrlValue(6) + ' ]<hr>' +
-            '<hr>' + subcontent +
+            subcontent +
             '</div>';
         return content;
     }
@@ -444,15 +496,8 @@
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
-                // if (all) {
-                //     <% koboinfos_odt.forEach(function(element) { %>
-                //     jsonObject = <%- JSON.stringify(element) %>;
-                //     jsonObject.properties.color = "blue";
-                //     jsonObject.properties.nameoption = "Culvert";
-                //     ////console.log(JSON.stringify(jsonObject));
-                //     map.data.addGeoJson(jsonObject);
-                //     <%}); %>
-                // }
+
+
 
                 $('#spinner').hide(2000);
 
@@ -527,16 +572,7 @@
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
-                // if (all) {
-                //     <% koboinfos_bridge.forEach(function(element) { %>
-                //     jsonObject = <%- JSON.stringify(element) %>;
-                //     jsonObject.properties.color = "#F47983";
-                //     jsonObject.properties.nameoption = "BRIDGE";
-                //     ////console.log(JSON.stringify(jsonObject));
-                //     map.data.addGeoJson(jsonObject);
 
-                //     <%}); %>
-                // }
                 $('#spinner').hide(2000);
 
             } else {
@@ -609,16 +645,7 @@
                     map.data.addGeoJson(jsonObject);
                     <%}); %>
                 }
-                // if (all) {
-                //     <% koboinfos_geo.forEach(function(element) { %>
-                //     jsonObject = <%- JSON.stringify(element) %>;
-                //     jsonObject.properties.color = "green";
-                //     jsonObject.properties.nameoption = "GEOT";
-                //     ////console.log(JSON.stringify(jsonObject));
-                //     map.data.addGeoJson(jsonObject);
 
-                //     <%}); %>
-                // }
                 $('#spinner').hide(2000);
 
             } else {
