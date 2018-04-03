@@ -73,3 +73,6 @@ public/media
 /gmaps10.sh
 /google_images.tar
 /my_archive
+/_mongodata
+/_tools/**/*.json
+.DS_Store
