@@ -271,6 +271,13 @@
                 $('#CriticalityForm input[type=checkbox]').each(function (index) {
                     $(this).prop('checked', false);
                 });
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption').indexOf('CRITICALITY') >= 0) {
+                        map.data.remove(feature);
+                    }
+
+                });
 
 
             }
@@ -387,6 +394,13 @@
                 $('#ConditionForm input[type=checkbox]').each(function (index) {
                     $(this).prop('checked', false);
                 });
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption').indexOf('CONDITION') >= 0) {
+                        map.data.remove(feature);
+                    }
+
+                });
             }
         });
         $('#Calculation').click(function () {
@@ -398,6 +412,20 @@
                 $('#CalculationForm input[type=checkbox]').each(function (index) {
                     $(this).prop('checked', false);
                 });
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption').indexOf('RISKPHY') >= 0) {
+                        map.data.remove(feature);
+                    }
+
+                })
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption').indexOf('RISKNAT') >= 0) {
+                        map.data.remove(feature);
+                    }
+
+                })
             }
         });
 
@@ -940,7 +968,7 @@
                     //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
-                    filterPav = true;
+                    filterAsset = true;
                 }
             });
             // alert($this.val());
@@ -1068,7 +1096,7 @@
                     //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
-                    filterPav = true;
+                    filterAsset = true;
                 }
             });
             // alert($this.val());
