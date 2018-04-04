@@ -8,9 +8,28 @@
     var featureRiskPhy = [];
     var featureRiskNat = [];
 
+    var mainRoads = []
+    var secondaryRoads = []
+    var feederRoads = []
+    var urbanRoads = []
 
-    function setData(){
+    var assetData = {
+        /*
+        Example object shape
+        Culvert: {
+            main: [],
+            secondary: [],
+            feeder: [],
+            urban: []
+        },
+        Bridge: {},
+        Geo: {},
+        Pavement: {} */
+    }
 
+    function saveAssetData(assets){
+        assetData = assets
+        console.log('saved asset data', assetData)
     }
 
     function getContent(type, event) {
@@ -263,8 +282,6 @@
 
         // });
     };
-
-
 
     $(document).ready(function () {
         var featureActive = [];

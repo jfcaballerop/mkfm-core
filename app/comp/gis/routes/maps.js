@@ -763,7 +763,39 @@ router.get('/list_info', function (req, resp, next) {
         console.log('main roads', mainr.length)
         console.log('kobo_mainr_odt', kobo_mainr_odt.length)
         console.log('kobo_mainr_geo', kobo_mainr_geo.length)
+
+        // group data by asset type
+        const assetData = {
+            'Culvert': {
+                main: kobo_mainr_odt,
+                secondary: kobo_secondaryr_odt,
+                feeder: kobo_feederr_odt,
+                urban: kobo_urbanr_odt
+            },
+            'Bridge': {
+                main: kobo_mainr_bridge,
+                secondary: kobo_secondaryr_bridge,
+                feeder: kobo_feederr_bridge,
+                urban: kobo_urbanr_bridge
+            },
+            'Geo': {
+                main: kobo_mainr_geo,
+                secondary: kobo_secondaryr_geo,
+                feeder: kobo_feederr_geo,
+                urban: kobo_urbanr_geo
+            },
+            'Pavement': {
+                main: mainr,
+                secondary: secondaryr,
+                feeder: feederr,
+                urban: urbanr
+            }
+        }
+
+
         resp.render('maps', {
+            // All assets grouped
+            assetData: assetData,
             // Geotechnical
             kobo_mainr_geo: kobo_mainr_geo,
             kobo_secondaryr_geo: kobo_secondaryr_geo,
@@ -783,11 +815,13 @@ router.get('/list_info', function (req, resp, next) {
             kobo_secondaryr_odt: kobo_secondaryr_odt,
             kobo_mainr_odt: kobo_mainr_odt,
             // road data
-            otherr: otherr,
+            // otherr: otherr, // not used?
+            // Pavements
             urbanr: urbanr,
             feederr: feederr,
             secondaryr: secondaryr,
             mainr: mainr,
+            // General data
             token: req.token,
             title: config.CLIENT_NAME + '-' + config.APP_NAME,
             cname: config.CLIENT_NAME,
