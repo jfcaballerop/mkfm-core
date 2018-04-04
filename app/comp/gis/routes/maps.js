@@ -13,6 +13,24 @@ var assert = require('assert');
 var req2 = require('request');
 var services = require(path.join(__dirname, '../../../services/services'));
 
+// DO this ONCE, not on every request!!
+// ALSO, better use underscore (uniq), which
+// is already a dependency
+Array.prototype.unique = function () {
+    var arr = [];
+    for (var i = 0; i < this.length; i++) {
+        if (!arr.includes(this[i])) {
+            arr.push(this[i]);
+        }
+    }
+    return arr;
+};
+Array.prototype.firstindex = function (v) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return i;
+    }
+    return -1;
+};
 
 /*
  * Global VBLES
@@ -157,52 +175,6 @@ router.get('/view_data', function (req, resp, next) {
     });
 });
 
-/*
-    Write data
-*/
-router.get('/stream', sseExpress, function (req, resp, next) {
-    // var optionsRoadlab = {
-    //     host: config.HOST_API,
-    //     port: config.PORT_API,
-    //     path: config.PATH_API + '/roadlab/V1/',
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Bearer ' + req.cookies.jwtToken
-    //     }
-    // };
-    // var requestRL = http.request(optionsRoadlab, function(res) {
-    //     //console.log('STATUS: ' + res.statusCode);
-    //     //console.log('HEADERS: ' + JSON.stringify(res.headers));
-    //     res.setEncoding('utf8');
-    //     var data = '';
-    //     res.on('data', function(chunk) {
-    //         //console.log('BODY: ' + chunk);
-    //         data += chunk;
-
-    //     });
-    //     res.on('end', function() {
-    //         //console.log('DATA ' + data.length + ' ' + data);
-    //         roadlabObject = JSON.parse(data);
-    //         roadlabObject.forEach(function(item) {
-    //             delete item["_id"];
-    //             delete item["updated_at"];
-    //             delete item["created_at"];
-    //             //delete item["properties"]["coordTimes"];
-
-    //         });
-    //         //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-    //         //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
-    //         //resp.status(200).jsonp(filetypesObject);
-    //         //console.log('\n\n### RL ###\n ' + JSON.stringify(roadlabObject));
-    //     });
-    // });
-    // requestRL.end();
-    resp.sse('message', {
-        prueba: 'prueba mensaje'
-    });
-
-});
 
 /* GET List Files */
 router.get('/list_files', function (req, resp, next) {
@@ -412,7 +384,7 @@ router.get('/list_info', function (req, resp, next) {
 
     // now wait for all promises to be done
     Promise.all(promises).then(function (allData) {
-        // This callback renders the page with all needed data 
+        // This callback renders the page with all needed data
         //   when all the https.request() calls are done
         //runISYGetCallback(allData, resInput);
         // console.log(JSON.stringify(allData[0].body));
@@ -440,21 +412,7 @@ router.get('/list_info', function (req, resp, next) {
         var otherr = [];
         var urbanr = [];
 
-        Array.prototype.unique = function () {
-            var arr = [];
-            for (var i = 0; i < this.length; i++) {
-                if (!arr.includes(this[i])) {
-                    arr.push(this[i]);
-                }
-            }
-            return arr;
-        };
-        Array.prototype.firstindex = function (v) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] === v) return i;
-            }
-            return -1;
-        };
+
 
         // allData[1].body.forEach(function (elem, index) {
         //     if (elem.properties.kobo_type === "Culvert") {
@@ -802,22 +760,29 @@ router.get('/list_info', function (req, resp, next) {
             }
         });
 
+        console.log('main roads', mainr.length)
+        console.log('kobo_mainr_odt', kobo_mainr_odt.length)
+        console.log('kobo_mainr_geo', kobo_mainr_geo.length)
         resp.render('maps', {
+            // Geotechnical
             kobo_mainr_geo: kobo_mainr_geo,
             kobo_secondaryr_geo: kobo_secondaryr_geo,
             kobo_feederr_geo: kobo_feederr_geo,
             kobo_urbanr_geo: kobo_urbanr_geo,
             kobo_otherr_geo: kobo_otherr_geo,
+            //Bridges
             kobo_mainr_bridge: kobo_mainr_bridge,
             kobo_secondaryr_bridge: kobo_secondaryr_bridge,
             kobo_feederr_bridge: kobo_feederr_bridge,
             kobo_urbanr_bridge: kobo_urbanr_bridge,
             kobo_otherr_bridge: kobo_otherr_bridge,
+            // ODT = Culvert?
             kobo_otherr_odt: kobo_otherr_odt,
             kobo_urbanr_odt: kobo_urbanr_odt,
             kobo_feederr_odt: kobo_feederr_odt,
             kobo_secondaryr_odt: kobo_secondaryr_odt,
             kobo_mainr_odt: kobo_mainr_odt,
+            // road data
             otherr: otherr,
             urbanr: urbanr,
             feederr: feederr,
