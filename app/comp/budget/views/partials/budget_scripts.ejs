@@ -245,6 +245,10 @@
             $('#' + capaActiva).hide(500);
             $('#interventionsContent').show();
             $('#riskCriteria').show();
+            if (Number(ValAmount) > 0 && Number(ValPeriodic) > 0 && Number(ValWorkInterventions) > 0) {
+                $('#PhysicalDeterioration').prop("disabled", false);
+                $('#NaturalHazards').prop("disabled", false);
+            }
             capaActiva = 'interventionsContent';
         });
 
@@ -591,10 +595,7 @@
             $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
                 ValWorkInterventions / 10000);
 
-            if (Number(ValAmount) > 0 && Number(ValPeriodic) > 0 && Number(ValWorkInterventions) > 0) {
-                $('#PhysicalDeterioration').prop("disabled", false);
-                $('#NaturalHazards').prop("disabled", false);
-            }
+
             ValInspections = $('#Inspections').val();
             $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic *
                 ValInspections / 10000);
