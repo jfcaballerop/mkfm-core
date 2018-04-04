@@ -106,19 +106,19 @@
                             </h5>
                             <div class="checkbox">
                                 <label>
-                                    <input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
+                                    <input id="mainr" class="js-road-type" type="checkbox" value="main">Main Roads</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
+                                    <input id="secondaryr" class="js-road-type"  type="checkbox" value="secondary">Secondary Roads</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
+                                    <input id="feederr" class="js-road-type"  type="checkbox" value="feeder">Feeder Roads</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
+                                    <input id="urbanr" class="js-road-type"  type="checkbox" value="urban">Urban Roads</label>
                             </div>
                         </div>
                         <div class="form-panel" id="assets">
@@ -129,7 +129,7 @@
                             </h5>
                             <div class="checkbox">
                                 <label>
-                                    <input id="ROAD" type="checkbox" value="Pavement">Pavements</label>
+                                    <input id="ROAD" type="checkbox" class="js-asset-type" value="Pavement">Pavements</label>
                                 <!-- <div id="pavements" class="form-panel" style="display: none;">
                                     <div class="checkbox">
                                         <label>
@@ -151,15 +151,15 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="BRIDGE" type="checkbox" value="Bridge">Bridge</label>
+                                    <input id="BRIDGE" type="checkbox" class="js-asset-type"  value="Bridge">Bridge</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="Culvert" type="checkbox" value="Culvert">Culvert</label>
+                                    <input id="Culvert" type="checkbox" class="js-asset-type"  value="Culvert">Culvert</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="GEOT" type="checkbox" value="Geotechnical">Geotechnical</label>
+                                    <input id="GEOT" type="checkbox" class="js-asset-type"  value="Geo">Geotechnical</label>
                             </div>
 
                         </div>
@@ -342,6 +342,7 @@
         <!--script for this page-->
 
         <% include partials/gmaps_functions %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
             saveAssetData(<%- JSON.stringify(assetData) %>)
         </script>

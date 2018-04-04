@@ -792,12 +792,12 @@ router.get('/list_info', function (req, resp, next) {
             }
         }
 
-
+        console.log(JSON.stringify(assetData.Culvert).length)
         resp.render('maps', {
             // All assets grouped
             assetData: assetData,
             // Geotechnical
-            kobo_mainr_geo: kobo_mainr_geo,
+            /* kobo_mainr_geo: kobo_mainr_geo,
             kobo_secondaryr_geo: kobo_secondaryr_geo,
             kobo_feederr_geo: kobo_feederr_geo,
             kobo_urbanr_geo: kobo_urbanr_geo,
@@ -813,14 +813,14 @@ router.get('/list_info', function (req, resp, next) {
             kobo_urbanr_odt: kobo_urbanr_odt,
             kobo_feederr_odt: kobo_feederr_odt,
             kobo_secondaryr_odt: kobo_secondaryr_odt,
-            kobo_mainr_odt: kobo_mainr_odt,
+            kobo_mainr_odt: kobo_mainr_odt, */
             // road data
             // otherr: otherr, // not used?
             // Pavements
-            urbanr: urbanr,
+            /* urbanr: urbanr,
             feederr: feederr,
             secondaryr: secondaryr,
-            mainr: mainr,
+            mainr: mainr, */
             // General data
             token: req.token,
             title: config.CLIENT_NAME + '-' + config.APP_NAME,

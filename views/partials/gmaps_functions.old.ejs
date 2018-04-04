@@ -69,13 +69,6 @@
         })
     }
 
-    function getSelectedAssets(){
-        return _.keys(selectedAssets).filter(key => !!selectedAssets[key])
-    }
-    function getSelectedRoads(){
-        return _.keys(selectedRoads).filter(key => !!selectedRoads[key])
-    }
-
     function getContent(type, event) {
         var content = 'Type of Asset: <span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') +
             '</span><br>';
@@ -327,14 +320,8 @@
         // });
     };
 
-    function createLayer(assetType, roadType){
+    function createLayer(assetType){
         var layer = new google.maps.Data()
-        layer.setStyle(function(feature){
-            return {
-                label: assetType.slice(0,1),
-                fillColor: '#ff0'
-            }
-        })
         _.each(selectedRoads, function(isSelected, roadType){
             if(isSelected){
                 layer.addGeoJson({
@@ -361,7 +348,337 @@
         var featureActive = [];
         saveUI()
         // ASSETS
+        // Pavements
+        /*
+        $('#ROAD').click(function () {
+            var $this = $(this);
 
+            if ($('#mainr').is(':checked')) {
+                var $this = $(this);
+                // alert($this.prop('checked'));
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+                    <% mainr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#5b5e63";
+                    jsonObject.properties.nameoption = "Main Road: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Main Road') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            }
+
+            if ($('#secondaryr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% secondaryr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#f29318";
+                    jsonObject.properties.nameoption = "Secondary: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Secondary') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
+            if ($('#feederr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% feederr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#fc1e3f";
+                    jsonObject.properties.nameoption = "Feeder: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <% }); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Feeder') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
+            if ($('#urbanr').is(':checked')) {
+                var $this = $(this);
+                //alert($this.val());
+                $('#spinner').show();
+                if ($this.prop('checked')) {
+
+                    <% urbanr.forEach(function (element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    // //console.log(jsonObject);
+                    jsonObject.properties.color = "#a8b2f7";
+                    jsonObject.properties.nameoption = "Urban: " + jsonObject.properties.name;
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                } else {
+                    map.data.forEach(function (feature) {
+                        // If you want, check here for some constraints.
+                        if (feature.getProperty('nameoption').indexOf('Urban') >= 0) {
+                            map.data.remove(feature);
+                        }
+
+                    });
+                }
+                $('#spinner').hide(2000);
+            };
+
+
+        });
+        // Culvert
+        $('#Culvert').click(function () {
+            $('#spinner').show();
+            var $this = $(this);
+            var all = true;
+
+            if ($this.prop('checked')) {
+                // alert(' ## Culvert ##');
+                if ($('#mainr').is(':checked')) {
+                    //console.log('#mainr');
+                    all = false;
+                    assetData.Culvert.main.forEach(function(element){
+
+                    })
+                    <% kobo_mainr_odt.forEach(function(element) { %>
+                    // debug('---------------------------------------------------------------------------');
+                    // debug(element);
+                    // debug('---------------------------------------------------------------------------');
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "blue";
+                    jsonObject.properties.nameoption = "Culvert";
+                    // console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#secondaryr').is(':checked')) {
+                    //console.log('#secondaryr');
+                    all = false;
+
+                    <% kobo_secondaryr_odt.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "blue";
+                    jsonObject.properties.nameoption = "Culvert";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#feederr').is(':checked')) {
+                    //console.log('#feederr');
+                    all = false;
+
+                    <% kobo_feederr_odt.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "blue";
+                    jsonObject.properties.nameoption = "Culvert";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#urbanr').is(':checked')) {
+                    //console.log('#urbanr');
+                    all = false;
+
+                    <% kobo_urbanr_odt.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "blue";
+                    jsonObject.properties.nameoption = "Culvert";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+
+
+
+                $('#spinner').hide(2000);
+
+            } else {
+                // alert(' ## DESACTIVO Culvert ##');
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'Culvert') {
+                        map.data.remove(feature);
+                    }
+
+                });
+                $('#spinner').hide(2000);
+
+            }
+
+        });
+        // Bridges
+        $('#BRIDGE').click(function () {
+            $('#spinner').show();
+            var $this = $(this);
+            var all = true;
+
+            if ($this.prop('checked')) {
+                // alert(' ## BRIDGE ##');
+
+
+                if ($('#mainr').is(':checked')) {
+                    //console.log('#mainr');
+                    all = false;
+                    <% kobo_mainr_bridge.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "#F47983";
+                    jsonObject.properties.nameoption = "BRIDGE";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#secondaryr').is(':checked')) {
+                    //console.log('#secondaryr');
+                    all = false;
+
+                    <% kobo_secondaryr_bridge.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "#F47983";
+                    jsonObject.properties.nameoption = "BRIDGE";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#feederr').is(':checked')) {
+                    //console.log('#feederr');
+                    all = false;
+
+                    <% kobo_feederr_bridge.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "#F47983";
+                    jsonObject.properties.nameoption = "BRIDGE";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#urbanr').is(':checked')) {
+                    //console.log('#urbanr');
+                    all = false;
+
+                    <% kobo_urbanr_bridge.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "#F47983";
+                    jsonObject.properties.nameoption = "BRIDGE";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+
+                $('#spinner').hide(2000);
+
+            } else {
+                // alert(' ## DESACTIVO BRIDGE ##');
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'BRIDGE') {
+                        map.data.remove(feature);
+                    }
+
+                });
+                $('#spinner').hide(2000);
+
+            }
+        });
+        // Geotechnical
+        $('#GEOT').click(function () {
+            $('#spinner').show();
+            var $this = $(this);
+            var all = true;
+
+            if ($this.prop('checked')) {
+
+                // alert(' ## GEOT ##');
+
+                if ($('#mainr').is(':checked')) {
+                    //console.log('#mainr');
+                    all = false;
+                    <% kobo_mainr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#secondaryr').is(':checked')) {
+                    //console.log('#secondaryr');
+                    all = false;
+
+                    <% kobo_secondaryr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#feederr').is(':checked')) {
+                    //console.log('#feederr');
+                    all = false;
+
+                    <% kobo_feederr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+                if ($('#urbanr').is(':checked')) {
+                    //console.log('#urbanr');
+                    all = false;
+
+                    <% kobo_urbanr_geo.forEach(function(element) { %>
+                    jsonObject = <%- JSON.stringify(element) %>;
+                    jsonObject.properties.color = "green";
+                    jsonObject.properties.nameoption = "GEOT";
+                    ////console.log(JSON.stringify(jsonObject));
+                    map.data.addGeoJson(jsonObject);
+                    <%}); %>
+                }
+
+                $('#spinner').hide(2000);
+
+            } else {
+                // alert(' ## DESACTIVO GEOT ##');
+                map.data.forEach(function (feature) {
+                    // If you want, check here for some constraints.
+                    if (feature.getProperty('nameoption') === 'GEOT') {
+                        map.data.remove(feature);
+                    }
+
+                });
+                $('#spinner').hide(2000);
+
+            }
+        });
+        */
         // RISK ASSESMENT
         $('#Criticality').click(function () {
             var $this = $(this);
