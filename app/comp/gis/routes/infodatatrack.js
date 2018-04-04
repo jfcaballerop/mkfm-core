@@ -835,9 +835,13 @@ router.get('/V1/', function (req, res, next) {
     debug(fields);
 
     Infodatatrack.find({}, fields).exec(function (err, infodatatracks) {
-        if (err)
-            res.send(500, err.ssage);
-        res.status(200).jsonp(infodatatracks);
+        if (err){
+            res.send(500, err.message);
+        }
+        else {
+            console.log('infodatatracks', infodatatracks.length)
+            res.status(200).json(infodatatracks);
+        }
     });
 
 });
