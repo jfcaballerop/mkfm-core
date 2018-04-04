@@ -29,7 +29,7 @@
                         <tr>
                             <td>Investment FY2018</td>
                             <td>
-                                <input class="form-control" id="InvestmentFY2018" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input class="form-control" id="InvestmentFY2018" type="text" placeholder="EC$ 0.00" disabled="" value="EC$ <%- retValues.budget.ammount %>">
                             </td>
                         </tr>
                         <tr>
@@ -41,19 +41,22 @@
                         <tr>
                             <td>Routine</td>
                             <td>
-                                <input class="form-control" id="disabledInputRoutine" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100) %>" class="form-control" id="disabledInputRoutine"
+                                    type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Periodic</td>
                             <td>
-                                <input class="form-control" id="disabledInputPeriodic" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100) %>" class="form-control" id="disabledInputPeriodic"
+                                    type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Emergency</td>
                             <td>
-                                <input class="form-control" id="disabledInputEmergency" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Emergency/100) %>" class="form-control" id="disabledInputEmergency"
+                                    type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
@@ -65,25 +68,30 @@
                         <tr>
                             <td>Brush cutting</td>
                             <td>
-                                <input class="form-control" id="disabledInputBrushcutting" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Brushcutting/100) %>" class="form-control"
+                                    id="disabledInputBrushcutting" type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Drain clearing</td>
                             <td>
-                                <input class="form-control" id="disabledInputDrainclearing" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Drainclearing/100) %>" class="form-control"
+                                    id="disabledInputDrainclearing" type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Patching</td>
                             <td>
-                                <input class="form-control" id="disabledInputPatching" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Patching/100) %>" class="form-control"
+                                    id="disabledInputPatching" type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Road Safety Improvement</td>
                             <td>
-                                <input class="form-control" id="disabledInputRoadSafetyImprovement" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.RoadSafetyImprovement/100) %>"
+                                    class="form-control" id="disabledInputRoadSafetyImprovement" type="text" placeholder="EC$ 0.00"
+                                    disabled="">
                             </td>
                         </tr>
                         <tr>
@@ -101,13 +109,16 @@
                         <tr>
                             <td>Interventions</td>
                             <td>
-                                <input class="form-control" id="disabledInputWorkInterventions" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.WorkInterventions/100) %>"
+                                    class="form-control" id="disabledInputWorkInterventions" type="text" placeholder="EC$ 0.00"
+                                    disabled="">
                             </td>
                         </tr>
                         <tr>
                             <td>Inspections</td>
                             <td>
-                                <input class="form-control" id="disabledInputInspections" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.Inspections/100) %>" class="form-control"
+                                    id="disabledInputInspections" type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr>
                     </tbody>
