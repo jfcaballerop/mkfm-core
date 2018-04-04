@@ -235,16 +235,24 @@
 
         $('#Summary').click(function () {
             //alert('Summary');
+            $this = $(this);
+            $this.parent().addClass("active");
+            $this.parent().siblings().removeClass("active");
             $('#' + capaActiva).hide(500);
-            $('#riskCriteria').hide();
+            // $('#riskCriteria').hide();
             $('#summaryGraphContent').show();
             capaActiva = 'summaryGraphContent';
+
         });
         $('#PriorizationofInterventions').click(function () {
             //alert('Summary');
+            $this = $(this);
+            $this.parent().addClass("active");
+            $this.parent().siblings().removeClass("active");
+
             $('#' + capaActiva).hide(500);
             $('#interventionsContent').show();
-            $('#riskCriteria').show();
+            // $('#riskCriteria').show();
             if (Number(ValAmount) > 0 && Number(ValPeriodic) > 0 && Number(ValWorkInterventions) > 0) {
                 $('#PhysicalDeterioration').prop("disabled", false);
                 $('#NaturalHazards').prop("disabled", false);
