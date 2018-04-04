@@ -8,6 +8,11 @@
     var featureRiskPhy = [];
     var featureRiskNat = [];
 
+
+    function setData(){
+
+    }
+
     function getContent(type, event) {
         var content = 'Type of Asset: <span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') +
             '</span><br>';
@@ -199,7 +204,7 @@
             map.setZoom(configzoom * 1.0);
         }
 
-        // 
+        //
 
 
         var jsonObject;
@@ -216,7 +221,7 @@
             ////console.log(event.latLng);
             infoWnd.setPosition(event.latLng);
             infoWnd.setContent(getContent(event.feature.getProperty('kobo_type'), event));
-            // Close active window if exists - [one might expect this to be default behaviour no?]				
+            // Close active window if exists - [one might expect this to be default behaviour no?]
             if (activeInfoWindow != null) activeInfoWindow.close();
 
             // Open new InfoWindow for mouseover event
@@ -259,22 +264,13 @@
         // });
     };
 
+
+
     $(document).ready(function () {
-        //console.log("Funciones Listas a ejecutarse!");
         var featureActive = [];
-        $('#Criticality').click(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#CriticalityForm').show();
-            } else {
-                $('#CriticalityForm').hide();
-                $('#CriticalityForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
 
-
-            }
-        });
+        // ASSETS
+        // Pavements
         $('#ROAD').click(function () {
             var $this = $(this);
 
@@ -377,72 +373,11 @@
 
 
         });
-
-        $('#Condition').click(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#ConditionForm').show();
-            } else {
-                $('#ConditionForm').hide();
-                $('#ConditionForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
-            }
-        });
-        $('#Calculation').click(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#CalculationForm').show();
-            } else {
-                $('#CalculationForm').hide();
-                $('#CalculationForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
-            }
-        });
-
-        $('input[type=radio][name=radioRisk]').change(function (event) {
-            $this = $(this);
-            switch ($('input:radio[name=radioRisk]:checked').val()) {
-                case 'PhysicalDeterioration':
-                    //console.log('PhysicalDeterioration');
-                    $('#NaturalHazardsForm').hide();
-                    $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-                        $(this).prop('checked', false);
-                    });
-                    $('#PhysicalCalculationForm').show();
-
-                    break;
-                case 'NaturalHazards':
-                    //console.log('NaturalHazards');
-                    $('#PhysicalCalculationForm').hide();
-                    $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-                        $(this).prop('checked', false);
-                    });
-                    $('#NaturalHazardsForm').show();
-
-                    break;
-
-                default:
-                    break;
-            }
-        });
-
-
+        // Culvert
         $('#Culvert').click(function () {
             $('#spinner').show();
             var $this = $(this);
             var all = true;
-
-            //console.log('******* map.data *****************');
-            //console.log(map.data);
-            // ;.forEach(function(feature) {
-            //     // If you want, check here for some constraints.
-            //     if (feature.getProperty('nameoption') === 'Culvert') {
-            //         ;.remove(feature);
-            //     }
-
-            // });
 
             if ($this.prop('checked')) {
                 // alert(' ## Culvert ##');
@@ -515,7 +450,7 @@
             }
 
         });
-
+        // Bridges
         $('#BRIDGE').click(function () {
             $('#spinner').show();
             var $this = $(this);
@@ -588,7 +523,7 @@
 
             }
         });
-
+        // Geotechnical
         $('#GEOT').click(function () {
             $('#spinner').show();
             var $this = $(this);
@@ -662,8 +597,70 @@
             }
         });
 
+        // RISK ASSESMENT
+        $('#Criticality').click(function () {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#CriticalityForm').show();
+            } else {
+                $('#CriticalityForm').hide();
+                $('#CriticalityForm input[type=checkbox]').each(function (index) {
+                    $(this).prop('checked', false);
+                });
 
 
+            }
+        });
+
+        $('#Condition').click(function () {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#ConditionForm').show();
+            } else {
+                $('#ConditionForm').hide();
+                $('#ConditionForm input[type=checkbox]').each(function (index) {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
+        $('#Calculation').click(function () {
+            var $this = $(this);
+            if ($this.prop('checked')) {
+                $('#CalculationForm').show();
+            } else {
+                $('#CalculationForm').hide();
+                $('#CalculationForm input[type=checkbox]').each(function (index) {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
+
+        $('input[type=radio][name=radioRisk]').change(function (event) {
+            $this = $(this);
+            switch ($('input:radio[name=radioRisk]:checked').val()) {
+                case 'PhysicalDeterioration':
+                    //console.log('PhysicalDeterioration');
+                    $('#NaturalHazardsForm').hide();
+                    $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
+                        $(this).prop('checked', false);
+                    });
+                    $('#PhysicalCalculationForm').show();
+
+                    break;
+                case 'NaturalHazards':
+                    //console.log('NaturalHazards');
+                    $('#PhysicalCalculationForm').hide();
+                    $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
+                        $(this).prop('checked', false);
+                    });
+                    $('#NaturalHazardsForm').show();
+
+                    break;
+
+                default:
+                    break;
+            }
+        });
 
         // Risk Assessment
         /**
