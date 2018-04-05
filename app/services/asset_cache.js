@@ -1,26 +1,8 @@
 const Infodatatrack = require('../comp/gis/models/infodatatrack')
 const Koboinfo = require('../comp/gis/models/koboinfo')
 const Cache = require('./cache')
+const _ = require('underscore')
 const services = require('./services')
-
-// DO this ONCE, not on every request!!
-// ALSO, better use underscore (uniq), which
-// is already a dependency
-Array.prototype.unique = function () {
-    var arr = [];
-    for (var i = 0; i < this.length; i++) {
-        if (!arr.includes(this[i])) {
-            arr.push(this[i]);
-        }
-    }
-    return arr;
-};
-Array.prototype.firstindex = function (v) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] === v) return i;
-    }
-    return -1;
-};
 
 async function loadInfodatatrack(){
     var fields = {
@@ -68,7 +50,31 @@ async function loadInfodatatrack(){
         "properties.gnature2": 1,
         "properties.gintensityfailure2": 1,
         "properties.gvisualcondition2": 1,
-        "properties.koboedit": 1
+        "properties.koboedit": 1,
+        // asset criticality
+        "properties.rcriticality": 1,
+        "properties.bcriticality": 1,
+        "properties.Cccriticality": 1,
+        "properties.gcriticality": 1,
+        "properties.gcriticality2": 1,
+        // asset condition
+        "properties.rcondition": 1,
+        "properties.bcondition": 1,
+        "properties.Ccondition": 1,
+        "properties.gcondition": 1,
+        "properties.gcondition2": 1,
+        // risk - physical deterioration
+        "properties.rriskphysicalnorm": 1,
+        "properties.briskphysicalnorm": 1,
+        "properties.CRIISKphysicalnorm": 1,
+        "properties.griskphysicalnorm": 1,
+        "properties.griskphysicalnorm2": 1,
+        // risk - natural hazards
+        "properties.rrisknaturalnorm": 1,
+        "properties.brisknaturalnorm": 1,
+        "properties.CRISKnaturalnorm": 1,
+        "properties.grisknaturalnorm": 1,
+        "properties.grisknaturalnorm2": 1
     };
     return Infodatatrack.find({}, fields)
 }
@@ -78,6 +84,7 @@ async function loadKobos(){
 }
 
 function transformData(tracks, koboinfos){
+    // ODT === Culvert!!!
     var kobo_mainr_odt = [];
     var kobo_mainr_bridge = [];
     var kobo_mainr_geo = [];
@@ -87,364 +94,85 @@ function transformData(tracks, koboinfos){
     var kobo_feederr_odt = [];
     var kobo_feederr_bridge = [];
     var kobo_feederr_geo = [];
-    var kobo_otherr_odt = [];
-    var kobo_otherr_bridge = [];
-    var kobo_otherr_geo = [];
     var kobo_urbanr_odt = [];
     var kobo_urbanr_bridge = [];
     var kobo_urbanr_geo = [];
+    var kobo_otherr_odt = [];
+    var kobo_otherr_bridge = [];
+    var kobo_otherr_geo = [];
     var mainr = [];
     var secondaryr = [];
     var feederr = [];
     var otherr = [];
     var urbanr = [];
 
+    // find a koboinfo document by its id
+    // NOTE: koboinfos are mongoose Documents, so _id is an ObjectId
+    // and hence the need to String() it before comparison
+    function getKoboById(id){
+        return koboinfos.find(k => String(k._id) === id)
+    }
+
+    // completes an asset with kobo-related data
+    function completeWithKoboData(roadElement, kobo, code, type){
+        const newElement = services.makeKoboGeoJson(roadElement, code, type)
+        newElement.properties._attachments = kobo.properties._attachments
+        return newElement
+    }
+
+    // extracts assets from a track, completes them with kobodata
+    // and pushes to a destination array
+    function extractAssets(track, codeProperty, assetType, destination){
+        const uniqueNonEmptyCodes = _.unique(track.properties[codeProperty].unique()).filter(x => !!x)
+        uniqueNonEmptyCodes.forEach(assetCode => {
+            const assetIndex = track.properties[codeProperty].findIndex(x => x === assetCode)
+            if(assetIndex && track.properties.koboedit[assetIndex]){
+                const koboId = track.properties.koboedit[assetIndex].kobo_id
+                const kobo = getKoboById(koboId)
+                kobo && destination.push(completeWithKoboData(track, kobo, assetIndex, assetType))
+            }
+        })
+    }
+
     tracks.forEach(function (elem, index) {
-        if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
+        if (~elem.properties.rcategory.indexOf('Main Road')) {
             mainr.push(elem);
-            var unique = elem.properties.Ccode.unique();
-            for (var u of unique) {
-                if (u !== '') {
-                    // debug(u + ' : ' + elem.properties.Ccode.firstindex(u) + '\n');
-                    // debug(elem.properties.koboedit);
-                    const code = elem.properties.Ccode.firstindex(u)
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[code] !== undefined &&
-                        elem.properties.koboedit[code] !== null) {
-                            //console.log('Voy a buscar kobo', u, koboinfos.length)
-                            const koboId = elem.properties.koboedit[code].kobo_id
-                            if(!koboId) continue
-                            const kobo = koboinfos.find(k => {
-                                return String(k.id) === koboId
-                            })
-                            if(kobo){
-                                kobo_mainr_odt.push(services.makeKoboGeoJson(elem, code, 'Culvert'));
-                                kobo_mainr_odt[kobo_mainr_odt.length - 1]["properties"]["_attachments"] = kobo.properties._attachments;
-                            }
-                    }
-                }
-            }
-            var unique = elem.properties.bcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    const bridgeIndex = elem.properties.bcode.firstindex(u)
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[bridgeIndex] !== undefined &&
-                        elem.properties.koboedit[bridgeIndex] !== null) {
-
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem._id) === elem.properties.koboedit[bridgeIndex].kobo_id) {
-                                //console.log('Encontrado puente en mainr', koboelem._id, elem.properties.koboedit[bridgeIndex].kobo_id)
-                                kobo_mainr_bridge.push(services.makeKoboGeoJson(elem, bridgeIndex, 'Bridge'));
-                                kobo_mainr_bridge[kobo_mainr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
-                                kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
-                                kobo_mainr_geo[kobo_mainr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode2.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
-                                kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
-                                kobo_mainr_geo[kobo_mainr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-        } else if (elem.properties.rcategory.indexOf('Secondary') >= 0) {
-            secondaryr.push(elem);
-            var unique = elem.properties.Ccode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
-                                kobo_secondaryr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
-                                kobo_secondaryr_odt[kobo_secondaryr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.bcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
-                                kobo_secondaryr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
-                                kobo_secondaryr_bridge[kobo_secondaryr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
-                                kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
-                                kobo_secondaryr_geo[kobo_secondaryr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode2.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
-                                kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
-                                kobo_secondaryr_geo[kobo_secondaryr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-        } else if (elem.properties.rcategory.indexOf('Feeder') >= 0) {
-            feederr.push(elem);
-            var unique = elem.properties.Ccode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
-                                kobo_feederr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
-                                kobo_feederr_odt[kobo_feederr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.bcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
-                                kobo_feederr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
-                                kobo_feederr_bridge[kobo_feederr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
-                                kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
-                                kobo_feederr_geo[kobo_feederr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode2.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
-                                kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
-                                kobo_feederr_geo[kobo_feederr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-        } else if (elem.properties.rcategory.indexOf('Urban') >= 0) {
-            urbanr.push(elem);
-            var unique = elem.properties.Ccode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
-                                kobo_urbanr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
-                                kobo_urbanr_odt[kobo_urbanr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.bcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
-                                kobo_urbanr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
-                                kobo_urbanr_bridge[kobo_urbanr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
-                                kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
-                                kobo_urbanr_geo[kobo_urbanr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode2.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
-                                kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
-                                kobo_urbanr_geo[kobo_urbanr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-        } else {
-            otherr.push(elem);
-            var unique = elem.properties.Ccode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
-                                kobo_otherr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
-                                kobo_otherr_odt[kobo_otherr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.bcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
-                                kobo_otherr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
-                                kobo_otherr_bridge[kobo_otherr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
-                                kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
-                                kobo_otherr_geo[kobo_otherr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
-            var unique = elem.properties.gcode2.unique();
-            for (var u of unique) {
-                if (u != '') {
-                    if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                        koboinfos.forEach(function (koboelem, index) {
-                            if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
-                                kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
-                                kobo_otherr_geo[kobo_otherr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-                            }
-
-                        });
-                    }
-                }
-            }
+            extractAssets(elem, 'Ccode', 'Culvert', kobo_mainr_odt)
+            extractAssets(elem, 'bcode', 'Bridge', kobo_mainr_bridge)
+            extractAssets(elem, 'gcode', 'Geotechnical', kobo_mainr_geo)
+            extractAssets(elem, 'gcode2', 'Geotechnical', kobo_mainr_geo)
         }
+        if (~elem.properties.rcategory.indexOf('Secondary')) {
+            secondaryr.push(elem);
+            extractAssets(elem, 'Ccode', 'Culvert', kobo_secondaryr_odt)
+            extractAssets(elem, 'bcode', 'Bridge', kobo_secondaryr_bridge)
+            extractAssets(elem, 'gcode', 'Geotechnical', kobo_secondaryr_geo)
+            extractAssets(elem, 'gcode2', 'Geotechnical', kobo_secondaryr_geo)
+        }
+        if (~elem.properties.rcategory.indexOf('Feeder')) {
+            feederr.push(elem);
+            extractAssets(elem, 'Ccode', 'Culvert', kobo_feederr_odt)
+            extractAssets(elem, 'bcode', 'Bridge', kobo_feederr_bridge)
+            extractAssets(elem, 'gcode', 'Geotechnical', kobo_feederr_geo)
+            extractAssets(elem, 'gcode2', 'Geotechnical', kobo_feederr_geo)
+        }
+        if (~elem.properties.rcategory.indexOf('Urban')) {
+            urbanr.push(elem);
+            extractAssets(elem, 'Ccode', 'Culvert', kobo_urbanr_odt)
+            extractAssets(elem, 'bcode', 'Bridge', kobo_urbanr_bridge)
+            extractAssets(elem, 'gcode', 'Geotechnical', kobo_urbanr_geo)
+            extractAssets(elem, 'gcode2', 'Geotechnical', kobo_urbanr_geo)
+        }
+        // Other is not used, avoid spending time here
+        /* else {
+            // Other types
+            otherr.push(elem);
+            extractAssets(elem, 'Ccode', 'Culvert', kobo_otherr_odt)
+            extractAssets(elem, 'bcode', 'Bridge', kobo_otherr_bridge)
+            extractAssets(elem, 'gcode', 'Geotechnical', kobo_otherr_geo)
+            extractAssets(elem, 'gcode2', 'Geotechnical', kobo_otherr_geo)
+        } */
     });
-
-    console.log('main roads', mainr.length)
-    console.log('kobo_mainr_odt', kobo_mainr_odt.length)
-    console.log('kobo_mainr_geo', kobo_mainr_geo.length)
 
     // group data by asset type
     const assetData = {
@@ -473,7 +201,6 @@ function transformData(tracks, koboinfos){
             urban: urbanr
         }
     }
-
     return assetData
 }
 
