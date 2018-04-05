@@ -205,28 +205,74 @@
         </div>
     </div>
 
-    <!-- 
-    <div class="row ">
-    <div class="col-md-12">
-        <h5 class="">
-            <i class="fa fa-angle-right"></i> Investment Strategies
-        </h5>
-        <div class="">
-            <label class="no-bold"  for="Distancesinergies">
-                <input type="" id="Distancesinergies" value="Distancesinergies"> Distance sinergies
-            </label>
-            <br>
-            <label class="no-bold"  for="Assetsshare">
-                <input type="" id="Assetsshare" value="Assetsshare"> Assets share
-            </label>
-            <br>
-            <label class="no-bold"  for="Corridorpriorization">
-                <input type="" id="Corridorpriorization" value="Corridorpriorization"> Corridor priorization
-            </label>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="">
+                <i class="fa fa-angle-right"></i> Investment Strategies
+            </h5>
+            <div class="">
+                <label class="no-bold" for="Distancesinergies">
+                    <input type="checkbox" id="Distancesinergies" value="Distancesinergies"> Distance sinergies
+                </label>
+                <br>
+                <div id="DistancesinergiesvalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Distancesinergiesval">
+                        Include assets located at a max distance of
+                        <input type="text" id="Distancesinergiesval" style="width: 50px;">km
+
+                    </label>
+                    <br>
+                </div>
+
+                <label class="no-bold" for="Assetsshare">
+                    <input type="checkbox" id="Assetsshare" value="Assetsshare"> Assets share
+                </label>
+                <br>
+                <div id="AssetssharevalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Pavementsval">
+                        Pavements=
+                        <input type="text" id="Pavementsval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Bridgesval">
+                        Bridges=
+                        <input type="text" id="Bridgesval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Culvertsval">
+                        Culverts=
+                        <input type="text" id="Culvertsval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Geotval">
+                        Geotechnicals=
+                        <input type="text" id="Geotval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                </div>
+                <label class="no-bold" for="Corridorpriorization">
+                    <input type="checkbox" id="Corridorpriorization" value="Corridorpriorization"> Corridor priorization
+                </label>
+                <br>
+                <div id="CorridorpriorizationvalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Corridorpriorizationval">
+                        <input type="text" id="Corridorpriorizationval" placeholder="Code/Road name">
+
+                    </label>
+                    <br>
+                </div>
+            </div>
         </div>
     </div>
-</div>
--->
+
     <hr>
     <div class="row">
         <div class="col-md-12">
