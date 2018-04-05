@@ -103,7 +103,7 @@
             }
         };
 
-        function paintRiskTable() {
+        function paintRiskTable(code) {
             var option = $('input[type=radio][name=optionRisk]:checked').val();
             var optionPeriod = $('input[type=radio][name=optionPeriod]:checked').val();
             var totalAmount = 0;
@@ -151,9 +151,13 @@
 
             var dataPost = {};
             dataPost['riskType'] = riskType;
+            var url = '/auth/WEB/schedule/getSched/' + riskType + '/' + totalAmount;
+            if (code !== undefined)
+                url += '/' + code;
+
 
             var p1 = $.ajax({
-                url: '/auth/WEB/schedule/getSched/' + riskType + '/' + totalAmount,
+                url: url,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
@@ -217,6 +221,8 @@
                             '</td>';
                         totalTable += Math.round(val.properties.cost * 100) / 100;
                         html[++h] = '</tr>';
+
+
                     }
                     html[++h] = '</tbody></table>';
 
@@ -740,23 +746,53 @@
                 paintDonutChart3();
             }
 
+            var strategies = $('input[type=radio][name=OptionStrategies]:checked').val();
+            if (strategies === undefined) {
 
-            paintRiskTable();
+                paintRiskTable();
+            } else {
+                // console.log(strategies);
+                switch (strategies) {
+                    case 'CorridorpriorizationvalLayer':
+                        var code = $('#Corridorpriorizationval').val();
+                        console.log('Code ', code)
+                        if (code === "")
+                            paintRiskTable();
+                        else {
+                            paintRiskTable(code);
+
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
         });
 
-        $('#Distancesinergies').click(function () {
-            $('#DistancesinergiesvalLayer').toggle(500);
+        $('input[type=radio][name=OptionStrategies]').click(function () {
+            $('input[type=radio][name=OptionStrategies]').each(function (index) {
+                $('#' + $(this).val()).hide(500);
+
+            });
+            $('#' + $('input[type=radio][name=OptionStrategies]:checked').val()).show(500);
+
 
         })
-        $('#Assetsshare').click(function () {
-            $('#AssetssharevalLayer').toggle(500);
 
-        })
-        $('#Corridorpriorization').click(function () {
-            $('#CorridorpriorizationvalLayer').toggle(500);
+        // $('#Distancesinergies').click(function () {
+        //     $('#DistancesinergiesvalLayer').toggle(500);
 
-        })
+        // })
+        // $('#Assetsshare').click(function () {
+        //     $('#AssetssharevalLayer').toggle(500);
+
+        // })
+        // $('#Corridorpriorization').click(function () {
+        //     $('#CorridorpriorizationvalLayer').toggle(500);
+
+        // })
 
     });
 </script>
