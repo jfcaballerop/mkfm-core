@@ -1065,8 +1065,9 @@
 
             // console.log(e);
             var $this = $(this);
+            $('#json-datalist').empty();
 
-            if (e.keyCode == 13 || e.keyCode == undefined) {
+            if (e.keyCode === 13 || e.keyCode === undefined) {
                 // Do something
                 // alert('Buscando ...' + $this.val().length);
                 $('#error').hide();
@@ -1306,123 +1307,107 @@
                 }
             } else {
                 if ($this.val().length > 3) {
-                    // console.log('keyup');
-                    $('#json-datalist').empty();
-                    if (true) {
-                        // Do something
-                        // alert('Buscando ...' + $this.val().length);
+                    $('#error').hide();
+                    $('#error').empty();
+                    $('#response').hide();
+                    $('#response').empty();
+                    $("#datainfophoto").empty();
+                    $("#datainfophoto").hide();
+                    $('#divmap1').empty();
+                    $("#generaldataupload").prop("checked", false);
+                    $("#generaldata").prop("checked", false);
+                    $("#inventorydata").prop("checked", false);
+                    $("#operation").prop("checked", false);
+                    $("#risk").prop("checked", false);
+                    // $('#datainfo').show();
+                    // $('#dataupload').show();
+                    $('#datainfo').hide();
+                    $('#dataupload').hide();
+
+                    var dataPost = {};
+
+                    if ($this.val().length <= 0) {
                         $('#error').hide();
                         $('#error').empty();
-                        $('#response').hide();
-                        $('#response').empty();
-                        $("#datainfophoto").empty();
-                        $("#datainfophoto").hide();
-                        $('#divmap1').empty();
-                        $("#generaldataupload").prop("checked", false);
-                        $("#generaldata").prop("checked", false);
-                        $("#inventorydata").prop("checked", false);
-                        $("#operation").prop("checked", false);
-                        $("#risk").prop("checked", false);
+                        $('#error').append("\n \n Empty value.<br>Try again.");
+                        $('#error').show();
+
+                    } else {
+
+
                         // $('#datainfo').show();
                         // $('#dataupload').show();
-                        $('#datainfo').hide();
-                        $('#dataupload').hide();
+                        var p1 = $.ajax({
+                            url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
+                            data: JSON.stringify(dataPost),
+                            type: 'POST',
+                            contentType: 'application/json'
+                        }, function (data) {
+                            //// //console.log('koboinfo ' + JSON.stringify(data));
+                            return (data);
+                        });
+                        var p2 = $.ajax({
+                            url: '/auth/WEB/gis/getFilesByAssetCode/' + $this.val(),
+                            // url: '/auth/WEB/gis/getFilesByAssetCode_general/' + $this.val(),
+                            data: JSON.stringify(dataPost),
+                            type: 'POST',
+                            contentType: 'application/json'
+                        }, function (data) {
+                            //// //console.log('koboinfo ' + JSON.stringify(data));
+                            return (data);
+                        });
 
-                        var dataPost = {};
+                        delay(function () {
+                            console.log('Time elapsed!');
+                            Promise.all([p1, p2]).then(function (values) {
+                                $('#spinner').show();
+                                map.data.forEach(function (feature) {
+                                    // If you want, check here for some constraints.
+                                    // if (feature.getProperty('nameoption') === 'Main Road') {
+                                    map.data.remove(feature);
+                                    // }
 
-                        if ($this.val().length <= 0) {
-                            $('#error').hide();
-                            $('#error').empty();
-                            $('#error').append("\n \n Empty value.<br>Try again.");
-                            $('#error').show();
-
-                        } else {
-
-
-                            // $('#datainfo').show();
-                            // $('#dataupload').show();
-                            var p1 = $.ajax({
-                                url: '/auth/WEB/infodatatrack/list_ifdt_general/' + $this.val(),
-                                data: JSON.stringify(dataPost),
-                                type: 'POST',
-                                contentType: 'application/json'
-                            }, function (data) {
-                                //// //console.log('koboinfo ' + JSON.stringify(data));
-                                return (data);
-                            });
-                            var p2 = $.ajax({
-                                url: '/auth/WEB/gis/getFilesByAssetCode/' + $this.val(),
-                                // url: '/auth/WEB/gis/getFilesByAssetCode_general/' + $this.val(),
-                                data: JSON.stringify(dataPost),
-                                type: 'POST',
-                                contentType: 'application/json'
-                            }, function (data) {
-                                //// //console.log('koboinfo ' + JSON.stringify(data));
-                                return (data);
-                            });
-
-                            delay(function () {
-                                console.log('Time elapsed!');
-                                Promise.all([p1, p2]).then(function (values) {
-                                    $('#spinner').show();
-                                    map.data.forEach(function (feature) {
-                                        // If you want, check here for some constraints.
-                                        // if (feature.getProperty('nameoption') === 'Main Road') {
-                                        map.data.remove(feature);
-                                        // }
-
-
-                                    });
-                                    console.log(values);
-                                    console.log(Object.keys(values[0]));
-                                    ifdt = values[0];
-                                    filelist = values[1];
-                                    $('#datainfo').hide();
-                                    $('#dataupload').hide();
-                                    $('#error').show();
-                                    // $('#error').append(Object.keys(values[0]));
-                                    var html1 = '';
-                                    var j = 0;
-                                    var maxresults = 20
-                                    $.each(values[0], function (key, element) {
-                                        console.log(
-                                            '--------------------------');
-                                        console.log(typeof (key));
-                                        $('#json-datalist').append(
-                                            '<option value="' + 'MA783' +
-                                            '">');
-                                        // html1 += '<option value="' + key + '">';
-
-                                        if (++j > maxresults) {
-                                            $('#json-datalist').append(
-                                                '<option value="... more than ' +
-                                                maxresults +
-                                                ' results available for: ' +
-                                                $this.val() + '">'
-                                            );
-                                            return false;
-                                        } else {
-                                            $('#json-datalist').append(
-                                                '<option value="' + key +
-                                                '">');
-                                        }
-                                    });
-                                    // .exec($('#json-datalist').html(html1));
-
-
-                                    $('#error').append("<br><br>" +
-                                        "Search not found.<br>Try again.");
-                                    map.setCenter(new google.maps.LatLng(15.41, -61.32));
-                                    map.panTo(new google.maps.LatLng(15.41, -61.32));
-                                    map.setZoom(11);
-
-                                    $('#spinner').hide();
 
                                 });
-                            }, 100);
+                                console.log(values);
+                                console.log(Object.keys(values[0]));
+                                ifdt = values[0];
+                                filelist = values[1];
+                                $('#datainfo').hide();
+                                $('#dataupload').hide();
+                                // $('#error').show();
+                                // $('#error').append(Object.keys(values[0]));
+                                var html1 = '';
+                                var j = 0;
+                                var maxresults = 20
+                                $.each(values[0], function (key, element) {
 
-                        }
+                                    if (++j > maxresults) {
+                                        $('#json-datalist').append(
+                                            '<option value="... more than ' +
+                                            maxresults +
+                                            ' results available for: ' +
+                                            $this.val() + '">'
+                                        );
+                                        return false;
+                                    } else {
+                                        $('#json-datalist').append(
+                                            '<option value="' + key +
+                                            '">');
+                                    }
+                                });
+
+                                map.setCenter(new google.maps.LatLng(15.41, -61.32));
+                                map.panTo(new google.maps.LatLng(15.41, -61.32));
+                                map.setZoom(11);
+
+                                $('#spinner').hide();
+
+                            });
+                        }, 100);
+
                     }
+
                 }
             }
         });

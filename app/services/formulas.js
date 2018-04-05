@@ -87,8 +87,8 @@ exports.riskRatingColorValue = function (in_val) {
     var ret = 1;
     var risk_rating = [];
 
-    risk_rating['Very Low'] = "#92d050";
-    risk_rating['Low'] = "#00b050";
+    risk_rating['Very Low'] = "#00b050";
+    risk_rating['Low'] = "#92d050";
     risk_rating['Medium'] = "#ffff00";
     risk_rating['High'] = "#f79646";
     risk_rating['Very High'] = "#ff0000";

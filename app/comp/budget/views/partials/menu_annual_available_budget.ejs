@@ -1,58 +1,61 @@
 <div id="menu_annual" style="display: none">
-    <div class="row mt">
+
+    <div class="row">
         <!-- Maintenance activities -->
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Maintenance activities
             </h5>
-            <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Routine">Routine (%)
+        </div>
+
+        <div class="col-md-12">
+
+            <div class="col-sm-8">
+                <div class="">
+                    <label class="no-bold" for="Routine">Routine (%)
                     </label>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
 
                 <input type="number" placeholder="0" min="0" max="100" id="Routine" name="Routine" class="form-control round-form" value="<%- retValues.budget.Routine %>">
             </div>
 
-            <br>
-            <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Periodic">Periodic (%)
+            <div class="col-sm-8">
+                <div class="">
+                    <label class="no-bold" for="Periodic">Periodic (%)
                     </label>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
 
                 <input type="number" placeholder="0" min="0" max="100" id="Periodic" name="Periodic" class="form-control round-form" value="<%- retValues.budget.Periodic %>">
             </div>
 
-            <br>
-            <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Emergency">Emergency (%)
+
+            <div class="col-sm-8">
+                <div class="">
+                    <label class="no-bold" for="Emergency">Emergency (%)
                     </label>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
 
                 <input type="number" placeholder="0" min="0" max="100" id="Emergency" name="Emergency" class="form-control round-form" value="<%- retValues.budget.Emergency %>">
             </div>
 
         </div>
     </div>
-    <hr>
 
-    <div class="row mt">
+    <div class="row">
         <!-- Routine Maintenance Activities -->
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Routine Maintenance Activities
             </h5>
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Brushcutting">Brush cutting (%)
+                <div class="">
+                    <label class="no-bold" for="Brushcutting">Brush cutting (%)
                     </label>
                 </div>
             </div>
@@ -64,8 +67,8 @@
 
             <br>
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Drainclearing">Drain clearing (%)
+                <div class="">
+                    <label class="no-bold" for="Drainclearing">Drain clearing (%)
                     </label>
                 </div>
             </div>
@@ -77,8 +80,8 @@
 
             <br>
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Patching">Patching (%)
+                <div class="">
+                    <label class="no-bold" for="Patching">Patching (%)
                     </label>
                 </div>
             </div>
@@ -88,8 +91,8 @@
             </div>
             <br>
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="RoadSafetyImprovement">Road Safety Improvement (%)
+                <div class="">
+                    <label class="no-bold" for="RoadSafetyImprovement">Road Safety Improvement (%)
                     </label>
                 </div>
             </div>
@@ -101,17 +104,17 @@
 
         </div>
     </div>
-    <hr>
-    <div class="row mt">
+
+    <div class="row">
         <!-- Periodic Maintenance Activities -->
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Periodic Maintenance Activities
             </h5>
 
             <!-- <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="DesignProjects">Design Projects (%)
+                <div class="">
+                    <label class="no-bold"  for="DesignProjects">Design Projects (%)
                     </label>
                 </div>
             </div>
@@ -122,8 +125,8 @@
 
             <br> -->
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="WorkInterventions">Interventions (%)
+                <div class="">
+                    <label class="no-bold" for="WorkInterventions">Interventions (%)
                     </label>
                 </div>
             </div>
@@ -134,8 +137,8 @@
             </div>
             <br>
             <div class="col-md-8">
-                <div class="checkbox">
-                    <label for="Inspections">Inspections (%)
+                <div class="">
+                    <label class="no-bold" for="Inspections">Inspections (%)
                     </label>
                 </div>
             </div>
@@ -148,31 +151,31 @@
         </div>
     </div>
 
-    <div class="row mt" id="riskCriteria" style="display: none;">
-        <hr>
+    <div class="row" id="riskCriteria">
+
         <!-- Risk Criteria -->
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Risk Criteria
             </h5>
-            <div class="checkbox">
-                <label for="PhysicalDeterioration">
-                    <input type="radio" name="optionRisk" id="PhysicalDeterioration" value="PhysicalDeterioration" disabled> Physical Deterioration
+            <div class="">
+                <label class="no-bold" for="PhysicalDeterioration">
+                    <input type="radio" name="optionRisk" id="PhysicalDeterioration" value="PhysicalDeterioration"> Physical Deterioration
                 </label>
                 <br>
-                <label for="NaturalHazards">
-                    <input type="radio" name="optionRisk" id="NaturalHazards" value="NaturalHazards" disabled> Natural Hazards
+                <label class="no-bold" for="NaturalHazards">
+                    <input type="radio" name="optionRisk" id="NaturalHazards" value="NaturalHazards"> Natural Hazards
                 </label>
             </div>
         </div>
     </div>
-    <!--<hr>
-    <div class="row mt">
+    <!--
+    <div class="row ">
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Acceptable Level of Risk
             </h5>
-            <div class="row mt">
+            <div class="row ">
                 <div class="col-md-12">
                     <input type="text" id="AcceptableLevelofRisk" class="form-control round-form">
                 </div>
@@ -180,48 +183,101 @@
             </div>
         </div>
     </div>-->
-    <!-- <hr>
-    <div class="row mt">
+
+    <div class="row ">
         <div class="col-md-12">
-            <h5 class="mb">
+            <h5 class="">
                 <i class="fa fa-angle-right"></i> Investment Period
             </h5>
-            <div class="checkbox">
-                <label for="1year">
-                    <input type="checkbox" id="1year" value="1year"> 1 year
+            <div class="">
+                <label class="no-bold" for="1year">
+                    <input type="radio" name="optionPeriod" id="1year" value="1"> 1 year
                 </label>
                 <br>
-                <label for="5years">
-                    <input type="checkbox" id="5years" value="5years"> 5 years
+                <label class="no-bold" for="5years">
+                    <input type="radio" name="optionPeriod" id="5years" value="5"> 5 years
                 </label>
                 <br>
-                <label for="10years">
-                    <input type="checkbox" id="10years" value="10years"> 10 years
+                <label class="no-bold" for="10years">
+                    <input type="radio" name="optionPeriod" id="10years" value="10"> 10 years
                 </label>
             </div>
         </div>
     </div>
--->
-    <!-- <hr>
-    <div class="row mt">
-    <div class="col-md-12">
-        <h5 class="mb">
-            <i class="fa fa-angle-right"></i> Investment Strategies
-        </h5>
-        <div class="checkbox">
-            <label for="Distancesinergies">
-                <input type="checkbox" id="Distancesinergies" value="Distancesinergies"> Distance sinergies
-            </label>
-            <br>
-            <label for="Assetsshare">
-                <input type="checkbox" id="Assetsshare" value="Assetsshare"> Assets share
-            </label>
-            <br>
-            <label for="Corridorpriorization">
-                <input type="checkbox" id="Corridorpriorization" value="Corridorpriorization"> Corridor priorization
-            </label>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="">
+                <i class="fa fa-angle-right"></i> Investment Strategies
+            </h5>
+            <div class="">
+                <label class="no-bold" for="Distancesinergies">
+                    <input type="radio" name="OptionStrategies" id="Distancesinergies" value="DistancesinergiesvalLayer"> Distance sinergies
+                </label>
+                <br>
+                <div id="DistancesinergiesvalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Distancesinergiesval">
+                        Include assets located at a max distance of
+                        <input type="text" id="Distancesinergiesval" style="width: 50px;">km
+
+                    </label>
+                    <br>
+                </div>
+
+                <label class="no-bold" for="Assetsshare">
+                    <input type="radio" name="OptionStrategies" id="Assetsshare" value="AssetssharevalLayer"> Assets share
+                </label>
+                <br>
+                <div id="AssetssharevalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Pavementsval">
+                        Pavements=
+                        <input type="text" id="Pavementsval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Bridgesval">
+                        Bridges=
+                        <input type="text" id="Bridgesval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Culvertsval">
+                        Culverts=
+                        <input type="text" id="Culvertsval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                    <label class="no-bold" for="Geotval">
+                        Geotechnicals=
+                        <input type="text" id="Geotval" style="width:  50px;">%
+
+                    </label>
+                    <br>
+                </div>
+                <label class="no-bold" for="Corridorpriorization">
+                    <input type="radio" name="OptionStrategies" id="Corridorpriorization" value="CorridorpriorizationvalLayer"> Corridor priorization
+                </label>
+                <br>
+                <div id="CorridorpriorizationvalLayer" style="display: none;">
+
+                    <label class="no-bold" for="Corridorpriorizationval">
+                        <input type="text" id="Corridorpriorizationval" placeholder="Code/Road name">
+
+                    </label>
+                    <br>
+                </div>
+            </div>
         </div>
     </div>
-</div>
--->
+
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" id="graphAnnual" class="btn btn-theme">
+                <i class="fa fa-chart-pie"></i> Calculate</button>
+        </div>
+    </div>
 </div>

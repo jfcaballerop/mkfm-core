@@ -168,6 +168,47 @@ router.post('/getSched/:riskType/:budget', function (req, resp) {
     request.end();
 
 });
+/**
+ * Add code of Asset to return values
+ */
+router.post('/getSched/:riskType/:budget/:code', function (req, resp) {
+    var postData = extend({}, req.body);
+    debug('## WEB getSched: ' + req.params.riskType);
+
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/schedule/V1/getSchedule/' + req.params.riskType + '/' + req.params.budget + '/' + req.params.code,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            //// debug('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            var responseObject = JSON.parse(data);
+            // console.log('responseObject:     ' + responseObject);
+            resp.status(200).jsonp(responseObject);
+            // resp.status(200).jsonp({ "result": "OK" });
+
+        });
+    });
+    request.write(JSON.stringify(postData));
+    request.end();
+
+});
 
 router.post('/saveEvent/:name/:startDate/:endDate/:type', function (req, resp) {
     var postData = extend({}, req.body);
@@ -288,11 +329,17 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                     res.send(500, err.message);
                 }
                 var total = 0;
+                var totalB = parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100));
+                debug(totalB);
                 ret['data'] = [];
                 for (var s of scheds) {
-                    if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
+                    if (total <= totalB) {
                         ret['data'].push(s);
-                    total += parseFloat(s.properties.cost);
+                        // debug(parseFloat(s.properties.cost));
+
+                    }
+                    total += isNaN(parseFloat(s.properties.cost)) ? 0 : parseFloat(s.properties.cost);
+                    // debug(total);
 
                 }
                 res.status(200).jsonp(ret);
@@ -316,7 +363,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
                 for (var s of scheds) {
                     if (total <= parseFloat((budgets[0].ammount * 1000000) * (budgets[0].Periodic / 100) * (budgets[0].WorkInterventions / 100)))
                         ret['data'].push(s);
-                    total += parseFloat(s.properties.cost);
+                    total += isNaN(parseFloat(s.properties.cost)) ? 0 : parseFloat(s.properties.cost);
 
                 }
                 res.status(200).jsonp(ret);
@@ -368,6 +415,81 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
         });
     } else if (req.params.type === 'NAT') {
         Schedulenat.find().sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            var total = 0;
+            ret['data'] = [];
+            for (var s of scheds) {
+                if (!isNaN(s.properties.cost)) {
+                    if (total <= Number(limitBudget)) {
+                        ret['data'].push(s);
+                    }
+                    total += Number(s.properties.cost);
+                }
+            }
+            res.status(200).jsonp(ret);
+        });
+    } else {
+        Schedule.find().exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+            ret['data'] = scheds;
+            res.status(200).jsonp(ret);
+        });
+
+    }
+
+});
+/* GET JSON Sched. */
+router.get('/V1/getSchedule/:type/:budget/:code', function (req, res, next) {
+    var ret = {
+        "result": "OK"
+    };
+    var limitBudget = Number(req.params.budget);
+    debug('limitBudget ' + limitBudget);
+
+
+    if (req.params.type === 'PHY') {
+        Schedulephy.find({
+            "properties.code": {
+                "$regex": req.params.code,
+                "$options": "i"
+            }
+        }).sort({
+            "properties.riskOrder": 1
+        }).exec(function (err, scheds) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            var total = 0;
+            ret['data'] = [];
+            for (var s of scheds) {
+                if (!isNaN(s.properties.cost)) {
+                    if (total <= Number(limitBudget)) {
+                        ret['data'].push(s);
+                    }
+                    total += Number(s.properties.cost);
+                }
+            }
+            res.status(200).jsonp(ret);
+
+        });
+    } else if (req.params.type === 'NAT') {
+        Schedulenat.find({
+            "properties.code": {
+                "$regex": req.params.code,
+                "$options": "i"
+            }
+        }).sort({
             "properties.riskOrder": 1
         }).exec(function (err, scheds) {
             if (err) {

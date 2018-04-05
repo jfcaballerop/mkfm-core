@@ -62,7 +62,7 @@
                     <!--main content start-->
                     <section id="main-content">
                         <section class="wrapper site-min-height">
-                            <div class="row mt">
+                            <div class="row">
                                 <div class="col-md-12">
                                     <h3>
                                         <i class="fa fa-angle-right"></i>
@@ -71,13 +71,13 @@
                                 </div>
                             </div>
                             <!-- page start-->
-                            <div class="row mt" id="">
+                            <div class="row" id="">
                                 <div class="col-md-3">
                                     <div class="form-panel">
-                                        <div class="row mt">
+                                        <div class="row">
                                             <!-- Budget Criteria -->
                                             <div class="col-md-12">
-                                                <h5 class="mb">
+                                                <h5 class="">
                                                     <i class="fa fa-angle-right"></i> Budget Criteria
                                                 </h5>
 
@@ -89,14 +89,10 @@
                                                     <label for="Annualavailablebudget">
                                                         <input type="radio" name="optionsRadios" id="Annualavailablebudget" value="Annualavailablebudget"> Annual available budget
                                                     </label>
+                                                    <hr>
                                                     <div id="amountdiv" style="display: none">
-                                                        <div class="row mt">
-                                                            <div class="col-md-12">
-                                                                <button type="button" id="graphAnnual" class="btn btn-theme">
-                                                                    <i class="fa fa-chart-pie"></i> Graph</button>
-                                                            </div>
-                                                        </div>
-                                                        <br>
+
+
                                                         <label for="amount">
                                                             Amount (Millions EC$):
                                                             <input type="number" id="ammount" name="ammount" value="<%- retValues.budget.ammount %>">
@@ -106,7 +102,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
                                         <%- include('partials/menu_annual_available_budget.ejs'); %>
                                             <%- include('partials/menu_global_budget.ejs'); %>
                                     </div>
@@ -124,7 +119,7 @@
                                 <!-- PARTE DCHA DE RESULTADOS-->
 
                             </div>
-                            <div class="row mt">
+                            <div class="row">
 
                             </div>
 
