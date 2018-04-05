@@ -105,7 +105,12 @@
 
         function paintRiskTable() {
             var option = $('input[type=radio][name=optionRisk]:checked').val();
+            var optionPeriod = $('input[type=radio][name=optionPeriod]:checked').val();
+            var totalAmount = 0;
+            var totalYearAmount = 0;
+
             console.log(option);
+            console.log(parseInt(optionPeriod));
 
             var riskType = "";
             switch (option) {
@@ -127,12 +132,28 @@
                     break;
             }
 
+            totalYearAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100));
+            switch (optionPeriod) {
+
+                case "5":
+                    totalAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100)) *
+                        5;
+                    break;
+                case "10":
+                    totalAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100)) *
+                        10;
+                    break;
+
+                default:
+                    totalAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100));
+                    break;
+            }
+
             var dataPost = {};
             dataPost['riskType'] = riskType;
+
             var p1 = $.ajax({
-                url: '/auth/WEB/schedule/getSched/' + riskType + '/' + ((ValAmount *
-                        1000000) *
-                    (ValPeriodic / 100) * (ValWorkInterventions / 100)),
+                url: '/auth/WEB/schedule/getSched/' + riskType + '/' + totalAmount,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
@@ -144,6 +165,7 @@
 
                 //$("html").html(values[0]);
                 console.log(values[0]);
+                var totalTable = 0;
                 if (values[0].result === "OK") {
 
                     // console.log(result);
@@ -151,10 +173,10 @@
                     var html = [];
                     if (riskType === 'PHY') {
                         html[++h] =
-                            'Physical Deterioration <a href="#" id="filterPhy" title="Filter/Show data"><i class="fas fa-filter"></i></a>';
+                            'Physical Deterioration ';
                     } else {
                         html[++h] =
-                            'Natural Hazards <a href="#" id="filterNat" title="Filter/Show data"><i class="fas fa-filter"></i></a>';
+                            'Natural Hazards ';
 
                     }
                     html[++h] =
@@ -166,12 +188,17 @@
                     html[++h] = '<th>Asset</th>';
                     html[++h] = '<th>Risk</th>';
                     html[++h] = '<th>Type</th>';
-                    html[++h] = '<th>Budget</th>';
+                    html[++h] = '<th>Budget (EC$)</th>';
                     html[++h] = '</tr>';
                     html[++h] = '<tbody>';
 
                     j = 0;
                     for (var val of values[0].data) {
+                        if (totalTable >= totalYearAmount) {
+                            html[++h] =
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
+                            totalTable = 0;
+                        }
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
@@ -182,6 +209,7 @@
                         html[++h] = '<td>' + val.type.charAt(0) + '</td>';
                         html[++h] = '<td>' + Math.round(val.properties.cost * 100) / 100 +
                             '</td>';
+                        totalTable += Math.round(val.properties.cost * 100) / 100;
                         html[++h] = '</tr>';
                     }
                     html[++h] = '</tbody></table>';
@@ -700,12 +728,11 @@
             $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic *
                 ValInspections / 10000);
 
-
-            paintDonutChart1();
-
-            paintDonutChart2();
-
-            paintDonutChart3();
+            if ($('#Summary').parent().attr('class') === 'active') {
+                paintDonutChart1();
+                paintDonutChart2();
+                paintDonutChart3();
+            }
 
 
             paintRiskTable();
