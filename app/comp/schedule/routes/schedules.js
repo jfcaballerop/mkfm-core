@@ -456,6 +456,7 @@ router.get('/V1/getSchedule/:type/:budget/:code', function (req, res, next) {
     var limitBudget = Number(req.params.budget);
     debug('limitBudget ' + limitBudget);
 
+    var regEx = new RegExp(req.params.code);
 
     if (req.params.type === 'PHY') {
         Schedulephy.find({
@@ -469,18 +470,40 @@ router.get('/V1/getSchedule/:type/:budget/:code', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
-            var total = 0;
-            ret['data'] = [];
-            for (var s of scheds) {
-                if (!isNaN(s.properties.cost)) {
-                    if (total <= Number(limitBudget)) {
-                        ret['data'].push(s);
-                    }
-                    total += Number(s.properties.cost);
+
+            Schedulephy.find({
+                "properties.code": {
+                    "$not": regEx
                 }
-            }
-            res.status(200).jsonp(ret);
+            }).sort({
+                "properties.riskOrder": 1
+            }).exec(function (err, scheds2) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (!isNaN(s.properties.cost)) {
+                        if (total <= Number(limitBudget)) {
+                            ret['data'].push(s);
+                        }
+                        total += Number(s.properties.cost);
+                    }
+                }
+
+                for (var s of scheds2) {
+                    if (!isNaN(s.properties.cost)) {
+                        if (total <= Number(limitBudget)) {
+                            ret['data'].push(s);
+                        }
+                        total += Number(s.properties.cost);
+                    }
+                }
+                res.status(200).jsonp(ret);
+            });
 
         });
     } else if (req.params.type === 'NAT') {
@@ -496,18 +519,36 @@ router.get('/V1/getSchedule/:type/:budget/:code', function (req, res, next) {
                 res.send(500, err.message);
             }
             // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
-
-            var total = 0;
-            ret['data'] = [];
-            for (var s of scheds) {
-                if (!isNaN(s.properties.cost)) {
-                    if (total <= Number(limitBudget)) {
-                        ret['data'].push(s);
-                    }
-                    total += Number(s.properties.cost);
+            Schedulenat.find({
+                "properties.code": {
+                    "$not": regEx
                 }
-            }
-            res.status(200).jsonp(ret);
+            }).sort({
+                "properties.riskOrder": 1
+            }).exec(function (err, scheds2) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                var total = 0;
+                ret['data'] = [];
+                for (var s of scheds) {
+                    if (!isNaN(s.properties.cost)) {
+                        if (total <= Number(limitBudget)) {
+                            ret['data'].push(s);
+                        }
+                        total += Number(s.properties.cost);
+                    }
+                }
+                for (var s of scheds2) {
+                    if (!isNaN(s.properties.cost)) {
+                        if (total <= Number(limitBudget)) {
+                            ret['data'].push(s);
+                        }
+                        total += Number(s.properties.cost);
+                    }
+                }
+                res.status(200).jsonp(ret);
+            });
         });
     } else {
         Schedule.find().exec(function (err, scheds) {
