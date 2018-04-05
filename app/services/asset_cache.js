@@ -107,20 +107,20 @@ function transformData(tracks, koboinfos){
                 if (u !== '') {
                     // debug(u + ' : ' + elem.properties.Ccode.firstindex(u) + '\n');
                     // debug(elem.properties.koboedit);
+                    const code = elem.properties.Ccode.firstindex(u)
                     if (elem.properties.koboedit !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
-                        elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
+                        elem.properties.koboedit[code] !== undefined &&
+                        elem.properties.koboedit[code] !== null) {
                             //console.log('Voy a buscar kobo', u, koboinfos.length)
-                            const koboId = elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id
+                            const koboId = elem.properties.koboedit[code].kobo_id
                             if(!koboId) continue
-                            koboinfos.forEach(function (koboelem, index) {
-                                //console.log('Comparo kobo', koboId, koboelem._id)
-                                if (String(koboelem.id) ===elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
-                                    kobo_mainr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
-                                    kobo_mainr_odt[kobo_mainr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
-
-                                }
-                            });
+                            const kobo = koboinfos.find(k => {
+                                return String(k.id) === koboId
+                            })
+                            if(kobo){
+                                kobo_mainr_odt.push(services.makeKoboGeoJson(elem, code, 'Culvert'));
+                                kobo_mainr_odt[kobo_mainr_odt.length - 1]["properties"]["_attachments"] = kobo.properties._attachments;
+                            }
                     }
                 }
             }
