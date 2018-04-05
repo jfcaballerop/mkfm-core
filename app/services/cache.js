@@ -25,10 +25,9 @@ class Cache {
 
     async get(){
         if(!this._loaded){
-            console.log('Cache miss', this._name, 'loading...')
+            console.log('Cache miss in cache: ', this._name, 'loading...')
             await this.load()
         }
-        console.log('Returning cached data from', this._name)
         return this._data
     }
 
