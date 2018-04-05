@@ -273,34 +273,6 @@ router.get('/list_files', function (req, resp, next) {
 router.get('/list_info', async function (req, resp, next) {
     //const assetData = await AssetCache.get()
     resp.render('maps', {
-        // All assets grouped
-        //assetData: assetData,
-        // Geotechnical
-        /* kobo_mainr_geo: kobo_mainr_geo,
-        kobo_secondaryr_geo: kobo_secondaryr_geo,
-        kobo_feederr_geo: kobo_feederr_geo,
-        kobo_urbanr_geo: kobo_urbanr_geo,
-        kobo_otherr_geo: kobo_otherr_geo,
-        //Bridges
-        kobo_mainr_bridge: kobo_mainr_bridge,
-        kobo_secondaryr_bridge: kobo_secondaryr_bridge,
-        kobo_feederr_bridge: kobo_feederr_bridge,
-        kobo_urbanr_bridge: kobo_urbanr_bridge,
-        kobo_otherr_bridge: kobo_otherr_bridge,
-        // ODT = Culvert?
-        kobo_otherr_odt: kobo_otherr_odt,
-        kobo_urbanr_odt: kobo_urbanr_odt,
-        kobo_feederr_odt: kobo_feederr_odt,
-        kobo_secondaryr_odt: kobo_secondaryr_odt,
-        kobo_mainr_odt: kobo_mainr_odt, */
-        // road data
-        // otherr: otherr, // not used?
-        // Pavements
-        /* urbanr: urbanr,
-        feederr: feederr,
-        secondaryr: secondaryr,
-        mainr: mainr, */
-        // General data
         token: req.token,
         title: config.CLIENT_NAME + '-' + config.APP_NAME,
         cname: config.CLIENT_NAME,
