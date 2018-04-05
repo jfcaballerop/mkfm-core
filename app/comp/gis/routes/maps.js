@@ -316,7 +316,6 @@ router.get('/list_info', async function (req, resp, next) {
 router.get('/assets/:assetType/:roadType', async function(req, res){
     const { assetType, roadType } = req.params
     try {
-        console.log('Get asset of type', assetType, 'road type', roadType)
         const cache = await AssetCache.get()
         const data = cache[assetType][roadType]
         res.json(data)

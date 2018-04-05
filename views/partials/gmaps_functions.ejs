@@ -53,7 +53,7 @@
             return Promise.resolve(assetData[assetType][roadType])
         }
         else {
-            $.get('/auth/WEB/maps/assets/' + assetType + '/' + roadType)
+            return  $.get('/auth/WEB/maps/assets/' + assetType + '/' + roadType)
             .then(function(data){
                 //console.log('Fetched', assetType, roadType, data.length)
                 assetData[assetType][roadType] = data
@@ -344,11 +344,11 @@
                 fillColor: color,
                 strokeColor: color,
                 strokeWeight: 3,
-                strokeOpacity: 0.7,
+                strokeOpacity: 1,
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     strokeColor: color,
-                    strokeOpacity: 0.5,
+                    strokeOpacity: 1,
                     scale: 3
                 }
             }
@@ -359,7 +359,7 @@
         // });
     };
 
-    function createLayer(assetType, roadType){
+    function createLayer(assetType){
         var layer = new google.maps.Data()
         layer.setStyle(function(feature){
             return {
@@ -367,25 +367,36 @@
                 fillColor: '#ff0'
             }
         })
+        var dataPromises = []
         _.each(selectedRoads, function(isSelected, roadType){
             if(isSelected){
-                layer.addGeoJson({
+                fetchAssets(assetType,roadType)
+                .then(function(data){
+                    layer.addGeoJson({
+                        type: 'FeatureCollection',
+                        features: data
+                    })
+                })
+                /* layer.addGeoJson({
                     type: 'FeatureCollection',
                     features: assetData[assetType][roadType]
-                })
+                }) */
             }
         })
         dataLayers[assetType] = layer
     }
 
     function loadDataLayer(assetType){
+        //TODO - get selected roadtypes
+        // for each selected roadtype...
+        // fetch data if needed,or simply toggle on
         if(!dataLayers[assetType]){
             createLayer(assetType)
         }
         dataLayers[assetType].setMap(map)
     }
 
-    function hideDataLayer(assetType){
+    function hideDataLayer(assetType, roadType){
         dataLayers[assetType] && dataLayers[assetType].setMap(null)
     }
 
