@@ -12,8 +12,10 @@ class Cache {
 
     async load(){
         try {
+            let start = Date.now()
             this._data = await this._loadFn()
             this._loaded = true
+            console.log(`Cache ${this._name} loaded in ${(Date.now()-start)/1000} secs`)
         }
         catch(error){
             console.log('Error loading cache ' + this._name + ': ' + error.message)
