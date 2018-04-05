@@ -123,7 +123,7 @@ function transformData(tracks, koboinfos){
     // extracts assets from a track, completes them with kobodata
     // and pushes to a destination array
     function extractAssets(track, codeProperty, assetType, destination){
-        const uniqueNonEmptyCodes = _.unique(track.properties[codeProperty].unique()).filter(x => !!x)
+        const uniqueNonEmptyCodes = _.unique(track.properties[codeProperty]).filter(x => !!x)
         uniqueNonEmptyCodes.forEach(assetCode => {
             const assetIndex = track.properties[codeProperty].findIndex(x => x === assetCode)
             if(assetIndex && track.properties.koboedit[assetIndex]){
