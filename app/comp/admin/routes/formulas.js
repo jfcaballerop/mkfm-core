@@ -347,7 +347,7 @@ router.get('/formulas', function (req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    // // Peticiones 
+    // // Peticiones
 
 
     var request = http.request(options, function (res) {
@@ -1182,7 +1182,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var culvertsTrackNat = [];
                 var geotsTrackPhy = [];
                 var geotsTrackNat = [];
-                /** 
+                /**
                  * Guardo aquellos assets ya visitados para no volver a mostrarlos
                  * a tener en cuenta que los CODEs deberían ser únicos.
                  */
@@ -4509,7 +4509,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                         // Mechanical Defects, Durable Defects
                                         var z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas", "BDamagesBeams"];
 
-                                        //  Very High, High, Medium, Low, Unknown 
+                                        //  Very High, High, Medium, Low, Unknown
                                         var z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity", "BDamagesBeamsSeverity"];
                                         var k = 0;
                                         if (ifdt.properties.bcode[i] === AssetADebugear) {
@@ -4609,7 +4609,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                                             //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
 
                                         }
-                                        // 
+                                        //
                                         /////////////////////////////////////////////////////////////////
 
                                         totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
@@ -4707,7 +4707,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                     var conditions = {
                         _id: ifdt._id
                     };
-                    /** 
+                    /**
                      * modified jfcp: añado el guardarlo por tanto por 1
                      */
                     var query = {
@@ -4720,7 +4720,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
                         if (err) {
                             ////debug(err.message);
                         }
-                        // ////debug(iup);  
+                        // ////debug(iup);
 
                     });
 
@@ -5596,11 +5596,11 @@ router.post('/V1/get_formulas_tracks/', function (req, res, next) {
                                                 break;
                                             case 'Culvert':
                                                 // //debug(v.properties.Ccondition[indice]);
-                                                if (v.properties.Ccondition[indice] !== null &&
-                                                    v.properties.Ccondition[indice] !== undefined &&
-                                                    v.properties.Ccondition[indice] !== '' &&
-                                                    v.properties.Ccondition[indice] >= formulasService.conditionValue(f).score.min &&
-                                                    v.properties.Ccondition[indice] < formulasService.conditionValue(f).score.max) {
+                                                if (v.properties.Ccondition[key] !== null &&
+                                                    v.properties.Ccondition[key] !== undefined &&
+                                                    v.properties.Ccondition[key] !== '' &&
+                                                    v.properties.Ccondition[key] >= formulasService.conditionValue(f).score.min &&
+                                                    v.properties.Ccondition[key] < formulasService.conditionValue(f).score.max) {
                                                     if (antCulvert == 0) antCulvert = key - 1;
                                                     if (key !== (antCulvert + 1)) {
                                                         // //debug('-- new geojson --');
