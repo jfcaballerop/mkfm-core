@@ -48,6 +48,25 @@
         console.log('saved asset data', assetData)
     }
 
+    function fetchAssets(assetType, roadType){
+        if(assetData[assetType][roadType] && assetData[assetType][roadType].length){
+            return Promise.resolve(assetData[assetType][roadType])
+        }
+        else {
+            $.get('/auth/WEB/maps/assets/' + assetType + '/' + roadType)
+            .then(function(data){
+                //console.log('Fetched', assetType, roadType, data.length)
+                assetData[assetType][roadType] = data
+                return data
+            })
+            .catch(function(error){
+                console.error('Failed fetching assets', error.status, error.message)
+                return []
+            })
+        }
+
+    }
+
     function getRoadType(formValue){
         switch(formValue){
             case 'Main Road':

@@ -271,10 +271,10 @@ router.get('/list_files', function (req, resp, next) {
 
 /* GET List Info */
 router.get('/list_info', async function (req, resp, next) {
-    const assetData = await AssetCache.get()
+    //const assetData = await AssetCache.get()
     resp.render('maps', {
         // All assets grouped
-        assetData: assetData,
+        //assetData: assetData,
         // Geotechnical
         /* kobo_mainr_geo: kobo_mainr_geo,
         kobo_secondaryr_geo: kobo_secondaryr_geo,
@@ -313,7 +313,18 @@ router.get('/list_info', async function (req, resp, next) {
     });
 });
 
-router.get('/assets/:type/', async function(req, res){
+router.get('/assets/:assetType/:roadType', async function(req, res){
+    const { assetType, roadType } = req.params
+    try {
+        console.log('Get asset of type', assetType, 'road type', roadType)
+        const cache = await AssetCache.get()
+        const data = cache[assetType][roadType]
+        res.json(data)
+    }
+    catch(err){
+        res.status(400).send({ message: err.message })
+    }
+
 
 })
 
