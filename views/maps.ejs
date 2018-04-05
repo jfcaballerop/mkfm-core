@@ -341,14 +341,17 @@
 
         <!--script for this page-->
 
-        <% include partials/gmaps_functions %>
+        <script src="/scripts/wgis.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
-
+            APP.WGIS.init(<%- JSON.stringify(maps_center) %>, <%- maps_zoom %>)
+            function onGoogleMapsReady(){
+                APP.WGIS.initMap()
+            }
         </script>
         <% include ./partials/dsheet_scripts_tables %>
         <% include ./partials/dsheet_scripts %>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%- api_key %>&callback=initMap">
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%- api_key %>&callback=onGoogleMapsReady">
         </script>
 
 </body>

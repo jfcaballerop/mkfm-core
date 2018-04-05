@@ -1,20 +1,19 @@
-<script>
+window.APP || (window.APP = {})
 
-    // This example uses the Google Maps JavaScript API's Data layer
-    // to create a rectangular polygon with 2 holes in it.
-    var map;
+window.APP.WGIS = function wGisModule(){
+    var map, spinner;
     var center, zoom
-    var activeInfoWindow;
+    var infoWnd, activeInfoWindow;
     var featureCrit = [];
     var featureCond = [];
     var featureRiskPhy = [];
     var featureRiskNat = [];
 
     var dataLayers = {
-        Culvert: null,
-        Bridge: null,
-        Geo: null,
-        Pavement: null
+        Culvert: {},
+        Bridge: {},
+        Geo: {},
+        Pavement: {}
     }
     var selectedRoads = {
         main: false,
@@ -84,11 +83,12 @@
     }
 
     function saveUI(){
+        spinner = $('#spinner')
         $('.js-road-type').change(function(event){
             var roadType = getRoadType(event.target.value)
             var isSelected = !!event.target.checked
             selectedRoads[roadType] = isSelected
-            console.log('Road change', selectedRoads)
+            toggleRoadDataLayers(roadType, isSelected)
         })
         $('.js-asset-type').change(function(event){
             var assetType = event.target.value
@@ -98,7 +98,7 @@
                 loadDataLayer(assetType)
             }
             else {
-                hideDataLayer(assetType)
+                hideAssetDataLayer(assetType)
             }
 
         })
@@ -111,7 +111,7 @@
         return _.keys(selectedRoads).filter(key => !!selectedRoads[key])
     }
 
-    function getContent(type, event) {
+    function getInfoWindowContent(type, event) {
         var content = 'Type of Asset: <span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') +
             '</span><br>';
         var subcontent = "";
@@ -288,6 +288,25 @@
         return color;
     }
 
+    function onDataLayerClick(event){
+        ////console.log(event.latLng);
+        console.log('map data click!', event.latLng, event.feature.getProperty)
+
+        // Open new InfoWindow for mouseover event
+        if(event.feature.getProperty('kobo_type')){
+            infoWnd.setPosition(event.latLng);
+            infoWnd.setContent(getInfoWindowContent(event.feature.getProperty('kobo_type'), event));
+            infoWnd.open(map)
+        }
+
+        // Store new open InfoWindow in global variable
+        var infoTextContent = event.feature.getProperty('nameoption');
+        if (event.feature.getProperty('nameoption') === 'Roads') {
+            infoTextContent += ' ' + event.feature.getProperty('name');
+        }
+        document.getElementById('info-box').textContent = infoTextContent;
+    }
+
     function initMap() {
         console.log('initMap', center, zoom)
         map = new google.maps.Map(document.getElementById('map'), {
@@ -296,8 +315,7 @@
         });
 
         var jsonObject;
-
-        var infoWnd = new google.maps.InfoWindow();
+        infoWnd = new google.maps.InfoWindow();
 
         // on mouseout (moved mouse off marker) make infoWindow disappear
         // map.data.addListener('click', function(event) {
@@ -305,29 +323,7 @@
         // });
 
         // Set mouseover event for each feature.
-        map.data.addListener('click', function (event) {
-            ////console.log(event.latLng);
-            infoWnd.setPosition(event.latLng);
-            infoWnd.setContent(getContent(event.feature.getProperty('kobo_type'), event));
-            // Close active window if exists - [one might expect this to be default behaviour no?]
-            if (activeInfoWindow != null) activeInfoWindow.close();
-
-            // Open new InfoWindow for mouseover event
-            if (event.feature.getProperty('nameoption') === 'Culvert' ||
-                event.feature.getProperty('nameoption') === 'BRIDGE' ||
-                event.feature.getProperty('nameoption') === 'GEOT') {
-                infoWnd.open(map);
-            }
-
-            // Store new open InfoWindow in global variable
-            activeInfoWindow = infoWnd;
-            var infoTextContent = event.feature.getProperty('nameoption');
-            if (event.feature.getProperty('nameoption') === 'Roads') {
-                infoTextContent += ' ' + event.feature.getProperty('name');
-            }
-            document.getElementById('info-box').textContent = infoTextContent;
-
-        });
+        map.data.addListener('click', onDataLayerClick);
         map.data.setStyle(function (feature) {
             var color = feature.getProperty('color');
             var nameopt = feature.getProperty('nameoption');
@@ -352,45 +348,68 @@
         // });
     };
 
-    function createLayer(assetType){
+    function createLayer(assetType, roadType){
         var layer = new google.maps.Data()
+        layer.addListener('click', onDataLayerClick)
+        dataLayers[assetType][roadType] = layer
+        layer.setMap(map)
+        spinner.show()
         layer.setStyle(function(feature){
             return {
                 label: assetType.slice(0,1),
                 fillColor: '#ff0'
             }
         })
-        var dataPromises = []
-        _.each(selectedRoads, function(isSelected, roadType){
-            if(isSelected){
-                fetchAssets(assetType,roadType)
-                .then(function(data){
-                    layer.addGeoJson({
-                        type: 'FeatureCollection',
-                        features: data
-                    })
-                })
-                /* layer.addGeoJson({
-                    type: 'FeatureCollection',
-                    features: assetData[assetType][roadType]
-                }) */
-            }
+
+        return fetchAssets(assetType,roadType)
+        .then(function(data){
+            layer.addGeoJson({
+                type: 'FeatureCollection',
+                features: data
+            })
         })
-        dataLayers[assetType] = layer
+        .done(function(){
+            spinner.hide()
+        })
     }
 
     function loadDataLayer(assetType){
         //TODO - get selected roadtypes
+        var roadTypes = getSelectedRoads()
         // for each selected roadtype...
         // fetch data if needed,or simply toggle on
-        if(!dataLayers[assetType]){
-            createLayer(assetType)
-        }
-        dataLayers[assetType].setMap(map)
+        _.each(roadTypes, function(roadType){
+            if(!dataLayers[assetType] || !dataLayers[assetType][roadType]){
+                createLayer(assetType, roadType)
+            }
+            else {
+                dataLayers[assetType][roadType].setMap(map)
+            }
+        })
     }
 
-    function hideDataLayer(assetType, roadType){
-        dataLayers[assetType] && dataLayers[assetType].setMap(null)
+    function toggleRoadDataLayers(roadType, isVisible){
+        const selectedAssets = getSelectedAssets()
+        _.each(dataLayers, function(assetLayers, assetType){
+            var shouldDisplay = isVisible && ~selectedAssets.indexOf(assetType)
+            assetLayers[roadType] && assetLayers[roadType].setMap(shouldDisplay ? map : null)
+        })
+    }
+
+    /* function hideRoadDataLayers(roadType){
+        var selectedAssetTypes = getSelectedAssets()
+        _.each(selectedAssetTypes, function(assetType){
+            var layer = dataLayers[assetType][roadType]
+            layer && layer.setMap(null)
+        })
+    } */
+
+    function hideAssetDataLayer(assetType){
+        var selectedRoadTypes = getSelectedRoads()
+        _.each(selectedRoadTypes, function(roadType){
+            var layer = dataLayers[assetType][roadType]
+            layer && layer.setMap(null)
+        })
     }
 
     $(document).ready(function () {
@@ -949,7 +968,12 @@
 
                 }
             }
-
         });
-    });
-</script>
+    })
+
+    return {
+        init: initMaps,
+        initMap: initMap,
+        dataLayers: dataLayers
+    }
+}()
