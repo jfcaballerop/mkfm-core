@@ -202,10 +202,16 @@
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
-                        html[++h] = '<td>' + riskv[0] + '-' + riskv[1] + '</td>';
-                        html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split(
-                            '-')[
-                            2] + riskv[3] + '</td>';
+                        var riskv2 = val.properties.code.split('__KP');
+                        if (val.type.charAt(0) === 'P') {
+
+                            html[++h] = '<td>' + riskv[0] + '-' + riskv[1] + '</td>';
+
+                        } else {
+                            html[++h] = '<td>' + riskv2[0] + '</td>';
+                        }
+                        html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split('-')[2] +
+                            riskv[3] + '</td>';
                         html[++h] = '<td>' + val.type.charAt(0) + '</td>';
                         html[++h] = '<td>' + Math.round(val.properties.cost * 100) / 100 +
                             '</td>';
