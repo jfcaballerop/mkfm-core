@@ -317,6 +317,8 @@ window.APP.WGIS = function wGisModule(){
         var jsonObject;
         infoWnd = new google.maps.InfoWindow();
 
+
+        window.map = map
         // on mouseout (moved mouse off marker) make infoWindow disappear
         // map.data.addListener('click', function(event) {
         //     infoWnd.close();
