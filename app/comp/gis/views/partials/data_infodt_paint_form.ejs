@@ -1722,7 +1722,7 @@
 
     var $checks;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var rObject;
 
         function fillTable(data) {
@@ -1732,7 +1732,7 @@
             html[++h] = '<thead>';
             html[++h] = '<tr>';
 
-            $.each(propertiesCols, function(key1, value1) {
+            $.each(propertiesCols, function (key1, value1) {
                 if (key1 === 'Trackinfo') var numfalses = 1;
                 if (key1 === 'road') var numfalses = 49;
                 if (key1 === 'furniture') var numfalses = 3;
@@ -1741,38 +1741,47 @@
                 if (key1 === 'culvert') var numfalses = 42;
                 if (key1 === 'drainage') var numfalses = 40;
 
-                html[++h] = '<th colspan="' + (Object.keys(propertiesCols[key1]).length - numfalses) + '" scope="colgroup" class="' +
-                    key1 + '" ><i id="' + key1 + '" class="fa fa-eye-slash" aria-hidden="true"></i>' + key1 + '</th>';
+                html[++h] = '<th colspan="' + (Object.keys(propertiesCols[key1]).length - numfalses) +
+                    '" scope="colgroup" class="' +
+                    key1 + '" ><i id="' + key1 + '" class="fa fa-eye-slash" aria-hidden="true"></i>' +
+                    key1 + '</th>';
             });
             html[++h] = '</tr>';
             html[++h] = '<tr>';
-            $.each(propertiesCols, function(key1, value1) {
+            $.each(propertiesCols, function (key1, value1) {
                 //console.log(key1, value1);
-                $.each(value1, function(key, value) {
+                $.each(value1, function (key, value) {
                     //console.log(key, value);
                     if (value.visible) {
 
                         html[++h] = '<th id="infodatatrack[properties][' + key +
-                            ']" title="' + key + '" class="' + key1 + '" style="max-width:100px; white-space:pre-wrap;">' + value.title + '</th>';
+                            ']" title="' + key + '" class="' + key1 +
+                            '" style="max-width:100px; white-space:pre-wrap;">' + value.title +
+                            '</th>';
                     }
                 });
             });
             html[++h] = '</tr></thead><tbody id="bodytable">';
 
 
-            data.geometry.coordinates.forEach(function(element, index) {
+            data.geometry.coordinates.forEach(function (element, index) {
                 html[++h] = '<tr id="row' + index + '" style="display: none;"><td>' + index + '</td>';
-                html[++h] = '<td><input id="check' + index + '" name="check[_id]" type="checkbox" class="input-xs" value="' + data._id + '"></td>'
-                    // html[++h] = '<td><input id="' + index + '" name="infodatatrack[properties][inventario]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    //     (typeof data.properties.inventario[index] !== "undefined" ? data.properties.inventario[index] : '') + '"></td>';
-                html[++h] = '<td id="infodatatrack[properties][coordTimes]">' + $.format.date(data.properties.coordTimes[index], "dd-MM-yyyy HH:mm:ss") + '</td>';
+                html[++h] = '<td><input id="check' + index +
+                    '" name="check[_id]" type="checkbox" class="input-xs" value="' + data._id +
+                    '"></td>'
+                // html[++h] = '<td><input id="' + index + '" name="infodatatrack[properties][inventario]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                //     (typeof data.properties.inventario[index] !== "undefined" ? data.properties.inventario[index] : '') + '"></td>';
+                html[++h] = '<td id="infodatatrack[properties][coordTimes]">' + $.format.date(data.properties
+                    .coordTimes[index], "dd-MM-yyyy HH:mm:ss") + '</td>';
 
 
                 if (index == 0) {
                     html[++h] = '<td id="infodatatrack[properties][videoTime]">' + index + '</td>';
                 } else {
-                    var d2 = new Date($.format.date(data.properties.coordTimes[0], "yyyy-MM-dd HH:mm:ss"))
-                    var d1 = new Date($.format.date(data.properties.coordTimes[index], "yyyy-MM-dd HH:mm:ss"))
+                    var d2 = new Date($.format.date(data.properties.coordTimes[0],
+                        "yyyy-MM-dd HH:mm:ss"))
+                    var d1 = new Date($.format.date(data.properties.coordTimes[index],
+                        "yyyy-MM-dd HH:mm:ss"))
                     var sec = (d1 - d2) / 1000;
                     var min = 0;
                     if (sec >= 60) {
@@ -1784,54 +1793,96 @@
                         var formattedSec = ("0" + sec).slice(-2);
                         var seconds = formattedSec;
                     }
-                    html[++h] = '<td id="infodatatrack[properties][videoTime]">' + minutes + ':' + seconds + '</td>';
+                    html[++h] = '<td id="infodatatrack[properties][videoTime]">' + minutes + ':' +
+                        seconds + '</td>';
                 }
-                html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[index] + ' ]</td>';
-                html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] + '</td>';
+                html[++h] = '<td id="infodatatrack[geometry][coordinates]">[ ' + data.geometry.coordinates[
+                    index] + ' ]</td>';
+                html[++h] = '<td id="infodatatrack[properties][pk]">' + data.properties.pk[index] +
+                    '</td>';
 
 
                 html[++h] = '<td id="infodatatrack[properties][kobo]">';
-                if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null && typeof data.properties.kobo[index] !== "undefined" &&
-                    data.properties.kobo[index].kobo_type !== undefined && data.properties.kobo[index].kobo_type !== '') {
+                if (data.properties.kobo !== undefined && data.properties.kobo[index] !== null &&
+                    typeof data.properties.kobo[index] !== "undefined" &&
+                    data.properties.kobo[index].kobo_type !== undefined && data.properties.kobo[index].kobo_type !==
+                    '') {
                     if (data.properties.kobo[index].kobo_type.toUpperCase() === "BRIDGE") {
-                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.kobo[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
+                        html[++h] =
+                            '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.kobo[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
                     } else if (data.properties.kobo[index].kobo_type.toUpperCase() === "CULVERT") {
-                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.kobo[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type + '\"}\' aria-hidden="true" style="color: blue;" title="Culvert"> </i>';
+                        html[++h] =
+                            '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.kobo[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: blue;" title="Culvert"> </i>';
                     } else {
-                        html[++h] = '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.kobo[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
+                        html[++h] =
+                            '<i class="fa fa-circle" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.kobo[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.kobo[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
 
                     }
                 }
                 if (data.properties.koboedit !== undefined && data.properties.koboedit[index] !== null &&
-                    typeof data.properties.koboedit[index] !== "undefined" && data.properties.koboedit[index] !== '' && data.properties.koboedit.length > 0 &&
-                    data.properties.koboedit[index].kobo_type !== undefined && data.properties.koboedit[index].kobo_type !== '' && data.properties.koboedit[index].kobo_type !== null) {
+                    typeof data.properties.koboedit[index] !== "undefined" && data.properties.koboedit[
+                        index] !== '' && data.properties.koboedit.length > 0 &&
+                    data.properties.koboedit[index].kobo_type !== undefined && data.properties.koboedit[
+                        index].kobo_type !== '' && data.properties.koboedit[index].kobo_type !== null) {
                     if (data.properties.koboedit[index].kobo_type.toUpperCase() === "BRIDGE") {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            '\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: #F47983;" title="DELETE BRIDGE"> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: #F47983;" title="BRIDGE"> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index +
+                            '\"}\' aria-hidden="true" style="color: #F47983;" title="DELETE BRIDGE"> </i>';
                     } else if (data.properties.koboedit[index].kobo_type.toUpperCase() === "CULVERT") {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: blue;" title="Culvert"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            '\"index\":\"' + index + '\"}\' aria-hidden="true" style="color: blue;" title="DELETE Culvert"> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: blue;" title="Culvert"> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index +
+                            '\"}\' aria-hidden="true" style="color: blue;" title="DELETE Culvert"> </i>';
                     } else {
-                        html[++h] = ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type + '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
-                        html[++h] = ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' + data.properties.koboedit[index].kobo_id + '\",' +
-                            '\"index\":\"' + index + '\"}\' aria-hidden="true " style="color: green;" title="DELETE GEOTECHNICAL "> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-pencil-square-o" name="modalKoboElem" data-params=\'{\"_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            ' \"kobo_type\":\"' + data.properties.koboedit[index].kobo_type +
+                            '\"}\' aria-hidden="true" style="color: green;" title="GEOTECHNICAL"> </i>';
+                        html[++h] =
+                            ' <i class="fa fa-trash" name="deleteKoboElem" data-params=\'{\"kobo_id\":\"' +
+                            data.properties.koboedit[index].kobo_id + '\",' +
+                            '\"index\":\"' + index +
+                            '\"}\' aria-hidden="true " style="color: green;" title="DELETE GEOTECHNICAL "> </i>';
 
                     }
 
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_id + '">';
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + data.properties.koboedit[index].kobo_type + '">';
+                    html[++h] =
+                        '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                        data.properties.koboedit[index].kobo_id + '">';
+                    html[++h] =
+                        '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                        data.properties.koboedit[index].kobo_type + '">';
                 } else {
                     var strblnk = '';
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + strblnk + '">';
-                    html[++h] = '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' + strblnk + '">';
+                    html[++h] =
+                        '<input name="infodatatrack[properties][koboedit][kobo_id]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                        strblnk + '">';
+                    html[++h] =
+                        '<input name="infodatatrack[properties][koboedit][kobo_type]" type="hidden" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                        strblnk + '">';
 
                 }
                 html[++h] = '</td>';
@@ -1843,11 +1894,15 @@
                     '<option >Marta Pertierra</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rcode]"><input name="infodatatrack[properties][rcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rcode[index] !== "undefined" ? data.properties.rcode[index] :
+                        '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rname]"><input name="infodatatrack[properties][rname]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rname[index] !== "undefined" ? data.properties.rname[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rname]"><input name="infodatatrack[properties][rname]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rname[index] !== "undefined" ? data.properties.rname[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rcategory]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rcategory]" class="form-control">' +
@@ -1872,18 +1927,26 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rlaneinc]"><input name="infodatatrack[properties][rlaneinc]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rlaneinc[index] !== "undefined" ? data.properties.rlaneinc[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rlaneinc]"><input name="infodatatrack[properties][rlaneinc]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rlaneinc[index] !== "undefined" ? data.properties.rlaneinc[
+                        index] : '') + '">' +
                     '</td>';
 
-                html[++h] = '<td id="infodatatrack[properties][rlanedecr]"><input name="infodatatrack[properties][rlanedecr]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rlanedecr[index] !== "undefined" ? data.properties.rlanedecr[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rlanedecr]"><input name="infodatatrack[properties][rlanedecr]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rlanedecr[index] !== "undefined" ? data.properties.rlanedecr[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rlanetotal]"><input name="infodatatrack[properties][rlanetotal]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rlanetotal[index] !== "undefined" ? data.properties.rlanetotal[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rlanetotal]"><input name="infodatatrack[properties][rlanetotal]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rlanetotal[index] !== "undefined" ? data.properties.rlanetotal[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rwidth]"><input name="infodatatrack[properties][rwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rwidth[index] !== "undefined" ? data.properties.rwidth[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rwidth]"><input name="infodatatrack[properties][rwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rwidth[index] !== "undefined" ? data.properties.rwidth[
+                        index] : '') + '">' +
                     '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][ralternatitinerary]">' +
@@ -1899,8 +1962,10 @@
                     '<option>Last road of the dendritic network</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][ropen]"><input name="infodatatrack[properties][ropen]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.ropen[index] !== "undefined" ? data.properties.ropen[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][ropen]"><input name="infodatatrack[properties][ropen]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.ropen[index] !== "undefined" ? data.properties.ropen[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rvcondition]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rvcondition]" class="form-control">' +
@@ -1916,22 +1981,32 @@
                     '</select>' +
                     '</td>';
 
-                html[++h] = '<td id="infodatatrack[properties][rinfrint]"><input name="infodatatrack[properties][rinfrint]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rinfrint[index] !== "undefined" ? data.properties.rinfrint[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][rtourism]"><input name="infodatatrack[properties][rtourism]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rtourism[index] !== "undefined" ? data.properties.rtourism[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][rhealth]"><input name="infodatatrack[properties][rhealth]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[index] : '') + '">';
+                html[++h] =
+                    '<td id="infodatatrack[properties][rinfrint]"><input name="infodatatrack[properties][rinfrint]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rinfrint[index] !== "undefined" ? data.properties.rinfrint[
+                        index] : '') + '">';
+                html[++h] =
+                    '<td id="infodatatrack[properties][rtourism]"><input name="infodatatrack[properties][rtourism]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rtourism[index] !== "undefined" ? data.properties.rtourism[
+                        index] : '') + '">';
+                html[++h] =
+                    '<td id="infodatatrack[properties][rhealth]"><input name="infodatatrack[properties][rhealth]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rhealth[index] !== "undefined" ? data.properties.rhealth[
+                        index] : '') + '">';
                 html[++h] = '<td id="infodatatrack[properties][renvironment]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][renvironment]" class="form-control">' +
                     '<option value="NO" selected>NO</option>' +
                     '<option value="YES">YES</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rriskphysical]"><input name="infodatatrack[properties][rriskphysical]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rriskphysical[index] !== "undefined" ? data.properties.rriskphysical[index] : '') + '">';
-                html[++h] = '<td id="infodatatrack[properties][rrisknatural]"><input name="infodatatrack[properties][rrisknatural]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rrisknatural[index] !== "undefined" ? data.properties.rrisknatural[index] : '') + '">';
+                html[++h] =
+                    '<td id="infodatatrack[properties][rriskphysical]"><input name="infodatatrack[properties][rriskphysical]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rriskphysical[index] !== "undefined" ? data.properties.rriskphysical[
+                        index] : '') + '">';
+                html[++h] =
+                    '<td id="infodatatrack[properties][rrisknatural]"><input name="infodatatrack[properties][rrisknatural]" type="text" style="min-width: 100px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rrisknatural[index] !== "undefined" ? data.properties.rrisknatural[
+                        index] : '') + '">';
                 // html[++h] = '<td id="infodatatrack[properties][iri]"><input name="infodatatrack[properties][iri]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.iri[index] !== "undefined" ? data.properties.iri[index] : '') + '">' +
                 //     '</td>';
@@ -1969,8 +2044,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rsignalsexist]"><input name="infodatatrack[properties][rsignalsexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rsignalsexist[index] !== "undefined" ? data.properties.rsignalsexist[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rsignalsexist]"><input name="infodatatrack[properties][rsignalsexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rsignalsexist[index] !== "undefined" ? data.properties.rsignalsexist[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rsignalstype]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rsignalstype]" class="form-control">' +
@@ -1999,8 +2076,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][rlightexist]"><input name="infodatatrack[properties][rlightexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.rlightexist[index] !== "undefined" ? data.properties.rlightexist[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][rlightexist]"><input name="infodatatrack[properties][rlightexist]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.rlightexist[index] !== "undefined" ? data.properties.rlightexist[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][rlighttype]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][rlighttype]" class="form-control">' +
@@ -2027,8 +2106,10 @@
                 // html[++h] = '<td id="infodatatrack[properties][rfcomments]"><input name="infodatatrack[properties][rfcomments]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
                 //     (typeof data.properties.rfcomments[index] !== "undefined" ? data.properties.rfcomments[index] : '') + '">'+
                 '</td>';
-                html[++h] = '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][bcode]"><input name="infodatatrack[properties][bcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.bcode[index] !== "undefined" ? data.properties.bcode[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][bexistence]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][bexistence]" class="form-control">' +
@@ -2039,14 +2120,20 @@
                     '<option>1</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][Bloadcapacity]"><input name="infodatatrack[properties][Bloadcapacity]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Bloadcapacity[index] !== "undefined" ? data.properties.Bloadcapacity[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][Bloadcapacity]"><input name="infodatatrack[properties][Bloadcapacity]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Bloadcapacity[index] !== "undefined" ? data.properties.Bloadcapacity[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][blenght]"><input name="infodatatrack[properties][blenght]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.blenght[index] !== "undefined" ? data.properties.blenght[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][bwidth]"><input name="infodatatrack[properties][bwidth]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.bwidth[index] !== "undefined" ? data.properties.bwidth[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][balternative]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][balternative]" class="form-control">' +
@@ -2067,14 +2154,20 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][briskphysical]"><input name="infodatatrack[properties][briskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.briskphysical[index] !== "undefined" ? data.properties.briskphysical[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][briskphysical]"><input name="infodatatrack[properties][briskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.briskphysical[index] !== "undefined" ? data.properties.briskphysical[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][brisknatural]"><input name="infodatatrack[properties][brisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.brisknatural[index] !== "undefined" ? data.properties.brisknatural[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][brisknatural]"><input name="infodatatrack[properties][brisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.brisknatural[index] !== "undefined" ? data.properties.brisknatural[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gcode]"><input name="infodatatrack[properties][gcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gcode[index] !== "undefined" ? data.properties.gcode[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtype]" class="form-control">' +
@@ -2123,8 +2216,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gheight]"><input name="infodatatrack[properties][gheight]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gheight[index] !== "undefined" ? data.properties.gheight[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gheight]"><input name="infodatatrack[properties][gheight]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gheight[index] !== "undefined" ? data.properties.gheight[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gh_h]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gh_h]" class="form-control">' +
@@ -2148,17 +2243,25 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gdistance]"><input name="infodatatrack[properties][gdistance]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gdistance[index] !== "undefined" ? data.properties.gdistance[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gdistance]"><input name="infodatatrack[properties][gdistance]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gdistance[index] !== "undefined" ? data.properties.gdistance[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gshoulders]"><input name="infodatatrack[properties][gshoulders]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gshoulders[index] !== "undefined" ? data.properties.gshoulders[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gshoulders]"><input name="infodatatrack[properties][gshoulders]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gshoulders[index] !== "undefined" ? data.properties.gshoulders[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.glength[index] !== "undefined" ? Math.abs(data.properties.glength[index]) : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][glength]"><input name="infodatatrack[properties][glength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.glength[index] !== "undefined" ? Math.abs(data.properties.glength[
+                        index]) : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gblocks]"><input name="infodatatrack[properties][gblocks]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gblocks[index] !== "undefined" ? data.properties.gblocks[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gblocks]"><input name="infodatatrack[properties][gblocks]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gblocks[index] !== "undefined" ? data.properties.gblocks[
+                        index] : '') + '">' +
                     '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments]">' +
@@ -2198,65 +2301,108 @@
                     '</select>' +
                     '</td>';
 
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingextension]"><input name="infodatatrack[properties][gtreatmentsretainingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingextension[index] !== "undefined" ? data.properties.gtreatmentsretainingextension[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingextension]"><input name="infodatatrack[properties][gtreatmentsretainingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingextension[index] !== "undefined" ? data
+                        .properties.gtreatmentsretainingextension[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingeffectiveness[index] !== "undefined" ? data.properties.gtreatmentsretainingeffectiveness[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingeffectiveness[index] !== "undefined" ?
+                        data.properties.gtreatmentsretainingeffectiveness[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingconservation]"><input name="infodatatrack[properties][gtreatmentsretainingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingconservation[index] !== "undefined" ? data.properties.gtreatmentsretainingconservation[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingconservation]"><input name="infodatatrack[properties][gtreatmentsretainingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingconservation[index] !== "undefined" ?
+                        data.properties.gtreatmentsretainingconservation[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingother]"><input name="infodatatrack[properties][gtreatmentsretainingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingother[index] !== "undefined" ? data.properties.gtreatmentsretainingother[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingother]"><input name="infodatatrack[properties][gtreatmentsretainingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingother[index] !== "undefined" ? data.properties
+                        .gtreatmentsretainingother[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefence]"><input name="infodatatrack[properties][gtreatmentsdefence]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefence[index] !== "undefined" ? data.properties.gtreatmentsdefence[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefence]"><input name="infodatatrack[properties][gtreatmentsdefence]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefence[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefence[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefencetype]"><input name="infodatatrack[properties][gtreatmentsdefencetype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefencetype[index] !== "undefined" ? data.properties.gtreatmentsdefencetype[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefencetype]"><input name="infodatatrack[properties][gtreatmentsdefencetype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefencetype[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefencetype[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceextension]"><input name="infodatatrack[properties][gtreatmentsdefenceextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceextension[index] !== "undefined" ? data.properties.gtreatmentsdefenceextension[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceextension]"><input name="infodatatrack[properties][gtreatmentsdefenceextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceextension[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefenceextension[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceeffectiveness[index] !== "undefined" ? data.properties.gtreatmentsdefenceeffectiveness[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceeffectiveness[index] !== "undefined" ?
+                        data.properties.gtreatmentsdefenceeffectiveness[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceconservation]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceconservation[index] !== "undefined" ? data.properties.gtreatmentsdefenceconservation[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceconservation]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceconservation[index] !== "undefined" ?
+                        data.properties.gtreatmentsdefenceconservation[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceother]"><input name="infodatatrack[properties][gtreatmentsdefenceother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceother[index] !== "undefined" ? data.properties.gtreatmentsdefenceother[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceother]"><input name="infodatatrack[properties][gtreatmentsdefenceother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceother[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefenceother[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoating]"><input name="infodatatrack[properties][gtreatmentscoating]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoating[index] !== "undefined" ? data.properties.gtreatmentscoating[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoating]"><input name="infodatatrack[properties][gtreatmentscoating]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoating[index] !== "undefined" ? data.properties
+                        .gtreatmentscoating[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingtype]"><input name="infodatatrack[properties][gtreatmentscoatingtype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingtype[index] !== "undefined" ? data.properties.gtreatmentscoatingtype[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingtype]"><input name="infodatatrack[properties][gtreatmentscoatingtype]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingtype[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingtype[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingextension]"><input name="infodatatrack[properties][gtreatmentscoatingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingextension[index] !== "undefined" ? data.properties.gtreatmentscoatingextension[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingextension]"><input name="infodatatrack[properties][gtreatmentscoatingextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingextension[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingextension[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingeffectiveness[index] !== "undefined" ? data.properties.gtreatmentscoatingeffectiveness[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingeffectiveness[index] !== "undefined" ?
+                        data.properties.gtreatmentscoatingeffectiveness[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingconservation]"><input name="infodatatrack[properties][gtreatmentscoatingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingconservation[index] !== "undefined" ? data.properties.gtreatmentscoatingconservation[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingconservation]"><input name="infodatatrack[properties][gtreatmentscoatingconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingconservation[index] !== "undefined" ?
+                        data.properties.gtreatmentscoatingconservation[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingother]"><input name="infodatatrack[properties][gtreatmentscoatingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingother[index] !== "undefined" ? data.properties.gtreatmentscoatingother[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingother]"><input name="infodatatrack[properties][gtreatmentscoatingother]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingother[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingother[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainages]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainages[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainages[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainages]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainages[index] !== "undefined" ? data.properties
+                        .gtreatmentsinternaldrainages[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainagesextension[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesextension[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesextension[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainagesextension[index] : ''
+                    ) + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness[index] :
+                        '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainagesconservation[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesconservation[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation[index] :
+                        '') + '">' +
                     '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gvegetation]">' +
@@ -2303,26 +2449,40 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gevidrecfailures]"><input name="infodatatrack[properties][gevidrecfailures]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gevidrecfailures[index] !== "undefined" ? data.properties.gevidrecfailures[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gevidrecfailures]"><input name="infodatatrack[properties][gevidrecfailures]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gevidrecfailures[index] !== "undefined" ? data.properties.gevidrecfailures[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtypefailure]"><input name="infodatatrack[properties][gtypefailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtypefailure[index] !== "undefined" ? data.properties.gtypefailure[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtypefailure]"><input name="infodatatrack[properties][gtypefailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtypefailure[index] !== "undefined" ? data.properties.gtypefailure[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gintensityfailure]"><input name="infodatatrack[properties][gintensityfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gintensityfailure[index] !== "undefined" ? data.properties.gintensityfailure[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gintensityfailure]"><input name="infodatatrack[properties][gintensityfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gintensityfailure[index] !== "undefined" ? data.properties.gintensityfailure[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gextentfailure]"><input name="infodatatrack[properties][gextentfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gextentfailure[index] !== "undefined" ? data.properties.gextentfailure[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gextentfailure]"><input name="infodatatrack[properties][gextentfailure]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gextentfailure[index] !== "undefined" ? data.properties.gextentfailure[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][griskphysical]"><input name="infodatatrack[properties][griskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.griskphysical[index] !== "undefined" ? data.properties.griskphysical[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][griskphysical]"><input name="infodatatrack[properties][griskphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.griskphysical[index] !== "undefined" ? data.properties.griskphysical[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][grisknatural]"><input name="infodatatrack[properties][grisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.grisknatural[index] !== "undefined" ? data.properties.grisknatural[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][grisknatural]"><input name="infodatatrack[properties][grisknatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.grisknatural[index] !== "undefined" ? data.properties.grisknatural[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gcode2]"><input name="infodatatrack[properties][gcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gcode2[index] !== "undefined" ? data.properties.gcode2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gcode2]"><input name="infodatatrack[properties][gcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gcode2[index] !== "undefined" ? data.properties.gcode2[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gtype2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gtype2]" class="form-control">' +
@@ -2371,8 +2531,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gheight2]"><input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gheight2[index] !== "undefined" ? data.properties.gheight2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gheight2]"><input name="infodatatrack[properties][gheight2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gheight2[index] !== "undefined" ? data.properties.gheight2[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][gh_h2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][gh_h2]" class="form-control">' +
@@ -2396,17 +2558,25 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gdistance2]"><input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gdistance2[index] !== "undefined" ? data.properties.gdistance2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gdistance2]"><input name="infodatatrack[properties][gdistance2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gdistance2[index] !== "undefined" ? data.properties.gdistance2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gshoulders2]"><input name="infodatatrack[properties][gshoulders2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gshoulders2[index] !== "undefined" ? data.properties.gshoulders2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gshoulders2]"><input name="infodatatrack[properties][gshoulders2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gshoulders2[index] !== "undefined" ? data.properties.gshoulders2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][glength2]"><input name="infodatatrack[properties][glength2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.glength2[index] !== "undefined" ? Math.abs(data.properties.glength2[index]) : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][glength2]"><input name="infodatatrack[properties][glength2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.glength2[index] !== "undefined" ? Math.abs(data.properties.glength2[
+                        index]) : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gblocks2]"><input name="infodatatrack[properties][gblocks2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gblocks2[index] !== "undefined" ? data.properties.gblocks2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gblocks2]"><input name="infodatatrack[properties][gblocks2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gblocks2[index] !== "undefined" ? data.properties.gblocks2[
+                        index] : '') + '">' +
                     '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gtreatments2]">' +
@@ -2446,65 +2616,108 @@
                     '</select>' +
                     '</td>';
 
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingextension2]"><input name="infodatatrack[properties][gtreatmentsretainingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingextension2[index] !== "undefined" ? data.properties.gtreatmentsretainingextension2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingextension2]"><input name="infodatatrack[properties][gtreatmentsretainingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingextension2[index] !== "undefined" ?
+                        data.properties.gtreatmentsretainingextension2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsretainingeffectiveness2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsretainingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingeffectiveness2[index] !== "undefined" ?
+                        data.properties.gtreatmentsretainingeffectiveness2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingconservation2]"><input name="infodatatrack[properties][gtreatmentsretainingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingconservation2[index] !== "undefined" ? data.properties.gtreatmentsretainingconservation2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingconservation2]"><input name="infodatatrack[properties][gtreatmentsretainingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingconservation2[index] !== "undefined" ?
+                        data.properties.gtreatmentsretainingconservation2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsretainingother2]"><input name="infodatatrack[properties][gtreatmentsretainingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsretainingother2[index] !== "undefined" ? data.properties.gtreatmentsretainingother2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsretainingother2]"><input name="infodatatrack[properties][gtreatmentsretainingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsretainingother2[index] !== "undefined" ? data.properties
+                        .gtreatmentsretainingother2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefence2]"><input name="infodatatrack[properties][gtreatmentsdefence2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefence2[index] !== "undefined" ? data.properties.gtreatmentsdefence2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefence2]"><input name="infodatatrack[properties][gtreatmentsdefence2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefence2[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefence2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefencetype2]"><input name="infodatatrack[properties][gtreatmentsdefencetype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefencetype2[index] !== "undefined" ? data.properties.gtreatmentsdefencetype2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefencetype2]"><input name="infodatatrack[properties][gtreatmentsdefencetype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefencetype2[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefencetype2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceextension2]"><input name="infodatatrack[properties][gtreatmentsdefenceextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceextension2[index] !== "undefined" ? data.properties.gtreatmentsdefenceextension2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceextension2]"><input name="infodatatrack[properties][gtreatmentsdefenceextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceextension2[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefenceextension2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsdefenceeffectiveness2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]"><input name="infodatatrack[properties][gtreatmentsdefenceeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceeffectiveness2[index] !== "undefined" ?
+                        data.properties.gtreatmentsdefenceeffectiveness2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceconservation2]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceconservation2[index] !== "undefined" ? data.properties.gtreatmentsdefenceconservation2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceconservation2]"><input name="infodatatrack[properties][gtreatmentsdefenceconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceconservation2[index] !== "undefined" ?
+                        data.properties.gtreatmentsdefenceconservation2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsdefenceother2]"><input name="infodatatrack[properties][gtreatmentsdefenceother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsdefenceother2[index] !== "undefined" ? data.properties.gtreatmentsdefenceother2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsdefenceother2]"><input name="infodatatrack[properties][gtreatmentsdefenceother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsdefenceother2[index] !== "undefined" ? data.properties
+                        .gtreatmentsdefenceother2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoating2]"><input name="infodatatrack[properties][gtreatmentscoating2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoating2[index] !== "undefined" ? data.properties.gtreatmentscoating2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoating2]"><input name="infodatatrack[properties][gtreatmentscoating2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoating2[index] !== "undefined" ? data.properties
+                        .gtreatmentscoating2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingtype2]"><input name="infodatatrack[properties][gtreatmentscoatingtype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingtype2[index] !== "undefined" ? data.properties.gtreatmentscoatingtype2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingtype2]"><input name="infodatatrack[properties][gtreatmentscoatingtype2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingtype2[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingtype2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingextension2]"><input name="infodatatrack[properties][gtreatmentscoatingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingextension2[index] !== "undefined" ? data.properties.gtreatmentscoatingextension2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingextension2]"><input name="infodatatrack[properties][gtreatmentscoatingextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingextension2[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingextension2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingeffectiveness2[index] !== "undefined" ? data.properties.gtreatmentscoatingeffectiveness2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingeffectiveness2]"><input name="infodatatrack[properties][gtreatmentscoatingeffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingeffectiveness2[index] !== "undefined" ?
+                        data.properties.gtreatmentscoatingeffectiveness2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingconservation2]"><input name="infodatatrack[properties][gtreatmentscoatingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingconservation2[index] !== "undefined" ? data.properties.gtreatmentscoatingconservation2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingconservation2]"><input name="infodatatrack[properties][gtreatmentscoatingconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingconservation2[index] !== "undefined" ?
+                        data.properties.gtreatmentscoatingconservation2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentscoatingother2]"><input name="infodatatrack[properties][gtreatmentscoatingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentscoatingother2[index] !== "undefined" ? data.properties.gtreatmentscoatingother2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentscoatingother2]"><input name="infodatatrack[properties][gtreatmentscoatingother2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentscoatingother2[index] !== "undefined" ? data.properties
+                        .gtreatmentscoatingother2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainages2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainages2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainages2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainages2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainages2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainages2[index] !== "undefined" ? data
+                        .properties.gtreatmentsinternaldrainages2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainagesextension2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesextension2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesextension2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesextension2[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainagesextension2[index] :
+                        '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainageseffectiveness2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainageseffectiveness2[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainageseffectiveness2[index] :
+                        '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtreatmentsinternaldrainagesconservation2[index] !== "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]"><input name="infodatatrack[properties][gtreatmentsinternaldrainagesconservation2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtreatmentsinternaldrainagesconservation2[index] !==
+                        "undefined" ? data.properties.gtreatmentsinternaldrainagesconservation2[index] :
+                        '') + '">' +
                     '</td>';
 
                 html[++h] = '<td id="infodatatrack[properties][gvegetation2]">' +
@@ -2551,26 +2764,40 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gevidrecfailures2]"><input name="infodatatrack[properties][gevidrecfailures2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gevidrecfailures2[index] !== "undefined" ? data.properties.gevidrecfailures2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gevidrecfailures2]"><input name="infodatatrack[properties][gevidrecfailures2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gevidrecfailures2[index] !== "undefined" ? data.properties.gevidrecfailures2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gtypefailure2]"><input name="infodatatrack[properties][gtypefailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gtypefailure2[index] !== "undefined" ? data.properties.gtypefailure2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gtypefailure2]"><input name="infodatatrack[properties][gtypefailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gtypefailure2[index] !== "undefined" ? data.properties.gtypefailure2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gintensityfailure2]"><input name="infodatatrack[properties][gintensityfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gintensityfailure2[index] !== "undefined" ? data.properties.gintensityfailure2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gintensityfailure2]"><input name="infodatatrack[properties][gintensityfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gintensityfailure2[index] !== "undefined" ? data.properties
+                        .gintensityfailure2[index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][gextentfailure2]"><input name="infodatatrack[properties][gextentfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.gextentfailure2[index] !== "undefined" ? data.properties.gextentfailure2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][gextentfailure2]"><input name="infodatatrack[properties][gextentfailure2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.gextentfailure2[index] !== "undefined" ? data.properties.gextentfailure2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][griskphysical2]"><input name="infodatatrack[properties][griskphysical2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.griskphysical2[index] !== "undefined" ? data.properties.griskphysical2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][griskphysical2]"><input name="infodatatrack[properties][griskphysical2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.griskphysical2[index] !== "undefined" ? data.properties.griskphysical2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][grisknatural2]"><input name="infodatatrack[properties][grisknatural2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.grisknatural2[index] !== "undefined" ? data.properties.grisknatural2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][grisknatural2]"><input name="infodatatrack[properties][grisknatural2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.grisknatural2[index] !== "undefined" ? data.properties.grisknatural2[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][Ccode]"><input name="infodatatrack[properties][Ccode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Ccode[index] !== "undefined" ? data.properties.Ccode[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][Ccode]"><input name="infodatatrack[properties][Ccode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Ccode[index] !== "undefined" ? data.properties.Ccode[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][Ctype]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][Ctype]" class="form-control">' +
@@ -2597,11 +2824,15 @@
                     '<option>Longitudinal drainage</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][Cnumelem]"><input name="infodatatrack[properties][Cnumelem]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Cnumelem[index] !== "undefined" ? data.properties.Cnumelem[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][Cnumelem]"><input name="infodatatrack[properties][Cnumelem]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Cnumelem[index] !== "undefined" ? data.properties.Cnumelem[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][Clength]"><input name="infodatatrack[properties][Clength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Clength[index] !== "undefined" ? Math.abs(data.properties.Clength[index]): '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][Clength]"><input name="infodatatrack[properties][Clength]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Clength[index] !== "undefined" ? Math.abs(data.properties.Clength[
+                        index]) : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][CConsLOS]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][CConsLOS]" class="form-control">' +
@@ -2613,17 +2844,25 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][Cclearing]"><input name="infodatatrack[properties][Cclearing]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.Cclearing[index] !== "undefined" ? data.properties.Cclearing[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][Cclearing]"><input name="infodatatrack[properties][Cclearing]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.Cclearing[index] !== "undefined" ? data.properties.Cclearing[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][CRISKphysical]"><input name="infodatatrack[properties][CRISKphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.CRISKphysical[index] !== "undefined" ? data.properties.CRISKphysical[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][CRISKphysical]"><input name="infodatatrack[properties][CRISKphysical]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.CRISKphysical[index] !== "undefined" ? data.properties.CRISKphysical[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][CRISKnatural]"><input name="infodatatrack[properties][CRISKnatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.CRISKnatural[index] !== "undefined" ? data.properties.CRISKnatural[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][CRISKnatural]"><input name="infodatatrack[properties][CRISKnatural]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.CRISKnatural[index] !== "undefined" ? data.properties.CRISKnatural[
+                        index] : '') + '">' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][dcode]"><input name="infodatatrack[properties][dcode]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcode[index] !== "undefined" ? data.properties.dcode[index] :
+                        '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][dtype]" class="form-control">' +
@@ -2669,8 +2908,10 @@
                     '<option>Unknown</option>' +
                     '</select>' +
                     '</td>';
-                html[++h] = '<td id="infodatatrack[properties][dcode2]"><input name="infodatatrack[properties][dcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
-                    (typeof data.properties.dcode2[index] !== "undefined" ? data.properties.dcode2[index] : '') + '">' +
+                html[++h] =
+                    '<td id="infodatatrack[properties][dcode2]"><input name="infodatatrack[properties][dcode2]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                    (typeof data.properties.dcode2[index] !== "undefined" ? data.properties.dcode2[
+                        index] : '') + '">' +
                     '</td>';
                 html[++h] = '<td id="infodatatrack[properties][dtype2]">' +
                     '<select style="min-width: 100px;" name="infodatatrack[properties][dtype2]" class="form-control">' +
@@ -2718,77 +2959,206 @@
             html[++h] = '</tbody>';
 
             $('#dataTable').html(html.join(''));
-            data.geometry.coordinates.forEach(function(element, index) {
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][surveyor]"]').val(data.properties.surveyor[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarriersexist]"]').val(data.properties.rbarriersexist[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][renvironment]"]').val(data.properties.renvironment[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][ralternatitinerary]"]').val(data.properties.ralternatitinerary[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsignalstype]"]').val(data.properties.rsignalstype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rvsignalstype]"]').val(data.properties.rvsignalstype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rsignalsfunct]"]').val(data.properties.rsignalsfunct[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlighttype]"]').val(data.properties.rlighttype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rlightfunct]"]').val(data.properties.rlightfunct[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][rdendritic]"]').val(data.properties.rdendritic[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bexistence]"]').val(data.properties.bexistence[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][balternative]"]').val(data.properties.balternative[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][bconslos]"]').val(data.properties.bconslos[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype]"]').val(data.properties.gtype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition]"]').val(data.properties.gposition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial]"]').val(data.properties.gmaterial[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature]"]').val(data.properties.gnature[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h]"]').val(data.properties.gh_h[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope]"]').val(data.properties.gslope[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments]"]').val(data.properties.gtreatments[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretaining]"]').val(data.properties.gtreatmentsretaining[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretainingtype]"]').val(data.properties.gtreatmentsretainingtype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation]"]').val(data.properties.gvegetation[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation]"]').val(data.properties.gtypevegetation[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition]"]').val(data.properties.gvisualcondition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gconslos]"]').val(data.properties.gconslos[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretaining2]"]').val(data.properties.gtreatmentsretaining2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatmentsretainingtype2]"]').val(data.properties.gtreatmentsretainingtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gconslos2]"]').val(data.properties.gconslos2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Ctype]"]').val(data.properties.Ctype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Clocation]"]').val(data.properties.Clocation[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][Cfeeding]"]').val(data.properties.Cfeeding[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][CConsLOS]"]').val(data.properties.CConsLOS[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection]"]').val(data.properties.dsection[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition]"]').val(data.properties.dposition[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dconslos]"]').val(data.properties.dconslos[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dconslos2]"]').val(data.properties.dconslos2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[index]);
-                $('#row' + index).children('td').children('select').filter('[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[index]);
+            data.geometry.coordinates.forEach(function (element, index) {
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][surveyor]"]').val(data.properties.surveyor[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rcategory]"]').val(data.properties.rcategory[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rmaterial]"]').val(data.properties.rmaterial[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rvcondition]"]').val(data.properties.rvcondition[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rbarriersexist]"]').val(data.properties.rbarriersexist[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][renvironment]"]').val(data.properties.renvironment[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][ralternatitinerary]"]').val(data.properties.ralternatitinerary[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rbarrierstype]"]').val(data.properties.rbarrierstype[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rsafetyfence]"]').val(data.properties.rsafetyfence[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rbarrierfunct]"]').val(data.properties.rbarrierfunct[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rsignalstype]"]').val(data.properties.rsignalstype[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rvsignalstype]"]').val(data.properties.rvsignalstype[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rsignalsfunct]"]').val(data.properties.rsignalsfunct[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rlighttype]"]').val(data.properties.rlighttype[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rlightfunct]"]').val(data.properties.rlightfunct[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][rdendritic]"]').val(data.properties.rdendritic[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][bexistence]"]').val(data.properties.bexistence[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][balternative]"]').val(data.properties.balternative[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][bconslos]"]').val(data.properties.bconslos[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtype]"]').val(data.properties.gtype[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gposition]"]').val(data.properties.gposition[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gmaterial]"]').val(data.properties.gmaterial[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gnature]"]').val(data.properties.gnature[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gh_h]"]').val(data.properties.gh_h[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gslope]"]').val(data.properties.gslope[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatments]"]').val(data.properties.gtreatments[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatmentsretaining]"]').val(data.properties
+                    .gtreatmentsretaining[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatmentsretainingtype]"]').val(data.properties
+                    .gtreatmentsretainingtype[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvegetation]"]').val(data.properties.gvegetation[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtypevegetation]"]').val(data.properties.gtypevegetation[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvisualcondition]"]').val(data.properties.gvisualcondition[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gconslos]"]').val(data.properties.gconslos[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatmentsretaining2]"]').val(data.properties
+                    .gtreatmentsretaining2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatmentsretainingtype2]"]').val(data.properties
+                    .gtreatmentsretainingtype2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gconslos2]"]').val(data.properties.gconslos2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][Ctype]"]').val(data.properties.Ctype[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][Clocation]"]').val(data.properties.Clocation[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][Cfeeding]"]').val(data.properties.Cfeeding[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][CConsLOS]"]').val(data.properties.CConsLOS[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dtype]"]').val(data.properties.dtype[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dsection]"]').val(data.properties.dsection[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dposition]"]').val(data.properties.dposition[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dconslos]"]').val(data.properties.dconslos[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dconslos2]"]').val(data.properties.dconslos2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtype2]"]').val(data.properties.gtype2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gposition2]"]').val(data.properties.gposition2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gmaterial2]"]').val(data.properties.gmaterial2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gnature2]"]').val(data.properties.gnature2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gh_h2]"]').val(data.properties.gh_h2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gslope2]"]').val(data.properties.gslope2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtreatments2]"]').val(data.properties.gtreatments2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvegetation2]"]').val(data.properties.gvegetation2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gtypevegetation2]"]').val(data.properties.gtypevegetation2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][gvisualcondition2]"]').val(data.properties.gvisualcondition2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dtype2]"]').val(data.properties.dtype2[index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dsection2]"]').val(data.properties.dsection2[
+                    index]);
+                $('#row' + index).children('td').children('select').filter(
+                    '[name="infodatatrack[properties][dposition2]"]').val(data.properties.dposition2[
+                    index]);
             });
 
         };
@@ -2808,16 +3178,17 @@
 
         $checks = $('#form').find("input[name='check[_id]']");
 
-        $('#road, #furniture, #bridges, #geotechnicals, #culvert, #drainage').click(function() {
+        $('#road, #furniture, #bridges, #geotechnicals, #culvert, #drainage').click(function () {
             // alert("Hidden." + $(this).attr("id"));
             var $clase = $(this).attr("id");
-            $('.' + $clase).each(function() {
+            $('.' + $clase).each(function () {
                 $(this).hide();
                 // alert("Hidden2." + $(this));
 
                 $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
                 if ($(this).attr("title") === 'Selection') {
-                    if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') == false) {
+                    if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop(
+                            'checked') == false) {
                         $('[id^=check]').prop('checked', true);
                     } else {
                         $('[id^=check]').prop('checked', false);
@@ -2830,7 +3201,7 @@
 
         });
 
-        $("thead > tr > th", $('#dataTable')).click(function() {
+        $("thead > tr > th", $('#dataTable')).click(function () {
             // Clic en cabecera individual
             // alert("Handler for .click() called.");
             // //console.log($(this).attr("id"));
@@ -2839,7 +3210,8 @@
                 $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).hide();
             }
             if ($(this).attr("title") === 'Selection') {
-                if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') == false) {
+                if ($('[id^=check]').prop('checked') == undefined || $('[id^=check]').prop('checked') ==
+                    false) {
                     $('[id^=check]').prop('checked', true);
                 } else {
                     $('[id^=check]').prop('checked', false);
@@ -2851,8 +3223,8 @@
 
         });
 
-        $("#showall").click(function() {
-            $("thead > tr > th", $('#dataTable')).each(function(index, elem) {
+        $("#showall").click(function () {
+            $("thead > tr > th", $('#dataTable')).each(function (index, elem) {
                 if ($(this).attr("id")) {
                     $(this).show();
                     $("tbody > tr > td[id='" + $(this).attr("id") + "']", $('#dataTable')).show();
@@ -2865,16 +3237,17 @@
 
         // INPUTS BLUR
 
-        $(":text,input[name^=infodatatrack]").blur(function() {
+        $(":text,input[name^=infodatatrack]").blur(function () {
             // console.log($(this));
             var $this = $(this);
             // console.log($this[0].name);
             var $val = $this[0].value;
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     // ////console.log('Check: ' + (index));
-                    $("form").find("input[name=" + $.escapeSelector($this[0].name) + "]")[index].value = $val;
+                    $("form").find("input[name=" + $.escapeSelector($this[0].name) + "]")[index]
+                        .value = $val;
 
                 }
 
@@ -2886,11 +3259,11 @@
 
         // SELECTS CHANGES
         var $inputssurveyor = $('#form').find('select[ name="infodatatrack[properties][surveyor]"]');
-        $inputssurveyor.on('change', function() {
+        $inputssurveyor.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2905,11 +3278,11 @@
             });
         });
         var $inputsrcategory = $('#form').find('select[ name="infodatatrack[properties][rcategory]"]');
-        $inputsrcategory.on('change', function() {
+        $inputsrcategory.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2924,11 +3297,11 @@
             });
         });
         var $inputsrmaterial = $('#form').find('select[ name="infodatatrack[properties][rmaterial]"]');
-        $inputsrmaterial.on('change', function() {
+        $inputsrmaterial.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2943,11 +3316,11 @@
             });
         });
         var $inputsrvcondition = $('#form').find('select[ name="infodatatrack[properties][rvcondition]"]');
-        $inputsrvcondition.on('change', function() {
+        $inputsrvcondition.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2962,11 +3335,11 @@
             });
         });
         var $inputsrbarrierstype = $('#form').find('select[ name="infodatatrack[properties][rbarrierstype]"]');
-        $inputsrbarrierstype.on('change', function() {
+        $inputsrbarrierstype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -2981,11 +3354,11 @@
             });
         });
         var $inputsRBarriersExist = $('#form').find('select[ name="infodatatrack[properties][rbarriersexist]"]');
-        $inputsRBarriersExist.on('change', function() {
+        $inputsRBarriersExist.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3000,11 +3373,11 @@
             });
         });
         var $inputsrenvironment = $('#form').find('select[ name="infodatatrack[properties][renvironment]"]');
-        $inputsrenvironment.on('change', function() {
+        $inputsrenvironment.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3018,12 +3391,13 @@
 
             });
         });
-        var $inputsralternatitinerary = $('#form').find('select[ name="infodatatrack[properties][ralternatitinerary]"]');
-        $inputsralternatitinerary.on('change', function() {
+        var $inputsralternatitinerary = $('#form').find(
+            'select[ name="infodatatrack[properties][ralternatitinerary]"]');
+        $inputsralternatitinerary.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3038,11 +3412,11 @@
             });
         });
         var $inputsrsafetyfence = $('#form').find('select[ name="infodatatrack[properties][rsafetyfence]"]');
-        $inputsrsafetyfence.on('change', function() {
+        $inputsrsafetyfence.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3057,11 +3431,11 @@
             });
         });
         var $inputsrbarrierfunct = $('#form').find('select[ name="infodatatrack[properties][rbarrierfunct]"]');
-        $inputsrbarrierfunct.on('change', function() {
+        $inputsrbarrierfunct.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3076,11 +3450,11 @@
             });
         });
         var $inputsrsignalstype = $('#form').find('select[ name="infodatatrack[properties][rsignalstype]"]');
-        $inputsrsignalstype.on('change', function() {
+        $inputsrsignalstype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3095,11 +3469,11 @@
             });
         });
         var $inputsrvsignalstype = $('#form').find('select[ name="infodatatrack[properties][rvsignalstype]"]');
-        $inputsrvsignalstype.on('change', function() {
+        $inputsrvsignalstype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3114,11 +3488,11 @@
             });
         });
         var $inputsrsignalsfunct = $('#form').find('select[ name="infodatatrack[properties][rsignalsfunct]"]');
-        $inputsrsignalsfunct.on('change', function() {
+        $inputsrsignalsfunct.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3133,11 +3507,11 @@
             });
         });
         var $inputsrlighttype = $('#form').find('select[ name="infodatatrack[properties][rlighttype]"]');
-        $inputsrlighttype.on('change', function() {
+        $inputsrlighttype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3152,11 +3526,11 @@
             });
         });
         var $inputsrlightfunct = $('#form').find('select[ name="infodatatrack[properties][rlightfunct]"]');
-        $inputsrlightfunct.on('change', function() {
+        $inputsrlightfunct.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3171,11 +3545,11 @@
             });
         });
         var $inputsrdendritic = $('#form').find('select[ name="infodatatrack[properties][rdendritic]"]');
-        $inputsrdendritic.on('change', function() {
+        $inputsrdendritic.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3190,11 +3564,11 @@
             });
         });
         var $inputsbexistence = $('#form').find('select[ name="infodatatrack[properties][bexistence]"]');
-        $inputsbexistence.on('change', function() {
+        $inputsbexistence.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3209,11 +3583,11 @@
             });
         });
         var $inputsbalternative = $('#form').find('select[ name="infodatatrack[properties][balternative]"]');
-        $inputsbalternative.on('change', function() {
+        $inputsbalternative.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3228,11 +3602,11 @@
             });
         });
         var $inputsbconslos = $('#form').find('select[ name="infodatatrack[properties][bconslos]"]');
-        $inputsbconslos.on('change', function() {
+        $inputsbconslos.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3247,11 +3621,11 @@
             });
         });
         var $inputsgtype = $('#form').find('select[ name="infodatatrack[properties][gtype]"]');
-        $inputsgtype.on('change', function() {
+        $inputsgtype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3266,11 +3640,11 @@
             });
         });
         var $inputsgposition = $('#form').find('select[ name="infodatatrack[properties][gposition]"]');
-        $inputsgposition.on('change', function() {
+        $inputsgposition.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3285,11 +3659,11 @@
             });
         });
         var $inputsgmaterial = $('#form').find('select[ name="infodatatrack[properties][gmaterial]"]');
-        $inputsgmaterial.on('change', function() {
+        $inputsgmaterial.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3304,11 +3678,11 @@
             });
         });
         var $inputsgnature = $('#form').find('select[ name="infodatatrack[properties][gnature]"]');
-        $inputsgnature.on('change', function() {
+        $inputsgnature.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3323,11 +3697,11 @@
             });
         });
         var $inputsgh_h = $('#form').find('select[ name="infodatatrack[properties][gh_h]"]');
-        $inputsgh_h.on('change', function() {
+        $inputsgh_h.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3342,11 +3716,11 @@
             });
         });
         var $inputsgslope = $('#form').find('select[ name="infodatatrack[properties][gslope]"]');
-        $inputsgslope.on('change', function() {
+        $inputsgslope.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3361,11 +3735,11 @@
             });
         });
         var $inputsgtreatments = $('#form').find('select[ name="infodatatrack[properties][gtreatments]"]');
-        $inputsgtreatments.on('change', function() {
+        $inputsgtreatments.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3379,12 +3753,13 @@
 
             });
         });
-        var $inputsgtreatmentsretaining = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretaining]"]');
-        $inputsgtreatmentsretaining.on('change', function() {
+        var $inputsgtreatmentsretaining = $('#form').find(
+            'select[ name="infodatatrack[properties][gtreatmentsretaining]"]');
+        $inputsgtreatmentsretaining.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3398,12 +3773,13 @@
 
             });
         });
-        var $inputsgtreatmentsretainingtype = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretainingtype]"]');
-        $inputsgtreatmentsretainingtype.on('change', function() {
+        var $inputsgtreatmentsretainingtype = $('#form').find(
+            'select[ name="infodatatrack[properties][gtreatmentsretainingtype]"]');
+        $inputsgtreatmentsretainingtype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3418,11 +3794,11 @@
             });
         });
         var $inputsgvegetation = $('#form').find('select[ name="infodatatrack[properties][gvegetation]"]');
-        $inputsgvegetation.on('change', function() {
+        $inputsgvegetation.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3436,12 +3812,13 @@
 
             });
         });
-        var $inputsgtypevegetation = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation]"]');
-        $inputsgtypevegetation.on('change', function() {
+        var $inputsgtypevegetation = $('#form').find(
+            'select[ name="infodatatrack[properties][gtypevegetation]"]');
+        $inputsgtypevegetation.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3455,12 +3832,13 @@
 
             });
         });
-        var $inputsgvisualcondition = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition]"]');
-        $inputsgvisualcondition.on('change', function() {
+        var $inputsgvisualcondition = $('#form').find(
+            'select[ name="infodatatrack[properties][gvisualcondition]"]');
+        $inputsgvisualcondition.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3475,11 +3853,11 @@
             });
         });
         var $inputsgconslos = $('#form').find('select[ name="infodatatrack[properties][gconslos]"]');
-        $inputsgconslos.on('change', function() {
+        $inputsgconslos.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3494,11 +3872,11 @@
             });
         });
         var $inputsgtype2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
-        $inputsgtype2.on('change', function() {
+        $inputsgtype2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3513,11 +3891,11 @@
             });
         });
         var $inputsgposition2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
-        $inputsgposition2.on('change', function() {
+        $inputsgposition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3532,11 +3910,11 @@
             });
         });
         var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
-        $inputsgmaterial2.on('change', function() {
+        $inputsgmaterial2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3551,11 +3929,11 @@
             });
         });
         var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
-        $inputsgnature2.on('change', function() {
+        $inputsgnature2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3570,11 +3948,11 @@
             });
         });
         var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
-        $inputsgh_h2.on('change', function() {
+        $inputsgh_h2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3589,11 +3967,11 @@
             });
         });
         var $inputsgslope2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
-        $inputsgslope2.on('change', function() {
+        $inputsgslope2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3608,11 +3986,11 @@
             });
         });
         var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
-        $inputsgtreatments2.on('change', function() {
+        $inputsgtreatments2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3626,12 +4004,13 @@
 
             });
         });
-        var $inputsgtreatmentsretaining2 = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretaining2]"]');
-        $inputsgtreatmentsretaining2.on('change', function() {
+        var $inputsgtreatmentsretaining2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gtreatmentsretaining2]"]');
+        $inputsgtreatmentsretaining2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3645,12 +4024,13 @@
 
             });
         });
-        var $inputsgtreatmentsretainingtype2 = $('#form').find('select[ name="infodatatrack[properties][gtreatmentsretainingtype2]"]');
-        $inputsgtreatmentsretainingtype2.on('change', function() {
+        var $inputsgtreatmentsretainingtype2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gtreatmentsretainingtype2]"]');
+        $inputsgtreatmentsretainingtype2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3665,11 +4045,11 @@
             });
         });
         var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
-        $inputsgvegetation2.on('change', function() {
+        $inputsgvegetation2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3683,12 +4063,13 @@
 
             });
         });
-        var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
-        $inputsgtypevegetation2.on('change', function() {
+        var $inputsgtypevegetation2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gtypevegetation2]"]');
+        $inputsgtypevegetation2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3702,12 +4083,13 @@
 
             });
         });
-        var $inputsgvisualcondition2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
-        $inputsgvisualcondition2.on('change', function() {
+        var $inputsgvisualcondition2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gvisualcondition2]"]');
+        $inputsgvisualcondition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3722,11 +4104,11 @@
             });
         });
         var $inputsgconslos2 = $('#form').find('select[ name="infodatatrack[properties][gconslos2]"]');
-        $inputsgconslos2.on('change', function() {
+        $inputsgconslos2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3741,11 +4123,11 @@
             });
         });
         var $inputsCtype = $('#form').find('select[ name="infodatatrack[properties][Ctype]"]');
-        $inputsCtype.on('change', function() {
+        $inputsCtype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3760,11 +4142,11 @@
             });
         });
         var $inputsClocation = $('#form').find('select[ name="infodatatrack[properties][Clocation]"]');
-        $inputsClocation.on('change', function() {
+        $inputsClocation.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3779,11 +4161,11 @@
             });
         });
         var $inputsCfeeding = $('#form').find('select[ name="infodatatrack[properties][Cfeeding]"]');
-        $inputsCfeeding.on('change', function() {
+        $inputsCfeeding.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3798,11 +4180,11 @@
             });
         });
         var $inputsCConsLOS = $('#form').find('select[ name="infodatatrack[properties][CConsLOS]"]');
-        $inputsCConsLOS.on('change', function() {
+        $inputsCConsLOS.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3817,11 +4199,11 @@
             });
         });
         var $inputsdtype = $('#form').find('select[ name="infodatatrack[properties][dtype]"]');
-        $inputsdtype.on('change', function() {
+        $inputsdtype.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3836,11 +4218,11 @@
             });
         });
         var $inputsdsection = $('#form').find('select[ name="infodatatrack[properties][dsection]"]');
-        $inputsdsection.on('change', function() {
+        $inputsdsection.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3855,11 +4237,11 @@
             });
         });
         var $inputsdposition = $('#form').find('select[ name="infodatatrack[properties][dposition]"]');
-        $inputsdposition.on('change', function() {
+        $inputsdposition.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3874,11 +4256,11 @@
             });
         });
         var $inputsdconslos = $('#form').find('select[ name="infodatatrack[properties][dconslos]"]');
-        $inputsdconslos.on('change', function() {
+        $inputsdconslos.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3893,11 +4275,11 @@
             });
         });
         var $inputsdtype2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
-        $inputsdtype2.on('change', function() {
+        $inputsdtype2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3912,11 +4294,11 @@
             });
         });
         var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
-        $inputsdsection2.on('change', function() {
+        $inputsdsection2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3931,11 +4313,11 @@
             });
         });
         var $inputsdposition2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
-        $inputsdposition2.on('change', function() {
+        $inputsdposition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3950,11 +4332,11 @@
             });
         });
         var $inputsdconslos2 = $('#form').find('select[ name="infodatatrack[properties][dconslos2]"]');
-        $inputsdconslos2.on('change', function() {
+        $inputsdconslos2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3969,11 +4351,11 @@
             });
         });
         var $inputsgtype2 = $('#form').find('select[ name="infodatatrack[properties][gtype2]"]');
-        $inputsgtype2.on('change', function() {
+        $inputsgtype2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -3988,11 +4370,11 @@
             });
         });
         var $inputsgposition2 = $('#form').find('select[ name="infodatatrack[properties][gposition2]"]');
-        $inputsgposition2.on('change', function() {
+        $inputsgposition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4007,11 +4389,11 @@
             });
         });
         var $inputsgmaterial2 = $('#form').find('select[ name="infodatatrack[properties][gmaterial2]"]');
-        $inputsgmaterial2.on('change', function() {
+        $inputsgmaterial2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4026,11 +4408,11 @@
             });
         });
         var $inputsgnature2 = $('#form').find('select[ name="infodatatrack[properties][gnature2]"]');
-        $inputsgnature2.on('change', function() {
+        $inputsgnature2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4045,11 +4427,11 @@
             });
         });
         var $inputsgh_h2 = $('#form').find('select[ name="infodatatrack[properties][gh_h2]"]');
-        $inputsgh_h2.on('change', function() {
+        $inputsgh_h2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4064,11 +4446,11 @@
             });
         });
         var $inputsgslope2 = $('#form').find('select[ name="infodatatrack[properties][gslope2]"]');
-        $inputsgslope2.on('change', function() {
+        $inputsgslope2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4083,11 +4465,11 @@
             });
         });
         var $inputsgtreatments2 = $('#form').find('select[ name="infodatatrack[properties][gtreatments2]"]');
-        $inputsgtreatments2.on('change', function() {
+        $inputsgtreatments2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4102,11 +4484,11 @@
             });
         });
         var $inputsgvegetation2 = $('#form').find('select[ name="infodatatrack[properties][gvegetation2]"]');
-        $inputsgvegetation2.on('change', function() {
+        $inputsgvegetation2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4120,12 +4502,13 @@
 
             });
         });
-        var $inputsgtypevegetation2 = $('#form').find('select[ name="infodatatrack[properties][gtypevegetation2]"]');
-        $inputsgtypevegetation2.on('change', function() {
+        var $inputsgtypevegetation2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gtypevegetation2]"]');
+        $inputsgtypevegetation2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4139,12 +4522,13 @@
 
             });
         });
-        var $inputsgvisualcondition2 = $('#form').find('select[ name="infodatatrack[properties][gvisualcondition2]"]');
-        $inputsgvisualcondition2.on('change', function() {
+        var $inputsgvisualcondition2 = $('#form').find(
+            'select[ name="infodatatrack[properties][gvisualcondition2]"]');
+        $inputsgvisualcondition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4159,11 +4543,11 @@
             });
         });
         var $inputsdtype2 = $('#form').find('select[ name="infodatatrack[properties][dtype2]"]');
-        $inputsdtype2.on('change', function() {
+        $inputsdtype2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4178,11 +4562,11 @@
             });
         });
         var $inputsdsection2 = $('#form').find('select[ name="infodatatrack[properties][dsection2]"]');
-        $inputsdsection2.on('change', function() {
+        $inputsdsection2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4197,11 +4581,11 @@
             });
         });
         var $inputsdposition2 = $('#form').find('select[ name="infodatatrack[properties][dposition2]"]');
-        $inputsdposition2.on('change', function() {
+        $inputsdposition2.on('change', function () {
             var $this = $(this);
 
             ////console.log('ID: ' + $this.attr("id"));
-            $checks.each(function(index) {
+            $checks.each(function (index) {
                 $check = $(this);
                 if ($check.prop("checked")) {
                     ////console.log('Check: ' + (index));
@@ -4217,7 +4601,7 @@
         });
 
 
-        $("#addcoord").click(function() {
+        $("#addcoord").click(function () {
             $('#addcoord').prop('disabled', true);
             var dataPost = {};
             dataPost._id = "<%- infodatatrack._id %>";
@@ -4227,11 +4611,11 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 // //console.log('dataRoad ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 dataTrack = values[0];
                 // console.log(dataTrack);
                 // location.reload();
@@ -4241,7 +4625,7 @@
 
         });
 
-        $("#inverted").click(function() {
+        $("#inverted").click(function () {
             // $('#inverted').prop('disabled', true);
             var dataPost = {};
             dataPost._id = "<%- infodatatrack._id %>";
@@ -4251,11 +4635,11 @@
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 // //console.log('dataRoad ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 dataTrack = values[0];
                 // console.log(dataTrack);
                 // location.reload();
@@ -4265,23 +4649,26 @@
 
         });
 
-        $("#checkcoord").click(function() {
+        $("#checkcoord").click(function () {
 
-            $('[id="infodatatrack[geometry][coordinates]"]').each(function(index, elem) {
+            $('[id="infodatatrack[geometry][coordinates]"]').each(function (index, elem) {
                 // console.log(elem);
                 if (index > 0) {
                     $val = $(this)[0].textContent;
                     // console.log($val);
-                    $(this).html('<input name="infodatatrack[geometry][coordinates]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' + $val + '">');
+                    $(this).html(
+                        '<input name="infodatatrack[geometry][coordinates]" type="text" style="min-width: 50px;" class="form-control round-form input-sm" value="' +
+                        $val + '">');
                 }
             });
-            $('#form').find("input[name='infodatatrack[geometry][coordinates]']").css('min-width', '200px');
+            $('#form').find("input[name='infodatatrack[geometry][coordinates]']").css('min-width',
+                '200px');
             var $inputsCOOR = $('#form').find("input[name='infodatatrack[geometry][coordinates]']");
-            $inputsCOOR.blur(function() {
+            $inputsCOOR.blur(function () {
                 var $this = $(this);
                 if ($this.val() != '') {
                     ////console.log('ID: ' + $this.attr("id"));
-                    $checks.each(function(index) {
+                    $checks.each(function (index) {
                         $check = $(this);
                         if ($check.prop("checked")) {
                             ////console.log('Check: ' + (index));
@@ -4305,7 +4692,7 @@
 
         // Check clic - ROW colored
         var lastChecked = null;
-        $checks.bind("click", function(e) {
+        $checks.bind("click", function (e) {
             if (!lastChecked) {
                 lastChecked = this;
                 return;
@@ -4315,13 +4702,14 @@
                 var start = $checks.index(this);
                 var end = $checks.index(lastChecked);
 
-                $checks.slice(Math.min(start, end), Math.max(start, end) + 1).prop('checked', lastChecked.checked);
+                $checks.slice(Math.min(start, end), Math.max(start, end) + 1).prop('checked',
+                    lastChecked.checked);
                 $checks.trigger("change");
             }
 
             lastChecked = this;
         });
-        $checks.on("change", function() {
+        $checks.on("change", function () {
             if ($(this).is(':checked'))
                 $(this).closest('tr').children('td').css('background-color', '#ccf5ff');
             else
@@ -4331,7 +4719,7 @@
         var $elemkobos = $('#form').find('i[ name="modalKoboElem"]');
         var koboid;
         var obj
-        $elemkobos.on('click', function() {
+        $elemkobos.on('click', function () {
             var res = JSON.stringify($(this).data('params'));
             obj = JSON.parse(res);
             // console.log(obj);
@@ -4339,87 +4727,145 @@
             koboid = obj._id;
             $("#modalKobo").modal("show");
         });
-        $("#modalKobo").on('show.bs.modal', function() {
+        $("#modalKobo").on('show.bs.modal', function () {
             var dataPost = {};
             dataPost = obj;
             dataPost._id = koboid;
-            var camposShow = ["_id", "kobo_type", "_xform_id_string", "gposition", "gheight", "glength", "gdistance", "gslope", "blenght", "bwidth", "dlength", "coordinates"];
+            var camposShow = ["_id", "kobo_type", "_xform_id_string", "gposition", "gheight", "glength",
+                "gdistance", "gslope", "blenght", "bwidth", "dlength", "coordinates"
+            ];
             var camposShowdisabled = ["_id", "kobo_type", "_xform_id_string"];
             var p1 = $.ajax({
                 url: '/auth/WEB/koboinfo/list_koboinfos/' + koboid,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 $("#formkobo").empty();
                 koboinfo = values[0];
                 var ifdtid = $("input[name*='infodatatrack[_id]']").val();
                 var ini = 0;
                 var fin = rObject.geometry.coordinates.length;
-                $("#formkobo").append('<input name="kobo[ifdtid]" required class="form-control" value="' + ifdtid + '" type="hidden">');
+                $("#formkobo").append(
+                    '<input name="kobo[ifdtid]" required class="form-control" value="' +
+                    ifdtid + '" type="hidden">');
                 // alert(ifdtid);
                 //console.log(koboinfo);
-                $.each(koboinfo, function(key, value) {
+                $.each(koboinfo, function (key, value) {
                     if (key === 'properties') {
-                        $.each(value, function(kprop, vprop) {
+                        $.each(value, function (kprop, vprop) {
                             //console.log(kprop, vprop);
                             if (kprop === "_attachments") {
                                 $("#photo").empty();
-                                $.each(vprop, function(kfoto, vfoto) {
-                                    var fotosmall = vfoto.replace(".jpg", "-small.jpg");
-                                    $("#photo").append('<img src="' + fotosmall + '">');
-                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
-                                });
-                            } else if (kprop === "dphoto" || kprop === "bphoto" || kprop === "gphoto") {
-                                $.each(vprop, function(kfoto, vfoto) {
-                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vfoto + '" type="hidden">');
+                                if ($.isArray(vprop)) {
+                                    $.each(vprop, function (kfoto, vfoto) {
+                                        var fotosmall = vfoto.replace(
+                                            ".jpg", "-small.jpg");
+                                        $("#photo").append('<img src="' +
+                                            fotosmall + '">');
+                                        $("#formkobo").append(
+                                            '<input name="kobo[properties][' +
+                                            kprop +
+                                            ']" required class="form-control" value="' +
+                                            vfoto +
+                                            '" type="hidden">');
+                                    });
+                                } else {
+                                    var fotosmall = vprop.replace(
+                                        ".jpg", "-small.jpg");
+                                    $("#photo").append('<img src="' +
+                                        fotosmall + '">');
+                                    $("#formkobo").append(
+                                        '<input name="kobo[properties][' +
+                                        kprop +
+                                        ']" required class="form-control" value="' +
+                                        vprop +
+                                        '" type="hidden">');
+                                }
+
+                            } else if (kprop === "dphoto" || kprop === "bphoto" ||
+                                kprop === "gphoto") {
+                                $.each(vprop, function (kfoto, vfoto) {
+                                    $("#formkobo").append(
+                                        '<input name="kobo[properties][' +
+                                        kprop +
+                                        ']" required class="form-control" value="' +
+                                        vfoto + '" type="hidden">');
                                 });
                             } else {
                                 if (camposShow.indexOf(kprop) >= 0) {
-                                    $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kprop + '</label>');
+                                    $("#formkobo").append(
+                                        '<label class="col-sm-2 col-sm-2 control-label">' +
+                                        kprop + '</label>');
                                     if (camposShowdisabled.indexOf(kprop) >= 0) {
-                                        $("#formkobo").append('<div class="col-sm-4">' +
-                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" readonly>' +
+                                        $("#formkobo").append(
+                                            '<div class="col-sm-4">' +
+                                            '<input name="kobo[properties][' +
+                                            kprop +
+                                            ']" required class="form-control" value="' +
+                                            vprop + '" readonly>' +
                                             '</div>');
                                     } else {
-                                        $("#formkobo").append('<div class="col-sm-4">' +
-                                            '<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '">' +
+                                        $("#formkobo").append(
+                                            '<div class="col-sm-4">' +
+                                            '<input name="kobo[properties][' +
+                                            kprop +
+                                            ']" required class="form-control" value="' +
+                                            vprop + '">' +
                                             '</div>');
                                     }
                                 } else {
-                                    $("#formkobo").append('<input name="kobo[properties][' + kprop + ']" required class="form-control" value="' + vprop + '" type="hidden">');
+                                    $("#formkobo").append(
+                                        '<input name="kobo[properties][' +
+                                        kprop +
+                                        ']" required class="form-control" value="' +
+                                        vprop + '" type="hidden">');
                                 }
                             }
 
                         });
                     } else if (key === 'geometry') {
-                        $.each(value, function(kgeom, vgeom) {
+                        $.each(value, function (kgeom, vgeom) {
                             // console.log(kgeom, vgeom);
                             if (kgeom === 'coordinates') {
-                                $("#formkobo").append('<div class="form-group">');
-                                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + kgeom + '</label>');
+                                $("#formkobo").append(
+                                    '<div class="form-group">');
+                                $("#formkobo").append(
+                                    '<label class="col-sm-2 col-sm-2 control-label">' +
+                                    kgeom + '</label>');
                                 $("#formkobo").append('<div class="col-sm-10">' +
-                                    '<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '" readonly>' +
+                                    '<input name="kobo[geometry][' + kgeom +
+                                    ']" required class="form-control" value="' +
+                                    vgeom + '" readonly>' +
                                     '</div>');
                                 $("#formkobo").append('</div>');
                             } else {
-                                $("#formkobo").append('<input name="kobo[geometry][' + kgeom + ']" required class="form-control" value="' + vgeom + '" type="hidden">');
+                                $("#formkobo").append(
+                                    '<input name="kobo[geometry][' + kgeom +
+                                    ']" required class="form-control" value="' +
+                                    vgeom + '" type="hidden">');
                             }
                             // (kgeom === 'coordinates') ? $("input[name*='kobo[geometry][" + kgeom + "]']").val(vgeom): false;
 
                         });
                     } else {
                         if (camposShow.indexOf(key) >= 0) {
-                            $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">' + key + '</label>');
+                            $("#formkobo").append(
+                                '<label class="col-sm-2 col-sm-2 control-label">' +
+                                key + '</label>');
                             $("#formkobo").append('<div class="col-sm-4">' +
-                                '<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" readonly>' +
+                                '<input name="kobo[' + key +
+                                ']" required class="form-control" value="' + value +
+                                '" readonly>' +
                                 '</div>');
                         } else {
-                            $("#formkobo").append('<input name="kobo[' + key + ']" required class="form-control" value="' + value + '" type="hidden">');
+                            $("#formkobo").append('<input name="kobo[' + key +
+                                ']" required class="form-control" value="' + value +
+                                '" type="hidden">');
                         }
 
                     }
@@ -4432,24 +4878,27 @@
                 for (var i = ini; i < fin; i++) {
                     optionsstr += '<option>' + i + '</option>';
                 }
-                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">coord ini</label>');
+                $("#formkobo").append(
+                    '<label class="col-sm-2 col-sm-2 control-label">coord ini</label>');
                 $("#formkobo").append('<div class="col-sm-4">' +
                     '<select style="min-width: 100px;" class="form-control" name="kobo[ifdtini]" required class="form-control">' +
                     optionsstr +
                     '</select></div>');
 
                 var $inputsCOORini = $('#formkobo').find('select[ name="kobo[ifdtini]"]');
-                $inputsCOORini.on('change', function() {
+                $inputsCOORini.on('change', function () {
                     $('#coordsubmit').prop('disabled', false);
                     var $this = $(this);
                     if ($this.val() != '') {
                         ////console.log('ID: ' + $this.attr("id"));
                         ////console.log('Check: ' + (index));
-                        $('#formkobo').find("input[name='kobo[geometry][coordinates]']").val(rObject.geometry.coordinates[parseInt($this.val())]);
+                        $('#formkobo').find("input[name='kobo[geometry][coordinates]']")
+                            .val(rObject.geometry.coordinates[parseInt($this.val())]);
 
                     }
                 });
-                $("#formkobo").append('<label class="col-sm-2 col-sm-2 control-label">coord fin</label>');
+                $("#formkobo").append(
+                    '<label class="col-sm-2 col-sm-2 control-label">coord fin</label>');
                 $("#formkobo").append('<div class="col-sm-4">' +
                     '<select style="min-width: 100px;" class="form-control" name="kobo[ifdtfin]" required class="form-control">' +
                     optionsstr +
@@ -4460,7 +4909,7 @@
         });
 
         var $deleteKoboElem = $('#form').find('i[name="deleteKoboElem"]');
-        $deleteKoboElem.click(function() {
+        $deleteKoboElem.click(function () {
             var $this = $(this);
             var res = JSON.stringify($(this).data('params'));
             obj = JSON.parse(res);
@@ -4473,15 +4922,16 @@
             console.log('/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index + '/' + obj.kobo_id);
 
             var p1 = $.ajax({
-                url: '/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index + '/' + obj.kobo_id,
+                url: '/auth/WEB/infodatatrack/delrows/' + rObject._id + '/' + obj.index + '/' +
+                    obj.kobo_id,
                 data: JSON.stringify(dataPost),
                 type: 'POST',
                 contentType: 'application/json'
-            }, function(data) {
+            }, function (data) {
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
-            Promise.all([p1]).then(function(values) {
+            Promise.all([p1]).then(function (values) {
                 dataTrack = values[0];
                 // console.log(dataTrack);
                 // location.reload();
