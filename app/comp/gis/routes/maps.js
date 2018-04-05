@@ -12,6 +12,9 @@ var utm = require('utm');
 var assert = require('assert');
 var req2 = require('request');
 var services = require(path.join(__dirname, '../../../services/services'));
+var AssetCache = require('../../../services/asset_cache')
+
+
 
 // DO this ONCE, not on every request!!
 // ALSO, better use underscore (uniq), which
@@ -288,8 +291,8 @@ router.get('/list_files', function (req, resp, next) {
 });
 
 /* GET List Info */
-router.get('/list_info', function (req, resp, next) {
-    var promises = [];
+router.get('/list_info', async function (req, resp, next) {
+    /* var promises = [];
     var optionsRoad = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -310,6 +313,7 @@ router.get('/list_info', function (req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
+    const start = Date.now()
     promises.push(new Promise(function (resolve, reject) {
         // save options locally because it will be reassigned to a different object
         // before it gets used in the callback below
@@ -412,8 +416,11 @@ router.get('/list_info', function (req, resp, next) {
         var otherr = [];
         var urbanr = [];
 
+        const tracks = allData[0].body
+        const koboinfos = allData[1].body
 
 
+        console.log('Query time', Date.now() - start)
         // allData[1].body.forEach(function (elem, index) {
         //     if (elem.properties.kobo_type === "Culvert") {
         //         koboinfos_odt.push(elem);
@@ -424,7 +431,7 @@ router.get('/list_info', function (req, resp, next) {
         //         koboinfos_geo.push(elem);
         //     }
         // });
-        allData[0].body.forEach(function (elem, index) {
+        tracks.forEach(function (elem, index) {
             if (elem.properties.rcategory.indexOf('Main Road') >= 0) {
                 mainr.push(elem);
                 var unique = elem.properties.Ccode.unique();
@@ -435,7 +442,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
                                     kobo_mainr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                                     kobo_mainr_odt[kobo_mainr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -451,7 +458,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
                                     kobo_mainr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                                     kobo_mainr_bridge[kobo_mainr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -467,7 +474,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
                                     kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
                                     kobo_mainr_geo[kobo_mainr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -483,7 +490,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
                                     kobo_mainr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                                     kobo_mainr_geo[kobo_mainr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -501,7 +508,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
                                     kobo_secondaryr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                                     kobo_secondaryr_odt[kobo_secondaryr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -517,7 +524,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
                                     kobo_secondaryr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                                     kobo_secondaryr_bridge[kobo_secondaryr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -533,7 +540,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
                                     kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
                                     kobo_secondaryr_geo[kobo_secondaryr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -549,7 +556,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
                                     kobo_secondaryr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                                     kobo_secondaryr_geo[kobo_secondaryr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -567,7 +574,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
                                     kobo_feederr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                                     kobo_feederr_odt[kobo_feederr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -583,7 +590,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
                                     kobo_feederr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                                     kobo_feederr_bridge[kobo_feederr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -599,7 +606,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
                                     kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
                                     kobo_feederr_geo[kobo_feederr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -615,7 +622,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
                                     kobo_feederr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                                     kobo_feederr_geo[kobo_feederr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -633,7 +640,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
                                     kobo_urbanr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                                     kobo_urbanr_odt[kobo_urbanr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -649,7 +656,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
                                     kobo_urbanr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                                     kobo_urbanr_bridge[kobo_urbanr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -665,7 +672,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
                                     kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
                                     kobo_urbanr_geo[kobo_urbanr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -681,7 +688,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
                                     kobo_urbanr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                                     kobo_urbanr_geo[kobo_urbanr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -699,7 +706,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.Ccode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.Ccode.firstindex(u)].kobo_id) {
                                     kobo_otherr_odt.push(services.makeKoboGeoJson(elem, elem.properties.Ccode.firstindex(u), 'Culvert'));
                                     kobo_otherr_odt[kobo_otherr_odt.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -715,7 +722,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.bcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.bcode.firstindex(u)].kobo_id) {
                                     kobo_otherr_bridge.push(services.makeKoboGeoJson(elem, elem.properties.bcode.firstindex(u), 'Bridge'));
                                     kobo_otherr_bridge[kobo_otherr_bridge.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -731,7 +738,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode.firstindex(u)].kobo_id) {
                                     kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode.firstindex(u), 'Geotechnical'));
                                     kobo_otherr_geo[kobo_otherr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -747,7 +754,7 @@ router.get('/list_info', function (req, resp, next) {
                         if (elem.properties.koboedit !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== undefined &&
                             elem.properties.koboedit[elem.properties.gcode2.firstindex(u)] !== null) {
-                            allData[1].body.forEach(function (koboelem, index) {
+                            koboinfos.forEach(function (koboelem, index) {
                                 if (koboelem._id === elem.properties.koboedit[elem.properties.gcode2.firstindex(u)].kobo_id) {
                                     kobo_otherr_geo.push(services.makeKoboGeoJson(elem, elem.properties.gcode2.firstindex(u), 'Geotechnical'));
                                     kobo_otherr_geo[kobo_otherr_geo.length - 1]["properties"]["_attachments"] = koboelem.properties._attachments;
@@ -790,9 +797,10 @@ router.get('/list_info', function (req, resp, next) {
                 feeder: feederr,
                 urban: urbanr
             }
-        }
+        } */
 
-        console.log(JSON.stringify(assetData.Culvert).length)
+        //console.log(JSON.stringify(assetData.Culvert).length)
+        const assetData = await AssetCache.get()
         resp.render('maps', {
             // All assets grouped
             assetData: assetData,
@@ -834,10 +842,10 @@ router.get('/list_info', function (req, resp, next) {
         });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
-    }, function (reason) {
+   /*  }, function (reason) {
         console.log(reason);
         return res.status(500).send(reason);
-    });
+    }); */
 
 });
 

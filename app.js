@@ -17,7 +17,7 @@ var flash = require('connect-flash');
 //var cors = require('cors');
 var jwt = require('jwt-simple');
 var bodyParser = require('body-parser');
-
+var AssetCache = require('./app/services/asset_cache')
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -104,7 +104,14 @@ mongoose.connect(configDB.url, {
             "connectTimeoutMS": configAPP.CONNECTTIMEOUTMS
         }
     }
-});
+})
+.then(() => {
+    console.debug('Connected to Mongo')
+    AssetCache.load()
+})
+.catch(err => {
+    console.error('Error connecting to mongo', err.message)
+})
 
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
@@ -113,7 +120,10 @@ var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('connect', console.debug.bind(console, 'MongoDB CONNECTION OK!'));
+db.on('connect', function(){
+    console.debug('MongoDB CONNECTION OK!')
+    AssetCache.load()
+});
 
 /*********************************
  *  URL - Routes
