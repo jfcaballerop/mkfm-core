@@ -48,9 +48,22 @@
         console.log('saved asset data', assetData)
     }
 
+    function getRoadType(formValue){
+        switch(formValue){
+            case 'Main Road':
+                return 'main'
+            case 'Secondary':
+                return 'secondary'
+            case 'Feeder':
+                return 'feeder'
+            default:
+                return 'urban'
+        }
+    }
+
     function saveUI(){
         $('.js-road-type').change(function(event){
-            var roadType = event.target.value
+            var roadType = getRoadType(event.target.value)
             var isSelected = !!event.target.checked
             selectedRoads[roadType] = isSelected
             console.log('Road change', selectedRoads)
