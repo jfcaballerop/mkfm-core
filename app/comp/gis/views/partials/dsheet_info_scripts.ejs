@@ -3,7 +3,7 @@
         var v_height = $(window.top).height() - 250;
         var v_width = $('#rowmap').width();
 
-        $('#rowmap').append('<br><div id="map" style="width:' +
+        $('#rowmap').append('<div id="map" style="width:' +
             v_width + 'px; height:' + v_height +
             'px; position: relative; overflow: hidden;">');
 
@@ -15,23 +15,6 @@
             lng: mapcenter.lng
         });
         map.setZoom(configzoom * 1);
-        // $.each(arrMarkerPos, function (k, v) {
-        //     var infoContent = '';
-        //     map.addMarker({
-        //         lat: v[1],
-        //         lng: v[0],
-        //         icon: {
-        //             path: google.maps.SymbolPath.CIRCLE,
-        //             strokeColor: 'black',
-        //             strokeOpacity: 0.5,
-        //             scale: 5
-        //         },
-        //         title: 'Query Result',
-        //         infoWindow: {
-        //             content: arrMarkerContent[k]
-        //         }
-        //     });
 
-        // })
     });
 </script>
