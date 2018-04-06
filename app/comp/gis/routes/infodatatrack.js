@@ -850,13 +850,13 @@ router.get('/V1/list_order', function (req, res, next) {
     var properties = {
         'properties.name': 1,
         'properties.rcode': 1
-
     };
     Infodatatrack.find({}, properties).sort({
         'properties.name': 1
     }).exec(function (err, infodatatracks) {
         if (err) {
-            res.send(500, err.message);
+            console.error('Error en infodatatrack list_order', err.message)
+            return res.status(500).send(err.message);
         }
         res.status(200).jsonp(infodatatracks);
     });

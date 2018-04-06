@@ -86,16 +86,20 @@ router.get('/view_data', function (req, resp, next) {
                 data += chunk;
             });
             res.on('end', function () {
-                var responseObject = JSON.parse(data);
-                resolve({
-                    hostname: localOptions.hostname,
-                    port: localOptions.port,
-                    path: localOptions.path,
-                    statusCode: res.statusCode,
-                    responseHeaders: JSON.stringify(res.headers),
-                    body: responseObject
-                });
-
+                try {
+                    var responseObject = JSON.parse(data);
+                    resolve({
+                        hostname: localOptions.hostname,
+                        port: localOptions.port,
+                        path: localOptions.path,
+                        statusCode: res.statusCode,
+                        responseHeaders: JSON.stringify(res.headers),
+                        body: responseObject
+                    });
+                }
+                catch(err){
+                    reject(err)
+                }
             });
         });
         request.on('error', function (e) {
@@ -111,19 +115,27 @@ router.get('/view_data', function (req, resp, next) {
         var localOptions = optionsInfoData;
         var req = http.request(localOptions, function (res) {
             var data = "";
+
             res.on('data', function (chunk) {
                 data += chunk;
             });
+            res.on('error', console.error.bind(console))
             res.on('end', function () {
-                var responseObject = JSON.parse(data);
-                resolve({
-                    hostname: localOptions.hostname,
-                    port: localOptions.port,
-                    path: localOptions.path,
-                    statusCode: res.statusCode,
-                    responseHeaders: JSON.stringify(res.headers),
-                    body: responseObject
-                });
+                try {
+                    var responseObject = JSON.parse(data);
+                    resolve({
+                        hostname: localOptions.hostname,
+                        port: localOptions.port,
+                        path: localOptions.path,
+                        statusCode: res.statusCode,
+                        responseHeaders: JSON.stringify(res.headers),
+                        body: responseObject
+                    });
+                }
+                catch(err){
+                    reject(err)
+                }
+
             });
         });
         req.on('error', function (e) {
@@ -153,7 +165,7 @@ router.get('/view_data', function (req, resp, next) {
         });
 
     }, function (reason) {
-        return res.status(500).send(reason);
+        return resp.status(500).send(reason);
     });
 });
 
