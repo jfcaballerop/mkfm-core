@@ -511,5 +511,24 @@ router.get('/list_info', function (req, resp, next) {
     });
 
 });
+/* GET List Info */
+router.get('/details/:assetcode', function (req, resp, next) {
+
+
+    resp.render('data_info_sheet', {
+
+        token: req.token,
+        title: config.CLIENT_NAME + '-' + config.APP_NAME,
+        cname: config.CLIENT_NAME,
+        id: req.user_id,
+        login: req.user_login,
+        rol: req.rol,
+        api_key: config.MAPS_API_KEY,
+        maps_center: config.MAPS_CENTER_POS,
+        maps_zoom: config.MAPS_CENTER_ZOOM
+    });
+
+
+});
 
 module.exports = router;

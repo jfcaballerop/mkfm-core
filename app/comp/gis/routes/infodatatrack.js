@@ -49,6 +49,61 @@ router.use(bodyParser.json());
         WEB CALLS
 **********************************************************/
 /* GET List infodatatracks */
+router.get('/list_ifdt/:info', function (req, resp, next) {
+    // req.params.info = req.params.info.replace(/%20/g, " ");
+    // debug("LLego aqui");
+    var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: encoded_url,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    // console.log('\n## list_ifdt ##\n' + encoded_url);
+
+
+    var request = http.request(options, function (res) {
+        // // console.log('STATUS: ' + res.statusCode);
+        // // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // // console.log('KOBO ID: ' + req.params.id);
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            // // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+
+            // // console.log('## ResponseObject:: \n' + JSON.stringify(responseObject.properties));
+            resp.status(200).jsonp(responseObject);
+        });
+
+    });
+    request.on('error', function (e) {
+        // General error, i.e.
+        //  - ECONNRESET - server closed the socket unexpectedly
+        //  - ECONNREFUSED - server did not listen
+        //  - HPE_INVALID_VERSION
+        //  - HPE_INVALID_STATUS
+        //  - ... (other HPE_* codes) - server returned garbage
+        // console.log(e);
+    });
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+/* POST List infodatatracks */
 router.post('/list_ifdt/:info', function (req, resp, next) {
     // req.params.info = req.params.info.replace(/%20/g, " ");
     // debug("LLego aqui");
