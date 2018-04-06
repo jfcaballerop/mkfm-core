@@ -63,6 +63,9 @@ window.APP.WGIS = function wGisModule(){
             })
             .catch(function(error){
                 console.error('Failed fetching assets', error.status, error.message)
+                if(error.status === 401){
+                    location.assign('/')
+                }
                 return []
             })
         }
@@ -317,12 +320,8 @@ window.APP.WGIS = function wGisModule(){
         var jsonObject;
         infoWnd = new google.maps.InfoWindow();
 
-
+        // needed for other scripts, they need to access the map
         window.map = map
-        // on mouseout (moved mouse off marker) make infoWindow disappear
-        // map.data.addListener('click', function(event) {
-        //     infoWnd.close();
-        // });
 
         // Set mouseover event for each feature.
         map.data.addListener('click', onDataLayerClick);
@@ -330,7 +329,7 @@ window.APP.WGIS = function wGisModule(){
             var color = feature.getProperty('color');
             var nameopt = feature.getProperty('nameoption');
             $('#layergps option[value="' + nameopt + '"]').prop('style', 'color: ' + color);
-
+            console.log('setStyle', feature)
             return {
                 fillColor: color,
                 strokeColor: color,
@@ -350,6 +349,33 @@ window.APP.WGIS = function wGisModule(){
         // });
     };
 
+    var roadTypeStrokeWeight = {
+        main: 4,
+        secondary: 3,
+        feeder: 2,
+        urban: 1
+    }
+
+    function getStyleForAssetType(assetType, roadType){
+        switch (assetType){
+            case 'Pavement':
+                return {
+                    // TODO - color en función de filtros
+                    'strokeColor': '#639',
+                    'strokeWeight': roadTypeStrokeWeight[roadType]
+                }
+            default: {
+                return {
+                    //TODO - markers específico por tipo de activo puntual
+                    //TODO - color de marker en función de filtros
+                    label: String(assetType.slice(0,1)).toUpperCase()
+                }
+            }
+        }
+
+
+    }
+
     function createLayer(assetType, roadType){
         var layer = new google.maps.Data()
         layer.addListener('click', onDataLayerClick)
@@ -357,10 +383,7 @@ window.APP.WGIS = function wGisModule(){
         layer.setMap(map)
         spinner.show()
         layer.setStyle(function(feature){
-            return {
-                label: assetType.slice(0,1),
-                fillColor: '#ff0'
-            }
+            return getStyleForAssetType(assetType, roadType)
         })
 
         return fetchAssets(assetType,roadType)
