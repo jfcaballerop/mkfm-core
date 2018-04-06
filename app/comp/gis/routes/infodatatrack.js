@@ -21,6 +21,8 @@ var Road = mongoose.model('Road');
 var koboinfoModels = require(path.join(__dirname, '../models/koboinfo'));
 var Koboinfo = mongoose.model('Koboinfo');
 
+const AssetCache = require('../../../services/asset_cache');
+
 
 
 router.use(function timeLog(req, res, next) {
@@ -565,7 +567,8 @@ router.post('/update_infodatatrack', function (req, resp, next) {
 });
 
 
-router.post('/update_videoinfodatatrack', function (req, resp, next) {
+router.post('/update_videoinfodatatrack',
+function (req, resp, next) {
     var postData = extend({}, req.body.infodatatrack);
     var arrOneCoord = [];
     var arrCoord = [];
@@ -622,7 +625,7 @@ router.post('/update_videoinfodatatrack', function (req, resp, next) {
             var responseObject = JSON.parse(data);
             //success(data);
             resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
-
+            AssetCache.refresh()
         });
     });
     request.on('error', function (err) {

@@ -31,6 +31,8 @@ var schedulephyModels = require(path.join(__dirname, '../../schedule/models/sche
 var Schedulephy = mongoose.model('Schedulephy');
 var mathjs = require('mathjs');
 
+const AssetCache = require('../../../services/asset_cache')
+
 var diccKoboToDominica = {
     "si": "Yes",
     "no": "No",
@@ -428,7 +430,8 @@ router.post('/get_formulas_tracks/', function (req, resp) {
  * @param formula
  * @param asset
  */
-router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp) {
+router.post('/update_formulas_tracks_risk/:formula/:asset',
+function (req, resp) {
     var postData = extend({}, req.body);
     ////debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
 
@@ -459,6 +462,9 @@ router.post('/update_formulas_tracks_risk/:formula/:asset', function (req, resp)
             resp.status(200).jsonp(responseObject);
             // resp.status(200).jsonp({ "result": "OK" });
 
+
+            //TODO: refresh asset cache
+            AssetCache.refresh()
         });
     });
     request.write(JSON.stringify(postData));
@@ -499,8 +505,8 @@ router.post('/update_formulas_tracks_likelihood/:formula/:asset', function (req,
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
-            resp.status(200).jsonp(responseObject);
-            // resp.status(200).jsonp({ "result": "OK" });
+            resp.status(200).json(responseObject);
+            AssetCache.refresh()
 
         });
     });
@@ -542,7 +548,8 @@ router.post('/update_formulas_tracks_sensitivity/:formula/:asset', function (req
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
-            resp.status(200).jsonp(responseObject);
+            resp.status(200).json(responseObject);
+            AssetCache.refresh()
             // resp.status(200).jsonp({ "result": "OK" });
 
         });
@@ -586,6 +593,7 @@ router.post('/update_formulas_tracks_response/:formula/:asset', function (req, r
         res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
+            AssetCache.refresh()
             // resp.status(200).jsonp({ "result": "OK" });
 
         });
@@ -628,7 +636,8 @@ router.post('/update_formulas_tracks/:formula/:asset', function (req, resp) {
         });
         res.on('end', function () {
             var responseObject = JSON.parse(data);
-            resp.status(200).jsonp(responseObject);
+            resp.status(200).json(responseObject);
+            AssetCache.refresh()
             // resp.status(200).jsonp({ "result": "OK" });
 
         });
@@ -672,6 +681,7 @@ router.post('/update_formulas_tracks_condition/:formula/:asset', function (req, 
         res.on('end', function () {
             var responseObject = JSON.parse(data);
             resp.status(200).jsonp(responseObject);
+            AssetCache.refresh()
             // resp.status(200).jsonp({ "result": "OK" });
 
         });
@@ -1742,7 +1752,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             ////debug('values2 ' + values2.length);
 
             ret.tracksUpdated = tracksUpdated;
-            res.status(200).jsonp(ret);
+            res.status(200).json(ret);
+            AssetCache.refresh()
         }).catch(function (reason2) {
             // console.log(reason2);
             return res.status(500).send(reason2);
@@ -2245,7 +2256,8 @@ router.post('/V1/update_formulas_tracks_likelihood/:formula/:asset', async funct
 
     ret.tracksUpdated = tracksUpdated;
     ////debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+    res.status(200).json(ret);
+    AssetCache.refresh()
 
 
 });
@@ -3016,7 +3028,8 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
     });
     ret.tracksUpdated = tracksUpdated;
     ////debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+    res.status(200).json(ret);
+    AssetCache.refresh()
 
 });
 
@@ -3613,7 +3626,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     }
     ret.tracksUpdated = tracksUpdated;
     ////debug(tracksUpdated);
-    res.status(200).jsonp(ret);
+    res.status(200).json(ret);
+    AssetCache.refresh()
 
 
 });
@@ -3621,7 +3635,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
-router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async function (req, res, next) {
+router.post('/V1/update_formulas_tracks_condition/:formula/:asset',
+async function (req, res, next) {
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
@@ -4757,12 +4772,8 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset', async functi
         default:
             break;
     }
-
+    AssetCache.refresh()
 });
-
-
-
-
 
 
 
