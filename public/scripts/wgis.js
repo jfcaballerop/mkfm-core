@@ -3,7 +3,7 @@ window.APP || (window.APP = {})
 window.APP.WGIS = function wGisModule(){
     var map, spinner;
     var center, zoom
-    var infoWnd, activeInfoWindow;
+    var infoWnd, infoBox;
     var featureCrit = [];
     var featureCond = [];
     var featureRiskPhy = [];
@@ -87,6 +87,7 @@ window.APP.WGIS = function wGisModule(){
 
     function saveUI(){
         spinner = $('#spinner')
+        infoBox = $('#info-box')
         $('.js-road-type').change(function(event){
             var roadType = getRoadType(event.target.value)
             var isSelected = !!event.target.checked
@@ -115,35 +116,35 @@ window.APP.WGIS = function wGisModule(){
     }
 
     function getInfoWindowContent(type, event) {
-        var content = 'Type of Asset: <span style="font-weight: bold;">' + event.feature.getProperty('kobo_type') +
-            '</span><br>';
+        var getProp = event.feature.getProperty.bind(event.feature)
+        var content = 'Asset Type: <strong>' + type + '</strong><br>';
         var subcontent = "";
-        if (event.feature.getProperty('kobo_type') === "Culvert") {
-            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('Ccode') +
-                '</span><br><hr>';
+        if (type === "Culvert") {
+            subcontent += 'Asset code: <strong>' + getProp('Ccode') +
+                '</strong><br><hr>';
 
             subcontent += 'Inventory Data<br>';
-            subcontent += '<span style="font-weight: bold;">N. Elements : </span>' + event.feature.getProperty(
+            subcontent += '<strong>N. Elements : </strong>' + getProp(
                 "Cnumelem") + '<br>';
             subcontent +=
-                '<span style="font-weight: bold;"> Type of section: </span>' +
-                event.feature.getProperty("Csection") + '<br>';
-            subcontent += '<span style="font-weight: bold;"> Material : </span>' + event.feature.getProperty(
+                '<strong> Type of section: </strong>' +
+                getProp("Csection") + '<br>';
+            subcontent += '<strong> Material : </strong>' + getProp(
                 "Cmaterial") + '<br>';
-            subcontent += '<span style="font-weight: bold;"> Diameter: </span>' + event.feature.getProperty("Cdiameter") +
+            subcontent += '<strong> Diameter: </strong>' + getProp("Cdiameter") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;"> Width: </span>' +
-                event.feature.getProperty("Cwidth") + '<br>';
+            subcontent += '<strong> Width: </strong>' +
+                getProp("Cwidth") + '<br>';
 
-            subcontent += '<span style="font-weight: bold;"> Length: </span>' + event.feature.getProperty("Clength") +
+            subcontent += '<strong> Length: </strong>' + getProp("Clength") +
                 '<br>';
             subcontent += '<br>O&M Data<br>';
-            subcontent += '<span style="font-weight: bold;"> Clearing required: </span>' + event.feature.getProperty(
+            subcontent += '<strong> Clearing required: </strong>' + getProp(
                 "Cclearing") + '<br>';
-            subcontent += '<span style="font-weight: bold;"> Current visual condition: </span>' + event.feature.getProperty(
+            subcontent += '<strong> Current visual condition: </strong>' + getProp(
                 "CVisualCondition") + '<br>';
 
-            vfoto = event.feature.getProperty("_attachments");
+            vfoto = getProp("_attachments");
             if (vfoto !== undefined && vfoto.length > 0) {
 
                 var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
@@ -154,35 +155,34 @@ window.APP.WGIS = function wGisModule(){
 
 
 
-        } else if (event.feature.getProperty('kobo_type') === "Bridge") {
-            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('bcode') +
-                '</span><br><hr>';
+        } else if (type === "Bridge") {
+            subcontent += 'Asset code: <strong>' + getProp('bcode') +
+                '</strong><br><hr>';
             subcontent += 'Inventory Data<br>';
-            subcontent += '<span style="font-weight: bold;">Structural typology: </span>' + event.feature.getProperty(
+            subcontent += '<strong>Structural typology: </strong>' + getProp(
                 "btype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">No of spans: </span>' + event.feature.getProperty("bspans") +
+            subcontent += '<strong>No of spans: </strong>' + getProp("bspans") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Toal length: </span>' + event.feature.getProperty("blenght") +
+            subcontent += '<strong>Toal length: </strong>' + getProp("blenght") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Width: </span>' + event.feature.getProperty("bwidth") +
+            subcontent += '<strong>Width: </strong>' + getProp("bwidth") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Free height: </span>' + event.feature.getProperty(
+            subcontent += '<strong>Free height: </strong>' + getProp(
                 "bfreeheight") + '<br>';
             subcontent += '<br>- Material -<br>';
-            subcontent += '<span style="font-weight: bold;">Deck: </span>' + event.feature.getProperty("bmaterialdeck") +
+            subcontent += '<strong>Deck: </strong>' + getProp("bmaterialdeck") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Piers: </span>' + event.feature.getProperty(
+            subcontent += '<strong>Piers: </strong>' + getProp(
                     "bmaterialpiers") +
                 '<br>';
-            subcontent += '<span style="font-weight: bold;">Abutments: </span>' + event.feature.getProperty(
+            subcontent += '<strong>Abutments: </strong>' + getProp(
                 "bmaterialabutments") + '<br>';
             subcontent += '<br>O&M Data<br>';
-            subcontent += '<span style="font-weight: bold;">Type of damages: </span>' + event.feature
-                .getProperty("bdamagesfoundationsgeneraltype") + '<br>';
-            subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
+            subcontent += '<strong>Type of damages: </strong>' + getProp("bdamagesfoundationsgeneraltype") + '<br>';
+            subcontent += '<strong>Current Visual Condition: </strong>' + getProp(
                 "bvisualcondition") + '<br>';
 
-            vfoto = event.feature.getProperty("_attachments");
+            vfoto = getProp("_attachments");
             if (vfoto !== undefined && vfoto.length > 0) {
 
                 var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
@@ -191,38 +191,32 @@ window.APP.WGIS = function wGisModule(){
                     '">' + '<br>';
             }
         } else {
-            if (event.feature.getProperty('gcode') !== "") {
-                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode') +
-                    '</span><br><hr>';
+            if (type === 'Geotechnical') {
+                subcontent += 'Asset code: <strong>' + (getProp('gcode') || getProp('gcode2')) +
+                    '</strong><br><hr>';
                 subcontent += 'Inventory Data<br>';
 
-                subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") +
+                subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty(
-                        "gposition") +
+                subcontent += '<strong>Position: </strong>' + (getProp("gposition") || getProp("gposition2")) +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight") +
+                subcontent += '<strong>Height: </strong>' + (getProp("gheight") || getProp("gheight2")) +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength") +
+                subcontent += '<strong>Length: </strong>' + (getProp("glength") || getProp("glength2")) +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty(
-                        "gslope") +
+                subcontent += '<strong>Slope/Angle: </strong>' + (getProp("gslope") || getProp("gslope2")) +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature") +
+                subcontent += '<strong>Nature: </strong>' + (getProp("gnature") || getProp("gnature2")) +
                     '<br>';
 
 
                 subcontent += '<br>O&M Data<br>';
-                subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
-                    "gnature") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature
-                    .getProperty(
-                        "bdamagesfoundationsgeneraltype") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
-                    "gintensityfailure") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
-                    "gvisualcondition") + '<br>';
-                vfoto = event.feature.getProperty("_attachments");
+                subcontent += '<strong>Failure processes: </strong>' + (getProp("gnature") || getProp("gnature2") || '') + '<br>';
+                /* subcontent += '<strong>Intensity of failure processes: </strong>' + getProp(
+                        "bdamagesfoundationsgeneraltype") + '<br>'; */
+                subcontent += '<strong>Extent of failure processes: </strong>' + (getProp("gintensityfailure") || getProp("gintensityfailure2")) + '<br>';
+                subcontent += '<strong>Current Visual Condition: </strong>' + (getProp("gvisualcondition") || getProp("gvisualcondition2")) + '<br>';
+                vfoto = getProp("_attachments");
                 if (vfoto !== undefined && vfoto.length > 0) {
 
                     var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
@@ -230,36 +224,36 @@ window.APP.WGIS = function wGisModule(){
                         fotosmall +
                         '">' + '<br>';
                 }
-            } else {
-                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode2') +
-                    '</span><br><hr>';
+            } /* else {
+                subcontent += 'Asset code: <strong>' + event.feature.getProperty('gcode2') +
+                    '</strong><br><hr>';
                 subcontent += 'Inventory Data<br>';
 
-                subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype2") +
+                subcontent += '<strong>Typology: </strong>' + event.feature.getProperty("gtype2") +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Position: </span>' + event.feature.getProperty(
+                subcontent += '<strong>Position: </strong>' + event.feature.getProperty(
                         "gposition2") +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Height: </span>' + event.feature.getProperty("gheight2") +
+                subcontent += '<strong>Height: </strong>' + event.feature.getProperty("gheight2") +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Length: </span>' + event.feature.getProperty("glength2") +
+                subcontent += '<strong>Length: </strong>' + event.feature.getProperty("glength2") +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Slope/Angle: </span>' + event.feature.getProperty(
+                subcontent += '<strong>Slope/Angle: </strong>' + event.feature.getProperty(
                         "gslope2") +
                     '<br>';
-                subcontent += '<span style="font-weight: bold;">Nature: </span>' + event.feature.getProperty("gnature2") +
+                subcontent += '<strong>Nature: </strong>' + event.feature.getProperty("gnature2") +
                     '<br>';
 
 
                 subcontent += '<br>O&M Data<br>';
-                subcontent += '<span style="font-weight: bold;">Failure processes: </span>' + event.feature.getProperty(
+                subcontent += '<strong>Failure processes: </strong>' + event.feature.getProperty(
                     "gnature2") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Intensity of failure processes: </span>' + event.feature
+                subcontent += '<strong>Intensity of failure processes: </strong>' + event.feature
                     .getProperty(
                         "bdamagesfoundationsgeneraltype2") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Extent of failure processes: </span>' + event.feature.getProperty(
+                subcontent += '<strong>Extent of failure processes: </strong>' + event.feature.getProperty(
                     "gintensityfailure2") + '<br>';
-                subcontent += '<span style="font-weight: bold;">Current Visual Condition: </span>' + event.feature.getProperty(
+                subcontent += '<strong>Current Visual Condition: </strong>' + event.feature.getProperty(
                     "gvisualcondition2") + '<br>';
                 vfoto = event.feature.getProperty("_attachments");
                 if (vfoto !== undefined && vfoto.length > 0) {
@@ -269,7 +263,7 @@ window.APP.WGIS = function wGisModule(){
                         fotosmall +
                         '">' + '<br>';
                 }
-            }
+            } */
 
         }
 
@@ -292,13 +286,12 @@ window.APP.WGIS = function wGisModule(){
     }
 
     function onDataLayerClick(event){
-        ////console.log(event.latLng);
-        console.log('map data click!', event.latLng, event.feature.getProperty)
-
-        // Open new InfoWindow for mouseover event
-        if(event.feature.getProperty('kobo_type')){
+        // Set info window on a point asset
+        var assetType = event.feature.getProperty('assetType')
+        console.log('Asset click on', assetType)
+        if(assetType){
             infoWnd.setPosition(event.latLng);
-            infoWnd.setContent(getInfoWindowContent(event.feature.getProperty('kobo_type'), event));
+            infoWnd.setContent(getInfoWindowContent(assetType, event));
             infoWnd.open(map)
         }
 
@@ -307,7 +300,13 @@ window.APP.WGIS = function wGisModule(){
         if (event.feature.getProperty('nameoption') === 'Roads') {
             infoTextContent += ' ' + event.feature.getProperty('name');
         }
-        document.getElementById('info-box').textContent = infoTextContent;
+        //document.getElementById('info-box').textContent = infoTextContent;
+    }
+
+    function onDataLayerHover(event){
+        if(event.feature.getId()){
+            infoBox.html(event.feature.getId())
+        }
     }
 
     function initMap() {
@@ -356,12 +355,25 @@ window.APP.WGIS = function wGisModule(){
         urban: 1
     }
 
+    var roadColors = {
+        dark: '#639',
+        light: '#ff0'
+    }
+
     function getStyleForAssetType(assetType, roadType){
+        var mapType = map.getMapTypeId()
+        let colorSource
+        if(mapType === 'terrain' || mapType === 'roadmap'){
+            colorSource = roadColors.dark
+        }
+        else {
+            colorSource = roadColors.light
+        }
         switch (assetType){
             case 'Pavement':
                 return {
                     // TODO - color en función de filtros
-                    'strokeColor': '#639',
+                    'strokeColor': colorSource,
                     'strokeWeight': roadTypeStrokeWeight[roadType]
                 }
             default: {
@@ -379,6 +391,7 @@ window.APP.WGIS = function wGisModule(){
     function createLayer(assetType, roadType){
         var layer = new google.maps.Data()
         layer.addListener('click', onDataLayerClick)
+        layer.addListener('mouseover', onDataLayerHover)
         dataLayers[assetType][roadType] = layer
         layer.setMap(map)
         spinner.show()
@@ -414,7 +427,7 @@ window.APP.WGIS = function wGisModule(){
     }
 
     function toggleRoadDataLayers(roadType, isVisible){
-        const selectedAssets = getSelectedAssets()
+        var selectedAssets = getSelectedAssets()
         _.each(dataLayers, function(assetLayers, assetType){
             var shouldDisplay = isVisible && ~selectedAssets.indexOf(assetType)
             assetLayers[roadType] && assetLayers[roadType].setMap(shouldDisplay ? map : null)
