@@ -12,6 +12,7 @@ var utm = require('utm');
 var assert = require('assert');
 var req2 = require('request');
 var services = require(path.join(__dirname, '../../../services/services'));
+var mongoose = require('mongoose')
 var AssetCache = require('../../../services/asset_cache')
 
 /*
@@ -305,10 +306,39 @@ router.get('/assets/:assetType/:roadType', async function(req, res){
         res.json(data)
     }
     catch(err){
+        console.error('Error fetching assets from cache', err.message)
         res.status(400).send({ message: err.message })
     }
+})
 
-
+router.get('/roads/:category', async function(req, res){
+    const { category } = req.params
+    try {
+        const data = mongoose.connection.db.collection('roads_extracted').find({
+            category: category
+        }).toArray((err, data) => {
+            if(err) {
+                throw err
+            }
+            const geoJson = data.map(road => ({
+                type: 'Feature',
+                id: road.roadCode,
+                properties: {
+                    category: road.category,
+                    roadCode: road.roadCode
+                },
+                geometry: road.geometry
+            }))
+            res.json({
+                type: 'FeatureCollection',
+                features: geoJson
+            })
+        })
+    }
+    catch(err) {
+        console.error('Error fetching roads', err.message)
+        res.status(500).send({ message: err.message })
+    }
 })
 
 module.exports = router;
