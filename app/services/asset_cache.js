@@ -131,13 +131,13 @@ function transformData(tracks, koboinfos){
     }
 
     // completes an asset with kobo-related data
-    function completeWithKoboData(roadElement, kobo, trackIndex, type){
+    /* function completeWithKoboData(roadElement, kobo, trackIndex, type){
         const newElement = services.makeKoboGeoJson(roadElement, trackIndex, type)
         if(kobo){
             newElement.properties._attachments = kobo.properties._attachments
         }
         return newElement
-    }
+    } */
 
     function getTrackProps(track){
         return {
@@ -182,7 +182,7 @@ function transformData(tracks, koboinfos){
                 //if(codeProperty === 'Ccode') console.log('build asset res', asset)
                 if(kobo) asset.properties._attachments = kobo.properties._attachments
                 // add feature id and asset type
-                asset.properties.id = assetCode
+                asset.id = assetCode
                 asset.properties.assetType = assetType
                 destination.push(asset)
             }

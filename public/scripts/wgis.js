@@ -115,30 +115,36 @@ window.APP.WGIS = function wGisModule(){
         return _.keys(selectedRoads).filter(key => !!selectedRoads[key])
     }
 
+    function getEventProp(prop){
+        return this.getProperty(prop) || ''
+    }
+
     function getInfoWindowContent(type, event) {
-        var getProp = event.feature.getProperty.bind(event.feature)
+        var getProp = getEventProp.bind(event.feature)
+
+
         var content = 'Asset Type: <strong>' + type + '</strong><br>';
         var subcontent = "";
         if (type === "Culvert") {
             subcontent += 'Asset code: <strong>' + getProp('Ccode') +
                 '</strong><br><hr>';
 
-            subcontent += 'Inventory Data<br>';
-            subcontent += '<strong>N. Elements : </strong>' + getProp(
+            subcontent += '<h4>Inventory Data</h4>';
+            subcontent += '<strong>N. Elements: </strong>' + getProp(
                 "Cnumelem") + '<br>';
             subcontent +=
-                '<strong> Type of section: </strong>' +
+                '<strong>Type of section: </strong>' +
                 getProp("Csection") + '<br>';
-            subcontent += '<strong> Material : </strong>' + getProp(
+            subcontent += '<strong>Material: </strong>' + getProp(
                 "Cmaterial") + '<br>';
-            subcontent += '<strong> Diameter: </strong>' + getProp("Cdiameter") +
+            subcontent += '<strong>Diameter: </strong>' + getProp("Cdiameter") +
                 '<br>';
-            subcontent += '<strong> Width: </strong>' +
+            subcontent += '<strong>Width: </strong>' +
                 getProp("Cwidth") + '<br>';
 
-            subcontent += '<strong> Length: </strong>' + getProp("Clength") +
+            subcontent += '<strong>Length: </strong>' + getProp("Clength") +
                 '<br>';
-            subcontent += '<br>O&M Data<br>';
+            subcontent += '<h4>O&M Data</h4>';
             subcontent += '<strong> Clearing required: </strong>' + getProp(
                 "Cclearing") + '<br>';
             subcontent += '<strong> Current visual condition: </strong>' + getProp(
@@ -158,18 +164,18 @@ window.APP.WGIS = function wGisModule(){
         } else if (type === "Bridge") {
             subcontent += 'Asset code: <strong>' + getProp('bcode') +
                 '</strong><br><hr>';
-            subcontent += 'Inventory Data<br>';
+            subcontent += '<h4>Inventory Data</h4>';
             subcontent += '<strong>Structural typology: </strong>' + getProp(
                 "btype") + '<br>';
             subcontent += '<strong>No of spans: </strong>' + getProp("bspans") +
                 '<br>';
-            subcontent += '<strong>Toal length: </strong>' + getProp("blenght") +
+            subcontent += '<strong>Total length: </strong>' + getProp("blenght") +
                 '<br>';
             subcontent += '<strong>Width: </strong>' + getProp("bwidth") +
                 '<br>';
             subcontent += '<strong>Free height: </strong>' + getProp(
                 "bfreeheight") + '<br>';
-            subcontent += '<br>- Material -<br>';
+            subcontent += '<h4>Material</h4>';
             subcontent += '<strong>Deck: </strong>' + getProp("bmaterialdeck") +
                 '<br>';
             subcontent += '<strong>Piers: </strong>' + getProp(
@@ -177,7 +183,7 @@ window.APP.WGIS = function wGisModule(){
                 '<br>';
             subcontent += '<strong>Abutments: </strong>' + getProp(
                 "bmaterialabutments") + '<br>';
-            subcontent += '<br>O&M Data<br>';
+            subcontent += '<h4>O&M Data</h4>';
             subcontent += '<strong>Type of damages: </strong>' + getProp("bdamagesfoundationsgeneraltype") + '<br>';
             subcontent += '<strong>Current Visual Condition: </strong>' + getProp(
                 "bvisualcondition") + '<br>';
@@ -194,7 +200,7 @@ window.APP.WGIS = function wGisModule(){
             if (type === 'Geotechnical') {
                 subcontent += 'Asset code: <strong>' + (getProp('gcode') || getProp('gcode2')) +
                     '</strong><br><hr>';
-                subcontent += 'Inventory Data<br>';
+                subcontent += '<h4>Inventory Data</h4>';
 
                 subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
                     '<br>';
@@ -210,7 +216,7 @@ window.APP.WGIS = function wGisModule(){
                     '<br>';
 
 
-                subcontent += '<br>O&M Data<br>';
+                subcontent += '<h4>O&M Data</h4>';
                 subcontent += '<strong>Failure processes: </strong>' + (getProp("gnature") || getProp("gnature2") || '') + '<br>';
                 /* subcontent += '<strong>Intensity of failure processes: </strong>' + getProp(
                         "bdamagesfoundationsgeneraltype") + '<br>'; */
