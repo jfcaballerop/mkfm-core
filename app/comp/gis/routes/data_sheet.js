@@ -1,3 +1,5 @@
+var debug = require('debug')('debug');
+
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -509,6 +511,52 @@ router.get('/list_info', function (req, resp, next) {
         console.log(reason);
         return res.status(500).send(reason);
     });
+
+});
+/* GET List Info */
+router.get('/details/:assetcode', function (req, resp, next) {
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.assetcode,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+    // // Peticiones 
+
+
+    var request = http.request(options, function (res) {
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            debug('DATA ' + data.length);
+            var responseObject = JSON.parse(data);
+
+            resp.render('data_sheet_details', {
+                assetdata: responseObject,
+                token: req.token,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME,
+                id: req.user_id,
+                login: req.user_login,
+                rol: req.rol,
+                api_key: config.MAPS_API_KEY,
+                maps_center: config.MAPS_CENTER_POS,
+                maps_zoom: config.MAPS_CENTER_ZOOM
+            });
+        });
+
+    });
+
+    request.end();
+
 
 });
 

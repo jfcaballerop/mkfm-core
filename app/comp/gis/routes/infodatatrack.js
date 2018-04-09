@@ -49,6 +49,61 @@ router.use(bodyParser.json());
         WEB CALLS
 **********************************************************/
 /* GET List infodatatracks */
+router.get('/list_ifdt/:info', function (req, resp, next) {
+    // req.params.info = req.params.info.replace(/%20/g, " ");
+    // debug("LLego aqui");
+    var encoded_url = encodeURI(config.PATH_API + '/infodatatrack/V1/list_ifdt/' + req.params.info);
+    var options = {
+        host: config.HOST_API,
+        port: config.PORT_API,
+        path: encoded_url,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + req.cookies.jwtToken
+        }
+    };
+
+    // console.log('\n## list_ifdt ##\n' + encoded_url);
+
+
+    var request = http.request(options, function (res) {
+        // // console.log('STATUS: ' + res.statusCode);
+        // // console.log('HEADERS: ' + JSON.stringify(res.headers));
+        // // console.log('KOBO ID: ' + req.params.id);
+        res.setEncoding('utf8');
+        var data = '';
+        res.on('data', function (chunk) {
+            // // console.log('BODY: ' + chunk);
+            data += chunk;
+
+        });
+        res.on('end', function () {
+            //// console.log('DATA ' + data.length + ' ' + data);
+            var responseObject = JSON.parse(data);
+            //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+            //resp.render('upload', { token: req.token, fup: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            //delete responseObject[_id];
+
+            // // console.log('## ResponseObject:: \n' + JSON.stringify(responseObject.properties));
+            resp.status(200).jsonp(responseObject);
+        });
+
+    });
+    request.on('error', function (e) {
+        // General error, i.e.
+        //  - ECONNRESET - server closed the socket unexpectedly
+        //  - ECONNREFUSED - server did not listen
+        //  - HPE_INVALID_VERSION
+        //  - HPE_INVALID_STATUS
+        //  - ... (other HPE_* codes) - server returned garbage
+        // console.log(e);
+    });
+    request.end();
+    //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
+
+});
+/* POST List infodatatracks */
 router.post('/list_ifdt/:info', function (req, resp, next) {
     // req.params.info = req.params.info.replace(/%20/g, " ");
     // debug("LLego aqui");
@@ -1279,7 +1334,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
     var returnObject = {};
     var index = 0;
     var lastindex = 0;
-    // // console.log(req.params.info.replace('%20', ' '));
+    var kobos = [];
+
+    Koboinfo.find({}, {
+        "properties._attachments": 1
+    }, function (err, koboinfos) {
+        if (err) {
+            res.status(500, err.message);
+        }
+        debug('koboinfo ', koboinfos.length);
+        kobos = koboinfos;
+        // Obtener para cada uno su foto
+        // if (koboinfo !== undefined && koboinfo.properties._attachments !== undefined)
+        //     returnObject["properties"]["asset_photos"] = [];
+        // returnObject["properties"]["asset_photos"] = koboinfo.properties._attachments;
+    });
+
     Infodatatrack.find({
         $or: [{
                 "properties.rcode": decodeURIComponent(req.params.info)
@@ -1318,6 +1388,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
         if (infodatatrack.length > 0) {
             returnObject = extend({}, infodatatrack[0]._doc);
             // // console.log('returnObject1 ' + JSON.stringify(infodatatrack[0].properties.Ccode));
+            returnObject["properties"]["asset_code"] = req.params.info;
+            returnObject["properties"]["asset_coordinates"] = service.getCoordinatesLatLong(infodatatrack[0].geometry.coordinates);
+
 
             if (infodatatrack[0].properties.rcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.rname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
@@ -1538,7 +1611,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 returnObject["properties"]["asset_type"] = "BRIDGE";
 
                 if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
-                    //// console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)));
+                    console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)));
                     index = infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info));
                     //// console.log('bcode lastindex ' + infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info)));
                     lastindex = infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info));
@@ -1561,6 +1634,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
                     returnObject.geometry.coordinates.splice(0, index);
                 }
+
                 /**
                  * Recorto el resto de arrays de properties
                  */
@@ -1583,6 +1657,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                         }
                     }
 
+                }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
                 }
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
@@ -1643,6 +1733,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
 
                 }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
+                }
             } else if (infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "CULVERT";
 
@@ -1691,7 +1797,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
                 }
                 //// console.log('returnObject.properties ' + JSON.stringify(returnObject.properties));
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
 
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
+                }
             } else if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.dcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "DRAINAGE";
@@ -1742,6 +1863,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                         }
                     }
 
+                }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
                 }
             }
             returnObject["properties"]["kval"] = kval;
