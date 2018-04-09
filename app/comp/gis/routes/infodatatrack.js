@@ -1634,20 +1634,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
                     returnObject.geometry.coordinates.splice(0, index);
                 }
-                /**
-                 * Obtengo las photos
-                 */
-                if (kobos !== []) {
-                    // debug('llego', infodatatrack[0].properties.koboedit[index].kobo_id);
-                    for (var kobo of kobos) {
 
-                        if (infodatatrack[0].properties.koboedit[index].kobo_id === String(kobo._id)) {
-                            debug('llego', String(kobo._id));
-                            returnObject["properties"]["asset_photos"] = kobo._attachments;
-                        }
-
-                    }
-                }
                 /**
                  * Recorto el resto de arrays de properties
                  */
@@ -1671,7 +1658,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
 
                 }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
 
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
+                }
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
 
@@ -1731,6 +1733,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
 
                 }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
+                }
             } else if (infodatatrack[0].properties.Ccode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "CULVERT";
 
@@ -1779,7 +1797,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
 
                 }
                 //// console.log('returnObject.properties ' + JSON.stringify(returnObject.properties));
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
 
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
+                }
             } else if (infodatatrack[0].properties.dcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.dcode2.indexOf(decodeURIComponent(req.params.info)) >= 0) {
                 returnObject["properties"]["asset_type"] = "DRAINAGE";
@@ -1830,6 +1863,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                         }
                     }
 
+                }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    debug('index', index);
+                    debug('_id', infodatatrack[0]._id);
+                    debug('llego', infodatatrack[0].properties.koboedit);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
+                        }
+
+                    }
                 }
             }
             returnObject["properties"]["kval"] = kval;
