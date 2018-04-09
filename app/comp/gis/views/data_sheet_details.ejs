@@ -51,10 +51,13 @@
                                 <i class="fa fa-angle-right"></i>
                                 <%- trans('DSHEET_ASSET_CODE') %>
                             </h5>
-                            <input id="searchtool" type="text" list="json-datalist" class="form-control round-form" placeholder="Enter road/asset code">
+                            <input id="searchtool" type="text" list="json-datalist" class="form-control round-form" placeholder="Enter road/asset code"
+                                value="<%- assetdata.properties.asset_code %>" disabled>
                             <datalist id="json-datalist"></datalist>
                             <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
-                            <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
+                            <div id="response" class="alert alert-success" role="alert"> Asset Type:
+                                <%- assetdata.properties.asset_type %>
+                            </div>
 
                         </div>
                         <div id="datainfo" class="form-panel">
@@ -64,7 +67,7 @@
                             </h5>
                             <div class="checkbox">
                                 <label>
-                                    <input id="generaldata" type="checkbox" value="General Data" checked>General Data</label>
+                                    <input id="generaldata" type="checkbox" value="General Data">General Data</label>
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -90,44 +93,65 @@
                                     <input id="generaldataupload" type="checkbox" value="General Data">File Upload</label>
                             </div>
                         </div>
-                        <div id="datainfophoto" class="form-panel" style="display:none;">
-
-
-                        </div>
+                        <% if(assetdata.properties.asset_photos !== undefined){ %>
+                            <div id="datainfophoto" class="form-panel">
+                                <% assetdata.properties.asset_photos.forEach(function(foto){ %>
+                                    <img src="<%- foto %>" class="img-rounded" alt="foto">
+                                    <% }); %>
+                            </div>
+                            <% } %>
 
 
 
                     </div>
                     <div class="col-md-4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div id="divmap1" style="display: none;">
+
+                        </div>
+                        <div id="generaldatadiv" class="content-panel" style="display: none;">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">General Data</th>
+                                        <tr>
+                                </thead>
+                                <tbody id="generaldatatbody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="inventorydatadiv" class="content-panel" style="display: none;">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">Inventory Data</th>
+                                        <tr>
+                                </thead>
+                                <tbody id="inventorydatabody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="operationdiv" class="content-panel" style="display: none;">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">Operation Data</th>
+                                        <tr>
+                                </thead>
+                                <tbody id="operationdatabody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="riskdiv" class="content-panel" style="display: none;">
+                            <table class="table table-striped table-advance table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">Indexes and risk analysis</th>
+                                        <tr>
+                                </thead>
+                                <tbody id="riskdatabody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div id="rowmap" class="row">
@@ -167,7 +191,8 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%- api_key %>&callback=initMap">
         </script>
         <script src="/assets/js/gmaps/gmaps.js"></script>
-        <% include ./partials/dsheet_info_scripts %>
+        <% include ./partials/dsheet_scripts_tables %>
+            <% include ./partials/data_sheet_details_scripts %>
 
 </body>
 

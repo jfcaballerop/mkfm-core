@@ -536,11 +536,11 @@ router.get('/details/:assetcode', function (req, resp, next) {
 
         });
         res.on('end', function () {
-            debug('DATA ' + data.length + ' ' + data);
+            debug('DATA ' + data.length);
             var responseObject = JSON.parse(data);
 
-            resp.render('data_info_sheet', {
-
+            resp.render('data_sheet_details', {
+                assetdata: responseObject,
                 token: req.token,
                 title: config.CLIENT_NAME + '-' + config.APP_NAME,
                 cname: config.CLIENT_NAME,

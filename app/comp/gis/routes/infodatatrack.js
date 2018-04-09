@@ -1334,7 +1334,22 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
     var returnObject = {};
     var index = 0;
     var lastindex = 0;
-    // // console.log(req.params.info.replace('%20', ' '));
+    var kobos = [];
+
+    Koboinfo.find({}, {
+        "properties._attachments": 1
+    }, function (err, koboinfos) {
+        if (err) {
+            res.status(500, err.message);
+        }
+        debug('koboinfo ', koboinfos.length);
+        kobos = koboinfos;
+        // Obtener para cada uno su foto
+        // if (koboinfo !== undefined && koboinfo.properties._attachments !== undefined)
+        //     returnObject["properties"]["asset_photos"] = [];
+        // returnObject["properties"]["asset_photos"] = koboinfo.properties._attachments;
+    });
+
     Infodatatrack.find({
         $or: [{
                 "properties.rcode": decodeURIComponent(req.params.info)
@@ -1373,6 +1388,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
         if (infodatatrack.length > 0) {
             returnObject = extend({}, infodatatrack[0]._doc);
             // // console.log('returnObject1 ' + JSON.stringify(infodatatrack[0].properties.Ccode));
+            returnObject["properties"]["asset_code"] = req.params.info;
+            returnObject["properties"]["asset_coordinates"] = service.getCoordinatesLatLong(infodatatrack[0].geometry.coordinates);
+
 
             if (infodatatrack[0].properties.rcode.indexOf(decodeURIComponent(req.params.info)) >= 0 ||
                 infodatatrack[0].properties.rname.indexOf(decodeURIComponent(req.params.info)) >= 0) {
@@ -1593,7 +1611,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                 returnObject["properties"]["asset_type"] = "BRIDGE";
 
                 if (infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)) >= 0) {
-                    //// console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)));
+                    console.log('bcode index ' + infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info)));
                     index = infodatatrack[0].properties.bcode.indexOf(decodeURIComponent(req.params.info));
                     //// console.log('bcode lastindex ' + infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info)));
                     lastindex = infodatatrack[0].properties.bcode.lastIndexOf(decodeURIComponent(req.params.info));
@@ -1615,6 +1633,20 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                         returnObject.geometry.coordinates.splice(lastindex + 1, returnObject.geometry.coordinates.length - (lastindex + 1));
                     }
                     returnObject.geometry.coordinates.splice(0, index);
+                }
+                /**
+                 * Obtengo las photos
+                 */
+                if (kobos !== []) {
+                    // debug('llego', infodatatrack[0].properties.koboedit[index].kobo_id);
+                    for (var kobo of kobos) {
+
+                        if (infodatatrack[0].properties.koboedit[index].kobo_id === String(kobo._id)) {
+                            debug('llego', String(kobo._id));
+                            returnObject["properties"]["asset_photos"] = kobo._attachments;
+                        }
+
+                    }
                 }
                 /**
                  * Recorto el resto de arrays de properties
@@ -1639,6 +1671,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     }
 
                 }
+
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.geometry.coordinates));
                 //// console.log('returnObject2 ' + JSON.stringify(returnObject.properties));
 
