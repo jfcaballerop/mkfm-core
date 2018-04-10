@@ -568,6 +568,10 @@ window.APP.WGIS = function wGisModule() {
         infoBox.html((event.feature.getProperty('assetType') || 'Road') + ' - ' + event.feature.getProperty('displayName') || '-')
     }
 
+    function onDataLayerMouseout(event){
+        infoBox.html('--')
+    }
+
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: center,
@@ -635,6 +639,7 @@ window.APP.WGIS = function wGisModule() {
         var layer = new google.maps.Data()
         layer.addListener('click', onDataLayerClick)
         layer.addListener('mouseover', onDataLayerHover)
+        layer.addListener('mouseout', onDataLayerMouseout)
         dataLayers[assetType][roadType] = layer
         spinner.show()
         layer.setStyle(function (feature) {
