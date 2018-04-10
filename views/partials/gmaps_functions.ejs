@@ -116,8 +116,9 @@
             '</span><br>';
         var subcontent = "";
         if (event.feature.getProperty('kobo_type') === "Culvert") {
-            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('Ccode') +
-                '</span><br><hr>';
+            subcontent += 'Asset code: <span style="font-weight: bold;"><a href="/auth/WEB/data_sheet/details/' +
+                event.feature.getProperty('Ccode') +
+                '">' + event.feature.getProperty('Ccode') + '</a></span><br><hr>';
 
             subcontent += 'Inventory Data<br>';
             subcontent += '<span style="font-weight: bold;">N. Elements : </span>' + event.feature.getProperty(
@@ -152,8 +153,10 @@
 
 
         } else if (event.feature.getProperty('kobo_type') === "Bridge") {
-            subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('bcode') +
-                '</span><br><hr>';
+
+            subcontent += 'Asset code: <span style="font-weight: bold;"><a href="/auth/WEB/data_sheet/details/' +
+                event.feature.getProperty('bcode') +
+                '">' + event.feature.getProperty('bcode') + '</a></span><br><hr>';
             subcontent += 'Inventory Data<br>';
             subcontent += '<span style="font-weight: bold;">Structural typology: </span>' + event.feature.getProperty(
                 "btype") + '<br>';
@@ -189,8 +192,11 @@
             }
         } else {
             if (event.feature.getProperty('gcode') !== "") {
-                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode') +
-                    '</span><br><hr>';
+
+
+                subcontent += 'Asset code: <span style="font-weight: bold;"><a href="/auth/WEB/data_sheet/details/' +
+                    event.feature.getProperty('gcode') +
+                    '">' + event.feature.getProperty('gcode') + '</a></span><br><hr>';
                 subcontent += 'Inventory Data<br>';
 
                 subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype") +
@@ -228,8 +234,9 @@
                         '">' + '<br>';
                 }
             } else {
-                subcontent += 'Asset code: <span style="font-weight: bold;">' + event.feature.getProperty('gcode2') +
-                    '</span><br><hr>';
+                subcontent += 'Asset code: <span style="font-weight: bold;"><a href="/auth/WEB/data_sheet/details/' +
+                    event.feature.getProperty('gcode2') +
+                    '">' + event.feature.getProperty('gcode2') + '</a></span><br><hr>';
                 subcontent += 'Inventory Data<br>';
 
                 subcontent += '<span style="font-weight: bold;">Typology: </span>' + event.feature.getProperty("gtype2") +

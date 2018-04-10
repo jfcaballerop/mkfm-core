@@ -40,7 +40,7 @@ router.use(bodyParser.json());
  * Save Kobo info
  */
 
-router.post('/save_kobo_info', function(req, resp, next) {
+router.post('/save_kobo_info', function (req, resp, next) {
     var postData = extend({}, req.body.kobo);
     console.log(postData.ifdtid);
     var options = {
@@ -54,17 +54,17 @@ router.post('/save_kobo_info', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // //console.log('STATUS: ' + res.statusCode);
         // //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
@@ -72,14 +72,14 @@ router.post('/save_kobo_info', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
     request.end();
 });
 /* GET List koboinfos */
-router.get('/list_koboinfos', function(req, resp, next) {
+router.get('/list_koboinfos', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -94,17 +94,17 @@ router.get('/list_koboinfos', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -122,7 +122,7 @@ router.get('/list_koboinfos', function(req, resp, next) {
 
 
 /* GET List koboinfos */
-router.post('/list_koboinfos/:id', function(req, resp, next) {
+router.post('/list_koboinfos/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -137,18 +137,18 @@ router.post('/list_koboinfos/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         // console.log('KOBO ID: ' + req.params.id);
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -165,7 +165,7 @@ router.post('/list_koboinfos/:id', function(req, resp, next) {
 
 });
 /* GET List koboinfos */
-router.get('/list_koboinfos/:id', function(req, resp, next) {
+router.get('/list_koboinfos/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -180,17 +180,17 @@ router.get('/list_koboinfos/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
@@ -208,7 +208,7 @@ router.get('/list_koboinfos/:id', function(req, resp, next) {
 
 
 /* GET List koboinfos */
-router.get('/edit_koboinfo/:id', function(req, resp, next) {
+router.get('/edit_koboinfo/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -223,22 +223,29 @@ router.get('/edit_koboinfo/:id', function(req, resp, next) {
 
 
 
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         //console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
 
             //resp.render('user', { token: req.token, users: responseObject, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
-            resp.render('data_koboinfo', { token: req.token, utm: utm, koboinfo: responseObject, moment: moment, title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME });
+            resp.render('data_koboinfo', {
+                token: req.token,
+                utm: utm,
+                koboinfo: responseObject,
+                moment: moment,
+                title: config.CLIENT_NAME + '-' + config.APP_NAME,
+                cname: config.CLIENT_NAME
+            });
             //console.log(JSON.stringify(responseObject));
         });
     });
@@ -253,7 +260,7 @@ router.get('/edit_koboinfo/:id', function(req, resp, next) {
 UPDATE ROAD
 */
 
-router.post('/update_koboinfo', function(req, resp, next) {
+router.post('/update_koboinfo', function (req, resp, next) {
     var postData = extend({}, req.body.koboinfo);
     var options = {
         host: config.HOST_API,
@@ -266,17 +273,17 @@ router.post('/update_koboinfo', function(req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    var request = http.request(options, function(res) {
+    var request = http.request(options, function (res) {
         // //console.log('STATUS: ' + res.statusCode);
         // //console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         var data = '';
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
             // //console.log('BODY: ' + chunk);
             data += chunk;
 
         });
-        res.on('end', function() {
+        res.on('end', function () {
             // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
@@ -284,7 +291,7 @@ router.post('/update_koboinfo', function(req, resp, next) {
 
         });
     });
-    request.on('error', function(err) {
+    request.on('error', function (err) {
         console.error('problem with request: ${err.message}');
     });
     request.write(JSON.stringify(postData));
@@ -295,9 +302,9 @@ router.post('/update_koboinfo', function(req, resp, next) {
  API REST CALLS
  **********************************************************/
 /* POST koboinfo */
-router.post('/V1/', function(req, res, next) {
+router.post('/V1/', function (req, res, next) {
     fu = new Koboinfo(req.body);
-    fu.save(function(err, koboinfo) {
+    fu.save(function (err, koboinfo) {
         if (err) {
             return res.status(500).send(err.message);
         }
@@ -306,8 +313,8 @@ router.post('/V1/', function(req, res, next) {
 });
 
 /* GET JSON Koboinfos listing. */
-router.get('/V1/', function(req, res, next) {
-    Koboinfo.find().exec(function(err, koboinfos) {
+router.get('/V1/', function (req, res, next) {
+    Koboinfo.find().exec(function (err, koboinfos) {
         if (err) {
             res.send(500, err.message);
         }
@@ -316,8 +323,11 @@ router.get('/V1/', function(req, res, next) {
 
 });
 /* GET JSON Koboinfos listing id. */
-router.get('/V1/list_id/', function(req, res, next) {
-    Koboinfo.find({}, { _id: 1, "properties.name": 1 }).exec(function(err, koboinfos) {
+router.get('/V1/list_id/', function (req, res, next) {
+    Koboinfo.find({}, {
+        _id: 1,
+        "properties.name": 1
+    }).exec(function (err, koboinfos) {
         if (err) {
             res.send(500, err.message);
         }
@@ -326,8 +336,26 @@ router.get('/V1/list_id/', function(req, res, next) {
 
 });
 /* GET JSON koboinfo by id. */
-router.get('/V1/list_koboinfos/:id', function(req, res, next) {
-    Koboinfo.findById(req.params.id, function(err, koboinfo) {
+router.get('/V1/list_koboinfos/:id', function (req, res, next) {
+    Koboinfo.findById(req.params.id, function (err, koboinfo) {
+        if (err) {
+            res.send(500, err.message);
+        }
+
+        // Obtener para cada 
+
+        res.status(200).jsonp(koboinfo);
+    });
+
+});
+/* GET JSON koboinfo by phot. */
+router.get('/V1/getkobobyphoto/:photoid', function (req, res, next) {
+    Koboinfo.findOne({
+        "properties.bphoto": {
+            "$regex": req.params.photoid,
+            "$options": "i"
+        }
+    }, function (err, koboinfo) {
         if (err) {
             res.send(500, err.message);
         }
@@ -341,13 +369,13 @@ router.get('/V1/list_koboinfos/:id', function(req, res, next) {
 
 
 /* DEL file */
-router.post('/V1/delete/:id', function(req, res, next) {
-    Koboinfo.findByIdAndRemove(req.params.id, function(err, file) {
+router.post('/V1/delete/:id', function (req, res, next) {
+    Koboinfo.findByIdAndRemove(req.params.id, function (err, file) {
         // console.log('## API DEL file: ' + req.params.id);
         if (err) {
             return res.status(500).send(err.message);
         }
-        Koboinfo.find(function(err, files) {
+        Koboinfo.find(function (err, files) {
             if (err) {
                 res.send(500, err.message);
             }
@@ -358,15 +386,15 @@ router.post('/V1/delete/:id', function(req, res, next) {
 });
 
 /* UPDATE Koboinfo */
-router.post('/V1/update_koboinfo/:id', function(req, res, next) {
+router.post('/V1/update_koboinfo/:id', function (req, res, next) {
     // console.log('## UPDATE ROAD ##\nBODY: ' + JSON.stringify(req.body));
-    Koboinfo.findById(req.params.id, function(err, koboinfo) {
+    Koboinfo.findById(req.params.id, function (err, koboinfo) {
         var saveKoboinfo = extend({}, req.body);
         // console.log('## UPDATE ROAD ##\nsaveKoboinfo: ' + JSON.stringify(saveKoboinfo));
 
         for (var key in saveKoboinfo) {
             // console.log(key + " = " + saveKoboinfo[key]);
-            if (saveKoboinfo[key] !== null && typeof(saveKoboinfo[key]) == "object") {
+            if (saveKoboinfo[key] !== null && typeof (saveKoboinfo[key]) == "object") {
                 // Estoy dentro de un subobjeto
                 for (var key2 in saveKoboinfo[key]) {
                     // console.log(key2 + " = " + saveKoboinfo[key][key2]);
@@ -380,7 +408,9 @@ router.post('/V1/update_koboinfo/:id', function(req, res, next) {
         }
 
         // console.log('## UPDATE ROAD ##\nfind&update: ' + JSON.stringify(koboinfo));
-        Koboinfo.findByIdAndUpdate(req.params.id, { $set: koboinfo }, function(err, result) {
+        Koboinfo.findByIdAndUpdate(req.params.id, {
+            $set: koboinfo
+        }, function (err, result) {
             if (err) {
                 //console.log(err);
                 return res.status(500).send(err.message);
@@ -395,21 +425,21 @@ router.post('/V1/update_koboinfo/:id', function(req, res, next) {
 
 
 /* GET JSON koboinfo by id. */
-router.get('/V1/tot_km_trav', function(req, res, next) {
+router.get('/V1/tot_km_trav', function (req, res, next) {
     var resJSON = {
         koboinfoName: [],
         koboinfoKm: []
     };
     var arrPK = [];
-    Koboinfo.find().exec(function(err, koboinfos) {
+    Koboinfo.find().exec(function (err, koboinfos) {
         if (err) {
             res.send(500, err.message);
         }
 
-        koboinfos.forEach(function(elem, ind) {
+        koboinfos.forEach(function (elem, ind) {
             arrPK = [];
             // console.log(JSON.stringify(koboinfo));
-            elem.geometry.coordinates.forEach(function(element, tabindex) {
+            elem.geometry.coordinates.forEach(function (element, tabindex) {
                 var utmValAct = utm.fromLatLon(element[0], element[1], 20);
                 if (tabindex > 0) {
                     var elemant = elem.geometry.coordinates[tabindex - 1];
@@ -438,10 +468,16 @@ router.get('/V1/tot_km_trav', function(req, res, next) {
 });
 
 /* GET JSON Koboinfo labs near. */
-router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
-    var point = { type: "Point", coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)] };
+router.get('/V1/getNear/:lng/:lat', function (req, res, next) {
+    var point = {
+        type: "Point",
+        coordinates: [parseFloat(req.params.lng), parseFloat(req.params.lat)]
+    };
 
-    Koboinfo.geoNear(point, { maxDistance: config.MAXDISTANCE, spherical: true }, function(err, koboinfos) {
+    Koboinfo.geoNear(point, {
+        maxDistance: config.MAXDISTANCE,
+        spherical: true
+    }, function (err, koboinfos) {
         if (err) {
             //console.log(err);
             return res.status(500).send(err.message);
@@ -457,7 +493,7 @@ router.get('/V1/getNear/:lng/:lat', function(req, res, next) {
 });
 
 /* POST JSON Koboinfo */
-router.post('/V1/updateKobo/:id', function(req, res, next) {
+router.post('/V1/updateKobo/:id', function (req, res, next) {
     var datamod = extend({}, req.body);
     var arrcoord = datamod.geometry.coordinates.split(",");
 
@@ -472,12 +508,12 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
     // console.log('\n## koboinfo ' + JSON.stringify(koboinfo));
     // res.status(200).jsonp(koboinfo);
 
-    koboinfo.save(function(err, kobomod) {
+    koboinfo.save(function (err, kobomod) {
         if (err) {
             return res.status(500).send(err.message);
         }
         console.log('kobomod ' + JSON.stringify(kobomod.properties.kobo_type));
-        Infodatatrack.findById(datamod.ifdtid, function(err, ifdt) {
+        Infodatatrack.findById(datamod.ifdtid, function (err, ifdt) {
             if (err) return handleError(err);
 
             var arrkoboedit = [];
@@ -592,7 +628,7 @@ router.post('/V1/updateKobo/:id', function(req, res, next) {
             ifdt.properties.koboedit = arrkoboedit;
             ifdt.isNew = false;
 
-            ifdt.save(function(err, imod) {
+            ifdt.save(function (err, imod) {
                 if (err) {
                     return res.status(500).send(err.message);
                 }
