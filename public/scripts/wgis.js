@@ -378,9 +378,10 @@ window.APP.WGIS = function wGisModule() {
             natural: $('#NaturalHazardsForm')
         }
 
-        riskToogles.change(function (e) {
+        riskToogles.click(function (e) {
+            var $toggle = $(this)
             _.each(riskForms, function (form, riskGroup) {
-                if (riskGroup === e.target.value) {
+                if (riskGroup === e.target.value && e.target.checked) {
                     form.slideDown(300)
                     form
                         .find('input[type=checkbox]')
@@ -391,6 +392,11 @@ window.APP.WGIS = function wGisModule() {
                             }
                             else {
                                 removeRiskFilter(riskGroup, filterValue)
+                                //if all are unchecked, hide the group
+                                if(!form.find('input:checked').length){
+                                    $toggle.prop('checked', false)
+                                    form.slideUp(300)
+                                }
                             }
                         })
                 }
