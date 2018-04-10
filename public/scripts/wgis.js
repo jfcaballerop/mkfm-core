@@ -1,6 +1,6 @@
 window.APP || (window.APP = {})
 
-window.APP.WGIS = function wGisModule(){
+window.APP.WGIS = function wGisModule() {
     var map, spinner, riskToogles, riskForms;
     var center, zoom
     var infoWnd, infoBox;
@@ -8,6 +8,7 @@ window.APP.WGIS = function wGisModule(){
     var featureCond = [];
     var featureRiskPhy = [];
     var featureRiskNat = [];
+    var defaultMarkerColor = '#ff6600'
 
     var dataLayers = {
         Culvert: {},
@@ -27,6 +28,131 @@ window.APP.WGIS = function wGisModule(){
         Bridge: false,
         Geo: false,
         Pavement: false
+    }
+
+    var riskRating = {
+        'Very Low': {
+            values: [
+                '0-20__A',
+                '0-20__B',
+                '20-40__A'
+            ],
+            color: '#00B050'
+        },
+        'Low': {
+            values: [
+                '0-20__C',
+                '0-20__D',
+                '20-40__B',
+                '20-40__C',
+                '40-60__A',
+                '60-80__A'
+            ],
+            color: '#92D050'
+        },
+        'Medium': {
+            values: [
+                '0-20__E',
+                '20-40__D',
+                '20-40__E',
+                '40-60__B',
+                '40-60__C',
+                '40-60__D',
+                '60-80__B',
+                '60-80__C',
+                '80-100__A',
+                '80-100__B'
+            ],
+            color: '#ffff00'
+        },
+        'High': {
+            values:[
+                '40-60__E',
+                '60-80__D',
+                '80-100__C'
+            ],
+            color: '#F79646'
+        },
+        'Very High': {
+            values: [
+                '60-80__E',
+                '80-100__D',
+                '80-100__E'
+            ],
+            color: '#ff0000'
+        }
+    }
+
+    var riskFormulas = {
+        criticality: {
+            "Very High": {
+                scale: 5,
+                color: "#ff0000",
+                min: 80,
+                max: 101
+            },
+            "High": {
+                scale: 4,
+                color: "#f79646",
+                min: 60,
+                max: 80
+            },
+            "Medium": {
+                scale: 3,
+                color: "#ffff00",
+                min: 40,
+                max: 60
+            },
+            "Low": {
+                scale: 2,
+                color: "#92d050",
+                min: 20,
+                max: 40
+            },
+            "Very Low": {
+                scale: 1,
+                color: "#00b050",
+                min: 0,
+                max: 20
+            }
+        },
+        condition: {
+            "Excellent": {
+                scale: 5,
+                color: "#00b050",
+                min: 0.8,
+                max: 1.01
+            },
+            "Good": {
+                scale: 4,
+                color: "#92d050",
+                min: 0.60,
+                max: 0.80
+            },
+            "Fair": {
+                scale: 3,
+                color: "#ffff00",
+                min: 0.40,
+                max: 0.60
+
+            },
+            "Poor": {
+                scale: 2,
+                color: "#f79646",
+                min: 0.20,
+                max: 0.40
+
+            },
+            "Very Poor": {
+                scale: 1,
+                color: "#ff0000",
+                min: 0,
+                max: 0.20
+            }
+        },
+        physical: riskRating,
+        natural: riskRating
+
     }
 
     var assetData = {
@@ -51,56 +177,164 @@ window.APP.WGIS = function wGisModule(){
         natural: []
     }
 
-    function setRiskFilter(group, value){
+    function setRiskFilter(group, value) {
         riskFilters[group].push(value)
         onRiskFilterChanged()
     }
 
-    function removeRiskFilter(group, value){
+    function removeRiskFilter(group, value) {
         riskFilters[group] = _.without(riskFilters[group], value)
         onRiskFilterChanged()
     }
-    function clearRiskFilter(group){
-        if(riskFilters[group].length){
+    function clearRiskFilter(group) {
+        if (riskFilters[group].length) {
             riskFilters[group] = []
             onRiskFilterChanged()
         }
     }
 
-    function onRiskFilterChanged(){
-        console.log('New filters', riskFilters)
+    function onRiskFilterChanged() {
+        //console.log('New filters', riskFilters)
+        applyRiskFiltersToAssets()
     }
 
-    function initMaps(mapCenter, zoomLevel){
+    function applyRiskFiltersToAssets() {
+        var selectedAssets = getSelectedAssets()
+        var selectedRoadTypes = getSelectedRoads()
+        if (!selectedRoadTypes.length) {
+            return
+        }
+        console.log('selected assets', selectedAssets)
+        console.log('selected road types', selectedRoadTypes)
+        console.log('risk filter', riskFilters)
+        _.each(selectedAssets, function (assetType) {
+            _.each(selectedRoadTypes, function (roadType) {
+                var layer = dataLayers[assetType][roadType]
+                //apply filter to layer
+                layer.forEach(function (feature) {
+                    var result = applyFiltersToFeature(feature)
+                    //console.log('filters result', result)
+                    if (!result) {
+                        feature.setProperty('isVisible', false)
+                    }
+                    else {
+                        feature.setProperty('isVisible', true)
+                        feature.setProperty('color', result.color)
+                    }
+                })
+            })
+        })
+    }
+
+    function findMatchingScore(riskFormula, value, selectedCriteria){
+        return _.find(riskFormula, function (score, key) {
+            //var score = riskFormulas.criticality[criteria]
+            return ~selectedCriteria.indexOf(key)
+                && value >= score.min
+                && value <= score.max
+        })
+    }
+
+    function findMatchingRiskScore(riskFormula, value, selectedCriteria){
+        return _.find(riskFormula, function(data, key){
+            return ~selectedCriteria.indexOf(key)
+                && ~data.values.indexOf(value)
+        })
+    }
+
+    function applyFiltersToFeature(feature) {
+        if (riskFilters.criticality.length) {
+            switch (feature.getProperty('assetType')) {
+                case 'Bridge':
+                    var value = feature.getProperty('bcriticality')
+                    return findMatchingScore(riskFormulas.criticality, value, riskFilters.criticality)
+                case 'Culvert':
+                    var value = feature.getProperty('Ccriticality')
+                    return findMatchingScore(riskFormulas.criticality, value, riskFilters.criticality)
+                case 'Geotechnical':
+                    var value = feature.getProperty('gcriticality') || feature.getProperty('gcriticality2')
+                    return findMatchingScore(riskFormulas.criticality, value, riskFilters.criticality)
+            }
+
+        }
+        else if (riskFilters.condition.length) {
+            switch (feature.getProperty('assetType')) {
+                case 'Bridge':
+                    var value = feature.getProperty('bcondition')
+                    return findMatchingScore(riskFormulas.condition, value, riskFilters.condition)
+                case 'Culvert':
+                    var value = feature.getProperty('Ccondition')
+                    return findMatchingScore(riskFormulas.condition, value, riskFilters.condition)
+                case 'Geotechnical':
+                    var value = feature.getProperty('gcondition') || feature.getProperty('gcondition2')
+                    return findMatchingScore(riskFormulas.condition, value, riskFilters.condition)
+            }
+        }
+        else if (riskFilters.natural.length) {
+            switch(feature.getProperty('assetType')){
+                case 'Bridge':
+                    var value = feature.getProperty('brisknaturalnorm')
+                    return findMatchingRiskScore(riskFormulas.natural, value, riskFilters.natural)
+                case 'Culvert':
+                    var value = feature.getProperty('CRISKnaturalnorm')
+                    return findMatchingRiskScore(riskFormulas.natural, value, riskFilters.natural)
+                case 'Geotechnical':
+                    var value = feature.getProperty('grisknaturalnorm') || feature.getProperty('grisknaturalnorm2')
+                    return findMatchingRiskScore(riskFormulas.natural, value, riskFilters.natural)
+            }
+        }
+        else if (riskFilters.physical.length) {
+            switch(feature.getProperty('assetType')){
+                case 'Bridge':
+                    var value = feature.getProperty('briskphysicalnorm')
+                    return findMatchingRiskScore(riskFormulas.physical, value, riskFilters.physical)
+                case 'Culvert':
+                    var value = feature.getProperty('CRISKphysicalnorm')
+                    return findMatchingRiskScore(riskFormulas.physical, value, riskFilters.physical)
+                case 'Geotechnical':
+                    var value = feature.getProperty('griskphysicalnorm') || feature.getProperty('griskphysicalnorm2')
+                    return findMatchingRiskScore(riskFormulas.physical, value, riskFilters.physical)
+            }
+        }
+        else {
+            // no filter set, return something so feature is visible
+            return {
+                color: defaultMarkerColor
+            }
+        }
+    }
+
+
+
+    function initMaps(mapCenter, zoomLevel) {
         //console.log('initmaps', mapCenter, zoomLevel)
         center = mapCenter
         zoom = zoomLevel
     }
 
-    function fetchAssets(assetType, roadType){
-        if(assetData[assetType][roadType] && assetData[assetType][roadType].length){
+    function fetchAssets(assetType, roadType) {
+        if (assetData[assetType][roadType] && assetData[assetType][roadType].length) {
             return Promise.resolve(assetData[assetType][roadType])
         }
         else {
-            return  $.get('/auth/WEB/maps/assets/' + assetType + '/' + roadType)
-            .then(function(data){
-                //console.log('Fetched', assetType, roadType, data.length)
-                assetData[assetType][roadType] = data
-                return data
-            })
-            .catch(function(error){
-                console.error('Failed fetching assets', error.status, error.message)
-                if(error.status === 401){
-                    location.assign('/')
-                }
-                return []
-            })
+            return $.get('/auth/WEB/maps/assets/' + assetType + '/' + roadType)
+                .then(function (data) {
+                    //console.log('Fetched', assetType, roadType, data.length)
+                    assetData[assetType][roadType] = data
+                    return data
+                })
+                .catch(function (error) {
+                    console.error('Failed fetching assets', error.status, error.message)
+                    if (error.status === 401) {
+                        location.assign('/')
+                    }
+                    return []
+                })
         }
-
     }
 
-    function getRoadType(formValue){
-        switch(formValue){
+    function getRoadType(formValue) {
+        switch (formValue) {
             case 'Main Road':
                 return 'main'
             case 'Secondary':
@@ -112,22 +346,22 @@ window.APP.WGIS = function wGisModule(){
         }
     }
 
-    function saveUI(){
+    function saveUI() {
         spinner = $('#spinner')
         infoBox = $('#info-box')
         riskToogles = $('input[type=radio][name=risk-assesment]')
 
-        $('.js-road-type').change(function(event){
+        $('.js-road-type').change(function (event) {
             var roadType = getRoadType(event.target.value)
             var isSelected = !!event.target.checked
             selectedRoads[roadType] = isSelected
             toggleRoadDataLayers(roadType, isSelected)
         })
-        $('.js-asset-type').change(function(event){
+        $('.js-asset-type').change(function (event) {
             var assetType = event.target.value
             var isSelected = !!event.target.checked
             selectedAssets[assetType] = isSelected
-            if(isSelected){
+            if (isSelected) {
                 loadDataLayer(assetType)
             }
             else {
@@ -144,15 +378,15 @@ window.APP.WGIS = function wGisModule(){
             natural: $('#NaturalHazardsForm')
         }
 
-        riskToogles.change(function(e){
-            _.each(riskForms, function(form, riskGroup){
-                if(riskGroup === e.target.value){
+        riskToogles.change(function (e) {
+            _.each(riskForms, function (form, riskGroup) {
+                if (riskGroup === e.target.value) {
                     form.slideDown(300)
                     form
                         .find('input[type=checkbox]')
-                        .change(function(e){
+                        .change(function (e) {
                             var filterValue = e.target.value
-                            if(e.target.checked){
+                            if (e.target.checked) {
                                 setRiskFilter(riskGroup, filterValue)
                             }
                             else {
@@ -162,6 +396,7 @@ window.APP.WGIS = function wGisModule(){
                 }
                 else {
                     form.slideUp(300)
+                    form.find('input[type=checkbox]').off('change')
                     // clean up filter
                     clearRiskFilter(riskGroup)
                     // uncheck any child checkboxes
@@ -171,14 +406,14 @@ window.APP.WGIS = function wGisModule(){
         })
     }
 
-    function getSelectedAssets(){
+    function getSelectedAssets() {
         return _.keys(selectedAssets).filter(key => !!selectedAssets[key])
     }
-    function getSelectedRoads(){
+    function getSelectedRoads() {
         return _.keys(selectedRoads).filter(key => !!selectedRoads[key])
     }
 
-    function getEventProp(prop){
+    function getEventProp(prop) {
         return this.getProperty(prop) || ''
     }
 
@@ -242,7 +477,7 @@ window.APP.WGIS = function wGisModule(){
             subcontent += '<strong>Deck: </strong>' + getProp("bmaterialdeck") +
                 '<br>';
             subcontent += '<strong>Piers: </strong>' + getProp(
-                    "bmaterialpiers") +
+                "bmaterialpiers") +
                 '<br>';
             subcontent += '<strong>Abutments: </strong>' + getProp(
                 "bmaterialabutments") + '<br>';
@@ -263,7 +498,7 @@ window.APP.WGIS = function wGisModule(){
             if (type === 'Geotechnical') {
                 var code = getProp('gcode') || getProp('gcode2')
                 subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + code + '">' + code +
-                '</a></strong><br><hr>';
+                    '</a></strong><br><hr>';
                 subcontent += '<h4>Inventory Data</h4>';
 
                 subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
@@ -312,11 +547,11 @@ window.APP.WGIS = function wGisModule(){
         return color;
     }
 
-    function onDataLayerClick(event){
+    function onDataLayerClick(event) {
         // Set info window on a point asset
         var assetType = event.feature.getProperty('assetType')
         console.log('Asset click on', assetType)
-        if(assetType){
+        if (assetType) {
             infoWnd.setPosition(event.latLng);
             infoWnd.setContent(getInfoWindowContent(assetType, event));
             infoWnd.open(map)
@@ -330,8 +565,8 @@ window.APP.WGIS = function wGisModule(){
         //document.getElementById('info-box').textContent = infoTextContent;
     }
 
-    function onDataLayerHover(event){
-        if(event.feature.getId()){
+    function onDataLayerHover(event) {
+        if (event.feature.getId()) {
             infoBox.html(event.feature.getId())
         }
     }
@@ -347,27 +582,6 @@ window.APP.WGIS = function wGisModule(){
 
         // needed for other scripts, they need to access the map
         window.map = map
-
-        // Set mouseover event for each feature.
-       /*  map.data.addListener('click', onDataLayerClick);
-        map.data.setStyle(function (feature) {
-            var color = feature.getProperty('color');
-            var nameopt = feature.getProperty('nameoption');
-            $('#layergps option[value="' + nameopt + '"]').prop('style', 'color: ' + color);
-
-            return {
-                fillColor: color,
-                strokeColor: color,
-                strokeWeight: 3,
-                strokeOpacity: 1,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    strokeColor: color,
-                    strokeOpacity: 1,
-                    scale: 3
-                }
-            }
-        }); */
 
         $('#spinner').hide();
 
@@ -385,16 +599,20 @@ window.APP.WGIS = function wGisModule(){
         light: '#ff0'
     }
 
-    function getStyleForAssetType(assetType, roadType){
+    function createIconMarker(letter, backgroundColor){
+        return "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + letter + "|" + backgroundColor.replace('#', '') + "|000000"
+    }
+
+    function getStyleForAssetType(assetType, roadType, feature) {
         var mapType = map.getMapTypeId()
         let colorSource
-        if(mapType === 'terrain' || mapType === 'roadmap'){
+        if (mapType === 'terrain' || mapType === 'roadmap') {
             colorSource = roadColors.dark
         }
         else {
             colorSource = roadColors.light
         }
-        switch (assetType){
+        switch (assetType) {
             case 'Pavement':
                 return {
                     // TODO - color en función de filtros
@@ -405,8 +623,10 @@ window.APP.WGIS = function wGisModule(){
                 return {
                     //TODO - markers específico por tipo de activo puntual
                     //TODO - color de marker en función de filtros
-                    'marker-color': '#ff0',
-                    label: String(assetType.slice(0,1)).toUpperCase()
+
+                    //label: String(assetType.slice(0, 1)).toUpperCase(),
+                    icon: createIconMarker(String(assetType.slice(0, 1)).toUpperCase(), feature.getProperty('color') || '#ff3300'),
+                    visible: feature.getProperty('isVisible') !== false
                 }
             }
         }
@@ -414,36 +634,37 @@ window.APP.WGIS = function wGisModule(){
 
     }
 
-    function createLayer(assetType, roadType){
+    function createLayer(assetType, roadType) {
         var layer = new google.maps.Data()
         layer.addListener('click', onDataLayerClick)
         layer.addListener('mouseover', onDataLayerHover)
         dataLayers[assetType][roadType] = layer
         layer.setMap(map)
         spinner.show()
-        layer.setStyle(function(feature){
-            return getStyleForAssetType(assetType, roadType)
+        layer.setStyle(function (feature) {
+            return getStyleForAssetType(assetType, roadType, feature)
         })
 
-        return fetchAssets(assetType,roadType)
-        .then(function(data){
-            layer.addGeoJson({
-                type: 'FeatureCollection',
-                features: data
+        return fetchAssets(assetType, roadType)
+            .then(function (data) {
+                layer.addGeoJson({
+                    type: 'FeatureCollection',
+                    features: data
+                })
+                applyRiskFiltersToAssets()
             })
-        })
-        .done(function(){
-            spinner.hide()
-        })
+            .done(function () {
+                spinner.hide()
+            })
     }
 
-    function loadDataLayer(assetType){
+    function loadDataLayer(assetType) {
         //TODO - get selected roadtypes
         var roadTypes = getSelectedRoads()
         // for each selected roadtype...
         // fetch data if needed,or simply toggle on
-        _.each(roadTypes, function(roadType){
-            if(!dataLayers[assetType] || !dataLayers[assetType][roadType]){
+        _.each(roadTypes, function (roadType) {
+            if (!dataLayers[assetType] || !dataLayers[assetType][roadType]) {
                 createLayer(assetType, roadType)
             }
             else {
@@ -452,9 +673,9 @@ window.APP.WGIS = function wGisModule(){
         })
     }
 
-    function toggleRoadDataLayers(roadType, isVisible){
+    function toggleRoadDataLayers(roadType, isVisible) {
         var selectedAssets = getSelectedAssets()
-        _.each(dataLayers, function(assetLayers, assetType){
+        _.each(dataLayers, function (assetLayers, assetType) {
             var shouldDisplay = isVisible && ~selectedAssets.indexOf(assetType)
             assetLayers[roadType] && assetLayers[roadType].setMap(shouldDisplay ? map : null)
         })
@@ -468,551 +689,16 @@ window.APP.WGIS = function wGisModule(){
         })
     } */
 
-    function hideAssetDataLayer(assetType){
+    function hideAssetDataLayer(assetType) {
         var selectedRoadTypes = getSelectedRoads()
-        _.each(selectedRoadTypes, function(roadType){
+        _.each(selectedRoadTypes, function (roadType) {
             var layer = dataLayers[assetType][roadType]
             layer && layer.setMap(null)
         })
     }
 
     $(document).ready(function () {
-        var featureActive = [];
         saveUI()
-        // ASSETS
-
-        /*
-        // RISK ASSESMENT
-        toggles.criticality.change(function (e) {
-            var $this = $(this);
-            if (e.target.checked) {
-                forms.criticality.slideDown();
-            } else {
-                forms.criticality.slideUp();
-                $('#CriticalityForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
-            }
-        });
-
-        $('#Condition').change(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#ConditionForm').show();
-            } else {
-                $('#ConditionForm').hide();
-                $('#ConditionForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
-            }
-        });
-        $('#Calculation').change(function () {
-            var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#CalculationForm').show();
-            } else {
-                $('#CalculationForm').hide();
-                $('#CalculationForm input[type=checkbox]').each(function (index) {
-                    $(this).prop('checked', false);
-                });
-            }
-        }); */
-
-
-
-        // Risk Assessment
-        /**
-         * AJAX CALL to Criticality
-         * Se hace una peticion para cada valor del rango de criticality
-         */
-        /*
-        $('#CriticalityForm input[type=checkbox]').click(async function () {
-            var $this = $(this);
-            var filterPav = false;
-            var filterAsset = false;
-            var filterPavArr = [];
-            var filterAssetArr = [];
-            var filterArr = [];
-            var sendData = {
-                filter: [],
-                filterPav: [],
-                filterAsset: [],
-                formname: "Criticality",
-                form: []
-            };
-            var pulsado = $this.is(':checked') | false;
-
-            //console.log('pulsado ' + pulsado);
-
-            $('#pavements input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterPavArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-
-                }
-            });
-            $('#assets input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterAssetArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterAsset = true;
-                }
-            });
-            // alert($this.val());
-
-            var optChecked = [];
-            await $('#CriticalityForm input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    optChecked.push($(this).val());
-                }
-
-            });
-
-
-            map.data.forEach(function (feature) {
-                // If you want, check here for some constraints.
-                if (feature.getProperty('nameoption').indexOf('CRITICALITY') >= 0) {
-                    map.data.remove(feature);
-                }
-
-            });
-
-            if ($this.is(':checked')) {
-                if (!filterPav && !filterAsset) {
-                    $('#myModal').modal();
-                    $('#alertModalContent').empty();
-                    $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
-
-            if (optChecked.length > 0) {
-
-                await $('#CriticalityForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCriticality').show();
-
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
-
-                    }
-
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && (filterPav || filterAsset)) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        // //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                //console.log('value' + JSON.stringify(value));
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "CRITICALITY: " +
-                                    jsonObject.properties.name;
-                                featureCrit = map.data.addGeoJson(jsonObject);
-
-                            });
-                            $('#spinnerCriticality').hide();
-
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
-
-                        } else {
-                            $('#spinnerCriticality').hide();
-
-                        }
-                    });
-                } else {
-                    $('#spinnerCriticality').hide();
-
-                }
-            }
-
-        });
-
-        $('#ConditionForm input[type=checkbox]').click(async function () {
-            var $this = $(this);
-            var filterPav = false;
-            var filterPavArr = [];
-            var filterAssetArr = [];
-            var filterArr = [];
-            var sendData = {
-                filter: [],
-                filterPav: [],
-                filterAsset: [],
-                formname: "Condition",
-                form: []
-            };
-            var pulsado = $this.is(':checked') | false;
-
-            //console.log('pulsado ' + pulsado);
-
-            $('#pavements input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterPavArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-
-                }
-            });
-            $('#assets input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterAssetArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-                }
-            });
-            // alert($this.val());
-
-            var optChecked = [];
-            await $('#ConditionForm input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    optChecked.push($(this).val());
-                }
-
-            });
-
-
-            map.data.forEach(function (feature) {
-                // If you want, check here for some constraints.
-                if (feature.getProperty('nameoption').indexOf('CONDITION') >= 0) {
-                    map.data.remove(feature);
-                }
-
-            });
-
-            if ($this.is(':checked')) {
-                if (!filterPav) {
-                    $('#myModal').modal();
-                    $('#alertModalContent').empty();
-                    $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
-
-            if (optChecked.length > 0) {
-
-                await $('#ConditionForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
-
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
-
-                    }
-
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "CONDITION: " +
-                                    jsonObject.properties.name;
-                                featureCond = map.data.addGeoJson(jsonObject);
-
-                            });
-                            $('#spinnerCondition').hide();
-
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
-
-                        } else {
-                            $('#spinnerCondition').hide();
-
-                        }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
-                }
-            }
-
-        });
-        */
-        /**
-         * PhysicalCalculationForm
-         */
-        /*
-        $('#PhysicalCalculationForm input[type=checkbox]').click(async function () {
-            var $this = $(this);
-            var filterPav = false;
-            var filterPavArr = [];
-            var filterAssetArr = [];
-            var filterArr = [];
-            var sendData = {
-                filter: [],
-                filterPav: [],
-                filterAsset: [],
-                formname: "RiskPhy",
-                form: []
-            };
-            var pulsado = $this.is(':checked') | false;
-
-            //console.log('pulsado ' + pulsado);
-
-            $('#pavements input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterPavArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-
-                }
-            });
-            $('#assets input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterAssetArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-                }
-            });
-            // alert($this.val());
-
-            var optChecked = [];
-            await $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    optChecked.push($(this).val());
-                }
-
-            });
-
-
-            map.data.forEach(function (feature) {
-                // If you want, check here for some constraints.
-                if (feature.getProperty('nameoption').indexOf('RISKPHY') >= 0) {
-                    map.data.remove(feature);
-                }
-
-            });
-
-            if ($this.is(':checked')) {
-                if (!filterPav) {
-                    $('#myModal').modal();
-                    $('#alertModalContent').empty();
-                    $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
-
-            if (optChecked.length > 0) {
-
-                await $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
-
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
-
-                    }
-
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "RISKPHY: " +
-                                    jsonObject.properties.name;
-                                featureRiskPhy = map.data.addGeoJson(jsonObject);
-
-                            });
-                            $('#spinnerCondition').hide();
-
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
-
-                        } else {
-                            $('#spinnerCondition').hide();
-
-                        }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
-                }
-            }
-
-        });
-        */
-        /**
-         * NaturalHazardsForm
-         */
-        /*
-        $('#NaturalHazardsForm input[type=checkbox]').click(async function () {
-            var $this = $(this);
-            var filterPav = false;
-            var filterPavArr = [];
-            var filterAssetArr = [];
-            var filterArr = [];
-            var sendData = {
-                filter: [],
-                filterPav: [],
-                filterAsset: [],
-                formname: "RiskNat",
-                form: []
-            };
-            var pulsado = $this.is(':checked') | false;
-
-            //console.log('pulsado ' + pulsado);
-
-            $('#pavements input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterPavArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-
-                }
-            });
-            $('#assets input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
-                    filterAssetArr.push($(this).val());
-                    filterArr.push($(this).val());
-                    filterPav = true;
-                }
-            });
-            // alert($this.val());
-
-            var optChecked = [];
-            await $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-                if ($(this).is(':checked')) {
-                    optChecked.push($(this).val());
-                }
-
-            });
-
-
-            map.data.forEach(function (feature) {
-                // If you want, check here for some constraints.
-                if (feature.getProperty('nameoption').indexOf('RISKPHY') >= 0) {
-                    map.data.remove(feature);
-                }
-
-            });
-
-            if ($this.is(':checked')) {
-                if (!filterPav) {
-                    $('#myModal').modal();
-                    $('#alertModalContent').empty();
-                    $('#alertModalContent').append('<p>Filters not selected!</p>');
-                }
-            }
-
-            if (optChecked.length > 0) {
-
-                await $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-                    if ($(this).is(':checked')) {
-                        $('#spinnerCondition').show();
-
-                        sendData.form.push($(this).val());
-                    } else {
-                        var ix = sendData.form.indexOf($(this).val())
-                        ix > -1 ? sendData.form.splice(ix, 1) : false;
-
-                    }
-
-                });
-                sendData.filterPav = filterPavArr;
-                sendData.filterAsset = filterAssetArr;
-                sendData.filter = filterArr;
-                if (pulsado && filterPav) {
-
-                    var p1 = $.ajax({
-                        url: '/auth/WEB/admin/get_formulas_tracks/',
-                        data: JSON.stringify(sendData),
-                        type: 'POST',
-                        contentType: 'application/json'
-                    }, function (data) { // //console.log('koboinfo ' + JSON.stringify(data)); return (data);
-                    });
-                    Promise.all([p1]).then(function (values) {
-                        //console.log(values);
-                        if (values[0].length > 0) {
-
-
-                            $.each(values[0], function (index, value) {
-                                jsonObject = value;
-                                var color_to_paint = value.properties[
-                                    'marker-color'];
-                                jsonObject.properties.color = color_to_paint;
-                                jsonObject.properties.nameoption = "RISKNAT: " +
-                                    jsonObject.properties.name;
-                                featureRiskNat = map.data.addGeoJson(jsonObject);
-
-                            });
-                            $('#spinnerCondition').hide();
-
-                            //     $('#resultUpdate' + id).append('Tracks update: ' + values[0].tracksUpdated);
-
-                        } else {
-                            $('#spinnerCondition').hide();
-
-                        }
-                    });
-                } else {
-                    $('#spinnerCondition').hide();
-
-                }
-            }
-        });
-        */
     })
 
     return {
