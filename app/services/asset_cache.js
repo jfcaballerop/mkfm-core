@@ -180,15 +180,18 @@ function transformData(tracks, koboinfos){
                 //const asset = completeWithKoboData(track, kobo, assetIndex, assetType)
                 const asset = buildGeoAsset(track, assetIndex, assetProps)
                 //if(codeProperty === 'Ccode') console.log('build asset res', asset)
-                if(kobo) asset.properties._attachments = kobo.properties._attachments
-                // add feature id and asset type
-                asset.id = assetCode
-                asset.properties.assetType = assetType
-                destination.push(asset)
+                if(kobo) {
+                    asset.properties._attachments = kobo.properties._attachments
+                    // add feature id and asset type
+                    asset.id = assetCode
+                    asset.properties.assetType = assetType
+                    destination.push(asset)
+                }
             }
-            else if (assetIndex){
+            // ONLY CRITICAL ASSETS WITH KOBO ARE SHOWN IN MAPS
+           /*  else if (assetIndex){
                 console.log('Found asset of type ' + assetType + ' in index' + assetIndex + ' without koboId, ignoring it')
-            }
+            } */
         })
     }
 
