@@ -1,7 +1,7 @@
 window.APP || (window.APP = {})
 
 window.APP.WGIS = function wGisModule(){
-    var map, spinner;
+    var map, spinner, riskToogles, riskForms;
     var center, zoom
     var infoWnd, infoBox;
     var featureCrit = [];
@@ -42,6 +42,33 @@ window.APP.WGIS = function wGisModule(){
         Bridge: {},
         Geo: {},
         Pavement: {}
+    }
+
+    var riskFilters = {
+        criticality: [],
+        condition: [],
+        physical: [],
+        natural: []
+    }
+
+    function setRiskFilter(group, value){
+        riskFilters[group].push(value)
+        onRiskFilterChanged()
+    }
+
+    function removeRiskFilter(group, value){
+        riskFilters[group] = _.without(riskFilters[group], value)
+        onRiskFilterChanged()
+    }
+    function clearRiskFilter(group){
+        if(riskFilters[group].length){
+            riskFilters[group] = []
+            onRiskFilterChanged()
+        }
+    }
+
+    function onRiskFilterChanged(){
+        console.log('New filters', riskFilters)
     }
 
     function initMaps(mapCenter, zoomLevel){
@@ -88,6 +115,8 @@ window.APP.WGIS = function wGisModule(){
     function saveUI(){
         spinner = $('#spinner')
         infoBox = $('#info-box')
+        riskToogles = $('input[type=radio][name=risk-assesment]')
+
         $('.js-road-type').change(function(event){
             var roadType = getRoadType(event.target.value)
             var isSelected = !!event.target.checked
@@ -105,6 +134,40 @@ window.APP.WGIS = function wGisModule(){
                 hideAssetDataLayer(assetType)
             }
 
+        })
+
+        riskForms = {
+            criticality: $('#CriticalityForm'),
+            condition: $('#ConditionForm'),
+            //calculation: $('#CalculationForm'),
+            physical: $('#PhysicalDeteriorationForm'),
+            natural: $('#NaturalHazardsForm')
+        }
+
+        riskToogles.change(function(e){
+            _.each(riskForms, function(form, riskGroup){
+                if(riskGroup === e.target.value){
+                    form.slideDown(300)
+                    form
+                        .find('input[type=checkbox]')
+                        .change(function(e){
+                            var filterValue = e.target.value
+                            if(e.target.checked){
+                                setRiskFilter(riskGroup, filterValue)
+                            }
+                            else {
+                                removeRiskFilter(riskGroup, filterValue)
+                            }
+                        })
+                }
+                else {
+                    form.slideUp(300)
+                    // clean up filter
+                    clearRiskFilter(riskGroup)
+                    // uncheck any child checkboxes
+                    form.find('input[type=checkbox]').prop('checked', false)
+                }
+            })
         })
     }
 
@@ -316,7 +379,6 @@ window.APP.WGIS = function wGisModule(){
     }
 
     function initMap() {
-        console.log('initMap', center, zoom)
         map = new google.maps.Map(document.getElementById('map'), {
             center: center,
             zoom: zoom
@@ -329,12 +391,12 @@ window.APP.WGIS = function wGisModule(){
         window.map = map
 
         // Set mouseover event for each feature.
-        map.data.addListener('click', onDataLayerClick);
+       /*  map.data.addListener('click', onDataLayerClick);
         map.data.setStyle(function (feature) {
             var color = feature.getProperty('color');
             var nameopt = feature.getProperty('nameoption');
             $('#layergps option[value="' + nameopt + '"]').prop('style', 'color: ' + color);
-            console.log('setStyle', feature)
+
             return {
                 fillColor: color,
                 strokeColor: color,
@@ -347,11 +409,10 @@ window.APP.WGIS = function wGisModule(){
                     scale: 3
                 }
             }
-        });
+        }); */
 
         $('#spinner').hide();
 
-        // });
     };
 
     var roadTypeStrokeWeight = {
@@ -386,6 +447,7 @@ window.APP.WGIS = function wGisModule(){
                 return {
                     //TODO - markers específico por tipo de activo puntual
                     //TODO - color de marker en función de filtros
+                    'marker-color': '#ff0',
                     label: String(assetType.slice(0,1)).toUpperCase()
                 }
             }
@@ -461,22 +523,21 @@ window.APP.WGIS = function wGisModule(){
         saveUI()
         // ASSETS
 
+        /*
         // RISK ASSESMENT
-        $('#Criticality').click(function () {
+        toggles.criticality.change(function (e) {
             var $this = $(this);
-            if ($this.prop('checked')) {
-                $('#CriticalityForm').show();
+            if (e.target.checked) {
+                forms.criticality.slideDown();
             } else {
-                $('#CriticalityForm').hide();
+                forms.criticality.slideUp();
                 $('#CriticalityForm input[type=checkbox]').each(function (index) {
                     $(this).prop('checked', false);
                 });
-
-
             }
         });
 
-        $('#Condition').click(function () {
+        $('#Condition').change(function () {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#ConditionForm').show();
@@ -487,7 +548,7 @@ window.APP.WGIS = function wGisModule(){
                 });
             }
         });
-        $('#Calculation').click(function () {
+        $('#Calculation').change(function () {
             var $this = $(this);
             if ($this.prop('checked')) {
                 $('#CalculationForm').show();
@@ -497,40 +558,16 @@ window.APP.WGIS = function wGisModule(){
                     $(this).prop('checked', false);
                 });
             }
-        });
+        }); */
 
-        $('input[type=radio][name=radioRisk]').change(function (event) {
-            $this = $(this);
-            switch ($('input:radio[name=radioRisk]:checked').val()) {
-                case 'PhysicalDeterioration':
-                    //console.log('PhysicalDeterioration');
-                    $('#NaturalHazardsForm').hide();
-                    $('#NaturalHazardsForm input[type=checkbox]').each(function (index) {
-                        $(this).prop('checked', false);
-                    });
-                    $('#PhysicalCalculationForm').show();
 
-                    break;
-                case 'NaturalHazards':
-                    //console.log('NaturalHazards');
-                    $('#PhysicalCalculationForm').hide();
-                    $('#PhysicalCalculationForm input[type=checkbox]').each(function (index) {
-                        $(this).prop('checked', false);
-                    });
-                    $('#NaturalHazardsForm').show();
-
-                    break;
-
-                default:
-                    break;
-            }
-        });
 
         // Risk Assessment
         /**
          * AJAX CALL to Criticality
          * Se hace una peticion para cada valor del rango de criticality
          */
+        /*
         $('#CriticalityForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
@@ -772,9 +809,11 @@ window.APP.WGIS = function wGisModule(){
             }
 
         });
+        */
         /**
          * PhysicalCalculationForm
          */
+        /*
         $('#PhysicalCalculationForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
@@ -893,9 +932,11 @@ window.APP.WGIS = function wGisModule(){
             }
 
         });
+        */
         /**
          * NaturalHazardsForm
          */
+        /*
         $('#NaturalHazardsForm input[type=checkbox]').click(async function () {
             var $this = $(this);
             var filterPav = false;
@@ -1013,6 +1054,7 @@ window.APP.WGIS = function wGisModule(){
                 }
             }
         });
+        */
     })
 
     return {

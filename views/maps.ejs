@@ -86,7 +86,7 @@
                 </div>
                 <!-- page start-->
                 <div class="row mt">
-                    <div class="col-md-3" style="height: 80vh; overflow-y: scroll">
+                    <div class="col-md-2" style="height: 80vh; overflow-y: scroll">
                         <div class="form-panel">
                             <h5>
                                 <i class="fa fa-angle-right"></i>
@@ -130,24 +130,6 @@
                             <div class="checkbox">
                                 <label>
                                     <input id="ROAD" type="checkbox" class="js-asset-type" value="Pavement">Pavements</label>
-                                <!-- <div id="pavements" class="form-panel" style="display: none;">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="mainr" type="checkbox" value="Main Road">Main Roads</label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="secondaryr" type="checkbox" value="Secondary">Secondary Roads</label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="feederr" type="checkbox" value="Feeder">Feeder Roads</label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="urbanr" type="checkbox" value="Urban">Urban Roads</label>
-                                    </div>
-                                </div> -->
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -169,9 +151,10 @@
                                 <%- trans('GMAPS_RISK_ASSESSMENT') %>
                                     <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
                             </h5>
-                            <div class="checkbox">
+                            <div class="radio">
                                 <label>
-                                    <input id="Criticality" type="checkbox" value="Asset Criticality">Asset Criticality</label>
+                                    <input id="Criticality" name="risk-assesment" type="radio" value="criticality"> Asset Criticality
+                                </label>
                                 <div id="CriticalityForm" class="form-panel" style="display: none;">
                                     <div class="checkbox">
                                         <label>
@@ -195,90 +178,91 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkbox">
+                            <div class="radio">
                                 <label>
-                                    <input id="Condition" type="checkbox" value="Asset Condition">Asset Condition</label>
-                                <div id="ConditionForm" class="form-panel" style="display: none;">
+                                    <input id="Condition" name="risk-assesment" type="radio" value="condition">Asset Condition</label>
+                                    <div id="ConditionForm" class="form-panel" style="display: none;">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="Excellent" type="checkbox" value="Excellent">Excellent</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="Good" type="checkbox" value="Good">Good</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="Fair" type="checkbox" value="Fair">Fair</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="Poor" type="checkbox" value="Poor">Poor</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="Very Poor" type="checkbox" value="Very Poor">Very Poor</label>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input id="PhysicalDeterioration" name="risk-assesment" type="radio" value="physical">Risk by Physical Deterioration</label>
+                                <div id="PhysicalDeteriorationForm" class="form-panel" style="display: none;">
                                     <div class="checkbox">
                                         <label>
-                                            <input id="Excellent" type="checkbox" value="Excellent">Excellent</label>
+                                            <input id="Physical Very High" type="checkbox" value="Very High">Very High</label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="Good" type="checkbox" value="Good">Good</label>
+                                            <input id="Physical High" type="checkbox" value="High">High</label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="Fair" type="checkbox" value="Fair">Fair</label>
+                                            <input id="Physical Medium" type="checkbox" value="Medium">Medium</label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="Poor" type="checkbox" value="Poor">Poor</label>
+                                            <input id="Physical Low" type="checkbox" value="Low">Low</label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input id="Very Poor" type="checkbox" value="Very Poor">Very Poor</label>
+                                            <input id="Physical Very Low" type="checkbox" value="Very Low">Very Low</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkbox">
+                            <div class="radio">
                                 <label>
-                                    <input id="Calculation" type="checkbox" value="Risk Calculation">Risk Calculation</label>
-                                <div id="CalculationForm" class="form-panel" style="display: none;">
-                                    <div class="radio">
+                                    <input id="NaturalHazards" name="risk-assesment" type="radio" value="natural">Risk by Natural Hazards</label>
+                                <div id="NaturalHazardsForm" class="form-panel" style="display: none;">
+                                    <div class="checkbox">
                                         <label>
-                                            <input id="PhysicalDeterioration" name="radioRisk" type="radio" value="PhysicalDeterioration">Physical Deterioration</label>
-                                        <div id="PhysicalCalculationForm" class="form-panel" style="display: none;">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="Physical Very High" type="checkbox" value="Very High">Very High</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="Physical High" type="checkbox" value="High">High</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="Physical Medium" type="checkbox" value="Medium">Medium</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="Physical Low" type="checkbox" value="Low">Low</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="Physical Very Low" type="checkbox" value="Very Low">Very Low</label>
-                                            </div>
-                                        </div>
+                                            <input id="NaturalHazards Very High" type="checkbox" value="Very High">Very High</label>
                                     </div>
-                                    <div class="radio">
+                                    <div class="checkbox">
                                         <label>
-                                            <input id="NaturalHazards" name="radioRisk" type="radio" value="NaturalHazards">Natural Hazards</label>
-                                        <div id="NaturalHazardsForm" class="form-panel" style="display: none;">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="NaturalHazards Very High" type="checkbox" value="Very High">Very High</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="NaturalHazards High" type="checkbox" value="High">High</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="NaturalHazards Medium" type="checkbox" value="Medium">Medium</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="NaturalHazards Low" type="checkbox" value="Low">Low</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="NaturalHazards Very Low" type="checkbox" value="Very Low">Very Low</label>
-                                            </div>
-                                        </div>
+                                            <input id="NaturalHazards High" type="checkbox" value="High">High</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="NaturalHazards Medium" type="checkbox" value="Medium">Medium</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="NaturalHazards Low" type="checkbox" value="Low">Low</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="NaturalHazards Very Low" type="checkbox" value="Very Low">Very Low</label>
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="radio">
+                                <label>
+                                    <input id="Calculation" name="risk-assesment" type="radio" value="calculation">Risk Calculation</label>
+                                    <div id="CalculationForm" class="form-panel" style="display: none;">
+
+                                    </div>
+                            </div> -->
 
                         </div>
                         <!-- <div class="form-panel">
@@ -289,7 +273,7 @@
                         </div> -->
                     </div>
 
-                    <div class="col-md-9" style="height: 80vh;">
+                    <div class="col-md-10" style="height: 80vh;">
                         <div id="spinner" class="spinner">
                             <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
                         </div>
