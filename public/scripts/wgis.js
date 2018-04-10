@@ -8,7 +8,7 @@ window.APP.WGIS = function wGisModule() {
     var featureCond = [];
     var featureRiskPhy = [];
     var featureRiskNat = [];
-    var defaultMarkerColor = '#ff6600'
+    var defaultMarkerColor = '#ffffff'
 
     var dataLayers = {
         Culvert: {},
@@ -204,12 +204,12 @@ window.APP.WGIS = function wGisModule() {
         if (!selectedRoadTypes.length) {
             return
         }
-        console.log('selected assets', selectedAssets)
-        console.log('selected road types', selectedRoadTypes)
-        console.log('risk filter', riskFilters)
         _.each(selectedAssets, function (assetType) {
             _.each(selectedRoadTypes, function (roadType) {
                 var layer = dataLayers[assetType][roadType]
+                if(!layer && typeof layer.forEach !== 'function'){
+                    return
+                }
                 //apply filter to layer
                 layer.forEach(function (feature) {
                     var result = applyFiltersToFeature(feature)
@@ -567,7 +567,7 @@ window.APP.WGIS = function wGisModule() {
 
     function onDataLayerHover(event) {
         if (event.feature.getId()) {
-            infoBox.html(event.feature.getId())
+            infoBox.html((event.feature.getProperty('assetType') || 'Road') + ' - ' + event.feature.getId())
         }
     }
 
@@ -669,6 +669,7 @@ window.APP.WGIS = function wGisModule() {
             }
             else {
                 dataLayers[assetType][roadType].setMap(map)
+                applyRiskFiltersToAssets()
             }
         })
     }
