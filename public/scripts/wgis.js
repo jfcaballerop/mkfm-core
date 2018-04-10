@@ -638,7 +638,6 @@ window.APP.WGIS = function wGisModule() {
         layer.addListener('click', onDataLayerClick)
         layer.addListener('mouseover', onDataLayerHover)
         dataLayers[assetType][roadType] = layer
-        layer.setMap(map)
         spinner.show()
         layer.setStyle(function (feature) {
             return getStyleForAssetType(assetType, roadType, feature)
@@ -650,7 +649,11 @@ window.APP.WGIS = function wGisModule() {
                     type: 'FeatureCollection',
                     features: data
                 })
+               /*  data.forEach(function(feature){
+                    layer.addGeoJson(feature)
+                }) */
                 applyRiskFiltersToAssets()
+                layer.setMap(map)
             })
             .done(function () {
                 spinner.hide()
