@@ -441,3 +441,20 @@ exports.getDistrictSiglas = function (district) {
 
     return siglas[district];
 }
+
+exports.getCoordinatesLatLong = function (arrCoor) {
+    var arrRet = [];
+
+    for (var element of arrCoor) {
+        var eCoor = [];
+        eCoor[0] = element[1];
+        eCoor[1] = element[0];
+        eCoor[2] = element[2];
+        arrRet.push(eCoor);
+
+    };
+
+    return arrRet;
+
+
+}

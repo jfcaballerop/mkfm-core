@@ -94,6 +94,7 @@
 	"DSHEET_SEARCH_TOOL": "Search tool",
 	"DSHEET_DATA_UPLOAD": "File upload",
 	"DSHEET_DATA_INFO": "Data information",
+	"DSHEET_ASSET_CODE": "Asset code",
 	"QUERYS_FILTER": "Select filter",
 	"COST_LIBRARY_TITLE": "Cost Library of Asset Renewal by Typology or Material",
 	"COST_LIBRARY_HEAD_ASSET": "Asset & material / condition",
