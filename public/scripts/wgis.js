@@ -8,7 +8,7 @@ window.APP.WGIS = function wGisModule() {
     var featureCond = [];
     var featureRiskPhy = [];
     var featureRiskNat = [];
-    var defaultMarkerColor = '#ffffff'
+    var defaultMarkerColor = '#00abff'
 
     var dataLayers = {
         Culvert: {},
@@ -71,7 +71,7 @@ window.APP.WGIS = function wGisModule() {
                 '60-80__D',
                 '80-100__C'
             ],
-            color: '#F79646'
+            color: '#FFA500'
         },
         'Very High': {
             values: [
@@ -93,7 +93,7 @@ window.APP.WGIS = function wGisModule() {
             },
             "High": {
                 scale: 4,
-                color: "#f79646",
+                color: "#FFA500",
                 min: 60,
                 max: 80
             },
@@ -306,7 +306,7 @@ window.APP.WGIS = function wGisModule() {
 
 
 
-    function initMaps(mapCenter, zoomLevel) {
+    function initModule(mapCenter, zoomLevel) {
         //console.log('initmaps', mapCenter, zoomLevel)
         center = mapCenter
         zoom = zoomLevel
@@ -427,7 +427,7 @@ window.APP.WGIS = function wGisModule() {
             subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + getProp('Ccode') + '">' + getProp('Ccode') +
                 '</a></strong><br><hr>';
 
-            subcontent += '<h4>Inventory Data</h4>';
+            subcontent += '<h5>Inventory Data</h5>';
             subcontent += '<strong>N. Elements: </strong>' + getProp(
                 "Cnumelem") + '<br>';
             subcontent +=
@@ -442,7 +442,7 @@ window.APP.WGIS = function wGisModule() {
 
             subcontent += '<strong>Length: </strong>' + getProp("Clength") +
                 '<br>';
-            subcontent += '<h4>O&M Data</h4>';
+            subcontent += '<h5>O&M Data</h5>';
             subcontent += '<strong> Clearing required: </strong>' + getProp(
                 "Cclearing") + '<br>';
             subcontent += '<strong> Current visual condition: </strong>' + getProp(
@@ -462,7 +462,7 @@ window.APP.WGIS = function wGisModule() {
         } else if (type === "Bridge") {
             subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + getProp('bcode') + '">' + getProp('bcode') +
                 '</a></strong><br><hr>';
-            subcontent += '<h4>Inventory Data</h4>';
+            subcontent += '<h5>Inventory Data</h5>';
             subcontent += '<strong>Structural typology: </strong>' + getProp(
                 "btype") + '<br>';
             subcontent += '<strong>No of spans: </strong>' + getProp("bspans") +
@@ -473,7 +473,7 @@ window.APP.WGIS = function wGisModule() {
                 '<br>';
             subcontent += '<strong>Free height: </strong>' + getProp(
                 "bfreeheight") + '<br>';
-            subcontent += '<h4>Material</h4>';
+            subcontent += '<h5>Material</h5>';
             subcontent += '<strong>Deck: </strong>' + getProp("bmaterialdeck") +
                 '<br>';
             subcontent += '<strong>Piers: </strong>' + getProp(
@@ -481,7 +481,7 @@ window.APP.WGIS = function wGisModule() {
                 '<br>';
             subcontent += '<strong>Abutments: </strong>' + getProp(
                 "bmaterialabutments") + '<br>';
-            subcontent += '<h4>O&M Data</h4>';
+            subcontent += '<h5>O&M Data</h5>';
             subcontent += '<strong>Type of damages: </strong>' + getProp("bdamagesfoundationsgeneraltype") + '<br>';
             subcontent += '<strong>Current Visual Condition: </strong>' + getProp(
                 "bvisualcondition") + '<br>';
@@ -499,7 +499,7 @@ window.APP.WGIS = function wGisModule() {
                 var code = getProp('gcode') || getProp('gcode2')
                 subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + code + '">' + code +
                     '</a></strong><br><hr>';
-                subcontent += '<h4>Inventory Data</h4>';
+                subcontent += '<h5>Inventory Data</h5>';
 
                 subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
                     '<br>';
@@ -515,7 +515,7 @@ window.APP.WGIS = function wGisModule() {
                     '<br>';
 
 
-                subcontent += '<h4>O&M Data</h4>';
+                subcontent += '<h5>O&M Data</h5>';
                 subcontent += '<strong>Failure processes: </strong>' + (getProp("gnature") || getProp("gnature2") || '') + '<br>';
                 /* subcontent += '<strong>Intensity of failure processes: </strong>' + getProp(
                         "bdamagesfoundationsgeneraltype") + '<br>'; */
@@ -556,13 +556,6 @@ window.APP.WGIS = function wGisModule() {
             infoWnd.setContent(getInfoWindowContent(assetType, event));
             infoWnd.open(map)
         }
-
-        // Store new open InfoWindow in global variable
-        var infoTextContent = event.feature.getProperty('nameoption');
-        if (event.feature.getProperty('nameoption') === 'Roads') {
-            infoTextContent += ' ' + event.feature.getProperty('name');
-        }
-        //document.getElementById('info-box').textContent = infoTextContent;
     }
 
     function onDataLayerHover(event) {
@@ -599,7 +592,7 @@ window.APP.WGIS = function wGisModule() {
         light: '#ff0'
     }
 
-    function createIconMarker(letter, backgroundColor){
+    function createIconMarker(letter, backgroundColor, fgColor){
         return "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + letter + "|" + backgroundColor.replace('#', '') + "|000000"
     }
 
@@ -625,7 +618,7 @@ window.APP.WGIS = function wGisModule() {
                     //TODO - color de marker en función de filtros
 
                     //label: String(assetType.slice(0, 1)).toUpperCase(),
-                    icon: createIconMarker(String(assetType.slice(0, 1)).toUpperCase(), feature.getProperty('color') || '#ff3300'),
+                    icon: createIconMarker(String(assetType.slice(0, 1)).toUpperCase(), feature.getProperty('color') || defaultMarkerColor),
                     visible: feature.getProperty('isVisible') !== false
                 }
             }
@@ -703,7 +696,7 @@ window.APP.WGIS = function wGisModule() {
     })
 
     return {
-        init: initMaps,
+        init: initModule,
         initMap: initMap,
         dataLayers: dataLayers
     }
