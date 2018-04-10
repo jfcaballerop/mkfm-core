@@ -126,8 +126,8 @@ window.APP.WGIS = function wGisModule(){
         var content = 'Asset Type: <strong>' + type + '</strong><br>';
         var subcontent = "";
         if (type === "Culvert") {
-            subcontent += 'Asset code: <strong>' + getProp('Ccode') +
-                '</strong><br><hr>';
+            subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + getProp('Ccode') + '">' + getProp('Ccode') +
+                '</a></strong><br><hr>';
 
             subcontent += '<h4>Inventory Data</h4>';
             subcontent += '<strong>N. Elements: </strong>' + getProp(
@@ -162,8 +162,8 @@ window.APP.WGIS = function wGisModule(){
 
 
         } else if (type === "Bridge") {
-            subcontent += 'Asset code: <strong>' + getProp('bcode') +
-                '</strong><br><hr>';
+            subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + getProp('bcode') + '">' + getProp('bcode') +
+                '</a></strong><br><hr>';
             subcontent += '<h4>Inventory Data</h4>';
             subcontent += '<strong>Structural typology: </strong>' + getProp(
                 "btype") + '<br>';
@@ -198,8 +198,9 @@ window.APP.WGIS = function wGisModule(){
             }
         } else {
             if (type === 'Geotechnical') {
-                subcontent += 'Asset code: <strong>' + (getProp('gcode') || getProp('gcode2')) +
-                    '</strong><br><hr>';
+                var code = getProp('gcode') || getProp('gcode2')
+                subcontent += 'Asset code: <strong><a href="/auth/WEB/data_sheet/details/' + code + '">' + code +
+                '</a></strong><br><hr>';
                 subcontent += '<h4>Inventory Data</h4>';
 
                 subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
@@ -230,53 +231,10 @@ window.APP.WGIS = function wGisModule(){
                         fotosmall +
                         '">' + '<br>';
                 }
-            } /* else {
-                subcontent += 'Asset code: <strong>' + event.feature.getProperty('gcode2') +
-                    '</strong><br><hr>';
-                subcontent += 'Inventory Data<br>';
-
-                subcontent += '<strong>Typology: </strong>' + event.feature.getProperty("gtype2") +
-                    '<br>';
-                subcontent += '<strong>Position: </strong>' + event.feature.getProperty(
-                        "gposition2") +
-                    '<br>';
-                subcontent += '<strong>Height: </strong>' + event.feature.getProperty("gheight2") +
-                    '<br>';
-                subcontent += '<strong>Length: </strong>' + event.feature.getProperty("glength2") +
-                    '<br>';
-                subcontent += '<strong>Slope/Angle: </strong>' + event.feature.getProperty(
-                        "gslope2") +
-                    '<br>';
-                subcontent += '<strong>Nature: </strong>' + event.feature.getProperty("gnature2") +
-                    '<br>';
-
-
-                subcontent += '<br>O&M Data<br>';
-                subcontent += '<strong>Failure processes: </strong>' + event.feature.getProperty(
-                    "gnature2") + '<br>';
-                subcontent += '<strong>Intensity of failure processes: </strong>' + event.feature
-                    .getProperty(
-                        "bdamagesfoundationsgeneraltype2") + '<br>';
-                subcontent += '<strong>Extent of failure processes: </strong>' + event.feature.getProperty(
-                    "gintensityfailure2") + '<br>';
-                subcontent += '<strong>Current Visual Condition: </strong>' + event.feature.getProperty(
-                    "gvisualcondition2") + '<br>';
-                vfoto = event.feature.getProperty("_attachments");
-                if (vfoto !== undefined && vfoto.length > 0) {
-
-                    var fotosmall = vfoto[0].replace(".jpg", "-small.jpg");
-                    subcontent += '<img src="' +
-                        fotosmall +
-                        '">' + '<br>';
-                }
-            } */
-
+            }
         }
 
         content += '<div class="scrollFix">' +
-            // event.feature.getProperty('xform_id_string') + " -- " +
-            // event.feature.getProperty('_id') + '<br>' +
-            // '[ ' + event.latLng.toUrlValue(6) + ' ]<hr>' +
             subcontent +
             '</div>';
         return content;
