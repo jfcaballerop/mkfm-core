@@ -173,7 +173,7 @@ function transformData(tracks, koboinfos){
         const uniqueNonEmptyCodes = _.unique(track.properties[codeProperty]).filter(x => !!x)
         uniqueNonEmptyCodes.forEach(assetCode => {
             const assetIndex = track.properties[codeProperty].findIndex(x => x === assetCode)
-            const hasKoboData = !!track.properties.koboedit[assetIndex]
+            const hasKoboData = !!track.properties.koboedit && !!track.properties.koboedit[assetIndex]
             if(assetIndex && hasKoboData){
                 const koboId = track.properties.koboedit[assetIndex] && track.properties.koboedit[assetIndex].kobo_id
                 const kobo = getKoboById(koboId)

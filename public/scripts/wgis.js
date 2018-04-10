@@ -207,7 +207,7 @@ window.APP.WGIS = function wGisModule() {
         _.each(selectedAssets, function (assetType) {
             _.each(selectedRoadTypes, function (roadType) {
                 var layer = dataLayers[assetType][roadType]
-                if(!layer && typeof layer.forEach !== 'function'){
+                if(!layer || !layer.forEach){
                     return
                 }
                 //apply filter to layer
