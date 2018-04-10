@@ -565,9 +565,7 @@ window.APP.WGIS = function wGisModule() {
     }
 
     function onDataLayerHover(event) {
-        if (event.feature.getId()) {
-            infoBox.html((event.feature.getProperty('assetType') || 'Road') + ' - ' + event.feature.getId())
-        }
+        infoBox.html((event.feature.getProperty('assetType') || 'Road') + ' - ' + event.feature.getProperty('displayName') || '-')
     }
 
     function initMap() {

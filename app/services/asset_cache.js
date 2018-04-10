@@ -13,6 +13,7 @@ const commonFields = {
 }
 const roadFields = {
     "properties.rcode": 1,
+    "properties.rname": 1,
     "properties.rcategory": 1,
     "properties.rcriticality": 1,
     "properties.rcondition": 1,
@@ -141,13 +142,15 @@ function transformData(tracks, koboinfos){
 
     function getTrackProps(track){
         return {
+            type: 'Feature',
             geometry: track.geometry,
-            type: track.type,
-            id: track.properties.rcode[0],
             properties: {
-                name: track.properties.name,
+                displayName: track.properties.rname ? track.properties.rname[0] :
+                    track.properties.rcode ? track.properties.rcode[0] : '',
+                trackName: track.properties.name,
                 rcategory: track.properties.rcategory[0],
-                rcode: track.properties.rcode[0]
+                rcode: track.properties.rcode ? track.properties.rcode[0] : '',
+                rname: track.properties.rname ? track.properties.rname[0] : ''
             }
         }
     }
@@ -183,7 +186,7 @@ function transformData(tracks, koboinfos){
                 if(kobo) {
                     asset.properties._attachments = kobo.properties._attachments
                     // add feature id and asset type
-                    asset.id = assetCode
+                    asset.properties.displayName = assetCode
                     asset.properties.assetType = assetType
                     destination.push(asset)
                 }
@@ -198,34 +201,40 @@ function transformData(tracks, koboinfos){
 
 
     tracks.forEach(function (track, index) {
-        if (~track.properties.rcategory.indexOf('Main Road')) {
+        try {
+
+        if (track.properties.rcategory.indexOf('Main Road') >= 0) {
             mainr.push(getTrackProps(track));
             extractAssets(track, 'Ccode', 'Culvert', kobo_mainr_odt, culvertFields)
             extractAssets(track, 'bcode', 'Bridge', kobo_mainr_bridge, bridgeFields)
             extractAssets(track, 'gcode', 'Geotechnical', kobo_mainr_geo, geoFields)
             extractAssets(track, 'gcode2', 'Geotechnical', kobo_mainr_geo, geo2Fields)
         }
-        else if (~track.properties.rcategory.indexOf('Secondary')) {
+        else if (track.properties.rcategory.indexOf('Secondary') >= 0) {
             secondaryr.push(getTrackProps(track));
             extractAssets(track, 'Ccode', 'Culvert', kobo_secondaryr_odt, culvertFields)
             extractAssets(track, 'bcode', 'Bridge', kobo_secondaryr_bridge, bridgeFields)
             extractAssets(track, 'gcode', 'Geotechnical', kobo_secondaryr_geo, geoFields)
             extractAssets(track, 'gcode2', 'Geotechnical', kobo_secondaryr_geo, geo2Fields)
         }
-        else if (~track.properties.rcategory.indexOf('Feeder')) {
+        else if (track.properties.rcategory.indexOf('Feeder') >= 0) {
             feederr.push(getTrackProps(track));
             extractAssets(track, 'Ccode', 'Culvert', kobo_feederr_odt, culvertFields)
             extractAssets(track, 'bcode', 'Bridge', kobo_feederr_bridge, bridgeFields)
             extractAssets(track, 'gcode', 'Geotechnical', kobo_feederr_geo, geoFields)
             extractAssets(track, 'gcode2', 'Geotechnical', kobo_feederr_geo, geo2Fields)
         }
-        else if (~track.properties.rcategory.indexOf('Urban')) {
+        else if (track.properties.rcategory.indexOf('Urban') >= 0) {
             urbanr.push(getTrackProps(track));
             extractAssets(track, 'Ccode', 'Culvert', kobo_urbanr_odt, culvertFields)
             extractAssets(track, 'bcode', 'Bridge', kobo_urbanr_bridge, bridgeFields)
             extractAssets(track, 'gcode', 'Geotechnical', kobo_urbanr_geo, geoFields)
             extractAssets(track, 'gcode2', 'Geotechnical', kobo_urbanr_geo, geo2Fields)
         }
+    }
+    catch(error){
+        console.error('Error processing track', track.properties.name, error.message)
+    }
         // Other is not used, avoid spending time here
         /* else {
             // Other types
