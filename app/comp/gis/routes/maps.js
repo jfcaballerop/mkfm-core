@@ -429,34 +429,4 @@ function splitLinestringIntoFragments(data){
     return multilines
 }
 
-router.get('/roads/:category', async function(req, res){
-    const { category } = req.params
-    try {
-        const data = mongoose.connection.db.collection('roads_extracted').find({
-            category: category
-        }).toArray((err, data) => {
-            if(err) {
-                throw err
-            }
-            const geoJson = data.map(road => ({
-                type: 'Feature',
-                id: road.roadCode,
-                properties: {
-                    category: road.category,
-                    roadCode: road.roadCode
-                },
-                geometry: road.geometry
-            }))
-            res.json({
-                type: 'FeatureCollection',
-                features: geoJson
-            })
-        })
-    }
-    catch(err) {
-        console.error('Error fetching roads', err.message)
-        res.status(500).send({ message: err.message })
-    }
-})
-
 module.exports = router;
