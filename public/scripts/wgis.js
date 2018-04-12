@@ -4,10 +4,6 @@ window.APP.WGIS = function wGisModule() {
     var map, spinner, riskToogles, riskForms;
     var center, zoom
     var infoWnd, infoBox;
-    var featureCrit = [];
-    var featureCond = [];
-    var featureRiskPhy = [];
-    var featureRiskNat = [];
     var defaultMarkerColor = '#00abff'
 
     var dataLayers = {
@@ -170,6 +166,18 @@ window.APP.WGIS = function wGisModule() {
         Pavement: {}
     }
 
+    var pavementByRisk = {
+        main: {
+            criticality: null,
+            condition: null,
+            physical: null,
+            natural: null
+        },
+        secondary: {},
+        urban: {},
+        feeder: {}
+    }
+
     var riskFilters = {
         criticality: [],
         condition: [],
@@ -192,10 +200,52 @@ window.APP.WGIS = function wGisModule() {
             onRiskFilterChanged()
         }
     }
+    function getActiveFilter(){
+        return _.find(_.keys(riskFilters), function(key){
+            return riskFilters[key].length > 0
+        })
+    }
 
     function onRiskFilterChanged() {
         //console.log('New filters', riskFilters)
-        applyRiskFiltersToAssets()
+        fetchRoadsByRisk().then(function(){
+            applyRiskFiltersToAssets()
+        })
+    }
+
+    function getNonLoadedRoadByRiskPaths(){
+        var activeFilter = getActiveFilter()
+        if(!activeFilter) return []
+        var pendingTypes = _.filter(getSelectedRoads(), function(roadType){
+            return !pavementByRisk[roadType][activeFilter]
+        })
+        var paths = _.map(pendingTypes, function(type){
+            return [type, activeFilter]
+        })
+        return paths
+    }
+
+    function fetchRoadsByRisk(){
+        var pendingPaths = getNonLoadedRoadByRiskPaths()
+        if(!pendingPaths.length){
+            return Promise.resolve()
+        }
+        else {
+            return Promise.all(_.map(pendingPaths, function(path){
+                var roadType = path[0]
+                var riskType = path[1]
+                var layer = new google.maps.Data()
+
+                return $.getJSON('/auth/WEB/maps/roads_by_risk/' + getRoadCategoryByType(roadType) + '/r' + riskType)
+                    .then(data => {
+                        layer.addGeoJson(data)
+                        pavementByRisk[roadType][riskType] = layer
+                        console.log('Loaded road risk layer', roadType, riskType, data)
+                        layer.setMap(map)
+                        return true
+                    })
+            }))
+        }
     }
 
     function applyRiskFiltersToAssets() {
@@ -343,6 +393,17 @@ window.APP.WGIS = function wGisModule() {
                 return 'feeder'
             default:
                 return 'urban'
+        }
+    }
+
+    function getRoadCategoryByType(roadType){
+        switch(roadType){
+            case 'main':
+                return 'Main Road'
+            case 'secondary':
+                return 'Secondary'
+            default:
+                return roadType[0].toUpperCase() + roadType.slice(1)
         }
     }
 
@@ -544,19 +605,10 @@ window.APP.WGIS = function wGisModule() {
         return content;
     }
 
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
+    /* Manejadores de eventos de data layer */
     function onDataLayerClick(event) {
         // Set info window on a point asset
         var assetType = event.feature.getProperty('assetType')
-        console.log('Asset click on', assetType)
         if (assetType) {
             infoWnd.setPosition(event.latLng);
             infoWnd.setContent(getInfoWindowContent(assetType, event));
