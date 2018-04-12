@@ -1674,7 +1674,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
 
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (infodatatrack[0].properties.koboedit.length && infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
@@ -1812,8 +1812,7 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('_id', infodatatrack[0]._id);
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
-
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (!!infodatatrack[0].properties.koboedit.length && infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
