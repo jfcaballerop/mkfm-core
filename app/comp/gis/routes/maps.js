@@ -370,18 +370,16 @@ router.get('/roads_by_risk/:roadType/:riskField', async function(req, res){
             {
                 $project: {
                     "_id": 0,
-                    "type": { "$literal": "Feature" },
                     "properties": {
                         [riskField]: "$_id." + riskField,
                         "sourceTrack": "$_id.sourceTrack",
                         "roadCategory": "$_id.roadCategory",
                     },
                     "geometry": {
-                        "type": { $literal: "LineString" },
                         "coordinates": "$coordinates"
                     },
                     // esto por si necesito depurar de que indices viene
-                    //"trackIndices": "$indices"
+                    "trackIndices": "$indices"
                 }
             },
             // y por ultimo, devuelvo solo los de la categoria que me interesa
@@ -393,11 +391,16 @@ router.get('/roads_by_risk/:roadType/:riskField', async function(req, res){
             }
         ])
 
-        console.log('Fragments length', roadFragments.length)
-
         res.json({
             type: 'FeatureCollection',
-            features: roadFragments
+            features: roadFragments.map(data => ({
+                type: 'Feature',
+                properties: data.properties,
+                geometry: {
+                    type: 'MultiLineString',
+                    coordinates: splitLinestringIntoFragments(data)
+                }
+            }))
         })
     }
     catch(err){
@@ -406,6 +409,25 @@ router.get('/roads_by_risk/:roadType/:riskField', async function(req, res){
 
     }
 })
+
+function splitLinestringIntoFragments(data){
+    var fragments = data.trackIndices.reduce((acc, index) => {
+        if(!acc.current || index - acc.current[acc.current.length-1] > 1){
+            acc.output.push([])
+            acc.current = acc.output[acc.output.length-1]
+        }
+        acc.current.push(index)
+        return acc
+
+
+    }, { current: null, output: [] })
+
+    var multilines = fragments.output.map(function(frag){
+        return frag.map(idx => data.geometry.coordinates[data.trackIndices.indexOf(idx)])
+    })
+
+    return multilines
+}
 
 router.get('/roads/:category', async function(req, res){
     const { category } = req.params
