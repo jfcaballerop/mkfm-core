@@ -22,7 +22,7 @@ window.APP.WGIS = function wGisModule() {
     }
 
     // Risk configuration
-    var riskRating = {
+    var riskDictionaryNormalized = {
         'Very Low': {
             values: [
                 '0-20__A',
@@ -141,8 +141,8 @@ window.APP.WGIS = function wGisModule() {
                 max: 0.20
             }
         },
-        physical: riskRating,
-        natural: riskRating
+        physical: riskDictionaryNormalized,
+        natural: riskDictionaryNormalized
 
     }
 
@@ -195,7 +195,6 @@ window.APP.WGIS = function wGisModule() {
                             })
                     }))
                     .then(function(){
-                        console.log('Risk data updated')
                         applyRiskFiltersToAssets()
                         riskSpinner.hide()
                     })
@@ -321,7 +320,7 @@ window.APP.WGIS = function wGisModule() {
             //var score = riskFormulas.criticality[criteria]
             return ~selectedCriteria.indexOf(key)
                 && value >= score.min
-                && value <= score.max
+                && value < score.max
         })
     }
 
