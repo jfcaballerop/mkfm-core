@@ -125,7 +125,7 @@
                             <h5>
                                 <i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_ASSETS') %>
-                                    <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
+                                    <i id="assetSpinner" class="fa fa-spinner fa-pulse fa-fw" style="display:none;"></i>
                             </h5>
                             <div class="checkbox">
                                 <label>
@@ -137,11 +137,11 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="Culvert" type="checkbox" class="js-asset-type"  value="Culvert">Culvert</label>
+                                    <input id="Culvert" type="checkbox" class="js-asset-type" value="Culvert">Culvert</label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input id="GEOT" type="checkbox" class="js-asset-type"  value="Geo">Geotechnical</label>
+                                    <input id="GEOT" type="checkbox" class="js-asset-type" value="Geo">Geotechnical</label>
                             </div>
 
                         </div>
@@ -149,7 +149,7 @@
                             <h5>
                                 <i class="fa fa-angle-right"></i>
                                 <%- trans('GMAPS_RISK_ASSESSMENT') %>
-                                    <i id="spinnerCriticality" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i>
+                                <i id="riskSpinner" class="fa fa-spinner fa-pulse fa-fw" style="display:none;"></i>
                             </h5>
 
                             <div class="radio">
@@ -257,21 +257,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="radio">
-                                <label>
-                                    <input id="Calculation" name="risk-assesment" type="radio" value="calculation">Risk Calculation</label>
-                                    <div id="CalculationForm" class="form-panel" style="display: none;">
-
-                                    </div>
-                            </div> -->
-
                         </div>
-                        <!-- <div class="form-panel">
-                            <h5><i class="fa fa-angle-right"></i>
-                                <%- trans('GMAPS_DATOS') %>
-                            </h5>
-                            <a href="/auth/WEB/maps/view_data"><button type="button" class="btn btn-theme04"><i class="fa  fa-road"></i> <%- trans('GMAPS_DATOS_BUTTON_ROADS') %></button></a>
-                        </div> -->
                     </div>
 
                     <div class="col-md-10" style="height: 80vh;">
@@ -280,10 +266,6 @@
                         </div>
                         <div id="map"></div>
                         <div id="info-box">--</div>
-
-
-                        <!-- <iframe allowfullscreen width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJFVoV8vrSFIwRPP06BQmRs0k&key=<%= api_key %>&maptype=satellite" allowfullscreen> -->
-                        <!-- </iframe> -->
                     </div>
                 </div>
                 <!-- page end-->

@@ -145,8 +145,8 @@ function transformData(tracks, koboinfos){
             type: 'Feature',
             geometry: track.geometry,
             properties: {
-                displayName: track.properties.rname ? track.properties.rname[0] :
-                    track.properties.rcode ? track.properties.rcode[0] : '',
+                displayName: track.properties.rcode ? track.properties.rcode[0] :
+                    'Missing road code',
                 trackName: track.properties.name,
                 rcategory: track.properties.rcategory[0],
                 rcode: track.properties.rcode ? track.properties.rcode[0] : '',
