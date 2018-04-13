@@ -156,8 +156,6 @@ window.APP.WGIS = function wGisModule() {
     var selectedRoads = new APP.Models.SelectedRoads()
     var selectedAssets = new APP.Models.SelectedAssets()
 
-
-
     var riskFilters = new APP.Models.RiskFilters()
 
     function getSelectedAssets() {
@@ -191,7 +189,7 @@ window.APP.WGIS = function wGisModule() {
                                     layer.remove(feature)
                                 })
                                 layer.addGeoJson(data)
-                                //layer.setMap(map)
+                                layer.setMap(map)
                             })
                     }))
                     .then(function(){
@@ -249,6 +247,12 @@ window.APP.WGIS = function wGisModule() {
         var selectedRoadTypes = selectedRoads.getSelected()
         _.each(changed, function(isSelected, assetType){
             if(isSelected){
+                if(assetType === 'Pavement'){
+                    //hide risk layers
+                    _.each(riskRoadLayers, function(layer){
+                        layer.setMap(map)
+                    })
+                }
                 if(!selectedRoadTypes.length) return
                 assetSpinner.show()
                 // fetch & display assets for selected road types
@@ -272,6 +276,12 @@ window.APP.WGIS = function wGisModule() {
                 _.each(dataLayers[assetType], function(roadLayer){
                     roadLayer.setMap(null)
                 })
+                if(assetType === 'Pavement'){
+                    //hide risk layers
+                    _.each(riskRoadLayers, function(layer){
+                        layer.setMap(null)
+                    })
+                }
             }
         })
     }
