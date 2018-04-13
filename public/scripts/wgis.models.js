@@ -114,9 +114,7 @@ window.APP.Models = function WGISModels(){
             })
         },
         getActiveFilter: function(){
-            return _.find(_.keys(this.attributes), function(riskType){
-                return this.get(riskType).length > 0
-            }, this)
+            return this.get('current')
         }
     })
 
@@ -135,7 +133,31 @@ window.APP.Models = function WGISModels(){
                 return this._fetchingPromise
             }
             if(this._fetched){
-                return Promise.resolve()
+                return Promise.resolve(this.toJSON())
+            }
+            else {
+                this._fetchingPromise = this.fetch()
+                return this._fetchingPromise
+            }
+        }
+    })
+
+    var FetchOnceModel = Backbone.Model.extend({
+        initialize: function(){
+            this._fetched = false
+            this._fetchingPromise = false
+            this.listenTo(this, 'sync', this.fetchComplete)
+        },
+        fetchComplete: function(col){
+            this._fetched = true
+            this._fetchingPromise = null
+        },
+        fetchIfNeeded: function(){
+            if(this._fetchingPromise){
+                return this._fetchingPromise
+            }
+            if(this._fetched){
+                return Promise.resolve(this.toJSON())
             }
             else {
                 this._fetchingPromise = this.fetch()
@@ -160,13 +182,13 @@ window.APP.Models = function WGISModels(){
             this._baseUrl = options.baseUrl || '/auth/WEB/maps/assets'
         },
         url: function(){
-            return [this._baseUrl, this._assetType, this._roadType].join('/')
+            return [this._baseUrl, this._assetType, this._roadType].join('/') + '?' + Date.now().toString(16)
         }
     })
 
-    var RoadRiskCollection = FetchOnceCollection.extend({
+    var RoadRiskTypeModel = FetchOnceModel.extend({
         initialize: function(models, options){
-            FetchOnceCollection.prototype.initialize.apply(this, [])
+            FetchOnceModel.prototype.initialize.apply(this, [])
             validateRoadType(options.roadType)
             validateRiskType(options.riskType)
             this._roadType = options.roadType
@@ -176,7 +198,7 @@ window.APP.Models = function WGISModels(){
         url: function(){
             var riskField = riskFilterTypeToField(this._riskType)
             var roadCategory = roadTypeToCategory(this._roadType)
-            return [this._baseUrl, roadCategory, riskField].join('/')
+            return [this._baseUrl, roadCategory, riskField].join('/') + '?' + Date.now().toString(16)
         }
     })
 
@@ -185,22 +207,22 @@ window.APP.Models = function WGISModels(){
             validateRoadType(options.roadType)
             this._roadType = options.roadType
             this._baseUrl = options.baseUrl || '/auth/WEB/maps/roads_by_risk'
-            this.criticality = new RoadRiskCollection(null, {
+            this.criticality = new RoadRiskTypeModel(null, {
                 roadType: this._roadType,
                 riskType: 'criticality',
                 baseUrl: this._baseUrl
             })
-            this.condition = new RoadRiskCollection(null, {
+            this.condition = new RoadRiskTypeModel(null, {
                 roadType: this._roadType,
                 riskType: 'condition',
                 baseUrl: this._baseUrl
             })
-            this.physical = new RoadRiskCollection(null, {
+            this.physical = new RoadRiskTypeModel(null, {
                 roadType: this._roadType,
                 riskType: 'physical',
                 baseUrl: this._baseUrl
             })
-            this.natural = new RoadRiskCollection(null, {
+            this.natural = new RoadRiskTypeModel(null, {
                 roadType: this._roadType,
                 riskType: 'natural',
                 baseUrl: this._baseUrl
@@ -258,19 +280,18 @@ window.APP.Models = function WGISModels(){
     function createRiskRoadModels(riskLayers){
         return ROAD_TYPES.reduce(function(acc, roadType){
             var model = new RoadRisk(null, { roadType: roadType })
-            _.each(RISK_FILTERS, function(riskType){
+           /*  _.each(RISK_FILTERS, function(riskType){
                 model[riskType].on('sync', function(col){
                     var layer = riskLayers[roadType]
-
                     // remove existing
                     layer.forEach(function(feature){
                         layer.remove(feature)
                     })
                     // server returns already a geoJSon feature collection, so only
                     // the first collection element contains everything
-                    layer.addGeoJson(col.toJSON()[0])
+                    layer.addGeoJson(col.toJSON())
                 })
-            })
+            }) */
             acc[roadType] = model
             return acc
         }, {})
@@ -281,7 +302,7 @@ window.APP.Models = function WGISModels(){
         SelectedAssets: SelectedAssets,
         RiskFilters: RiskFilters,
         AssetCollection: AssetCollection,
-        RoadRiskCollection: RoadRiskCollection,
+        RoadRiskCollection: RoadRiskTypeModel,
         RoadRisk: RoadRisk,
         createAssetDataLayers: createAssetDataLayers,
         createRiskRoadDataLayers: createRiskRoadDataLayers,

@@ -184,15 +184,19 @@ window.APP.WGIS = function wGisModule() {
                     //load road risk data
                     riskSpinner.show()
                     Promise.all(_.map(selectedRoadTypes, function(roadType){
-                        console.log('Fetching', roadType, currentRiskFilter)
-                        riskRoads[roadType][currentRiskFilter].fetchIfNeeded()
-                            .then(function(){
-                                riskRoadLayers[roadType].setMap(map)
+                        return riskRoads[roadType][currentRiskFilter].fetchIfNeeded()
+                            .then(function(data){
+                                var layer = riskRoadLayers[roadType]
+                                layer.forEach(function(feature){
+                                    layer.remove(feature)
+                                })
+                                layer.addGeoJson(data)
+                                //layer.setMap(map)
                             })
                     }))
                     .then(function(){
-                        console.log('Finished loading!')
-                        debugger
+                        console.log('Risk data updated')
+                        applyRiskFiltersToAssets()
                         riskSpinner.hide()
                     })
                     .catch(function(err){
@@ -200,14 +204,16 @@ window.APP.WGIS = function wGisModule() {
                         riskSpinner.hide()
                     })
                 }
+                else {
+                    console.log('Risk filter change but not Pavement selected')
+                }
 
             }
-            else {
-                var previousRisk = model.previous('current')
+            /* else {
                 _.each(selectedRoadTypes, function(roadType){
                     riskRoadLayers[roadType].setMap(null)
                 })
-            }
+            } */
         } else if(haveFilterOptionsChanged){
             applyRiskFiltersToAssets()
         }
@@ -291,6 +297,7 @@ window.APP.WGIS = function wGisModule() {
             _.each(selectedRoadTypes, function (roadType) {
                 if(assetType === 'Pavement'){
                     _.each(selectedRoadTypes, function(roadType){
+                        //console.log('Setting style for risk road type', roadType)
                         riskRoadLayers[roadType].setStyle(createRoadRiskSetStyle(roadType))
                     })
                     return
@@ -332,6 +339,12 @@ window.APP.WGIS = function wGisModule() {
     }
 
     function applyFiltersToFeature(feature) {
+        if(!riskFilters.getActiveFilter()){
+            return {
+                color: defaultMarkerColor,
+                visible: true
+            }
+        }
         var riskFilterData = riskFilters.attributes
         if (riskFilterData.criticality.length) {
             switch (feature.getProperty('assetType')) {
@@ -389,18 +402,27 @@ window.APP.WGIS = function wGisModule() {
         else {
             // no filter set, return something so feature is visible
             return {
-                color: defaultMarkerColor
+                color: defaultMarkerColor,
+                visible: true
             }
         }
     }
 
+    var zIndexByRoadType = {
+        'main': 5,
+        'secondary': 6,
+        'feeder': 7,
+        'urban': 8
+    }
+
     function createRoadRiskSetStyle(roadType){
+        var defaults = {
+            visible: false
+        }
         return function(feature){
             var currentRiskFilter =  riskFilters.getActiveFilter()
             if(!currentRiskFilter){
-                return {
-                    visible: false
-                }
+                return defaults
             }
             var riskMatchingFn
             if(currentRiskFilter === 'criticality' || currentRiskFilter === 'condition'){
@@ -411,12 +433,20 @@ window.APP.WGIS = function wGisModule() {
             }
             var propertyName = APP.Models.helpers.riskFilterTypeToField(currentRiskFilter)
             var fragmentValue = feature.getProperty(propertyName)
-            var riskScore = riskMatchingFn(riskFormulas[currentRiskFilter], fragmentValue, riskFilters.get(currentRiskFilter))
-            return riskScore ? {
+            if(!fragmentValue) {
+                return defaults
+            }
+            var selectedFilterOptions = riskFilters.get(currentRiskFilter)
+            var riskScore = riskMatchingFn(riskFormulas[currentRiskFilter], fragmentValue, selectedFilterOptions)
+            if(!riskScore) {
+                return defaults
+            }
+            return {
                 'strokeWeight': roadTypeStrokeWeight[roadType],
                 'strokeColor': riskScore.color,
-                zIndex: 50
-            } : { visible: false }
+                zIndex: zIndexByRoadType[roadType],
+                visible: true
+            }
         }
     }
 
@@ -696,16 +726,12 @@ window.APP.WGIS = function wGisModule() {
             switch (assetType) {
                 case 'Pavement':
                     return {
-                        // TODO - color en función de filtros
                         'strokeColor': colorSource,
                         'strokeWeight': roadTypeStrokeWeight[roadType]
                     }
                 default: {
                     return {
                         //TODO - markers específico por tipo de activo puntual
-                        //TODO - color de marker en función de filtros
-
-                        //label: String(assetType.slice(0, 1)).toUpperCase(),
                         icon: createIconMarker(String(assetType.slice(0, 1)).toUpperCase(), feature.getProperty('color') || defaultMarkerColor),
                         visible: feature.getProperty('isVisible') !== false
                     }
