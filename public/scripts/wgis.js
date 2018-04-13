@@ -204,16 +204,10 @@ window.APP.WGIS = function wGisModule() {
                         riskSpinner.hide()
                     })
                 }
-                else {
-                    console.log('Risk filter change but not Pavement selected')
-                }
-
             }
-            /* else {
-                _.each(selectedRoadTypes, function(roadType){
-                    riskRoadLayers[roadType].setMap(null)
-                })
-            } */
+            else {
+                applyRiskFiltersToAssets()
+            }
         } else if(haveFilterOptionsChanged){
             applyRiskFiltersToAssets()
         }
