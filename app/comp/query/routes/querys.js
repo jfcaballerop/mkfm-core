@@ -57,7 +57,7 @@ router.get('/consultas', function (req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    // // Peticiones 
+    // // Peticiones
 
 
     var request = http.request(options, function (res) {
@@ -285,23 +285,26 @@ router.post('/V1/paint_results/', function (req, res, next) {
             inval = {
                 $in: postData[v]
             };
-            where["properties." + v] = inval;
-            whereArr.push(where);
-            inArr[v] = postData[v];
-            select2["properties." + v] = 1;
-
+            // añadir solo criterios que tengan valores!
+            if(postData[v].length){
+                where["properties." + v] = inval;
+                whereArr.push(where);
+                inArr[v] = postData[v];
+                select2["properties." + v] = 1;
+            }
         }
     };
     debug(select);
     debug('#### WHERE ####');
     debug(JSON.stringify(whereArr));
+    console.log(JSON.stringify(whereArr))
     Infodatatrack.find({
         $and: whereArr
     }, services.mergeDeep(select, select2)).exec(function (err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
-            res.send(500, ret);
+            res.status(500).send(ret);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
         //ret.data = data;
