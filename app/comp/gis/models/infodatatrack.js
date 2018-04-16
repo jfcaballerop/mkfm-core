@@ -101,7 +101,7 @@ var infodatatrackSchema = new Schema({
         rlofnatural: [],
         rlofphysical: [],
 
-        rbarriersexist: [], //Road Furniture Data        
+        rbarriersexist: [], //Road Furniture Data
         rbarrierstype: [],
         rsafetyfence: [],
         rbarrierfunct: [],
@@ -115,7 +115,7 @@ var infodatatrackSchema = new Schema({
         rfpastinterv: [],
         rfyearinterv: [],
         rfcomments: [],
-        bcode: [], // BRIDGES        
+        bcode: [], // BRIDGES
         bexistence: [],
         bname: [],
         byearconstruc: [],
@@ -203,7 +203,7 @@ var infodatatrackSchema = new Schema({
         brisknaturalnorm: [],
         blofnatural: [],
         blofphysical: [],
-        gcode: [], // GEOTECHNICAL ASSETS        
+        gcode: [], // GEOTECHNICAL ASSETS
         gyearconstruct: [],
         gtype: [],
         gposition: [],
@@ -283,7 +283,7 @@ var infodatatrackSchema = new Schema({
         grisknaturalnorm: [],
         glofnatural: [],
         glofphysical: [],
-        gcode2: [], // GEOTECHNICAL ASSETS  2      
+        gcode2: [], // GEOTECHNICAL ASSETS  2
         gyearconstruct2: [],
         gtype2: [],
         gposition2: [],
@@ -492,6 +492,9 @@ var infodatatrackSchema = new Schema({
 infodatatrackSchema.index({
     "geometry": "2dsphere"
 });
+infodatatrackSchema.index({
+    "properties.name": 1
+})
 
 // create the model
 var Infodatatrack = mongoose.model('Infodatatrack', infodatatrackSchema);

@@ -1,4 +1,5 @@
 // DEBUG APP
+var dotenv = require('dotenv').load()
 var debug = require('debug')('mkfw-corev1');
 
 var express = require('express');
@@ -16,7 +17,7 @@ var flash = require('connect-flash');
 //var cors = require('cors');
 var jwt = require('jwt-simple');
 var bodyParser = require('body-parser');
-
+var AssetCache = require('./app/services/asset_cache')
 
 // CONFIG de la APP
 var configDB = require((path.join(__dirname, '/config/database.js')));
@@ -41,7 +42,7 @@ app.set('views', [
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(cookieParser());
 // TRANSLATE CONFIG
 
@@ -52,8 +53,8 @@ i18n.configure({
     autoReload: true,
     cookie: 'ulang',
     api: {
-        '__': 'trans', //now req.__ becomes req.t 
-        '__n': 'tn' //and req.__n can be called as req.tn 
+        '__': 'trans', //now req.__ becomes req.t
+        '__n': 'tn' //and req.__n can be called as req.tn
     }
 
 });
@@ -103,7 +104,14 @@ mongoose.connect(configDB.url, {
             "connectTimeoutMS": configAPP.CONNECTTIMEOUTMS
         }
     }
-});
+})
+.then(() => {
+    console.debug('Connected to Mongo')
+    AssetCache.load()
+})
+.catch(err => {
+    console.error('Error connecting to mongo', err.message)
+})
 
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
@@ -112,10 +120,13 @@ var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('connect', console.debug.bind(console, 'MongoDB CONNECTION OK!'));
+db.on('connect', function(){
+    console.debug('MongoDB CONNECTION OK!')
+    AssetCache.load()
+});
 
 /*********************************
- *  URL - Routes 
+ *  URL - Routes
  * *******************************/
 // Require ROUTES de la aplicacion
 var login = require('./routes/login');
@@ -152,5 +163,21 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
+// any exception not catched end up here
+// ideally we should clean up and finish the process
+// but now, for developement, log it and keep the app working
+process.on('uncaughtException', err => {
+    console.warn('OOOPS! Unhandled ERROR', err.message);
+    console.warn('Maybe you should try/catch the operation?');
+    console.log(err);
+});
+
+process.on('unhandledRejection', err => {
+    console.warn('OOOPS! Unhandled Promise rejection', err.message);
+    console.log(err);
+})
+
 
 module.exports = app;

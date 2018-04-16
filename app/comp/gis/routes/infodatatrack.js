@@ -21,6 +21,8 @@ var Road = mongoose.model('Road');
 var koboinfoModels = require(path.join(__dirname, '../models/koboinfo'));
 var Koboinfo = mongoose.model('Koboinfo');
 
+const AssetCache = require('../../../services/asset_cache');
+
 
 
 router.use(function timeLog(req, res, next) {
@@ -620,72 +622,73 @@ router.post('/update_infodatatrack', function (req, resp, next) {
 });
 
 
-router.post('/update_videoinfodatatrack', function (req, resp, next) {
-    var postData = extend({}, req.body.infodatatrack);
-    var arrOneCoord = [];
-    var arrCoord = [];
-    var arrPK = [];
-    // Comprobar si trae geometry
-    if (postData.geometry !== undefined) {
-        // // console.log('## WEB/update_videoinfodatatrack geometry## ');
-        // // console.log('## WEB/update_videoinfodatatrack inverted ## ' + postData.inverted);
-        if (postData.geometry.coordinates !== undefined) {
-            //// console.log(JSON.stringify(postData.geometry.coordinates));
-            postData.geometry.coordinates.forEach(function (element, index) {
-                arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
-                arrOneCoord.forEach(function (e, i) {
-                    arrOneCoord[i] = parseFloat(e.trim());
+router.post('/update_videoinfodatatrack',
+    function (req, resp, next) {
+        var postData = extend({}, req.body.infodatatrack);
+        var arrOneCoord = [];
+        var arrCoord = [];
+        var arrPK = [];
+        // Comprobar si trae geometry
+        if (postData.geometry !== undefined) {
+            // // console.log('## WEB/update_videoinfodatatrack geometry## ');
+            // // console.log('## WEB/update_videoinfodatatrack inverted ## ' + postData.inverted);
+            if (postData.geometry.coordinates !== undefined) {
+                //// console.log(JSON.stringify(postData.geometry.coordinates));
+                postData.geometry.coordinates.forEach(function (element, index) {
+                    arrOneCoord = element.replace('[ ', '').replace(' ]', '').split(',');
+                    arrOneCoord.forEach(function (e, i) {
+                        arrOneCoord[i] = parseFloat(e.trim());
+                    });
+                    arrCoord[index] = arrOneCoord;
+                    if (index > 0) {
+                        arrPK[index] = Math.round((arrPK[index - 1] + service.calDIST(arrCoord[index], arrCoord[index - 1])) * 100) / 100;
+                    } else {
+                        arrPK[index] = 0;
+                    }
                 });
-                arrCoord[index] = arrOneCoord;
-                if (index > 0) {
-                    arrPK[index] = Math.round((arrPK[index - 1] + service.calDIST(arrCoord[index], arrCoord[index - 1])) * 100) / 100;
-                } else {
-                    arrPK[index] = 0;
-                }
+                postData.geometry.coordinates = arrCoord;
+                postData.properties.pk = arrPK;
+
+                //TODO: si se modifican las COORD, hay que recalcular los PK/UTM
+                // // console.log(JSON.stringify(postData.properties));
+            }
+        }
+
+        var options = {
+            host: config.HOST_API,
+            port: config.PORT_API,
+            path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+                'Authorization': 'Bearer ' + req.cookies.jwtToken
+            }
+        };
+        var request = http.request(options, function (res) {
+            // //// // console.log('STATUS: ' + res.statusCode);
+            // //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
+            res.setEncoding('utf8');
+            var data = '';
+            res.on('data', function (chunk) {
+                // //// // console.log('BODY: ' + chunk);
+                data += chunk;
+
             });
-            postData.geometry.coordinates = arrCoord;
-            postData.properties.pk = arrPK;
-
-            //TODO: si se modifican las COORD, hay que recalcular los PK/UTM
-            // // console.log(JSON.stringify(postData.properties));
-        }
-    }
-
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/infodatatrack/V1/update_infodatatrack/' + req.body.infodatatrack._id,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
-    var request = http.request(options, function (res) {
-        // //// // console.log('STATUS: ' + res.statusCode);
-        // //// // console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            // //// // console.log('BODY: ' + chunk);
-            data += chunk;
-
+            res.on('end', function () {
+                // //// // console.log('DATA ' + data.length + ' ' + data);
+                var responseObject = JSON.parse(data);
+                //success(data);
+                resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+                AssetCache.refresh()
+            });
         });
-        res.on('end', function () {
-            // //// // console.log('DATA ' + data.length + ' ' + data);
-            var responseObject = JSON.parse(data);
-            //success(data);
-            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
-
+        request.on('error', function (err) {
+            console.error('problem with request: ${err.message}');
         });
+        request.write(JSON.stringify(postData));
+        request.end();
     });
-    request.on('error', function (err) {
-        console.error('problem with request: ${err.message}');
-    });
-    request.write(JSON.stringify(postData));
-    request.end();
-});
 
 
 /*
@@ -890,9 +893,12 @@ router.get('/V1/', function (req, res, next) {
     debug(fields);
 
     Infodatatrack.find({}, fields).exec(function (err, infodatatracks) {
-        if (err)
-            res.send(500, err.ssage);
-        res.status(200).jsonp(infodatatracks);
+        if (err) {
+            res.send(500, err.message);
+        } else {
+            console.log('infodatatracks', infodatatracks.length)
+            res.status(200).json(infodatatracks);
+        }
     });
 
 });
@@ -901,13 +907,13 @@ router.get('/V1/list_order', function (req, res, next) {
     var properties = {
         'properties.name': 1,
         'properties.rcode': 1
-
     };
     Infodatatrack.find({}, properties).sort({
         'properties.name': 1
     }).exec(function (err, infodatatracks) {
         if (err) {
-            res.send(500, err.message);
+            console.error('Error en infodatatrack list_order', err.message)
+            return res.status(500).send(err.message);
         }
         res.status(200).jsonp(infodatatracks);
     });
@@ -1667,7 +1673,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
 
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (infodatatrack[0].properties.koboedit !== undefined &&
+                            infodatatrack[0].properties.koboedit.length &&
+                            infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
@@ -1742,7 +1750,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
 
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (infodatatrack[0].properties.koboedit !== undefined &&
+                            infodatatrack[0].properties.koboedit.length &&
+                            infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
@@ -1805,8 +1815,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('_id', infodatatrack[0]._id);
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
-
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (infodatatrack[0].properties.koboedit !== undefined &&
+                            infodatatrack[0].properties.koboedit.length &&
+                            infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
@@ -1873,7 +1884,9 @@ router.get('/V1/list_ifdt/:info', function (req, res, next) {
                     debug('llego', infodatatrack[0].properties.koboedit);
                     for (var kobo of kobos) {
 
-                        if (infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
+                        if (infodatatrack[0].properties.koboedit !== undefined &&
+                            infodatatrack[0].properties.koboedit.length &&
+                            infodatatrack[0].properties.koboedit[0].kobo_id === String(kobo._id)) {
                             debug('llego', String(kobo._id));
                             returnObject["properties"]["asset_photos"] = kobo.properties._attachments;
                         }
