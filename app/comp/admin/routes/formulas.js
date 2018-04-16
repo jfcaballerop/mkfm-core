@@ -4328,7 +4328,10 @@ async function (req, res, next) {
                                                 //debug('totalScoring6: ' + totalScoring);
                                             }
                                             //  CORRECTIVE FACTORS - VEGETATION
-                                            if (ifdt.properties.gtypevegetation2 !== undefined && ifdt.properties.gtypevegetation2.length > 0 &&
+                                            if (
+                                                ifdt.properties.gtypevegetation2.length > 0 &&
+                                                ifdt.properties.gtypevegetation2 !== undefined &&
+                                                ifdt.properties.gtypevegetation2[i] !== undefined &&
                                                 ifdt.properties.gtypevegetation2[i] !== null &&
                                                 ifdt.properties.gtypevegetation2[i] !== "") {
                                                 for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
