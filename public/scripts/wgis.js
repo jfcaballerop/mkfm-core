@@ -626,7 +626,7 @@ window.APP.WGIS = function wGisModule() {
                     '</a></strong><br><hr>';
                 subcontent += '<h5>Inventory Data</h5>';
 
-                subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype")) +
+                subcontent += '<strong>Typology: </strong>' + (getProp("gtype") || getProp("gtype2")) +
                     '<br>';
                 subcontent += '<strong>Position: </strong>' + (getProp("gposition") || getProp("gposition2")) +
                     '<br>';
