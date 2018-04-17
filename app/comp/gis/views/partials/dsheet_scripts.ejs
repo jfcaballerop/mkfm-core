@@ -1027,7 +1027,7 @@
                             $('#response').show();
                             $('#response').append("Asset type: " + ifdt.properties.asset_type);
                             jsonObject = ifdt;
-                            //// //console.log(jsonObject); 
+                            //// //console.log(jsonObject);
                             jsonObject.properties.color = "#a17cff";
                             jsonObject.properties.nameoption = "Culvert";
                             map.data.addGeoJson(jsonObject);
@@ -1041,7 +1041,7 @@
                             $('#response').show();
                             $('#response').append("Asset type: " + ifdt.properties.asset_type);
                             jsonObject = ifdt;
-                            //// //console.log(jsonObject); 
+                            //// //console.log(jsonObject);
                             jsonObject.properties.color = "#135dd6";
                             jsonObject.properties.nameoption = "Drainage";
                             map.data.addGeoJson(jsonObject);
@@ -1274,7 +1274,7 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
                                 jsonObject = ifdt;
-                                //// //console.log(jsonObject); 
+                                //// //console.log(jsonObject);
                                 jsonObject.properties.color = "#a17cff";
                                 jsonObject.properties.nameoption = "Culvert";
                                 map.data.addGeoJson(jsonObject);
@@ -1288,7 +1288,7 @@
                                 $('#response').show();
                                 $('#response').append("Asset type: " + ifdt.properties.asset_type);
                                 jsonObject = ifdt;
-                                //// //console.log(jsonObject); 
+                                //// //console.log(jsonObject);
                                 jsonObject.properties.color = "#135dd6";
                                 jsonObject.properties.nameoption = "Drainage";
                                 map.data.addGeoJson(jsonObject);
@@ -1358,19 +1358,18 @@
                         });
 
                         delay(function () {
-                            console.log('Time elapsed!');
                             Promise.all([p1, p2]).then(function (values) {
                                 $('#spinner').show();
-                                map.data.forEach(function (feature) {
+                                /* map.data.forEach(function (feature) {
                                     // If you want, check here for some constraints.
                                     // if (feature.getProperty('nameoption') === 'Main Road') {
                                     map.data.remove(feature);
                                     // }
 
 
-                                });
-                                console.log(values);
-                                console.log(Object.keys(values[0]));
+                                }); */
+                                /* console.log(values);
+                                console.log(Object.keys(values[0])); */
                                 ifdt = values[0];
                                 filelist = values[1];
                                 $('#datainfo').hide();
@@ -1456,7 +1455,7 @@
 
 
         $("#upload_file_form").bind("submit", function () {
-            // above check 
+            // above check
             $('#datainfo').show();
             $('#dataupload').show();
             var ext = $('#file_upload').val().split('.').pop().toLowerCase();

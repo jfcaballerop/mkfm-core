@@ -11,6 +11,7 @@ var base64Img = require('base64-img');
 var mathjs = require('mathjs');
 var formulasService = require('./formulas');
 
+
 exports.makeKoboGeoJson = function (arr, index, type) {
     // console.log('## Services makeKoboGeoJson ##');
     //console.log(JSON.stringify(arr) + ' ' + index + ' ' + type);
@@ -27,6 +28,7 @@ exports.makeKoboGeoJson = function (arr, index, type) {
     retJson.geometry.coordinates = arr.geometry.coordinates[index];
 
     for (var v of Object.keys(arr.properties)) {
+        if(!arr.properties[v]) continue;
         retJson.properties[v] = arr.properties[v][index];
         // debug(v + ': ' + retJson.properties[v]);
     }
@@ -204,7 +206,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         //debug(typeof (ts));
         ts = Number(ts);
         if (ts === 0) {
-            /** 
+            /**
              * si es el primer tramo inicializo
              */
             antsect = mathjs.mode(trackSections[0])[0];
@@ -224,8 +226,8 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             // //debug('*NEW ' + mathjs.mode(trackSections[ts]) +
             //     ' pkini: ' + pkini.toString().split('.')[0] + '+' + pkini.toString().split('.')[1].substring(0, 3));
         } else {
-            /** 
-             * Si no es el primer tramo, hago los calculos 
+            /**
+             * Si no es el primer tramo, hago los calculos
              */
 
             // debug('antsect ' + antsect);
