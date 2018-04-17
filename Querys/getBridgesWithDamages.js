@@ -79,6 +79,8 @@ db.getCollection('infodatatracks').aggregate([
         // finally, select a single bridge if needed
         // or at least only bridges with ANY damage
         $match: {
+            // get only documents with bcode
+            bcode: { $exists: 1, $ne: "" },
             // DEBUG SINGLE BRIDGE
             //_id: "M6-SPL-B-1130",
             /* $or: [
