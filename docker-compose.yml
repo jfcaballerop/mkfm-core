@@ -1,0 +1,32 @@
+version: "3"
+services:
+  app:
+    build: .
+    environment:
+      - MONGO_HOST=mongodb
+    volumes:
+      - ./:/app                 # mount source code into container
+      - /app/node_modules       # don't share node_modules (host may be OSX/Win but container is Linux)
+    links:
+      - mongodb
+    ports:
+      - "3000:3000"
+    # npm install just in case some dependencies where added since the container was last built
+    command: bash -c "npm install && npm run devstart"
+
+  # How to configure mongo image: https://stackoverflow.com/a/42917632/573520
+  # Restoring stuff in mongo: docker-compose exec mongodb bash y luego
+  # mongorestore -d mkfwcoredb -u "mkfwcore" -p "admin" --authenticationDatabase admin  -c schedules backups/schedule
+  mongodb:
+    image: mongo:3.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mkfwcore
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=mkfwcoredb
+    volumes:
+      # Any .js or .sh files in _tools/mongo will be executed the first time the container is built
+      - ./_tools/mongo:/docker-entrypoint-initdb.d/
+      - ./_mongodata:/data/db/
+      - ./backups:/backups
+    ports:
+      - "27017:27017"

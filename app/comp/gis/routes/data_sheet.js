@@ -320,7 +320,7 @@ router.get('/list_files', function (req, resp, next) {
 
 /* GET List Info */
 router.get('/list_info', function (req, resp, next) {
-    var promises = [];
+    /* var promises = [];
     var optionsRoad = {
         host: config.HOST_API,
         port: config.PORT_API,
@@ -417,7 +417,7 @@ router.get('/list_info', function (req, resp, next) {
 
     // now wait for all promises to be done
     Promise.all(promises).then(function (allData) {
-        // This callback renders the page with all needed data 
+        // This callback renders the page with all needed data
         //   when all the https.request() calls are done
         //runISYGetCallback(allData, resInput);
         // console.log(JSON.stringify(allData[0].body));
@@ -469,10 +469,10 @@ router.get('/list_info', function (req, resp, next) {
             } else {
                 otherr.push(elem);
             }
-        });
+        }); */
 
         resp.render('data_sheet', {
-            kobo_mainr_geo: kobo_mainr_geo,
+           /*  kobo_mainr_geo: kobo_mainr_geo,
             kobo_secondaryr_geo: kobo_secondaryr_geo,
             kobo_feederr_geo: kobo_feederr_geo,
             kobo_urbanr_geo: kobo_urbanr_geo,
@@ -494,7 +494,7 @@ router.get('/list_info', function (req, resp, next) {
             mainr: mainr,
             koboinfos_geo: koboinfos_geo,
             koboinfos_odt: koboinfos_odt,
-            koboinfos_bridge: koboinfos_bridge,
+            koboinfos_bridge: koboinfos_bridge, */
             token: req.token,
             title: config.CLIENT_NAME + '-' + config.APP_NAME,
             cname: config.CLIENT_NAME,
@@ -507,10 +507,10 @@ router.get('/list_info', function (req, resp, next) {
         });
         //  resp.render('user', { users: JSON.parse(data), title: config.CLIENT_NAME + '-' + config.APP_NAME, cname: config.CLIENT_NAME, id: req.user_id, login: req.user_login, rol: req.rol });
 
-    }, function (reason) {
+   /*  }, function (reason) {
         console.log(reason);
         return res.status(500).send(reason);
-    });
+    }); */
 
 });
 /* GET List Info */
@@ -525,7 +525,7 @@ router.get('/details/:assetcode', function (req, resp, next) {
             'Authorization': 'Bearer ' + req.cookies.jwtToken
         }
     };
-    // // Peticiones 
+    // // Peticiones
 
 
     var request = http.request(options, function (res) {

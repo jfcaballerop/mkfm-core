@@ -35,7 +35,7 @@ router.use(function timeLog(req, res, next) {
                 req.flash('message', 'El token ha expirado!');
 
                 // res.status(403).redirect('/');
-                res.status(401).send('Token expired! Refresh session.');
+                res.status(401).redirect('/');
             } else if (err) {
                 debug('## ERR2: ' + err);
                 req.flash('message', err);
