@@ -104,22 +104,22 @@ function calculateBridgeCondition(bridge = DEFAULT_BRIDGE, params) {
     }
 
     // no damages
-    console.log('All scores', scores)
+    //console.log('All scores', scores)
     score = twoDecimals(findSmaller(scores))
-    console.log('Score before corrective factors', score)
+    //console.log('Score before corrective factors', score)
 
     // CORRECTIVE FACTORS
 
     // 1. existance of several damages
     if(mechanicalDamageCount > 0){
         // apply formula
-        console.log('applying mech correction')
+        //console.log('applying mech correction')
         const y = 0.0018*Math.pow(mechanicalDamageCount, 3) - 0.0305*Math.pow(mechanicalDamageCount, 2) + 0.0302*mechanicalDamageCount + 0.9862
         score *= y
     }
     if(durableDamageCount > 0){
         // apply formula
-        console.log('applying durable correction')
+        //console.log('applying durable correction')
         const y = durableDamageCount < 3 ? 1 : -0.0214*durableDamageCount + 1.0643
         score *= y
     }
@@ -127,13 +127,13 @@ function calculateBridgeCondition(bridge = DEFAULT_BRIDGE, params) {
     // 2. bridge type ONLY if score is NOT 100
     const bridgeTypeScore = params.correctiveBridgeType[bridgeData.type]
     if(score !== 100 && bridgeTypeScore){
-        console.log('Applying bridge corrective factor', score, bridgeData.type, bridgeTypeScore)
+        //console.log('Applying bridge corrective factor', score, bridgeData.type, bridgeTypeScore)
         score *= bridgeTypeScore
     }
     else if(score !== 100) {
         score *= params.correctiveBridgeType.Other
     }
-    console.log('Score before return', score)
+    //console.log('Score before return', score)
     return twoDecimals(score)
 }
 
