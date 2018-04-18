@@ -6,16 +6,22 @@ class Cache {
 
         this._name = name
         this._loadFn = loadFn
+        this._loadingPromise = null
         this._loaded = false
         this._data = null
     }
 
     async load(){
+        if(this._loadingPromise) return this._loadingPromise
         try {
             let start = Date.now()
-            this._data = await this._loadFn()
-            this._loaded = true
-            console.log(`Cache ${this._name} loaded in ${(Date.now()-start)/1000} secs`)
+            this._loadingPromise = this._loadFn().then(data => {
+                this._data = data
+                this._loaded = true
+                console.log(`Cache ${this._name} loaded in ${(Date.now()-start)/1000} secs`)
+            })
+            return this._loadingPromise
+
         }
         catch(error){
             console.log('Error loading cache ' + this._name + ': ' + error.message)
@@ -32,6 +38,7 @@ class Cache {
     }
 
     refresh(){
+        this._loadingPromise = null
         this._loaded = false
     }
 }
