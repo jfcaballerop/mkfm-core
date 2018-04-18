@@ -121,7 +121,7 @@ async function updateBridgeCondition(bridgeData){
     }
     try {
         const result = await Infodatatrack.update(updateConditions, updateData)
-        console.log('Updated bridge', bridgeData._id, ' with condition', fractionalBridgeCondition, result)
+        //console.log('Updated bridge', bridgeData._id, ' with condition', fractionalBridgeCondition, result)
         return true
     }
     catch(err){
