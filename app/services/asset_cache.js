@@ -151,8 +151,14 @@ function isCorrectKoboType(assetType, koboType){
     }
 }
 
-// extracts assets from a track, completes them with kobodata
-// and pushes to a destination array
+// extracts assets from a track, completes them with kobodata and pushes to a destination array
+
+// @param {String}  codeProperty    Asset code property, like "bcode" or "Ccode"
+// @param {String}  assetType       Culvert | Bridge | Geotechnical
+// @param {Array}   destination     Destination array to push found assets to
+// @param {Object}  assetProps      Map of mongo fields to extract, like { "properties.bcondition" }
+// @param {Array}   koboinfos       Array of Koboinfos Mongoose documents to find kobos related to each asset
+// @returns nothing
 function extractAssets(track, codeProperty, assetType, destination, assetProps, koboinfos){
     const uniqueNonEmptyCodes = _.unique(track.properties[codeProperty]).filter(x => !!x)
     uniqueNonEmptyCodes.forEach(assetCode => {
