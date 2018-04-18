@@ -2,41 +2,6 @@ describe('Bridge Condition', () => {
     const assert = require('assert')
     const { calculateBridgeCondition, DEFAULT_BRIDGE } = require('./bridgeCondition')
 
-    const mock1 = {
-        "_id": "M6-SPL-B-1130",
-        "indices": [
-            163,
-            164
-        ],
-        "sourceTrackId": "59fb33cc8fa7b44dcbd1fd18",
-        "bcode": "M6-SPL-B-1130",
-        "type": "Masonry_arch",
-        "damages": {
-            "foundations": "Damages from foundation-ground decay",
-            foundationsDetail: 'Scouring on abutments',
-            //"foundations": "Damages from foundation decay",
-            "foundationsDetail": "General scouring",
-            "slab": "",
-            "slabSeverity": "",
-            "piers": "",
-            "piersSeverity": "",
-            "beams": "",
-            "beamsSeverity": "",
-            "bearings": "",
-            "bearingsSeverity": "",
-            "abutments": "",
-            "abutmentsSeverity": "",
-            "sidewalls": "",
-            "sidewallsSeverity": "",
-            "vaultsArches": "",
-            "vaultsArchesSeverity": "",
-            "spandrel": "",
-            "spandrelSeverity": "",
-            "specialAreas": "",
-            "nonStructural": "No damages"
-        }
-    }
-
     const parameters = {
         damageTypeScoring: {
             foundationGroundDecay: {
@@ -253,7 +218,7 @@ describe('Bridge Condition', () => {
     })
 
     it('returns a number', () => {
-        const res = calculateBridgeCondition(mock1, parameters)
+        const res = calculateBridgeCondition(DEFAULT_BRIDGE, parameters)
         assert.equal(typeof res, 'number')
     })
 

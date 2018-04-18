@@ -10,6 +10,7 @@ function findSmaller(numbers){
     })[0]
 }
 
+// Expected data format, see Queys/getBridgesWithDamages
 const DEFAULT_BRIDGE = {
     type: 'Other',
     damages: {
