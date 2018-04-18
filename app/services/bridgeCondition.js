@@ -1,73 +1,140 @@
 const _ = require('underscore')
 
-function calculateBridgeCondition(bridgeData, params) {
+function twoDecimals(n){
+    return Math.round(n * 100) / 100
+}
+
+function findSmaller(numbers){
+    return numbers.sort(function(a,b){
+        return a-b
+    })[0]
+}
+
+const DEFAULT_BRIDGE = {
+    type: 'Other',
+    damages: {
+        foundations: '',
+        foundationsDetail: '',
+        slab: '',
+        slabSeverity: '',
+        piers: '',
+        piersSeverity: '',
+        beams: '',
+        beamsSeverity: '',
+        bearings: '',
+        bearingsSeverity: '',
+        abutments: '',
+        abutmentsSeverity: '',
+        sidewalls: '',
+        sidewallsSeverity: '',
+        vaultArches: '',
+        vaultArchesSeverity: '',
+        spandrel: "",
+        spandrelSeverity: "",
+        specialAreas: "",
+        nonStructural: "No damages"
+    }
+}
+
+function calculateBridgeCondition(bridge = DEFAULT_BRIDGE, params) {
+    const bridgeData = _.extend({}, DEFAULT_BRIDGE, bridge)
     const { damages } = bridgeData
     const { damageTypeScoring } = params
     // FIRST - MAIN FACTORS
     let damageCount = 0
     let mechanicalDamageCount = 0
     let durableDamageCount = 0
-    let score = 1
+    let scores = [100]
     // damages on foundations
     if (damages.foundations) {
         if(~damages.foundations.indexOf(damageTypeScoring.foundationGroundDecay.match)){
             // find details
             _.each(damageTypeScoring.foundationGroundDecay.details, function(detailScore, match){
-                if(~damages.foundationsDetail.indexOf(match)){
-                    score *= detailScore * damageTypeScoring.foundationGroundDecay.score
+                const regex = new RegExp(match, 'gi')
+                if(regex.test(damages.foundationsDetail)){
+                    //console.log('Found foundation damage', match, damages.foundationsDetail)
+                    scores.push(detailScore * damageTypeScoring.foundationGroundDecay.score)
                     damageCount++
+                    mechanicalDamageCount++
                 }
             })
         }
         if(~damages.foundations.indexOf(damageTypeScoring.foundationDecay.match)){
             // no details in Mongo right now
-            score *= damageTypeScoring.foundationDecay.score * damageTypeScoring.foundationDecay.detailsScore
+            scores.push(damageTypeScoring.foundationDecay.score * damageTypeScoring.foundationDecay.detailsScore)
             damageCount++
+            mechanicalDamageCount++
         }
     }
 
     // damages on structural elements
-    const hasStructuralDamages = Boolean(damages.slab || damages.piers || damages.beams || damages.bearings ||
-        damages.abutments || damages.sidewalls || damages.vaultsArches || damages.spandrel || damages.specialAreas)
-    if(hasStructuralDamages){
-
-    }
+    const structuralProperties = ['slab', 'piers', 'beams', 'bearings', 'abutments', 'sidewalls', 'vaultsArches', 'spandrel', 'specialAreas']
+    structuralProperties.forEach(prop => {
+        const type = damages[prop]
+        const severity = damages[prop + 'Severity']
+        const paramGroup = params.damageTypeScoring[prop]
+        const groupScore = paramGroup.score
+        _.each(paramGroup.details, function(severityOptions, damageType){
+            const damageTypeRegEx = new RegExp(damageType, 'gi')
+            if(damageTypeRegEx.test(type)){
+                const isMechanical = /Mechanical|No bearings|Bearings displaced/.test(type)
+                //console.log('Found type of damage', prop, damageType, type)
+                _.each(severityOptions, function(score, optionSeverity){
+                    if(severity === optionSeverity){
+                        //console.log('Found structural damage', prop, severity, groupScore*score, 'Mech/Durable: ', isMechanical)
+                        scores.push(groupScore * score)
+                        isMechanical ? mechanicalDamageCount++ : durableDamageCount++
+                    }
+                })
+            }
+        })
+    })
 
 
     // damages on non structural elements
     if(damages.nonStructural){
         _.each(damageTypeScoring.nonStructural.details, function(detailScore, match){
-            if(~damages.nonStructural.indexOf(match)){
+            const regex = new RegExp(match, 'gi')
+            if(regex.test(damages.nonStructural)){
+                //console.log('Found non structural', damages.nonStructural, match)
                 score *= detailScore * damageTypeScoring.nonStructural.score
             }
         })
     }
 
     // no damages
-
+    //console.log('All scores', scores)
+    score = twoDecimals(findSmaller(scores))
+    //console.log('Score before corretive factors', score)
 
     // CORRECTIVE FACTORS
-    // existance of several damages
+
+    // 1. existance of several damages
     if(mechanicalDamageCount > 0){
         // apply formula
+        const y = 0.0018*Math.pow(mechanicalDamageCount, 3) - 0.0305*Math.pow(mechanicalDamageCount, 2) + 0.0302*mechanicalDamageCount + 0.9862
+        score *= y
     }
     if(durableDamageCount > 0){
         // apply formula
+        const y = durableDamageCount < 3 ? 1 : -0.0214*durableDamageCount + 1.0643
+        score *= y
     }
-    // bridge type
-    if(damageCount){
-        const bridgeTypeScore = params.correctiveBridgeType[bridgeData.type]
-        if(bridgeTypeScore){
-            score *= bridgeTypeScore
-        }
+    score = twoDecimals(score)
+    // 2. bridge type
+    const bridgeTypeScore = params.correctiveBridgeType[bridgeData.type]
+    if(bridgeTypeScore){
+        //console.log('Applying bridge corrective factor', score, bridgeData.type, bridgeTypeScore)
+        score *= bridgeTypeScore
+    }
+    else {
+        score *= params.correctiveBridgeType.Other
     }
 
-
-
-    return Math.round(score * 100) / 100
-    //return score
+    return twoDecimals(score)
 }
 
 module.exports = {
-    calculateBridgeCondition
+    calculateBridgeCondition,
+    DEFAULT_BRIDGE
 }
