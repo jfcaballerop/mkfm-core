@@ -614,7 +614,7 @@ router.post('/V1/updateKobo/:id', function (req, res, next) {
                     arrkoboedit.push(newkobo);
 
                 } else {
-                    if (ifdt.properties.koboedit.length != 0) {
+                    if (ifdt.properties.koboedit !== undefined && ifdt.properties.koboedit.length != 0) {
                         arrkoboedit.push(ifdt.properties.koboedit[cindex]);
 
                     } else {
