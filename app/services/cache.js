@@ -31,7 +31,7 @@ class Cache {
         return this._data
     }
 
-    async refresh(){
+    refresh(){
         this._loaded = false
     }
 }

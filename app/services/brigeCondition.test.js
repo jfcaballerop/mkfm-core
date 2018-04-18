@@ -32,6 +32,7 @@ describe('Bridge Condition', () => {
                 }
             },
             {
+                //M6-SPL-B-1130
                 expected: 30.49,
                 type: 'Masonry_arch',
                 damages: {
@@ -40,7 +41,7 @@ describe('Bridge Condition', () => {
                 }
             },
             {
-                expected: 95,
+                expected: 100,
                 type: 'Slab',
                 damages: {}
             },
@@ -77,6 +78,14 @@ describe('Bridge Condition', () => {
                 damages: {
                     foundations: 'Damages from foundation-ground decay',
                     foundationsDetail: 'Scouring on abutments'
+                }
+            },
+            {
+                //M6-SD-B-3606
+                expected: 100,
+                type: 'Masonry_arch',
+                damages: {
+                    nonStructural: 'No damages'
                 }
             }
         ].map(x => createBridge(x))

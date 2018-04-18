@@ -3635,8 +3635,23 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
 /**
  * Metodo para modificar los valores devueltos por las formulas
  */
+const BridgeService = require('../../../services/bridgeService')
 router.post('/V1/update_formulas_tracks_condition/:formula/:asset',
 async function (req, res, next) {
+    console.log('Update formulas tracks condition', req.params.formula, req.params.asset)
+    // Carlos - cortocircuitar para puentes aqui
+    // y usar el servicio BridgeServicio y la nueva fórmula de condición de puentes
+    if(req.params.formula === 'AssetCondition' && req.params.asset === 'Bridges'){
+        const { updatedCount, failedCount } = await BridgeService.updateAllBridgesCondition()
+        AssetCache.refresh()
+        res.json({
+            result: 'OK',
+            tracksUpdated: updatedCount,
+            tracksFailed: failedCount
+        })
+        return
+    }
+
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
@@ -4392,7 +4407,8 @@ async function (req, res, next) {
 
 
 
-        case 'Bridges':
+
+        /*case 'Bridges':
             // ////debug(form);
             // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
             await Infodatatrack.find({
@@ -4674,9 +4690,9 @@ async function (req, res, next) {
 
                                         }
                                         // //debug('totalScoring7:  ' + totalScoring);
-                                        /**
-                                         * jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
-                                         */
+                                        //
+                                        // jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
+                                        //
                                         valueconditionsr.push(totalScoring / 100);
                                         if (ifdt.properties.bcode[i] === AssetADebugear) {
                                             //debug(' totalScoring10:            ' + totalScoring);
@@ -4713,9 +4729,6 @@ async function (req, res, next) {
                     var conditions = {
                         _id: ifdt._id
                     };
-                    /**
-                     * modified jfcp: añado el guardarlo por tanto por 1
-                     */
                     var query = {
                         $set: {
                             "properties.bcondition": valueconditionsr
@@ -4743,24 +4756,10 @@ async function (req, res, next) {
             ret.tracksUpdated = tracksUpdated;
             ////debug('tracksUpdated: ' + tracksUpdated);
             res.status(200).jsonp(ret);
-            break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             break;
-        default:
+            */
+            default:
             break;
     }
     AssetCache.refresh()
