@@ -297,14 +297,26 @@ router.post('/V1/paint_results/', function (req, res, next) {
     debug(select);
     debug('#### WHERE ####');
     debug(JSON.stringify(whereArr));
-    console.log(JSON.stringify(whereArr))
+    console.log('Queries, Where:', JSON.stringify(whereArr))
+    console.log('Selected columns', select, select2)
+    const conditions = {}
+    // if not filter is selected, don't send an AND to Mongo or an empty AND
+    // that will cause the ENTIRE DB to sent back
+    // stop here and tell the user to filter some more
+    if(!whereArr.length){
+        return res.status(400).send({
+            result: 'ERROR',
+            errormessage: "Please select some filter criteria"
+        })
+    }
     Infodatatrack.find({
         $and: whereArr
     }, services.mergeDeep(select, select2)).exec(function (err, data) {
         if (err) {
             ret.result = 'ERROR';
             ret.errormessage = err.message;
-            res.status(500).send(ret);
+            console.log('Error in Query', err)
+            return res.status(500).send(ret);
         }
         //debug(" ### GET Querys ### \n" + JSON.stringify(ifdts));
         //ret.data = data;

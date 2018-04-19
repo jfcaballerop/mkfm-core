@@ -120,7 +120,7 @@
                     if (values[0].result === "ERROR") {
                         // console.log(values[0].result);
                     } else {
-                        // TODO: Stop spinner        
+                        // TODO: Stop spinner
                         // console.log(values[0].result);
                         //// console.log(values[0].filters);
                         var filters = values[0].filters;
@@ -361,8 +361,11 @@
                     for (var [kfc, vfc] of Object.keys(arrFiltersValues).entries()) {
                         dataPost[vfc] = arrFiltersValues[vfc];
                         // console.length(k + ' ' + v)
-
                     };
+                    if(!arrColumnsChecked.length){
+                        alert("Please select some column to display results!")
+                        return
+                    }
                     var p1 = $.ajax({
                         url: '/auth/WEB/query/paint_results',
                         data: JSON.stringify(dataPost),
