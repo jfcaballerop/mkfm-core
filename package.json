@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "devstart": "nodemon -e js,json --ignore '*.test.js' ./bin/www",
+        "devstart": "nodemon --max_old_space_size=4096 -e js,json --ignore '*.test.js' ./bin/www",
         "test": "mocha ./app/**/*.test.js",
         "tdd": "npm test -- --watch --watch-extensions js"
     },

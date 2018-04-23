@@ -431,46 +431,46 @@ router.post('/get_formulas_tracks/', function (req, resp) {
  * @param asset
  */
 router.post('/update_formulas_tracks_risk/:formula/:asset',
-function (req, resp) {
-    var postData = extend({}, req.body);
-    ////debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
+    function (req, resp) {
+        var postData = extend({}, req.body);
+        ////debug('## WEB update_formulas_tracks_risk: ' + req.params.formula + ' - ' + req.params.asset);
 
-    var options = {
-        host: config.HOST_API,
-        port: config.PORT_API,
-        path: config.PATH_API + '/admin/V1/update_formulas_tracks_risk/' + req.params.formula + '/' + req.params.asset + '/',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
-            'Authorization': 'Bearer ' + req.cookies.jwtToken
-        }
-    };
+        var options = {
+            host: config.HOST_API,
+            port: config.PORT_API,
+            path: config.PATH_API + '/admin/V1/update_formulas_tracks_risk/' + req.params.formula + '/' + req.params.asset + '/',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(JSON.stringify(postData)),
+                'Authorization': 'Bearer ' + req.cookies.jwtToken
+            }
+        };
 
 
 
-    var request = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        var data = '';
-        res.on('data', function (chunk) {
-            //// ////debug('BODY: ' + chunk);
-            data += chunk;
+        var request = http.request(options, function (res) {
+            res.setEncoding('utf8');
+            var data = '';
+            res.on('data', function (chunk) {
+                //// ////debug('BODY: ' + chunk);
+                data += chunk;
 
+            });
+            res.on('end', function () {
+                var responseObject = JSON.parse(data);
+                resp.status(200).jsonp(responseObject);
+                // resp.status(200).jsonp({ "result": "OK" });
+
+
+                //TODO: refresh asset cache
+                AssetCache.refresh()
+            });
         });
-        res.on('end', function () {
-            var responseObject = JSON.parse(data);
-            resp.status(200).jsonp(responseObject);
-            // resp.status(200).jsonp({ "result": "OK" });
+        request.write(JSON.stringify(postData));
+        request.end();
 
-
-            //TODO: refresh asset cache
-            AssetCache.refresh()
-        });
     });
-    request.write(JSON.stringify(postData));
-    request.end();
-
-});
 /* update_formulas_tracks_likelihood */
 /**
  * Proceso AJAX que recibe la peticion de actualizar todos los tracks afectados por la formular señeccionada
@@ -3038,7 +3038,7 @@ router.post('/V1/update_formulas_tracks_response/:formula/:asset', async functio
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, res, next) {
-    ////debug('API /V1/update_formulas_tracks/');
+    debug('API /V1/update_formulas_tracks/', req.params.formula, req.params.asset);
     var postData = extend({}, req.body);
     var ret = {
         "result": "OK",
@@ -3125,7 +3125,64 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     }
     ////debug(selectjson);
 
-    await Infodatatrack.find({}, selectjson).exec(function (err, rtracks) {
+    /**
+     * Cambio para seleccionar solo el asset que corresponda
+     */
+    var select = {};
+    switch (req.params.asset) {
+        case 'Bridges':
+            select = {
+                "properties.bcode": {
+                    $regex: /\w/i
+                }
+            }
+            break;
+        case 'Culverts':
+            select = {
+                "properties.Ccode": {
+                    $regex: /\w/i
+                }
+            }
+            break;
+        case 'Culverts':
+            select = {
+                "properties.Ccode": {
+                    $regex: /\w/i
+                }
+            }
+            break;
+        case 'Earthworks':
+            select = {
+                $or: [{
+                    "properties.gcode": {
+                        $regex: /\w/i
+                    }
+                }, {
+                    "properties.gcode2": {
+                        $regex: /\w/i
+                    }
+                }]
+            }
+            break;
+        case 'Retaining_Walls':
+            select = {
+                $or: [{
+                    "properties.gcode": {
+                        $regex: /\w/i
+                    }
+                }, {
+                    "properties.gcode2": {
+                        $regex: /\w/i
+                    }
+                }]
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    await Infodatatrack.find(select, selectjson).exec(function (err, rtracks) {
         if (err) {
             res.send(500, err.message);
         }
@@ -3637,1133 +3694,1136 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
  */
 const BridgeService = require('../../../services/bridgeService')
 router.post('/V1/update_formulas_tracks_condition/:formula/:asset',
-async function (req, res, next) {
-    console.log('Update formulas tracks condition', req.params.formula, req.params.asset)
-    // Carlos - cortocircuitar para puentes aqui
-    // y usar el servicio BridgeServicio y la nueva fórmula de condición de puentes
-    if(req.params.formula === 'AssetCondition' && req.params.asset === 'Bridges'){
-        const { updatedCount, failedCount } = await BridgeService.updateAllBridgesCondition()
-        AssetCache.refresh()
-        res.json({
-            result: 'OK',
-            tracksUpdated: updatedCount,
-            tracksFailed: failedCount
-        })
-        return
-    }
-
-    var postData = extend({}, req.body);
-    var tracksUpdated = 0;
-    var ret = {
-        "result": "OK",
-        "tracksUpdated": 0
-    };
-    var form;
-    var asset = req.params.asset;
-    var formula = 'Condition';
-    await Formula.find({
-        "name": formula
-    }).exec(async function (err, f) {
-        if (err) {
-            res.send(500, err.message);
+    async function (req, res, next) {
+        console.log('Update formulas tracks condition', req.params.formula, req.params.asset)
+        // Carlos - cortocircuitar para puentes aqui
+        // y usar el servicio BridgeServicio y la nueva fórmula de condición de puentes
+        if (req.params.formula === 'AssetCondition' && req.params.asset === 'Bridges') {
+            const {
+                updatedCount,
+                failedCount
+            } = await BridgeService.updateAllBridgesCondition()
+            AssetCache.refresh()
+            res.json({
+                result: 'OK',
+                tracksUpdated: updatedCount,
+                tracksFailed: failedCount
+            })
+            return
         }
-        form = f[0];
-    });
-    var wherearr = [];
-    var selectjson = {
-        "geometry.coordinates": 1,
-        properties: []
-    };
-    wherearr.push('Ccode');
-    wherearr.push('bcode');
-    wherearr.push('gcode');
-    wherearr.push('gcode2');
-    for (var w of wherearr) {
-        selectjson.properties[w] = 1;
-    }
-    var tracksUpdated2 = 0;
-    switch (asset) {
-        case 'Pavements':
-            // Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    var rcond = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        if (ifdt.properties.iri !== undefined &&
-                            ifdt.properties.iri !== [] &&
-                            ifdt.properties.iri[i] !== undefined && ifdt.properties.iri[i] !== null &&
-                            ifdt.properties.iri[i] !== "") {
-                            rcond[i] = formulasService.pavCondScaleNumIri(ifdt.properties.iri[i]);
-                        } else if (ifdt.properties.rvcondition !== undefined &&
-                            ifdt.properties.rvcondition !== [] &&
-                            ifdt.properties.rvcondition[i] !== undefined && ifdt.properties.rvcondition[i] !== null &&
-                            ifdt.properties.rvcondition[i] !== "") {
 
-                            rcond[i] = formulasService.pavCondScaleLetter(ifdt.properties.rvcondition[i]);
-                        } else {
-                            rcond[i] = "";
-                        }
+        var postData = extend({}, req.body);
+        var tracksUpdated = 0;
+        var ret = {
+            "result": "OK",
+            "tracksUpdated": 0
+        };
+        var form;
+        var asset = req.params.asset;
+        var formula = 'Condition';
+        await Formula.find({
+            "name": formula
+        }).exec(async function (err, f) {
+            if (err) {
+                res.send(500, err.message);
+            }
+            form = f[0];
+        });
+        var wherearr = [];
+        var selectjson = {
+            "geometry.coordinates": 1,
+            properties: []
+        };
+        wherearr.push('Ccode');
+        wherearr.push('bcode');
+        wherearr.push('gcode');
+        wherearr.push('gcode2');
+        for (var w of wherearr) {
+            selectjson.properties[w] = 1;
+        }
+        var tracksUpdated2 = 0;
+        switch (asset) {
+            case 'Pavements':
+                // Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
                     }
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-                    var query = {
-                        $set: {
-                            "properties.rcondition": rcond
-                        }
-                    }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-            });
-            res.status(200).jsonp(ret);
-            break;
-        case 'Culverts':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (form.formulaSpec[f].name) {
-                                case 'Culverts':
-                                    if (ifdt.properties.Ccode.length > 0) {
-                                        if (ifdt.properties.Ccode !== undefined &&
-                                            ifdt.properties.Ccode !== [] &&
-                                            ifdt.properties.Ccode[i] !== null &&
-                                            ifdt.properties.Ccode[i] !== "") {
-                                            var numberOfScores = 0;
-                                            if (ifdt.properties.CDamages.length > 0) {
-                                                for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(
-                                                                (score.toUpperCase() === 'LOSSOFDRAINAGEMOUTH' ? 'LOSS' : score.toUpperCase()) /// gnapa due to db values inconsistency
-                                                            ) >= 0) {
-                                                            totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
-                                                                totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
-                                                            numberOfScores++;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                totalScoring = 100;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                            if (numberOfScores > 2) {
-                                                totalScoring *= 0.9;
-                                            } else {
-                                                // existance of several damages
-                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            }
-                                            //  clearing required
-                                            if (ifdt.properties.Cclearing[i].length > 0) {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score];
-                                                            numberOfScores++;
-                                                        } else {
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
+                    for (var ifdt of ifdts) {
+                        var rcond = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            if (ifdt.properties.iri !== undefined &&
+                                ifdt.properties.iri !== [] &&
+                                ifdt.properties.iri[i] !== undefined && ifdt.properties.iri[i] !== null &&
+                                ifdt.properties.iri[i] !== "") {
+                                rcond[i] = formulasService.pavCondScaleNumIri(ifdt.properties.iri[i]);
+                            } else if (ifdt.properties.rvcondition !== undefined &&
+                                ifdt.properties.rvcondition !== [] &&
+                                ifdt.properties.rvcondition[i] !== undefined && ifdt.properties.rvcondition[i] !== null &&
+                                ifdt.properties.rvcondition[i] !== "") {
 
-                                                totalScoring *= 0.98;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring / 100);
-                                        } else {
-                                            // valueconditionsr.push("");
-                                            if (ifdt.properties.Ccondition[i] !== undefined) {
-                                                valueconditionsr.push(ifdt.properties.Ccondition[i]);
-                                            } else {
-                                                valueconditionsr.push('');
-                                            }
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                rcond[i] = formulasService.pavCondScaleLetter(ifdt.properties.rvcondition[i]);
+                            } else {
+                                rcond[i] = "";
                             }
                         }
-                    }
-                    tracksUpdated++;
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-                    var query = {
-                        $set: {
-                            "properties.Ccondition": valueconditionsr
-                        }
-                    }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-                // res.status(200).jsonp(ret);
-            });
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            res.status(200).jsonp(ret);
-            break;
-        case 'Retaining_Walls':
-            Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        var coincidencias = 0;
-                        //////debug(form.formulaSpec.length);
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (form.formulaSpec[f].name) {
-                                case 'Retaining_Walls':
-                                    //////////////////////INICIO///////////////////////////////
-                                    // ////debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
-                                    if (ifdt.properties.gcode.length > 0) {
-                                        if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
-                                            ifdt.properties.gcode[i] !== null &&
-                                            ifdt.properties.gcode[i] !== "" &&
-                                            ifdt.properties.gtype[i].indexOf('aining') > 0) {
-                                            // ////debug(ifdt.properties.gcode);
-                                            // ////debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
-                                            var numberOfScores = 0;
-                                            var numberOfTypeOfFailureProcess = 0;
-                                            // ////debug(ifdt.properties.gtypefailure.length);
-                                            if (ifdt.properties.gtypefailure.length > 0) {
-                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                    coincidencias++;
-                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
-                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
-                                                                    esnull = true;
-                                                                    numberOfScores++;
-                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure[i]) != ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
-                                                                        (ifdt.properties.gextentfailure[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4 * 100) ? 0.9 : (
-                                                                            (ifdt.properties.gextentfailure[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
-                                                                }
-                                                            }
-
-                                                            // if (ifdt.properties.gcode ==='S8-SG-01-RWL-2909'){
-                                                            //     //debug();
-                                                            // }
-
-
-
-
-                                                        }
-
-
-                                                    }
-                                                }
-                                                ////debug('totalScoring: ' + totalScoring);
-                                            } else {
-                                                totalScoring = 100;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                            // ////debug(totalScoring);
-
-                                            // Existance of several damages
-                                            if (numberOfScores > 2) {
-                                                totalScoring *= 0.9;
-                                            } else {
-                                                // existance of several damages
-                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            }
-
-                                            // ////debug('ifdt.properties.gtypevegetation:    ' + ifdt.properties.gtypevegetation);
-                                            // ////debug('ifdt.properties.gmaterial:    ' + ifdt.properties.gmaterial);
-                                            //  CORRECTIVE FACTORS - MATERIAL
-                                            if (ifdt.properties.gmaterial !== undefined &&
-                                                ifdt.properties.gmaterial.length > 0 &&
-                                                ifdt.properties.gmaterial[i] !== null &&
-                                                ifdt.properties.gmaterial[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
-                                                    // ////debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
-                                                    if (score !== undefined && score !== null) {
-                                                        // ////debug('score ' + score);
-                                                        // ////debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
-                                                        if (ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
-                                                            // ////debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-
-                                            } else {
-
-                                                totalScoring *= 0.98;
-                                            }
-                                            //  CORRECTIVE FACTORS - VEGETATION
-                                            if (ifdt.properties.gtypevegetation !== undefined && ifdt.properties.gtypevegetation.length > 0 &&
-                                                ifdt.properties.gtypevegetation[i] !== null &&
-                                                ifdt.properties.gtypevegetation[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    // ////debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
-                                                    if (score !== undefined && score !== null) {
-                                                        // ////debug('score ' + score);
-                                                        // ////debug('ifdt.gtypevegetation ' + ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
-                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                            // ////debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-
-                                                totalScoring *= 0.8;
-                                            }
-
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring / 100);
-                                            //////debug(totalScoring + '\n');
-                                        } else {
-                                            // valueconditionsr.push("");
-                                            if (ifdt.properties.gcondition[i] !== undefined) {
-                                                valueconditionsr.push(ifdt.properties.gcondition[i]);
-                                            } else {
-                                                valueconditionsr.push('');
-                                            }
-                                        }
-                                    }
-                                    // ////debug(valueconditionsr);
-                                    ///////////////////////FINAL//////////////////////////////////////////////
-
-                                    break;
-                                default:
-                                    break;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
+                        var query = {
+                            $set: {
+                                "properties.rcondition": rcond
                             }
                         }
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
                     }
-                    tracksUpdated++;
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-                    var query = {
-                        $set: {
-                            "properties.gcondition": valueconditionsr
-                        }
+                });
+                res.status(200).jsonp(ret);
+                break;
+            case 'Culverts':
+                await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
                     }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-                // res.status(200).jsonp(ret);
-            });
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        var coincidencias = 0;
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (form.formulaSpec[f].name) {
-                                case 'Retaining_Walls':
-                                    //////////////////////INICIO///////////////////////////////
-                                    if (ifdt.properties.gcode2.length > 0) {
-                                        if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
-                                            ifdt.properties.gcode2[i] !== null &&
-                                            ifdt.properties.gcode2[i] !== "" &&
-                                            ifdt.properties.gtype2[i].indexOf('aining') > 0) {
-                                            var numberOfScores = 0;
-                                            var numberOfTypeOfFailureProcess = 0;
-                                            if (ifdt.properties.gtypefailure2.length > 0) {
-                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                                    form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
-                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                    coincidencias++;
-                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
-                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
-                                                                    esnull = true;
-                                                                    numberOfScores++;
-                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
-                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
-                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
-                                                                }
-
+                    for (var ifdt of ifdts) {
+                        tracksUpdated2++;
+                        var valueconditionsr = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            for (var f = 0; f < form.formulaSpec.length; f++) {
+                                var totalScoring = Number.MAX_VALUE;
+                                switch (form.formulaSpec[f].name) {
+                                    case 'Culverts':
+                                        if (ifdt.properties.Ccode.length > 0) {
+                                            if (ifdt.properties.Ccode !== undefined &&
+                                                ifdt.properties.Ccode !== [] &&
+                                                ifdt.properties.Ccode[i] !== null &&
+                                                ifdt.properties.Ccode[i] !== "") {
+                                                var numberOfScores = 0;
+                                                if (ifdt.properties.CDamages.length > 0) {
+                                                    for (score in form.formulaSpec[f].MainFactor.Damages.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.CDamages[i].toString().toUpperCase().indexOf(
+                                                                    (score.toUpperCase() === 'LOSSOFDRAINAGEMOUTH' ? 'LOSS' : score.toUpperCase()) /// gnapa due to db values inconsistency
+                                                                ) >= 0) {
+                                                                totalScoring = totalScoring < form.formulaSpec[f].MainFactor.Damages.scoring[score] ?
+                                                                    totalScoring : form.formulaSpec[f].MainFactor.Damages.scoring[score];
+                                                                numberOfScores++;
                                                             }
                                                         }
                                                     }
+                                                } else {
+                                                    totalScoring = 100;
                                                 }
-                                            } else {
-                                                totalScoring = 100;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                            // Existance of several damages
-                                            if (numberOfScores > 2) {
-                                                totalScoring *= 0.9;
-                                            } else {
-                                                // existance of several damages
-                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            }
-                                            //  CORRECTIVE FACTORS - MATERIAL
-                                            if (ifdt.properties.gmaterial2 !== undefined &&
-                                                ifdt.properties.gmaterial2.length > 0 &&
-                                                ifdt.properties.gmaterial2[i] !== null &&
-                                                ifdt.properties.gmaterial2[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                if (numberOfScores > 2) {
+                                                    totalScoring *= 0.9;
+                                                } else {
+                                                    // existance of several damages
+                                                    totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
                                                 }
-
-                                            } else {
-
-                                                totalScoring *= 0.98;
-                                            }
-                                            //  CORRECTIVE FACTORS - VEGETATION
-                                            if (ifdt.properties.gtypevegetation2 !== undefined && ifdt.properties.gtypevegetation2.length > 0 &&
-                                                ifdt.properties.gtypevegetation2[i] !== null &&
-                                                ifdt.properties.gtypevegetation2[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                totalScoring *= 0.8;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring / 100);
-                                        } else {
-                                            // valueconditionsr.push("");
-                                            if (ifdt.properties.gcondition2[i] !== undefined) {
-                                                valueconditionsr.push(ifdt.properties.gcondition2[i]);
-                                            } else {
-                                                valueconditionsr.push('');
-                                            }
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                    tracksUpdated++;
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-
-                    var query = {
-                        $set: {
-                            "properties.gcondition2": valueconditionsr
-                        }
-                    }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-                // res.status(200).jsonp(ret);
-            });
-
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            res.status(200).jsonp(ret);
-            break;
-        case 'Cuttings_Embankments':
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        var coincidencias = 0;
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (form.formulaSpec[f].name) {
-                                case 'Cuttings_Embankments':
-                                    if (ifdt.properties.gcode.length > 0) {
-                                        if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
-                                            ifdt.properties.gcode[i] !== null &&
-                                            ifdt.properties.gcode[i] !== "" &&
-                                            (ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment")
-                                        ) {
-                                            var numberOfScores = 0;
-                                            var numberOfTypeOfFailureProcess = 0;
-                                            if (ifdt.properties.gtypefailure.length > 0) {
-                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                    coincidencias++;
-                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
-                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
-                                                                    esnull = true;
-                                                                    numberOfScores++;
-                                                                    totalScoring *= (Number(ifdt.properties.gextentfailure[i]) != ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
-                                                                        (ifdt.properties.gextentfailure[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4 * 100) ? 0.9 : (
-                                                                            (ifdt.properties.gextentfailure[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
-                                                                }
-
+                                                //  clearing required
+                                                if (ifdt.properties.Cclearing[i].length > 0) {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.Cclearing[i].toString().toUpperCase().indexOf(score.toUpperCase()) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.ClearingRequired.scoring[score];
+                                                                numberOfScores++;
+                                                            } else {
+                                                                totalScoring *= 1;
                                                             }
                                                         }
                                                     }
+                                                } else {
+
+                                                    totalScoring *= 0.98;
                                                 }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                valueconditionsr.push(totalScoring / 100);
                                             } else {
-                                                totalScoring = 100;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                            // Existance of several damages
-                                            if (numberOfScores > 2) {
-                                                totalScoring *= 0.9;
-                                            } else {
-                                                // existance of several damages
-                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            }
-                                            //  CORRECTIVE FACTORS - SizeOfBlocks
-                                            var factorSize0 = 1;
-                                            if (ifdt.properties.gblocks !== undefined &&
-                                                ifdt.properties.gblocks.length > 0 &&
-                                                ifdt.properties.gblocks[i] !== null &&
-                                                ifdt.properties.gblocks[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            // totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
-                                                            factorSize0 = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize0 ?
-                                                                form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize0;
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
+                                                // valueconditionsr.push("");
+                                                if (ifdt.properties.Ccondition[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.Ccondition[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
                                                 }
-                                                totalScoring *= factorSize0;
-
-                                            } else {
-
-                                                totalScoring *= 0.98;
-                                            }
-                                            //  CORRECTIVE FACTORS - VEGETATION
-                                            if (ifdt.properties.gtypevegetation !== undefined && ifdt.properties.gtypevegetation.length > 0 &&
-                                                ifdt.properties.gtypevegetation[i] !== null &&
-                                                ifdt.properties.gtypevegetation[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                        } else {
-
-                                                            totalScoring *= 1;
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-
-                                                totalScoring *= 0.8;
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring / 100);
-                                        } else {
-                                            // valueconditionsr.push("");
-                                            if (ifdt.properties.gcondition[i] !== undefined) {
-                                                valueconditionsr.push(ifdt.properties.gcondition[i]);
-                                            } else {
-                                                valueconditionsr.push('');
                                             }
                                         }
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                    }
-                    tracksUpdated++;
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-                    var query = {
-                        $set: {
-                            "properties.gcondition": valueconditionsr
+                        tracksUpdated++;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
+                        var query = {
+                            $set: {
+                                "properties.Ccondition": valueconditionsr
+                            }
                         }
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
                     }
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-            });
+                    // res.status(200).jsonp(ret);
+                });
+                tracksUpdated2 = tracksUpdated;
+                ret.tracksUpdated = tracksUpdated;
+                res.status(200).jsonp(ret);
+                break;
+            case 'Retaining_Walls':
+                Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    for (var ifdt of ifdts) {
+                        tracksUpdated2++;
+                        var valueconditionsr = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            var coincidencias = 0;
+                            //////debug(form.formulaSpec.length);
+                            for (var f = 0; f < form.formulaSpec.length; f++) {
+                                var totalScoring = Number.MAX_VALUE;
+                                switch (form.formulaSpec[f].name) {
+                                    case 'Retaining_Walls':
+                                        //////////////////////INICIO///////////////////////////////
+                                        // ////debug('ifdt.properties.gcode.length: ' + ifdt.properties.gcode.length);
+                                        if (ifdt.properties.gcode.length > 0) {
+                                            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
+                                                ifdt.properties.gcode[i] !== null &&
+                                                ifdt.properties.gcode[i] !== "" &&
+                                                ifdt.properties.gtype[i].indexOf('aining') > 0) {
+                                                // ////debug(ifdt.properties.gcode);
+                                                // ////debug('form.formulaSpec[f].name' + JSON.stringify(ifdt));
+                                                var numberOfScores = 0;
+                                                var numberOfTypeOfFailureProcess = 0;
+                                                // ////debug(ifdt.properties.gtypefailure.length);
+                                                if (ifdt.properties.gtypefailure.length > 0) {
+                                                    for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                        form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
+                                                        if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                            for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                                if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                        coincidencias++;
+                                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                        esnull = true;
+                                                                        numberOfScores++;
+                                                                        totalScoring *= (Number(ifdt.properties.gextentfailure[i]) != ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
+                                                                            (ifdt.properties.gextentfailure[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4 * 100) ? 0.9 : (
+                                                                                (ifdt.properties.gextentfailure[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
+                                                                    }
+                                                                }
 
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        var coincidencias = 0;
-                        //////debug(form.formulaSpec.length);
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (form.formulaSpec[f].name) {
-                                case 'Cuttings_Embankments':
-                                    var AssetADebugear2 = 'S8-SG-01-CR-2049-njasdkf';
-                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                        //debug('------------');
-                                        //debug(ifdt.properties.gcode2[i]);
-                                        //debug('totalScoring1: ' + totalScoring);
-                                    }
-                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                        //debug('ifdt.properties.gcode2    :' + ifdt.properties.gcode2[i]);
-                                        //debug('ifdt.properties.gtypefailure2    :' + ifdt.properties.gtypefailure2[i]);
-                                        //debug('ifdt.properties.gintensityfailure2    :' + ifdt.properties.gintensityfailure2[i]);
-                                        //debug('ifdt.properties.gextentfailure2    :' + ifdt.properties.gextentfailure2[i]);
-                                        //debug('ifdt.properties.gblocks2    :' + ifdt.properties.gblocks2[i]);
-                                        //debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2[i]);
-                                    }
-                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                        //debug('totalScoring2: ' + totalScoring);
-                                    }
-                                    if (ifdt.properties.gcode2.length > 0) {
-                                        if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
-                                            ifdt.properties.gcode2[i] !== null &&
-                                            ifdt.properties.gcode2[i] !== "" &&
-                                            (ifdt.properties.gtype2[i] === "Cutting" || ifdt.properties.gtype2[i] === "Embankment")
-                                        ) {
-                                            var numberOfScores = 0;
-                                            var numberOfTypeOfFailureProcess = 0;
-                                            if (ifdt.properties.gtypefailure2.length > 0) {
-                                                for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
-                                                    if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
-                                                        for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
-                                                            if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                // if (ifdt.properties.gcode ==='S8-SG-01-RWL-2909'){
+                                                                //     //debug();
+                                                                // }
 
-                                                                if (ifdt.properties.gintensityfailure2[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                                    coincidencias++;
-                                                                    totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
-                                                                        totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
-                                                                    esnull = true;
-                                                                    numberOfScores++;
-                                                                    totalScoring *= ((Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i]) || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
-                                                                        (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
-                                                                            (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
 
-                                                                    if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                                        //debug('totalScoring3: ' + totalScoring);
-                                                                        //debug('numberOfScores: ' + numberOfScores);
-                                                                        //debug('score: ' + score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
+
+
+                                                            }
+
+
+                                                        }
+                                                    }
+                                                    ////debug('totalScoring: ' + totalScoring);
+                                                } else {
+                                                    totalScoring = 100;
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                // ////debug(totalScoring);
+
+                                                // Existance of several damages
+                                                if (numberOfScores > 2) {
+                                                    totalScoring *= 0.9;
+                                                } else {
+                                                    // existance of several damages
+                                                    totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                                }
+
+                                                // ////debug('ifdt.properties.gtypevegetation:    ' + ifdt.properties.gtypevegetation);
+                                                // ////debug('ifdt.properties.gmaterial:    ' + ifdt.properties.gmaterial);
+                                                //  CORRECTIVE FACTORS - MATERIAL
+                                                if (ifdt.properties.gmaterial !== undefined &&
+                                                    ifdt.properties.gmaterial.length > 0 &&
+                                                    ifdt.properties.gmaterial[i] !== null &&
+                                                    ifdt.properties.gmaterial[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
+                                                        // ////debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
+                                                        if (score !== undefined && score !== null) {
+                                                            // ////debug('score ' + score);
+                                                            // ////debug('ifdt.gmaterial ' + ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
+                                                            if (ifdt.properties.gmaterial[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
+                                                                // ////debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score]);
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+
+                                                } else {
+
+                                                    totalScoring *= 0.98;
+                                                }
+                                                //  CORRECTIVE FACTORS - VEGETATION
+                                                if (ifdt.properties.gtypevegetation !== undefined && ifdt.properties.gtypevegetation.length > 0 &&
+                                                    ifdt.properties.gtypevegetation[i] !== null &&
+                                                    ifdt.properties.gtypevegetation[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
+                                                        // ////debug(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
+                                                        if (score !== undefined && score !== null) {
+                                                            // ////debug('score ' + score);
+                                                            // ////debug('ifdt.gtypevegetation ' + ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''));
+                                                            if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
+                                                                // ////debug(score + ' ' + form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score]);
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+
+                                                    totalScoring *= 0.8;
+                                                }
+
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                valueconditionsr.push(totalScoring / 100);
+                                                //////debug(totalScoring + '\n');
+                                            } else {
+                                                // valueconditionsr.push("");
+                                                if (ifdt.properties.gcondition[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.gcondition[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
+                                                }
+                                            }
+                                        }
+                                        // ////debug(valueconditionsr);
+                                        ///////////////////////FINAL//////////////////////////////////////////////
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        tracksUpdated++;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
+                        var query = {
+                            $set: {
+                                "properties.gcondition": valueconditionsr
+                            }
+                        }
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
+                    }
+                    // res.status(200).jsonp(ret);
+                });
+                tracksUpdated2 = tracksUpdated;
+                ret.tracksUpdated = tracksUpdated;
+                await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    for (var ifdt of ifdts) {
+                        tracksUpdated2++;
+                        var valueconditionsr = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            var coincidencias = 0;
+                            for (var f = 0; f < form.formulaSpec.length; f++) {
+                                var totalScoring = Number.MAX_VALUE;
+                                switch (form.formulaSpec[f].name) {
+                                    case 'Retaining_Walls':
+                                        //////////////////////INICIO///////////////////////////////
+                                        if (ifdt.properties.gcode2.length > 0) {
+                                            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
+                                                ifdt.properties.gcode2[i] !== null &&
+                                                ifdt.properties.gcode2[i] !== "" &&
+                                                ifdt.properties.gtype2[i].indexOf('aining') > 0) {
+                                                var numberOfScores = 0;
+                                                var numberOfTypeOfFailureProcess = 0;
+                                                if (ifdt.properties.gtypefailure2.length > 0) {
+                                                    for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                        form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight
+                                                        if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                            for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                                if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                        coincidencias++;
+                                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                        esnull = true;
+                                                                        numberOfScores++;
+                                                                        totalScoring *= (Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i] || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
+                                                                            (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
+                                                                                (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    totalScoring = 100;
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                // Existance of several damages
+                                                if (numberOfScores > 2) {
+                                                    totalScoring *= 0.9;
+                                                } else {
+                                                    // existance of several damages
+                                                    totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                                }
+                                                //  CORRECTIVE FACTORS - MATERIAL
+                                                if (ifdt.properties.gmaterial2 !== undefined &&
+                                                    ifdt.properties.gmaterial2.length > 0 &&
+                                                    ifdt.properties.gmaterial2[i] !== null &&
+                                                    ifdt.properties.gmaterial2[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gmaterial2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Material.Na.scoring[score];
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+
+                                                } else {
+
+                                                    totalScoring *= 0.98;
+                                                }
+                                                //  CORRECTIVE FACTORS - VEGETATION
+                                                if (ifdt.properties.gtypevegetation2 !== undefined && ifdt.properties.gtypevegetation2.length > 0 &&
+                                                    ifdt.properties.gtypevegetation2[i] !== null &&
+                                                    ifdt.properties.gtypevegetation2[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    totalScoring *= 0.8;
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                valueconditionsr.push(totalScoring / 100);
+                                            } else {
+                                                // valueconditionsr.push("");
+                                                if (ifdt.properties.gcondition2[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.gcondition2[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        tracksUpdated++;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
+
+                        var query = {
+                            $set: {
+                                "properties.gcondition2": valueconditionsr
+                            }
+                        }
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
+                    }
+                    // res.status(200).jsonp(ret);
+                });
+
+                tracksUpdated2 = tracksUpdated;
+                ret.tracksUpdated = tracksUpdated;
+                res.status(200).jsonp(ret);
+                break;
+            case 'Cuttings_Embankments':
+                await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    for (var ifdt of ifdts) {
+                        tracksUpdated2++;
+                        var valueconditionsr = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            var coincidencias = 0;
+                            for (var f = 0; f < form.formulaSpec.length; f++) {
+                                var totalScoring = Number.MAX_VALUE;
+                                switch (form.formulaSpec[f].name) {
+                                    case 'Cuttings_Embankments':
+                                        if (ifdt.properties.gcode.length > 0) {
+                                            if (ifdt.properties.gcode !== undefined && ifdt.properties.gcode !== [] &&
+                                                ifdt.properties.gcode[i] !== null &&
+                                                ifdt.properties.gcode[i] !== "" &&
+                                                (ifdt.properties.gtype[i] === "Cutting" || ifdt.properties.gtype[i] === "Embankment")
+                                            ) {
+                                                var numberOfScores = 0;
+                                                var numberOfTypeOfFailureProcess = 0;
+                                                if (ifdt.properties.gtypefailure.length > 0) {
+                                                    for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                        if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                            for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                                if (ifdt.properties.gtypefailure[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                    if (ifdt.properties.gintensityfailure[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                        coincidencias++;
+                                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                        esnull = true;
+                                                                        numberOfScores++;
+                                                                        totalScoring *= (Number(ifdt.properties.gextentfailure[i]) != ifdt.properties.gextentfailure[i] || ifdt.properties.gextentfailure[i] === 0) ? 1.00 : (
+                                                                            (ifdt.properties.gextentfailure[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure[i] <= 0.4 * 100) ? 0.9 : (
+                                                                                (ifdt.properties.gextentfailure[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    totalScoring = 100;
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                // Existance of several damages
+                                                if (numberOfScores > 2) {
+                                                    totalScoring *= 0.9;
+                                                } else {
+                                                    // existance of several damages
+                                                    totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                                }
+                                                //  CORRECTIVE FACTORS - SizeOfBlocks
+                                                var factorSize0 = 1;
+                                                if (ifdt.properties.gblocks !== undefined &&
+                                                    ifdt.properties.gblocks.length > 0 &&
+                                                    ifdt.properties.gblocks[i] !== null &&
+                                                    ifdt.properties.gblocks[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gblocks[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                // totalScoring *= form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score];
+                                                                factorSize0 = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize0 ?
+                                                                    form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize0;
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+                                                    totalScoring *= factorSize0;
+
+                                                } else {
+
+                                                    totalScoring *= 0.98;
+                                                }
+                                                //  CORRECTIVE FACTORS - VEGETATION
+                                                if (ifdt.properties.gtypevegetation !== undefined && ifdt.properties.gtypevegetation.length > 0 &&
+                                                    ifdt.properties.gtypevegetation[i] !== null &&
+                                                    ifdt.properties.gtypevegetation[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gtypevegetation[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+
+                                                    totalScoring *= 0.8;
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                valueconditionsr.push(totalScoring / 100);
+                                            } else {
+                                                // valueconditionsr.push("");
+                                                if (ifdt.properties.gcondition[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.gcondition[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        tracksUpdated++;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
+                        var query = {
+                            $set: {
+                                "properties.gcondition": valueconditionsr
+                            }
+                        }
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
+                    }
+                });
+
+                tracksUpdated2 = tracksUpdated;
+                ret.tracksUpdated = tracksUpdated;
+                await Infodatatrack.find({}, selectjson).exec(async function (err, ifdts) {
+                    if (err) {
+                        res.send(500, err.message);
+                    }
+                    for (var ifdt of ifdts) {
+                        tracksUpdated2++;
+                        var valueconditionsr = [];
+                        for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                            var coincidencias = 0;
+                            //////debug(form.formulaSpec.length);
+                            for (var f = 0; f < form.formulaSpec.length; f++) {
+                                var totalScoring = Number.MAX_VALUE;
+                                switch (form.formulaSpec[f].name) {
+                                    case 'Cuttings_Embankments':
+                                        var AssetADebugear2 = 'S8-SG-01-CR-2049-njasdkf';
+                                        if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                            //debug('------------');
+                                            //debug(ifdt.properties.gcode2[i]);
+                                            //debug('totalScoring1: ' + totalScoring);
+                                        }
+                                        if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                            //debug('ifdt.properties.gcode2    :' + ifdt.properties.gcode2[i]);
+                                            //debug('ifdt.properties.gtypefailure2    :' + ifdt.properties.gtypefailure2[i]);
+                                            //debug('ifdt.properties.gintensityfailure2    :' + ifdt.properties.gintensityfailure2[i]);
+                                            //debug('ifdt.properties.gextentfailure2    :' + ifdt.properties.gextentfailure2[i]);
+                                            //debug('ifdt.properties.gblocks2    :' + ifdt.properties.gblocks2[i]);
+                                            //debug('ifdt.properties.gtypevegetation2    :' + ifdt.properties.gtypevegetation2[i]);
+                                        }
+                                        if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                            //debug('totalScoring2: ' + totalScoring);
+                                        }
+                                        if (ifdt.properties.gcode2.length > 0) {
+                                            if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] &&
+                                                ifdt.properties.gcode2[i] !== null &&
+                                                ifdt.properties.gcode2[i] !== "" &&
+                                                (ifdt.properties.gtype2[i] === "Cutting" || ifdt.properties.gtype2[i] === "Embankment")
+                                            ) {
+                                                var numberOfScores = 0;
+                                                var numberOfTypeOfFailureProcess = 0;
+                                                if (ifdt.properties.gtypefailure2.length > 0) {
+                                                    for (TypeOfFailureProcess1 in form.formulaSpec[f].Damages.TypeOfFailureProcess) {
+                                                        if (TypeOfFailureProcess1 !== undefined && TypeOfFailureProcess1 !== null) {
+                                                            for (score in form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring) {
+                                                                if (ifdt.properties.gtypefailure2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(TypeOfFailureProcess1.toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+
+                                                                    if (ifdt.properties.gintensityfailure2[i].toString().toUpperCase().indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                        coincidencias++;
+                                                                        totalScoring = totalScoring < form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight ?
+                                                                            totalScoring : form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].scoring[score] * form.formulaSpec[f].Damages.TypeOfFailureProcess[TypeOfFailureProcess1].weight;
+                                                                        esnull = true;
+                                                                        numberOfScores++;
+                                                                        totalScoring *= ((Number(ifdt.properties.gextentfailure2[i]) != ifdt.properties.gextentfailure2[i]) || ifdt.properties.gextentfailure2[i] === 0) ? 1.00 : (
+                                                                            (ifdt.properties.gextentfailure2[i] <= 0.2 * 100) ? 1 : ((ifdt.properties.gextentfailure2[i] <= 0.4 * 100) ? 0.9 : (
+                                                                                (ifdt.properties.gextentfailure2[i] <= 0.6 * 100) ? 0.8 : ((ifdt.properties.gextentfailure2[i] <= 0.8 * 100) ? 0.7 : (0.5)))));
+
+                                                                        if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                                            //debug('totalScoring3: ' + totalScoring);
+                                                                            //debug('numberOfScores: ' + numberOfScores);
+                                                                            //debug('score: ' + score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, ''))
+                                                                        }
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     }
+                                                } else {
+                                                    totalScoring = 100;
                                                 }
-                                            } else {
-                                                totalScoring = 100;
-                                            }
-                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                //debug('totalScoring4: ' + totalScoring);
-                                                //debug('numberOfScores: ' + numberOfScores);
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                            // Existance of several damages
-                                            if (numberOfScores > 2) {
-                                                totalScoring *= 0.9;
-                                            } else {
-                                                // existance of several damages
-                                                totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
-                                            }
-                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                //debug('totalScoring5: ' + totalScoring);
-                                            }
-                                            //  CORRECTIVE FACTORS - SizeOfBlocks
-                                            if (ifdt.properties.gblocks2 !== undefined &&
-                                                ifdt.properties.gblocks2.length > 0 &&
-                                                ifdt.properties.gblocks2[i] !== null &&
-                                                ifdt.properties.gblocks2[i] !== "") {
-                                                var factorSize = 1;
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            factorSize = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize ?
-                                                                form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize;
-                                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                                //debug(form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
-                                                                //debug('factorSize: ' + factorSize);
+                                                if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                    //debug('totalScoring4: ' + totalScoring);
+                                                    //debug('numberOfScores: ' + numberOfScores);
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                // Existance of several damages
+                                                if (numberOfScores > 2) {
+                                                    totalScoring *= 0.9;
+                                                } else {
+                                                    // existance of several damages
+                                                    totalScoring *= (-0.1 * numberOfScores) / 3 + 1;
+                                                }
+                                                if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                    //debug('totalScoring5: ' + totalScoring);
+                                                }
+                                                //  CORRECTIVE FACTORS - SizeOfBlocks
+                                                if (ifdt.properties.gblocks2 !== undefined &&
+                                                    ifdt.properties.gblocks2.length > 0 &&
+                                                    ifdt.properties.gblocks2[i] !== null &&
+                                                    ifdt.properties.gblocks2[i] !== "") {
+                                                    var factorSize = 1;
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gblocks2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                factorSize = form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] < factorSize ?
+                                                                    form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score] : factorSize;
+                                                                if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                                    //debug(form.formulaSpec[f].CorrectiveFactors.SizeOfBlocks.Na.scoring[score]);
+                                                                    //debug('factorSize: ' + factorSize);
+                                                                }
+                                                            } else {
+
+                                                                totalScoring *= 1;
                                                             }
-                                                        } else {
-
-                                                            totalScoring *= 1;
                                                         }
                                                     }
+                                                    totalScoring *= factorSize;
+                                                } else {
+                                                    totalScoring *= 1;
                                                 }
-                                                totalScoring *= factorSize;
-                                            } else {
-                                                totalScoring *= 1;
-                                            }
-                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                //debug('totalScoring6: ' + totalScoring);
-                                            }
-                                            //  CORRECTIVE FACTORS - VEGETATION
-                                            if (
-                                                ifdt.properties.gtypevegetation2.length > 0 &&
-                                                ifdt.properties.gtypevegetation2 !== undefined &&
-                                                ifdt.properties.gtypevegetation2[i] !== undefined &&
-                                                ifdt.properties.gtypevegetation2[i] !== null &&
-                                                ifdt.properties.gtypevegetation2[i] !== "") {
-                                                for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
-                                                    if (score !== undefined && score !== null) {
-                                                        if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                            totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
-                                                        } else {
-                                                            totalScoring *= 1;
+                                                if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                    //debug('totalScoring6: ' + totalScoring);
+                                                }
+                                                //  CORRECTIVE FACTORS - VEGETATION
+                                                if (
+                                                    ifdt.properties.gtypevegetation2.length > 0 &&
+                                                    ifdt.properties.gtypevegetation2 !== undefined &&
+                                                    ifdt.properties.gtypevegetation2[i] !== undefined &&
+                                                    ifdt.properties.gtypevegetation2[i] !== null &&
+                                                    ifdt.properties.gtypevegetation2[i] !== "") {
+                                                    for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
+                                                        if (score !== undefined && score !== null) {
+                                                            if (ifdt.properties.gtypevegetation2[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring[score];
+                                                            } else {
+                                                                totalScoring *= 1;
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            } else {
+                                                } else {
 
-                                                totalScoring *= 1;
-                                            }
-                                            if (ifdt.properties.gcode2[i] === AssetADebugear2) {
-                                                //debug('totalScoring7: ' + totalScoring);
-                                            }
-                                            totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                            valueconditionsr.push(totalScoring / 100);
-                                        } else {
-                                            // valueconditionsr.push("");
-                                            if (ifdt.properties.gcondition2[i] !== undefined) {
-                                                valueconditionsr.push(ifdt.properties.gcondition2[i]);
+                                                    totalScoring *= 1;
+                                                }
+                                                if (ifdt.properties.gcode2[i] === AssetADebugear2) {
+                                                    //debug('totalScoring7: ' + totalScoring);
+                                                }
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                valueconditionsr.push(totalScoring / 100);
                                             } else {
-                                                valueconditionsr.push('');
+                                                // valueconditionsr.push("");
+                                                if (ifdt.properties.gcondition2[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.gcondition2[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
+                                                }
                                             }
                                         }
-                                    }
-                                    break;
-                                default:
-                                    break;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                    }
-                    tracksUpdated++;
-                    var conditions = {
-                        _id: ifdt._id
-                    };
+                        tracksUpdated++;
+                        var conditions = {
+                            _id: ifdt._id
+                        };
 
-                    var query = {
-                        $set: {
-                            "properties.gcondition2": valueconditionsr
+                        var query = {
+                            $set: {
+                                "properties.gcondition2": valueconditionsr
+                            }
                         }
+
+                        await Infodatatrack.update(conditions, query, function (err, iup) {
+                            if (err) {}
+                        });
                     }
+                });
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {}
-                    });
-                }
-            });
-
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            ////debug('tracksUpdated: ' + tracksUpdated);
-            res.status(200).jsonp(ret);
-            break;
+                tracksUpdated2 = tracksUpdated;
+                ret.tracksUpdated = tracksUpdated;
+                ////debug('tracksUpdated: ' + tracksUpdated);
+                res.status(200).jsonp(ret);
+                break;
 
 
 
 
-        /*case 'Bridges':
-            // ////debug(form);
-            // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
-            await Infodatatrack.find({
-                 _id: ObjectId("59fb33cc8fa7b44dcbd1fd18")
-            }, selectjson).exec(async function (err, ifdts) {
-                if (err) {
-                    res.send(500, err.message);
-                }
-                AssetADebugear = 'M6-SPL-B-1130';
-                for (var ifdt of ifdts) {
-                    tracksUpdated2++;
-                    var valueconditionsr = [];
+                /*case 'Bridges':
+                    // ////debug(form);
+                    // Infodatatrack.find({}, selectjson).exec(function (err, ifdts) {
+                    await Infodatatrack.find({
+                         _id: ObjectId("59fb33cc8fa7b44dcbd1fd18")
+                    }, selectjson).exec(async function (err, ifdts) {
+                        if (err) {
+                            res.send(500, err.message);
+                        }
+                        AssetADebugear = 'M6-SPL-B-1130';
+                        for (var ifdt of ifdts) {
+                            tracksUpdated2++;
+                            var valueconditionsr = [];
 
-                    for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                        // console.log('i:     ' + i);
-                        var coincidencias = 0;
-                        var coincidenciasMechanical = 0;
-                        var coincidenciasDurable = 0;
-                        //////debug(form.formulaSpec.length);
-                        for (var f = 0; f < form.formulaSpec.length; f++) {
-                            var formula = form.formulaSpec[f]
-                            var totalScoring = Number.MAX_VALUE;
-                            switch (formula.name) {
-                                case 'Bridges':
+                            for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
+                                // console.log('i:     ' + i);
+                                var coincidencias = 0;
+                                var coincidenciasMechanical = 0;
+                                var coincidenciasDurable = 0;
+                                //////debug(form.formulaSpec.length);
+                                for (var f = 0; f < form.formulaSpec.length; f++) {
+                                    var formula = form.formulaSpec[f]
+                                    var totalScoring = Number.MAX_VALUE;
+                                    switch (formula.name) {
+                                        case 'Bridges':
 
-                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                        console.debug('ASSET TO DEBUG')
-                                        console.debug('Index', i)
-                                        console.debug('bcode: ' + ifdt.properties.bcode[i]);
-                                        console.debug('bdamagesfoundationsgeneraltype:   ' + ifdt.properties.bdamagesfoundationsgeneraltype[i]);
-                                        console.debug('bdamagesfoundationsdetailedtype:   ' + ifdt.properties.bdamagesfoundationsdetailedtype[i]);
-                                        console.debug('BDamagesSlab:   ' + ifdt.properties.BDamagesSlab[i]);
-                                        console.debug('BDamagesslabSeverity:   ' + ifdt.properties.BDamagesslabSeverity[i]);
-                                        console.debug('BDamagesPiers:   ' + ifdt.properties.BDamagesPiers[i]);
-                                        console.debug('BDamagesPiersSeverity:   ' + ifdt.properties.BDamagesPiersSeverity[i]);
-                                        console.debug('BDamagesBearings:   ' + ifdt.properties.BDamagesBearings[i]);
-                                        console.debug('BDamagesBearingsSeverity:   ' + ifdt.properties.BDamagesBearingsSeverity[i]);
-                                        console.debug('BDamagesAbutments:   ' + ifdt.properties.BDamagesAbutments[i]);
-                                        console.debug('BDamagesAbutmentsSeverity:   ' + ifdt.properties.BDamagesAbutmentsSeverity[i]);
-                                        console.debug('BDamagessidewallsSeverity:   ' + ifdt.properties.BDamagessidewallsSeverity[i]);
-                                        console.debug('BDamagesVaultArchesSeverity:   ' + ifdt.properties.BDamagesVaultArchesSeverity[i]);
-                                        console.debug('BDamagesSpandrelSeverity:   ' + ifdt.properties.BDamagesSpandrelSeverity[i]);
-                                        console.debug('BDamagesSpecialareasSeverity:   ' + ifdt.properties.BDamagesSpecialareasSeverity[i]);
-                                        console.debug('BDamagesBeamsSeverity:   ' + ifdt.properties.BDamagesBeamsSeverity[i]);
-
-                                        console.debug('formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay: ' + JSON.stringify(formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay));
-                                    }
-
-                                    if (ifdt.properties.bcode &&
-                                        ifdt.properties.bcode.length &&
-                                        ifdt.properties.bcode[i]) {
-                                        console.log('Tengo bcode, al lio')
-                                        var numberOfScores = 0;
-                                        var numberOfTypeOfFailureProcess = 0;
-                                        if (formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay  &&
-                                            formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring  &&
-                                            Array.isArray(ifdt.properties.bdamagesfoundationsgeneraltype) &&
-                                            ifdt.properties.bdamagesfoundationsgeneraltype[i]) {
-                                            ////debug(formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
-                                            console.log('Entro en daños from foundation ground decay')
-                                            for (x in formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
-                                                console.log('Evaluando ', x, ifdt.properties.bdamagesfoundationsdetailedtype[i])
-                                                if(!x) continue;
-                                                if (~ifdt.properties.bdamagesfoundationsdetailedtype[i].indexOf(x)) {
-                                                    console.log('Found damagesfoundations detailed type in ', ifdt.properties.bdamagesfoundationsdetailedtype[i])
-                                                    totalScoring = 0.85 * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
-                                                } else {
-                                                    console.log('no from foundation ground decay', totalScoring)
-                                                    if (x.toString().indexOf("echanical") > -1) {
-                                                        coincidenciasMechanical++;
-                                                    } else if (x.toString().indexOf("urable") > -1) {
-                                                        coincidenciasDurable++;
-                                                    }
-                                                    coincidencias++;
-                                                    totalScoring = totalScoring < formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
-                                                        totalScoring : formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
-
-                                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                        console.debug(' totalScoring1:            ' + totalScoring);
-                                                        console.debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                                        console.debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                                    }
-                                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                        console.debug(' ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()]:               ' + ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()]);
-
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        // //debug('totalScoring2:  ' + totalScoring);
-                                        if (formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay !== undefined &&
-                                            formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[0] !== undefined &&
-                                            ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
-                                            ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length !== 0) {
-                                            for (x in formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
-                                                if (x.toString() !== undefined &&
-                                                    ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()] === undefined) {;
-                                                } else {
-
-                                                    if (x.toString().indexOf("echanical") > -1) {
-                                                        coincidenciasMechanical++;
-                                                    } else if (x.toString().indexOf("urable") > -1) {
-                                                        coincidenciasDurable++;
-                                                    }
-                                                    coincidencias++;
-                                                    totalScoring = totalScoring < formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
-                                                        totalScoring : formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
-                                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                        //debug(' totalScoring2:            ' + totalScoring);
-                                                        //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                                        //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        // //debug('totalScoring3:  ' + totalScoring);
-                                        // Mechanical Defects, Durable Defects
-                                        var z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas", "BDamagesBeams"];
-
-                                        //  Very High, High, Medium, Low, Unknown
-                                        var z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity", "BDamagesBeamsSeverity"];
-                                        var k = 0;
-                                        if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                            //debug('formula.MainFactor.Damages.DamagesOnStructuralElements:');
-                                            //debug(formula.MainFactor.Damages.DamagesOnStructuralElements)
-                                        }
-                                        for (y in formula.MainFactor.Damages.DamagesOnStructuralElements) {
-                                            var FACTOR = Number.MAX_VALUE;
                                             if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                //debug('----------' + k);
-                                                //debug(y);
-                                                //debug(z2[k]);
-                                                //debug(' ifdt.properties[z2[k]][i]:            ' + ifdt.properties[z2[k]][i]);
-                                                //debug(z1[k]);
-                                                //debug(' ifdt.properties[z1[k]][i]: ' + ifdt.properties[z1[k]][i]);
-                                                //debug(ifdt.properties[z2[k]][i] !== undefined);
-                                                //debug(ifdt.properties[z1[k]][i] !== undefined);
-                                                //debug(ifdt.properties[z2[k]][i] !== '');
-                                                //debug(ifdt.properties[z1[k]][i] !== '');
-                                                //debug(capitalizeFirstLetter(ifdt.properties[z2[k]][i]) !== undefined);
-                                                //debug(capitalizeFirstLetter(ifdt.properties[z1[k]][i]) !== undefined);
-                                                // //debug(ifdt.properties[z1[k]][i].replace('Durability','Durable'));
-                                                //debug(capitalizeFirstLetter(ifdt.properties[z1[k]][i]));
-                                                //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y]);
-                                                // //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))] !== undefined);
+                                                console.debug('ASSET TO DEBUG')
+                                                console.debug('Index', i)
+                                                console.debug('bcode: ' + ifdt.properties.bcode[i]);
+                                                console.debug('bdamagesfoundationsgeneraltype:   ' + ifdt.properties.bdamagesfoundationsgeneraltype[i]);
+                                                console.debug('bdamagesfoundationsdetailedtype:   ' + ifdt.properties.bdamagesfoundationsdetailedtype[i]);
+                                                console.debug('BDamagesSlab:   ' + ifdt.properties.BDamagesSlab[i]);
+                                                console.debug('BDamagesslabSeverity:   ' + ifdt.properties.BDamagesslabSeverity[i]);
+                                                console.debug('BDamagesPiers:   ' + ifdt.properties.BDamagesPiers[i]);
+                                                console.debug('BDamagesPiersSeverity:   ' + ifdt.properties.BDamagesPiersSeverity[i]);
+                                                console.debug('BDamagesBearings:   ' + ifdt.properties.BDamagesBearings[i]);
+                                                console.debug('BDamagesBearingsSeverity:   ' + ifdt.properties.BDamagesBearingsSeverity[i]);
+                                                console.debug('BDamagesAbutments:   ' + ifdt.properties.BDamagesAbutments[i]);
+                                                console.debug('BDamagesAbutmentsSeverity:   ' + ifdt.properties.BDamagesAbutmentsSeverity[i]);
+                                                console.debug('BDamagessidewallsSeverity:   ' + ifdt.properties.BDamagessidewallsSeverity[i]);
+                                                console.debug('BDamagesVaultArchesSeverity:   ' + ifdt.properties.BDamagesVaultArchesSeverity[i]);
+                                                console.debug('BDamagesSpandrelSeverity:   ' + ifdt.properties.BDamagesSpandrelSeverity[i]);
+                                                console.debug('BDamagesSpecialareasSeverity:   ' + ifdt.properties.BDamagesSpecialareasSeverity[i]);
+                                                console.debug('BDamagesBeamsSeverity:   ' + ifdt.properties.BDamagesBeamsSeverity[i]);
+
+                                                console.debug('formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay: ' + JSON.stringify(formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay));
                                             }
-                                            if (
-                                                ifdt.properties[z2[k]][i] !== undefined &&
-                                                ifdt.properties[z1[k]][i] !== undefined &&
-                                                ifdt.properties[z2[k]][i] !== '' &&
-                                                ifdt.properties[z1[k]][i] !== '' &&
-                                                capitalizeFirstLetter(ifdt.properties[z2[k]][i]) !== undefined &&
-                                                capitalizeFirstLetter(ifdt.properties[z1[k]][i]) !== undefined &&
-                                                formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))] !== undefined
-                                            ) {
-                                                FACTOR = formula.MainFactor.Damages.DamagesOnStructuralElements[y].weight * formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))].scoring[capitalizeFirstLetter(ifdt.properties[z2[k]][i])];
-                                                coincidencias++;
-                                                if (ifdt.properties[z1[k]][i].indexOf("echan") > -1 ||
-                                                    ifdt.properties[z1[k]][i].indexOf("o bearing") > -1 ||
-                                                    ifdt.properties[z1[k]][i].indexOf("rings displac") > -1) {
-                                                    coincidenciasMechanical++;
-                                                } else if (ifdt.properties[z1[k]][i].indexOf("urab") > -1 ||
-                                                    ifdt.properties[z1[k]][i].indexOf("rings de") > -1 ||
-                                                    ifdt.properties[z1[k]][i].indexOf("ther da") > -1) {
-                                                    coincidenciasDurable++;
+
+                                            if (ifdt.properties.bcode &&
+                                                ifdt.properties.bcode.length &&
+                                                ifdt.properties.bcode[i]) {
+                                                console.log('Tengo bcode, al lio')
+                                                var numberOfScores = 0;
+                                                var numberOfTypeOfFailureProcess = 0;
+                                                if (formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay  &&
+                                                    formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring  &&
+                                                    Array.isArray(ifdt.properties.bdamagesfoundationsgeneraltype) &&
+                                                    ifdt.properties.bdamagesfoundationsgeneraltype[i]) {
+                                                    ////debug(formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring);
+                                                    console.log('Entro en daños from foundation ground decay')
+                                                    for (x in formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring) {
+                                                        console.log('Evaluando ', x, ifdt.properties.bdamagesfoundationsdetailedtype[i])
+                                                        if(!x) continue;
+                                                        if (~ifdt.properties.bdamagesfoundationsdetailedtype[i].indexOf(x)) {
+                                                            console.log('Found damagesfoundations detailed type in ', ifdt.properties.bdamagesfoundationsdetailedtype[i])
+                                                            totalScoring = 0.85 * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+                                                        } else {
+                                                            console.log('no from foundation ground decay', totalScoring)
+                                                            if (x.toString().indexOf("echanical") > -1) {
+                                                                coincidenciasMechanical++;
+                                                            } else if (x.toString().indexOf("urable") > -1) {
+                                                                coincidenciasDurable++;
+                                                            }
+                                                            coincidencias++;
+                                                            totalScoring = totalScoring < formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight ?
+                                                                totalScoring : formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationGroundDecay.weight;
+
+                                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                                console.debug(' totalScoring1:            ' + totalScoring);
+                                                                console.debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                                console.debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                            }
+                                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                                console.debug(' ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()]:               ' + ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()]);
+
+                                                            }
+                                                        }
+                                                    }
                                                 }
-                                                totalScoring = totalScoring < FACTOR ? totalScoring : FACTOR;
+                                                // //debug('totalScoring2:  ' + totalScoring);
+                                                if (formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay !== undefined &&
+                                                    formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[0] !== undefined &&
+                                                    ifdt.properties.BDamagesslabSeverity !== undefined && ifdt.properties.BDamagesslabSeverity.length > 0 &&
+                                                    ifdt.properties.BDamagesslabSeverity[i] !== undefined && ifdt.properties.BDamagesslabSeverity[i].length !== 0) {
+                                                    for (x in formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring) {
+                                                        if (x.toString() !== undefined &&
+                                                            ifdt.properties.bdamagesfoundationsdetailedtype[x.toString()] === undefined) {;
+                                                        } else {
+
+                                                            if (x.toString().indexOf("echanical") > -1) {
+                                                                coincidenciasMechanical++;
+                                                            } else if (x.toString().indexOf("urable") > -1) {
+                                                                coincidenciasDurable++;
+                                                            }
+                                                            coincidencias++;
+                                                            totalScoring = totalScoring < formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight ?
+                                                                totalScoring : formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.scoring[x] * formula.MainFactor.Damages.DamagesOnFoundations.FromFoundationDecay.weight;
+                                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                                //debug(' totalScoring2:            ' + totalScoring);
+                                                                //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                                //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                // //debug('totalScoring3:  ' + totalScoring);
+                                                // Mechanical Defects, Durable Defects
+                                                var z1 = ["BDamagesSlab", "BDamagesPiers", "BDamagesBearings", "BDamagesAbutments", "BDamagesSidewalls", "bdamagesvaultsarchesmechanicaldurable", "BDamagesSpandrel", "BDamagesSpecialareas", "BDamagesBeams"];
+
+                                                //  Very High, High, Medium, Low, Unknown
+                                                var z2 = ["BDamagesslabSeverity", "BDamagesPiersSeverity", "BDamagesBearingsSeverity", "BDamagesAbutmentsSeverity", "BDamagessidewallsSeverity", "BDamagesVaultArchesSeverity", "BDamagesSpandrelSeverity", "BDamagesSpecialareasSeverity", "BDamagesBeamsSeverity"];
+                                                var k = 0;
                                                 if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                    //debug(' totalScoring3:            ' + totalScoring);
-                                                    //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                                    //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-                                                    //debug(' z1[k]:    ' + z1[k]);
-                                                    //debug(' z2[k]:    ' + z2[k]);
-                                                    // //debug('formula.MainFactor.Damages.DamagesOnStructuralElements' + JSON.stringify(formula.MainFactor.Damages.DamagesOnStructuralElements));
-                                                    // //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i]));
-
+                                                    //debug('formula.MainFactor.Damages.DamagesOnStructuralElements:');
+                                                    //debug(formula.MainFactor.Damages.DamagesOnStructuralElements)
                                                 }
-                                            } else {
-
-                                            }
-                                            k++;
-                                        }
-
-                                        ////debug('coincidencias despues: ' + coincidencias)
-                                        // **************************
-                                        // //debug('totalScoring3.1:  ' + totalScoring);
-                                        if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
-                                            totalScoring = 0.85 * formula.MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
-                                        } else {
-
-                                            coincidencias++;
-                                            if (ifdt.properties.bdamagesnonstructural[i] === 'NoDamages') {
-                                                totalScoring = totalScoring < 100 ? totalScoring : 100;
-                                            } else {
-                                                totalScoring = totalScoring < 95 ? totalScoring : 95;
-                                            }
-                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                //debug(' totalScoring4:            ' + totalScoring);
-                                                //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                                //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                            }
-                                        }
-                                        // //debug('totalScoring4:  ' + totalScoring);
-                                        /////////////////////////////////////////////////////////////////
-                                        // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
-                                        //
-                                        if (coincidenciasMechanical !== 0) {
-                                            totalScoring *= 0.0018000000000 * Math.pow(coincidenciasMechanical, 3) - 0.0305000000000 * Math.pow(coincidenciasMechanical, 2) + 0.0302000000000 * Math.pow(coincidenciasMechanical, 1) + 0.9862000000000;
-                                        }
-                                        if (coincidenciasDurable > 2) {
-                                            totalScoring *= -0.0214 * coincidenciasDurable + 1.0643;
-                                        }
-                                        if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                            //debug(' totalScoring5:            ' + totalScoring);
-                                            //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                            //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                        }
-                                        //
-                                        /////////////////////////////////////////////////////////////////
-
-                                        totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
-                                        if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                            //debug(' totalScoring6:            ' + totalScoring);
-                                            //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                            //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                        }
-                                        // //debug('totalScoring5:  ' + totalScoring);
-                                        // ////debug(totalScoring);
-                                        //  CORRECTIVE FACTORS - Bridge type
-                                        if (ifdt.properties.btype !== undefined &&
-                                            ifdt.properties.btype.length !== 0 &&
-                                            ifdt.properties.btype[i] !== undefined &&
-                                            ifdt.properties.btype[i] !== null &&
-                                            ifdt.properties.btype[i] !== "") {
-                                            for (score in formula.CorrectiveFactors.BridgeType.scoring) {
-                                                if (score !== undefined && score !== null &&
-                                                    ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '') !== undefined) {
-                                                    if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
-                                                        totalScoring *= formula.CorrectiveFactors.BridgeType.scoring[score];
+                                                for (y in formula.MainFactor.Damages.DamagesOnStructuralElements) {
+                                                    var FACTOR = Number.MAX_VALUE;
+                                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                        //debug('----------' + k);
+                                                        //debug(y);
+                                                        //debug(z2[k]);
+                                                        //debug(' ifdt.properties[z2[k]][i]:            ' + ifdt.properties[z2[k]][i]);
+                                                        //debug(z1[k]);
+                                                        //debug(' ifdt.properties[z1[k]][i]: ' + ifdt.properties[z1[k]][i]);
+                                                        //debug(ifdt.properties[z2[k]][i] !== undefined);
+                                                        //debug(ifdt.properties[z1[k]][i] !== undefined);
+                                                        //debug(ifdt.properties[z2[k]][i] !== '');
+                                                        //debug(ifdt.properties[z1[k]][i] !== '');
+                                                        //debug(capitalizeFirstLetter(ifdt.properties[z2[k]][i]) !== undefined);
+                                                        //debug(capitalizeFirstLetter(ifdt.properties[z1[k]][i]) !== undefined);
+                                                        // //debug(ifdt.properties[z1[k]][i].replace('Durability','Durable'));
+                                                        //debug(capitalizeFirstLetter(ifdt.properties[z1[k]][i]));
+                                                        //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y]);
+                                                        // //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))] !== undefined);
+                                                    }
+                                                    if (
+                                                        ifdt.properties[z2[k]][i] !== undefined &&
+                                                        ifdt.properties[z1[k]][i] !== undefined &&
+                                                        ifdt.properties[z2[k]][i] !== '' &&
+                                                        ifdt.properties[z1[k]][i] !== '' &&
+                                                        capitalizeFirstLetter(ifdt.properties[z2[k]][i]) !== undefined &&
+                                                        capitalizeFirstLetter(ifdt.properties[z1[k]][i]) !== undefined &&
+                                                        formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))] !== undefined
+                                                    ) {
+                                                        FACTOR = formula.MainFactor.Damages.DamagesOnStructuralElements[y].weight * formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i].replace('Durability', 'Durable'))].scoring[capitalizeFirstLetter(ifdt.properties[z2[k]][i])];
+                                                        coincidencias++;
+                                                        if (ifdt.properties[z1[k]][i].indexOf("echan") > -1 ||
+                                                            ifdt.properties[z1[k]][i].indexOf("o bearing") > -1 ||
+                                                            ifdt.properties[z1[k]][i].indexOf("rings displac") > -1) {
+                                                            coincidenciasMechanical++;
+                                                        } else if (ifdt.properties[z1[k]][i].indexOf("urab") > -1 ||
+                                                            ifdt.properties[z1[k]][i].indexOf("rings de") > -1 ||
+                                                            ifdt.properties[z1[k]][i].indexOf("ther da") > -1) {
+                                                            coincidenciasDurable++;
+                                                        }
+                                                        totalScoring = totalScoring < FACTOR ? totalScoring : FACTOR;
                                                         if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                            //debug(score);
+                                                            //debug(' totalScoring3:            ' + totalScoring);
+                                                            //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                            //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+                                                            //debug(' z1[k]:    ' + z1[k]);
+                                                            //debug(' z2[k]:    ' + z2[k]);
+                                                            // //debug('formula.MainFactor.Damages.DamagesOnStructuralElements' + JSON.stringify(formula.MainFactor.Damages.DamagesOnStructuralElements));
+                                                            // //debug(formula.MainFactor.Damages.DamagesOnStructuralElements[y][capitalizeFirstLetter(ifdt.properties[z1[k]][i]));
 
                                                         }
                                                     } else {
 
-                                                        totalScoring *= 1;
+                                                    }
+                                                    k++;
+                                                }
+
+                                                ////debug('coincidencias despues: ' + coincidencias)
+                                                // **************************
+                                                // //debug('totalScoring3.1:  ' + totalScoring);
+                                                if (ifdt.properties.bdamagesnonstructural[i] === undefined) {
+                                                    totalScoring = 0.85 * formula.MainFactor.Damages.DamagesOnNonStructuralElements.DamagesOnNonStructuralElement.weight;
+                                                } else {
+
+                                                    coincidencias++;
+                                                    if (ifdt.properties.bdamagesnonstructural[i] === 'NoDamages') {
+                                                        totalScoring = totalScoring < 100 ? totalScoring : 100;
+                                                    } else {
+                                                        totalScoring = totalScoring < 95 ? totalScoring : 95;
                                                     }
                                                     if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                        //debug(' totalScoring7:            ' + totalScoring);
+                                                        //debug(' totalScoring4:            ' + totalScoring);
                                                         //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
                                                         //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
 
                                                     }
                                                 }
+                                                // //debug('totalScoring4:  ' + totalScoring);
+                                                /////////////////////////////////////////////////////////////////
+                                                // =(0.0018 * (x) ^ 3) - 0.0305 * (x) ^ 2) + 0.0302 * (x) + 0.9862) * L101
+                                                //
+                                                if (coincidenciasMechanical !== 0) {
+                                                    totalScoring *= 0.0018000000000 * Math.pow(coincidenciasMechanical, 3) - 0.0305000000000 * Math.pow(coincidenciasMechanical, 2) + 0.0302000000000 * Math.pow(coincidenciasMechanical, 1) + 0.9862000000000;
+                                                }
+                                                if (coincidenciasDurable > 2) {
+                                                    totalScoring *= -0.0214 * coincidenciasDurable + 1.0643;
+                                                }
+                                                if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                    //debug(' totalScoring5:            ' + totalScoring);
+                                                    //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                    //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                }
+                                                //
+                                                /////////////////////////////////////////////////////////////////
+
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? 100 : totalScoring;
+                                                if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                    //debug(' totalScoring6:            ' + totalScoring);
+                                                    //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                    //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                }
+                                                // //debug('totalScoring5:  ' + totalScoring);
+                                                // ////debug(totalScoring);
+                                                //  CORRECTIVE FACTORS - Bridge type
+                                                if (ifdt.properties.btype !== undefined &&
+                                                    ifdt.properties.btype.length !== 0 &&
+                                                    ifdt.properties.btype[i] !== undefined &&
+                                                    ifdt.properties.btype[i] !== null &&
+                                                    ifdt.properties.btype[i] !== "") {
+                                                    for (score in formula.CorrectiveFactors.BridgeType.scoring) {
+                                                        if (score !== undefined && score !== null &&
+                                                            ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '') !== undefined) {
+                                                            if (ifdt.properties.btype[i].toString().toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '').indexOf(score.toUpperCase().replace(/[-+(.,)\s]/g, '').replace(/[^\w ]/, '')) >= 0) {
+                                                                totalScoring *= formula.CorrectiveFactors.BridgeType.scoring[score];
+                                                                if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                                    //debug(score);
+
+                                                                }
+                                                            } else {
+
+                                                                totalScoring *= 1;
+                                                            }
+                                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                                //debug(' totalScoring7:            ' + totalScoring);
+                                                                //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                                //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                            }
+                                                        }
+                                                    }
+
+                                                } else {
+
+                                                    totalScoring *= formula.CorrectiveFactors.BridgeType.scoring['Other'];
+                                                    if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                        //debug(' totalScoring8:            ' + totalScoring);
+                                                        //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                        //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                    }
+                                                }
+                                                // //debug('totalScoring6:  ' + totalScoring);
+
+                                                totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
+                                                if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                    //debug(' totalScoring9:            ' + totalScoring);
+                                                    //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                    //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                }
+                                                // //debug('totalScoring7:  ' + totalScoring);
+                                                //
+                                                // jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
+                                                //
+                                                valueconditionsr.push(totalScoring / 100);
+                                                if (ifdt.properties.bcode[i] === AssetADebugear) {
+                                                    //debug(' totalScoring10:            ' + totalScoring);
+                                                    //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
+                                                    //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
+
+                                                }
+                                                ////debug('totalScoring7:  ' + totalScoring);
+                                                //////debug(totalScoring + '\n');
+                                            } else {
+                                                // valueconditionsr.push("");
+                                                //console.log('Me salté el super IF!!!!')
+                                                if (ifdt.properties.bcondition[i] !== undefined) {
+                                                    valueconditionsr.push(ifdt.properties.bcondition[i]);
+                                                } else {
+                                                    valueconditionsr.push('');
+                                                }
                                             }
+                                            // ////debug(valueconditionsr);
+                                            ///////////////////////FINAL//////////////////////////////////////////////
 
-                                        } else {
-
-                                            totalScoring *= formula.CorrectiveFactors.BridgeType.scoring['Other'];
-                                            if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                                //debug(' totalScoring8:            ' + totalScoring);
-                                                //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                                //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                            }
-                                        }
-                                        // //debug('totalScoring6:  ' + totalScoring);
-
-                                        totalScoring = (totalScoring === Number.MAX_VALUE) ? null : totalScoring;
-                                        if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                            //debug(' totalScoring9:            ' + totalScoring);
-                                            //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                            //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                        }
-                                        // //debug('totalScoring7:  ' + totalScoring);
-                                        //
-                                        // jfcp: modificado para guardarlo en tanto por 1, puesto que Pavements se devuelve en tanto por 1 tambien
-                                        //
-                                        valueconditionsr.push(totalScoring / 100);
-                                        if (ifdt.properties.bcode[i] === AssetADebugear) {
-                                            //debug(' totalScoring10:            ' + totalScoring);
-                                            //debug(' coincidenciasMechanical: ' + coincidenciasMechanical);
-                                            //debug(' coincidenciasDurable:    ' + coincidenciasDurable);
-
-                                        }
-                                        ////debug('totalScoring7:  ' + totalScoring);
-                                        //////debug(totalScoring + '\n');
-                                    } else {
-                                        // valueconditionsr.push("");
-                                        //console.log('Me salté el super IF!!!!')
-                                        if (ifdt.properties.bcondition[i] !== undefined) {
-                                            valueconditionsr.push(ifdt.properties.bcondition[i]);
-                                        } else {
-                                            valueconditionsr.push('');
-                                        }
+                                            break;
+                                        default:
+                                            break;
                                     }
-                                    // ////debug(valueconditionsr);
-                                    ///////////////////////FINAL//////////////////////////////////////////////
-
-                                    break;
-                                default:
-                                    break;
+                                }
+                                // if (i === 123) { while (true) { ; } }
                             }
-                        }
-                        // if (i === 123) { while (true) { ; } }
-                    }
-                    // ////debug('coincidencias: ' + coincidencias);
-                    tracksUpdated++;
-                    ////debug(valueconditionsr.toString());
-                    // ////debug(tracksUpdated);
+                            // ////debug('coincidencias: ' + coincidencias);
+                            tracksUpdated++;
+                            ////debug(valueconditionsr.toString());
+                            // ////debug(tracksUpdated);
 
-                    var conditions = {
-                        _id: ifdt._id
-                    };
-                    var query = {
-                        $set: {
-                            "properties.bcondition": valueconditionsr
-                        }
-                    }
+                            var conditions = {
+                                _id: ifdt._id
+                            };
+                            var query = {
+                                $set: {
+                                    "properties.bcondition": valueconditionsr
+                                }
+                            }
 
-                    await Infodatatrack.update(conditions, query, function (err, iup) {
-                        if (err) {
-                            ////debug(err.message);
-                        }
-                        // ////debug(iup);
+                            await Infodatatrack.update(conditions, query, function (err, iup) {
+                                if (err) {
+                                    ////debug(err.message);
+                                }
+                                // ////debug(iup);
 
+                            });
+
+
+
+
+
+                        }
+
+                        // res.status(200).jsonp(ret);
                     });
 
+                    tracksUpdated2 = tracksUpdated;
+                    ret.tracksUpdated = tracksUpdated;
+                    ////debug('tracksUpdated: ' + tracksUpdated);
+                    res.status(200).jsonp(ret);
 
-
-
-
-                }
-
-                // res.status(200).jsonp(ret);
-            });
-
-            tracksUpdated2 = tracksUpdated;
-            ret.tracksUpdated = tracksUpdated;
-            ////debug('tracksUpdated: ' + tracksUpdated);
-            res.status(200).jsonp(ret);
-
-            break;
-            */
+                    break;
+                    */
             default:
-            break;
-    }
-    AssetCache.refresh()
-});
+                break;
+        }
+        AssetCache.refresh()
+    });
 
 
 
