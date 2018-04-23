@@ -4,7 +4,9 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "devstart": "nodemon -e js,json ./bin/www"
+        "devstart": "nodemon --max_old_space_size=4096 -e js,json --ignore '*.test.js' ./bin/www",
+        "test": "mocha ./app/**/*.test.js",
+        "tdd": "npm test -- --watch --watch-extensions js"
     },
     "dependencies": {
         "base64-img": "^1.0.3",
@@ -29,6 +31,7 @@
         "mathjs": "^3.20.2",
         "meanio": "^0.9.4",
         "method-override": "^2.3.9",
+        "mocha": "^5.1.0",
         "moment": "^2.18.1",
         "mongodb": "^3.0.1",
         "mongodb-geojson-normalize": "^0.1.2",

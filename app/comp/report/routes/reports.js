@@ -41,10 +41,6 @@ function simpleStringify(object) {
     return JSON.stringify(simpleObject); // returns cleaned up JSON
 };
 
-router.use(function timeLog(req, res, next) {
-    ////// debug('Fecha: ', moment().format("YYYYMMDD - hh:mm:ss"));
-    next();
-});
 router.use(bodyParser.urlencoded({
     extended: true
 }));

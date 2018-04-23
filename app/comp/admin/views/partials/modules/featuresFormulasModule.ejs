@@ -96,9 +96,7 @@
                                         'scoring');
                                     urlTest = ('Condition__' + postgressArray.join().replace(
                                         /,/g, "__"));
-                                    console.log(postgressArray.join().replace(/,/g, ".").replace(
-                                        "CorrectiveFactors.Material",
-                                        "CorrectiveFactors.Material.Na.scoring"));
+
                                     html[++h] =
                                         '<td> <input class="form-control, col-sm-12" name="' +
                                         urlTest + '" type="number" value="' + eval('form.' +
@@ -115,17 +113,7 @@
                                     // postgressArray.push(capitalizeFirstLetter(val))
                                     // postgressArray.push(capitalizeFirstLetter(val)
 
-                                    console.log('  form.' +
-                                        postgressArray.join().replace(/,/g, ".")
-                                        .replace("CorrectiveFactors.Material",
-                                            "CorrectiveFactors.Material.Na.scoring")
-                                        .replace("CorrectiveFactors.Vegetation",
-                                            "CorrectiveFactors.Vegetation.Na.scoring")
-                                        .replace("CorrectiveFactors.SizeOfBlocks",
-                                            "CorrectiveFactors.SizeOfBlocks.Na.scoring"
-                                        )
-                                        .replace("CorrectiveFactors.BridgeType",
-                                            "CorrectiveFactors.BridgeType.scoring"));
+
 
                                     if (Number(val).toString() === val) {
 
@@ -159,34 +147,7 @@
                                                 .replace("CorrectiveFactors.BridgeType",
                                                     "CorrectiveFactors.BridgeType.scoring")
                                             ) + '"  step="0.01"></td>';
-                                        console.log(eval('form.' +
-                                                postgressArray.join().replace(/,/g, ".")
-                                                .replace("CorrectiveFactors.Material",
-                                                    "CorrectiveFactors.Material.Na.scoring"
-                                                )
-                                                .replace("CorrectiveFactors.Vegetation",
-                                                    "CorrectiveFactors.Vegetation.Na.scoring"
-                                                )
-                                                .replace(
-                                                    "CorrectiveFactors.SizeOfBlocks",
-                                                    "CorrectiveFactors.SizeOfBlocks.Na.scoring"
-                                                )
-                                                .replace("CorrectiveFactors.BridgeType",
-                                                    "CorrectiveFactors.BridgeType.scoring"
-                                                )) + '  form.' +
-                                            postgressArray.join().replace(/,/g, ".")
-                                            .replace("CorrectiveFactors.Material",
-                                                "CorrectiveFactors.Material.Na.scoring"
-                                            )
-                                            .replace("CorrectiveFactors.Vegetation",
-                                                "CorrectiveFactors.Vegetation.Na.scoring"
-                                            )
-                                            .replace("CorrectiveFactors.SizeOfBlocks",
-                                                "CorrectiveFactors.SizeOfBlocks.Na.scoring"
-                                            )
-                                            .replace("CorrectiveFactors.BridgeType",
-                                                "CorrectiveFactors.BridgeType.scoring")
-                                        );
+
                                     } else {
                                         html[++h] = '<td>' + val + '</td>';
                                     }
@@ -325,7 +286,7 @@
 
 
                     $("document").ready(function() {
-                        if (true) { /// not working :( 
+                        if (true) { /// not working :(
                             $("#formulaTableBody").rowspanizer();
                         }
                     });
