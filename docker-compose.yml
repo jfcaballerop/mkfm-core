@@ -28,5 +28,6 @@ services:
       - ./_tools/mongo:/docker-entrypoint-initdb.d/
       - ./_mongodata:/data/db/
       - ./backups:/backups
+      - ./Querys:/queries
     ports:
       - "27017:27017"
