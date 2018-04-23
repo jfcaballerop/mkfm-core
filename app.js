@@ -42,7 +42,7 @@ app.set('views', [
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(cookieParser());
 // TRANSLATE CONFIG
 
@@ -97,21 +97,21 @@ app.use(methodOverride());
 // DB Connect
 //Set up default mongoose connection
 mongoose.connect(configDB.url, {
-    server: {
-        "socketOptions": {
-            "socketTimeoutMS": configAPP.SOCKETTIMEOUTMS,
-            "keepAlive": configAPP.KEEPALIVE,
-            "connectTimeoutMS": configAPP.CONNECTTIMEOUTMS
+        server: {
+            "socketOptions": {
+                "socketTimeoutMS": configAPP.SOCKETTIMEOUTMS,
+                "keepAlive": configAPP.KEEPALIVE,
+                "connectTimeoutMS": configAPP.CONNECTTIMEOUTMS
+            }
         }
-    }
-})
-.then(() => {
-    console.debug('Connected to Mongo')
-    AssetCache.load()
-})
-.catch(err => {
-    console.error('Error connecting to mongo', err.message)
-})
+    })
+    .then(() => {
+        console.debug('Connected to Mongo')
+        AssetCache.load()
+    })
+    .catch(err => {
+        console.error('Error connecting to mongo', err.message)
+    })
 
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
@@ -120,7 +120,7 @@ var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('connect', function(){
+db.on('connect', function () {
     console.debug('MongoDB CONNECTION OK!')
     AssetCache.load()
 });
