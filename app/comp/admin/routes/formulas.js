@@ -3280,7 +3280,15 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype != [] &&
                             ifdt.properties.gtype[index] != undefined &&
                             ifdt.properties.gtype[index] != "" &&
-                            ifdt.properties.gtype[index] === "Retaining_walls") || (
+                            ifdt.properties.gtype[index] === "Retaining_walls")) {
+                        calcularValue = true;
+                        // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                    } else {
+                        // ////debug(fieldkey + ' : UNDEFINED');
+                        calcularValue = false;
+                    }
+
+                    if ((
                             ifdt.properties.gcode2 != undefined &&
                             ifdt.properties.gcode2 != null &&
                             ifdt.properties.gcode2 != [] &&
@@ -3293,11 +3301,11 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype2[index] != "" &&
                             ifdt.properties.gtype2[index] === "Retaining_walls"
                         )) {
-                        calcularValue = true;
-                        // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        calcularValue2 = true;
+
                     } else {
-                        // ////debug(fieldkey + ' : UNDEFINED');
-                        calcularValue = false;
+                        calcularValue2 = false;
+
                     }
                     break;
                 case 'Earthworks':
@@ -3486,8 +3494,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype[index] === "Retaining_walls"
                         ) {
                             // en este caso estoy en la izda
-                            if (calcularValue) {
-                                formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendData, ifdt, index);
+                            if (calcularValue || calcularValue2) {
+                                formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendDataFinal, ifdt, index);
                             } else {
                                 if (ifdt.properties.gcriticality !== undefined &&
                                     ifdt.properties.gcriticality !== null &&
@@ -3529,8 +3537,10 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype2[index] === "Retaining_walls"
                         ) {
                             // en este caso estoy en la dcha
-                            if (calcularValue) {
-                                formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendData, ifdt, index);
+                            if (calcularValue || calcularValue2) {
+                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
+                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
+                                formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendDataFinal, ifdt, index);
                             } else {
                                 if (ifdt.properties.gcriticality2 !== undefined &&
                                     ifdt.properties.gcriticality2 !== null &&
@@ -3597,7 +3607,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype !== [] &&
                             ifdt.properties.gtype[index] !== undefined &&
                             ifdt.properties.gtype[index] !== "" && (
-                                ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                ifdt.properties.gtype[index] === "Cutting" ||
+                                ifdt.properties.gtype[index] === "Embankment"
                             )
 
                         ) {
