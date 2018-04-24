@@ -956,7 +956,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 existsgcode = true;
             }
             if (ifdt.properties.gcode2 !== undefined && ifdt.properties.gcode2 !== [] && ifdt.properties.gcode2.length > 0 &&
-                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i] !== "") {
+                ifdt.properties.gcode2[i] !== undefined && ifdt.properties.gcode2[i] !== null && ifdt.properties.gcode2[i].length > 0 &&
+                ifdt.properties.gcode2[i] !== "") {
                 existsgcode2 = true;
             }
 
@@ -994,6 +995,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     } else {
                         bcrit = 0;
                     }
+
+
                 }
             }
             /**
@@ -1104,22 +1107,37 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
             valuerriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuerriskphysicalarr[i]);
             valuerrisknaturalarr[i] = serviceService.roundValuePerCent(rlofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(rcrit);
             valuerrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuerrisknaturalarr[i]);
-            valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-            valuebriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuebriskphysicalarr[i]);
-            valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(bcrit);
-            valuebrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuebrisknaturalarr[i]);
-            valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-            valueCriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valueCriskphysicalarr[i]);
-            valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(Ccrit);
-            valueCrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valueCrisknaturalarr[i]);
-            valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-            valuegriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuegriskphysicalarr[i]);
-            valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit);
-            valuegrisknaturalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuegrisknaturalarr[i]);
-            valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
-            valuegriskphysicalarr2norm[i] = formulasService.NormalizeRiskRatingScale(valuegriskphysicalarr2[i]);
-            valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + formulasService.criticalityRatingLetterScale(gcrit2);
-            valuegrisknaturalarr2norm[i] = formulasService.NormalizeRiskRatingScale(valuegrisknaturalarr2[i]);
+
+            if (existsbcode) {
+                var bcrit_val = formulasService.criticalityRatingLetterScale(bcrit);
+                (bcrit_val === undefined) ? debug('Bridge', i, ifdt._id, bcrit_val, ifdt.properties.bcriticality[i], ifdt.properties.bcode[i]): 0;
+                valuebriskphysicalarr[i] = serviceService.roundValuePerCent(blofphy, 2) + '__' + bcrit_val;
+                valuebriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuebriskphysicalarr[i]);
+                valuebrisknaturalarr[i] = serviceService.roundValuePerCent(blofnat, 2) + '__' + bcrit_val;
+            }
+            if (existsCcode) {
+                var Ccrit_val = formulasService.criticalityRatingLetterScale(Ccrit);
+                (Ccrit_val === undefined) ? debug('Culvert', i, ifdt._id, Ccrit_val, ifdt.properties.Ccriticality[i], ifdt.properties.Ccode[i]): 0;
+                valueCriskphysicalarr[i] = serviceService.roundValuePerCent(Clofphy, 2) + '__' + Ccrit_val;
+                valueCriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valueCriskphysicalarr[i]);
+                valueCrisknaturalarr[i] = serviceService.roundValuePerCent(Clofnat, 2) + '__' + Ccrit_val;
+            }
+            if (existsgcode) {
+
+                var gcrit_val = formulasService.criticalityRatingLetterScale(gcrit);
+                (gcrit_val === undefined) ? debug('GEOT1', i, ifdt._id, gcrit_val, ifdt.properties.gcriticality[i], ifdt.properties.gcode[i]): 0;
+                valuegriskphysicalarr[i] = serviceService.roundValuePerCent(glofphy, 2) + '__' + gcrit_val;
+                valuegriskphysicalarrnorm[i] = formulasService.NormalizeRiskRatingScale(valuegriskphysicalarr[i]);
+                valuegrisknaturalarr[i] = serviceService.roundValuePerCent(glofnat, 2) + '__' + gcrit_val;
+            }
+            if (existsgcode2) {
+
+                var gcrit_val2 = formulasService.criticalityRatingLetterScale(gcrit2);
+                (gcrit_val2 === undefined) ? debug('GEOT2', i, ifdt._id, gcrit_val2, ifdt.properties.gcriticality2[i], ifdt.properties.gcode2[i]): 0;
+                valuegriskphysicalarr2[i] = serviceService.roundValuePerCent(glofphy2, 2) + '__' + gcrit_val2;
+                valuegrisknaturalarr2[i] = serviceService.roundValuePerCent(glofnat2, 2) + '__' + gcrit_val2;
+                valuegrisknaturalarr2norm[i] = formulasService.NormalizeRiskRatingScale(valuegrisknaturalarr2[i]);
+            }
 
 
         }
@@ -3048,6 +3066,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
     var asset = postData[Object.keys(postData)[0]];
     var formula = Object.keys(postData)[0];
     var sendData = {};
+    var sendData2 = {};
     var formResult = [];
     var formResultLeft = [];
     var formResultRight = [];
@@ -3203,6 +3222,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
         for (index = 0; index < ifdt.geometry.coordinates.length; index++) {
             // ////debug(index);
             var calcularValue = false;
+            var calcularValue2 = false; // lo usamos para la dcha
             /**
              * debo comprobar que el asset elegido tenga CODE para poder actualizarlo
              * Solo sucederá en aquellos casos que esté completado
@@ -3260,7 +3280,15 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype != [] &&
                             ifdt.properties.gtype[index] != undefined &&
                             ifdt.properties.gtype[index] != "" &&
-                            ifdt.properties.gtype[index] === "Retaining_walls") || (
+                            ifdt.properties.gtype[index] === "Retaining_walls")) {
+                        calcularValue = true;
+                        // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                    } else {
+                        // ////debug(fieldkey + ' : UNDEFINED');
+                        calcularValue = false;
+                    }
+
+                    if ((
                             ifdt.properties.gcode2 != undefined &&
                             ifdt.properties.gcode2 != null &&
                             ifdt.properties.gcode2 != [] &&
@@ -3273,11 +3301,11 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype2[index] != "" &&
                             ifdt.properties.gtype2[index] === "Retaining_walls"
                         )) {
-                        calcularValue = true;
-                        // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+                        calcularValue2 = true;
+
                     } else {
-                        // ////debug(fieldkey + ' : UNDEFINED');
-                        calcularValue = false;
+                        calcularValue2 = false;
+
                     }
                     break;
                 case 'Earthworks':
@@ -3294,7 +3322,14 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype[index] != "" && (
                                 ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
                             )
-                        ) || (
+                        )) {
+                        calcularValue = true;
+                        // ////debug(index + ': ' + ifdt.properties.gtype[index] + ' : ' + ifdt.properties.gtype2[index]);
+                    } else {
+                        // ////debug(index + ' : UNDEFINED');
+                        calcularValue = false;
+                    }
+                    if ((
                             ifdt.properties.gcode2 != undefined &&
                             ifdt.properties.gcode2 != null &&
                             ifdt.properties.gcode2 != [] &&
@@ -3308,11 +3343,9 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                                 ifdt.properties.gtype2[index] === "Cutting" || ifdt.properties.gtype2[index] === "Embankment"
                             )
                         )) {
-                        calcularValue = true;
-                        // ////debug(index + ': ' + ifdt.properties.gtype[index] + ' : ' + ifdt.properties.gtype2[index]);
+                        calcularValue2 = true;
                     } else {
-                        // ////debug(index + ' : UNDEFINED');
-                        calcularValue = false;
+                        calcularValue2 = false;
                     }
                     break;
 
@@ -3321,7 +3354,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
             }
 
             var fspecSendData = {};
-            if (calcularValue) {
+            if (calcularValue) { // hago los calculos solo para la izda
                 if (f[0].formulaSpec !== undefined) {
                     for (var fspec of f[0].formulaSpec) {
                         if (fspec.name === asset) {
@@ -3339,8 +3372,15 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                                                 ifdt.properties[fieldkey] !== null &&
                                                 ifdt.properties[fieldkey] !== [] &&
                                                 ifdt.properties[fieldkey][index] !== undefined &&
-                                                ifdt.properties[fieldkey][index] !== "") {
-                                                sendData[fieldkey] = ifdt.properties[fieldkey][index];
+                                                ifdt.properties[fieldkey][index] !== ""
+                                            ) {
+                                                if (l1key.indexOf('Economic_Technical') >= 0) {
+                                                    if (fieldkey.indexOf('2') < 0)
+                                                        sendData[fieldkey] = ifdt.properties[fieldkey][index];
+                                                } else {
+                                                    sendData[fieldkey] = ifdt.properties[fieldkey][index];
+
+                                                }
                                                 // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
 
                                             } else {
@@ -3356,7 +3396,53 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                     }
                 }
             }
-            if (calcularValue) {
+            if (calcularValue2) { // hago los calculos solo para la izda
+                if (f[0].formulaSpec !== undefined) {
+                    for (var fspec of f[0].formulaSpec) {
+                        if (fspec.name === asset) {
+                            // //debug('CalcularValue ' + fspec.name + ' asset ' + asset);
+                            fspecSendData = fspec;
+                            for (var [l1key, level1] of Object.entries(fspec)) {
+                                if (typeof level1 === 'object') {
+                                    for (var [fieldkey, field] of Object.entries(level1)) {
+                                        if (typeof field === 'object') {
+                                            /**
+                                             * En este nivel tengo los campos de la formula
+                                             * Debo comprobar que tienen valor para poder aplicar la formula
+                                             */
+                                            if (ifdt.properties[fieldkey] !== undefined &&
+                                                ifdt.properties[fieldkey] !== null &&
+                                                ifdt.properties[fieldkey] !== [] &&
+                                                ifdt.properties[fieldkey][index] !== undefined &&
+                                                ifdt.properties[fieldkey][index] !== ""
+                                            ) {
+                                                if (l1key.indexOf('Economic_Technical') >= 0) {
+                                                    if (fieldkey.indexOf('2') >= 0)
+                                                        sendData2[fieldkey] = ifdt.properties[fieldkey][index];
+                                                } else {
+                                                    sendData2[fieldkey] = ifdt.properties[fieldkey][index];
+
+                                                } // ////debug(fieldkey + ' : ' + ifdt.properties[fieldkey][index]);
+
+                                            } else {
+                                                // ////debug(fieldkey + ' : UNDEFINED');
+                                                sendData2[fieldkey] = undefined;
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (calcularValue || calcularValue2) {
+
+                var sendDataFinal = {};
+                (calcularValue) ? sendDataFinal = sendData: 0;
+                (calcularValue2) ? sendDataFinal = sendData2: 0;
+
 
                 // ////debug(sendData);
                 // //debug('END CalcularValue ' + ' asset ' + asset);
@@ -3408,8 +3494,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype[index] === "Retaining_walls"
                         ) {
                             // en este caso estoy en la izda
-                            if (calcularValue) {
-                                formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendData, ifdt, index);
+                            if (calcularValue || calcularValue2) {
+                                formResultLeft[index] = formulasService.criticality('Retaining_Walls', fspec1, sendDataFinal, ifdt, index);
                             } else {
                                 if (ifdt.properties.gcriticality !== undefined &&
                                     ifdt.properties.gcriticality !== null &&
@@ -3451,8 +3537,10 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype2[index] === "Retaining_walls"
                         ) {
                             // en este caso estoy en la dcha
-                            if (calcularValue) {
-                                formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendData, ifdt, index);
+                            if (calcularValue || calcularValue2) {
+                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
+                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
+                                formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendDataFinal, ifdt, index);
                             } else {
                                 if (ifdt.properties.gcriticality2 !== undefined &&
                                     ifdt.properties.gcriticality2 !== null &&
@@ -3519,13 +3607,17 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                             ifdt.properties.gtype !== [] &&
                             ifdt.properties.gtype[index] !== undefined &&
                             ifdt.properties.gtype[index] !== "" && (
-                                ifdt.properties.gtype[index] === "Cutting" || ifdt.properties.gtype[index] === "Embankment"
+                                ifdt.properties.gtype[index] === "Cutting" ||
+                                ifdt.properties.gtype[index] === "Embankment"
                             )
 
                         ) {
                             // en este caso estoy en la izda
-                            if (calcularValue) {
-                                formResultLeft[index] = formulasService.criticality('Earthworks', fspec1, sendData);
+                            if (calcularValue || calcularValue2) {
+                                (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
+                                (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
+
+                                formResultLeft[index] = formulasService.criticality('Earthworks', fspec1, sendDataFinal);
                             } else {
                                 if (
                                     ifdt.properties.gcriticality !== undefined &&
@@ -3577,7 +3669,7 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ) {
                             // en este caso estoy en la dcha
                             if (calcularValue) {
-                                formResultRight[index] = formulasService.criticality('Earthworks', fspec2, sendData);
+                                formResultRight[index] = formulasService.criticality('Earthworks', fspec2, sendDataFinal);
                             } else {
                                 if (ifdt.properties.gcriticality2 !== undefined &&
                                     ifdt.properties.gcriticality2 !== null &&

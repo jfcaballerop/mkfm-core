@@ -212,31 +212,38 @@ exports.criticality = function (type, formula, data, ifdt, index) {
                     //console.log(l2key);
                     if (data[l2key] != undefined && data[l2key] != null) {
                         if (level2.type === 'select') {
-                            val += level2.scoring[data[l2key]] * level2.weight / 100;
+                            val += level2.scoring[String(data[l2key])] * level2.weight / 100;
+                            if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67')
+                                debug('Select', l2key, String(data[l2key]), level2.scoring[String(data[l2key])], 'level2.weight', level2.weight, 'val=', val);
                         } else if (level2.type === 'range') {
                             for (var [rk, rango] of Object.entries(level2.scoring)) {
                                 /**
                                  * compruebo que tenga o no guion para definir el rango y si es el primer o no elemento
                                  */
-                                // console.log('Rango: ' + rk + ' ' + data[l2key] + ' Scoring ' + level2.scoring[rk]);
+                                // console.log('Rango: ' + rk + ' ' + Number(data[l2key]) + ' Scoring ' + level2.scoring[rk]);
                                 if (rk.indexOf('-') == -1) {
                                     //Ultimo valor del rango
-                                    if (rk * 1.0 <= data[l2key] * 1) {
-                                        // console.log('entro1');
-                                        val += level2.scoring[rk] * level2.weight / 100;
+                                    if (Number(rk) <= Number(data[l2key]) * 1) {
+                                        if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67') debug('entro1', l2key);
+                                        val1 = level2.scoring[rk] * level2.weight / 100;
+                                        val += val1;
+                                        if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67')
+                                            debug('Rango: ', rk, l2key, data[l2key], ' Scoring ', level2.scoring[rk], 'Weight', level2.weight, 'val1', val1);
 
                                     }
                                 } else {
                                     var valRango = rk.split('-');
-                                    if (valRango[0] * 1.0 < data[l2key] * 1.0 && valRango[1] * 1.0 > data[l2key] * 1.0) {
-                                        // console.log('entro2');
-                                        val += level2.scoring[rk] * level2.weight / 100;
-                                        // console.log('Rango: ' + rk + ' ' + data[l2key] + ' Scoring ' + level2.scoring[rk]);
+                                    if (Number(valRango[0]) < Number(data[l2key]) && Number(valRango[1]) > Number(data[l2key])) {
+                                        if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67') debug('entro2', l2key);
+                                        val1 = level2.scoring[rk] * level2.weight / 100;
+                                        val += val1;
+                                        if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67')
+                                            debug('Rango: ', rk, l2key, data[l2key], ' Scoring ', level2.scoring[rk], 'Weight', level2.weight, 'val1', val1);
                                     }
                                 }
                             }
 
-                            // console.log('Rango: ' + data[l2key]);
+                            // console.log('Rango: ' , data[l2key]);
 
                         }
                         //console.log('Val: ' + val);
@@ -245,41 +252,42 @@ exports.criticality = function (type, formula, data, ifdt, index) {
                     }
 
                 }
-                // if (ifdt.properties.bcode[index] === 'S8-SG-01-B-1453') {
-                //     debug(' index:               ' + index);
-                //     debug(' bcode[index]:        ' + ifdt.properties.gcode[index]);
-                //     debug(' rcategory:           ' + ifdt.properties.rcategory[index]);
-                //     debug(' rdendritic:          ' + ifdt.properties.rdendritic[index]);
-                //     debug(' ralternatitinerary:  ' + ifdt.properties.ralternatitinerary[index]);
-                //     debug(' rinfrint:            ' + ifdt.properties.rinfrint[index]);
-                //     debug(' rtourism:            ' + ifdt.properties.rtourism[index]);
-                //     debug(' rindustrydist:       ' + ifdt.properties.rindustrydist[index]);
-                //     debug(' rindustry:           ' + ifdt.properties.rindustry[index]);
-                //     debug(' rhealth:             ' + ifdt.properties.rhealth[index]);
-                //     debug(' renvironment:        ' + ifdt.properties.renvironment[index]);
-                //     debug(' rwaste:              ' + ifdt.properties.rwaste[index]);
-                //     debug(' rwidth:              ' + ifdt.properties.rwidth[index]);
-                //     debug(' rmaterial:           ' + ifdt.properties.rmaterial[index]);
-                //     debug(' rdateconstruct:      ' + ifdt.properties.rdateconstruct[index]);
-                //     debug(' gmaterial:           ' + ifdt.properties.gmaterial[index]);
-                //     debug(' gmaterial2:          ' + ifdt.properties.gmaterial2[index]);
-                //     debug(' gheight:             ' + ifdt.properties.gheight[index]);
-                //     debug(' gheight2:            ' + ifdt.properties.gheight2[index]);
-                //     debug(' glength:             ' + ifdt.properties.glength[index]);
-                //     debug(' glength2:            ' + ifdt.properties.glength2[index]);
-                //     debug('l1key:                ' + l1key);
-                //     debug('level1:               ');
-                //     debug(level1);
-                //     debug('l2key:                ' + l2key);
-                //     debug('level2:               ');
-                //     debug(level2);
-                //     debug('rk:                   ' + rk);
-                //     debug('rango:                ' + rango);
-                //     // while (true) { ; };
+                // if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67') {
+                //     debug('-------**********--------- \n index:               ', index);
+                //     debug(' gcode2[index]:        ', ifdt.properties.gcode2[index]);
+                // debug(' rcategory:           ', ifdt.properties.rcategory[index]);
+                // debug(' rdendritic:          ', ifdt.properties.rdendritic[index]);
+                // debug(' ralternatitinerary:  ', ifdt.properties.ralternatitinerary[index]);
+                // debug(' rinfrint:            ', ifdt.properties.rinfrint[index]);
+                // debug(' rtourism:            ', ifdt.properties.rtourism[index]);
+                // debug(' rindustrydist:       ', ifdt.properties.rindustrydist[index]);
+                // debug(' rindustry:           ', ifdt.properties.rindustry[index]);
+                // debug(' rhealth:             ', ifdt.properties.rhealth[index]);
+                // debug(' renvironment:        ', ifdt.properties.renvironment[index]);
+                // debug(' rwaste:              ', ifdt.properties.rwaste[index]);
+                // debug(' rwidth:              ', ifdt.properties.rwidth[index]);
+                // debug(' rmaterial:           ', ifdt.properties.rmaterial[index]);
+                // debug(' rdateconstruct:      ', ifdt.properties.rdateconstruct[index]);
+                // debug(' gmaterial:           ', ifdt.properties.gmaterial[index]);
+                // debug(' gmaterial2:          ', ifdt.properties.gmaterial2[index]);
+                // debug(' gheight:             ', ifdt.properties.gheight[index]);
+                // debug(' gheight2:            ', ifdt.properties.gheight2[index]);
+                // debug(' glength:             ', ifdt.properties.glength[index]);
+                // debug(' glength2:            ', ifdt.properties.glength2[index]);
+                // debug('l1key:                ', l1key);
+                // debug('level1:               ');
+                // debug(level1);
+                // debug('l2key:                ', l2key);
+                // debug('level2:               ');
+                // debug(level2);
+                // debug('rk:                   ', rk);
+                // debug('rango:                ', rango);
+                // while (true) { ; };
                 // }
             }
+            if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67') debug('retCriticality: ', retCriticality);
             retCriticality += val * level1.weight / 100;
-            // console.log('retCriticality: ' + retCriticality);
+            if (ifdt.properties.gcode2[index] === 'F7-SPK-05-RW-67') debug('Level 1: retCriticality: ', retCriticality, 'val:', val, 'weight', level1.weight / 100);
         }
 
     }
