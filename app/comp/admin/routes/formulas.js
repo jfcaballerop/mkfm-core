@@ -3538,8 +3538,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ) {
                             // en este caso estoy en la dcha
                             if (calcularValue || calcularValue2) {
-                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
-                                (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
+                                // (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
+                                // (ifdt._id.toString() === "59cbc01ea08d076db46e2ab4" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
                                 formResultRight[index] = formulasService.criticality('Retaining_Walls', fspec2, sendDataFinal, ifdt, index);
                             } else {
                                 if (ifdt.properties.gcriticality2 !== undefined &&
@@ -3614,8 +3614,8 @@ router.post('/V1/update_formulas_tracks/:formula/:asset', async function (req, r
                         ) {
                             // en este caso estoy en la izda
                             if (calcularValue || calcularValue2) {
-                                (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
-                                (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
+                                // (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue) ? debug(ifdt.properties.gcode[index], sendDataFinal): 0;
+                                // (ifdt._id.toString() === "5a0090ac9184a0311c8f2eaa" && calcularValue2) ? debug(ifdt.properties.gcode2[index], sendDataFinal): 0;
 
                                 formResultLeft[index] = formulasService.criticality('Earthworks', fspec1, sendDataFinal);
                             } else {
