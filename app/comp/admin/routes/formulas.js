@@ -4332,7 +4332,9 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset',
                                                     totalScoring *= 0.98;
                                                 }
                                                 //  CORRECTIVE FACTORS - VEGETATION
-                                                if (ifdt.properties.gtypevegetation !== undefined && ifdt.properties.gtypevegetation.length > 0 &&
+                                                if (ifdt.properties.gtypevegetation !== undefined &&
+                                                    ifdt.properties.gtypevegetation.length > 0 &&
+                                                    ifdt.properties.gtypevegetation[i] !== undefined &&
                                                     ifdt.properties.gtypevegetation[i] !== null &&
                                                     ifdt.properties.gtypevegetation[i] !== "") {
                                                     for (score in form.formulaSpec[f].CorrectiveFactors.Vegetation.Na.scoring) {
