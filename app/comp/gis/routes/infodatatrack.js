@@ -1047,7 +1047,7 @@ router.post('/V1/delete/:id', function (req, res, next) {
 
 /* UPDATE Infodatatrack */
 router.post('/V1/update_infodatatrack/:id', function (req, res, next) {
-    //// console.log('## UPDATE Infodatatrack ##\nBODY: ' + JSON.stringify(req.body));
+    debug('## UPDATE Infodatatrack ##');
     Infodatatrack.findById(req.params.id, function (err, infodatatrack) {
         var saveInfodatatrack = extend({}, req.body);
         for (var key in saveInfodatatrack) {
@@ -1057,6 +1057,13 @@ router.post('/V1/update_infodatatrack/:id', function (req, res, next) {
                 for (var key2 in saveInfodatatrack[key]) {
                     //// console.log(key2 + ": " + saveInfodatatrack[key][key2]);
                     if (key2 === 'koboedit') {
+                        if (infodatatrack[key][key2] === undefined) {
+                            debug('** entro **');
+                            infodatatrack[key][key2] = new Array(infodatatrack.geometry.coordinates.length).map(function (x) {
+                                return {};
+                            });
+
+                        }
                         infodatatrack[key][key2]["kobo_id"] = saveInfodatatrack[key][key2]["kobo_id"];
                         infodatatrack[key][key2]["kobo_type"] = saveInfodatatrack[key][key2]["kobo_type"];
 
