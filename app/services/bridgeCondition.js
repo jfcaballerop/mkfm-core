@@ -156,10 +156,10 @@ function calculateBridgeCondition(bridge = DEFAULT_BRIDGE, params) {
   score = twoDecimals(score)
   // 2. bridge type ONLY if score is NOT 100
   const bridgeTypeScore = params.correctiveBridgeType[bridgeData.type]
-  if (score !== 100 && bridgeTypeScore) {
+  if (bridgeTypeScore) {
     //console.log('Applying bridge corrective factor', score, bridgeData.type, bridgeTypeScore)
     score *= bridgeTypeScore
-  } else if (score !== 100) {
+  } else {
     score *= params.correctiveBridgeType.Other
   }
   //console.log('Score before return', score)
