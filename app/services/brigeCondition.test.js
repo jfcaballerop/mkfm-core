@@ -41,7 +41,7 @@ describe('Bridge Condition', () => {
                 }
             },
             {
-                expected: 100,
+                expected: 95,
                 type: 'Slab',
                 damages: {}
             },
@@ -82,7 +82,7 @@ describe('Bridge Condition', () => {
             },
             {
                 //M6-SD-B-3606
-                expected: 100,
+                expected: 98,
                 type: 'Masonry_arch',
                 damages: {
                     nonStructural: 'No damages'
