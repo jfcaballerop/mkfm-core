@@ -54,86 +54,80 @@
 
         </aside>
         <!--sidebar end-->
-        <!-- main content Permission denied -->
-        <% if(!token.admin) {%>
-            <% include partials/error_permissions %>
-                <!-- End permission denied -->
-                <%} else {%>
-                    <!--main content start-->
-                    <section id="main-content">
-                        <section class="wrapper site-min-height">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
+                            <%- trans('MENU_PANEL_BUDGET') %>
+                        </h3>
+                    </div>
+                </div>
+                <!-- page start-->
+                <div class="row" id="">
+                    <div class="col-md-3">
+                        <div class="form-panel">
                             <div class="row">
+                                <!-- Budget Criteria -->
                                 <div class="col-md-12">
-                                    <h3>
-                                        <i class="fa fa-angle-right"></i>
-                                        <%- trans('MENU_PANEL_BUDGET') %>
-                                    </h3>
-                                </div>
-                            </div>
-                            <!-- page start-->
-                            <div class="row" id="">
-                                <div class="col-md-3">
-                                    <div class="form-panel">
-                                        <div class="row">
-                                            <!-- Budget Criteria -->
-                                            <div class="col-md-12">
-                                                <h5 class="">
-                                                    <i class="fa fa-angle-right"></i> Budget Criteria
-                                                </h5>
+                                    <h5 class="">
+                                        <i class="fa fa-angle-right"></i> Budget Criteria
+                                    </h5>
 
-                                                <div class="radio">
-                                                    <label for="Globalbudget">
-                                                        <input type="radio" name="optionsRadios" id="Globalbudget" value="Globalbudget"> Global budget
-                                                    </label>
-                                                    <br>
-                                                    <label for="Annualavailablebudget">
-                                                        <input type="radio" name="optionsRadios" id="Annualavailablebudget" value="Annualavailablebudget"> Annual available budget
-                                                    </label>
-                                                    <hr>
-                                                    <div id="amountdiv" style="display: none">
+                                    <div class="radio">
+                                        <label for="Globalbudget">
+                                            <input type="radio" name="optionsRadios" id="Globalbudget" value="Globalbudget"> Global budget
+                                        </label>
+                                        <br>
+                                        <label for="Annualavailablebudget">
+                                            <input type="radio" name="optionsRadios" id="Annualavailablebudget" value="Annualavailablebudget"> Annual available budget
+                                        </label>
+                                        <hr>
+                                        <div id="amountdiv" style="display: none">
 
 
-                                                        <label for="amount">
-                                                            Amount (Millions EC$):
-                                                            <input type="number" id="ammount" name="ammount" value="<%- retValues.budget.ammount %>">
-                                                        </label>
+                                            <label for="amount">
+                                                Amount (Millions EC$):
+                                                <input type="number" id="ammount" name="ammount" value="<%- retValues.budget.ammount %>">
+                                            </label>
 
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <%- include('partials/menu_annual_available_budget.ejs'); %>
-                                            <%- include('partials/menu_global_budget.ejs'); %>
                                     </div>
                                 </div>
-                                <!-- PARTE DCHA DE RESULTADOS-->
-                                <div class="col-md-9">
-                                    <div class="col-md-12" id="content_global" style="display: none">
-
-                                        <%- include('partials/content_global_budget_natural.ejs'); %>
-                                            <%- include('partials/content_global_budget_physical.ejs'); %>
-                                                <%- include('partials/content_global_budget_graph.ejs'); %>
-                                    </div>
-                                    <%- include('partials/content_annual_available_budget.ejs'); %>
-                                </div>
-                                <!-- PARTE DCHA DE RESULTADOS-->
-
                             </div>
-                            <div class="row">
+                            <%- include('partials/menu_annual_available_budget.ejs'); %>
+                                <%- include('partials/menu_global_budget.ejs'); %>
+                        </div>
+                    </div>
+                    <!-- PARTE DCHA DE RESULTADOS-->
+                    <div class="col-md-9">
+                        <div class="col-md-12" id="content_global" style="display: none">
 
-                            </div>
+                            <%- include('partials/content_global_budget_natural.ejs'); %>
+                                <%- include('partials/content_global_budget_physical.ejs'); %>
+                                    <%- include('partials/content_global_budget_graph.ejs'); %>
+                        </div>
+                        <%- include('partials/content_annual_available_budget.ejs'); %>
+                    </div>
+                    <!-- PARTE DCHA DE RESULTADOS-->
 
-                            <!-- page end-->
-                        </section>
-                    </section>
-                    <!-- /MAIN CONTENT -->
-                    <% } %>
-                        <!--main content end-->
-                        <!--footer start-->
-                        <footer class="site-footer">
-                            <% include partials/footer %>
-                        </footer>
-                        <!--footer end-->
+                </div>
+                <div class="row">
+
+                </div>
+
+                <!-- page end-->
+            </section>
+        </section>
+        <!-- /MAIN CONTENT -->
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <% include partials/footer %>
+        </footer>
+        <!--footer end-->
     </section>
 
     <% include partials/footer_scripts %>
