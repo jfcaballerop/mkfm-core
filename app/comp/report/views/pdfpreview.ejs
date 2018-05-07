@@ -80,88 +80,83 @@
         </aside>
         <!--sidebar end-->
         <!-- main content Permission denied -->
-        <% if(!token.admin) {%>
-            <% include partials/error_permissions %>
-                <!-- End permission denied -->
-                <%} else {%>
-                    <!--main content start-->
-                    <section id="main-content">
-                        <section class="wrapper site-min-height">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                <div class="row mt">
+                    <div class="col-md-12">
+                        <h3>
+                            <i class="fa fa-angle-right"></i>
+                            <%- trans('MENU_PANEL_REPORT') %>
+                        </h3>
+
+                    </div>
+                </div>
+                <!-- page start-->
+                <div class="row mt" id="bodyQuery">
+                    <div class="col-md-3">
+                        <div class="form-panel">
+                            <h5 class="mb">
+                                <i class="fa fa-angle-right"></i>
+                                <%- trans('DSHEET_SEARCH_TOOL') %>
+                            </h5>
                             <div class="row mt">
                                 <div class="col-md-12">
-                                    <h3>
-                                        <i class="fa fa-angle-right"></i>
-                                        <%- trans('MENU_PANEL_REPORT') %>
-                                    </h3>
+                                    <div class="search">
+                                        <span class="fa fa-search"></span>
+                                        <input id="searchtool" type="text" list="json-datalist" class="form-control round-form" placeholder="Enter road/asset code">
+                                        <datalist id="json-datalist"></datalist>
+                                        <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                        <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
 
-                                </div>
-                            </div>
-                            <!-- page start-->
-                            <div class="row mt" id="bodyQuery">
-                                <div class="col-md-3">
-                                    <div class="form-panel">
-                                        <h5 class="mb">
-                                            <i class="fa fa-angle-right"></i>
-                                            <%- trans('DSHEET_SEARCH_TOOL') %>
-                                        </h5>
-                                        <div class="row mt">
-                                            <div class="col-md-12">
-                                                <div class="search">
-                                                    <span class="fa fa-search"></span>
-                                                    <input id="searchtool" type="text" list="json-datalist" class="form-control round-form" placeholder="Enter road/asset code">
-                                                    <datalist id="json-datalist"></datalist>
-                                                    <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
-                                                    <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
-
-                                                    <div id="spinner" class="spinner" style="display:none;">
-                                                        <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
-                                                    </div>
-                                                    <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
-                                                    <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
-                                                </div>
-                                            </div>
+                                        <div id="spinner" class="spinner" style="display:none;">
+                                            <img id="img-spinner" src="/assets/img/gifs/ajax-loader.gif" alt="Loading" />
                                         </div>
-                                        <div class="row mt">
-                                            <div class="col-md-12">
-                                                <% templates.forEach(function(temp){ %>
-
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" value="<%- temp.config.HTML.id %>">
-                                                            <%- temp.name %>
-                                                        </label>
-                                                        <br>
-                                                    </div>
-                                                    <% }); %>
-                                            </div>
-                                        </div>
-                                        <div class="row mt">
-                                            <div class="col-md-12">
-                                                <button id="generateReport" type="button" class="btn btn-success">
-                                                    <i class="fa fa-file-alt"></i> Report</button>
-
-                                            </div>
-                                        </div>
+                                        <div id="error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                                        <div id="response" class="alert alert-success" role="alert" style="display:none;"></div>
                                     </div>
-                                </div>
-                                <div class="col-md-9" id="iframeContainer">
                                 </div>
                             </div>
                             <div class="row mt">
+                                <div class="col-md-12">
+                                    <% templates.forEach(function(temp){ %>
 
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="<%- temp.config.HTML.id %>">
+                                                <%- temp.name %>
+                                            </label>
+                                            <br>
+                                        </div>
+                                        <% }); %>
+                                </div>
                             </div>
+                            <div class="row mt">
+                                <div class="col-md-12">
+                                    <button id="generateReport" type="button" class="btn btn-success">
+                                        <i class="fa fa-file-alt"></i> Report</button>
 
-                            <!-- page end-->
-                        </section>
-                    </section>
-                    <!-- /MAIN CONTENT -->
-                    <% } %>
-                        <!--main content end-->
-                        <!--footer start-->
-                        <footer class="site-footer">
-                            <% include partials/footer %>
-                        </footer>
-                        <!--footer end-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9" id="iframeContainer">
+                    </div>
+                </div>
+                <div class="row mt">
+
+                </div>
+
+                <!-- page end-->
+            </section>
+        </section>
+        <!-- /MAIN CONTENT -->
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <% include partials/footer %>
+        </footer>
+        <!--footer end-->
     </section>
 
     <% include partials/footer_scripts %>
