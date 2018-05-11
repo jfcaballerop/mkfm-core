@@ -111,13 +111,13 @@
 	"USER_ACCION": "Action",
 	"USER_ADD_USER": "Add user",
 	"USER_MODIFY_USER": "Modify user",
-	"USER_NAME": "Name",
-	"USER_APELL1": "First name",
+	"USER_NAME": "First name",
+	"USER_APELL1": "Middle name",
 	"USER_APELL2": "Last name",
 	"USER_LOGIN": "Login",
 	"USER_PASS": "Password",
 	"USER_ADMIN": "Administrator",
-	"USER_MODIFIY_USER": "USER_MODIFIY_USER",
+	"USER_MODIFIY_USER": "Modify user",
 	"UPDATED": "Updated",
 	"UPLOAD": "Upload"
 }
