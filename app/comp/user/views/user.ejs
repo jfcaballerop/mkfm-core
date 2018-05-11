@@ -101,9 +101,13 @@
                                                         <td>
                                                             <div id="tag_<%=users[i]._id %>">
                                                                 <% if(users[i].activo){ %>
-                                                                    <span class="label label-success label-mini">Activado</span>
+                                                                    <span class="label label-success label-mini">
+                                                                        <%- trans("ACTIVE") %>
+                                                                    </span>
                                                                     <% } else { %>
-                                                                        <span class="label label-danger label-mini">Desactivado</span>
+                                                                        <span class="label label-danger label-mini">
+                                                                            <%- trans("DISABLED") %>
+                                                                        </span>
                                                                         <% } %>
                                                             </div>
                                                         </td>
