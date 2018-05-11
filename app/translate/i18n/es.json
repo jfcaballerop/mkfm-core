@@ -1,4 +1,9 @@
 {
+    "ACTIVE": "Activo",
+    "DISABLED": "Desactivado",
+    "BUTTON_ADD": "añadir",
+    "BUTTON_CANCEL": "cancelar",
+    "BUTTON_MODIFICAR": "Modificar",
     "WELCOME_MSG": "Bienvenido!",
     "CODE": "Codigo",
     "VALUE": "Valor",
@@ -102,5 +107,13 @@
     "VERY_POOR": "VERY_POOR",
     "POOR": "POOR",
     "FAIR": "FAIR",
-    "GOOD": "GOOD"
+    "GOOD": "GOOD",
+    "USER_ADD_USER": "Añadir usuario",
+    "USER_MODIFY_USER": "Modificar user",
+    "USER_NAME": "Nombre",
+    "USER_APELL1": "Primer apellido",
+    "USER_APELL2": "Segundo apellido",
+    "USER_PASS": "Contraseña",
+    "USER_ADMIN": "Administrator"
+
 }
