@@ -28,7 +28,7 @@ exports.makeKoboGeoJson = function (arr, index, type) {
     retJson.geometry.coordinates = arr.geometry.coordinates[index];
 
     for (var v of Object.keys(arr.properties)) {
-        if(!arr.properties[v]) continue;
+        if (!arr.properties[v]) continue;
         retJson.properties[v] = arr.properties[v][index];
         // debug(v + ': ' + retJson.properties[v]);
     }
@@ -188,11 +188,12 @@ exports.roundValuePerCent = function (value, decimals) {
     }
 };
 
-exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, iup, type) {
+exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, trackPavDist, iup, type) {
     var tracksnamessche = [];
     var antsect = mathjs.mode(trackSections[0])[0];
     var antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
     var antcat = mathjs.mode(trackPavCat[0])[0];
+    var antdist = mathjs.mode(trackPavDist[0])[0];
     var antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
     var antcost = mathjs.sum(trackPavCost[0]);
     var pkiniant = trackpkreg[0][0];
@@ -214,6 +215,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             antcost = mathjs.sum(trackPavCost[0]);
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[0])[0]);
             antcat = mathjs.mode(trackPavCat[0])[0];
+            antdist = mathjs.mode(trackPavDist[0])[0];
             antmaxwidth = trackSectionswidth[0].length > 0 ? mathjs.max(trackSectionswidth[0]) : 0;
             pkiniant = trackpkreg[0][0];
             pkfinant = trackpkreg[0][trackpkreg[0].length - 1];
@@ -262,6 +264,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
             antsect = mathjs.mode(trackSections[ts])[0];
             antcond = formulasService.ConditionRating(mathjs.mode(trackSectionscond[ts])[0]);
             antcat = mathjs.mode(trackPavCat[ts])[0];
+            antdist = mathjs.mode(trackPavDist[ts])[0];
             antmaxwidth = trackSectionswidth[ts].length > 0 ? mathjs.max(trackSectionswidth[ts]) : 0;
             antcost += mathjs.sum(trackPavCost[ts]);
 
@@ -281,6 +284,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
         width: antmaxwidth,
         cost: antcost,
         rcategory: antcat,
+        district: antdist,
         riskOrder: formulasService.riskRatingScaleOrderCode(tracknamesche)
 
     });
