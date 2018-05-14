@@ -1206,6 +1206,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 var pavDistrict = []; // jfcaballero: añadido para obtener el district/parish de la road
                 var trackPavDist = [];
+                // TODO: Terminar los district para el resto de activos, actualmente solo esta hecho para PAV
 
                 var trackpkreg = [];
                 var trackPavCost = [];
