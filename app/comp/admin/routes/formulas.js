@@ -1254,6 +1254,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1265,6 +1266,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1283,6 +1285,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1295,6 +1298,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1316,6 +1320,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1327,6 +1332,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1349,6 +1355,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1360,6 +1367,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1429,6 +1437,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1440,6 +1449,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1458,6 +1468,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1469,6 +1480,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1489,6 +1501,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1499,6 +1512,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1520,6 +1534,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1531,6 +1546,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 

@@ -245,6 +245,7 @@ exports.tracksGroupNameRiskCond = function (trackSections, trackSectionscond, tr
                     width: antmaxwidth,
                     cost: antcost,
                     rcategory: antcat,
+                    district: antdist,
                     riskOrder: formulasService.riskRatingScaleOrderCode(tracknamesche)
                 });
                 // //debug(' pkfin: ' + pkfin.toString().split('.')[0] + '+' + pkfin.toString().split('.')[1].substring(0, 3)) + '__R'+type+'-' + antsect + '__COND-' + antcond;
@@ -425,7 +426,7 @@ exports.getDistrictDictionary = function (code) {
     codes['SM'] = 'SM';
     codes['SPK'] = 'SPK';
     codes['SPL'] = 'SPL';
-    codes['SPR'] = 'SPR';
+    codes['SPT'] = 'SPT';
     return codes[code];
 
 }
@@ -441,7 +442,7 @@ exports.getDistrictSiglas = function (district) {
     siglas['Saint Mark'] = 'SM';
     siglas['Saint Patrick'] = 'SPK';
     siglas['Saint Paul'] = 'SPL';
-    siglas['Saint Peter'] = 'SPR';
+    siglas['Saint Peter'] = 'SPT';
 
     return siglas[district];
 }
