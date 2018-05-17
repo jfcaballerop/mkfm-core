@@ -764,7 +764,7 @@ router.get('/V1/formulas/', function (req, res, next) {
  * Metodo para modificar los valores devueltos por las formulas
  */
 router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (req, res, next) {
-    ////debug('API /V1/update_formulas_tracks_risk/');
+    debug('API /V1/update_formulas_tracks_risk/');
     var postData = extend({}, req.body);
     var tracksUpdated = 0;
     var ret = {
@@ -1200,10 +1200,16 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                 var nsections = 1;
                 var pkreg = [];
                 var pavCost = [];
+
                 var pavCategory = [];
+                var trackPavCat = [];
+
+                var pavDistrict = []; // jfcaballero: añadido para obtener el district/parish de la road
+                var trackPavDist = [];
+                // TODO: Terminar los district para el resto de activos, actualmente solo esta hecho para PAV
+
                 var trackpkreg = [];
                 var trackPavCost = [];
-                var trackPavCat = [];
                 var bridgesTrackPhy = [];
                 var bridgesTrackNat = [];
                 var culvertsTrackPhy = [];
@@ -1216,13 +1222,13 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                  */
                 var assetsVisited = [];
 
-                var valini = iup.properties.pk[0]; //cojo el primer valo del PK
+                var valini = iup.properties.pk[0]; //cojo el primer valor del PK
 
                 /**
                  * Se comprueba si el PK es creciente o decreciente
                  * Despues se generan las secciones con el RISK normalizado dentro de los rangos 0-20, 20-40, etc...
                  * Dividimos los PAV por sections
-                 * SOLO LOS PAVEMENTS ESTAN SECCIONADOS, EL RESTOD DE ASSETS LOS TRAMOS DE MANERA DISCRETA EN SU PUNTO INICIAL !!!
+                 * SOLO LOS PAVEMENTS ESTAN SECCIONADOS, EL RESTO DE ASSETS COGE LOS TRAMOS DE MANERA DISCRETA EN SU PUNTO INICIAL !!!
                  */
                 if (iup.inverted) {
                     sectionlength *= -1;
@@ -1248,6 +1254,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1259,6 +1266,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1277,6 +1285,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1289,6 +1298,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1310,6 +1320,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1321,6 +1332,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
 
                             });
@@ -1343,6 +1355,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1354,6 +1367,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1370,6 +1384,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         pkreg[ns] = iup.properties.pk[i];
                         pavCost[ns] = (iup.properties.rinvestmentrequired[i] !== undefined && iup.properties.rinvestmentrequired[i] !== '') ? iup.properties.rinvestmentrequired[i] : 0;
                         pavCategory[ns] = (iup.properties.rcategory[i] !== undefined && iup.properties.rcategory[i] !== '') ? iup.properties.rcategory[i] : '';
+                        pavDistrict[ns] = (iup.properties.district[i] !== undefined && iup.properties.district[i] !== '') ? iup.properties.district[i] : '';
 
                         if (iup.properties.pk[i] <= pkini + sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                             // ////debug(nsections);
@@ -1380,6 +1395,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             trackpkreg.push(pkreg);
                             trackPavCost.push(pavCost);
                             trackPavCat.push(pavCategory);
+                            trackPavDist.push(pavDistrict);
                             sectionsphy = [];
                             sectionsnat = [];
                             sectionscond = [];
@@ -1387,6 +1403,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             pkreg = [];
                             pavCost = [];
                             pavCategory = [];
+                            pavDistrict = [];
                             nsections++;
                             ns = 0;
                         } else {
@@ -1399,7 +1416,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                     }
 
 
-                } else {
+                } else { /** SINO ES INVERTED */
                     var ns = 0;
                     for (var i = 0; i < iup.geometry.coordinates.length; i++) {
                         /**
@@ -1420,6 +1437,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1431,6 +1449,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight[i],
                                 cost: iup.properties.rginvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1449,6 +1468,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1460,6 +1480,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 height: iup.properties.gheight2[i],
                                 cost: iup.properties.rginvestmentrequired2[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1480,6 +1501,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1490,6 +1512,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 length: iup.properties.Clength[i],
                                 cost: iup.properties.Cinvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1511,6 +1534,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1522,6 +1546,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                                 width: iup.properties.bwidth[i],
                                 cost: iup.properties.binvestmentrequired[i],
                                 rcategory: iup.properties.rcategory[i],
+                                district: iup.properties.district[i],
                                 riskOrder: formulasService.riskRatingScaleOrderCode(code)
                             });
 
@@ -1533,6 +1558,7 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                         pkreg[ns] = iup.properties.pk[i];
                         pavCost[ns] = (iup.properties.rinvestmentrequired[i] !== undefined && iup.properties.rinvestmentrequired[i] !== '') ? iup.properties.rinvestmentrequired[i] : 0;
                         pavCategory[ns] = (iup.properties.rcategory[i] !== undefined && iup.properties.rcategory[i] !== '') ? iup.properties.rcategory[i] : '';
+                        pavDistrict[ns] = (iup.properties.district[i] !== undefined && iup.properties.district[i] !== '') ? iup.properties.district[i] : '';
 
                         if (iup.properties.pk[i] >= sectionlength * nsections || i + 1 === iup.geometry.coordinates.length) {
                             // ////debug(nsections);
@@ -1542,9 +1568,11 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
                             trackSectionswidth.push(sectionswidth);
                             trackpkreg.push(pkreg);
                             trackPavCost.push(pavCost);
+                            trackPavDist.push(pavDistrict);
                             trackPavCat.push(pavCategory);
                             pavCost = [];
                             pavCategory = [];
+                            pavDistrict = [];
                             pkreg = [];
                             sectionsphy = [];
                             sectionsnat = [];
@@ -1561,8 +1589,8 @@ router.post('/V1/update_formulas_tracks_risk/:formula/:asset', async function (r
 
                 }
                 // //debug(trackPavCat);
-                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, iup, 'PHY');
-                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, iup, 'NAT');
+                var tgphys = serviceService.tracksGroupNameRiskCond(trackSectionsphy, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, trackPavDist, iup, 'PHY');
+                var tgnats = serviceService.tracksGroupNameRiskCond(trackSectionsnat, trackSectionscond, trackSectionswidth, trackpkreg, trackPavCost, trackPavCat, trackPavDist, iup, 'NAT');
                 resolve([tgphys, tgnats, bridgesTrackPhy, bridgesTrackNat, culvertsTrackPhy, culvertsTrackNat, geotsTrackPhy, geotsTrackNat]);
             })
         }));
