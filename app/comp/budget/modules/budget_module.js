@@ -4,8 +4,8 @@ var services = require(path.join(__dirname, '../../../services/services'));
 var mathjs = require('mathjs');
 var debug = require('debug')('debug');
 
-exports.investmentDistrict = function (arrInv, code, investment, type) {
-    var districtVal = code.split('-')[1];
+exports.investmentDistrict = function (arrInv, district, investment, type) {
+    var districtVal = services.getDistrictSiglas(district);
 
     if (type === 'PHY') {
 
@@ -86,8 +86,8 @@ exports.investmentDistrict = function (arrInv, code, investment, type) {
     return arrInv;
 }
 
-exports.nRoadsDistrict = function (arrInv, code, type) {
-    var districtVal = code.split('-')[1];
+exports.nRoadsDistrict = function (arrInv, district, type) {
+    var districtVal = services.getDistrictSiglas(district);
     // debug(districtVal);
     if (type === 'PHY') {
         // debug(services.getDistrictDictionary(districtVal));
@@ -774,7 +774,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_nat1']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_nat1']++;
                         break;
 
@@ -817,7 +817,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_nat2']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_nat2']++;
                     default:
                         break;
@@ -857,7 +857,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_nat3']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_nat3']++;
                     default:
                         break;
@@ -897,7 +897,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_nat4']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_nat4']++;
                     default:
                         break;
@@ -937,7 +937,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_nat5']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_nat5']++;
                     default:
                         break;
@@ -985,7 +985,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_phy1']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_phy1']++;
                     default:
                         break;
@@ -1026,7 +1026,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_phy2']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_phy2']++;
                     default:
                         break;
@@ -1066,7 +1066,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_phy3']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_phy3']++;
                     default:
                         break;
@@ -1106,7 +1106,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_phy4']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_phy4']++;
                     default:
                         break;
@@ -1146,7 +1146,7 @@ exports.nAssetsRiskGraphParish = function (arrInv, code, type) {
                     case "SL":
                         arrInv['Graph_elements_Saint_Luke_phy5']++;
                         break;
-                    case "SPR":
+                    case "SPT":
                         arrInv['Graph_elements_Saint_Peter_phy5']++;
                     default:
                         break;
@@ -2564,8 +2564,8 @@ exports.schedInterv = function (ret, schnats, schphys) {
         ret = this.nInterventionsCriticality(ret, snat.properties.code, snat.type, 'NAT');
         ret = this.nRoadsCategory(ret, snat.properties.rcategory, 'NAT');
         ret = this.investmentCategory(ret, snat.properties.rcategory, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
-        ret = this.investmentDistrict(ret, snat.properties.code, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
-        ret = this.nRoadsDistrict(ret, snat.properties.code, 'NAT');
+        ret = this.investmentDistrict(ret, snat.properties.district, (isNaN(snat.properties.cost) ? 0 : Number(snat.properties.cost)), 'NAT');
+        ret = this.nRoadsDistrict(ret, snat.properties.district, 'NAT');
 
         if (snat.type === 'PAVEMENTS') {
             ret['Total_roads_interventions']++;
@@ -2597,8 +2597,8 @@ exports.schedInterv = function (ret, schnats, schphys) {
         ret = this.nInterventionsCriticality(ret, sphy.properties.code, sphy.type, 'PHY');
         ret = this.nRoadsCategory(ret, sphy.properties.rcategory, 'PHY');
         ret = this.investmentCategory(ret, sphy.properties.rcategory, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
-        ret = this.investmentDistrict(ret, sphy.properties.code, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
-        ret = this.nRoadsDistrict(ret, sphy.properties.code, 'PHY');
+        ret = this.investmentDistrict(ret, sphy.properties.district, (isNaN(sphy.properties.cost) ? 0 : Number(sphy.properties.cost)), 'PHY');
+        ret = this.nRoadsDistrict(ret, sphy.properties.district, 'PHY');
 
 
         if (sphy.type === 'PAVEMENTS') {
