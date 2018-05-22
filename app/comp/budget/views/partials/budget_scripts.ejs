@@ -175,6 +175,8 @@
                     // console.log(result);
                     var h = -1;
                     var html = [];
+
+
                     if (riskType === 'PHY') {
                         html[++h] =
                             'Physical Deterioration ';
@@ -183,8 +185,10 @@
                             'Natural Hazards ';
 
                     }
+                    html[++h] = '<button type="button" class="btn btn-success" id="excelExport' +
+                        riskType + '">Excel</button>';
                     html[++h] =
-                        '<table class="table table-bordered table-striped table-condensed" ><tbody id="risk"' +
+                        '<table id="TableRisk" class="table table-bordered table-striped table-condensed" ><tbody id="risk"' +
                         riskType + '>';
                     html[++h] = '<thead>';
                     html[++h] = '<tr>';
@@ -423,11 +427,13 @@
                     $('#naturalHazardsContent').show();
                     $('#PhysicalDeteriorationContent').hide();
                     $('#graphButton').prop("disabled", false);
+                    $('#exportExcelGlobal').prop("disabled", false);
                     break;
                 case "PhysicalDeterioration":
                     $('#PhysicalDeteriorationContent').show();
                     $('#naturalHazardsContent').hide();
                     $('#graphButton').prop("disabled", false);
+                    $('#exportExcelGlobal').prop("disabled", false);
                     break;
 
                 default:
@@ -441,7 +447,7 @@
         // });
 
         $('#amountdiv').change(function (event) {
-            $('#InvestmentFY2018').val('EC$ ' + $('#ammount').val());
+            $('#InvestmentFY2018').html('EC$ ' + $('#ammount').val());
             ValAmount = $('#ammount').val();
             // paintDonutChart1();
 
@@ -450,7 +456,7 @@
         $('#Routine').change(function (event) {
             sanitizeNumberFields($(this));
             ValRoutine = $('#Routine').val();
-            $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
+            $('#disabledInputRoutine').html('EC$ ' + ValAmount * ValRoutine / 100);
             $('#Brushcutting').trigger('change');
             $('#Drainclearing').trigger('change');
             $('#Patching').trigger('change');
@@ -461,7 +467,7 @@
         $('#Periodic').change(function (event) {
             sanitizeNumberFields($(this));
             ValPeriodic = $('#Periodic').val();
-            $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
+            $('#disabledInputPeriodic').html('EC$ ' + ValAmount * ValPeriodic / 100);
             //$('#DesignProjects').trigger('change');
             $('#WorkInterventions').trigger('change');
             $('#Inspections').trigger('change');
@@ -471,7 +477,7 @@
         $('#Emergency').change(function (event) {
             sanitizeNumberFields($(this));
             ValEmergency = $('#Emergency').val();
-            $('#disabledInputEmergency').val('EC$ ' + ValAmount * ValEmergency / 100);
+            $('#disabledInputEmergency').html('EC$ ' + ValAmount * ValEmergency / 100);
             // paintDonutChart1();
         });
 
@@ -479,27 +485,27 @@
         $('#Brushcutting').change(function (event) {
             sanitizeNumberFields($(this));
             ValBrushcutting = $('#Brushcutting').val();
-            $('#disabledInputBrushcutting').val('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
+            $('#disabledInputBrushcutting').html('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
                 10000);
             // paintDonutChart2();
         });
         $('#Drainclearing').change(function (event) {
             sanitizeNumberFields($(this));
             ValDrainclearing = $('#Drainclearing').val();
-            $('#disabledInputDrainclearing').val('EC$ ' + ValAmount * ValRoutine * ValDrainclearing /
+            $('#disabledInputDrainclearing').html('EC$ ' + ValAmount * ValRoutine * ValDrainclearing /
                 10000);
             // paintDonutChart2();
         });
         $('#Patching').change(function (event) {
             sanitizeNumberFields($(this));
             ValPatching = $('#Patching').val();
-            $('#disabledInputPatching').val('EC$ ' + ValAmount * ValRoutine * ValPatching / 10000);
+            $('#disabledInputPatching').html('EC$ ' + ValAmount * ValRoutine * ValPatching / 10000);
             // paintDonutChart2();
         });
         $('#RoadSafetyImprovement').change(function (event) {
             sanitizeNumberFields($(this));
             ValRoadSafetyImprovement = $('#RoadSafetyImprovement').val();
-            $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
+            $('#disabledInputRoadSafetyImprovement').html('EC$ ' + ValAmount * ValRoutine *
                 ValRoadSafetyImprovement / 10000);
             // paintDonutChart2();
         });
@@ -516,7 +522,7 @@
         $('#WorkInterventions').change(function (event) {
             sanitizeNumberFields($(this));
             ValWorkInterventions = $('#WorkInterventions').val();
-            $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
+            $('#disabledInputWorkInterventions').html('EC$ ' + ValAmount * ValPeriodic *
                 ValWorkInterventions /
                 10000);
             // paintDonutChart3();
@@ -528,7 +534,7 @@
         $('#Inspections').change(function (event) {
             sanitizeNumberFields($(this));
             ValInspections = $('#Inspections').val();
-            $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic * ValInspections /
+            $('#disabledInputInspections').html('EC$ ' + ValAmount * ValPeriodic * ValInspections /
                 10000);
             // paintDonutChart3();
         });
@@ -708,36 +714,36 @@
 
         $('#graphAnnual').click(function () {
             ValAmount = $('#ammount').val();
-            $('#InvestmentFY2018').val('EC$ ' + ValAmount);
+            $('#InvestmentFY2018').html('EC$ ' + ValAmount);
 
             ValRoutine = $('#Routine').val();
-            $('#disabledInputRoutine').val('EC$ ' + ValAmount * ValRoutine / 100);
+            $('#disabledInputRoutine').html('EC$ ' + ValAmount * ValRoutine / 100);
             ValPeriodic = $('#Periodic').val();
-            $('#disabledInputPeriodic').val('EC$ ' + ValAmount * ValPeriodic / 100);
+            $('#disabledInputPeriodic').html('EC$ ' + ValAmount * ValPeriodic / 100);
             ValEmergency = $('#Emergency').val();
-            $('#disabledInputEmergency').val('EC$ ' + ValAmount * ValEmergency / 100);
+            $('#disabledInputEmergency').html('EC$ ' + ValAmount * ValEmergency / 100);
             ValBrushcutting = $('#Brushcutting').val();
-            $('#disabledInputBrushcutting').val('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
+            $('#disabledInputBrushcutting').html('EC$ ' + ValAmount * ValRoutine * ValBrushcutting /
                 10000);
             ValDrainclearing = $('#Drainclearing').val();
-            $('#disabledInputDrainclearing').val('EC$ ' + ValAmount * ValRoutine *
+            $('#disabledInputDrainclearing').html('EC$ ' + ValAmount * ValRoutine *
                 ValDrainclearing / 10000);
             ValPatching = $('#Patching').val();
-            $('#disabledInputPatching').val('EC$ ' + ValAmount * ValRoutine * ValPatching /
+            $('#disabledInputPatching').html('EC$ ' + ValAmount * ValRoutine * ValPatching /
                 10000);
             ValRoadSafetyImprovement = $('#RoadSafetyImprovement').val();
-            $('#disabledInputRoadSafetyImprovement').val('EC$ ' + ValAmount * ValRoutine *
+            $('#disabledInputRoadSafetyImprovement').html('EC$ ' + ValAmount * ValRoutine *
                 ValRoadSafetyImprovement / 10000);
             ValDesignProjects = $('#DesignProjects').val();
             $('#disabledInputDesignProjects').val('EC$ ' + ValAmount * ValPeriodic *
                 ValDesignProjects / 10000);
             ValWorkInterventions = $('#WorkInterventions').val();
-            $('#disabledInputWorkInterventions').val('EC$ ' + ValAmount * ValPeriodic *
+            $('#disabledInputWorkInterventions').html('EC$ ' + ValAmount * ValPeriodic *
                 ValWorkInterventions / 10000);
 
 
             ValInspections = $('#Inspections').val();
-            $('#disabledInputInspections').val('EC$ ' + ValAmount * ValPeriodic *
+            $('#disabledInputInspections').html('EC$ ' + ValAmount * ValPeriodic *
                 ValInspections / 10000);
 
             if ($('#Summary').parent().attr('class') === 'active') {
@@ -793,6 +799,55 @@
         //     $('#CorridorpriorizationvalLayer').toggle(500);
 
         // })
+
+        function Export2Excel(table) {
+            var name = table + '_results_' + Math.floor((Math.random() * 9999999) +
+                1000000) + '.xls';
+            $("#" + table).table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Export data",
+                filename: name //do not include extension
+            });
+
+        }
+
+        $('#excelExport').click(function (event) {
+            // window.open('data:application/vnd.ms-excel,' + $('div[id$=TableAnnualAvailableBudget]').html());
+            Export2Excel('TableAnnualAvailableBudget');
+
+        })
+        var checkExist = setInterval(function () {
+            if ($('#TableRisk').length) {
+                // console.log("Exists!");
+                clearInterval(checkExist);
+                $('#excelExportPHY').click(function (event) {
+                    Export2Excel('TableRisk');
+
+                })
+                $('#excelExportNAT').click(function (event) {
+                    Export2Excel('TableRisk');
+
+                })
+
+            }
+        }, 1000); // check every 1000ms
+
+        $('#exportExcelGlobal').click(function (event) {
+            var option = $('input:checked[type=radio][name=riskoptionsRadios]').val();
+            console.log(option);
+            if (option === 'PhysicalDeterioration') {
+                Export2Excel('PhysicalDeteriorationContent');
+
+            } else if (option === 'NaturalHazards') {
+                Export2Excel('naturalHazardsContent');
+
+            }
+
+
+
+        })
+
 
     });
 </script>
