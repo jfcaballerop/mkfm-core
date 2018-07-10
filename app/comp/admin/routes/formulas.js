@@ -3872,12 +3872,7 @@ router.post('/V1/update_formulas_tracks_condition/:formula/:asset',
                     for (var ifdt of ifdts) {
                         var rcond = [];
                         for (var i = 0; i < ifdt.geometry.coordinates.length; i++) {
-                            if (ifdt.properties.iri !== undefined &&
-                                ifdt.properties.iri !== [] &&
-                                ifdt.properties.iri[i] !== undefined && ifdt.properties.iri[i] !== null &&
-                                ifdt.properties.iri[i] !== "") {
-                                rcond[i] = formulasService.pavCondScaleNumIri(ifdt.properties.iri[i]);
-                            } else if (ifdt.properties.rvcondition !== undefined &&
+                            if (ifdt.properties.rvcondition !== undefined &&
                                 ifdt.properties.rvcondition !== [] &&
                                 ifdt.properties.rvcondition[i] !== undefined && ifdt.properties.rvcondition[i] !== null &&
                                 ifdt.properties.rvcondition[i] !== "") {
