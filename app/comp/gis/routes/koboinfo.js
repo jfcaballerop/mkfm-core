@@ -68,7 +68,7 @@ router.post('/save_kobo_info', function (req, resp, next) {
             // //console.log('DATA ' + data.length + ' ' + data);
             var responseObject = JSON.parse(data);
             //success(data);
-            resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.kobo.ifdtid);
+            resp.redirect('/auth/WEB/infodatatrack/edit_database_infodatatrack/' + req.body.kobo.ifdtid);
 
         });
     });
