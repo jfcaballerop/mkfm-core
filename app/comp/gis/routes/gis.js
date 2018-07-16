@@ -988,7 +988,8 @@ router.post('/V1/validate/:id', function (req, res, next) {
                 else if (validFeatureCollection._id === undefined && GJV.valid(validFeatureCollection)) {
                     console.log("CASO GEOJSON sin _ID");
                     var road = new Road(validFeatureCollection);
-                    if (validFeatureCollection.properties.coordTimes.length === 0) { // SI no nos dan coordTimes relleno se rellena manualmente
+                    if (validFeatureCollection.properties.coordTimes === undefined || validFeatureCollection.properties.coordTimes.length === 0 ||
+                        validFeatureCollection.properties.coordTimes.length !== validFeatureCollection.geometry.coordinates.length) { // SI no nos dan coordTimes relleno se rellena manualmente
                         var newCoord = new Date();
                         console.log("MI IF AQUII");
                         // var year = newCoord.getFullYear();
