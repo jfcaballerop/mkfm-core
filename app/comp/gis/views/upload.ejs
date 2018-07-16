@@ -192,7 +192,7 @@
                                                         </td>
                                                         <td>
                                                             <div id="button_<%= fup[i]._id %>">
-                                                                <% if( "pending" == fup[i].status && false) {   %>
+                                                                <% if( "pending" == fup[i].status) {   %>
                                                                     <button onclick="validate('<%= fup[i]._id %>');" class="btn btn-warning btn-xs">
                                                                         <i class="fa fa-question-circle"> Sin validar</i>
                                                                     </button>
@@ -253,23 +253,41 @@
         <script>
             function validate(id) {
                 // alert("VALIDATE " + id);
-                $.post('/auth/WEB/gis/validate/' + id, function (returnedData) {
-                    console.log(returnedData);
-                    var rowCount = $('#table_files tr').length - 1; //Hay que quitar el TH
-                    console.log('rowCount ' + rowCount);
-                    console.log('returnedData.length ' + returnedData.length);
+                // //Recogemos el valor del ID del documento del cual se representa con name?
+                // var p2 = $.get('/auth/WEB/gis/upload/' + id, function (data) {
+                //     //console.log('list_infodatatrack ' + JSON.stringify(data));
+                //     if (data) {
+                //         console.log("DATAA:",data);
+                //         return data;
+                //     } else {
+                //         console.log("No hay datos en la peticion");
+                //         return undefined;
+                //     }
 
-                    if (returnedData.length > rowCount) {
-                        // ha devuelto un fichero de más y debemos recargar la pagina.    
-                        location.reload();
+                // });
 
-                    }
+                var opcion = confirm("¿Seguro de que desea validar el archivo ?");
+                if (opcion == true) {
+                    // document.getElementById("button").innerHTML = mensaje;
+                    $.post('/auth/WEB/gis/validate/' + id, function (returnedData) {
+                        console.log(returnedData);
+                        var rowCount = $('#table_files tr').length - 1; //Hay que quitar el TH
+                        console.log('rowCount ' + rowCount);
+                        console.log('returnedData.length ' + returnedData.length);
 
-                    // $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
-                    $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+                        if (returnedData.length > rowCount) {
+                            // ha devuelto un fichero de más y debemos recargar la pagina.    
+                            location.reload();
 
-                });
+                        }
 
+                        // $("#tag_" + id).load(location.href + " #tag_" + id); // Add space between URL and selector.
+                        $("#button_" + id).load(location.href + " #button_" + id); // Add space between URL and selector.
+
+                    });
+                } else {
+                    // NO HAGO NADA
+                }
             };
 
             function desactivate(id) {
