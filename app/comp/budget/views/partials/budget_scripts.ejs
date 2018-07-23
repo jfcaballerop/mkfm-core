@@ -62,21 +62,21 @@
             value: 5
         }];
         var ddata2 = [{
-                label: "Brush cutting",
-                value: 45
-            },
-            {
-                label: "Drain clearing",
-                value: 20
-            },
-            {
-                label: "Patching",
-                value: 20
-            },
-            {
-                label: "Road Safety Improvement",
-                value: 15
-            }
+            label: "Brush cutting",
+            value: 45
+        },
+        {
+            label: "Drain clearing",
+            value: 20
+        },
+        {
+            label: "Patching",
+            value: 20
+        },
+        {
+            label: "Road Safety Improvement",
+            value: 15
+        }
         ];
         var ddata3 = [
             // {
@@ -133,6 +133,7 @@
             }
 
             totalYearAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100));
+            console.log("INICIAL:", totalYearAmount);
             switch (optionPeriod) {
 
                 case "5":
@@ -155,7 +156,7 @@
             if (code !== undefined)
                 url += '/' + code;
 
-
+            console.log(url);
             var p1 = $.ajax({
                 url: url,
                 data: JSON.stringify(dataPost),
@@ -165,6 +166,7 @@
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
+
             Promise.all([p1]).then(function (values) {
 
                 //$("html").html(values[0]);
@@ -201,12 +203,20 @@
                     html[++h] = '<tbody>';
 
                     j = 0;
+
                     for (var val of values[0].data) {
-                        if (totalTable >= totalYearAmount) {
+                        // Hay que tener encuenta que por cada activo se debe poner un nuevo año si sobrepasa al total por año
+                        if (totalTable >= totalYearAmount || Math.round(val.properties.cost * 100) / 100 >= totalYearAmount) {
                             html[++h] =
                                 '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
                             totalTable = 0;
+                            console.log("REINICIO: ", totalTable);
                         }
+                        // Estas condiciones se ponen hasta ver que solución se da a los Nan, null y "" de cost, y a la no aparición del cost en los COND-A
+                        if (val.properties.cost === 0 || val.properties.code.includes("_COND-A") || val.properties.cost === null) {
+                            continue;
+                        }
+
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
@@ -225,7 +235,6 @@
                             '</td>';
                         totalTable += Math.round(val.properties.cost * 100) / 100;
                         html[++h] = '</tr>';
-
 
                     }
                     html[++h] = '</tbody></table>';

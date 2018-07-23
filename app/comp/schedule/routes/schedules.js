@@ -375,7 +375,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            // debug(" ### GET getSchedules 2 ### \n" + JSON.stringify(scheds));
 
             ret['data'] = scheds;
             res.status(200).jsonp(ret);
@@ -399,7 +399,7 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            debug(" ### GET getSchedules 1### \n" );
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
@@ -420,7 +420,7 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            
 
             var total = 0;
             ret['data'] = [];
@@ -431,7 +431,9 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
                     }
                     total += Number(s.properties.cost);
                 }
-            }
+            } 
+            // debug(" ### GET getSchedules sched### " + scheds.length);
+            // debug(" ### GET getSchedules 2### " + Object.keys(ret['data']).length);
             res.status(200).jsonp(ret);
         });
     } else {
@@ -439,7 +441,7 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            // debug(" ### GET getSchedules ### \n" + JSON.stringify(scheds));
+            debug(" ### GET getSchedules 3 ### \n" + JSON.stringify(scheds));
 
             ret['data'] = scheds;
             res.status(200).jsonp(ret);
