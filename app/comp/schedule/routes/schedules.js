@@ -385,11 +385,12 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
 
 });
 /* GET JSON Sched. */
-router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
+router.get('/V1/getSchedule/:type/:yearBudget/:budget', function (req, res, next) {
     var ret = {
         "result": "OK"
     };
     var limitBudget = Number(req.params.budget);
+    var yearBudget = Number(req.params.yearBudget);
     debug('limitBudget ' + limitBudget);
 
     if (req.params.type === 'PHY') {
@@ -399,17 +400,19 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            debug(" ### GET getSchedules 1### \n" );
+            debug(" ### GET getSchedules 1### \n");
+
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (!isNaN(s.properties.cost)) {
-                    if (total <= Number(limitBudget)) {
+                if (!isNaN(s.properties.cost) && Number(s.properties.cost) <= yearBudget) { // Tener en cuenta los NaN / si cost < limiteAño
+                    if (total <= Number(limitBudget)) { // Si total <= limite en X anios
                         ret['data'].push(s);
                     }
                     total += Number(s.properties.cost);
-                }
+                } else continue;
             }
+
             res.status(200).jsonp(ret);
 
         });
@@ -420,18 +423,17 @@ router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
             if (err) {
                 res.send(500, err.message);
             }
-            
 
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (!isNaN(s.properties.cost)) {
+                if (!isNaN(s.properties.cost) && Number(s.properties.cost) <= yearBudget) {
                     if (total <= Number(limitBudget)) {
                         ret['data'].push(s);
                     }
                     total += Number(s.properties.cost);
-                }
-            } 
+                } else continue;
+            }
             // debug(" ### GET getSchedules sched### " + scheds.length);
             // debug(" ### GET getSchedules 2### " + Object.keys(ret['data']).length);
             res.status(200).jsonp(ret);
@@ -582,51 +584,51 @@ router.post('/V1/saveEvent/:name/:startDate/:endDate/:type', function (req, res,
         Schedulephy.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                startDate: req.params.startDate,
-                endDate: req.params.endDate
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    startDate: req.params.startDate,
+                    endDate: req.params.endDate
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
 
     } else if (type === 'NAT') {
         Schedulenat.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                startDate: req.params.startDate,
-                endDate: req.params.endDate
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    startDate: req.params.startDate,
+                    endDate: req.params.endDate
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
     } else {
         Schedule.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                startDate: req.params.startDate,
-                endDate: req.params.endDate
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    startDate: req.params.startDate,
+                    endDate: req.params.endDate
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
 
     }
 
@@ -648,48 +650,48 @@ router.post('/V1/completeEvent/:name/:type', function (req, res, next) {
         Schedulephy.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                completed: true
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    completed: true
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
 
     } else if (type === 'NAT') {
         Schedulenat.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                completed: true
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    completed: true
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
     } else {
         Schedule.findOneAndUpdate({
             "properties.code": req.params.name
         }, {
-            $set: {
-                completed: true
-            }
-        }).exec(function (err, doc) {
-            if (err) {
-                res.send(500, err.message);
-            }
-            debug(doc);
-            res.status(200).jsonp(ret);
+                $set: {
+                    completed: true
+                }
+            }).exec(function (err, doc) {
+                if (err) {
+                    res.send(500, err.message);
+                }
+                debug(doc);
+                res.status(200).jsonp(ret);
 
-        });
+            });
 
     }
 

@@ -152,7 +152,7 @@
 
             var dataPost = {};
             dataPost['riskType'] = riskType;
-            var url = '/auth/WEB/schedule/getSched/' + riskType + '/' + totalAmount;
+            var url = '/auth/WEB/schedule/getSched/' + riskType + '/' + totalYearAmount + '/' + totalAmount;
             if (code !== undefined)
                 url += '/' + code;
 
@@ -202,21 +202,28 @@
                     html[++h] = '</tr>';
                     html[++h] = '<tbody>';
 
-                    j = 0;
-
+                    var j = 0;
+                    var cont = 0;
                     for (var val of values[0].data) {
-                        // Hay que tener encuenta que por cada activo se debe poner un nuevo año si sobrepasa al total por año
-                        if (totalTable >= totalYearAmount || Math.round(val.properties.cost * 100) / 100 >= totalYearAmount) {
-                            html[++h] =
-                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
-                            totalTable = 0;
-                            console.log("REINICIO: ", totalTable);
-                        }
+                        // Hay que tener encuenta que por cada activo no se debe poner un nuevo año si sobrepasa al total por año ya que lo supera
+                        // if (Math.round(val.properties.cost * 100) / 100 >= totalYearAmount)
+                        //     continue;
+
                         // Estas condiciones se ponen hasta ver que solución se da a los Nan, null y "" de cost, y a la no aparición del cost en los COND-A
                         if (val.properties.cost === 0 || val.properties.code.includes("_COND-A") || val.properties.cost === null) {
+                            console.log("Valo cero o null o NaN: " + val._id, val.properties.cost);
                             continue;
                         }
-
+                        if ((Math.round(val.properties.cost * 100) / 100) + totalTable >= totalYearAmount) {
+                            html[++h] =
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
+                            console.log("REINICIO: ", totalTable);
+                            totalTable = 0;
+                            cont++;
+                            if(cont === parseInt(optionPeriod))
+                                break;
+                        }
+                        
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
@@ -231,9 +238,12 @@
                         html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split('-')[2] +
                             riskv[3] + '</td>';
                         html[++h] = '<td>' + val.type.charAt(0) + '</td>';
+
+
                         html[++h] = '<td>' + Math.round(val.properties.cost * 100) / 100 +
                             '</td>';
                         totalTable += Math.round(val.properties.cost * 100) / 100;
+                        console.log("ACTIVO: ", Math.round(val.properties.cost * 100) / 100);
                         html[++h] = '</tr>';
 
                     }
