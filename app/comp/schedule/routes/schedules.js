@@ -405,12 +405,12 @@ router.get('/V1/getSchedule/:type/:yearBudget/:budget', function (req, res, next
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (!isNaN(s.properties.cost) && Number(s.properties.cost) <= yearBudget) { // Tener en cuenta los NaN / si cost < limiteAño
+                if (!isNaN(s.properties.cost)) { // Tener en cuenta los NaN / si cost < limiteAño
                     if (total <= Number(limitBudget)) { // Si total <= limite en X anios
                         ret['data'].push(s);
                     }
                     total += Number(s.properties.cost);
-                } else continue;
+                }
             }
 
             res.status(200).jsonp(ret);
@@ -427,12 +427,12 @@ router.get('/V1/getSchedule/:type/:yearBudget/:budget', function (req, res, next
             var total = 0;
             ret['data'] = [];
             for (var s of scheds) {
-                if (!isNaN(s.properties.cost) && Number(s.properties.cost) <= yearBudget) {
+                if (!isNaN(s.properties.cost)) {
                     if (total <= Number(limitBudget)) {
                         ret['data'].push(s);
                     }
                     total += Number(s.properties.cost);
-                } else continue;
+                }
             }
             // debug(" ### GET getSchedules sched### " + scheds.length);
             // debug(" ### GET getSchedules 2### " + Object.keys(ret['data']).length);
