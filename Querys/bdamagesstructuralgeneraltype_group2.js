@@ -1,0 +1,1 @@
+db.getCollection('infodatatracks').updateMany({},{$set:{"config.properties.bdamagesstructuralgeneraltype.subgroup":"Bridges Group 2: Operation & Maintenance Data"}})

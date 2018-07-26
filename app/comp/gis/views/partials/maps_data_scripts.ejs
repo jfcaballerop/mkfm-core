@@ -471,23 +471,23 @@
 
     });
 
-    function go_edit_road() {
-        // alert($("#roads").val());
-        var id = $("#infodatas").val();
-        if (id == 0) {
-            window.location = '#';
-        } else {
-            window.location = '/auth/WEB/infodatatrack/edit_infodatatrack/' + dataTrack._id;
-        }
-    }
+    // function go_edit_road() {
+    //     // alert($("#roads").val());
+    //     var id = $("#infodatas").val();
+    //     if (id == 0) {
+    //         window.location = '#';
+    //     } else {
+    //         window.location = '/auth/WEB/infodatatrack/edit_infodatatrack/' + dataTrack._id;
+    //     }
+    // }
 
-    function go_edit_video_road() {
+    function go_edit_database_road() {
         // alert($("#roads").val());
         var id = $("#infodatas").val();
         if (id == 0) {
             window.location = '#';
         } else {
-            window.location = '/auth/WEB/infodatatrack/edit_video_infodatatrack/' + dataTrack._id;
+            window.location = '/auth/WEB/infodatatrack/edit_database_infodatatrack/' + dataTrack._id;
         }
     }
     $('#downloadbutton').click(function () {
@@ -540,8 +540,8 @@
 
         Promise.all([p1]).then(function (values) {
             $('#ultimaversion').empty();
-            $('#editbutton').show();
-            $('#editvideobutton').show();
+            // $('#editbutton').show();
+            $('#editdatabasebutton').show();
             $('#downloadbutton').show();
             $('#exportbutton').show();
             ////console.log(JSON.stringify(values));
@@ -578,8 +578,8 @@
                 $('#ultimaversion').append('<b> Version: ' + moment(dataTrack.updated_at).format(
                     'DD-MM-YYYY HH:mm:ss') + '</b>');
                 $('#ultimaversion').show();
-                $('#editbutton').show();
-                $('#editvideobutton').show();
+                // $('#editbutton').show();
+                $('#editdatabasebutton').show();
                 $('#downloadbutton').show();
                 $('#exportbutton').show();
                 $('#versionbutton').hide();
@@ -666,13 +666,14 @@
             // }
 
         });
+        // location.load();
     });
     $(document).on('change', "#roads", function () {
         var id = $("#roads").val();
         $('#ultimaversion').empty();
         $('#ultimaversion').hide();
-        $('#editbutton').hide();
-        $('#editvideobutton').hide();
+        // $('#editbutton').hide();
+        $('#editdatabasebutton').hide();
         $('#downloadbutton').hide();
         $('#exportbutton').hide();
         $('#dataTable').empty();
@@ -700,5 +701,6 @@
             $("#accordion").hide();
 
         }
+        // location.load();
     });
 </script>

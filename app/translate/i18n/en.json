@@ -55,8 +55,7 @@
 	"LOADFILE_TITLE_TYPE": "Type",
 	"LOGIN": "Sign in",
 	"MAPSDATA_BUTTON_DOWN": "Download",
-	"MAPSDATA_BUTTON_EDIT": "Edit",
-	"MAPSDATA_BUTTON_EDITVIDEO": "Edit video",
+	"MAPSDATA_BUTTON_EDIT_DATABASE": "Edit database",
 	"MAPSDATA_BUTTON_EXPORT": "Export excel",
 	"MAPSDATA_BUTTON_NEWVER": "New Version",
 	"MAPSDATA_FILTER": "Filters",
@@ -118,5 +117,6 @@
 	"USER_TITLE": "User list",
 	"VALUE": "Value",
 	"VERY_POOR": "VERY POOR",
-	"WELCOME_MSG": "Wellcome!"
+	"WELCOME_MSG": "Wellcome!",
+	"MAPSDATA_BUTTON_EDIT": "MAPSDATA_BUTTON_EDIT"
 }

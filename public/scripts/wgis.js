@@ -58,7 +58,7 @@ window.APP.WGIS = function wGisModule() {
             color: '#ffff00'
         },
         'High': {
-            values:[
+            values: [
                 '40-60__E',
                 '60-80__D',
                 '80-100__C'
@@ -139,8 +139,38 @@ window.APP.WGIS = function wGisModule() {
                 color: "#ff0000",
                 min: 0,
                 max: 0.20
-            }
+            },
         },
+        condition2: {
+            "Excellent": {
+                scale: 5,
+                color: "#00b050",
+                letter: "A",
+            },
+            "Good": {
+                scale: 4,
+                color: "#92d050",
+                letter: "B",
+            },
+            "Fair": {
+                scale: 3,
+                color: "#ffff00",
+                letter: "C",
+
+            },
+            "Poor": {
+                scale: 2,
+                color: "#f79646",
+                letter: "D",
+
+            },
+            "Very Poor": {
+                scale: 1,
+                color: "#ff0000",
+                letter: "E",
+            },
+        },
+
         physical: riskDictionaryNormalized,
         natural: riskDictionaryNormalized
 
@@ -165,120 +195,120 @@ window.APP.WGIS = function wGisModule() {
         return _.keys(selectedRoads.attributes).filter(key => !!selectedRoads.get(key))
     }
 
-    function onRiskFiltersChanged(model){
+    function onRiskFiltersChanged(model) {
         var changed = model.changedAttributes()
         var hasFilterTypeChanged = _.has(changed, 'current')
-        var haveFilterOptionsChanged = _.some(changed, function(value, key){
+        var haveFilterOptionsChanged = _.some(changed, function (value, key) {
             return key !== 'current' && value.length
         })
         var selectedRoadTypes = selectedRoads.getSelected()
         var selectedAssetTypes = selectedAssets.getSelected()
 
-        if(hasFilterTypeChanged){
+        if (hasFilterTypeChanged) {
             var currentRiskFilter = changed.current
-            if(currentRiskFilter !== null){
+            if (currentRiskFilter !== null) {
                 applyRiskFiltersToAssets()
-                if(selectedAssets.get('Pavement')){
+                if (selectedAssets.get('Pavement')) {
                     //load road risk data
                     riskSpinner.show()
-                    Promise.all(_.map(selectedRoadTypes, function(roadType){
+                    Promise.all(_.map(selectedRoadTypes, function (roadType) {
                         return riskRoads[roadType][currentRiskFilter].fetchIfNeeded()
-                            .then(function(data){
+                            .then(function (data) {
                                 var layer = riskRoadLayers[roadType]
-                                layer.forEach(function(feature){
+                                layer.forEach(function (feature) {
                                     layer.remove(feature)
                                 })
                                 layer.addGeoJson(data)
                                 layer.setMap(map)
                             })
                     }))
-                    .then(function(){
-                        applyRiskFiltersToAssets()
-                        riskSpinner.hide()
-                    })
-                    .catch(function(err){
-                        console.error('Error fetching risk road data', err)
-                        riskSpinner.hide()
-                    })
+                        .then(function () {
+                            applyRiskFiltersToAssets()
+                            riskSpinner.hide()
+                        })
+                        .catch(function (err) {
+                            console.error('Error fetching risk road data', err)
+                            riskSpinner.hide()
+                        })
                 }
             }
             else {
                 applyRiskFiltersToAssets()
             }
-        } else if(haveFilterOptionsChanged){
+        } else if (haveFilterOptionsChanged) {
             applyRiskFiltersToAssets()
         }
     }
 
-    function onSelectedRoadsChanged(model){
+    function onSelectedRoadsChanged(model) {
         var changed = model.changedAttributes()
         var selectedAssetTypes = selectedAssets.getSelected()
-        _.each(changed, function(isSelected, roadType){
-            if(isSelected){
-                if(!selectedAssetTypes.length) return
+        _.each(changed, function (isSelected, roadType) {
+            if (isSelected) {
+                if (!selectedAssetTypes.length) return
                 // fetch & display selected assets for road type
                 assetSpinner.show()
-                Promise.all(_.map(selectedAssetTypes, function(assetType){
+                Promise.all(_.map(selectedAssetTypes, function (assetType) {
                     return assetCollections[assetType][roadType].fetchIfNeeded()
-                        .then(function(){
+                        .then(function () {
                             applyRiskFiltersToAssets()
                             dataLayers[assetType][roadType].setMap(map)
                         })
                 }))
-                .then(function(){
-                    assetSpinner.hide()
-                })
-                .catch(function(){
-                    console.error('Error loading assets', err)
-                    assetSpinner.hide()
-                })
+                    .then(function () {
+                        assetSpinner.hide()
+                    })
+                    .catch(function () {
+                        console.error('Error loading assets', err)
+                        assetSpinner.hide()
+                    })
             }
             else {
                 // hide assets for road type
-                _.each(dataLayers, function(assetLayers){
+                _.each(dataLayers, function (assetLayers) {
                     assetLayers[roadType].setMap(null)
                 })
             }
         })
     }
 
-    function onSelectedAssetsChanged(model){
+    function onSelectedAssetsChanged(model) {
         var changed = model.changedAttributes()
         var selectedRoadTypes = selectedRoads.getSelected()
-        _.each(changed, function(isSelected, assetType){
-            if(isSelected){
-                if(assetType === 'Pavement'){
+        _.each(changed, function (isSelected, assetType) {
+            if (isSelected) {
+                if (assetType === 'Pavement') {
                     //hide risk layers
-                    _.each(riskRoadLayers, function(layer){
+                    _.each(riskRoadLayers, function (layer) {
                         layer.setMap(map)
                     })
                 }
-                if(!selectedRoadTypes.length) return
+                if (!selectedRoadTypes.length) return
                 assetSpinner.show()
                 // fetch & display assets for selected road types
-                Promise.all(_.map(selectedRoadTypes, function(roadType){
+                Promise.all(_.map(selectedRoadTypes, function (roadType) {
                     return assetCollections[assetType][roadType].fetchIfNeeded()
-                        .then(function(){
+                        .then(function () {
                             applyRiskFiltersToAssets()
                             dataLayers[assetType][roadType].setMap(map)
                         })
                 }))
-                .then(function(){
-                    assetSpinner.hide()
-                })
-                .catch(function(err){
-                    console.error('Error loading assets', err)
-                    assetSpinner.hide()
-                })
+                    .then(function () {
+                        assetSpinner.hide()
+                    })
+                    .catch(function (err) {
+                        console.error('Error loading assets', err)
+                        assetSpinner.hide()
+                    })
             }
             else {
                 // hide asset layers
-                _.each(dataLayers[assetType], function(roadLayer){
+                _.each(dataLayers[assetType], function (roadLayer) {
                     roadLayer.setMap(null)
                 })
-                if(assetType === 'Pavement'){
+                if (assetType === 'Pavement') {
                     //hide risk layers
-                    _.each(riskRoadLayers, function(layer){
+                    _.each(riskRoadLayers, function (layer) {
                         layer.setMap(null)
                     })
                 }
@@ -298,15 +328,15 @@ window.APP.WGIS = function wGisModule() {
         }
         _.each(selectedAssets, function (assetType) {
             _.each(selectedRoadTypes, function (roadType) {
-                if(assetType === 'Pavement'){
-                    _.each(selectedRoadTypes, function(roadType){
-                        //console.log('Setting style for risk road type', roadType)
+                if (assetType === 'Pavement') {
+                    _.each(selectedRoadTypes, function (roadType) {
+                        console.log('Setting style for risk road type', roadType)
                         riskRoadLayers[roadType].setStyle(createRoadRiskSetStyle(roadType))
                     })
                     return
                 }
                 var layer = dataLayers[assetType][roadType]
-                if(!layer || !layer.forEach){
+                if (!layer || !layer.forEach) {
                     return
                 }
                 //apply filter to layer
@@ -325,7 +355,7 @@ window.APP.WGIS = function wGisModule() {
         })
     }
 
-    function findMatchingScore(riskFormula, value, selectedCriteria){
+    function findMatchingScore(riskFormula, value, selectedCriteria) {
         return _.find(riskFormula, function (score, key) {
             //var score = riskFormulas.criticality[criteria]
             return ~selectedCriteria.indexOf(key)
@@ -333,22 +363,30 @@ window.APP.WGIS = function wGisModule() {
                 && value < score.max
         })
     }
+    function findMatchingScore2(riskFormula, value, selectedCriteria) {
+        return _.find(riskFormula, function (score, key) {
+            //var score = riskFormulas.condition2[criteria]
+            console.log("ESTOO:", score);
+            return ~selectedCriteria.indexOf(key) && value === score.letter
+        })
+    }
 
-    function findMatchingRiskScore(riskFormula, value, selectedCriteria){
-        return _.find(riskFormula, function(data, key){
+    function findMatchingRiskScore(riskFormula, value, selectedCriteria) {
+        return _.find(riskFormula, function (data, key) {
             return ~selectedCriteria.indexOf(key)
                 && ~data.values.indexOf(value)
         })
     }
 
     function applyFiltersToFeature(feature) {
-        if(!riskFilters.getActiveFilter()){
+        if (!riskFilters.getActiveFilter()) {
             return {
                 color: defaultMarkerColor,
                 visible: true
             }
         }
         var riskFilterData = riskFilters.attributes
+
         if (riskFilterData.criticality.length) {
             switch (feature.getProperty('assetType')) {
                 case 'Bridge':
@@ -377,7 +415,7 @@ window.APP.WGIS = function wGisModule() {
             }
         }
         else if (riskFilterData.natural.length) {
-            switch(feature.getProperty('assetType')){
+            switch (feature.getProperty('assetType')) {
                 case 'Bridge':
                     var value = feature.getProperty('brisknaturalnorm')
                     return findMatchingRiskScore(riskFormulas.natural, value, riskFilterData.natural)
@@ -390,7 +428,7 @@ window.APP.WGIS = function wGisModule() {
             }
         }
         else if (riskFilterData.physical.length) {
-            switch(feature.getProperty('assetType')){
+            switch (feature.getProperty('assetType')) {
                 case 'Bridge':
                     var value = feature.getProperty('briskphysicalnorm')
                     return findMatchingRiskScore(riskFormulas.physical, value, riskFilterData.physical)
@@ -418,35 +456,46 @@ window.APP.WGIS = function wGisModule() {
         'urban': 8
     }
 
-    function createRoadRiskSetStyle(roadType){
+    function createRoadRiskSetStyle(roadType) {
         var defaults = {
             visible: false
         }
-        return function(feature){
-            var currentRiskFilter =  riskFilters.getActiveFilter()
-            if(!currentRiskFilter){
+        return function (feature) {
+            var currentRiskFilter = riskFilters.getActiveFilter()
+            console.log("CURRENT ", currentRiskFilter);
+            if (!currentRiskFilter) {
                 return defaults
             }
             var riskMatchingFn
-            if(currentRiskFilter === 'criticality' || currentRiskFilter === 'condition'){
-                riskMatchingFn = findMatchingScore
-            }
-            else {
-                riskMatchingFn = findMatchingRiskScore
-            }
+            console.log("FEATURE: ", feature);
             var propertyName = APP.Models.helpers.riskFilterTypeToField(currentRiskFilter)
+            console.log("proname ", propertyName);
             var fragmentValue = feature.getProperty(propertyName)
-            if(!fragmentValue) {
+            console.log("fragment ", fragmentValue);
+            if (!fragmentValue) {
                 return defaults
             }
             var selectedFilterOptions = riskFilters.get(currentRiskFilter)
-            var riskScore = riskMatchingFn(riskFormulas[currentRiskFilter], fragmentValue, selectedFilterOptions)
-            if(!riskScore) {
+            console.log("SELECT", selectedFilterOptions);
+            // var riskScore = riskMatchingFn(riskFormulas[currentRiskFilter], fragmentValue, selectedFilterOptions)
+
+            if (currentRiskFilter === 'criticality') {
+                riskMatchingFn = findMatchingScore(riskFormulas[currentRiskFilter], fragmentValue, selectedFilterOptions)
+            } else if (currentRiskFilter === 'condition') {
+                riskMatchingFn = findMatchingScore2(riskFormulas['condition2'], fragmentValue, selectedFilterOptions)
+                console.log("IF");
+            }
+            else {
+                console.log("ELSE");
+                riskMatchingFn = findMatchingRiskScore(riskFormulas[currentRiskFilter], fragmentValue, selectedFilterOptions)
+            }
+            console.log("RISKCORE", riskMatchingFn);
+            if (!riskMatchingFn) {
                 return defaults
             }
             return {
                 'strokeWeight': roadTypeStrokeWeight[roadType],
-                'strokeColor': riskScore.color,
+                'strokeColor': riskMatchingFn.color,
                 zIndex: zIndexByRoadType[roadType],
                 visible: true
             }
@@ -517,7 +566,7 @@ window.APP.WGIS = function wGisModule() {
                             else {
                                 riskFilters.removeRiskFilterOption(riskGroup, filterValue)
                                 //if all are unchecked, hide the group
-                                if(!form.find('input:checked').length){
+                                if (!form.find('input:checked').length) {
                                     $toggle.prop('checked', false)
                                     form.slideUp(300)
                                 }
@@ -678,7 +727,7 @@ window.APP.WGIS = function wGisModule() {
         infoBox.html((event.feature.getProperty('assetType') || 'Road') + ' - ' + event.feature.getProperty('displayName') || '-')
     }
 
-    function onDataLayerMouseout(event){
+    function onDataLayerMouseout(event) {
         infoBox.html('--')
     }
 
@@ -698,10 +747,10 @@ window.APP.WGIS = function wGisModule() {
             createSetStyle: getStyleForAssetType
         }
         dataLayers = {
-            Culvert: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Culvert'})),
-            Bridge: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Bridge'})),
-            Geo: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Geo'})),
-            Pavement: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Pavement'}))
+            Culvert: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Culvert' })),
+            Bridge: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Bridge' })),
+            Geo: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Geo' })),
+            Pavement: APP.Models.createAssetDataLayers(map, _.extend({}, dataLayerOptions, { assetType: 'Pavement' }))
         }
         assetCollections = APP.Models.createAssetCollections(dataLayers)
         var riskRoadLayerOptions = {
@@ -712,12 +761,12 @@ window.APP.WGIS = function wGisModule() {
 
     };
 
-    function createIconMarker(letter, backgroundColor, fgColor){
+    function createIconMarker(letter, backgroundColor, fgColor) {
         return "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + letter + "|" + backgroundColor.replace('#', '') + "|000000"
     }
 
     function getStyleForAssetType(assetType, roadType) {
-        return function(feature){
+        return function (feature) {
             var mapType = map.getMapTypeId()
             let colorSource
             if (mapType === 'terrain' || mapType === 'roadmap') {

@@ -62,21 +62,21 @@
             value: 5
         }];
         var ddata2 = [{
-                label: "Brush cutting",
-                value: 45
-            },
-            {
-                label: "Drain clearing",
-                value: 20
-            },
-            {
-                label: "Patching",
-                value: 20
-            },
-            {
-                label: "Road Safety Improvement",
-                value: 15
-            }
+            label: "Brush cutting",
+            value: 45
+        },
+        {
+            label: "Drain clearing",
+            value: 20
+        },
+        {
+            label: "Patching",
+            value: 20
+        },
+        {
+            label: "Road Safety Improvement",
+            value: 15
+        }
         ];
         var ddata3 = [
             // {
@@ -133,6 +133,7 @@
             }
 
             totalYearAmount = ((ValAmount * 1000000) * (ValPeriodic / 100) * (ValWorkInterventions / 100));
+            console.log("INICIAL:", totalYearAmount);
             switch (optionPeriod) {
 
                 case "5":
@@ -155,7 +156,7 @@
             if (code !== undefined)
                 url += '/' + code;
 
-
+            console.log(url);
             var p1 = $.ajax({
                 url: url,
                 data: JSON.stringify(dataPost),
@@ -165,13 +166,123 @@
                 // console.log('koboinfo ' + JSON.stringify(data));
                 return (data);
             });
+
             Promise.all([p1]).then(function (values) {
 
                 //$("html").html(values[0]);
-                console.log(values[0]);
+
+                //.log(values[0]);
                 var totalTable = 0;
+
                 if (values[0].result === "OK") {
 
+                    // Vamos a ordenarlos para rellenar lo máximo posible al limite anual para las intervenciones
+                    var datos = jQuery.extend(true, {}, values[0].data);
+                    var long = values[0].data.length;
+
+                    //.log("DDD: ", datos);
+                    var orderedData = [];
+                    var sumador = 0;
+                    var valCloned;
+                    var valCloned2;
+                    var bandera = false;
+                    var i = 0;
+                    for (let index = 0; index < long; index++) { // Algoritmo ajustado de ordenación por riksOrder(query) y presupuesto
+                        // No es IA =)
+
+                        let costo = datos[index].properties.cost;
+
+                        if (costo === 0 || datos[index].properties.code.includes("_COND-A") || costo === null) {
+                            continue;
+                        }
+                        if (costo > totalYearAmount) {
+                            // Dividimos el costo superior al anual en 2 FILAS generando uno encajado y otro año destinado a el activo
+                            let div = costo - totalYearAmount;
+                            let div2 = totalYearAmount;
+
+                            valCloned = jQuery.extend(true, {}, datos[index]); // Como val.pro.cost referencian a una misma dirección de memoria debemos hacer
+                            valCloned.properties.cost = div;              // Una copia para poder guardar la division en filas, true deja clonar atributos
+                            //.log("DIV: " + valCloned.properties.cost);
+                            orderedData.push(valCloned);
+
+                            let copiaI = index;
+                            if (sumador + div > totalYearAmount) {
+                                sumador = div;
+
+                                //.log("INDEX: ", index);
+
+                                let dat = datos; //.log("DAT LEGNTH: ", dat);
+                                var cont = 0;
+                                for (let index = copiaI + 1; index < long; index++) {
+
+                                    //.log("Primer el: ", dat[index].properties.cost, "/" + sumador);
+                                    if (sumador + dat[index].properties.cost < totalYearAmount) {
+                                        //.log("METOOOO: ", dat[index]);
+                                        orderedData.push(dat[index]);
+                                        sumador += dat[index].properties.cost;
+                                        cont++;
+                                    } else {
+                                        // cont++
+                                        // Hay que almacenar ese último caso en el que es prioritario pero al sumar se pasa del anual
+                                        break;// Si no los activos que pueden entrar en una primera etapa no entran nunca
+                                    }
+                                }
+                                index = copiaI + cont;
+                                //.log("COPIAAA", index);
+                                //.log("VAL VALEE: ", datos[index].properties.cost);
+                            }
+
+                            datos[copiaI].properties.cost = div2; // Rescato el indice de donde empece a guardar
+                            //.log("DIV2: " + datos[copiaI].properties.cost);
+                            orderedData.push(datos[copiaI]);
+                            sumador = 0;
+                            // index--;
+                            continue;
+
+                        }
+
+                        if (sumador < totalYearAmount) {
+                            //.log("Menores ", sumador, costo);
+                            sumador += costo;
+                            if (sumador >= totalYearAmount) {
+
+                                valCloned2 = jQuery.extend(true, {}, datos[index]); // SI es mayor lo clono para luego reubicarlo
+                                //.log("Siguiente a meter: ", valCloned2.properties.cost);
+                                sumador -= costo;
+                                bandera = true;
+                            }
+                            else {
+                                orderedData.push(datos[index]);
+                            }
+                        }
+                        if (bandera) {
+                            //.log("Busco los siguientes que encajen en el año actual");
+                            bandera = false;
+                            //AHORA DEBERÍA BUSCAR LOS QUE ESTEN POR DEBAJO Y QUE NO SE PASEN DEL BUDGET YEAR O ANUAL
+                            let copiaI = index;
+                            let dat = datos;
+                            let cont = 0;
+                            //.log(dat);
+                            for (let index = copiaI + 1; index < long; index++) {
+
+                                if (dat[index].properties.cost + sumador <= totalYearAmount) {
+                                    sumador += dat[index].properties.cost;
+                                    orderedData.push(dat[index]);
+                                    cont++;
+                                }
+                                else {
+                                    //.log("me paso");
+                                    break;
+                                }
+
+                            }
+                            sumador = 0;
+                            index = copiaI + cont;
+                            orderedData.push(valCloned2);
+                        }
+
+                    }
+                    //.log("ORDERED: ", orderedData);
                     // console.log(result);
                     var h = -1;
                     var html = [];
@@ -200,13 +311,36 @@
                     html[++h] = '</tr>';
                     html[++h] = '<tbody>';
 
-                    j = 0;
-                    for (var val of values[0].data) {
-                        if (totalTable >= totalYearAmount) {
-                            html[++h] =
-                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
-                            totalTable = 0;
+                    var j = 0;
+                    var cont = 0;
+                    var total = 0;
+                    html[++h] =
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5"> Year 1 </td></tr>';
+                            total += totalTable;
+                    for (var val of orderedData) {
+                        // Hay que tener encuenta que por cada activo no se debe poner un nuevo año si sobrepasa al total por año ya que lo supera
+                        // if (Math.round(val.properties.cost * 100) / 100 >= totalYearAmount)
+                        //     continue;
+
+                        // Estas condiciones se ponen hasta ver que solución se da a los Nan, null y "" de cost, y a la no aparición del cost en los COND-A
+                        if (val.properties.cost === 0 || val.properties.code.includes("_COND-A") || val.properties.cost === null) {
+                            // console.log("Valo cero o null o NaN: " + val._id, val.properties.cost);
+                            continue;
                         }
+                        if ((Math.round(val.properties.cost * 100) / 100) + totalTable >= totalYearAmount) {
+                            cont++;
+                            let copy = cont+1;
+                            if (cont === parseInt(optionPeriod)) // Evitamos que genera años demás
+                                break;
+                            html[++h] =
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5"> Year ' + copy + '</td></tr>';
+                            total += totalTable;
+                            console.log("REINICIO: ", totalTable);
+                            totalTable = 0;
+
+                            
+                        }
+
                         html[++h] = '<tr>';
                         html[++h] = '<td>' + (++j) + '</td>';
                         var riskv = val.properties.code.split('__');
@@ -221,15 +355,18 @@
                         html[++h] = '<td>' + riskv[2].split('-')[1] + '-' + riskv[2].split('-')[2] +
                             riskv[3] + '</td>';
                         html[++h] = '<td>' + val.type.charAt(0) + '</td>';
+
+
                         html[++h] = '<td>' + Math.round(val.properties.cost * 100) / 100 +
                             '</td>';
                         totalTable += Math.round(val.properties.cost * 100) / 100;
+                        // console.log("ACTIVO: ", Math.round(val.properties.cost * 100) / 100);
                         html[++h] = '</tr>';
 
-
                     }
-                    html[++h] = '</tbody></table>';
 
+                    html[++h] = '</tbody></table>';
+                    console.log("TOTAL TABLE: ", total);
                     $('#divTableRisk').html(html.join(''));
 
 
