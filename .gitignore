@@ -77,3 +77,9 @@ public/media
 /backups
 /_tools/**/*.json
 .DS_Store
+
+# PRE CHANGES
+bin/www
+config/config.js
+config/database.js
+views/login.ejs
