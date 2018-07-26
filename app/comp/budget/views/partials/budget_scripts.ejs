@@ -152,7 +152,7 @@
 
             var dataPost = {};
             dataPost['riskType'] = riskType;
-            var url = '/auth/WEB/schedule/getSched/' + riskType + '/' + totalYearAmount + '/' + totalAmount;
+            var url = '/auth/WEB/schedule/getSched/' + riskType + '/' + totalAmount;
             if (code !== undefined)
                 url += '/' + code;
 
@@ -171,7 +171,7 @@
 
                 //$("html").html(values[0]);
 
-                console.log(values[0]);
+                //.log(values[0]);
                 var totalTable = 0;
 
                 if (values[0].result === "OK") {
@@ -180,7 +180,7 @@
                     var datos = jQuery.extend(true, {}, values[0].data);
                     var long = values[0].data.length;
 
-                    console.log("DDD: ", datos);
+                    //.log("DDD: ", datos);
                     var orderedData = [];
                     var sumador = 0;
                     var valCloned;
@@ -188,7 +188,7 @@
                     var bandera = false;
                     var i = 0;
                     for (let index = 0; index < long; index++) { // Algoritmo ajustado de ordenación por riksOrder(query) y presupuesto
-                    // No es IA =)
+                        // No es IA =)
 
                         let costo = datos[index].properties.cost;
 
@@ -202,22 +202,22 @@
 
                             valCloned = jQuery.extend(true, {}, datos[index]); // Como val.pro.cost referencian a una misma dirección de memoria debemos hacer
                             valCloned.properties.cost = div;              // Una copia para poder guardar la division en filas, true deja clonar atributos
-                            console.log("DIV: " + valCloned.properties.cost);
+                            //.log("DIV: " + valCloned.properties.cost);
                             orderedData.push(valCloned);
 
                             let copiaI = index;
                             if (sumador + div > totalYearAmount) {
                                 sumador = div;
 
-                                console.log("INDEX: ", index);
+                                //.log("INDEX: ", index);
 
-                                let dat = datos; console.log("DAT LEGNTH: ", dat);
+                                let dat = datos; //.log("DAT LEGNTH: ", dat);
                                 var cont = 0;
                                 for (let index = copiaI + 1; index < long; index++) {
 
-                                    console.log("Primer el: ", dat[index].properties.cost, "/" + sumador);
+                                    //.log("Primer el: ", dat[index].properties.cost, "/" + sumador);
                                     if (sumador + dat[index].properties.cost < totalYearAmount) {
-                                        console.log("METOOOO: ", dat[index]);
+                                        //.log("METOOOO: ", dat[index]);
                                         orderedData.push(dat[index]);
                                         sumador += dat[index].properties.cost;
                                         cont++;
@@ -228,12 +228,12 @@
                                     }
                                 }
                                 index = copiaI + cont;
-                                console.log("COPIAAA", index);
-                                console.log("VAL VALEE: ", datos[index].properties.cost);
+                                //.log("COPIAAA", index);
+                                //.log("VAL VALEE: ", datos[index].properties.cost);
                             }
 
                             datos[copiaI].properties.cost = div2; // Rescato el indice de donde empece a guardar
-                            console.log("DIV2: " + datos[copiaI].properties.cost);
+                            //.log("DIV2: " + datos[copiaI].properties.cost);
                             orderedData.push(datos[copiaI]);
                             sumador = 0;
                             // index--;
@@ -242,12 +242,12 @@
                         }
 
                         if (sumador < totalYearAmount) {
-                            console.log("Menores ", sumador, costo);
+                            //.log("Menores ", sumador, costo);
                             sumador += costo;
                             if (sumador >= totalYearAmount) {
 
                                 valCloned2 = jQuery.extend(true, {}, datos[index]); // SI es mayor lo clono para luego reubicarlo
-                                console.log("Siguiente a meter: ", valCloned2.properties.cost);
+                                //.log("Siguiente a meter: ", valCloned2.properties.cost);
                                 sumador -= costo;
                                 bandera = true;
                             }
@@ -256,13 +256,13 @@
                             }
                         }
                         if (bandera) {
-                            console.log("Busco los siguientes que encajen en el año actual");
+                            //.log("Busco los siguientes que encajen en el año actual");
                             bandera = false;
                             //AHORA DEBERÍA BUSCAR LOS QUE ESTEN POR DEBAJO Y QUE NO SE PASEN DEL BUDGET YEAR O ANUAL
                             let copiaI = index;
                             let dat = datos;
                             let cont = 0;
-                            console.log(dat);
+                            //.log(dat);
                             for (let index = copiaI + 1; index < long; index++) {
 
                                 if (dat[index].properties.cost + sumador <= totalYearAmount) {
@@ -271,7 +271,7 @@
                                     cont++;
                                 }
                                 else {
-                                    console.log("me paso");
+                                    //.log("me paso");
                                     break;
                                 }
 
@@ -282,7 +282,7 @@
                         }
 
                     }
-                    console.log("ORDERED: ", orderedData);
+                    //.log("ORDERED: ", orderedData);
                     // console.log(result);
                     var h = -1;
                     var html = [];
@@ -314,6 +314,9 @@
                     var j = 0;
                     var cont = 0;
                     var total = 0;
+                    html[++h] =
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5"> Year 1 </td></tr>';
+                            total += totalTable;
                     for (var val of orderedData) {
                         // Hay que tener encuenta que por cada activo no se debe poner un nuevo año si sobrepasa al total por año ya que lo supera
                         // if (Math.round(val.properties.cost * 100) / 100 >= totalYearAmount)
@@ -325,14 +328,17 @@
                             continue;
                         }
                         if ((Math.round(val.properties.cost * 100) / 100) + totalTable >= totalYearAmount) {
+                            cont++;
+                            let copy = cont+1;
+                            if (cont === parseInt(optionPeriod)) // Evitamos que genera años demás
+                                break;
                             html[++h] =
-                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5">NEXT YEAR</td></tr>';
+                                '<tr style="background-color: #fcf8e3;text-align:center;"><td colspan = "5"> Year ' + copy + '</td></tr>';
                             total += totalTable;
                             console.log("REINICIO: ", totalTable);
                             totalTable = 0;
-                            cont++;
-                            if (cont === parseInt(optionPeriod)) // Evitamos que genera años demás
-                                break;
+
+                            
                         }
 
                         html[++h] = '<tr>';

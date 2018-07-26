@@ -385,7 +385,7 @@ router.get('/V1/getSchedule/:type', function (req, res, next) {
 
 });
 /* GET JSON Sched. */
-router.get('/V1/getSchedule/:type/:yearBudget/:budget', function (req, res, next) {
+router.get('/V1/getSchedule/:type/:budget', function (req, res, next) {
     var ret = {
         "result": "OK"
     };
