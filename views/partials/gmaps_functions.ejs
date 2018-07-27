@@ -438,6 +438,7 @@
                 });
                 map.data.forEach(function (feature) {
                     // If you want, check here for some constraints.
+
                     if (feature.getProperty('nameoption').indexOf('CONDITION') >= 0) {
                         map.data.remove(feature);
                     }
@@ -635,7 +636,7 @@
 
             $('#pavements input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterPavArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterPav = true;
@@ -644,13 +645,13 @@
             });
             $('#assets input[type=checkbox]').each(function (index) {
                 if ($(this).is(':checked')) {
-                    //console.log(index + ": " + $this.val() + ' - ' + $(this).val());
+                    console.log(index + ": " + $this.val() + ' - ' + $(this).val());
                     filterAssetArr.push($(this).val());
                     filterArr.push($(this).val());
                     filterAsset = true;
                 }
             });
-            // alert($this.val());
+            alert($this.val());
 
             var optChecked = [];
             await $('#ConditionForm input[type=checkbox]').each(function (index) {
