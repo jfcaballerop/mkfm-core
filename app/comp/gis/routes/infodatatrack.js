@@ -530,7 +530,7 @@ router.get('/edit_infodatatrack/:id', function (req, resp, next) {
 
 });
 
-router.get('/edit_video_infodatatrack/:id', function (req, resp, next) {
+router.get('/edit_database_infodatatrack/:id', function (req, resp, next) {
 
     var options = {
         host: config.HOST_API,
@@ -679,7 +679,7 @@ router.post('/update_videoinfodatatrack',
                 // //// // console.log('DATA ' + data.length + ' ' + data);
                 var responseObject = JSON.parse(data);
                 //success(data);
-                resp.redirect('/auth/WEB/infodatatrack/edit_video_infodatatrack/' + req.body.infodatatrack._id);
+                resp.redirect('/auth/WEB/infodatatrack/edit_database_infodatatrack/' + req.body.infodatatrack._id);
                 AssetCache.refresh()
             });
         });

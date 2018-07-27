@@ -64,6 +64,9 @@ router.use('/budget', require(path.join(__dirname, '../app/comp/budget/routes/bu
 // FILETYPE auth
 router.use('/filetype', require(path.join(__dirname, '../app/comp/gis/routes/filetype')));
 
+// FILEUPLOAD auth
+router.use('/fileupload', require(path.join(__dirname, '../app/comp/gis/routes/fileupload')));
+
 // ROAD auth
 router.use('/road', require(path.join(__dirname, '../app/comp/gis/routes/road')));
 

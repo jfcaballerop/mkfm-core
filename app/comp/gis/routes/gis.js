@@ -24,6 +24,9 @@ var Filetype = mongoose.model('Filetype');
 var infodatatrackModels = require(path.join(__dirname, '../models/infodatatrack'));
 var Infodatatrack = mongoose.model('Infodatatrack');
 
+var infodatatrackModels = require(path.join(__dirname, '../models/road'));
+var Road = mongoose.model('Road');
+
 
 
 router.use(function timeLog(req, res, next) {
@@ -385,7 +388,7 @@ router.get('/getfile/:id', function (req, resp) {
             }
         };
         var request = http.request(options, function (res) {
-            console.log('STATUS: ****************************************************** ' + res.statusCode);
+            // console.log('STATUS: ****************************************************** ' + res.statusCode);
             ////// console.log('HEADERS: ' + JSON.stringify(res.headers));
             res.setEncoding('utf8');
             var data = '';
@@ -418,7 +421,7 @@ router.get('/getfile/:id', function (req, resp) {
         readStream.on('finish', function () {
             resp.end();
         });
-        console.log('The length was:', stat.size);
+        // console.log('The length was:', stat.size);
         request.end();
     });
 
@@ -791,25 +794,25 @@ router.get('/V1/:id', function (req, res, next) {
     // debug(req.params.id);
     Fileupload.findById(req.params.id, function (err, fup) {
         debug(fup);
-        if (fup !== undefined){
-        if (err) {
-            // res.send(500, err.message);
-            res.status(500).send(err.message)
-        }
-        var validFeatureCollection = {};
-        fs.readFile(fup.path, function (err, dataFile) {
+        if (fup !== undefined) {
             if (err) {
-                return res.status(500).send(err.message);
+                // res.send(500, err.message);
+                res.status(500).send(err.message)
             }
-            // console.log('## File DATA:: ' + dataFile);
-            // validFeatureCollection = JSON.parse(dataFile);
+            var validFeatureCollection = {};
+            fs.readFile(fup.path, function (err, dataFile) {
+                if (err) {
+                    return res.status(500).send(err.message);
+                }
+                // console.log('## File DATA:: ' + dataFile);
+                // validFeatureCollection = JSON.parse(dataFile);
 
-            // res.status(200).jsonp(validFeatureCollection);
+                // res.status(200).jsonp(validFeatureCollection);
+                res.status(200);
+            });
+        } else {
             res.status(200);
-        });
-    } else {
-            res.status(200);
-    }
+        }
     });
 
 });
@@ -835,42 +838,42 @@ router.post('/V1/getFilesByAssetCode/:assetCode', function (req, res, next) {
 router.post('/V1/getFilesByAssetCode_general/:assetCode', function (req, res, next) {
     Fileupload.find({
         $or: [{
-                "properties.rcode": /req.params.assetCode/i
-            },
-            {
-                "properties.rname": /req.params.assetCode/i
-            },
-            {
-                "properties.bcode": /req.params.assetCode/i
-            },
-            {
-                "properties.bname": /req.params.assetCode/i
-            },
-            {
-                "properties.gcode": /req.params.assetCode/i
-            },
-            {
-                "properties.gcode2": /req.params.assetCode/i
-            },
-            {
-                "properties.dcode": /req.params.assetCode/i
-            },
-            {
-                "properties.dcode2": /req.params.assetCode/i
-            },
-            {
-                "properties.Ccode": /req.params.assetCode/i
-            },
-            {
-                "properties.name": /req.params.assetCode/i
-            }
+            "properties.rcode": /req.params.assetCode/i
+        },
+        {
+            "properties.rname": /req.params.assetCode/i
+        },
+        {
+            "properties.bcode": /req.params.assetCode/i
+        },
+        {
+            "properties.bname": /req.params.assetCode/i
+        },
+        {
+            "properties.gcode": /req.params.assetCode/i
+        },
+        {
+            "properties.gcode2": /req.params.assetCode/i
+        },
+        {
+            "properties.dcode": /req.params.assetCode/i
+        },
+        {
+            "properties.dcode2": /req.params.assetCode/i
+        },
+        {
+            "properties.Ccode": /req.params.assetCode/i
+        },
+        {
+            "properties.name": /req.params.assetCode/i
+        }
         ]
 
     }, function (err, fup) {
         if (err) {
             res.send(500, err.message);
         }
-        console.log(fup._id);
+        // console.log(fup._id);
         // console.log(req);
         // console.log(res);
         // console.log(next);
@@ -882,39 +885,64 @@ router.post('/V1/getFilesByAssetCode_general/:assetCode', function (req, res, ne
 /* VALIDATE File */
 // TODO: Este método debería realizar la carga en BD una vez validado
 router.post('/V1/validate/:id', function (req, res, next) {
-    Fileupload.findById(req.params.id, function (err, fup) {
-        if (fup.type === 'geojson') {
+    console.log("ID FINDID:", req.params.id);
+    Fileupload.findById(req.params.id, function (err, fup) { // Se busca en la coleccion fileTypes 
+        if (fup.type === 'geojson') { // CASO GEOJSON
+            // // console.log("FUP ENTERO:", fup);
             var validFeatureCollection = {};
-            fs.readFile(fup.path, function (err, dataFile) {
+            fs.readFile(fup.path, function (err, dataFile) { //Leemos el archivo de disco subido en fileuploads (../public/uploads)
                 if (err) {
                     return res.status(500).send(err.message);
                 }
-                ////// console.log('## File DATA:: ' + dataFile);
+                // // console.log('## File DATA:: ' + dataFile);
                 try {
-                    validFeatureCollection = JSON.parse(dataFile);
+                    var prueba = dataFile.toString();
+                    var cadena1 = /ObjectId\(/g;
+                    var cadena2 = /"\)/g;
+                    var cadena3 = /\ISODate\(/g;
+
+                    //CASO VALID GOSJSON SUSTITUYENDO OBJECTID / DOC EXISTENTE 
+                    var nuevo1 = prueba.replace(cadena1, '');
+                    var nuevo2 = nuevo1.replace(cadena2, '"');
+                    //CASO 
+                    var nuevo3 = nuevo2.replace(cadena3, '');
+
+                    console.log("TRAD:", nuevo3);
+                    validFeatureCollection = JSON.parse(nuevo3);
+
+                    //GUARDAMOS OBJECTID que se usara en findId ya que si esta es porque se va a sustituir el doc
+                    // var sustPuntos = prueba2.replace(':',',');
+                    // _id = sustPuntos.split(",",2); //Sería _id[1]
                 } catch (e) {
                     if (e) {
                         fup.status = 'error';
-
+                        // console.log("ERROR AQUIII", e);
                     }
                 }
-                // console.log('ENTRO ####');
-                //simple test 
+                console.log('ENTRO ####');
+                //simple test
                 GJV.valid(validFeatureCollection, function (valid, errs) {
                     if (!valid) {
-                        // console.log("this is INVALID GeoJSON! :" + errs);
+                        console.log("this is INVALID GeoJSON! :" + errs);
 
+                    } else {
+                        console.log("this is VALID GeoJSON!");
                     }
 
                 });
-                if (GJV.valid(validFeatureCollection)) {
+
+                if (validFeatureCollection._id !== undefined && GJV.valid(validFeatureCollection)) { //GeoJson valido y hay _id: esINFODATATRACKS
                     // console.log("this is valid GeoJSON!\n" + JSON.stringify(validFeatureCollection));
-                    if (validFeatureCollection._id !== undefined) {
-                        Infodatatrack.findById(validFeatureCollection._id).exec(function (err, infodatatrack) {
-                            if (err) {
-                                fup.status = 'error';
-                                res.send(500, err.message);
-                            }
+                    console.log("Primer if\n", validFeatureCollection._id);
+                    // Caso : subo archivo (_id) existente modificado 
+                    Infodatatrack.findById(validFeatureCollection._id).exec(function (err, infodatatrack) {
+                        if (err) {
+                            fup.status = 'error';
+                            console.log("AQUI");
+                            return res.status(500).send(err.message);
+                        } else {
+
+                            console.log("AAAAA----------");
                             //// console.log('\ninfodatatrack::\n' + JSON.stringify(infodatatrack));
                             //res.status(200).jsonp(infodatatrack);
                             // TODO: Añadir poder modificar el resto de opciones
@@ -923,57 +951,120 @@ router.post('/V1/validate/:id', function (req, res, next) {
                             // Paso 1. Comprobar longitud de las Coordenadas
                             if (validFeatureCollection.geometry.coordinates.length !== infodatatrack.geometry.coordinates.length) {
                                 fup.status = 'error';
-                                //// console.log('Error en longitud de coordenadas');
+                                // // console.log('Error en longitud de coordenadas');
                             } else {
-                                infodatatrack.geometry.coordinates = validFeatureCollection.geometry.coordinates;
+                                // HASTA QUE NO SE SUSTITUYE infodatatracks por validFeatureCollection no se ven los cambios
+
+                                infodatatrack.geometry.coordinates = validFeatureCollection.geometry.coordinates;// En este caso se sustituye campo a campo
+                                infodatatrack.properties.name = validFeatureCollection.properties.name
                                 infodatatrack.save(function (err, info) {
                                     if (err) {
-                                        //// console.log('Error en grabar infodatatrack');
+                                        // // console.log('Error en grabar infodatatrack');
                                         fup.status = 'error';
-                                        // return res.status(500).send(err.message);
-                                    }
-                                    //// console.log('infodatatrack grabado OK !!!');
-                                    fup.status = 'validate';
-                                    //// console.log('## API ACTIVATE file: ' + req.params.id);
-                                    //// console.log('## API RES STATUS: ' + fup.status);
-                                    fup.save(function (err, file) {
-                                        if (err) {
-                                            return res.status(500).send(err.message);
-                                        }
-                                        Fileupload.find(function (err, fup) {
+                                        return res.status(500).send(err.message);
+                                    } else {
+                                        console.log('infodatatrack grabado OK !!!');
+                                        fup.status = 'validate';
+                                        //// console.log('## API ACTIVATE file: ' + req.params.id);
+                                        console.log('## API RES STATUS: ' + fup.status);
+                                        fup.save(function (err, file) {
                                             if (err) {
-                                                res.send(500, err.message);
+                                                return res.status(500).send(err.message);
                                             }
-                                            res.status(200).jsonp(fup);
+                                            Fileupload.find(function (err, fup) {
+                                                if (err) {
+                                                    res.send(500, err.message);
+                                                }
+                                                res.status(200).jsonp(fup);
+                                            });
                                         });
-                                    });
+                                    }
                                 });
                             }
 
-                        });
+                        }
+                    });
+                }  //Si no tenemos _id en el documento: ES ROAD
+                else if (validFeatureCollection._id === undefined && GJV.valid(validFeatureCollection)) {
+                    console.log("CASO GEOJSON sin _ID");
+                    var road = new Road(validFeatureCollection);
+                    if (validFeatureCollection.properties.coordTimes === undefined || validFeatureCollection.properties.coordTimes.length === 0 ||
+                        validFeatureCollection.properties.coordTimes.length !== validFeatureCollection.geometry.coordinates.length) { // SI no nos dan coordTimes relleno se rellena manualmente
+                        var newCoord = new Date();
+                        console.log("MI IF AQUII");
+                        // var year = newCoord.getFullYear();
+                        // var month = newCoord.getMonth(); // no tiene el formato 01, 02...
+                        // var day = newCoord.getDate();
+                        // if (month.toString().length===1){
+                        //     month = "0"+month;
+                        // }
+                        // if (day.toString().length===1){
+                        //     day = "0"+day;
+                        // }
+                        // var cadena = year + "-" + month + "-" + day;
+                        var cadena = newCoord.toISOString(); // IDEM , ya tiene el formato necesario
+                        var copia = cadena.slice(0, 17); //Corta la cadena hasta el ultimo :
+                        var copia1 = copia;
+                        var miArray = new Array();
+                        var copia2;
+                        for (let i = 0; i < validFeatureCollection.geometry.coordinates.length; i++) {
+                            if (i < 10) {
+                                copia += "0" + i + "Z";
+                                copia2 = copia;
+                                miArray[i] = copia2;
+                                copia = copia1;
+                            } else {
+                                copia += i + "Z";
+                                copia2 = copia;
+                                miArray[i] = copia2;
+                                copia = copia1;
+                            }
+
+                        }
+                        road.properties.coordTimes = miArray;
                     }
 
-                } else {
-                    GJV.isGeoJSONObject(validFeatureCollection, function (valid, errs) {
-                        if (!valid) {
-                            // console.log('## API ERROR isGeoJSONObject: ' + errs);
-                        }
-                        fup.status = 'error';
-                        // console.log('## API ACTIVATE file: ' + req.params.id + ' STATUS: ' + fup.status);
-                        fup.save(function (err, file) {
-                            if (err) {
-                                return res.status(500).send(err.message);
-                            }
-                            Fileupload.find(function (err, fup) {
+                    road.save(function (err, info) {
+                        if (err) {
+                            // // console.log('Error en grabar infodatatrack');
+                            fup.status = 'error';
+                            return res.status(500).send(err.message);
+                        } else {
+                            console.log('road grabado OK !!!');
+                            fup.status = 'validate';
+                            //// console.log('## API ACTIVATE file: ' + req.params.id);
+                            console.log('## API RES STATUS: ' + fup.status);
+                            fup.save(function (err, file) {
                                 if (err) {
-                                    res.send(500, err.message);
+                                    return res.status(500).send(err.message);
                                 }
-                                res.status(200).jsonp(fup);
+                                Fileupload.find(function (err, fup) {
+                                    if (err) {
+                                        res.send(500, err.message);
+                                    }
+                                    res.status(200).jsonp(fup);
+                                });
                             });
+                        }
+                    });
+                } else { // Si el GEOJSON no es valido coloco el status 'error'
+                    console.log("CASO GEOJSON NO VALIDO ELSE");
+
+                    fup.status = 'error';
+                    // console.log('## API ACTIVATE file: ' + req.params.id + ' STATUS: ' + fup.status);
+                    fup.save(function (err, file) {
+                        if (err) {
+                            return res.status(500).send(err.message);
+                        }
+                        Fileupload.find(function (err, fup) {
+                            if (err) {
+                                res.send(500, err.message);
+                            }
+                            res.status(200).jsonp(fup);
                         });
                     });
                 }
-
+                console.log("SALGO FUP:", fup.status);
             });
         } else if ((fup.type === 'gpx') || (fup.type === 'kml')) {
             // Primero: transformar el fichero GPX a GeoJson

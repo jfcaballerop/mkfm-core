@@ -7,7 +7,7 @@
                         <a id="Summary" href="#">Summary</a>
                     </li>
                     <li>
-                        <a id="PriorizationofInterventions" href="#">Priorization of Interventions</a>
+                        <a id="PriorizationofInterventions" href="#">Prioritization of Interventions</a>
                     </li>
 
                 </ul>
@@ -26,8 +26,9 @@
         </div>
         <div id="SummaryContent" class="row mt">
             <div class="col-md-6">
+                <button type="button" class="btn btn-success" id="excelExport">Excel</button>
                 <!-- col izda -->
-                <table class="table table-bordered table-striped table-condensed">
+                <table id="TableAnnualAvailableBudget" class="table table-bordered table-striped table-condensed">
                     <thead>
                         <tr>
                             <th></th>
@@ -37,8 +38,8 @@
                     <tbody>
                         <tr>
                             <td>Investment FY2018</td>
-                            <td>
-                                <input class="form-control" id="InvestmentFY2018" type="text" placeholder="EC$ 0.00" disabled="" value="EC$ <%- retValues.budget.ammount %>">
+                            <td id="InvestmentFY2018">
+                                <%- retValues.budget.ammount %>
                             </td>
                         </tr>
                         <tr>
@@ -49,23 +50,20 @@
                         </tr>
                         <tr>
                             <td>Routine</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100) %>" class="form-control" id="disabledInputRoutine"
-                                    type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputRoutine">
+                                <%- retValues.budget.ammount*(retValues.budget.Routine/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Periodic</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100) %>" class="form-control" id="disabledInputPeriodic"
-                                    type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputPeriodic">
+                                <%- retValues.budget.ammount*(retValues.budget.Periodic/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Emergency</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Emergency/100) %>" class="form-control" id="disabledInputEmergency"
-                                    type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputEmergency">
+                                <%- retValues.budget.ammount*(retValues.budget.Emergency/100) %>
                             </td>
                         </tr>
                         <tr>
@@ -76,31 +74,26 @@
                         </tr>
                         <tr>
                             <td>Brush cutting</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Brushcutting/100) %>" class="form-control"
-                                    id="disabledInputBrushcutting" type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputBrushcutting">
+                                <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Brushcutting/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Drain clearing</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Drainclearing/100) %>" class="form-control"
-                                    id="disabledInputDrainclearing" type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputDrainclearing">
+                                <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Drainclearing/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Patching</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Patching/100) %>" class="form-control"
-                                    id="disabledInputPatching" type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputPatching">
+                                <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.Patching/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Road Safety Improvement</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.RoadSafetyImprovement/100) %>"
-                                    class="form-control" id="disabledInputRoadSafetyImprovement" type="text" placeholder="EC$ 0.00"
-                                    disabled="">
+                            <td id="disabledInputRoadSafetyImprovement">
+                                <%- retValues.budget.ammount*(retValues.budget.Routine/100)*(retValues.budget.RoadSafetyImprovement/100) %>
                             </td>
                         </tr>
                         <tr>
@@ -110,24 +103,21 @@
                             <td></td>
                         </tr>
                         <!-- <tr>
-                            <td>Design Projects</td>
+                            <td>Design Projects</td id="disabledInputDesignProjects">
                             <td>
-                                <input class="form-control" id="disabledInputDesignProjects" type="text" placeholder="EC$ 0.00" disabled="">
+                                <input class="form-control"  type="text" placeholder="EC$ 0.00" disabled="">
                             </td>
                         </tr> -->
                         <tr>
                             <td>Interventions</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.WorkInterventions/100) %>"
-                                    class="form-control" id="disabledInputWorkInterventions" type="text" placeholder="EC$ 0.00"
-                                    disabled="">
+                            <td id="disabledInputWorkInterventions">
+                                <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.WorkInterventions/100) %>
                             </td>
                         </tr>
                         <tr>
                             <td>Inspections</td>
-                            <td>
-                                <input value="EC$ <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.Inspections/100) %>" class="form-control"
-                                    id="disabledInputInspections" type="text" placeholder="EC$ 0.00" disabled="">
+                            <td id="disabledInputInspections">
+                                <%- retValues.budget.ammount*(retValues.budget.Periodic/100)*(retValues.budget.Inspections/100) %>
                             </td>
                         </tr>
                     </tbody>
