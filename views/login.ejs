@@ -44,7 +44,8 @@
 
             <form id="loginform" class="form-login" action="/login" method="post">
                 <h1 class="form-login-heading">
-                    Risk-Based Road Asset Management and Strategic Investment Planning Tool
+                    <%=(env !== 'production')? env: '' %>
+                        Risk-Based Road Asset Management and Strategic Investment Planning Tool
                 </h1>
                 <h2 class="form-login-heading">
 

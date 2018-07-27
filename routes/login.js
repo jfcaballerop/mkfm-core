@@ -23,7 +23,8 @@ router.get('/', function (req, res, next) {
     res.render('login', {
         title: 'Login',
         cname: config.client_name,
-        message: req.flash('message')
+        message: req.flash('message'),
+        env: process.env.NODE_ENV
     });
 
 });
