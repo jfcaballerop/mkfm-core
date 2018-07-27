@@ -5,7 +5,7 @@ module.exports = {
             script: "./bin/www",
             watch: true,
             env: {
-                "PORT": 4000,
+                "PORT": 5000,
                 "NODE_ENV": "DEV"
             },
             env_production: {
@@ -13,7 +13,7 @@ module.exports = {
                 "NODE_ENV": "PRODUCTION",
             },
             env_pre: {
-                "PORT": 5000,
+                "PORT": 4000,
                 "NODE_ENV": "PRE",
                 "MONGO_HOST": "localhost",
                 "MONGO_DB": "mkfwcoredbPRE",

@@ -794,7 +794,7 @@ db.infodatatracks.update({}, {
                 },
                 bdamagesstructuralgeneraltype: {
                     desc: "borrar",
-                    subgroup: "Bridge Group 3: Indexes and Risk Analysis",
+                    subgroup: "Bridge Group 2: Indexes and Risk Analysis",
                     group: "BRIDGES"
                 },
                 bcondition: {
